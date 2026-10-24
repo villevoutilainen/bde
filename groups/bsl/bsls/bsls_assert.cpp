@@ -160,10 +160,12 @@ const char *Assert::k_permitOutOfPolicyReturningAssertionBuildKey =
                                                                    g_KeyBuffer;
 
 // PUBLIC CONSTANTS
+#ifndef BSLS_ASSERT_USE_CONTRACTS_P4324
 const char Assert::k_LEVEL_SAFE[]   = "SAF";
 const char Assert::k_LEVEL_OPT[]    = "OPT";
 const char Assert::k_LEVEL_ASSERT[] = "DBG";
 const char Assert::k_LEVEL_INVOKE[] = "INV";
+#endif
 
 // CLASS METHODS
 void Assert::failOnViolation(const bsls::AssertViolation& violation)

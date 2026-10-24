@@ -1577,6 +1577,7 @@ BSLS_IDENT("$Id: $")
 
 #ifdef BSLS_ASSERT_USE_CONTRACTS_P4324
 #include <contracts>
+#include <contract_labels>
 #elif defined(BSLS_ASSERT_USE_CONTRACTS)
 #include <contract>
 #endif
@@ -1696,12 +1697,16 @@ BSLS_IDENT("$Id: $")
 // assertion invokes the assertion-failure handler as 'BSLS_ASSERT_INVOKE'
 // does, never continuing past a handler that returns; an assumed one is an
 // ignored, assumable contract; a disabled one, ignored.
-// The control object carries only the level: it must be a constant, and
-// a single initializer keeps commas out of macro arguments.  File and line
-// come from the contract's own source location, so (as with the Lock3
+// An active assertion is a conveyor contract, labelled with its level
+// (see 'AssertConveyorLabel'): what it does on a violation follows the
+// build's contract configuration -- the evaluation semantic configured
+// for its level's contract group, else the translation unit's.  The
+// label carries only the level: it must be a constant, and a single
+// initializer keeps commas out of macro arguments.  File and line come
+// from the contract's own source location, so (as with the Lock3
 // flavour) redefining 'BSLS_ASSERTIMPUTIL_FILE' has no effect.
 #define BSLS_ASSERT_ASSERT_IMP(X,LVL)                                         \
-    contract_assert<BloombergLP::bsls::AssertContractControl{LVL}>(X)
+    contract_assert<BloombergLP::bsls::AssertConveyorLabel{LVL}>(X)
 
 // As without contracts, assumption is used only where 'bsls_assert' already
 // uses it (not with GCC); elsewhere an assumed assertion is disabled.
@@ -2186,10 +2191,20 @@ class Assert {
 
                      // 'assertLevel' Strings
 
+#ifdef BSLS_ASSERT_USE_CONTRACTS_P4324
+    // With P4324 contract control objects the levels are constants, so
+    // that a level can choose an assertion's contract groups at compile
+    // time (see `AssertConveyorLabel`).
+    static constexpr char k_LEVEL_SAFE[]   = "SAF";
+    static constexpr char k_LEVEL_OPT[]    = "OPT";
+    static constexpr char k_LEVEL_ASSERT[] = "DBG";
+    static constexpr char k_LEVEL_INVOKE[] = "INV";
+#else
     static const char k_LEVEL_SAFE[];
     static const char k_LEVEL_OPT[];
     static const char k_LEVEL_ASSERT[];
     static const char k_LEVEL_INVOKE[];
+#endif
 
     // PUBLIC CLASS DATA
     static const char *k_permitOutOfPolicyReturningAssertionBuildKey;
@@ -2489,6 +2504,100 @@ struct AssertContractIgnore {
     constexpr void operator()(
                          const std::contracts::assertion_context&) const
     {
+    }
+};
+
+                        // ==========================
+                        // struct AssertConveyorLabel
+                        // ==========================
+
+/// P4324 conveyor contract control object, as a P3400 label, for an active
+/// (BSLS) "ASSERT" whose behavior on a violation follows the build's
+/// contract configuration rather than being always enforced.  Its
+/// contract groups are its level's (`bsls.safe`, `bsls.assert` or
+/// `bsls.opt`) and `bsls`, so that, e.g.,
+/// `-fcontracts-group-evaluation-semantic=bsls.safe:observe` configures
+/// the "SAFE" assertions; the first rule naming one of them applies, and
+/// without one, the translation unit's `-fcontract-evaluation-semantic`.
+/// On a violation, for that semantic:
+///
+/// * `enforce`: invoke the assertion-failure handler, never continuing
+///   past one that returns (`Assert::invokeHandlerNoReturn`);
+/// * `quick_enforce`: abort (`Assert::failByAbort`), without the handler;
+/// * `observe`: invoke the review handler, as a (BSLS) "REVIEW" does, and
+///   continue;
+/// * `ignore`: never checked (`is_ignored`).
+///
+/// As a conveyor contract the condition must be free of undefined
+/// behavior and side effects, and may only call `conveyor` functions;
+/// an analysis may treat it as a fact after the assertion where a failed
+/// check stops execution -- not where it's observed.  Not constified, as
+/// the "ASSERT" macros never were.
+struct AssertConveyorLabel
+: std::contracts::P3400::label_base<AssertConveyorLabel> {
+
+    // TYPES
+    using assertion_control_object = AssertConveyorLabel;
+
+    // CLASS DATA
+    static constexpr const char *k_SAFE_GROUPS[2]   = { "bsls.safe",
+                                                        "bsls" };
+    static constexpr const char *k_ASSERT_GROUPS[2] = { "bsls.assert",
+                                                        "bsls" };
+    static constexpr const char *k_OPT_GROUPS[2]    = { "bsls.opt",
+                                                        "bsls" };
+
+    // DATA
+    const char                             *d_level_p;   // assertion level
+    std::contracts::P3400::group_name_view  group_names; // its groups
+
+    // CREATORS
+    constexpr AssertConveyorLabel(const char *level)
+    : d_level_p(level)
+    , group_names{ level == Assert::k_LEVEL_SAFE ? k_SAFE_GROUPS
+                 : level == Assert::k_LEVEL_OPT  ? k_OPT_GROUPS
+                 :                                 k_ASSERT_GROUPS, 2 }
+    {
+    }
+
+    // CLASS METHODS
+    static constexpr bool is_conveyor(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return true;
+    }
+    static constexpr bool constify(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return false;
+    }
+
+    // ACCESSORS
+    constexpr void operator()(
+                         const std::contracts::assertion_context& context) const
+    {
+        if (context.check()) {
+            return;                                                   // RETURN
+        }
+        const std::contracts::evaluation_semantic semantic =
+            this->__effective_semantic(
+                       this->__configured_semantic(context.static_info()));
+        AssertViolation violation(context.comment(),
+                                  context.location().file_name(),
+                                  static_cast<int>(context.location().line()),
+                                  d_level_p);
+        if (semantic == std::contracts::evaluation_semantic::observe) {
+            Review::invokeHandler(ReviewViolation(violation.comment(),
+                                                  violation.fileName(),
+                                                  violation.lineNumber(),
+                                                  d_level_p,
+                                                  1));
+            return;                                                   // RETURN
+        }
+        if (semantic == std::contracts::evaluation_semantic::quick_enforce) {
+            Assert::failByAbort(violation);
+        }
+        Assert::invokeHandlerNoReturn(violation);
     }
 };
 #endif  // BSLS_ASSERT_USE_CONTRACTS_P4324
