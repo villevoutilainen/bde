@@ -593,6 +593,18 @@ BSLS_IDENT("$Id: $")
 #define BSLS_KEYWORD_CONSTEXPR_CPP20
 #endif
 
+// `BSLS_KEYWORD_CONVEYOR` marks a function `conveyor` (P4324: free of
+// undefined behavior, which the compiler checks, so that it may be called
+// from conveyor contract conditions) where conveyor assertions are in use
+// (`BSLS_ASSERT_CONVEYOR`, with a compiler supporting P4324 contract
+// control objects); otherwise it expands to nothing.  It follows the
+// declarator, like `noexcept`, on every declaration.
+#if defined(__cpp_contract_control_objects) && defined(BSLS_ASSERT_CONVEYOR)
+# define BSLS_KEYWORD_CONVEYOR conveyor
+#else
+# define BSLS_KEYWORD_CONVEYOR
+#endif
+
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_DELETED_FUNCTIONS
 # define BSLS_KEYWORD_DELETED = delete
 #else

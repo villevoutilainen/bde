@@ -1697,16 +1697,25 @@ BSLS_IDENT("$Id: $")
 // assertion invokes the assertion-failure handler as 'BSLS_ASSERT_INVOKE'
 // does, never continuing past a handler that returns; an assumed one is an
 // ignored, assumable contract; a disabled one, ignored.
-// An active assertion is a conveyor contract, labelled with its level
-// (see 'AssertConveyorLabel'): what it does on a violation follows the
-// build's contract configuration -- the evaluation semantic configured
-// for its level's contract group, else the translation unit's.  The
-// label carries only the level: it must be a constant, and a single
+// An active assertion is a contract labelled with its level (see
+// 'AssertLevelLabel'): what it does on a violation follows the build's
+// contract configuration -- the evaluation semantic configured for its
+// level's contract group, else the translation unit's.  With
+// 'BSLS_ASSERT_CONVEYOR' defined (for a whole build or component -- an
+// inline function's assertions are those of each translation unit that
+// uses it), it is a conveyor contract: its condition must follow the
+// conveyor rules, and an analysis may then rely on it.  The label
+// carries only the level: it must be a constant, and a single
 // initializer keeps commas out of macro arguments.  File and line come
 // from the contract's own source location, so (as with the Lock3
 // flavour) redefining 'BSLS_ASSERTIMPUTIL_FILE' has no effect.
+#ifdef BSLS_ASSERT_CONVEYOR
+#define BSLS_ASSERT_ASSERT_LABEL_IMP BloombergLP::bsls::AssertConveyorLabel
+#else
+#define BSLS_ASSERT_ASSERT_LABEL_IMP BloombergLP::bsls::AssertConfigLabel
+#endif
 #define BSLS_ASSERT_ASSERT_IMP(X,LVL)                                         \
-    contract_assert<BloombergLP::bsls::AssertConveyorLabel{LVL}>(X)
+    contract_assert<BSLS_ASSERT_ASSERT_LABEL_IMP{LVL}>(X)
 
 // As without contracts, assumption is used only where 'bsls_assert' already
 // uses it (not with GCC); elsewhere an assumed assertion is disabled.
@@ -2194,7 +2203,7 @@ class Assert {
 #ifdef BSLS_ASSERT_USE_CONTRACTS_P4324
     // With P4324 contract control objects the levels are constants, so
     // that a level can choose an assertion's contract groups at compile
-    // time (see `AssertConveyorLabel`).
+    // time (see `AssertLevelLabel`).
     static constexpr char k_LEVEL_SAFE[]   = "SAF";
     static constexpr char k_LEVEL_OPT[]    = "OPT";
     static constexpr char k_LEVEL_ASSERT[] = "DBG";
@@ -2507,13 +2516,15 @@ struct AssertContractIgnore {
     }
 };
 
-                        // ==========================
-                        // struct AssertConveyorLabel
-                        // ==========================
+                         // =======================
+                         // struct AssertLevelLabel
+                         // =======================
 
-/// P4324 conveyor contract control object, as a P3400 label, for an active
-/// (BSLS) "ASSERT" whose behavior on a violation follows the build's
-/// contract configuration rather than being always enforced.  Its
+/// P4324 contract control object, as a P3400 label, for an active (BSLS)
+/// "ASSERT" whose behavior on a violation follows the build's contract
+/// configuration rather than being always enforced; a conveyor contract
+/// if `t_CONVEYOR` (`AssertConveyorLabel`), else an ordinary one
+/// (`AssertConfigLabel`).  Its
 /// contract groups are its level's (`bsls.safe`, `bsls.assert` or
 /// `bsls.opt`) and `bsls`, so that, e.g.,
 /// `-fcontracts-group-evaluation-semantic=bsls.safe:observe` configures
@@ -2529,15 +2540,16 @@ struct AssertContractIgnore {
 /// * `ignore`: never checked (`is_ignored`).
 ///
 /// As a conveyor contract the condition must be free of undefined
-/// behavior and side effects, and may only call `conveyor` functions;
-/// an analysis may treat it as a fact after the assertion where a failed
-/// check stops execution -- not where it's observed.  Not constified, as
-/// the "ASSERT" macros never were.
-struct AssertConveyorLabel
-: std::contracts::P3400::label_base<AssertConveyorLabel> {
+/// behavior and side effects, and may only call `conveyor` functions
+/// (see `BSLS_KEYWORD_CONVEYOR`); an analysis may treat it as a fact after
+/// the assertion where a failed check stops execution -- not where it's
+/// observed.  Not constified, as the "ASSERT" macros never were.
+template <bool t_CONVEYOR>
+struct AssertLevelLabel
+: std::contracts::P3400::label_base<AssertLevelLabel<t_CONVEYOR> > {
 
     // TYPES
-    using assertion_control_object = AssertConveyorLabel;
+    using assertion_control_object = AssertLevelLabel;
 
     // CLASS DATA
     static constexpr const char *k_SAFE_GROUPS[2]   = { "bsls.safe",
@@ -2552,7 +2564,7 @@ struct AssertConveyorLabel
     std::contracts::P3400::group_name_view  group_names; // its groups
 
     // CREATORS
-    constexpr AssertConveyorLabel(const char *level)
+    constexpr AssertLevelLabel(const char *level)
     : d_level_p(level)
     , group_names{ level == Assert::k_LEVEL_SAFE ? k_SAFE_GROUPS
                  : level == Assert::k_LEVEL_OPT  ? k_OPT_GROUPS
@@ -2564,7 +2576,7 @@ struct AssertConveyorLabel
     static constexpr bool is_conveyor(
                          std::contracts::assertion_static_info) noexcept
     {
-        return true;
+        return t_CONVEYOR;
     }
     static constexpr bool constify(
                          std::contracts::assertion_static_info) noexcept
@@ -2600,6 +2612,10 @@ struct AssertConveyorLabel
         Assert::invokeHandlerNoReturn(violation);
     }
 };
+
+/// The ordinary and the conveyor flavours of `AssertLevelLabel`.
+using AssertConfigLabel   = AssertLevelLabel<false>;
+using AssertConveyorLabel = AssertLevelLabel<true>;
 #endif  // BSLS_ASSERT_USE_CONTRACTS_P4324
 
 }  // close package namespace

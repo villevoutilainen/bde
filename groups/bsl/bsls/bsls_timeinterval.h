@@ -283,7 +283,7 @@ class TimeInterval {
     /// represented using a 64-bit signed integer, and `false` otherwise.
     BSLS_KEYWORD_CONSTEXPR
     static bool isSumValidInt64(bsls::Types::Int64 lhs,
-                                bsls::Types::Int64 rhs);
+                                bsls::Types::Int64 rhs) BSLS_KEYWORD_CONVEYOR;
 
   public:
     // CLASS METHODS
@@ -295,7 +295,7 @@ class TimeInterval {
     /// can be represented with a 64-bit signed integer.
     BSLS_KEYWORD_CONSTEXPR
     static bool isValid(bsls::Types::Int64 seconds,
-                        int                nanoseconds);
+                        int                nanoseconds) BSLS_KEYWORD_CONVEYOR;
 
 #ifdef BSLS_TIMEINTERVAL_PROVIDES_CHRONO_CONVERSIONS
     /// Return `true` if a `TimeInterval` object can be constructed from the
@@ -900,7 +900,7 @@ TimeInterval operator ""_ns( unsigned long long int nanoseconds);
 // PRIVATE CLASS METHODS
 inline BSLS_KEYWORD_CONSTEXPR
 bool TimeInterval::isSumValidInt64(bsls::Types::Int64 lhs,
-                                   bsls::Types::Int64 rhs)
+                                   bsls::Types::Int64 rhs) BSLS_KEYWORD_CONVEYOR
 {
     // {DRQS 164912552} Sun CC miscomplies this ternary operator when the
     // function is invoked from the 'TimeInterval' constructor.
@@ -918,7 +918,7 @@ int TimeInterval::maxSupportedBdexVersion(int /* versionSelector */)
 
 inline BSLS_KEYWORD_CONSTEXPR
 bool TimeInterval::isValid(bsls::Types::Int64 seconds,
-                           int                nanoseconds)
+                           int                nanoseconds) BSLS_KEYWORD_CONVEYOR
 {
     return isSumValidInt64(seconds, nanoseconds / k_NANOSECS_PER_SEC);
 }
