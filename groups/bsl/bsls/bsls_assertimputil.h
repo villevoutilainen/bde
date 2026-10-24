@@ -150,21 +150,36 @@ namespace bsls {
 // extensions it makes available can be found at
 // 'https://github.com/lock3/gcc/wiki/contracts'.
 
-#if !defined(__cpp_contracts_literal_semantics)
+// P4324 contract control objects (the GCC 'p4324' branch, with
+// '-fcontracts -fcontract-control-objects'): the "ASSERT" macros become
+// 'contract_assert<CONTROL>(X)', with 'CONTROL' one of the control objects
+// defined in 'bsls_assert', which carry the assertion level, file and line.
+
+#if defined(__cpp_contract_control_objects)
+#define BSLS_ASSERT_USE_CONTRACTS_P4324 1
+#elif !defined(__cpp_contracts_literal_semantics)
 #error BSLS_ASSERT_USE_CONTRACTS requires compiler contract support           \
-    (__cpp_contracts_literal_semantics)
+    (__cpp_contracts_literal_semantics or __cpp_contract_control_objects)
 #endif
 
-#ifndef BSLS_ASSERT_NORETURN_INVOKE_HANDLER
+#if !defined(BSLS_ASSERT_NORETURN_INVOKE_HANDLER)                            \
+    && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
 // 'bsls_assert' with language-level contracts will use a non-continuing
 // contract mode, so we can no longer support a returning violation handler.
 #define BSLS_ASSERT_NORETURN_INVOKE_HANDLER
 #endif
 
+#ifdef BSLS_ASSERT_USE_CONTRACTS_P4324
+struct AssertImpUtil_UseContractsP4324 {
+    static const int s_isAssertUseContracts;
+};
+typedef AssertImpUtil_UseContractsP4324 AssertImpUtil_UseContracts;
+#else
 struct AssertImpUtil_UseContractsCpp20 {
     static const int s_isAssertUseContracts;
 };
 typedef AssertImpUtil_UseContractsCpp20 AssertImpUtil_UseContracts;
+#endif
 
 #else
 

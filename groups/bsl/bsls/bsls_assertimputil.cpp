@@ -40,7 +40,11 @@ namespace bsls {
 
 #ifdef BSLS_ASSERT_USE_CONTRACTS
 
+#ifdef BSLS_ASSERT_USE_CONTRACTS_P4324
+const int bsls::AssertImpUtil_UseContractsP4324::s_isAssertUseContracts = 1;
+#else
 const int bsls::AssertImpUtil_UseContractsCpp20::s_isAssertUseContracts = 1;
+#endif
 
 #else
 

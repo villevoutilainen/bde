@@ -1575,7 +1575,9 @@ BSLS_IDENT("$Id: $")
 #include <bsls_platform.h>
 #include <bsls_review.h>
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#ifdef BSLS_ASSERT_USE_CONTRACTS_P4324
+#include <contracts>
+#elif defined(BSLS_ASSERT_USE_CONTRACTS)
 #include <contract>
 #endif
 
@@ -1689,7 +1691,36 @@ BSLS_IDENT("$Id: $")
     #define BSLS_ASSERT_NO_ASSERTION_MACROS_DEFINED 0
 #endif
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
+// P4324 control objects (see 'AssertContractControl' below): an active
+// assertion invokes the assertion-failure handler as 'BSLS_ASSERT_INVOKE'
+// does, never continuing past a handler that returns; an assumed one is an
+// ignored, assumable contract; a disabled one, ignored.
+// The control object carries only the level: it must be a constant, and
+// a single initializer keeps commas out of macro arguments.  File and line
+// come from the contract's own source location, so (as with the Lock3
+// flavour) redefining 'BSLS_ASSERTIMPUTIL_FILE' has no effect.
+#define BSLS_ASSERT_ASSERT_IMP(X,LVL)                                         \
+    contract_assert<BloombergLP::bsls::AssertContractControl{LVL}>(X)
+
+// As without contracts, assumption is used only where 'bsls_assert' already
+// uses it (not with GCC); elsewhere an assumed assertion is disabled.
+#if defined(BSLS_PLATFORM_CMP_CLANG) || defined(BSLS_PLATFORM_CMP_MSVC)
+#define BSLS_ASSERT_ASSUME_IMP(X,LVL)                                         \
+    contract_assert<BloombergLP::bsls::AssertContractAssume{}>(X)
+#define BSLS_ASSERT_ASSUME_ENABLED
+#else
+#define BSLS_ASSERT_ASSUME_IMP(X,LVL) BSLS_ASSERT_DISABLED_IMP(X,LVL)
+#endif
+
+#ifdef BSLS_ASSERT_VALIDATE_DISABLED_MACROS
+#define BSLS_ASSERT_DISABLED_IMP(X,LVL)                                       \
+    contract_assert<BloombergLP::bsls::AssertContractIgnore{}>(X)
+#else
+#define BSLS_ASSERT_DISABLED_IMP(X,LVL) do {} while (false)
+#endif
+
+#elif defined(BSLS_ASSERT_USE_CONTRACTS)
 #define BSLS_ASSERT_ASSERT_IMP(X,LVL) [[ assert check_never_continue : X ]]
 
 #define BSLS_ASSERT_ASSUME_IMP(X,LVL) [[ assert assume : X ]]
@@ -2231,7 +2262,7 @@ class Assert {
     BSLS_ANNOTATION_NORETURN
     static void invokeHandlerNoReturn(const AssertViolation &violation);
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS) && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
     /// Call `invokeHandler` with an `AssertViolation` with properties from
     /// the specified `violation`.
     BSLS_ANNOTATION_ANALYZER_NORETURN
@@ -2359,6 +2390,108 @@ class AssertFailureHandlerGuard {
     /// created and destroy this guard.
     ~AssertFailureHandlerGuard();
 };
+
+
+#ifdef BSLS_ASSERT_USE_CONTRACTS_P4324
+                       // ===========================
+                       // struct AssertContractControl
+                       // ===========================
+
+/// P4324 contract control object for an active (BSLS) "ASSERT": a failed
+/// check invokes the currently installed assertion-failure handler with an
+/// `AssertViolation` carrying the assertion's text, its source location and
+/// its level, through
+/// `Assert::invokeHandlerNoReturn`: a handler may throw (as the negative
+/// testing of `bsls_asserttest` does), but if it returns, the program
+/// aborts.  Execution never continues past a failed assertion -- the
+/// `check_never_continue` of the language-contract flavour this replaces
+/// -- which is what lets an analysis treat a checked assertion as a fact.
+struct AssertContractControl {
+
+    // DATA
+    const char *d_level_p;  // assertion level (e.g., `Assert::k_LEVEL_SAFE`)
+
+    // CLASS METHODS
+    static constexpr bool is_ignored(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return false;
+    }
+    static constexpr bool constify(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return false;
+    }
+    static constexpr bool assumable(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return false;
+    }
+
+    // ACCESSORS
+    constexpr void operator()(
+                         const std::contracts::assertion_context& context) const
+    {
+        if (context.check()) {
+            return;                                                   // RETURN
+        }
+        Assert::invokeHandlerNoReturn(
+                   AssertViolation(context.comment(),
+                                   context.location().file_name(),
+                                   static_cast<int>(context.location().line()),
+                                   d_level_p));
+    }
+};
+
+/// P4324 contract control object for an assumed (BSLS) "ASSERT": never
+/// checked, handed to the optimizer as an assumption.
+struct AssertContractAssume {
+    static constexpr bool is_ignored(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return true;
+    }
+    static constexpr bool constify(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return false;
+    }
+    static constexpr bool assumable(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return true;
+    }
+    constexpr void operator()(
+                         const std::contracts::assertion_context&) const
+    {
+    }
+};
+
+/// P4324 contract control object for a disabled (BSLS) "ASSERT" whose
+/// condition is still required to compile
+/// (`BSLS_ASSERT_VALIDATE_DISABLED_MACROS`): never checked or assumed.
+struct AssertContractIgnore {
+    static constexpr bool is_ignored(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return true;
+    }
+    static constexpr bool constify(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return false;
+    }
+    static constexpr bool assumable(
+                         std::contracts::assertion_static_info) noexcept
+    {
+        return false;
+    }
+    constexpr void operator()(
+                         const std::contracts::assertion_context&) const
+    {
+    }
+};
+#endif  // BSLS_ASSERT_USE_CONTRACTS_P4324
 
 }  // close package namespace
 

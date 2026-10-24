@@ -649,7 +649,7 @@ BSLS_IDENT("$Id: $")
 #include <bsls_performancehint.h>
 #include <bsls_platform.h>
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS) && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
 #include <contract>
 #endif
 
@@ -803,7 +803,7 @@ BSLS_IDENT("$Id: $")
                            // BSLS_REVIEW_REVIEW_IMP
                            // ======================
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS) && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
 #define BSLS_REVIEW_REVIEW_IMP(X,LVL) [[ assert check_maybe_continue : X ]]
 
 #ifdef BSLS_REVIEW_VALIDATE_DISABLED_MACROS
@@ -1176,7 +1176,7 @@ class Review {
     /// called by clients directly as needed.
     static void invokeHandler(const ReviewViolation& violation);
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS) && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
     static void invokeLanguageContractHandler(
                                      const std::contract_violation& violation);
         // Call 'invokeHandler' with a 'ReviewViolation' with properties from

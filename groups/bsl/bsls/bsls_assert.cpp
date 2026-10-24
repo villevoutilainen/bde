@@ -29,7 +29,7 @@ BSLS_IDENT("$Id$ $CSID$")
                          // Language Contract Support
                          // -------------------------
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS) && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
 
 void handle_contract_violation(const std::contract_violation &violation)
     // Call 'bsls::Review::invokeLanguageContractHandler' or
@@ -300,7 +300,7 @@ void Assert::invokeHandlerNoReturn(const bsls::AssertViolation &violation)
     failByAbort(violation);
 }
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS) && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
 void Assert::invokeLanguageContractHandler(
                                       const std::contract_violation &violation)
 {

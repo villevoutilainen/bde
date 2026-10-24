@@ -170,7 +170,7 @@ static int         globalCount = 0;
 
 // When using language contracts the contract level is not available to the
 // violation handler, so it will not be set.
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS) && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
 static bool checkLevels = false;
 #else
 static bool checkLevels = true;
@@ -201,7 +201,7 @@ static bool globalReturnOnTestReview = false;
 // handler is needed for this test driver in order to hook into language
 // contracts properly.
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS) && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
 
 void handle_contract_violation(const std::contract_violation& violation)
     // Call `bsls::Review::invokeLanguageContractHandler` with the specified

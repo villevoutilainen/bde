@@ -15,7 +15,7 @@ BSLS_IDENT("$Id$ $CSID$")
 
 #include <exception>
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS) && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
 #include <map>
 #include <utility>
 #include <string>
@@ -142,7 +142,7 @@ void Review::invokeHandler(const ReviewViolation& violation)
     violationHandlerPtr(violation);
 }
 
-#ifdef BSLS_ASSERT_USE_CONTRACTS
+#if defined(BSLS_ASSERT_USE_CONTRACTS) && !defined(BSLS_ASSERT_USE_CONTRACTS_P4324)
 void Review::invokeLanguageContractHandler(
                                       const std::contract_violation &violation)
 {
