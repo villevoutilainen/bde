@@ -495,7 +495,7 @@ class basic_stringbuf
 
     : BaseType()
     , d_str(initialString.data(), initialString.size(), allocator)
-    , d_endHint(initialString.size())
+    , d_endHint(BSLS_ASSERT_CONVEYOR_REF(initialString).size())
     , d_mode(ios_base::in | ios_base::out)
     {
         // Note: implemented inline due to Sun CC compilation error.
@@ -524,7 +524,7 @@ class basic_stringbuf
                     !bsl::is_same<ALLOCATOR, SALLOC>::value, void *>::type = 0)
     : BaseType()
     , d_str(initialString.data(), initialString.size(), allocator)
-    , d_endHint(initialString.size())
+    , d_endHint(BSLS_ASSERT_CONVEYOR_REF(initialString).size())
     , d_mode(modeBitMask)
     {
         // Note: implemented inline due to Sun CC compilation error.
@@ -930,9 +930,9 @@ typename basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::pos_type
 basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::
                            updateInputPointers(char_type *currentInputPosition)
 {
-    BSLS_ASSERT(d_mode & ios_base::in);
-    BSLS_ASSERT(&d_str[0] <= currentInputPosition);
-    BSLS_ASSERT(currentInputPosition <=
+    BSLS_ASSERT_NONCONVEYOR(d_mode & ios_base::in);
+    BSLS_ASSERT_NONCONVEYOR(&d_str[0] <= currentInputPosition);
+    BSLS_ASSERT_NONCONVEYOR(currentInputPosition <=
                         &d_str[0] + static_cast<std::ptrdiff_t>(streamSize()));
 
     char_type *dataPtr = &d_str[0];
@@ -948,9 +948,10 @@ typename basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::pos_type
 basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::
                          updateOutputPointers(char_type *currentOutputPosition)
 {
-    BSLS_ASSERT(d_mode & ios_base::out);
-    BSLS_ASSERT(&d_str[0] <= currentOutputPosition);
-    BSLS_ASSERT(currentOutputPosition <= &d_str[0] + d_str.size());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_mode & ios_base::out);
+    BSLS_ASSERT_NONCONVEYOR(&d_str[0] <= currentOutputPosition);
+    BSLS_ASSERT_NONCONVEYOR(currentOutputPosition <= &d_str[0] + d_str.size());
 
     char_type   *dataPtr  = &d_str[0];
     std::size_t  dataSize =  d_str.size();
@@ -972,6 +973,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 void basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::
     updateStreamPositions(off_type inputOffset, off_type outputOffset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Extend the internal buffer to the full capacity of the string to allow
     // us to use the full capacity for buffering output.
 
@@ -1025,10 +1027,11 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 typename basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::pos_type
     basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::streamSize() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     pos_type size = std::max<off_type>(d_endHint,
                                        this->pptr() - this->pbase());
 
-    BSLS_ASSERT(size <= off_type(d_str.size()));
+    BSLS_ASSERT_NONCONVEYOR(size <= off_type(d_str.size()));
 
     return size;
 }
@@ -1039,6 +1042,7 @@ bool basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::arePointersValid(
                                                   const char_type *middle,
                                                   const char_type *last) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bool isNull            = first == 0;
     const char_type *bufferBegin = isNull ? 0 : d_str.data();
     const char_type *bufferEnd   = isNull ? 0 : d_str.data() + d_str.size();
@@ -1270,11 +1274,12 @@ std::streamsize
                                                 const char_type *inputString,
                                                 std::streamsize  numCharacters)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if ((d_mode & ios_base::out) == 0) {
         return 0;                                                     // RETURN
     }
-    BSLS_ASSERT(this->pptr());
-    BSLS_ASSERT(this->pbase());
+    BSLS_ASSERT_NONCONVEYOR(this->pptr());
+    BSLS_ASSERT_NONCONVEYOR(this->pbase());
 
     // Compute the space required.
 
@@ -1319,6 +1324,7 @@ typename basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::int_type
     basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::overflow(
                                                             int_type character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if ((d_mode & ios_base::out) == 0) {
         return traits_type::eof();                                    // RETURN
     }
@@ -1390,7 +1396,7 @@ basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::
                     const allocator_type& allocator)
 : BaseType()
 , d_str(initialString, allocator)
-, d_endHint(initialString.size())
+, d_endHint(BSLS_ASSERT_CONVEYOR_REF(initialString).size())
 , d_mode(ios_base::in | ios_base::out)
 {
     updateStreamPositions();
@@ -1404,7 +1410,7 @@ basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::
                     const allocator_type& allocator)
 : BaseType()
 , d_str(initialString, allocator)
-, d_endHint(initialString.size())
+, d_endHint(BSLS_ASSERT_CONVEYOR_REF(initialString).size())
 , d_mode(modeBitMask)
 {
     updateStreamPositions(0, d_mode & ios_base::ate ? d_endHint : 0);
@@ -1472,6 +1478,7 @@ basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::
 , d_endHint(std::move(original.d_endHint))
 , d_mode(std::move(original.d_mode))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     // Capture the positions for later restoration
 
     const off_type  inputOffset = original.gptr() - original.eback();
@@ -1500,6 +1507,7 @@ basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::
 , d_endHint(std::move(original.d_endHint))
 , d_mode(std::move(original.d_mode))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     // Capture the positions for later restoration
 
     const off_type inputOffset  = original.gptr() - original.eback();
@@ -1524,13 +1532,13 @@ basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::
     ~basic_stringbuf()
 {
     if (d_mode & ios_base::in) {
-        BSLS_ASSERT(arePointersValid(this->eback(),
+        BSLS_ASSERT_NONCONVEYOR(arePointersValid(this->eback(),
                                      this->gptr(),
                                      this->egptr()));
     }
 
     if (d_mode & ios_base::out) {
-        BSLS_ASSERT(arePointersValid(this->pbase(),
+        BSLS_ASSERT_NONCONVEYOR(arePointersValid(this->pbase(),
                                      this->pptr(),
                                      this->epptr()));
     }
@@ -1544,6 +1552,7 @@ basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>&
 basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::
     operator=(basic_stringbuf&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     // Capture the positions for later restoration
 
     const off_type inputOffset  = rhs.gptr()  - rhs.eback();
@@ -1588,6 +1597,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 void basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::str(
                                                        const StringType& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_str     = value;
     d_endHint = d_str.size();
     updateStreamPositions(0, d_mode & ios_base::ate ? d_endHint : 0);
@@ -1597,6 +1607,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 void basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::str(
                               BloombergLP::bslmf::MovableRef<StringType> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     StringType& lvalue = value;
 
     d_str     = MoveUtil::move(lvalue);
@@ -1636,7 +1647,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 void basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::swap(
                                                         basic_stringbuf& other)
 {
-    BSLS_ASSERT(
+    BSLS_ASSERT_NONCONVEYOR(
          bsl::allocator_traits<ALLOCATOR>::propagate_on_container_swap::value
       || d_str.get_allocator() == other.d_str.get_allocator());
     // Capture the positions for the later restoration.  Formally,

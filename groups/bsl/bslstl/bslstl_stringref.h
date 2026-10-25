@@ -731,7 +731,7 @@ StringRefImp<CHAR_TYPE>::StringRefImp(
 template <class CHAR_TYPE>
 inline
 StringRefImp<CHAR_TYPE>::StringRefImp(const bsl::basic_string<CHAR_TYPE>& str)
-: Base(str.data(), str.data() + str.length())
+: Base(str.data(), str.data() + BSLS_ASSERT_CONVEYOR_REF(str).length())
 {
 }
 
@@ -812,6 +812,7 @@ template <class CHAR_TYPE>
 inline
 void StringRefImp<CHAR_TYPE>::assign(const bsl::basic_string<CHAR_TYPE>& str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     *this = StringRefImp(str.data(), str.data() + str.length());
 }
 

@@ -110,7 +110,7 @@ public:
     /// Return `true` if the (template parameter) type `t_INPUT_ITERATOR` has
     /// a forward iterator category and the (template parameter) type
     /// `t_SENTINEL` is convertible to `t_INPUT_ITERATOR`.
-    BSLS_KEYWORD_CONSTEXPR static bool canCalculate();
+    BSLS_KEYWORD_CONSTEXPR static bool canCalculate() BSLS_KEYWORD_CONVEYOR;
 
     /// Return the number of elements in the range `[first, last)` if
     /// the (template parameter) type `t_SENTINEL` is convertible to the
@@ -131,7 +131,7 @@ struct IteratorUtil_LegacyInsertDistance<t_INPUT_ITERATOR, t_SENTINEL, false>
 public:
     // CLASS METHODS
 
-    BSLS_KEYWORD_CONSTEXPR static bool canCalculate();
+    BSLS_KEYWORD_CONSTEXPR static bool canCalculate() BSLS_KEYWORD_CONVEYOR;
 
     static
     typename bsl::iterator_traits<t_INPUT_ITERATOR>::difference_type
@@ -148,7 +148,8 @@ struct IteratorUtil {
     /// Return `true` if the calculation of `insertDistance` is supported for
     /// iterators of the specified types, `false` otherwise.
     template <class t_INPUT_ITERATOR, class t_SENTINEL>
-    static BSLS_KEYWORD_CONSTEXPR bool canCalculateInsertDistance();
+    static BSLS_KEYWORD_CONSTEXPR bool canCalculateInsertDistance()
+                                                         BSLS_KEYWORD_CONVEYOR;
 
     /// Return 0 if the (template parameter) type `t_INPUT_ITERATOR` is limited
     /// to the standard input-iterator category, otherwise return the number
@@ -211,6 +212,7 @@ BSLS_KEYWORD_CONSTEXPR bool
 IteratorUtil_LegacyInsertDistance<t_INPUT_ITERATOR,
                                   t_SENTINEL,
                                   t_MATCHING_SENTINEL>::canCalculate()
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     return bsl::is_convertible<
             typename bsl::iterator_traits<t_INPUT_ITERATOR>::iterator_category,
@@ -267,7 +269,7 @@ template <class t_INPUT_ITERATOR,
 BSLS_KEYWORD_CONSTEXPR bool
 IteratorUtil_LegacyInsertDistance<t_INPUT_ITERATOR,
                                   t_SENTINEL,
-                                  false>::canCalculate()
+                                  false>::canCalculate() BSLS_KEYWORD_CONVEYOR
 {
     return false;                                                     // RETURN
 }
@@ -290,6 +292,7 @@ IteratorUtil_LegacyInsertDistance<t_INPUT_ITERATOR,
 
 template <class t_INPUT_ITERATOR, class t_SENTINEL>
 BSLS_KEYWORD_CONSTEXPR bool IteratorUtil::canCalculateInsertDistance()
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     // Note that this function, `insertDistance`, and the test function
     // `insertDistanceClassification` should all have the same structure
