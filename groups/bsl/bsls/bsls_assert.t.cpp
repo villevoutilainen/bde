@@ -607,14 +607,14 @@ struct ExplicitBool
 {
   bool d_value;
 
-  ExplicitBool(bool value)
+  ExplicitBool(bool value) BSLS_KEYWORD_CONVEYOR
   : d_value(value)
   {
   }
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_OPERATOR_EXPLICIT
   explicit
-  operator bool() const {
+  operator bool() const BSLS_KEYWORD_CONVEYOR {
     return d_value;
   }
 #else
@@ -1367,11 +1367,11 @@ MyDate::~MyDate()
 /// Return `true` if the specified `d_date` represents a valid date
 /// value, and `false` otherwise.
 struct MyDateImpUtil {
-    static bool isValidSerialDate(int d_date);
+    static bool isValidSerialDate(int d_date) BSLS_KEYWORD_CONVEYOR;
 };
 
 inline
-bool MyDateImpUtil::isValidSerialDate(int d_date)
+bool MyDateImpUtil::isValidSerialDate(int d_date) BSLS_KEYWORD_CONVEYOR
 {
     return 1 <= d_date && d_date <= 3652061;
 }

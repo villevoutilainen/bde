@@ -25,6 +25,7 @@ const bsls::TimeInterval TimedCompletionGuard::k_WAITING  =
 void *TimedCompletionGuard::guardThreadFunction(void *arg)
 {
     TimedCompletionGuard& obj = *static_cast<TimedCompletionGuard *>(arg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
 
     bslmt::LockGuard<bslmt::Mutex> guardData(&obj.d_dataMutex);
 
@@ -71,6 +72,7 @@ void TimedCompletionGuard::failByAbort(const char *text)
 int TimedCompletionGuard::guard(const bsls::TimeInterval& duration,
                                 const bsl::string_view&   text)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&duration);
     BSLS_ASSERT(bsls::TimeInterval(0, 0) < duration);
 
     bslmt::LockGuard<bslmt::Mutex> guardHandle(&d_handleMutex);
@@ -118,6 +120,7 @@ void TimedCompletionGuard::release()
 
 int TimedCompletionGuard::updateText(const bsl::string_view& text)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guardHandle(&d_handleMutex);
     bslmt::LockGuard<bslmt::Mutex> guardData(&d_dataMutex);
 

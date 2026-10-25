@@ -295,6 +295,7 @@ TimedCompletionGuard::allocator_type TimedCompletionGuard::get_allocator()
 inline
 bool TimedCompletionGuard::isGuarding() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guardData(&d_dataMutex);
 
     return k_DISABLED != d_expiration && k_WAITING != d_expiration;

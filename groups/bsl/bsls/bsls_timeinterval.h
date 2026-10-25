@@ -347,7 +347,8 @@ class TimeInterval {
     /// sign or magnitude of either argument except that they must not
     /// violate the method's preconditions.
     BSLS_KEYWORD_CONSTEXPR_CPP14
-    TimeInterval(bsls::Types::Int64 seconds, int nanoseconds);
+    TimeInterval(bsls::Types::Int64 seconds, int nanoseconds)
+                                                         BSLS_KEYWORD_CONVEYOR;
 
     /// Create a time interval having the value represented by the specified
     /// real number of `seconds`.  The fractional part of `seconds`, if any,
@@ -597,7 +598,8 @@ class TimeInterval {
     /// sign or magnitude of either argument except that they must not
     /// violate the method's preconditions.
     BSLS_KEYWORD_CONSTEXPR_CPP14
-    void setInterval(bsls::Types::Int64 seconds, int nanoseconds = 0);
+    void setInterval(bsls::Types::Int64 seconds, int nanoseconds = 0)
+                                                         BSLS_KEYWORD_CONVEYOR;
 
     /// Set this time interval to have the value given by the sum of the
     /// specified integral number of `seconds`, and the optionally specified
@@ -643,12 +645,12 @@ class TimeInterval {
     /// Return the nanoseconds field in the canonical representation of the
     /// value of this time interval.
     BSLS_KEYWORD_CONSTEXPR
-    int nanoseconds() const;
+    int nanoseconds() const BSLS_KEYWORD_CONVEYOR;
 
     /// Return the seconds field in the canonical representation of the
     /// value of this time interval.
     BSLS_KEYWORD_CONSTEXPR
-    bsls::Types::Int64 seconds() const;
+    bsls::Types::Int64 seconds() const BSLS_KEYWORD_CONVEYOR;
 
     /// Return the value of this time interval as an integral number of
     /// days, rounded towards zero.  Note that the return value may be
@@ -811,7 +813,8 @@ TimeInterval operator-(const TimeInterval& rhs);
 /// value if their respective second and nanosecond fields have the same
 /// value.  The behavior is undefined unless operands of type `double` can
 /// be converted to valid `TimeInterval` objects.
-bool operator==(const TimeInterval& lhs, const TimeInterval& rhs);
+bool operator==(const TimeInterval& lhs, const TimeInterval& rhs)
+                                                         BSLS_KEYWORD_CONVEYOR;
 bool operator==(const TimeInterval& lhs, double rhs);
 bool operator==(double lhs, const TimeInterval& rhs);
 
@@ -820,7 +823,8 @@ bool operator==(double lhs, const TimeInterval& rhs);
 /// have the same value if their respective second or nanosecond fields
 /// differ in value.  The behavior is undefined unless operands of type
 /// `double` can be converted to valid `TimeInterval` objects.
-bool operator!=(const TimeInterval& lhs, const TimeInterval& rhs);
+bool operator!=(const TimeInterval& lhs, const TimeInterval& rhs)
+                                                         BSLS_KEYWORD_CONVEYOR;
 bool operator!=(const TimeInterval& lhs, double rhs);
 bool operator!=(double lhs, const TimeInterval& rhs);
 
@@ -828,16 +832,20 @@ bool operator!=(double lhs, const TimeInterval& rhs);
 /// `rhs` time interval values holds, and `false` otherwise.  The behavior
 /// is undefined unless operands of type `double` can be converted to valid
 /// `TimeInterval` objects.
-bool operator< (const TimeInterval& lhs, const TimeInterval& rhs);
+bool operator< (const TimeInterval& lhs, const TimeInterval& rhs)
+                                                         BSLS_KEYWORD_CONVEYOR;
 bool operator< (const TimeInterval& lhs, double rhs);
 bool operator< (double lhs, const TimeInterval& rhs);
-bool operator<=(const TimeInterval& lhs, const TimeInterval& rhs);
+bool operator<=(const TimeInterval& lhs, const TimeInterval& rhs)
+                                                         BSLS_KEYWORD_CONVEYOR;
 bool operator<=(const TimeInterval& lhs, double rhs);
 bool operator<=(double lhs, const TimeInterval& rhs);
-bool operator> (const TimeInterval& lhs, const TimeInterval& rhs);
+bool operator> (const TimeInterval& lhs, const TimeInterval& rhs)
+                                                         BSLS_KEYWORD_CONVEYOR;
 bool operator> (const TimeInterval& lhs, double rhs);
 bool operator> (double lhs, const TimeInterval& rhs);
-bool operator>=(const TimeInterval& lhs, const TimeInterval& rhs);
+bool operator>=(const TimeInterval& lhs, const TimeInterval& rhs)
+                                                         BSLS_KEYWORD_CONVEYOR;
 bool operator>=(const TimeInterval& lhs, double rhs);
 bool operator>=(double lhs, const TimeInterval& rhs);
 
@@ -968,6 +976,7 @@ TimeInterval::TimeInterval()
 inline BSLS_KEYWORD_CONSTEXPR_CPP14
 TimeInterval::TimeInterval(bsls::Types::Int64 seconds,
                            int                nanoseconds)
+                                                         BSLS_KEYWORD_CONVEYOR
 : d_seconds(0)
 , d_nanoseconds(0)
 {
@@ -1167,6 +1176,7 @@ void TimeInterval::setTotalSeconds(bsls::Types::Int64 seconds)
 inline BSLS_KEYWORD_CONSTEXPR_CPP14
 void TimeInterval::setTotalMilliseconds(bsls::Types::Int64 milliseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     setInterval(                  milliseconds / k_MILLISECS_PER_SEC,
                 static_cast<int>((milliseconds % k_MILLISECS_PER_SEC) *
                                                      k_NANOSECS_PER_MILLISEC));
@@ -1175,6 +1185,7 @@ void TimeInterval::setTotalMilliseconds(bsls::Types::Int64 milliseconds)
 inline BSLS_KEYWORD_CONSTEXPR_CPP14
 void TimeInterval::setTotalMicroseconds(bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     setInterval(                  microseconds / k_MICROSECS_PER_SEC,
                 static_cast<int>((microseconds % k_MICROSECS_PER_SEC) *
                                                      k_NANOSECS_PER_MICROSEC));
@@ -1184,6 +1195,7 @@ void TimeInterval::setTotalMicroseconds(bsls::Types::Int64 microseconds)
 inline BSLS_KEYWORD_CONSTEXPR_CPP14
 void TimeInterval::setTotalNanoseconds(bsls::Types::Int64 nanoseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     setInterval(                 nanoseconds / k_NANOSECS_PER_SEC,
                 static_cast<int>(nanoseconds % k_NANOSECS_PER_SEC));
 }
@@ -1213,6 +1225,7 @@ TimeInterval::addDuration(
 inline BSLS_KEYWORD_CONSTEXPR_CPP14
 void TimeInterval::setInterval(bsls::Types::Int64 seconds,
                                int                nanoseconds)
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     BSLS_PRECONDITIONS_BEGIN();
     BSLS_ASSERT(isValid(seconds, nanoseconds));
@@ -1314,13 +1327,13 @@ bool TimeInterval::isInDurationRange(
 #endif  // BSLS_TIMEINTERVAL_PROVIDES_CHRONO_CONVERSIONS
 
 inline BSLS_KEYWORD_CONSTEXPR
-int TimeInterval::nanoseconds() const
+int TimeInterval::nanoseconds() const BSLS_KEYWORD_CONVEYOR
 {
     return d_nanoseconds;
 }
 
 inline BSLS_KEYWORD_CONSTEXPR
-bsls::Types::Int64 TimeInterval::seconds() const
+bsls::Types::Int64 TimeInterval::seconds() const BSLS_KEYWORD_CONVEYOR
 {
     return d_seconds;
 }
@@ -1469,6 +1482,7 @@ inline
 bsls::TimeInterval bsls::operator+(const TimeInterval& lhs,
                                    const TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     TimeInterval result(lhs);
     return result.addInterval(rhs.seconds(), rhs.nanoseconds());
 }
@@ -1490,6 +1504,7 @@ bsls::TimeInterval bsls::operator-(const TimeInterval& lhs,
                                    const TimeInterval& rhs)
 
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_SAFE(LLONG_MIN != rhs.seconds());
 
     TimeInterval result(lhs);
@@ -1512,6 +1527,7 @@ bsls::TimeInterval bsls::operator-(double lhs, const TimeInterval& rhs)
 inline
 bsls::TimeInterval bsls::operator-(const TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_SAFE(LLONG_MIN != rhs.seconds());
 
     return TimeInterval(-rhs.seconds(), -rhs.nanoseconds());
@@ -1519,6 +1535,7 @@ bsls::TimeInterval bsls::operator-(const TimeInterval& rhs)
 
 inline
 bool bsls::operator==(const TimeInterval& lhs, const TimeInterval& rhs)
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     return lhs.seconds()     == rhs.seconds()
         && lhs.nanoseconds() == rhs.nanoseconds();
@@ -1527,17 +1544,20 @@ bool bsls::operator==(const TimeInterval& lhs, const TimeInterval& rhs)
 inline
 bool bsls::operator==(const TimeInterval& lhs, double rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs == TimeInterval(rhs);
 }
 
 inline
 bool bsls::operator==(double lhs, const TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return TimeInterval(lhs) == rhs;
 }
 
 inline
 bool bsls::operator!=(const TimeInterval& lhs, const TimeInterval& rhs)
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     return lhs.seconds()     != rhs.seconds()
         || lhs.nanoseconds() != rhs.nanoseconds();
@@ -1546,17 +1566,20 @@ bool bsls::operator!=(const TimeInterval& lhs, const TimeInterval& rhs)
 inline
 bool bsls::operator!=(const TimeInterval& lhs, double rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs != TimeInterval(rhs);
 }
 
 inline
 bool bsls::operator!=(double lhs, const TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return TimeInterval(lhs) != rhs;
 }
 
 inline
 bool bsls::operator< (const TimeInterval& lhs, const TimeInterval& rhs)
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     return lhs.seconds() < rhs.seconds()
         || (lhs.seconds() == rhs.seconds()
@@ -1566,17 +1589,20 @@ bool bsls::operator< (const TimeInterval& lhs, const TimeInterval& rhs)
 inline
 bool bsls::operator< (const TimeInterval& lhs, double rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs < TimeInterval(rhs);
 }
 
 inline
 bool bsls::operator< (double lhs, const TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return TimeInterval(lhs) < rhs;
 }
 
 inline
 bool bsls::operator<=(const TimeInterval& lhs, const TimeInterval& rhs)
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     return lhs.seconds() < rhs.seconds()
         || (lhs.seconds() == rhs.seconds()
@@ -1586,17 +1612,20 @@ bool bsls::operator<=(const TimeInterval& lhs, const TimeInterval& rhs)
 inline
 bool bsls::operator<=(const TimeInterval& lhs, double rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs <= TimeInterval(rhs);
 }
 
 inline
 bool bsls::operator<=(double lhs, const TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return TimeInterval(lhs) <= rhs;
 }
 
 inline
 bool bsls::operator> (const TimeInterval& lhs, const TimeInterval& rhs)
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     return lhs.seconds() > rhs.seconds()
         || (lhs.seconds() == rhs.seconds()
@@ -1606,17 +1635,20 @@ bool bsls::operator> (const TimeInterval& lhs, const TimeInterval& rhs)
 inline
 bool bsls::operator> (const TimeInterval& lhs, double rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs > TimeInterval(rhs);
 }
 
 inline
 bool bsls::operator> (double lhs, const TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return TimeInterval(lhs) > rhs;
 }
 
 inline
 bool bsls::operator>=(const TimeInterval& lhs, const TimeInterval& rhs)
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     return lhs.seconds() > rhs.seconds()
         || (lhs.seconds() == rhs.seconds()
@@ -1626,12 +1658,14 @@ bool bsls::operator>=(const TimeInterval& lhs, const TimeInterval& rhs)
 inline
 bool bsls::operator>=(const TimeInterval& lhs, double rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs >= TimeInterval(rhs);
 }
 
 inline
 bool bsls::operator>=(double lhs, const TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return TimeInterval(lhs) >= rhs;
 }
 

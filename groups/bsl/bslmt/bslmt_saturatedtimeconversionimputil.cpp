@@ -127,6 +127,7 @@ void bslmt::SaturatedTimeConversionImpUtil::toTimeSpec(
                                                 TimeSpec                  *dst,
                                                 const bsls::TimeInterval&  src)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&src);
     BSLS_ASSERT(dst);
 
     enum { k_MAX_NANOSECONDS = 1000 * 1000 * 1000 - 1 };
@@ -180,6 +181,7 @@ void bslmt::SaturatedTimeConversionImpUtil::toMillisec(
                                                 unsigned int              *dst,
                                                 const bsls::TimeInterval&  src)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&src);
     BSLS_ASSERT(dst);
 
     const int fracMilliSeconds = src.nanoseconds() % k_NANOSEC_PER_MILLISEC;
@@ -222,6 +224,7 @@ void bslmt::SaturatedTimeConversionImpUtil::toMillisec(
                                                 bsls::Types::Uint64       *dst,
                                                 const bsls::TimeInterval&  src)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&src);
     BSLS_ASSERT(dst);
 
     typedef bsls::Types::Uint64 Uint64;

@@ -393,6 +393,7 @@ int bslmt::ThreadUtilImpl<bslmt::Platform::PosixThreads>::sleep(
 
     const int result = nanosleep(&naptime, unsleptTime ? &unslept_time : 0);
     if (result && unsleptTime) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(unsleptTime);
         unsleptTime->setInterval(unslept_time.tv_sec,
                                   static_cast<int>(unslept_time.tv_nsec));
     }
@@ -447,6 +448,7 @@ int bslmt::ThreadUtilImpl<bslmt::Platform::PosixThreads>::microSleep(
 
     const int result = nanosleep(&naptime, unsleptTime ? &unslept : 0);
     if (result && unsleptTime) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(unsleptTime);
         unsleptTime->setInterval(unslept.tv_sec,
                                  static_cast<int>(unslept.tv_nsec));
     }
@@ -486,6 +488,7 @@ int bslmt::ThreadUtilImpl<bslmt::Platform::PosixThreads>::sleepUntil(
                             bool                        retryOnSignalInterrupt,
                             bsls::SystemClockType::Enum clockType)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&absoluteTime);
     // ASSERT that the interval is between January 1, 1970 00:00.000 and the
     // end of December 31, 9999 (i.e., less than January 1, 10000).
 
