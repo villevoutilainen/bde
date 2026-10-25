@@ -2029,6 +2029,82 @@ BSLS_IDENT("$Id: $")
                                       BloombergLP::bsls::Assert::k_LEVEL_OPT)
 #endif
 
+                        // ===========================
+                        // BSLS_ASSERT_*_NONCONVEYOR
+                        // ===========================
+
+// With 'BSLS_ASSERT_CONVEYOR', every active assertion is a conveyor contract
+// (see 'BSLS_ASSERT_ASSERT_IMP'), whose condition must follow the conveyor
+// rules.  An assertion whose condition cannot -- it calls the standard
+// library, or a function that may throw -- uses the '_NONCONVEYOR' form of
+// its level's macro instead: an ordinary contract with that level's label,
+// and otherwise exactly the plain macro.
+#if defined(BSLS_ASSERT_USE_CONTRACTS_P4324) && defined(BSLS_ASSERT_CONVEYOR)
+#define BSLS_ASSERT_NONCONVEYOR_IMP(X,LVL)                                    \
+    contract_assert<BloombergLP::bsls::AssertConfigLabel{LVL}>(X)
+#if defined(BSLS_ASSERT_SAFE_IS_ACTIVE)
+    #define BSLS_ASSERT_SAFE_NONCONVEYOR(X) BSLS_ASSERT_NONCONVEYOR_IMP(      \
+                                     X,                                       \
+                                     BloombergLP::bsls::Assert::k_LEVEL_SAFE)
+#else
+    #define BSLS_ASSERT_SAFE_NONCONVEYOR(X) BSLS_ASSERT_SAFE(X)
+#endif
+#if defined(BSLS_ASSERT_IS_ACTIVE)
+    #define BSLS_ASSERT_NONCONVEYOR(X) BSLS_ASSERT_NONCONVEYOR_IMP(           \
+                                   X,                                         \
+                                   BloombergLP::bsls::Assert::k_LEVEL_ASSERT)
+#else
+    #define BSLS_ASSERT_NONCONVEYOR(X) BSLS_ASSERT(X)
+#endif
+#if defined(BSLS_ASSERT_OPT_IS_ACTIVE)
+    #define BSLS_ASSERT_OPT_NONCONVEYOR(X) BSLS_ASSERT_NONCONVEYOR_IMP(       \
+                                      X,                                      \
+                                      BloombergLP::bsls::Assert::k_LEVEL_OPT)
+#else
+    #define BSLS_ASSERT_OPT_NONCONVEYOR(X) BSLS_ASSERT_OPT(X)
+#endif
+#else
+#define BSLS_ASSERT_SAFE_NONCONVEYOR(X) BSLS_ASSERT_SAFE(X)
+#define BSLS_ASSERT_NONCONVEYOR(X) BSLS_ASSERT(X)
+#define BSLS_ASSERT_OPT_NONCONVEYOR(X) BSLS_ASSERT_OPT(X)
+#endif
+
+                         // ===========================
+                         // BSLS_ASSERT_CONVEYOR_OBJECT
+                         // ===========================
+
+// A conveyor function's 'this' and reference parameters, and any pointer it
+// is given, must be shown to address objects (P2680 'is_object_address')
+// before it is called.  'BSLS_ASSERT_CONVEYOR_OBJECT(P)' asserts that the
+// specified pointer 'P' addresses an object, as a fact the code after it
+// relies on but nothing proves: a 'never_proven' conveyor assertion.  A
+// function calling conveyor members of its own object, or of an object it
+// is given, uses it ('BSLS_ASSERT_CONVEYOR_OBJECT(this)') rather than make
+// every caller prove it.  Without 'BSLS_ASSERT_CONVEYOR' it expands to
+// nothing.
+// 'BSLS_ASSERT_CONVEYOR_POST(RESULT, COND)' gives a conveyor function the
+// postcondition that the specified 'COND' holds for its result, named by the
+// specified 'RESULT': proven from its body, and relied on by its callers
+// ('if (isSumValidInt64(a, b)) return a + b;').  A value parameter it names
+// must be 'const'.
+//
+// 'BSLS_ASSERT_CONVEYOR_REF(X)' is the specified lvalue 'X', asserted in the
+// same way to be an object, for where no statement can go (a constructor's
+// member initializer: 'd_size(BSLS_ASSERT_CONVEYOR_REF(str).size())').
+#if defined(BSLS_ASSERT_USE_CONTRACTS_P4324) && defined(BSLS_ASSERT_CONVEYOR)
+#define BSLS_ASSERT_CONVEYOR_OBJECT(P)                                        \
+    contract_assert<std::contracts::never_proven_conveyor_v>(                 \
+                                                   std::is_object_address(P))
+#define BSLS_ASSERT_CONVEYOR_REF(X)                                           \
+    BloombergLP::bsls::AssertConveyorUtil::object(X)
+#define BSLS_ASSERT_CONVEYOR_POST(RESULT, COND)                               \
+    post<std::contracts::conveyor_assert_v>(RESULT: COND)
+#else
+#define BSLS_ASSERT_CONVEYOR_OBJECT(P) do {} while (false)
+#define BSLS_ASSERT_CONVEYOR_REF(X) (X)
+#define BSLS_ASSERT_CONVEYOR_POST(RESULT, COND)
+#endif
+
                              // ==================
                              // BSLS_ASSERT_INVOKE
                              // ==================
@@ -2564,7 +2640,7 @@ struct AssertLevelLabel
     std::contracts::P3400::group_name_view  group_names; // its groups
 
     // CREATORS
-    constexpr AssertLevelLabel(const char *level)
+    constexpr AssertLevelLabel(const char *level) conveyor
     : d_level_p(level)
     , group_names{ level == Assert::k_LEVEL_SAFE ? k_SAFE_GROUPS
                  : level == Assert::k_LEVEL_OPT  ? k_OPT_GROUPS
@@ -2616,6 +2692,27 @@ struct AssertLevelLabel
 /// The ordinary and the conveyor flavours of `AssertLevelLabel`.
 using AssertConfigLabel   = AssertLevelLabel<false>;
 using AssertConveyorLabel = AssertLevelLabel<true>;
+
+                         // =========================
+                         // struct AssertConveyorUtil
+                         // =========================
+
+/// This `struct` provides a namespace for the function behind
+/// `BSLS_ASSERT_CONVEYOR_REF`.
+struct AssertConveyorUtil {
+
+    // CLASS METHODS
+
+    /// Return the specified `reference`, an object (an assertion nothing
+    /// proves; see `BSLS_ASSERT_CONVEYOR_OBJECT`).
+    template <class t_TYPE>
+    static t_TYPE& object(t_TYPE& reference)
+        post<std::contracts::never_proven_conveyor_v>(
+                                     result: std::is_object_address(&result))
+    {
+        return reference;
+    }
+};
 #endif  // BSLS_ASSERT_USE_CONTRACTS_P4324
 
 }  // close package namespace
