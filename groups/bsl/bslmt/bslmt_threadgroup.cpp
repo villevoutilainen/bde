@@ -89,6 +89,7 @@ void bslmt::ThreadGroup::addThread(const ThreadUtil::Handle& handle) {
 
 void bslmt::ThreadGroup::joinAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     LockGuard<Mutex> guard(&d_threadsMutex);
 
     bsl::for_each(d_threads.begin(), d_threads.end(), &bindJoin);

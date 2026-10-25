@@ -226,7 +226,7 @@ class ThroughputBenchmarkResult {
                              // Object state
 
     /// Return the number of test samples.
-    int numSamples() const;
+    int numSamples() const BSLS_KEYWORD_CONVEYOR;
 
     /// Return the number of thread groups.
     int numThreadGroups() const;
@@ -346,11 +346,12 @@ void ThroughputBenchmarkResult::setThroughput(int    threadGroupIndex,
                                               int    sampleIndex,
                                               double value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0                            <= value);
     BSLS_ASSERT(0                            <= threadGroupIndex);
-    BSLS_ASSERT(numThreadGroups()            >  threadGroupIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreadGroups()            >  threadGroupIndex);
     BSLS_ASSERT(0                            <= threadIndex);
-    BSLS_ASSERT(numThreads(threadGroupIndex) >  threadIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreads(threadGroupIndex) >  threadIndex);
     BSLS_ASSERT(0                            <= sampleIndex);
     BSLS_ASSERT(numSamples()                 >  sampleIndex);
 
@@ -360,32 +361,38 @@ void ThroughputBenchmarkResult::setThroughput(int    threadGroupIndex,
 // ACCESSORS
                                 // Object state
 inline
-int ThroughputBenchmarkResult::numSamples() const
+int ThroughputBenchmarkResult::numSamples() const BSLS_KEYWORD_CONVEYOR
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_vecThroughputs.size());
 }
 
 inline
 int ThroughputBenchmarkResult::numThreadGroups() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == numSamples()) {
         return 0;                                                     // RETURN
     }
-    return static_cast<int>(d_vecThroughputs[0].size());
+    return static_cast<int>(
+                        BSLS_ASSERT_CONVEYOR_REF(d_vecThroughputs[0]).size());
 }
 
 inline
 int ThroughputBenchmarkResult::numThreads(int threadGroupIndex) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0                 <= threadGroupIndex);
-    BSLS_ASSERT(numThreadGroups() >  threadGroupIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreadGroups() >  threadGroupIndex);
 
-    return static_cast<int>(d_vecThroughputs[0][threadGroupIndex].size());
+    return static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                           d_vecThroughputs[0][threadGroupIndex]).size());
 }
 
 inline
 int ThroughputBenchmarkResult::totalNumThreads() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == numSamples()) {
         return 0;                                                     // RETURN
     }
@@ -404,10 +411,11 @@ double ThroughputBenchmarkResult::getValue(int threadGroupIndex,
                                            int threadIndex,
                                            int sampleIndex) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0                            <= threadGroupIndex);
-    BSLS_ASSERT(numThreadGroups()            >  threadGroupIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreadGroups()            >  threadGroupIndex);
     BSLS_ASSERT(0                            <= threadIndex);
-    BSLS_ASSERT(numThreads(threadGroupIndex) >  threadIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreads(threadGroupIndex) >  threadIndex);
     BSLS_ASSERT(0                            <= sampleIndex);
     BSLS_ASSERT(numSamples()                 >  sampleIndex);
 

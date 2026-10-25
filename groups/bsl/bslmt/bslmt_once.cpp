@@ -47,7 +47,8 @@ bool bslmt::Once::enter(Once::OnceLock *onceLock)
 
 void bslmt::Once::leave(Once::OnceLock *onceLock)
 {
-    BSLS_ASSERT(e_IN_PROGRESS == bsls::AtomicOperations::getInt(&d_state));
+    BSLS_ASSERT_NONCONVEYOR(
+        e_IN_PROGRESS == bsls::AtomicOperations::getInt(&d_state));
 
     bsls::AtomicOperations::setInt(&d_state, e_DONE);
     onceLock->unlock();
@@ -55,7 +56,8 @@ void bslmt::Once::leave(Once::OnceLock *onceLock)
 
 void bslmt::Once::cancel(Once::OnceLock *onceLock)
 {
-    BSLS_ASSERT(e_IN_PROGRESS == bsls::AtomicOperations::getInt(&d_state));
+    BSLS_ASSERT_NONCONVEYOR(
+        e_IN_PROGRESS == bsls::AtomicOperations::getInt(&d_state));
 
     bsls::AtomicOperations::setInt(&d_state, e_NOT_ENTERED);
     onceLock->unlock();
@@ -80,6 +82,7 @@ bslmt::OnceGuard::~OnceGuard()
 
 bool bslmt::OnceGuard::enter()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (e_DONE == d_state) {
         return false;                                                 // RETURN
     }

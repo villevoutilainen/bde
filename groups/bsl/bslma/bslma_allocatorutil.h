@@ -335,6 +335,7 @@ BSLS_IDENT("$Id: $")
 #include <bsls_assert.h>
 #include <bsls_exceptionutil.h>
 #include <bsls_compilerfeatures.h>
+#include <bsls_keyword.h>
 #include <bsls_util.h>     // 'forward<T>(V)' for C++11
 
 #include <algorithm>  // 'std::swap'
@@ -435,7 +436,7 @@ struct AllocatorUtil {
 
     /// Return `true` if the specified `alignment` is a (positive) power of
     /// two; otherwise return false.
-    static bool isPowerOf2(std::size_t alignment);
+    static bool isPowerOf2(std::size_t alignment) BSLS_KEYWORD_CONVEYOR;
 
     // PRIVATE TYPES
 
@@ -803,7 +804,7 @@ void AllocatorUtil::deleteObjectImp(const t_ALLOCATOR&  allocator,
 }
 
 inline
-bool AllocatorUtil::isPowerOf2(std::size_t alignment)
+bool AllocatorUtil::isPowerOf2(std::size_t alignment) BSLS_KEYWORD_CONVEYOR
 {
     return (0 < alignment) && (0 == (alignment & (alignment - 1)));
 }
@@ -993,7 +994,7 @@ template <class t_TYPE>
 inline
 void AllocatorUtil::swap(t_TYPE *pa, t_TYPE *pb, bsl::false_type)
 {
-    BSLS_ASSERT(*pa == *pb);
+    BSLS_ASSERT_NONCONVEYOR(*pa == *pb);
     (void)pa; (void)pb;
 }
 

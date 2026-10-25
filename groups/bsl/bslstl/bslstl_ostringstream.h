@@ -635,7 +635,7 @@ void basic_ostringstream<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::swap(
 # pragma GCC diagnostic push
 # pragma GCC diagnostic ignored "-Wstringop-overflow"
 #endif
-    BSLS_ASSERT(
+    BSLS_ASSERT_NONCONVEYOR(
            bsl::allocator_traits<ALLOCATOR>::propagate_on_container_swap::value
         || get_allocator() == other.get_allocator());
     this->BaseType::swap(other);

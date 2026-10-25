@@ -544,6 +544,7 @@ AllocEmplacableTestType::arg14() const
 inline
 bslma::Allocator *AllocEmplacableTestType::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_arg01.allocator();
 }
 

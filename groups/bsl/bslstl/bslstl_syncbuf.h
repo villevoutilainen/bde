@@ -406,7 +406,8 @@ basic_syncbuf<CHAR,TRAITS,ALLOCATOR>::operator=(basic_syncbuf&& original)
 template <class CHAR, class TRAITS, class ALLOCATOR>
 void basic_syncbuf<CHAR,TRAITS,ALLOCATOR>::swap(basic_syncbuf& other)
 {
-    BSLS_ASSERT(allocator_traits<ALLOCATOR>::propagate_on_container_swap::value
+    BSLS_ASSERT_NONCONVEYOR(
+        allocator_traits<ALLOCATOR>::propagate_on_container_swap::value
              || get_allocator() == other.get_allocator());
     typedef BloombergLP::bslalg::SwapUtil SwapUtil;
     streambuf_type::swap(other);

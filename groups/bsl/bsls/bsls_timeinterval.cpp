@@ -84,6 +84,7 @@ TimeInterval::TimeInterval(double seconds)
 TimeInterval& TimeInterval::addInterval(bsls::Types::Int64 seconds,
                                         int                nanoseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_PRECONDITIONS_BEGIN();
     BSLS_ASSERT(isSumValidInt64(d_seconds, seconds));
     BSLS_ASSERT(isSumValidInt64(

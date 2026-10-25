@@ -1125,7 +1125,7 @@ inline
 void TestAllocator::restoreStatistics(
                                TestAllocatorStashedStatistics *savedStatistics)
 {
-    BSLS_ASSERT(savedStatistics->origin() == this);
+    BSLS_ASSERT_NONCONVEYOR(savedStatistics->origin() == this);
 
     bsls::BslLockGuard guard(&d_lock);
 
@@ -1237,6 +1237,7 @@ bool TestAllocator::hasFillPattern() const
 inline
 bsls::Types::Uint64 TestAllocator::getFillPattern() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::BslLockGuard guard(&d_lock);
 
     BSLS_ASSERT(d_hasFillPattern);
@@ -1400,6 +1401,7 @@ TestAllocatorStashedStatistics::TestAllocatorStashedStatistics(
 inline
 void TestAllocatorStashedStatistics::markRestored()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_origin_p);
 
     d_origin_p = 0;
@@ -1408,6 +1410,7 @@ void TestAllocatorStashedStatistics::markRestored()
 inline
 void TestAllocatorStashedStatistics::restore()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_origin_p);
 
     d_origin_p->restoreStatistics(this);

@@ -311,6 +311,7 @@ void EntryPointFunctorAdapter<TYPE>::invokerFunction(void *adapterRaw)
 {
     EntryPointFunctorAdapter<TYPE> *adapter =
                       static_cast<EntryPointFunctorAdapter<TYPE>*>(adapterRaw);
+    BSLS_ASSERT_CONVEYOR_OBJECT(adapter);
 
     bslma::Allocator *a = adapter->d_threadName.get_allocator().mechanism();
     bslma::RawDeleterGuard<EntryPointFunctorAdapter<TYPE>,

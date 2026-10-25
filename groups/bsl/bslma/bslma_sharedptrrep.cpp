@@ -24,7 +24,7 @@ void SharedPtrRep::vtableDummy() const
 // MANIPULATORS
 void SharedPtrRep::acquireWeakRef()
 {
-    BSLS_ASSERT(0 < numWeakReferences() || 0 < numReferences());
+    BSLS_ASSERT_NONCONVEYOR(0 < numWeakReferences() || 0 < numReferences());
 
     d_adjustedWeakCount.addRelaxed(2);          // minimum consistency: relaxed
 
@@ -83,7 +83,7 @@ void SharedPtrRep::resetCountsRaw(int numSharedReferences,
 
 bool SharedPtrRep::tryAcquireRef()
 {
-    BSLS_ASSERT(0 < numWeakReferences() || 0 < numReferences());
+    BSLS_ASSERT_NONCONVEYOR(0 < numWeakReferences() || 0 < numReferences());
 
     int sharedCount = d_adjustedSharedCount.loadRelaxed();
                                                 // minimum consistency: relaxed

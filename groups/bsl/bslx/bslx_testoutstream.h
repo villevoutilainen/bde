@@ -833,6 +833,7 @@ void TestOutStream::reset()
 inline
 TestOutStream& TestOutStream::putString(const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     putLength(static_cast<int>(value.length()));
     return putArrayUint8(value.data(), static_cast<int>(value.length()));
 }

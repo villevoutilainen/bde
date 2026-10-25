@@ -44,6 +44,7 @@ bslstl::Function_Rep::~Function_Rep()
 
 void bslstl::Function_Rep::allocateBuf(std::size_t sooFuncSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT((! d_funcManager_p) && (! d_invoker_p));
 
     if (sooFuncSize > sizeof(InplaceBuffer)) {
@@ -62,6 +63,8 @@ void bslstl::Function_Rep::allocateBuf(std::size_t sooFuncSize)
 
 void bslstl::Function_Rep::copyInit(const Function_Rep& original)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     // Precondition: '*this' is empty.
     BSLS_ASSERT(0 == d_invoker_p);
 
@@ -88,6 +91,7 @@ void bslstl::Function_Rep::copyInit(const Function_Rep& original)
 
 void bslstl::Function_Rep::moveInit(Function_Rep *from)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Precondition: '*this' is empty.
     BSLS_ASSERT(0 == d_invoker_p);
 
@@ -125,6 +129,7 @@ void bslstl::Function_Rep::moveInit(Function_Rep *from)
 
 void bslstl::Function_Rep::makeEmpty()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // This function should not be called on a partially-constructed object.
     // Either 'd_funcManager_p' and 'd_invoker_p' are both NULL, or they are
     // both non-NULL.
@@ -155,7 +160,7 @@ void bslstl::Function_Rep::makeEmpty()
 void bslstl::Function_Rep::swap(Function_Rep& other) BSLS_KEYWORD_NOEXCEPT
 {
     // Swap will fail if allocators are not compatible
-    BSLS_ASSERT(this->get_allocator() == other.get_allocator());
+    BSLS_ASSERT_NONCONVEYOR(this->get_allocator() == other.get_allocator());
 
     Function_Rep temp(get_allocator());
 

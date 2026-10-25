@@ -693,6 +693,7 @@ void ByteOutStream::reset()
 inline
 ByteOutStream& ByteOutStream::putInt64(bsls::Types::Int64 value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!isValid())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return *this;                                                 // RETURN
@@ -722,6 +723,7 @@ ByteOutStream& ByteOutStream::putUint64(bsls::Types::Uint64 value)
 inline
 ByteOutStream& ByteOutStream::putInt56(bsls::Types::Int64 value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!isValid())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return *this;                                                 // RETURN
@@ -751,6 +753,7 @@ ByteOutStream& ByteOutStream::putUint56(bsls::Types::Uint64 value)
 inline
 ByteOutStream& ByteOutStream::putInt48(bsls::Types::Int64 value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!isValid())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return *this;                                                 // RETURN
@@ -780,6 +783,7 @@ ByteOutStream& ByteOutStream::putUint48(bsls::Types::Uint64 value)
 inline
 ByteOutStream& ByteOutStream::putInt40(bsls::Types::Int64 value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!isValid())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return *this;                                                 // RETURN
@@ -809,6 +813,7 @@ ByteOutStream& ByteOutStream::putUint40(bsls::Types::Uint64 value)
 inline
 ByteOutStream& ByteOutStream::putInt32(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!isValid())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return *this;                                                 // RETURN
@@ -838,6 +843,7 @@ ByteOutStream& ByteOutStream::putUint32(unsigned int value)
 inline
 ByteOutStream& ByteOutStream::putInt24(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!isValid())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return *this;                                                 // RETURN
@@ -867,6 +873,7 @@ ByteOutStream& ByteOutStream::putUint24(unsigned int value)
 inline
 ByteOutStream& ByteOutStream::putInt16(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!isValid())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return *this;                                                 // RETURN
@@ -896,6 +903,7 @@ ByteOutStream& ByteOutStream::putUint16(unsigned int value)
 inline
 ByteOutStream& ByteOutStream::putInt8(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!isValid())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return *this;                                                 // RETURN
@@ -927,6 +935,7 @@ ByteOutStream& ByteOutStream::putUint8(unsigned int value)
 inline
 ByteOutStream& ByteOutStream::putFloat64(double value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!isValid())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return *this;                                                 // RETURN
@@ -950,6 +959,7 @@ ByteOutStream& ByteOutStream::putFloat64(double value)
 inline
 ByteOutStream& ByteOutStream::putFloat32(float value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!isValid())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return *this;                                                 // RETURN
@@ -977,6 +987,7 @@ ByteOutStream& ByteOutStream::putArrayInt64(
                                            const bsls::Types::Int64 *values,
                                            int                       numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1005,6 +1016,7 @@ ByteOutStream& ByteOutStream::putArrayUint64(
                                           const bsls::Types::Uint64 *values,
                                           int                        numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1033,6 +1045,7 @@ ByteOutStream& ByteOutStream::putArrayInt56(
                                            const bsls::Types::Int64 *values,
                                            int                       numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1061,6 +1074,7 @@ ByteOutStream& ByteOutStream::putArrayUint56(
                                           const bsls::Types::Uint64 *values,
                                           int                        numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1089,6 +1103,7 @@ ByteOutStream& ByteOutStream::putArrayInt48(
                                            const bsls::Types::Int64 *values,
                                            int                       numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1117,6 +1132,7 @@ ByteOutStream& ByteOutStream::putArrayUint48(
                                           const bsls::Types::Uint64 *values,
                                           int                        numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1145,6 +1161,7 @@ ByteOutStream& ByteOutStream::putArrayInt40(
                                            const bsls::Types::Int64 *values,
                                            int                       numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1173,6 +1190,7 @@ ByteOutStream& ByteOutStream::putArrayUint40(
                                           const bsls::Types::Uint64 *values,
                                           int                        numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1199,6 +1217,7 @@ ByteOutStream& ByteOutStream::putArrayUint40(
 inline
 ByteOutStream& ByteOutStream::putArrayInt32(const int *values, int numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1226,6 +1245,7 @@ inline
 ByteOutStream& ByteOutStream::putArrayUint32(const unsigned int *values,
                                              int                 numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1252,6 +1272,7 @@ ByteOutStream& ByteOutStream::putArrayUint32(const unsigned int *values,
 inline
 ByteOutStream& ByteOutStream::putArrayInt24(const int *values, int numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1279,6 +1300,7 @@ inline
 ByteOutStream& ByteOutStream::putArrayUint24(const unsigned int *values,
                                              int                 numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1305,6 +1327,7 @@ ByteOutStream& ByteOutStream::putArrayUint24(const unsigned int *values,
 inline
 ByteOutStream& ByteOutStream::putArrayInt16(const short *values, int numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1332,6 +1355,7 @@ inline
 ByteOutStream& ByteOutStream::putArrayUint16(const unsigned short *values,
                                              int                   numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1358,6 +1382,7 @@ ByteOutStream& ByteOutStream::putArrayUint16(const unsigned short *values,
 inline
 ByteOutStream& ByteOutStream::putArrayInt8(const char *values, int numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1385,6 +1410,7 @@ inline
 ByteOutStream& ByteOutStream::putArrayInt8(const signed char *values,
                                            int                numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1411,6 +1437,7 @@ ByteOutStream& ByteOutStream::putArrayInt8(const signed char *values,
 inline
 ByteOutStream& ByteOutStream::putArrayUint8(const char *values, int numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1438,6 +1465,7 @@ inline
 ByteOutStream& ByteOutStream::putArrayUint8(const unsigned char *values,
                                             int                  numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1467,6 +1495,7 @@ inline
 ByteOutStream& ByteOutStream::putArrayFloat64(const double *values,
                                               int           numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1494,6 +1523,7 @@ inline
 ByteOutStream& ByteOutStream::putArrayFloat32(const float *values,
                                               int          numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(values);
     BSLS_ASSERT_SAFE(0 <= numValues);
 
@@ -1533,6 +1563,7 @@ int ByteOutStream::bdexVersionSelector() const
 inline
 const char *ByteOutStream::data() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_buffer.begin();
 }
 
@@ -1545,6 +1576,7 @@ bool ByteOutStream::isValid() const
 inline
 bsl::size_t ByteOutStream::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_buffer.size();
 }
 

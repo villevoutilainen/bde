@@ -120,7 +120,8 @@ MovableAllocTestType::MovableAllocTestType(
 
 MovableAllocTestType::~MovableAllocTestType()
 {
-    BSLS_ASSERT_OPT(!d_data_p == CopyMoveState::isMovedFrom(*this));
+    BSLS_ASSERT_OPT_NONCONVEYOR(
+        !d_data_p == CopyMoveState::isMovedFrom(*this));
 
     d_allocator_p->deallocate(d_data_p);
 

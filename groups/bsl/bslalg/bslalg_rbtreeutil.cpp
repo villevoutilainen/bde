@@ -317,7 +317,7 @@ void RbTreeUtil::insertAt(RbTreeAnchor *tree,
             }
         }
     }
-    BSLS_ASSERT(tree->sentinel() == tree->rootNode()->parent());
+    BSLS_ASSERT_NONCONVEYOR(tree->sentinel() == tree->rootNode()->parent());
     tree->rootNode()->makeBlack();
     tree->incrementNumNodes();
 }
@@ -326,7 +326,7 @@ void RbTreeUtil::remove(RbTreeAnchor *tree, RbTreeNode *node)
 {
     BSLS_ASSERT(0 != node);
     BSLS_ASSERT(0 != tree);
-    BSLS_ASSERT(0 != tree->rootNode());
+    BSLS_ASSERT_NONCONVEYOR(0 != tree->rootNode());
 
     RbTreeNode *x, *y;
     RbTreeNode *parentOfX;
@@ -435,8 +435,8 @@ void RbTreeUtil::remove(RbTreeAnchor *tree, RbTreeNode *node)
     if (yIsBlackFlag) {
         recolorTreeAfterRemoval(tree, x, parentOfX);
     }
-    BSLS_ASSERT(!tree->rootNode() ||
-                tree->sentinel() == tree->rootNode()->parent());
+    BSLS_ASSERT_NONCONVEYOR(!tree->rootNode() ||
+                            tree->sentinel() == tree->rootNode()->parent());
     tree->decrementNumNodes();
 }
 
@@ -484,7 +484,7 @@ void RbTreeUtil::printTreeStructure(
 void RbTreeUtil::rotateLeft(RbTreeNode *node)
 {
     BSLS_ASSERT(node);
-    BSLS_ASSERT(node->rightChild());
+    BSLS_ASSERT_NONCONVEYOR(node->rightChild());
 
     RbTreeNode *pivot = node->rightChild();
 
@@ -507,7 +507,7 @@ void RbTreeUtil::rotateLeft(RbTreeNode *node)
 void RbTreeUtil::rotateRight(RbTreeNode *node)
 {
     BSLS_ASSERT(node);
-    BSLS_ASSERT(node->leftChild());
+    BSLS_ASSERT_NONCONVEYOR(node->leftChild());
 
     RbTreeNode *pivot = node->leftChild();
 

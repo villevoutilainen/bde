@@ -268,6 +268,7 @@ void SequentialPool::reserveCapacity(int numBytes)
 
 void *SequentialPool::allocateAndExpand(int *size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(size);
     BSLS_ASSERT(0 <= *size);
 
     void *memory = allocate(*size);
@@ -288,6 +289,7 @@ void *SequentialPool::allocateAndExpand(int *size)
 
 void *SequentialPool::allocateAndExpand(int *size, int maxNumBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(size);
     BSLS_ASSERT(0 <= *size);  BSLS_ASSERT(*size <= maxNumBytes);
 
     void *memory = allocate(*size);

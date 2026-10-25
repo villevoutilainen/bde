@@ -213,7 +213,7 @@ void bslmt::QLock_EventFlag::set()
 
         // This flag permits only one set at a time, so the flag should not
         // have previously been set.
-        BSLS_ASSERT(sem !=  FLAG_SET_WITHOUT_SEMAPHORE);
+        BSLS_ASSERT_NONCONVEYOR(sem !=  FLAG_SET_WITHOUT_SEMAPHORE);
 
         sem->post();
     }
@@ -250,7 +250,7 @@ void bslmt::QLock_EventFlag::waitUntilSet(int spinRetryCount)
 
     // If we did not wait on the semaphore (and return above), then the flag
     // must have been set without a semaphore.
-    BSLS_ASSERT(flagValue == FLAG_SET_WITHOUT_SEMAPHORE);
+    BSLS_ASSERT_NONCONVEYOR(flagValue == FLAG_SET_WITHOUT_SEMAPHORE);
 }
 
                              // ----------------
@@ -260,6 +260,7 @@ void bslmt::QLock_EventFlag::waitUntilSet(int spinRetryCount)
 // MANIPULATORS
 void bslmt::QLockGuard::unlockRaw()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SPIN = 1000 };
 
     QLockGuard *tail = (QLockGuard *)bsls::AtomicOperations::testAndSwapPtr(
@@ -282,6 +283,7 @@ void bslmt::QLockGuard::unlockRaw()
 
 void bslmt::QLockGuard::lock()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SPIN = 100 };
 
     BSLS_ASSERT(d_qlock_p);
@@ -306,6 +308,7 @@ void bslmt::QLockGuard::lock()
 
 int bslmt::QLockGuard::tryLock()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_qlock_p);
 
     if (d_locked) {

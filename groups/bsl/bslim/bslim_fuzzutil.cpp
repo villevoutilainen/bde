@@ -74,6 +74,7 @@ void consumeRandomLengthCharSequence(CONTAINER    *output,
                                      FuzzDataView *fuzzDataView,
                                      bsl::size_t   maxLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(output);
     bsl::size_t length = bsl::min(maxLength, fuzzDataView->length());
 
     output->resize(length);

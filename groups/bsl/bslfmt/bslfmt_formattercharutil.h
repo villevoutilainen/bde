@@ -162,7 +162,7 @@ t_ITERATOR FormatterCharUtil<char>::outputFromChar(const char *begin,
                                                    const char *end,
                                                    t_ITERATOR  out)
 {
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     typedef typename bsl::iterator_traits<t_ITERATOR>::value_type ValueType;
     BSLMF_ASSERT((bsl::is_same<ValueType, char>::value) ||
@@ -187,7 +187,7 @@ t_ITERATOR FormatterCharUtil<char>::outputFromChar(const char value,
 inline
 void FormatterCharUtil<char>::toUpper(char *begin, const char *end)
 {
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     for (; begin != end; (void)++begin) {
         if (*begin >= 'a' && *begin <= 'z') {
@@ -201,7 +201,7 @@ t_ITERATOR FormatterCharUtil<wchar_t>::outputFromChar(const char *begin,
                                                       const char *end,
                                                       t_ITERATOR  out)
 {
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     typedef typename bsl::iterator_traits<t_ITERATOR>::value_type ValueType;
     BSLMF_ASSERT((bsl::is_same<ValueType, wchar_t>::value) ||
@@ -212,6 +212,7 @@ t_ITERATOR FormatterCharUtil<wchar_t>::outputFromChar(const char *begin,
 
     for (; begin != end; (void)++begin, (void)++out) {
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(begin);
         BSLS_ASSERT(0 <= *begin);
 
         *out = ct.widen(*begin);

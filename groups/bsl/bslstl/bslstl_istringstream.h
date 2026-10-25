@@ -576,7 +576,7 @@ void basic_istringstream<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::swap(
 # pragma GCC diagnostic push
 # pragma GCC diagnostic ignored "-Wstringop-overflow"
 #endif
-    BSLS_ASSERT(
+    BSLS_ASSERT_NONCONVEYOR(
            bsl::allocator_traits<ALLOCATOR>::propagate_on_container_swap::value
         || this->rdbuf()->get_allocator()
                                         == other.rdbuf()->get_allocator());

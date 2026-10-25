@@ -888,6 +888,7 @@ BSLS_KEYWORD_CONSTEXPR_CPP20 void FormatSpecificationParser<t_CHAR>::parse(
                                                  t_PARSE_CONTEXT *parseContext,
                                                  Sections         sections)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT((
         bsl::is_same<typename bsl::iterator_traits<
                          typename t_PARSE_CONTEXT::const_iterator>::value_type,

@@ -94,6 +94,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_issame.h>
 
 #include <bsls_performancehint.h>
+#include <bsls_keyword.h>
 #include <bsls_platform.h>
 
 #include <cstddef>
@@ -142,10 +143,10 @@ struct PadUtil {
 #ifdef BSLS_ASSERT_IS_USED
     /// Return `true` if the specified `filler` is a valid filler character for
     /// padding, and `false` otherwise.
-    static bool fillerIsOK(t_CHAR filler);
+    static bool fillerIsOK(t_CHAR filler) BSLS_KEYWORD_CONVEYOR;
     static bool fillerIsOK(const bsl::basic_string_view<t_CHAR>& filler);
     template <class t_INPUT_CHAR>
-    static bool fillerIsOK(t_INPUT_CHAR filler);
+    static bool fillerIsOK(t_INPUT_CHAR filler) BSLS_KEYWORD_CONVEYOR;
     template <class t_INPUT_CHAR>
     static bool fillerIsOK(const bsl::basic_string_view<t_INPUT_CHAR>& filler);
 #endif
@@ -225,7 +226,7 @@ struct PadUtil {
 #ifdef BSLS_ASSERT_IS_USED
 template <class t_CHAR>
 inline
-bool PadUtil<t_CHAR>::fillerIsOK(t_CHAR)
+bool PadUtil<t_CHAR>::fillerIsOK(t_CHAR) BSLS_KEYWORD_CONVEYOR
 {
     return true;
 }
@@ -240,7 +241,7 @@ bool PadUtil<t_CHAR>::fillerIsOK(const bsl::basic_string_view<t_CHAR>&)
 template <class t_CHAR>
 template <class t_INPUT_CHAR>
 inline
-bool PadUtil<t_CHAR>::fillerIsOK(t_INPUT_CHAR filler)
+bool PadUtil<t_CHAR>::fillerIsOK(t_INPUT_CHAR filler) BSLS_KEYWORD_CONVEYOR
 {
     return 0 == (~0x7f & filler);
 }
@@ -295,7 +296,7 @@ t_ITERATOR PadUtil<t_CHAR>::padImpl(t_ITERATOR      out,
                                     const t_FILLER& filler)
 {
     BSLMF_ASSERT(IteratorTypeIsOK<t_ITERATOR>::value);
-    BSLS_ASSERT(fillerIsOK(filler));
+    BSLS_ASSERT_NONCONVEYOR(fillerIsOK(filler));
 
     while (0 < width--) {
         out = writeFiller(out, filler);
@@ -313,6 +314,7 @@ void PadUtil<t_CHAR>::computePadding(std::ptrdiff_t      *leftPadding,
                                      Alignment            alignment,
                                      Alignment            defaultAlign)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&widthValue);
     BSLS_ASSERT(0 <= contentWidth);
     BSLS_ASSERT(Enums::e_ALIGN_DEFAULT != defaultAlign);
 

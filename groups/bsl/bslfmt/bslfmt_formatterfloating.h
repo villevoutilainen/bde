@@ -573,8 +573,9 @@ FormatterFloating_Base<t_VALUE, t_CHAR>::formatFixedImpl(
     typedef BloombergLP::bslalg::NumericFormatterUtil NFUtil;
 
     /// Must be decimal format
-    BSLS_ASSERT(Specification::e_FLOATING_FIXED == finalSpec.formatType() ||
-                Specification::e_FLOATING_FIXED_UC == finalSpec.formatType());
+    BSLS_ASSERT_NONCONVEYOR(
+        Specification::e_FLOATING_FIXED == finalSpec.formatType() ||
+        Specification::e_FLOATING_FIXED_UC == finalSpec.formatType());
 
     // Determine the precision
     typedef FormatterSpecificationNumericValue NumericValue;
@@ -631,11 +632,12 @@ FormatterFloating_Base<t_VALUE, t_CHAR>::formatDefaultImpl(
     typedef BloombergLP::bslalg::NumericFormatterUtil NFUtil;
 
     /// Must be default format
-    BSLS_ASSERT(Specification::e_FLOATING_DEFAULT == finalSpec.formatType());
+    BSLS_ASSERT_NONCONVEYOR(
+        Specification::e_FLOATING_DEFAULT == finalSpec.formatType());
 
     /// Must not have precision
-    BSLS_ASSERT(finalSpec.postprocessedPrecision().category() ==
-                FormatterSpecificationNumericValue::e_DEFAULT);
+    BSLS_ASSERT_NONCONVEYOR(finalSpec.postprocessedPrecision().category() ==
+                            FormatterSpecificationNumericValue::e_DEFAULT);
 
     // Converting to string
     char buf[NFUtil::ToCharsMaxLength<t_VALUE>::k_VALUE];
@@ -663,7 +665,7 @@ FormatterFloating_Base<t_VALUE, t_CHAR>::formatGeneralImpl(
     typedef BloombergLP::bslalg::NumericFormatterUtil NFUtil;
 
     /// Must be general format
-    BSLS_ASSERT(
+    BSLS_ASSERT_NONCONVEYOR(
               Specification::e_FLOATING_GENERAL == finalSpec.formatType() ||
               Specification::e_FLOATING_GENERAL_UC == finalSpec.formatType() ||
               Specification::e_FLOATING_DEFAULT == finalSpec.formatType());
@@ -727,12 +729,13 @@ FormatterFloating_Base<t_VALUE, t_CHAR>::formatHexImpl(
     typedef BloombergLP::bslalg::NumericFormatterUtil NFUtil;
 
     /// Must be hexfloat format
-    BSLS_ASSERT(Specification::e_FLOATING_HEX == finalSpec.formatType() ||
-                Specification::e_FLOATING_HEX_UC == finalSpec.formatType());
+    BSLS_ASSERT_NONCONVEYOR(
+        Specification::e_FLOATING_HEX == finalSpec.formatType() ||
+        Specification::e_FLOATING_HEX_UC == finalSpec.formatType());
 
     /// Must not have precision
-    BSLS_ASSERT(finalSpec.postprocessedPrecision().category() ==
-                FormatterSpecificationNumericValue::e_DEFAULT);
+    BSLS_ASSERT_NONCONVEYOR(finalSpec.postprocessedPrecision().category() ==
+                            FormatterSpecificationNumericValue::e_DEFAULT);
 
     // Converting to string
     char buf[NFUtil::ToCharsMaxLength<t_VALUE, NFUtil::e_HEX>::k_VALUE];
@@ -765,12 +768,13 @@ FormatterFloating_Base<t_VALUE, t_CHAR>::formatHexPrecImpl(
     typedef BloombergLP::bslalg::NumericFormatterUtil NFUtil;
 
     /// Must be hexfloat format
-    BSLS_ASSERT(Specification::e_FLOATING_HEX == finalSpec.formatType() ||
-                Specification::e_FLOATING_HEX_UC == finalSpec.formatType());
+    BSLS_ASSERT_NONCONVEYOR(
+        Specification::e_FLOATING_HEX == finalSpec.formatType() ||
+        Specification::e_FLOATING_HEX_UC == finalSpec.formatType());
 
     /// Must have precision
-    BSLS_ASSERT(finalSpec.postprocessedPrecision().category() !=
-                FormatterSpecificationNumericValue::e_DEFAULT);
+    BSLS_ASSERT_NONCONVEYOR(finalSpec.postprocessedPrecision().category() !=
+                            FormatterSpecificationNumericValue::e_DEFAULT);
 
     // Converting to string
     const size_t k_STACK_BUF_LEN =
@@ -825,7 +829,7 @@ FormatterFloating_Base<t_VALUE, t_CHAR>::formatScientificImpl(
     typedef BloombergLP::bslalg::NumericFormatterUtil NFUtil;
 
     /// Must be scientific format
-    BSLS_ASSERT(
+    BSLS_ASSERT_NONCONVEYOR(
             Specification::e_FLOATING_SCIENTIFIC == finalSpec.formatType() ||
             Specification::e_FLOATING_SCIENTIFIC_UC == finalSpec.formatType());
 

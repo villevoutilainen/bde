@@ -124,7 +124,8 @@ struct FormatterSpecificationNumericValue {
     bool operator==(const FormatterSpecificationNumericValue& other) const;
 
     /// Return the `category` attribute of this object.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 Category category() const;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 Category category() const
+                                                         BSLS_KEYWORD_CONVEYOR;
 
     /// Return the `value` attribute of this object.  The behavior is undefined
     /// if `category` is either `e_DEFAULT` or `e_NEXT_ARG_ID`.
@@ -371,7 +372,7 @@ FormatterSpecificationNumericValue::value() const
 inline
 BSLS_KEYWORD_CONSTEXPR_CPP20
 FormatterSpecificationNumericValue::Category
-FormatterSpecificationNumericValue::category() const
+FormatterSpecificationNumericValue::category() const BSLS_KEYWORD_CONVEYOR
 {
     return d_category;
 }

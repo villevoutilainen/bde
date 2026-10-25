@@ -472,7 +472,7 @@ void *TestAllocator::allocate(size_type size)
     }
 
     // Ensure 'allocate' returned maximally aligned memory.
-    BSLS_ASSERT(isAligned(header_p, k_MAX_ALIGNMENT));
+    BSLS_ASSERT_NONCONVEYOR(isAligned(header_p, k_MAX_ALIGNMENT));
 
     // Use the number of allocations prior to this one as a unique ID for this
     // allocation.

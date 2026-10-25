@@ -80,6 +80,7 @@ bslmt::Sluice::~Sluice()
     GenerationDescriptor *g = d_descriptorPool;
     while (g) {
         GenerationDescriptor *c = g;
+        BSLS_ASSERT_CONVEYOR_OBJECT(c);
         g = g->d_next;
 
         BSLS_ASSERT(0 == c->d_numThreads);
@@ -109,6 +110,7 @@ const void *bslmt::Sluice::enter()
         }
 
         d_pendingGeneration = g;
+        BSLS_ASSERT_CONVEYOR_OBJECT(g);
         BSLS_ASSERT(0 == g->d_numThreads);
         BSLS_ASSERT(0 == g->d_numSignaled);
     }
@@ -119,6 +121,7 @@ const void *bslmt::Sluice::enter()
 
 void bslmt::Sluice::wait(const void *token)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     GenerationDescriptor *g =
                 static_cast<GenerationDescriptor *>(const_cast<void *>(token));
 
@@ -154,6 +157,7 @@ void bslmt::Sluice::wait(const void *token)
 int bslmt::Sluice::timedWait(const void                *token,
                              const bsls::TimeInterval&  absTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     GenerationDescriptor *g =
                 static_cast<GenerationDescriptor *>(const_cast<void *>(token));
 

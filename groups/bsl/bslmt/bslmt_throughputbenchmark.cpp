@@ -129,6 +129,7 @@ int ThroughputBenchmark::addThreadGroup(
                              const InitializeThreadFunction& initializeFunctor,
                              const CleanupThreadFunction&    cleanupFunctor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <  numThreads);
     BSLS_ASSERT(0 <= busyWorkAmount);
 
@@ -168,7 +169,7 @@ void ThroughputBenchmark::execute(
 {
     BSLS_ASSERT(0 < millisecondsPerSample);
     BSLS_ASSERT(0 < numSamples);
-    BSLS_ASSERT(0 < numThreadGroups());
+    BSLS_ASSERT_NONCONVEYOR(0 < numThreadGroups());
     BSLS_ASSERT(result);
 
     // At this point we know how many threads we have.

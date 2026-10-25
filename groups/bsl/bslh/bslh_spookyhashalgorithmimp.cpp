@@ -362,6 +362,7 @@ void SpookyHashAlgorithmImp::update(const void *message, size_t length)
     // If we have any message fragments stored for later use, handle them now.
     if (m_remainder)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT(m_remainder < k_BUFFER_SIZE);
 
         Uint8 prefix = static_cast<Uint8>(k_BUFFER_SIZE - m_remainder);

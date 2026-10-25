@@ -113,7 +113,7 @@ void HashTableImpUtil::remove(HashTableAnchor   *anchor,
 {
     BSLS_ASSERT(link);
     BSLS_ASSERT(anchor);
-    BSLS_ASSERT(link->previousLink() || anchor->listRootAddress() == link);
+    BSLS_ASSERT_NONCONVEYOR(link->previousLink() || anchor->listRootAddress() == link);
 
     // Note that we must update the bucket *before* we unlink from the list,
     // as otherwise we will lose our nextLink()/prev pointers.

@@ -61,7 +61,7 @@ static int nativeDefaultThreadStackSizeImp()
     BSLS_ASSERT(threadStackSize <= static_cast<bsl::size_t>(INT_MAX));
 
 #  ifdef PTHREAD_STACK_MIN
-    BSLS_ASSERT(threadStackSize >= PTHREAD_STACK_MIN);
+    BSLS_ASSERT_NONCONVEYOR(threadStackSize >= PTHREAD_STACK_MIN);
 #  endif
 
     return static_cast<int>(threadStackSize);
@@ -115,7 +115,8 @@ int bslmt::Configuration::nativeDefaultThreadStackSize()
     if (bsls::AtomicOperations::getIntRelaxed(&ret) < 0) {
         bsls::AtomicOperations::setIntRelaxed(&ret,
                                        nativeDefaultThreadStackSizeImp());
-        BSLS_ASSERT(bsls::AtomicOperations::getIntRelaxed(&ret) >= 1);
+        BSLS_ASSERT_NONCONVEYOR(
+            bsls::AtomicOperations::getIntRelaxed(&ret) >= 1);
     }
 
     return bsls::AtomicOperations::getIntRelaxed(&ret);
@@ -165,7 +166,8 @@ int bslmt::Configuration::recommendedDefaultThreadStackSize()
     // Note -- this cannot be a BSLMF_ASSERT -- 'PTHREAD_STACK_MIN' is a
     // function call on some platforms.
 
-    BSLS_ASSERT(k_RECOMMENDED_DEFAULT_STACKSIZE >= PTHREAD_STACK_MIN);
+    BSLS_ASSERT_NONCONVEYOR(
+        k_RECOMMENDED_DEFAULT_STACKSIZE >= PTHREAD_STACK_MIN);
 #endif
 
     return k_RECOMMENDED_DEFAULT_STACKSIZE;
@@ -174,7 +176,8 @@ int bslmt::Configuration::recommendedDefaultThreadStackSize()
 void bslmt::Configuration::setDefaultThreadStackSize(int numBytes)
 {
 #if defined(BSLMT_PLATFORM_POSIX_THREADS) && defined(PTHREAD_STACK_MIN)
-    BSLS_ASSERT_OPT(numBytes >= static_cast<int>(PTHREAD_STACK_MIN));
+    BSLS_ASSERT_OPT_NONCONVEYOR(
+        numBytes >= static_cast<int>(PTHREAD_STACK_MIN));
 #else
     BSLS_ASSERT_OPT(numBytes > 0);
 #endif

@@ -62,7 +62,7 @@ void Latch::countDown(int numEvents)
 
             LockGuard<Mutex> lock(&d_mutex);
 
-            BSLS_ASSERT(current == d_sigCount.loadRelaxed());
+            BSLS_ASSERT_NONCONVEYOR(current == d_sigCount.loadRelaxed());
             d_sigCount.storeRelease(0);
             d_cond.broadcast();
 

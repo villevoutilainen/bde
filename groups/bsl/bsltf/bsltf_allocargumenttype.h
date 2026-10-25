@@ -47,6 +47,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_movableref.h>
 
 #include <bsls_assert.h>
+#include <bsls_keyword.h>
 
 namespace BloombergLP {
 namespace bsltf {
@@ -134,7 +135,7 @@ class AllocArgumentType {
     // ACCESSORS
 
     /// Return the allocator used by this object to supply memory.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_KEYWORD_CONVEYOR;
 
     /// Return the value of this test argument object.
     operator int() const;
@@ -338,6 +339,7 @@ AllocArgumentType<N>::operator int() const
 template <int N>
 inline
 bslma::Allocator * AllocArgumentType<N>::allocator() const
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     return d_allocator_p;
 }

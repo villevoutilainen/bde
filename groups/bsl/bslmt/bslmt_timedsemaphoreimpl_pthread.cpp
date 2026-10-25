@@ -168,8 +168,8 @@ bslmt::TimedSemaphoreImpl<bslmt::Platform::PthreadTimedSemaphore>::
 
     pthread_cond_destroy(&d_condition);
 
-    BSLS_ASSERT(d_resources >= 0);
-    BSLS_ASSERT(d_waiters >= 0);
+    BSLS_ASSERT_NONCONVEYOR(d_resources >= 0);
+    BSLS_ASSERT_NONCONVEYOR(d_waiters >= 0);
 }
 
 // MANIPULATORS

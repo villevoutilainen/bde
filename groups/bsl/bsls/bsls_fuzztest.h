@@ -403,11 +403,11 @@ class FuzzTestHandlerGuard {
 inline
 FuzzTestHandlerGuard::FuzzTestHandlerGuard()
 {
-    BSLS_ASSERT(&FuzzTestPreconditionTracker::handleAssertViolation !=
-                bsls::Assert::violationHandler());
+    BSLS_ASSERT_NONCONVEYOR(&FuzzTestPreconditionTracker::handleAssertViolation !=
+                            bsls::Assert::violationHandler());
 
-    BSLS_ASSERT(&FuzzTestPreconditionTracker::handleReviewViolation !=
-                bsls::Review::violationHandler());
+    BSLS_ASSERT_NONCONVEYOR(&FuzzTestPreconditionTracker::handleReviewViolation !=
+                            bsls::Review::violationHandler());
 
     PreconditionsHandler::installHandlers(
         &FuzzTestPreconditionTracker::handlePreconditionsBegin,
@@ -429,11 +429,11 @@ FuzzTestHandlerGuard::FuzzTestHandlerGuard()
 inline
 FuzzTestHandlerGuard::~FuzzTestHandlerGuard()
 {
-    BSLS_ASSERT(&FuzzTestPreconditionTracker::handleAssertViolation ==
-                bsls::Assert::violationHandler());
+    BSLS_ASSERT_NONCONVEYOR(&FuzzTestPreconditionTracker::handleAssertViolation ==
+                            bsls::Assert::violationHandler());
 
-    BSLS_ASSERT(&FuzzTestPreconditionTracker::handleReviewViolation ==
-                bsls::Review::violationHandler());
+    BSLS_ASSERT_NONCONVEYOR(&FuzzTestPreconditionTracker::handleReviewViolation ==
+                            bsls::Review::violationHandler());
 
     PreconditionsHandler::installHandlers(&PreconditionsHandler::noOpHandler,
                                           &PreconditionsHandler::noOpHandler);
@@ -446,7 +446,7 @@ FuzzTestHandlerGuard::~FuzzTestHandlerGuard()
 inline
 FuzzTestHandlerGuard *FuzzTestHandlerGuard::instance()
 {
-    BSLS_ASSERT(s_currentFuzzTestHandlerGuard_p);
+    BSLS_ASSERT_NONCONVEYOR(s_currentFuzzTestHandlerGuard_p);
     return s_currentFuzzTestHandlerGuard_p;
 }
 

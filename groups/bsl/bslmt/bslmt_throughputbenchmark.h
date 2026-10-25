@@ -475,6 +475,7 @@ bool ThroughputBenchmark::isRunState() const
 inline
 int ThroughputBenchmark::numThreads() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == d_threadGroups.size()) {
         return 0;                                                     // RETURN
     }
@@ -489,6 +490,7 @@ int ThroughputBenchmark::numThreads() const
 inline
 int ThroughputBenchmark::numThreadGroups() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_threadGroups.size());
 }
 
@@ -496,7 +498,7 @@ inline
 int ThroughputBenchmark::numThreadsInGroup(int threadGroupIndex) const
 {
     BSLS_ASSERT(0                 <= threadGroupIndex);
-    BSLS_ASSERT(numThreadGroups() >  threadGroupIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreadGroups() >  threadGroupIndex);
 
     return d_threadGroups[threadGroupIndex].d_numThreads;
 }

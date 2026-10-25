@@ -27,12 +27,15 @@ void ThroughputBenchmarkResult::getSortedSumThroughputs(
                                    bsl::vector<double> *throughputs,
                                    int                  threadGroupIndex) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0                 <= threadGroupIndex);
-    BSLS_ASSERT(numThreadGroups() >  threadGroupIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreadGroups() >  threadGroupIndex);
     BSLS_ASSERT(throughputs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(throughputs);
     BSLS_ASSERT(static_cast<int>(throughputs->size()) == numSamples());
 
     DoubleVector& vec = *throughputs;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
     int           numThreadsInTG = numThreads(threadGroupIndex);
     for (int sampleIndex = 0; sampleIndex < numSamples(); ++sampleIndex) {
         vec[sampleIndex] = 0;
@@ -54,6 +57,7 @@ ThroughputBenchmarkResult::ThroughputBenchmarkResult(
                                      bslma::Allocator        *basicAllocator)
 : d_vecThroughputs(basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&threadGroupSizes);
     BSLS_ASSERT(0 < numSamples);
     BSLS_ASSERT(0 < threadGroupSizes.size());
 
@@ -110,12 +114,13 @@ void ThroughputBenchmarkResult::initialize(
                                       int                     numSamples,
                                       const bsl::vector<int>& threadGroupSizes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&threadGroupSizes);
     BSLS_ASSERT(0 < numSamples);
     BSLS_ASSERT(0 < threadGroupSizes.size());
 
     int numTG = static_cast<int>(threadGroupSizes.size());
     for (int i = 0; i < numTG; ++i) {
-        BSLS_ASSERT(0 < threadGroupSizes[i]);
+        BSLS_ASSERT_NONCONVEYOR(0 < threadGroupSizes[i]);
     }
 
     d_vecThroughputs.resize(numSamples);
@@ -132,8 +137,9 @@ void ThroughputBenchmarkResult::initialize(
 void ThroughputBenchmarkResult::getMedian(double *median,
                                           int     threadGroupIndex) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0                 <= threadGroupIndex);
-    BSLS_ASSERT(numThreadGroups() >  threadGroupIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreadGroups() >  threadGroupIndex);
     BSLS_ASSERT(median);
 
     int          nSamples = numSamples();
@@ -151,8 +157,9 @@ void ThroughputBenchmarkResult::getPercentile(double *percentile,
                                               double  percentage,
                                               int     threadGroupIndex) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0                 <= threadGroupIndex);
-    BSLS_ASSERT(numThreadGroups() >  threadGroupIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreadGroups() >  threadGroupIndex);
     BSLS_ASSERT(0.0               <= percentage);
     BSLS_ASSERT(1.0               >= percentage);
     BSLS_ASSERT(percentile);
@@ -171,9 +178,11 @@ void ThroughputBenchmarkResult::getPercentiles(
                                    bsl::vector<double> *percentiles,
                                    int                  threadGroupIndex) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0                 <= threadGroupIndex);
-    BSLS_ASSERT(numThreadGroups() >  threadGroupIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreadGroups() >  threadGroupIndex);
     BSLS_ASSERT(percentiles);
+    BSLS_ASSERT_CONVEYOR_OBJECT(percentiles);
     BSLS_ASSERT(2                 <= percentiles->size());
 
     int          nSamples = numSamples();
@@ -195,16 +204,18 @@ void ThroughputBenchmarkResult::getThreadPercentiles(
                      bsl::vector<bsl::vector<double> > *percentiles,
                      int                                threadGroupIndex) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0                 <= threadGroupIndex);
-    BSLS_ASSERT(numThreadGroups() >  threadGroupIndex);
+    BSLS_ASSERT_NONCONVEYOR(numThreadGroups() >  threadGroupIndex);
     BSLS_ASSERT(percentiles);
+    BSLS_ASSERT_CONVEYOR_OBJECT(percentiles);
     BSLS_ASSERT(2                 <= percentiles->size());
 
     int    nSamples = numSamples();
     int    numThreadsInTG = numThreads(threadGroupIndex);
     for (bsl::size_t i = 0; i < percentiles->size(); ++i) {
-        BSLS_ASSERT(numThreadsInTG ==
-                                   static_cast<int>((*percentiles)[i].size()));
+        BSLS_ASSERT_NONCONVEYOR(numThreadsInTG == static_cast<int>(
+                         BSLS_ASSERT_CONVEYOR_REF((*percentiles)[i]).size()));
     }
 
     DoubleVector sortedThroughputs(nSamples,

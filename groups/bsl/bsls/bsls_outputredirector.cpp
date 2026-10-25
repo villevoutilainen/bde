@@ -276,6 +276,7 @@ void OutputRedirector::enable()
 
 bool OutputRedirector::load()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_isRedirectingFlag);
 
     if (ferror(redirectedStream()) != 0) {
@@ -396,6 +397,7 @@ bool OutputRedirector::load()
 
 void OutputRedirector::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_isRedirectingFlag);
 
     d_outputSize = 0u;

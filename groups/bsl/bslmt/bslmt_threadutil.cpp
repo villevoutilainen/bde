@@ -71,6 +71,7 @@ extern "C"
 void *bslmt_threadutil_namedFuncPtrThunk(void *arg)
 {
     u::NamedFuncPtrRecord *nfpr_p = static_cast<u::NamedFuncPtrRecord *>(arg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(nfpr_p);
 
     BSLS_ASSERT(!nfpr_p->d_threadName.empty());  // This function should never
                                                  // be called unless the

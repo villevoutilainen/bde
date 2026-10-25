@@ -167,6 +167,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmf_matchanytype.h>
 
+#include <bsls_keyword.h>
+
 namespace BloombergLP {
 namespace bsltf {
 
@@ -243,7 +245,7 @@ struct CopyMoveState {
     /// otherwise `false`.  A valid value is any of the enumerators or the
     /// bitwise OR of any of the enumerators except `e_UNKNOWN` with
     /// `e_MOVED_FROM`.
-    static bool isValid(Enum val);
+    static bool isValid(Enum val) BSLS_KEYWORD_CONVEYOR;
 
     /// For the specified `obj_p` address and specified `state`, invoke
     /// `setCopyMoveState(obj_p, state)`.  Note that `setCopyMoveState` is
@@ -373,7 +375,7 @@ inline void CopyMoveState::set(TYPE *obj_p, Enum state)
     setCopyMoveState(obj_p, state);
 }
 
-inline bool CopyMoveState::isValid(Enum val)
+inline bool CopyMoveState::isValid(Enum val) BSLS_KEYWORD_CONVEYOR
 {
     // 'VALID_MASK' is a bitset with a bit representing every enumerated value
     // less than or equal to 'e_UNKNOWN', with a 1 bit representing a valid
