@@ -1178,6 +1178,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                                      const bsl::vector<int, ALLOC>& value,
                                      int                         /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 

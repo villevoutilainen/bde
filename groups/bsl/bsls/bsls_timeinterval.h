@@ -997,7 +997,7 @@ TimeInterval::TimeInterval(
                                    PERIOD_TYPE>::k_IMPLICIT_CONVERSION_ENABLED,
                             int>::type *)
 {
-    BSLS_ASSERT((isValid<REP_TYPE, PERIOD_TYPE>(duration)));
+    BSLS_ASSERT_NONCONVEYOR((isValid<REP_TYPE, PERIOD_TYPE>(duration)));
     using SecondsRatio = std::ratio<1>;
     using TimeIntervalSeconds =
                      std::chrono::duration<bsls::Types::Int64, SecondsRatio>;
@@ -1021,7 +1021,7 @@ TimeInterval::TimeInterval(
                                    PERIOD_TYPE>::k_EXPLICIT_CONVERSION_ENABLED,
                             int>::type *)
 {
-    BSLS_ASSERT((isValid<REP_TYPE, PERIOD_TYPE>(duration)));
+    BSLS_ASSERT_NONCONVEYOR((isValid<REP_TYPE, PERIOD_TYPE>(duration)));
     const bsls::Types::Int64 k_SECONDS     =
             std::chrono::duration_cast<std::chrono::seconds>(duration).count();
     const int                k_NANOSECONDS = static_cast<int>(
@@ -1211,7 +1211,7 @@ TimeInterval::addDuration(
                                    PERIOD_TYPE>::k_IMPLICIT_CONVERSION_ENABLED,
                                int>::type *)
 {
-    BSLS_ASSERT((isValid<REP_TYPE, PERIOD_TYPE>(duration)));
+    BSLS_ASSERT_NONCONVEYOR((isValid<REP_TYPE, PERIOD_TYPE>(duration)));
 
     const bsls::Types::Int64 k_SECONDS     =
             std::chrono::duration_cast<std::chrono::seconds>(duration).count();
@@ -1304,6 +1304,7 @@ bool TimeInterval::isInDurationRange(
          typename std::enable_if<TimeInterval_IsDuration<DURATION_TYPE>::value,
                                  int>::type *) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     using SecondsRatio = std::ratio<1>;
     using TimeIntervalSeconds =
                        std::chrono::duration<bsls::Types::Int64, SecondsRatio>;
@@ -1413,7 +1414,7 @@ TimeInterval::asDuration() const
                        std::chrono::duration<bsls::Types::Int64, SecondsRatio>;
     using TimeIntervalNanoseconds = std::chrono::duration<int, std::nano>;
 
-    BSLS_ASSERT(isInDurationRange<DURATION_TYPE>());
+    BSLS_ASSERT_NONCONVEYOR(isInDurationRange<DURATION_TYPE>());
 
     return (std::chrono::duration_cast<DURATION_TYPE>(TimeIntervalSeconds(
                                                                     d_seconds))

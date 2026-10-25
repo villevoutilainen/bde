@@ -3259,6 +3259,7 @@ void vector<VALUE_TYPE, ALLOCATOR>::privateAppendSizedRange(
                                                           t_SENTINEL end,
                                                           size_type  rangeSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (rangeSize == 0) {
         return;                                                       // RETURN
     }
@@ -3350,6 +3351,7 @@ void vector<VALUE_TYPE, ALLOCATOR>::privateInsert(
                                       SENTINEL                        last,
                                       const std::input_iterator_tag&)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // IMPLEMENTATION NOTES: We can't compute the size in advance.  Append onto
     // the back of the current vector while capacity remains.  This honors the
     // idea of not allocating unnecessarily for the temporary vector, and so
@@ -4425,6 +4427,7 @@ vector<VALUE_TYPE, ALLOCATOR>::insert_range(
                            const_iterator                             position,
                            BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(this->begin() <= position);
     BSLS_ASSERT_SAFE(position      <= this->end());
 
@@ -4550,6 +4553,8 @@ inline
 bool operator==(const vector<VALUE_TYPE, ALLOCATOR>& lhs,
                 const vector<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return BloombergLP::bslalg::RangeCompare::equal(lhs.begin(),
                                                     lhs.end(),
                                                     lhs.size(),
@@ -4635,6 +4640,7 @@ template <class VALUE_TYPE, class ALLOCATOR, class BDE_OTHER_TYPE>
 inline typename vector<VALUE_TYPE, ALLOCATOR>::size_type
 erase(vector<VALUE_TYPE, ALLOCATOR>& vec, const BDE_OTHER_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
     typename vector<VALUE_TYPE, ALLOCATOR>::size_type oldSize = vec.size();
     vec.erase(bsl::remove(vec.begin(), vec.end(), value), vec.end());
     return oldSize - vec.size();
@@ -4644,6 +4650,7 @@ template <class VALUE_TYPE, class ALLOCATOR, class PREDICATE>
 inline typename vector<VALUE_TYPE, ALLOCATOR>::size_type
 erase_if(vector<VALUE_TYPE, ALLOCATOR>& vec, PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
     typename vector<VALUE_TYPE, ALLOCATOR>::size_type oldSize = vec.size();
     vec.erase(bsl::remove_if(vec.begin(), vec.end(), predicate), vec.end());
     return oldSize - vec.size();
@@ -4664,6 +4671,7 @@ template <class HASHALG, class VALUE_TYPE, class ALLOCATOR>
 inline
 void hashAppend(HASHALG& hashAlg, const vector<VALUE_TYPE, ALLOCATOR>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     using ::BloombergLP::bslh::hashAppend;
     typedef typename vector<VALUE_TYPE, ALLOCATOR>::const_iterator ci_t;
     hashAppend(hashAlg, input.size());
@@ -4676,6 +4684,7 @@ template <class HASHALG, class ALLOCATOR>
 inline
 void hashAppend(HASHALG& hashAlg, const vector<char, ALLOCATOR>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlg, input.size());
     hashAppend(hashAlg, input.data(), input.size());

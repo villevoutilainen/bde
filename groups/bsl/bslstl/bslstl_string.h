@@ -4527,6 +4527,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::privateAppend(
                                              const char              *message,
                                              std::input_iterator_tag  )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(npos == numChars);  (void) numChars;
 
     basic_string temp(get_allocator());
@@ -4570,6 +4571,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::privateAppend(
                                            const char                *message,
                                            std::forward_iterator_tag  )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(numChars == static_cast<size_type>(
               BloombergLP::bslstl::IteratorUtil::insertDistance(first, last)));
 
@@ -5083,6 +5085,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::privateReplace(
                                            SENTINEL                last,
                                            std::input_iterator_tag )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(npos == inNumChars);  (void) inNumChars;
 
     privateThrowOutOfRange(
@@ -5135,6 +5138,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::privateReplace(
                                          SENTINEL                  last,
                                          std::forward_iterator_tag )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(inNumChars == static_cast<size_type>(
               BloombergLP::bslstl::IteratorUtil::insertDistance(first, last)));
     (void) last;
@@ -6496,6 +6500,7 @@ basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::insert(
                                          size_type                    position,
                                          const STRING_VIEW_LIKE_TYPE& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = other;
     privateThrowOutOfRange(
               position > length(),
@@ -8012,6 +8017,7 @@ int basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::compare(
                 BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) *)
                                 const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = other;
 
     return privateCompareRaw(size_type(0),
@@ -8229,6 +8235,8 @@ bool bsl::operator==(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>& lhs,
                      const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>& rhs)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.size() == rhs.size()
         && 0 == CHAR_TRAITS::compare(lhs.data(), rhs.data(), lhs.size());
 }
@@ -8240,6 +8248,7 @@ bsl::operator==(const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>& lhs,
                 const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>& rhs)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs.size() == rhs.size()
         && 0 == CHAR_TRAITS::compare(lhs.data(), rhs.data(), lhs.size());
 }
@@ -8249,6 +8258,7 @@ inline
 bool bsl::operator==(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>&  lhs,
                      const CHAR_TYPE                                  *rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT_SAFE(rhs);
 
     std::size_t len = CHAR_TRAITS::length(rhs);
@@ -8595,6 +8605,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& lhs,
                const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> result(
         bsl::allocator_traits<ALLOCATOR>::
             select_on_container_copy_construction(lhs.get_allocator()));
@@ -8698,6 +8710,7 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(const CHAR_TYPE                                      *lhs,
                const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&  rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_SAFE(lhs);
 
     typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::size_type
@@ -8759,6 +8772,7 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&  lhs,
                const CHAR_TYPE                                      *rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT_SAFE(rhs);
     typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::size_type
                                           rhsLength = CHAR_TRAITS::length(rhs);
@@ -8947,6 +8961,7 @@ std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&
 bsl::operator>>(std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&     is,
                 basic_string<CHAR_TYPE,CHAR_TRAITS, ALLOCATOR>& str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     typedef std::basic_istream<CHAR_TYPE, CHAR_TRAITS> Istrm;
     typename Istrm::sentry sentry(is);
 

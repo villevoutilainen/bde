@@ -305,7 +305,7 @@ FuzzUtil::consumeNumberInRange(FuzzDataView *fuzzDataView, TYPE min, TYPE max)
     BSLS_ASSERT(min <= max);
 
     BSLS_ASSERT(min == min && max == max);
-    BSLS_ASSERT(bsl::numeric_limits<TYPE>::infinity() != max &&
+    BSLS_ASSERT_NONCONVEYOR(bsl::numeric_limits<TYPE>::infinity() != max &&
                 -bsl::numeric_limits<TYPE>::infinity() != min);
 
     TYPE       addend = min;

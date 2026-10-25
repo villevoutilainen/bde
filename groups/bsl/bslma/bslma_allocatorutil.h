@@ -860,7 +860,7 @@ template <class t_TYPE>
 inline
 t_TYPE& AllocatorUtil::assign(t_TYPE *lhs, const t_TYPE& rhs, bsl::false_type)
 {
-    BSLS_ASSERT(*lhs == rhs);
+    BSLS_ASSERT_NONCONVEYOR(*lhs == rhs);
     (void)rhs;
     return *lhs;
 }
@@ -898,7 +898,7 @@ void AllocatorUtil::deallocateObject(const t_ALLOCATOR& allocator,
                                      t_POINTER          p,
                                      std::size_t        n)
 {
-    BSLS_ASSERT(t_POINTER() != p);
+    BSLS_ASSERT_NONCONVEYOR(t_POINTER() != p);
     deallocateObjectImp(allocator, p, n, *p);
 }
 
@@ -906,7 +906,7 @@ template <class t_ALLOCATOR, class t_POINTER>
 inline void
 AllocatorUtil::deleteObject(const t_ALLOCATOR& allocator, t_POINTER p)
 {
-    BSLS_ASSERT(t_POINTER() != p);
+    BSLS_ASSERT_NONCONVEYOR(t_POINTER() != p);
     deleteObjectImp(allocator, p, *p);
 }
 

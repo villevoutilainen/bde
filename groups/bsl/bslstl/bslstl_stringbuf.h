@@ -494,7 +494,9 @@ class basic_stringbuf
                     !bsl::is_same<ALLOCATOR, SALLOC>::value, void *>::type = 0)
 
     : BaseType()
-    , d_str(initialString.data(), initialString.size(), allocator)
+    , d_str(BSLS_ASSERT_CONVEYOR_REF(initialString).data(),
+            BSLS_ASSERT_CONVEYOR_REF(initialString).size(),
+            allocator)
     , d_endHint(BSLS_ASSERT_CONVEYOR_REF(initialString).size())
     , d_mode(ios_base::in | ios_base::out)
     {
@@ -523,7 +525,9 @@ class basic_stringbuf
         typename bsl::enable_if<
                     !bsl::is_same<ALLOCATOR, SALLOC>::value, void *>::type = 0)
     : BaseType()
-    , d_str(initialString.data(), initialString.size(), allocator)
+    , d_str(BSLS_ASSERT_CONVEYOR_REF(initialString).data(),
+            BSLS_ASSERT_CONVEYOR_REF(initialString).size(),
+            allocator)
     , d_endHint(BSLS_ASSERT_CONVEYOR_REF(initialString).size())
     , d_mode(modeBitMask)
     {
@@ -629,6 +633,8 @@ class basic_stringbuf
         bsl::enable_if<!bsl::is_same<ALLOCATOR, SALLOC>::value, void>::type
     str(const basic_string<CHAR_TYPE, CHAR_TRAITS, SALLOC>& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         // Note: implemented inline due to Sun CC compilation error.
         d_str.assign(value.data(), value.size());
         d_endHint = d_str.size();
@@ -643,6 +649,7 @@ class basic_stringbuf
     BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void)
     str(const STRING_VIEW_LIKE_TYPE& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         // Note: implemented inline due to Sun CC compilation error.
         ViewType sv = value;
         d_str.assign(sv.data(), sv.size());

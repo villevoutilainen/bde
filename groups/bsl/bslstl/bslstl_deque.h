@@ -2011,7 +2011,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::reference
 Deque_Base<VALUE_TYPE>::operator[](size_type position)
 {
-    BSLS_ASSERT_SAFE(position < size());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(position < size());
 
     return *(begin() + position);
 }
@@ -2034,7 +2034,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::reference
 Deque_Base<VALUE_TYPE>::front()
 {
-    BSLS_ASSERT_SAFE(!empty());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(!empty());
 
     return *d_start;
 }
@@ -2044,7 +2044,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::reference
 Deque_Base<VALUE_TYPE>::back()
 {
-    BSLS_ASSERT_SAFE(!empty());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(!empty());
 
     IteratorImp backIterator = d_finish;
     --backIterator;
@@ -2151,8 +2151,8 @@ Deque_Base<VALUE_TYPE>::capacity() const BSLS_KEYWORD_NOEXCEPT
     IteratorImp last(d_blocks_p + d_blocksLength - 1);
     last += BLOCK_LENGTH - 1;
 
-    BSLS_ASSERT_SAFE(!(d_start < first));          // 'IteratorImp' has no '>='
-    BSLS_ASSERT_SAFE(!(last    < d_finish));
+    BSLS_ASSERT_SAFE_NONCONVEYOR(!(d_start < first));          // 'IteratorImp' has no '>='
+    BSLS_ASSERT_SAFE_NONCONVEYOR(!(last    < d_finish));
 
     const size_type frontCapacity = d_finish - first;
     const size_type backCapacity  = last - d_start;
@@ -2175,7 +2175,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reference
 Deque_Base<VALUE_TYPE>::operator[](size_type position) const
 {
-    BSLS_ASSERT_SAFE(position < size());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(position < size());
 
     return *(begin() + position);
 }
@@ -2198,7 +2198,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reference
 Deque_Base<VALUE_TYPE>::front() const
 {
-    BSLS_ASSERT_SAFE(!empty());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(!empty());
 
     return *d_start;
 }
@@ -2208,7 +2208,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reference
 Deque_Base<VALUE_TYPE>::back() const
 {
-    BSLS_ASSERT_SAFE(!empty());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(!empty());
 
     IteratorImp backIterator = d_finish;
     --backIterator;
@@ -2554,7 +2554,7 @@ void deque<VALUE_TYPE, ALLOCATOR>::privateInsert(
                                               SENTINEL                last,
                                               std::input_iterator_tag tag)
 {
-    BSLS_ASSERT(first != last);
+    BSLS_ASSERT_NONCONVEYOR(first != last);
 
     iterator pos(position.imp());
     const size_type currentSize = this->size();
@@ -2773,7 +2773,7 @@ void deque<VALUE_TYPE, ALLOCATOR>::privateInsert(
                                       SENTINEL                        last,
                                       std::random_access_iterator_tag tag)
 {
-    BSLS_ASSERT(first != last);
+    BSLS_ASSERT_NONCONVEYOR(first != last);
 
     if (position == this->cbegin()) {
         privatePrepend(first, last, tag);
@@ -2945,7 +2945,7 @@ deque<VALUE_TYPE, ALLOCATOR>::privatePrepend(
                                          SENTINEL                        last,
                                          std::random_access_iterator_tag)
 {
-    BSLS_ASSERT_OPT((BloombergLP::bslstl::IteratorUtil
+    BSLS_ASSERT_OPT_NONCONVEYOR((BloombergLP::bslstl::IteratorUtil
                     ::canCalculateInsertDistance<INPUT_ITERATOR, SENTINEL>()));
     const size_type numElements =
                 BloombergLP::bslstl::IteratorUtil::insertDistance(first, last);
@@ -2967,7 +2967,7 @@ deque<VALUE_TYPE, ALLOCATOR>::privatePrepend(
     }
     else {
         end = first + numElements;
-        BSLS_ASSERT_SAFE(end == last);
+        BSLS_ASSERT_SAFE_NONCONVEYOR(end == last);
     }
 #else
     INPUT_ITERATOR end = last;
@@ -3739,8 +3739,8 @@ typename deque<VALUE_TYPE, ALLOCATOR>::iterator
 deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                                       Args&&...      arguments)
 {
-    BSLS_ASSERT(position >= this->cbegin());
-    BSLS_ASSERT(position <= this->cend());
+    BSLS_ASSERT_NONCONVEYOR(position >= this->cbegin());
+    BSLS_ASSERT_NONCONVEYOR(position <= this->cend());
 
     if (position == this->cbegin()) {
         emplace_front(BSLS_COMPILERFEATURES_FORWARD(Args, arguments)...);
@@ -3802,7 +3802,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::pop_front()
 {
-    BSLS_ASSERT(!this->empty());
+    BSLS_ASSERT_NONCONVEYOR(!this->empty());
 
     BloombergLP::bslma::DestructionUtil::destroy(this->d_start.valuePtr());
 
@@ -3818,7 +3818,7 @@ void deque<VALUE_TYPE, ALLOCATOR>::pop_front()
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::pop_back()
 {
-    BSLS_ASSERT(!this->empty());
+    BSLS_ASSERT_NONCONVEYOR(!this->empty());
 
     if (0 == this->d_finish.offsetInBlock()) {
         --this->d_finish;
@@ -3837,8 +3837,8 @@ typename deque<VALUE_TYPE, ALLOCATOR>::iterator
 deque<VALUE_TYPE, ALLOCATOR>::insert(const_iterator    position,
                                      const VALUE_TYPE& value)
 {
-    BSLS_ASSERT(position >= this->cbegin());
-    BSLS_ASSERT(position <= this->cend());
+    BSLS_ASSERT_NONCONVEYOR(position >= this->cbegin());
+    BSLS_ASSERT_NONCONVEYOR(position <= this->cend());
 
     if (position == this->cbegin()) {
         push_front(value);
@@ -3896,8 +3896,8 @@ deque<VALUE_TYPE, ALLOCATOR>::insert(
                            const_iterator                             position,
                            BloombergLP::bslmf::MovableRef<VALUE_TYPE> value)
 {
-    BSLS_ASSERT(position >= this->cbegin());
-    BSLS_ASSERT(position <= this->cend());
+    BSLS_ASSERT_NONCONVEYOR(position >= this->cbegin());
+    BSLS_ASSERT_NONCONVEYOR(position <= this->cend());
 
     VALUE_TYPE& lvalue = value;
 
@@ -3955,8 +3955,8 @@ deque<VALUE_TYPE, ALLOCATOR>::insert(const_iterator    position,
                                      size_type         numElements,
                                      const VALUE_TYPE& value)
 {
-    BSLS_ASSERT(position >= this->cbegin());
-    BSLS_ASSERT(position <= this->cend());
+    BSLS_ASSERT_NONCONVEYOR(position >= this->cbegin());
+    BSLS_ASSERT_NONCONVEYOR(position <= this->cend());
 
     const size_type posIdx = position - this->cbegin();
 
@@ -4029,8 +4029,8 @@ deque<VALUE_TYPE, ALLOCATOR>::insert(const_iterator position,
                                      INPUT_ITERATOR first,
                                      INPUT_ITERATOR last)
 {
-    BSLS_ASSERT_SAFE(position >= this->cbegin());
-    BSLS_ASSERT_SAFE(position <= this->cend());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(position >= this->cbegin());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(position <= this->cend());
 
     const size_type posIdx = position - this->cbegin();
 
@@ -4051,8 +4051,8 @@ deque<VALUE_TYPE, ALLOCATOR>::insert(
                                     const_iterator                    position,
                                     std::initializer_list<value_type> values)
 {
-    BSLS_ASSERT_SAFE(position >= this->cbegin());
-    BSLS_ASSERT_SAFE(position <= this->cend());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(position >= this->cbegin());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(position <= this->cend());
 
     return insert(position, values.begin(), values.end());
 }
@@ -4075,8 +4075,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 typename deque<VALUE_TYPE, ALLOCATOR>::iterator
 deque<VALUE_TYPE, ALLOCATOR>::erase(const_iterator position)
 {
-    BSLS_ASSERT(position >= this->cbegin());
-    BSLS_ASSERT(position <  this->cend());
+    BSLS_ASSERT_NONCONVEYOR(position >= this->cbegin());
+    BSLS_ASSERT_NONCONVEYOR(position <  this->cend());
 
     if (position == const_iterator(this->d_start)) {
         pop_front();
@@ -4095,10 +4095,10 @@ template <class VALUE_TYPE, class ALLOCATOR>
 typename deque<VALUE_TYPE, ALLOCATOR>::iterator
 deque<VALUE_TYPE, ALLOCATOR>::erase(const_iterator first, const_iterator last)
 {
-    BSLS_ASSERT(first >= this->cbegin());
-    BSLS_ASSERT(first <= this->cend());
-    BSLS_ASSERT(first <= last);
-    BSLS_ASSERT(last  <= this->cend());
+    BSLS_ASSERT_NONCONVEYOR(first >= this->cbegin());
+    BSLS_ASSERT_NONCONVEYOR(first <= this->cend());
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(last  <= this->cend());
 
     iterator first_imp = this->begin() + (first - this->cbegin());
     iterator last_imp  = this->begin() + (last  - this->cbegin());

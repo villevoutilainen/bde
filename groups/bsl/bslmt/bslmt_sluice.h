@@ -282,6 +282,7 @@ template <class CLOCK, class DURATION>
 int Sluice::timedWait(const void                                      *token,
                       const bsl::chrono::time_point<CLOCK, DURATION>&  absTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     GenerationDescriptor *g =
                 static_cast<GenerationDescriptor *>(const_cast<void *>(token));

@@ -386,6 +386,7 @@ class TestSpecificationGenerator_TypedOption
     /// Switch the state of this object to the next one.
     bool nextState()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!nextOption() || !nextOption()->nextState()) {
             // There is no subsequent node, or all subsequent nodes finished
             // their cycles.  This node needs to change state.
@@ -1509,6 +1510,7 @@ template <class t_CHAR>
 typename TestSpecificationGenerator<t_CHAR>::Sign
 TestSpecificationGenerator<t_CHAR>::sign() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_signOptionIsPresent);
     return d_sign;
 }
