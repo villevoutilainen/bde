@@ -113,6 +113,7 @@ BSLS_IDENT("$Id: $")
 // assert(3 == p->bitpos());
 // ```
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_keyword.h>
 #include <bsls_platform.h>
@@ -205,7 +206,11 @@ struct Util {
     static
     BSLS_KEYWORD_CONSTEXPR
     TYPE&& forward(typename Util_RemoveReference<TYPE>::type&  t)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+        BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+        BSLS_ASSERT_CONVEYOR_POST(bsls_r,
+                          std::is_object_address(__builtin_addressof(bsls_r)));
 
     /// Return a reference to the specified `t` of non-deduced `TYPE`.  If
     /// `TYPE` is an lvalue-reference type, then the result will be an
@@ -219,7 +224,11 @@ struct Util {
     static
     BSLS_KEYWORD_CONSTEXPR
     TYPE&& forward(typename Util_RemoveReference<TYPE>::type&& t)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+        BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+        BSLS_ASSERT_CONVEYOR_POST(bsls_r,
+                          std::is_object_address(__builtin_addressof(bsls_r)));
 #endif // BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES
 };
 
@@ -296,6 +305,7 @@ template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR
 TYPE&& Util::forward(typename Util_RemoveReference<TYPE>::type& t)
                                                           BSLS_KEYWORD_NOEXCEPT
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     return static_cast<TYPE&&>(t);
 }
@@ -304,6 +314,7 @@ template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR
 TYPE&& Util::forward(typename Util_RemoveReference<TYPE>::type&& t)
                                                           BSLS_KEYWORD_NOEXCEPT
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     static_assert(sizeof(typename Util_AssertNotLvalue<TYPE>::type) > 0,
                   "Just to trigger instantiation of the checker template.");

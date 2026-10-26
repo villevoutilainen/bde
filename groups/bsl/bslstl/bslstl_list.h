@@ -1268,7 +1268,8 @@ class list {
     list(from_range_t                               ,
          BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range,
          const ALLOCATOR&                           basicAllocator =
-                                                                  ALLOCATOR());
+                                                                  ALLOCATOR())
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
     /// Create a list having the same value as the specified `original`
     /// object.  Use the allocator returned by
@@ -1437,7 +1438,8 @@ class list {
     /// parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    void assign_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
+    void assign_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
                               // *** iterators ***
 
@@ -1524,7 +1526,8 @@ class list {
     /// (template parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    void append_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
+    void append_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Append to the back of this list a newly created `value_type` object,
@@ -1562,7 +1565,8 @@ class list {
     /// convertible to (template parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    void prepend_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
+    void prepend_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
     /// Append to the back of this list a copy of the specified `value`.
     /// This method offers full guarantee of rollback in case an exception
@@ -1710,7 +1714,8 @@ class list {
     template <class t_RANGE>
     BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
     iterator insert_range(const_iterator                             position,
-                          BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
+                          BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
                           // *** list operations ***
 
@@ -2457,7 +2462,7 @@ template <class VALUE, class ALLOCATOR>
 inline
 void list<VALUE, ALLOCATOR>::quickSwap(list *other)
 {
-    BSLS_ASSERT_SAFE(allocatorImp() == other->allocatorImp());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(allocatorImp() == other->allocatorImp());
 
     using std::swap;
 
@@ -3209,7 +3214,7 @@ template <class VALUE, class ALLOCATOR>
 inline
 void list<VALUE, ALLOCATOR>::merge(list& other)
 {
-    BSLS_ASSERT_SAFE(this->allocatorImp() == other.allocatorImp());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(this->allocatorImp() == other.allocatorImp());
 
     merge(other, DefaultLessThan());
 }
@@ -3220,7 +3225,8 @@ void list<VALUE, ALLOCATOR>::merge(BloombergLP::bslmf::MovableRef<list> other)
 {
     list& lvalue = other;
 
-    BSLS_ASSERT_SAFE(this->allocatorImp() == lvalue.allocatorImp());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(
+                         this->allocatorImp() == lvalue.allocatorImp());
 
     merge(lvalue, DefaultLessThan());
 }
@@ -3233,7 +3239,7 @@ void list<VALUE, ALLOCATOR>::merge(list& other, COMPARE comparator)
         return;                                                       // RETURN
     }
 
-    BSLS_ASSERT(this->allocatorImp() == other.allocatorImp());
+    BSLS_ASSERT_NONCONVEYOR(this->allocatorImp() == other.allocatorImp());
 
     if (other.empty()) {
         // This is an important special case to avoid pointing to sentinel.
@@ -3263,7 +3269,8 @@ void list<VALUE, ALLOCATOR>::merge(
 {
     list& lvalue = other;
 
-    BSLS_ASSERT_SAFE(this->allocatorImp() == lvalue.allocatorImp());
+    BSLS_ASSERT_SAFE_NONCONVEYOR(
+                         this->allocatorImp() == lvalue.allocatorImp());
 
     merge(lvalue, comparator);
 }
@@ -3342,7 +3349,7 @@ void list<VALUE, ALLOCATOR>::sort(COMPARE comparator)
 template <class VALUE, class ALLOCATOR>
 void list<VALUE, ALLOCATOR>::splice(const_iterator dstPosition, list& src)
 {
-    BSLS_ASSERT(allocatorImp() == src.allocatorImp());
+    BSLS_ASSERT_NONCONVEYOR(allocatorImp() == src.allocatorImp());
     BSLS_ASSERT(&src != this);
 
     if (src.empty()) {
@@ -3380,7 +3387,7 @@ void list<VALUE, ALLOCATOR>::splice(const_iterator dstPosition,
                                     list&          src,
                                     const_iterator srcNode)
 {
-    BSLS_ASSERT(allocatorImp() == src.allocatorImp());
+    BSLS_ASSERT_NONCONVEYOR(allocatorImp() == src.allocatorImp());
 
     NodePtr pPos          = dstPosition.d_node_p;
     NodePtr pSrcNode      = srcNode.d_node_p;
@@ -3418,7 +3425,7 @@ void list<VALUE, ALLOCATOR>::splice(const_iterator dstPosition,
                                     const_iterator first,
                                     const_iterator last)
 {
-    BSLS_ASSERT(allocatorImp() == src.allocatorImp());
+    BSLS_ASSERT_NONCONVEYOR(allocatorImp() == src.allocatorImp());
 
     size_type n = bsl::distance(first, last);
 

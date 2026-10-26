@@ -611,7 +611,7 @@ TestValuesArrayIterator<VALUE>::TestValuesArrayIterator(
     BSLS_ASSERT_SAFE(end);
     BSLS_ASSERT_SAFE(dereferenceable);
     BSLS_ASSERT_SAFE(isValid);
-    BSLS_ASSERT_SAFE(*isValid);
+    BSLS_ASSERT_SAFE_NONCONVEYOR(*isValid);
 }
 
 template <class VALUE>
@@ -623,7 +623,7 @@ TestValuesArrayIterator<VALUE>::TestValuesArrayIterator(
 , d_dereferenceable_p(original.d_dereferenceable_p)
 , d_isValid_p(original.d_isValid_p)
 {
-    BSLS_ASSERT_OPT(*original.d_isValid_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*original.d_isValid_p);
 }
 
 // MANIPULATORS
@@ -631,7 +631,7 @@ template <class VALUE>
 TestValuesArrayIterator<VALUE>&
 TestValuesArrayIterator<VALUE>::operator=(const TestValuesArrayIterator& other)
 {
-    BSLS_ASSERT_OPT(*other.d_isValid_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*other.d_isValid_p);
 
     d_data_p            = other.d_data_p;
     d_end_p             = other.d_end_p;
@@ -645,8 +645,8 @@ template <class VALUE>
 TestValuesArrayIterator<VALUE>&
 TestValuesArrayIterator<VALUE>::operator++()
 {
-    BSLS_ASSERT_OPT(d_data_p != d_end_p);
-    BSLS_ASSERT_OPT(*d_isValid_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(d_data_p != d_end_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*d_isValid_p);
 
     *d_dereferenceable_p = false;
     *d_isValid_p = false;
@@ -661,8 +661,8 @@ template <class VALUE>
 TestValuesArray_PostIncrementPtr<VALUE>
 TestValuesArrayIterator<VALUE>::operator++(int)
 {
-    BSLS_ASSERT_OPT(*d_isValid_p);
-    BSLS_ASSERT_OPT(d_data_p != d_end_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*d_isValid_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(d_data_p != d_end_p);
 
     TestValuesArray_PostIncrementPtr<VALUE> result(d_data_p);
     this->operator++();
@@ -674,8 +674,8 @@ template <class VALUE>
 inline
 const VALUE& TestValuesArrayIterator<VALUE>::operator *() const
 {
-    BSLS_ASSERT_OPT(*d_isValid_p);
-    BSLS_ASSERT_OPT(*d_dereferenceable_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*d_isValid_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*d_dereferenceable_p);
 
     *d_dereferenceable_p = false;
     return *d_data_p;
@@ -685,8 +685,8 @@ template <class VALUE>
 inline
 const VALUE *TestValuesArrayIterator<VALUE>::operator->() const
 {
-    BSLS_ASSERT_OPT(*d_isValid_p);
-    BSLS_ASSERT_OPT(*d_dereferenceable_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*d_isValid_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*d_dereferenceable_p);
 
     *d_dereferenceable_p = false;
     return d_data_p;
@@ -730,8 +730,8 @@ inline
 bool bsltf::operator==(const bsltf::TestValuesArrayIterator<VALUE>& lhs,
                        const bsltf::TestValuesArrayIterator<VALUE>& rhs)
 {
-    BSLS_ASSERT_OPT(*lhs.d_isValid_p);
-    BSLS_ASSERT_OPT(*rhs.d_isValid_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*lhs.d_isValid_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*rhs.d_isValid_p);
 
     return lhs.d_data_p == rhs.d_data_p;
 }
@@ -741,8 +741,8 @@ inline
 bool bsltf::operator!=(const bsltf::TestValuesArrayIterator<VALUE>& lhs,
                        const bsltf::TestValuesArrayIterator<VALUE>& rhs)
 {
-    BSLS_ASSERT_OPT(*lhs.d_isValid_p);
-    BSLS_ASSERT_OPT(*rhs.d_isValid_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*lhs.d_isValid_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(*rhs.d_isValid_p);
 
     return !(lhs == rhs);
 }

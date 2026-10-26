@@ -418,7 +418,8 @@ using variant_alternative_t =
 /// * constexpr is not implemented
 template <class t_HEAD, class... t_TAIL>
 void swap(bsl::variant<t_HEAD, t_TAIL...>& lhs,
-          bsl::variant<t_HEAD, t_TAIL...>& rhs);
+          bsl::variant<t_HEAD, t_TAIL...>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // HASH SPECIALIZATIONS
 
@@ -434,7 +435,8 @@ void hashAppend(t_HASHALG& hashAlg, const variant<t_HEAD, t_TAIL...>& input);
 /// appear exactly once in the variant's list of alternatives.
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
 bool holds_alternative(
-                  const variant<t_HEAD, t_TAIL...>& obj) BSLS_KEYWORD_NOEXCEPT;
+                  const variant<t_HEAD, t_TAIL...>& obj) BSLS_KEYWORD_NOEXCEPT
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 #endif
 #ifdef BSL_VARIANT_FULL_IMPLEMENTATION
 /// Return a reference to the alternative object at index (template
@@ -444,17 +446,21 @@ bool holds_alternative(
 /// type of `obj`.
 template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 typename variant_alternative<t_INDEX, variant<t_HEAD, t_TAIL...> >::type& get(
-                                              variant<t_HEAD, t_TAIL...>& obj);
+                                              variant<t_HEAD, t_TAIL...>& obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 const typename variant_alternative<t_INDEX, variant<t_HEAD, t_TAIL...> >::type&
-get(const variant<t_HEAD, t_TAIL...>& obj);
+get(const variant<t_HEAD, t_TAIL...>& obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 typename variant_alternative<t_INDEX, variant<t_HEAD, t_TAIL...> >::type&& get(
-                                             variant<t_HEAD, t_TAIL...>&& obj);
+                                             variant<t_HEAD, t_TAIL...>&& obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 const typename variant_alternative<t_INDEX,
                                    variant<t_HEAD, t_TAIL...> >::type&&
-get(const variant<t_HEAD, t_TAIL...>&& obj);
+get(const variant<t_HEAD, t_TAIL...>&& obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 
 /// Return a reference to the alternative object with type (template
 /// parameter) `t_TYPE` in the specified `obj`.  If `t_TYPE` is not the type
@@ -462,13 +468,17 @@ get(const variant<t_HEAD, t_TAIL...>&& obj);
 /// `bad_variant_access`.  `t_TYPE` shall appear exactly once in the
 /// variant's list of alternatives.
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
-t_TYPE& get(variant<t_HEAD, t_TAIL...>& obj);
+t_TYPE& get(variant<t_HEAD, t_TAIL...>& obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
-const t_TYPE& get(const variant<t_HEAD, t_TAIL...>& obj);
+const t_TYPE& get(const variant<t_HEAD, t_TAIL...>& obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
-t_TYPE&& get(variant<t_HEAD, t_TAIL...>&& obj);
+t_TYPE&& get(variant<t_HEAD, t_TAIL...>&& obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
-const t_TYPE&& get(const variant<t_HEAD, t_TAIL...>&& obj);
+const t_TYPE&& get(const variant<t_HEAD, t_TAIL...>&& obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 
 template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 typename add_pointer<
@@ -593,12 +603,14 @@ struct Variant_GetTypeReturnType<t_TYPE, bsl::variant<t_HEAD, t_TAIL...> > {
 /// type of `obj`.  Note that `t_VARIANT` may be const-qualified.
 template <size_t t_INDEX, class t_VARIANT>
 typename Variant_GetIndexReturnType<t_INDEX, t_VARIANT>::type
-get(t_VARIANT&                                obj);
+get(t_VARIANT&                                obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 template <size_t t_INDEX, class t_VARIANT>
 typename Variant_GetIndexReturnType<
     t_INDEX,
     BloombergLP::bslmf::MovableRef<t_VARIANT> >::type
-get(BloombergLP::bslmf::MovableRef<t_VARIANT> obj);
+get(BloombergLP::bslmf::MovableRef<t_VARIANT> obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 
 /// Return a reference to the alternative object with type (template parameter)
 /// `t_TYPE` in the specified `obj`.  If `t_TYPE` is not the type of the
@@ -607,14 +619,17 @@ get(BloombergLP::bslmf::MovableRef<t_VARIANT> obj);
 /// list of alternatives.
 template <class t_TYPE, class t_VARIANT>
 typename Variant_GetTypeReturnType<t_TYPE&, t_VARIANT>::type get(
-                                t_VARIANT&                                obj);
+                                t_VARIANT&                                obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 template <class t_TYPE, class t_VARIANT>
 typename Variant_GetTypeReturnType<const t_TYPE&, t_VARIANT>::type get(
-                                const t_VARIANT&                          obj);
+                                const t_VARIANT&                          obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 template <class t_TYPE, class t_VARIANT>
 typename Variant_GetTypeReturnType<BloombergLP::bslmf::MovableRef<t_TYPE>,
                                    t_VARIANT>::type get(
-                                BloombergLP::bslmf::MovableRef<t_VARIANT> obj);
+                                BloombergLP::bslmf::MovableRef<t_VARIANT> obj)
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 
 // Return a pointer to the alternative object with index (template parameter)
 // `t_INDEX` in the specified `obj`, or a null pointer if `obj` itself is a
@@ -647,7 +662,8 @@ typename Variant_GetTypeReturnType<const t_TYPE, t_VARIANT>::pointer get_if(
 /// alternatives shall support `operator==`.
 template <class t_HEAD, class... t_TAIL>
 bool operator==(const variant<t_HEAD, t_TAIL...>& lhs,
-                const variant<t_HEAD, t_TAIL...>& rhs);
+                const variant<t_HEAD, t_TAIL...>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` have different active
 /// alternatives or only one holds an alternative, or if they have the same
@@ -655,7 +671,8 @@ bool operator==(const variant<t_HEAD, t_TAIL...>& lhs,
 /// return `false`.  All alternatives shall support `operator!=`.
 template <class t_HEAD, class... t_TAIL>
 bool operator!=(const variant<t_HEAD, t_TAIL...>& lhs,
-                const variant<t_HEAD, t_TAIL...>& rhs);
+                const variant<t_HEAD, t_TAIL...>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the index of the active alternative in the specified
 /// `lhs` is less than that of the specified `rhs`, or if both have the same
@@ -664,7 +681,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL...>& lhs,
 /// otherwise, return `false`.  All alternatives shall support `operator<`.
 template <class t_HEAD, class... t_TAIL>
 bool operator<(const variant<t_HEAD, t_TAIL...>& lhs,
-               const variant<t_HEAD, t_TAIL...>& rhs);
+               const variant<t_HEAD, t_TAIL...>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the index of the active alternative in the specified
 /// `lhs` is greater than that of the specified `rhs`, or if both have the
@@ -674,7 +692,8 @@ bool operator<(const variant<t_HEAD, t_TAIL...>& lhs,
 /// `operator>`.
 template <class t_HEAD, class... t_TAIL>
 bool operator>(const variant<t_HEAD, t_TAIL...>& lhs,
-               const variant<t_HEAD, t_TAIL...>& rhs);
+               const variant<t_HEAD, t_TAIL...>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the index of the active alternative in the specified
 /// `lhs` is less than that of the specified `rhs`, or if both have the same
@@ -683,7 +702,8 @@ bool operator>(const variant<t_HEAD, t_TAIL...>& lhs,
 /// otherwise, return `false`.  All alternatives shall support `operator<=`.
 template <class t_HEAD, class... t_TAIL>
 bool operator<=(const variant<t_HEAD, t_TAIL...>& lhs,
-                const variant<t_HEAD, t_TAIL...>& rhs);
+                const variant<t_HEAD, t_TAIL...>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the index of the active alternative in the specified
 /// `lhs` is greater than that of the specified `rhs`, or if both have the
@@ -693,7 +713,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL...>& lhs,
 /// `operator>=`.
 template <class t_HEAD, class... t_TAIL>
 bool operator>=(const variant<t_HEAD, t_TAIL...>& lhs,
-                const variant<t_HEAD, t_TAIL...>& rhs);
+                const variant<t_HEAD, t_TAIL...>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #if defined BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON &&             \
     defined BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
@@ -709,7 +730,8 @@ template <class... t_ALTS>
     requires(std::three_way_comparable<t_ALTS> && ...)
 constexpr std::common_comparison_category_t<
     std::compare_three_way_result_t<t_ALTS>...>
-operator<=>(const variant<t_ALTS...>& lhs, const variant<t_ALTS...>& rhs);
+operator<=>(const variant<t_ALTS...>& lhs, const variant<t_ALTS...>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 #endif
 #endif
 
@@ -1085,12 +1107,20 @@ struct Variant_ImpUtil {
     template <class t_HEAD, class... t_TAIL>
     static bsl::variant<t_HEAD, t_TAIL...>& asVariant(
                                             bsl::variant<t_HEAD, t_TAIL...>& v)
+        BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(v)
+        BSLS_ASSERT_CONVEYOR_POST(bslstl_r,
+                       std::is_object_address(__builtin_addressof(bslstl_r)))
     {
         return v;
     }
     template <class t_HEAD, class... t_TAIL>
     static const bsl::variant<t_HEAD, t_TAIL...>& asVariant(
                                       const bsl::variant<t_HEAD, t_TAIL...>& v)
+        BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(v)
+        BSLS_ASSERT_CONVEYOR_POST(bslstl_r,
+                       std::is_object_address(__builtin_addressof(bslstl_r)))
     {
         return v;
     }
@@ -1102,12 +1132,20 @@ struct Variant_ImpUtil {
     template <class t_HEAD, class... t_TAIL>
     static bsl::variant<t_HEAD, t_TAIL...>&& asVariant(
                                            bsl::variant<t_HEAD, t_TAIL...>&& v)
+        BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(v)
+        BSLS_ASSERT_CONVEYOR_POST(bslstl_r,
+                       std::is_object_address(__builtin_addressof(bslstl_r)))
     {
         return std::move(v);
     }
     template <class t_HEAD, class... t_TAIL>
     static const bsl::variant<t_HEAD, t_TAIL...>&& asVariant(
                                      const bsl::variant<t_HEAD, t_TAIL...>&& v)
+        BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(v)
+        BSLS_ASSERT_CONVEYOR_POST(bslstl_r,
+                       std::is_object_address(__builtin_addressof(bslstl_r)))
     {
         return std::move(v);
     }
@@ -2139,6 +2177,7 @@ namespace bsl {
 ///   supported.
 template <class t_RET, class t_VISITOR, class t_VARIANT>
 t_RET visit(t_VISITOR&& visitor, t_VARIANT&& variant)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(variant)
 {
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
@@ -2167,6 +2206,7 @@ typename bsl::invoke_result<
     t_VISITOR&&,
     decltype(get<0>(BloombergLP::bslstl::Variant_ImpUtil::
                     asVariant(std::forward<t_VARIANT>(variant))))>::type
+    BSLS_ASSERT_CONVEYOR_REQUIRES(variant)
 {
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
     typedef decltype(ImpUtil::asVariant(std::forward<t_VARIANT>(variant)))
@@ -2199,6 +2239,7 @@ typename bsl::invoke_result<
 /// function.
 template <class t_RET, class t_VISITOR, class t_VARIANT>
 t_RET visitR(t_VISITOR& visitor, t_VARIANT&& variant)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(variant)
 {
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
     return visit<t_RET>(visitor,
@@ -2221,6 +2262,7 @@ t_RET visitR(t_VISITOR& visitor, t_VARIANT&& variant)
 /// `visit` where the visitor type parameter is explicitly specified.
 template <class t_RET, class t_VISITOR, class t_VARIANT>
 t_RET visitR(t_VISITOR& visitor, t_VARIANT& variant)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(variant)
 {
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
@@ -2247,6 +2289,7 @@ t_RET visitR(t_VISITOR& visitor, t_VARIANT& variant)
 template <class t_RET, class t_VISITOR, class t_VARIANT>
 t_RET visitR(t_VISITOR&                                visitor,
              BloombergLP::bslmf::MovableRef<t_VARIANT> variant)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(variant)
 {
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
@@ -2267,6 +2310,7 @@ typename bsl::invoke_result<
     t_VISITOR&,
     typename bsl::variant_alternative<0, t_VARIANT>::type&>::type
 visit(t_VISITOR& visitor, t_VARIANT& variant)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(variant)
 {
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
@@ -2296,6 +2340,7 @@ typename bsl::invoke_result<
     BloombergLP::bslmf::MovableRef<
         typename bsl::variant_alternative<0, t_VARIANT>::type> >::type
 visit(t_VISITOR& visitor, BloombergLP::bslmf::MovableRef<t_VARIANT> variant)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(variant)
 {
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
@@ -2622,6 +2667,7 @@ class Variant_CopyAssignVisitor {
     void operator()(bsl::in_place_index_t<t_INDEX>, const t_TYPE& value) const
     {
 #ifdef BSL_VARIANT_FULL_IMPLEMENTATION
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_variant_p);
         bsl::get<t_INDEX>(*d_variant_p) = value;
 #else
         // When invoking this visitor in C++03, `t_INDEX` may not be the index
@@ -2678,6 +2724,7 @@ class Variant_MoveAssignVisitor {
     void operator()(bsl::in_place_index_t<t_INDEX>, t_TYPE& value) const
     {
 #ifdef BSL_VARIANT_FULL_IMPLEMENTATION
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_variant_p);
         bsl::get<t_INDEX>(*d_variant_p) = MoveUtil::move(value);
 #else
         typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
@@ -2730,6 +2777,7 @@ struct Variant_DestructorVisitor {
         bool operator()(bsl::in_place_index_t<t_INDEX>,                       \
                         const t_TYPE&                  value) const           \
         {                                                                     \
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_variant_p);                         \
             return (bsl::get<t_INDEX>(*d_variant_p) OP value);                \
         }                                                                     \
     };                                                                        \
@@ -2737,7 +2785,9 @@ struct Variant_DestructorVisitor {
     template <class t_VARIANT>                                                \
     bool Variant_ImpUtil::NAME(const t_VARIANT& lhs, const t_VARIANT& rhs)    \
     {                                                                         \
-        BSLS_ASSERT_NONCONVEYOR(lhs.index() == rhs.index() &&                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(lhs));                \
+        BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(rhs));                \
+        BSLS_ASSERT(lhs.index() == rhs.index() &&                             \
                                 !lhs.valueless_by_exception());               \
                                                                               \
         Variant_##NAME##Visitor<t_VARIANT> NAME##Visitor(                     \
@@ -2779,7 +2829,9 @@ struct Variant_DestructorVisitor {
     template <class t_VARIANT>                                                \
     bool Variant_ImpUtil::NAME(const t_VARIANT& lhs, const t_VARIANT& rhs)    \
     {                                                                         \
-        BSLS_ASSERT_NONCONVEYOR(lhs.index() == rhs.index() &&                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(lhs));                \
+        BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(rhs));                \
+        BSLS_ASSERT(lhs.index() == rhs.index() &&                             \
                                 !lhs.valueless_by_exception());               \
                                                                               \
         Variant_##NAME##Visitor<t_VARIANT> NAME##Visitor(                     \
@@ -2833,6 +2885,7 @@ class Variant_SwapVisitor {
     void operator()(bsl::in_place_index_t<t_INDEX>, t_TYPE& value) const
     {
 #ifdef BSL_VARIANT_FULL_IMPLEMENTATION
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_variant_p);
         BloombergLP::bslalg::SwapUtil::swap(
                          BSLS_UTIL_ADDRESSOF(value),
                          BSLS_UTIL_ADDRESSOF(bsl::get<t_INDEX>(*d_variant_p)));
@@ -4901,6 +4954,7 @@ class variant
                   BSLSTL_VARIANT_HAS_UNIQUE_TYPE(t_TYPE) &&
                   std::is_constructible<t_TYPE, t_ARGS...>::value> >
     t_TYPE& emplace(t_ARGS&&... args)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // This function template must be defined inline inside the class
         // definition, as Microsoft Visual C++ does not recognize the
@@ -4936,6 +4990,7 @@ class variant
                                         std::initializer_list<INIT_LIST_TYPE>&,
                                         t_ARGS...>::value> >
     t_TYPE& emplace(std::initializer_list<INIT_LIST_TYPE> il, t_ARGS&&... args)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // This function template must be defined inline inside the class
         // definition, as Microsoft Visual C++ does not recognize the
@@ -4970,6 +5025,7 @@ class variant
                                         t_ARGS...>::value> >
     typename variant_alternative<t_INDEX, variant<t_HEAD, t_TAIL...> >::type&
     emplace(t_ARGS&&... args)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // This function template must be defined inline inside the class
         // definition, as Microsoft Visual C++ does not recognize the
@@ -5006,6 +5062,7 @@ class variant
                                         t_ARGS...>::value> >
     typename variant_alternative<t_INDEX, variant<t_HEAD, t_TAIL...> >::type&
     emplace(std::initializer_list<INIT_LIST_TYPE> il, t_ARGS&&... args)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // This function template must be defined inline inside the class
         // definition, as Microsoft Visual C++ does not recognize the
@@ -5427,7 +5484,7 @@ class variant
     typename bsl::enable_if<
         BloombergLP::bslstl::Variant_AssignsFromType<variant, t_TYPE>::value,
         variant&>::type
-    operator=(t_TYPE&& value)
+    operator=(t_TYPE&& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // This function template must be defined inline inside the class
         // definition, as Microsoft Visual C++ does not recognize the
@@ -5506,7 +5563,8 @@ class variant
     /// following ways:
     /// * `constexpr` is not implemented
     /// * `noexcept` specification is not implemented
-    void swap(variant& other);
+    void swap(variant& other) BSLS_ASSERT_CONVEYOR_REQUIRES(other)
+                              BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 #ifdef BSL_VARIANT_FULL_IMPLEMENTATION
@@ -5535,7 +5593,7 @@ class variant
     /// * `constexpr` is not implemented
     /// This is because no constructors are currently constexpr and there is no
     /// way to test the constexpr property of this function.
-    size_t index() const BSLS_KEYWORD_NOEXCEPT;
+    size_t index() const BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR;
 
     /// Return `false` if there is an alternative object currently managed
     /// by this `variant` object, and `true` otherwise.  A `variant` object
@@ -5546,7 +5604,8 @@ class variant
     /// * `constexpr` is not implemented
     /// This is because no constructors are currently constexpr and there is no
     /// way to test the constexpr property of this function.
-    bool valueless_by_exception() const BSLS_KEYWORD_NOEXCEPT;
+    bool valueless_by_exception() const BSLS_KEYWORD_NOEXCEPT
+                                                        BSLS_KEYWORD_CONVEYOR;
 };
 
 #endif
@@ -5584,6 +5643,7 @@ t_RET& Variant_ImpUtil::getAlternative(
 template <class t_RET, size_t t_INDEX, class t_VARIANT>
 t_RET& Variant_ImpUtil::get(t_VARIANT& variant)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(variant));
     if (variant.index() != t_INDEX) {
         BSLS_THROW(bsl::bad_variant_access());
     }
@@ -5595,6 +5655,7 @@ t_RET& Variant_ImpUtil::get(t_VARIANT& variant)
 template <class t_RET, size_t t_INDEX, class t_VARIANT>
 t_RET& Variant_ImpUtil::get(const t_VARIANT& variant)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(variant));
     if (variant.index() != t_INDEX) {
         BSLS_THROW(bsl::bad_variant_access());
     }
@@ -5607,6 +5668,7 @@ t_RET& Variant_ImpUtil::get(const t_VARIANT& variant)
 template <class t_RET, class t_VISITOR, class t_VARIANT>
 t_RET Variant_ImpUtil::visit(t_VISITOR&& visitor, t_VARIANT&& variant)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(variant));
     static constexpr size_t varSize =
         bsl::variant_size<bsl::remove_reference_t<t_VARIANT> >::value;
 
@@ -5631,6 +5693,7 @@ t_RET Variant_ImpUtil::visit(t_VISITOR&& visitor, t_VARIANT&& variant)
 template <class t_RET, class t_VISITOR, class t_VARIANT>
 t_RET Variant_ImpUtil::visitId(t_VISITOR&& visitor, t_VARIANT&& variant)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(variant));
     static constexpr size_t varSize =
         bsl::variant_size<bsl::remove_reference_t<t_VARIANT> >::value;
 
@@ -5869,6 +5932,8 @@ const t_TYPE& Variant_DataImp<t_TYPE>::value() const
 template <class t_VARIANT>
 void variant_swapImpl(bsl::true_type, t_VARIANT& lhs, t_VARIANT& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(lhs));
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(rhs));
     if (lhs.get_allocator() == rhs.get_allocator()) {
         lhs.swap(rhs);
         return;                                                       // RETURN
@@ -5887,6 +5952,8 @@ void variant_swapImpl(bsl::true_type, t_VARIANT& lhs, t_VARIANT& rhs)
 template <class t_VARIANT>
 void variant_swapImpl(bsl::false_type, t_VARIANT& lhs, t_VARIANT& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(lhs));
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(rhs));
     lhs.swap(rhs);
 }
 
@@ -5961,6 +6028,7 @@ Variant_Base<t_HEAD, t_TAIL...>::Variant_Base(bsl::allocator_arg_t,
 : AllocBase(allocator)
 , d_type(bsl::variant_npos)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.index() != bsl::variant_npos) {
         BloombergLP::bslstl::Variant_CopyConstructVisitor<Variant_Base>
             copyConstructor(this);
@@ -5976,6 +6044,7 @@ Variant_Base<t_HEAD, t_TAIL...>::Variant_Base(bsl::allocator_arg_t,
 : AllocBase(allocator)
 , d_type(bsl::variant_npos)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.index() != bsl::variant_npos) {
         BloombergLP::bslstl::Variant_MoveConstructVisitor<Variant_Base>
             moveConstructor(this);
@@ -6430,6 +6499,7 @@ Variant_Base<t_HEAD, t_TAIL...>::Variant_Base(bsl::allocator_arg_t,
 : AllocBase(allocator)
 , d_type(bsl::variant_npos)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (!original.valueless_by_exception()) {
         BloombergLP::bslstl::Variant_CopyConstructVisitor<Variant_Base>
             copyConstructor(this);
@@ -7254,7 +7324,8 @@ void Variant_Base<t_HEAD, t_TAIL...>::reset() BSLS_KEYWORD_NOEXCEPT
 {
     if (d_type != bsl::variant_npos) {
         BloombergLP::bslstl::Variant_DestructorVisitor destructor;
-        bsl::visit(destructor, static_cast<Variant&>(*this));
+        bsl::visit(destructor,
+                   BSLS_ASSERT_CONVEYOR_REF(static_cast<Variant&>(*this)));
         d_type = bsl::variant_npos;
     }
 }
@@ -9116,6 +9187,7 @@ void variant<t_HEAD, t_TAIL...>::swap(variant& other)
 template <class t_HEAD, class... t_TAIL>
 inline
 size_t variant<t_HEAD, t_TAIL...>::index() const BSLS_KEYWORD_NOEXCEPT
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     return this->d_type;
 }
@@ -9123,7 +9195,7 @@ size_t variant<t_HEAD, t_TAIL...>::index() const BSLS_KEYWORD_NOEXCEPT
 template <class t_HEAD, class... t_TAIL>
 inline
 bool variant<t_HEAD, t_TAIL...>::valueless_by_exception()
-const BSLS_KEYWORD_NOEXCEPT
+const BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR
 {
     return this->d_type == bsl::variant_npos;
 }
@@ -9333,7 +9405,11 @@ get_if(variant<t_HEAD, t_TAIL...> *ptr) BSLS_KEYWORD_NOEXCEPT
     typedef BloombergLP::bslstl::Variant_ImpUtil                      ImpUtil;
     typedef typename bsl::variant_alternative<t_INDEX, Variant>::type Ret;
 
-    if (ptr == 0 || ptr->index() != t_INDEX) {
+    if (ptr == 0) {
+        return NULL;                                                  // RETURN
+    }
+    BSLS_ASSERT_CONVEYOR_OBJECT(ptr);
+    if (ptr->index() != t_INDEX) {
         return NULL;                                                  // RETURN
     }
 
@@ -9352,7 +9428,11 @@ get_if(const variant<t_HEAD, t_TAIL...> *ptr) BSLS_KEYWORD_NOEXCEPT
     typedef BloombergLP::bslstl::Variant_ImpUtil                      ImpUtil;
     typedef typename bsl::variant_alternative<t_INDEX, Variant>::type Ret;
 
-    if (ptr == 0 || ptr->index() != t_INDEX) {
+    if (ptr == 0) {
+        return NULL;                                                  // RETURN
+    }
+    BSLS_ASSERT_CONVEYOR_OBJECT(ptr);
+    if (ptr->index() != t_INDEX) {
         return NULL;                                                  // RETURN
     }
     return BSLS_UTIL_ADDRESSOF((ImpUtil::get<const Ret, t_INDEX>(*ptr)));
@@ -9369,7 +9449,11 @@ typename add_pointer<t_TYPE>::type get_if(
     typedef typename bsl::variant<t_HEAD, t_TAIL...> Variant;
     typedef BloombergLP::bslstl::Variant_ImpUtil     ImpUtil;
 
-    if (ptr == 0 || ptr->index() != BSLSTL_VARIANT_INDEX_OF(t_TYPE, Variant)) {
+    if (ptr == 0) {
+        return NULL;                                                  // RETURN
+    }
+    BSLS_ASSERT_CONVEYOR_OBJECT(ptr);
+    if (ptr->index() != BSLSTL_VARIANT_INDEX_OF(t_TYPE, Variant)) {
         return NULL;                                                  // RETURN
     }
     return BSLS_UTIL_ADDRESSOF((
@@ -9387,7 +9471,11 @@ typename add_pointer<const t_TYPE>::type get_if(
     typedef typename bsl::variant<t_HEAD, t_TAIL...> Variant;
     typedef BloombergLP::bslstl::Variant_ImpUtil     ImpUtil;
 
-    if (ptr == 0 || ptr->index() != BSLSTL_VARIANT_INDEX_OF(t_TYPE, Variant)) {
+    if (ptr == 0) {
+        return NULL;                                                  // RETURN
+    }
+    BSLS_ASSERT_CONVEYOR_OBJECT(ptr);
+    if (ptr->index() != BSLSTL_VARIANT_INDEX_OF(t_TYPE, Variant)) {
         return NULL;                                                  // RETURN
     }
     return BSLS_UTIL_ADDRESSOF(
@@ -9405,7 +9493,11 @@ get_if(t_VARIANT *ptr) BSLS_KEYWORD_NOEXCEPT
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
     typedef typename bsl::variant_alternative<t_INDEX, t_VARIANT>::type Ret;
 
-    if (ptr == 0 || ptr->index() != t_INDEX) {
+    if (ptr == 0) {
+        return NULL;                                                  // RETURN
+    }
+    BSLS_ASSERT_CONVEYOR_OBJECT(ptr);
+    if (ptr->index() != t_INDEX) {
         return NULL;                                                  // RETURN
     }
 
@@ -9455,6 +9547,7 @@ get_if(const t_VARIANT *ptr) BSLS_KEYWORD_NOEXCEPT
 template <class t_HASHALG, class t_HEAD, class... t_TAIL>
 void hashAppend(t_HASHALG& hashAlg, const variant<t_HEAD, t_TAIL...>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(input));
     if (!input.valueless_by_exception()) {
         hashAppend(hashAlg, input.index());
         BloombergLP::bslstl::Variant_HashVisitor<t_HASHALG> hashVisitor(
@@ -9613,6 +9706,8 @@ operator<=>(const variant<t_ALTS...>& lhs, const variant<t_ALTS...>& rhs)
             return BloombergLP::bslstl::Variant_ImpUtil::visitId<RET>(
                     [&lhs]<size_t t_INDEX>(bsl::in_place_index_t<t_INDEX>,
                                            auto&& rhs_value) {
+                        BSLS_ASSERT_CONVEYOR_OBJECT(
+                                                  __builtin_addressof(lhs));
                         return bsl::get<t_INDEX>(lhs) <=> rhs_value;  // RETURN
                     },
                     rhs);
