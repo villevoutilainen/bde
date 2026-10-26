@@ -1260,12 +1260,14 @@ class Optional_Base {
     /// `t_TYPE` object if `true == has_value()` and throw
     /// `bsl::bad_optional_access` otherwise.
     t_TYPE&  value() &;
-    t_TYPE&& value() &&;
+    t_TYPE&& value() &&
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # else
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.  Throws a `bsl::bad_optional_access` if the
     /// `Optional_Base` object is disengaged.
-    t_TYPE& value();
+    t_TYPE& value()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 
 # ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
@@ -1303,19 +1305,21 @@ class Optional_Base {
     /// Return a pointer providing modifiable access to the underlying `t_TYPE`
     /// object.  The behavior is undefined if the `Optional_Base` object is
     /// disengaged.
-    t_TYPE *operator->();
+    t_TYPE *operator->() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
 # ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if the `Optional_Base`
     /// object is disengaged.
     t_TYPE&  operator*() &;
-    t_TYPE&& operator*() &&;
+    t_TYPE&& operator*() &&
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # else
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if the `Optional_Base`
     /// object is disengaged.
-    t_TYPE& operator*();
+    t_TYPE& operator*()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 
     // ACCESSORS
@@ -1331,30 +1335,34 @@ class Optional_Base {
     /// `t_TYPE` object if `true == has_value()` and throw
     /// `bsl::bad_optional_access` otherwise.
     const t_TYPE&  value() const &;
-    const t_TYPE&& value() const &&;
+    const t_TYPE&& value() const &&
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # else
     /// Return a reference providing non-modifiable access to the underlying
     /// `t_TYPE` object.  Throws a `bsl::bad_optional_access` if the
     /// `Optional_Base` object is disengaged.
-    const t_TYPE& value() const;
+    const t_TYPE& value() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 
     /// Return a pointer providing non-modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if the `Optional_Base`
     /// object is disengaged.
-    const t_TYPE *operator->() const;
+    const t_TYPE *operator->() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
 # ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return a reference providing non-modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if the `Optional_Base`
     /// object is disengaged.
     const t_TYPE&  operator*() const &;
-    const t_TYPE&& operator*() const &&;
+    const t_TYPE&& operator*() const &&
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # else
     /// Return a reference providing non-modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if the `Optional_Base`
     /// object is disengaged.
-    const t_TYPE& operator*() const;
+    const t_TYPE& operator*() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 
 # ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
@@ -1841,12 +1849,14 @@ class Optional_Base<t_TYPE, false> {
     /// `t_TYPE` object if `true == has_value()` and throw
     /// `bsl::bad_optional_access` otherwise.
     t_TYPE&  value() &;
-    t_TYPE&& value() &&;
+    t_TYPE&& value() &&
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  else  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.  Throws a `bsl::bad_optional_access` if the
     /// `Optional_Base` object is disengaged.
-    t_TYPE& value();
+    t_TYPE& value()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 
 #  ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
@@ -1872,19 +1882,21 @@ class Optional_Base<t_TYPE, false> {
 
     /// Return a pointer providing modifiable access to the underlying `t_TYPE`
     /// object.  The behavior is undefined if this object is disengaged.
-    t_TYPE *operator->();
+    t_TYPE *operator->() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
 #  ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if this object is
     /// disengaged.
     t_TYPE&  operator*() &;
-    t_TYPE&& operator*() &&;
+    t_TYPE&& operator*() &&
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  else  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if this object is
     /// disengaged.
-    t_TYPE& operator*();
+    t_TYPE& operator*()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 
     // ACCESSORS
@@ -1897,12 +1909,14 @@ class Optional_Base<t_TYPE, false> {
     /// `t_TYPE` object if `true == has_value()` and throw
     /// `bsl::bad_optional_access` otherwise.
     const t_TYPE&  value() const &;
-    const t_TYPE&& value() const &&;
+    const t_TYPE&& value() const &&
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  else  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return a reference providing non-modifiable access to the underlying
     /// 't_TYPE' object.  Throws a 'bsl::bad_optional_access' if the
     /// 'Optional_Base' object is disengaged.
-    const t_TYPE& value() const;
+    const t_TYPE& value() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 
 #  ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
@@ -1925,19 +1939,21 @@ class Optional_Base<t_TYPE, false> {
     /// Return a pointer providing non-modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if this object is
     /// disengaged.
-    const t_TYPE *operator->() const;
+    const t_TYPE *operator->() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
 #  ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return a reference providing non-modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if this object is
     /// disengaged.
     const t_TYPE&  operator*() const&;
-    const t_TYPE&& operator*() const&&;
+    const t_TYPE&& operator*() const&&
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  else  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return a reference providing non-modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if this object is
     /// disengaged.
-    const t_TYPE& operator*() const;
+    const t_TYPE& operator*() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_OPERATOR_EXPLICIT
@@ -3921,7 +3937,7 @@ void Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::swap(Optional_Base& other)
                            bsl::is_nothrow_move_constructible<t_TYPE>::value &&
                            bsl::is_nothrow_swappable<t_TYPE>::value)
 {
-    BSLS_ASSERT(d_allocator == other.d_allocator);
+    BSLS_ASSERT_NONCONVEYOR(d_allocator == other.d_allocator);
 
     if (this->has_value() && other.has_value()) {
         BloombergLP::bslalg::SwapUtil::swap(
@@ -4055,7 +4071,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 t_TYPE *Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator->()
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return BSLS_UTIL_ADDRESSOF(d_value.value());
 }
@@ -4065,7 +4081,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 t_TYPE& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*() &
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return d_value.value();
 }
@@ -4074,7 +4090,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 t_TYPE&& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*() &&
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return std::move(d_value.value());
 }
@@ -4084,7 +4100,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 t_TYPE& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*()
 {
-   BSLS_ASSERT(has_value());
+   BSLS_ASSERT_NONCONVEYOR(has_value());
 
    return d_value.value();
 }
@@ -4223,7 +4239,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 const t_TYPE *Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator->() const
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return BSLS_UTIL_ADDRESSOF(d_value.value());
 }
@@ -4233,7 +4249,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 const t_TYPE& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*() const&
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return d_value.value();
 }
@@ -4242,7 +4258,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 const t_TYPE&& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*() const&&
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return std::move(d_value.value());
 }
@@ -4252,7 +4268,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 const t_TYPE& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*() const
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return d_value.value();
 }
@@ -4914,7 +4930,7 @@ template <class t_TYPE>
 inline
 t_TYPE& Optional_Base<t_TYPE, false>::operator*() &
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return d_value.value();
 }
@@ -4923,7 +4939,7 @@ template <class t_TYPE>
 inline
 t_TYPE&& Optional_Base<t_TYPE, false>::operator*() &&
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return std::move(d_value.value());
 }
@@ -4932,7 +4948,7 @@ template <class t_TYPE>
 inline
 t_TYPE& Optional_Base<t_TYPE, false>::operator*()
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return d_value.value();
 }
@@ -4942,7 +4958,7 @@ template <class t_TYPE>
 inline
 t_TYPE *Optional_Base<t_TYPE, false>::operator->()
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return BSLS_UTIL_ADDRESSOF(d_value.value());
 }
@@ -5036,7 +5052,7 @@ template <class t_TYPE>
 inline
 const t_TYPE *Optional_Base<t_TYPE, false>::operator->() const
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return BSLS_UTIL_ADDRESSOF(d_value.value());
 }
@@ -5046,7 +5062,7 @@ template <class t_TYPE>
 inline
 const t_TYPE& Optional_Base<t_TYPE, false>::operator*() const&
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return d_value.value();
 }
@@ -5055,7 +5071,7 @@ template <class t_TYPE>
 inline
 const t_TYPE&& Optional_Base<t_TYPE, false>::operator*() const&&
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return std::move(d_value.value());
 }
@@ -5065,7 +5081,7 @@ template <class t_TYPE>
 inline
 const t_TYPE& Optional_Base<t_TYPE, false>::operator*() const
 {
-    BSLS_ASSERT(has_value());
+    BSLS_ASSERT_NONCONVEYOR(has_value());
 
     return d_value.value();
 }

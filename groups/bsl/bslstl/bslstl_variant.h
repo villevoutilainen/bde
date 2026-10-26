@@ -2737,8 +2737,8 @@ struct Variant_DestructorVisitor {
     template <class t_VARIANT>                                                \
     bool Variant_ImpUtil::NAME(const t_VARIANT& lhs, const t_VARIANT& rhs)    \
     {                                                                         \
-        BSLS_ASSERT(lhs.index() == rhs.index() &&                             \
-                    !lhs.valueless_by_exception());                           \
+        BSLS_ASSERT_NONCONVEYOR(lhs.index() == rhs.index() &&                 \
+                                !lhs.valueless_by_exception());               \
                                                                               \
         Variant_##NAME##Visitor<t_VARIANT> NAME##Visitor(                     \
                                                    BSLS_UTIL_ADDRESSOF(lhs)); \
@@ -2779,8 +2779,8 @@ struct Variant_DestructorVisitor {
     template <class t_VARIANT>                                                \
     bool Variant_ImpUtil::NAME(const t_VARIANT& lhs, const t_VARIANT& rhs)    \
     {                                                                         \
-        BSLS_ASSERT(lhs.index() == rhs.index() &&                             \
-                    !lhs.valueless_by_exception());                           \
+        BSLS_ASSERT_NONCONVEYOR(lhs.index() == rhs.index() &&                 \
+                                !lhs.valueless_by_exception());               \
                                                                               \
         Variant_##NAME##Visitor<t_VARIANT> NAME##Visitor(                     \
                                                    BSLS_UTIL_ADDRESSOF(lhs)); \

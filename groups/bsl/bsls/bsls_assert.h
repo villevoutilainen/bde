@@ -2091,6 +2091,12 @@ BSLS_IDENT("$Id: $")
 // 'BSLS_ASSERT_CONVEYOR_REF(X)' is the specified lvalue 'X', asserted in the
 // same way to be an object, for where no statement can go (a constructor's
 // member initializer: 'd_size(BSLS_ASSERT_CONVEYOR_REF(str).size())').
+//
+// 'BSLS_ASSERT_CONVEYOR_RESULT_OBJECT' and 'BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_
+// REF' give a function returning a pointer, or a reference, the never-proven
+// postcondition that what it returns designates an object: checked when it
+// returns, relied on by its callers (calling a conveyor member through
+// 'opt->'), asking nothing of them.
 #if defined(BSLS_ASSERT_USE_CONTRACTS_P4324) && defined(BSLS_ASSERT_CONVEYOR)
 #define BSLS_ASSERT_CONVEYOR_OBJECT(P)                                        \
     contract_assert<std::contracts::never_proven_conveyor_v>(                 \
@@ -2099,10 +2105,18 @@ BSLS_IDENT("$Id: $")
     BloombergLP::bsls::AssertConveyorUtil::object(X)
 #define BSLS_ASSERT_CONVEYOR_POST(RESULT, COND)                               \
     post<std::contracts::conveyor_assert_v>(RESULT: COND)
+#define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT                                    \
+    post<std::contracts::never_proven_conveyor_v>(                            \
+                       bsls_result: std::is_object_address(bsls_result))
+#define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF                                \
+    post<std::contracts::never_proven_conveyor_v>(                            \
+        bsls_result: std::is_object_address(__builtin_addressof(bsls_result)))
 #else
 #define BSLS_ASSERT_CONVEYOR_OBJECT(P) do {} while (false)
 #define BSLS_ASSERT_CONVEYOR_REF(X) (X)
 #define BSLS_ASSERT_CONVEYOR_POST(RESULT, COND)
+#define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT
+#define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 #endif
 
                              // ==================

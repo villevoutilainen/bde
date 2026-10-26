@@ -3012,6 +3012,7 @@ template <class VALUE, class ALLOCATOR>
 typename list<VALUE, ALLOCATOR>::iterator
 list<VALUE, ALLOCATOR>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position.d_node_p != d_sentinel);
 
     NodePtr  condemned = position.d_node_p;
