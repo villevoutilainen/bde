@@ -394,34 +394,34 @@ class CopyMoveTracker {
     /// `e_COPIED_CONST_INTO` bits but not `e_UNKNOWN`.  This attribute is
     /// `true` if this object was copy constructed or copy assigned from a
     /// `const` lvalue (or, in C++03, from a prvalue).
-    bool isCopiedConstInto() const;
+    bool isCopiedConstInto() const BSLS_KEYWORD_CONVEYOR;
 
     /// Return `true` if this object's state includes the `e_COPIED_INTO`
     /// bit but not `e_UNKNOWN`.  This attribute is `true` if either
     /// `isCopiedConstInto()` or `isCopiedNonconstInto()` is true.
-    bool isCopiedInto() const;
+    bool isCopiedInto() const BSLS_KEYWORD_CONVEYOR;
 
     /// Return `true` if this object's state includes the
     /// `e_COPIED_NONCONST_INTO` bits but not `e_UNKNOWN`.  This attribute
     /// is `true` if this object was copy constructed or copy assigned from
     /// a non-`const` lvalue.
-    bool isCopiedNonconstInto() const;
+    bool isCopiedNonconstInto() const BSLS_KEYWORD_CONVEYOR;
 
     /// Return `true` if this object's state includes the `e_MOVED_INTO` bit
     /// but not `e_UNKNOWN`.  This attribute is `true` if this object was
     /// move constructed or was the lhs the of move assignment operator.
-    bool isMovedInto() const;
+    bool isMovedInto() const BSLS_KEYWORD_CONVEYOR;
 
     /// Return `true` if this object's state includes the `e_MOVED_FROM` bit
     /// but not `e_UNKNOWN`.  This attribute is `true` if this object was
     /// the argument of the move constructor or the rhs of the move
     /// assignment operator and was not subsequently modified.
-    bool isMovedFrom() const;
+    bool isMovedFrom() const BSLS_KEYWORD_CONVEYOR;
 
     /// Return `true` if this object is not in a copied-into, moved-into, or
     /// unknown state.  This attribute is `true` if this object was
     /// default constructed or reset and not subsequently assigned to.
-    bool isOriginal()  const;
+    bool isOriginal()  const BSLS_KEYWORD_CONVEYOR;
 
     // HIDDEN FRIENDS
 
@@ -580,39 +580,39 @@ inline bool CopyMoveTracker::hasUnknownCopyMoveState() const
     return bool(d_state & CopyMoveState::e_UNKNOWN);
 }
 
-inline bool CopyMoveTracker::isCopiedConstInto() const
+inline bool CopyMoveTracker::isCopiedConstInto() const BSLS_KEYWORD_CONVEYOR
 {
     return CopyMoveState::e_COPIED_CONST_INTO ==
         (d_state & (CopyMoveState::e_COPIED_CONST_INTO |
                     CopyMoveState::e_UNKNOWN));
 }
 
-inline bool CopyMoveTracker::isCopiedInto() const
+inline bool CopyMoveTracker::isCopiedInto() const BSLS_KEYWORD_CONVEYOR
 {
     return CopyMoveState::e_COPIED_INTO ==
         (d_state & (CopyMoveState::e_COPIED_INTO | CopyMoveState::e_UNKNOWN));
 }
 
-inline bool CopyMoveTracker::isCopiedNonconstInto() const
+inline bool CopyMoveTracker::isCopiedNonconstInto() const BSLS_KEYWORD_CONVEYOR
 {
     return CopyMoveState::e_COPIED_NONCONST_INTO ==
         (d_state & (CopyMoveState::e_COPIED_NONCONST_INTO |
                     CopyMoveState::e_UNKNOWN));
 }
 
-inline bool CopyMoveTracker::isMovedFrom() const
+inline bool CopyMoveTracker::isMovedFrom() const BSLS_KEYWORD_CONVEYOR
 {
     return CopyMoveState::e_MOVED_FROM ==
         (d_state & (CopyMoveState::e_MOVED_FROM | CopyMoveState::e_UNKNOWN));
 }
 
-inline bool CopyMoveTracker::isMovedInto() const
+inline bool CopyMoveTracker::isMovedInto() const BSLS_KEYWORD_CONVEYOR
 {
     return CopyMoveState::e_MOVED_INTO ==
         (d_state & (CopyMoveState::e_MOVED_INTO | CopyMoveState::e_UNKNOWN));
 }
 
-inline bool CopyMoveTracker::isOriginal() const
+inline bool CopyMoveTracker::isOriginal() const BSLS_KEYWORD_CONVEYOR
 {
     return 0 == (d_state & (CopyMoveState::e_COPIED_INTO |
                             CopyMoveState::e_MOVED_INTO |

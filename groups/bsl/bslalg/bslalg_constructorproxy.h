@@ -257,6 +257,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_nestedtraitdeclaration.h>
 #include <bslmf_util.h>    // 'forward(V)' for C++03
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_keyword.h>
 #include <bsls_objectbuffer.h>
@@ -554,12 +555,14 @@ class ConstructorProxy {
     // MANIPULATORS
 
     /// Return a reference to the modifiable object held by this proxy.
-    OBJECT_TYPE& object() BSLS_KEYWORD_NOEXCEPT;
+    OBJECT_TYPE& object() BSLS_KEYWORD_NOEXCEPT
+                              BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
     /// Return a reference to the non-modifiable object held by this proxy.
-    const OBJECT_TYPE& object() const BSLS_KEYWORD_NOEXCEPT;
+    const OBJECT_TYPE& object() const BSLS_KEYWORD_NOEXCEPT
+                              BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // ============================================================================

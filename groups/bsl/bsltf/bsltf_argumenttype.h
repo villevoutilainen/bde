@@ -268,7 +268,8 @@ class ArgumentType {
     /// Set this object to the default-constructed state.
     void reset();
 
-    void set(int value, CopyMoveState::Enum state);
+    void set(int value, CopyMoveState::Enum state)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
        // Set this object to the specified 'value' having the specified
        // copy/move 'state'.  The behavior is undefined if the arguments would
        // violate any class invariants, i.e., an invalid copy/move state, a

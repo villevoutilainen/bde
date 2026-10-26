@@ -923,7 +923,13 @@ namespace test_case_30 {
 #ifdef BSLSTL_OPTIONAL_USES_STD_ALIASES
 // avoid dependency on `bslstl_utility.h`
 template <class t_TYPE>
-constexpr const t_TYPE& asConst(t_TYPE& r) { return r; }
+constexpr const t_TYPE& asConst(t_TYPE& r) BSLS_KEYWORD_CONVEYOR
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(r)
+    BSLS_ASSERT_CONVEYOR_POST(result,
+                         std::is_object_address(__builtin_addressof(result)))
+{
+    return r;
+}
 
 struct S {
     constexpr S(std::initializer_list<int> il)

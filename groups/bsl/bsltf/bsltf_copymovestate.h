@@ -279,17 +279,17 @@ struct CopyMoveState {
 // FREE FUNCTIONS
 
 /// Return `true` if `value` is `e_ORIGINAL`; otherwise return `false`.
-bool operator!(CopyMoveState::Enum value);
+bool operator!(CopyMoveState::Enum value) BSLS_KEYWORD_CONVEYOR;
 
 /// Return `true` if the integral values of the specified `a` and `b`
 /// compare equal; otherwise return `false`.
-bool operator==(CopyMoveState::Enum a, int b);
-bool operator==(int a, CopyMoveState::Enum b);
+bool operator==(CopyMoveState::Enum a, int b) BSLS_KEYWORD_CONVEYOR;
+bool operator==(int a, CopyMoveState::Enum b) BSLS_KEYWORD_CONVEYOR;
 
 /// Return `true` if the integral values of the specified `a` and `b` do not
 /// compare equal; otherwise return `false`.
-bool operator!=(CopyMoveState::Enum a, int b);
-bool operator!=(int a, CopyMoveState::Enum b);
+bool operator!=(CopyMoveState::Enum a, int b) BSLS_KEYWORD_CONVEYOR;
+bool operator!=(int a, CopyMoveState::Enum b) BSLS_KEYWORD_CONVEYOR;
 
 /// Return `e_UNKWOWN`.  Called from `CopyMoveState::get`, this default
 /// implementation is called if a customized `copyMoveState` is not found
@@ -407,26 +407,31 @@ inline bool CopyMoveState::isValid(Enum val) BSLS_KEYWORD_CONVEYOR
 
 // FREE FUNCTIONS
 inline bool bsltf::operator!(bsltf::CopyMoveState::Enum value)
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     return value == 0;
 }
 
 inline bool bsltf::operator==(bsltf::CopyMoveState::Enum a, int b)
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     return int(a) == b;
 }
 
 inline bool bsltf::operator==(int a, bsltf::CopyMoveState::Enum b)
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     return a == int(b);
 }
 
 inline bool bsltf::operator!=(bsltf::CopyMoveState::Enum a, int b)
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     return int(a) != b;
 }
 
 inline bool bsltf::operator!=(int a, bsltf::CopyMoveState::Enum b)
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     return a != int(b);
 }

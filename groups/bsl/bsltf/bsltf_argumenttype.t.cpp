@@ -298,7 +298,7 @@ bool Thing::isDtorExecuted()
 {
     bsls::ObjectBuffer<Thing> buffer;
     Thing *p = new (buffer.address()) Thing();
-    BSLS_ASSERT(0 == *reinterpret_cast<char *>(p));
+    BSLS_ASSERT_NONCONVEYOR(0 == *reinterpret_cast<char *>(p));
     p->~Thing();
 
     return 0 != *reinterpret_cast<char *>(p);

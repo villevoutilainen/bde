@@ -2440,7 +2440,9 @@ class optional : public BloombergLP::bslstl::Optional_Base<t_TYPE> {
     template <class t_ANY_TYPE>
     BSLSTL_OPTIONAL_CONSTEXPR20
     BSLSTL_OPTIONAL_ENABLE_ASSIGN_FROM_BSL_OPTIONAL(t_TYPE, const t_ANY_TYPE&)&
-    operator=(const optional<t_ANY_TYPE>& rhs);
+    operator=(const optional<t_ANY_TYPE>& rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Disengage this object if the specified `rhs` object is disengaged,
     /// and move assign to this object the value of `rhs.value()` (of
@@ -2453,7 +2455,9 @@ class optional : public BloombergLP::bslstl::Optional_Base<t_TYPE> {
     template <class t_ANY_TYPE>
     BSLSTL_OPTIONAL_CONSTEXPR20
     BSLSTL_OPTIONAL_ENABLE_ASSIGN_FROM_BSL_OPTIONAL(t_TYPE, t_ANY_TYPE)&
-    operator=(BSLMF_MOVABLEREF_DEDUCE(optional<t_ANY_TYPE>) rhs);
+    operator=(BSLMF_MOVABLEREF_DEDUCE(optional<t_ANY_TYPE>) rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES)
     /// Assign to this object the value of the specified `rhs` object
@@ -2511,7 +2515,9 @@ class optional : public BloombergLP::bslstl::Optional_Base<t_TYPE> {
     template <class t_ANY_TYPE = t_TYPE>
     BSLSTL_OPTIONAL_CONSTEXPR20
     BSLSTL_OPTIONAL_ENABLE_ASSIGN_FROM_STD_OPTIONAL(t_TYPE, const t_ANY_TYPE&)&
-    operator=(const std::optional<t_ANY_TYPE>& rhs);
+    operator=(const std::optional<t_ANY_TYPE>& rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Disengage this object if the specified `rhs` object is disengaged,
     /// and move assign to this object the value of `rhs.value()` (of
@@ -2523,7 +2529,9 @@ class optional : public BloombergLP::bslstl::Optional_Base<t_TYPE> {
     template <class t_ANY_TYPE = t_TYPE>
     BSLSTL_OPTIONAL_CONSTEXPR20
     BSLSTL_OPTIONAL_ENABLE_ASSIGN_FROM_STD_OPTIONAL(t_TYPE, t_ANY_TYPE)&
-    operator=(std::optional<t_ANY_TYPE>&& rhs);
+    operator=(std::optional<t_ANY_TYPE>&& rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 # endif  // BSLSTL_OPTIONAL_USES_STD_ALIASES
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_BASELINE_LIBRARY
@@ -2547,10 +2555,14 @@ class optional : public BloombergLP::bslstl::Optional_Base<t_TYPE> {
     /// allocator-aware, the `optional` returned by `transform` is constructed
     /// using the allocator of the object returned by `func`.
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_BASELINE_LIBRARY
-    template <class t_FUNC> constexpr auto transform(t_FUNC&& func) &;
-    template <class t_FUNC> constexpr auto transform(t_FUNC&& func) &&;
-    template <class t_FUNC> constexpr auto transform(t_FUNC&& func) const &;
-    template <class t_FUNC> constexpr auto transform(t_FUNC&& func) const &&;
+    template <class t_FUNC> constexpr auto transform(t_FUNC&& func) &
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    template <class t_FUNC> constexpr auto transform(t_FUNC&& func) &&
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    template <class t_FUNC> constexpr auto transform(t_FUNC&& func) const &
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    template <class t_FUNC> constexpr auto transform(t_FUNC&& func) const &&
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #else
     template <class t_FUNC>
     optional<typename remove_cv<
@@ -2578,10 +2590,14 @@ class optional : public BloombergLP::bslstl::Optional_Base<t_TYPE> {
     ///   move-constructible.  Prior to C++17, `U` must be move-constructible
     ///   (but the copy or move is elided, even in debug builds).
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_BASELINE_LIBRARY
-    template <class t_FUNC> constexpr auto and_then(t_FUNC&& func) &;
-    template <class t_FUNC> constexpr auto and_then(t_FUNC&& func) &&;
-    template <class t_FUNC> constexpr auto and_then(t_FUNC&& func) const &;
-    template <class t_FUNC> constexpr auto and_then(t_FUNC&& func) const &&;
+    template <class t_FUNC> constexpr auto and_then(t_FUNC&& func) &
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    template <class t_FUNC> constexpr auto and_then(t_FUNC&& func) &&
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    template <class t_FUNC> constexpr auto and_then(t_FUNC&& func) const &
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    template <class t_FUNC> constexpr auto and_then(t_FUNC&& func) const &&
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #else
     template <class t_FUNC>
     typename
@@ -2611,12 +2627,14 @@ class optional : public BloombergLP::bslstl::Optional_Base<t_TYPE> {
     constexpr
     enable_if_t<conjunction_v<std::is_invocable<t_FUNC>,
                               std::is_copy_constructible<t_TYPE>>,
-                optional> or_else(t_FUNC&& func) const &;
+                optional> or_else(t_FUNC&& func) const &
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     template <class t_FUNC>
     constexpr
     enable_if_t<conjunction_v<std::is_invocable<t_FUNC>,
                               std::is_move_constructible<t_TYPE>>,
-                optional> or_else(t_FUNC&& func) &&;
+                optional> or_else(t_FUNC&& func) &&
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #else
     template <class t_FUNC>
     optional or_else(const t_FUNC& func) const;
@@ -2713,7 +2731,9 @@ template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR20
 typename bsl::enable_if<!BloombergLP::bslma::UsesBslmaAllocator<t_TYPE>::value,
                         void>::type
-swap(bsl::optional<t_TYPE>& lhs, bsl::optional<t_TYPE>& rhs);
+swap(bsl::optional<t_TYPE>& lhs, bsl::optional<t_TYPE>& rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // HASH SPECIALIZATIONS
 
@@ -2736,7 +2756,8 @@ bool operator==(const bsl::optional<t_LHS_TYPE>& lhs,
                 const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs == *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` `optional` objects do not
 /// have the same value, and `false` otherwise.  Two `optional` objects do
@@ -2750,7 +2771,8 @@ bool operator!=(const bsl::optional<t_LHS_TYPE>& lhs,
                 const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs != *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` `optional` object is ordered before
 /// the specified `rhs` `optional` object, and `false` otherwise.  `lhs` is
@@ -2764,7 +2786,8 @@ bool operator<(const bsl::optional<t_LHS_TYPE>& lhs,
                const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs < *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` `optional` object is ordered after
 /// the specified `rhs` `optional` object, and `false` otherwise.  `lhs` is
@@ -2778,7 +2801,8 @@ bool operator>(const bsl::optional<t_LHS_TYPE>& lhs,
                const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs > *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` `optional` object is ordered before
 /// the specified `rhs` `optional` object or if `lhs` and `rhs` have the
@@ -2791,7 +2815,8 @@ bool operator<=(const bsl::optional<t_LHS_TYPE>& lhs,
                 const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs <= *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` `optional` object is ordered after
 /// the specified `rhs` `optional` object or if `lhs` and `rhs` have the
@@ -2804,7 +2829,8 @@ bool operator>=(const bsl::optional<t_LHS_TYPE>& lhs,
                 const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs >= *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // comparison with 'nullopt_t'
 
@@ -2814,13 +2840,15 @@ bool operator>=(const bsl::optional<t_LHS_TYPE>& lhs,
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator==(const bsl::optional<t_TYPE>& value,
-                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT;
+                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 #if !(defined(BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON) &&          \
       defined(BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS))
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator==(const bsl::nullopt_t&,
-                const bsl::optional<t_TYPE>& value) BSLS_KEYWORD_NOEXCEPT;
+                const bsl::optional<t_TYPE>& value) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
 /// Return `true` if the specified `value` is engaged, and `false` otherwise.
 /// These functions can be called in constant expressions only if `t_TYPE` is
@@ -2828,11 +2856,13 @@ bool operator==(const bsl::nullopt_t&,
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator!=(const bsl::optional<t_TYPE>& value,
-                const bsl::nullopt_t&)       BSLS_KEYWORD_NOEXCEPT;
+                const bsl::nullopt_t&)       BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator!=(const bsl::nullopt_t&,
-                const bsl::optional<t_TYPE>& value) BSLS_KEYWORD_NOEXCEPT;
+                const bsl::optional<t_TYPE>& value) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
 /// Return `false`.  Note that `bsl::nullopt_t` never orders after a
 /// `bsl::optional`.  This function can be called in constant expressions only
@@ -2840,7 +2870,7 @@ bool operator!=(const bsl::nullopt_t&,
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator<(const bsl::optional<t_TYPE>&,
-               const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT;
+               const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT ;
 
 /// Return `true` if the specified `value` is engaged, and `false` otherwise.
 /// Note that `bsl::nullopt_t` is ordered before any `bsl::optional` that is
@@ -2849,7 +2879,8 @@ bool operator<(const bsl::optional<t_TYPE>&,
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator<(const bsl::nullopt_t&,
-               const bsl::optional<t_TYPE>& value) BSLS_KEYWORD_NOEXCEPT;
+               const bsl::optional<t_TYPE>& value) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
 /// Return `true` if the specified `value` is engaged, and `false` otherwise.
 /// This function can be called in constant expressions only if `t_TYPE` is not
@@ -2857,7 +2888,8 @@ bool operator<(const bsl::nullopt_t&,
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator>(const bsl::optional<t_TYPE>& value,
-               const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT;
+               const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
 /// Return `false`.  Note that `bsl::nullopt_t` never orders after a
 /// `bsl::optional`.  This function can be called in constant expressions only
@@ -2865,7 +2897,7 @@ bool operator>(const bsl::optional<t_TYPE>& value,
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator>(const bsl::nullopt_t&,
-               const bsl::optional<t_TYPE>&) BSLS_KEYWORD_NOEXCEPT;
+               const bsl::optional<t_TYPE>&) BSLS_KEYWORD_NOEXCEPT ;
 
 /// Return `true` if the specified `value` is disengaged, and `false`
 /// otherwise.  This function can be called in constant expressions only if
@@ -2873,7 +2905,8 @@ bool operator>(const bsl::nullopt_t&,
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator<=(const bsl::optional<t_TYPE>& value,
-                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT;
+                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
 /// Return `true`.  Note that `bsl::nullopt_t` is ordered before any
 /// `bsl::optional` that is engaged.  This function can be called in constant
@@ -2881,7 +2914,7 @@ bool operator<=(const bsl::optional<t_TYPE>& value,
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator<=(const bsl::nullopt_t&,
-                const bsl::optional<t_TYPE>&) BSLS_KEYWORD_NOEXCEPT;
+                const bsl::optional<t_TYPE>&) BSLS_KEYWORD_NOEXCEPT ;
 
 /// Return `true`.  Note that `bsl::nullopt_t` is ordered before any
 /// `bsl::optional` that is engaged.  This function can be called in constant
@@ -2889,7 +2922,7 @@ bool operator<=(const bsl::nullopt_t&,
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator>=(const bsl::optional<t_TYPE>&,
-                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT;
+                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT ;
 
 /// Return `true` if the specified `value` is disengaged, and `false`
 /// otherwise.  This function can be called in constant expressions only if
@@ -2897,7 +2930,8 @@ bool operator>=(const bsl::optional<t_TYPE>&,
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator>=(const bsl::nullopt_t&,
-                const bsl::optional<t_TYPE>& value) BSLS_KEYWORD_NOEXCEPT;
+                const bsl::optional<t_TYPE>& value) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 #endif  // !(defined(BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON) &&
         //   defined(BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS))
 
@@ -2917,7 +2951,8 @@ bool operator==(const bsl::optional<t_LHS_TYPE>& lhs,
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_RHS_TYPE>
         && requires {
             { *lhs == rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 template <class t_LHS_TYPE, class t_RHS_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator==(const t_LHS_TYPE&                lhs,
@@ -2926,7 +2961,8 @@ bool operator==(const t_LHS_TYPE&                lhs,
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_LHS_TYPE>
         && requires {
             { lhs == *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the same
 /// value, and `false` otherwise.  An `optional` object and a value of some
@@ -2942,7 +2978,8 @@ bool operator!=(const bsl::optional<t_LHS_TYPE>& lhs,
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_RHS_TYPE>
         && requires {
             { *lhs != rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 template <class t_LHS_TYPE, class t_RHS_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR17
 bool operator!=(const t_LHS_TYPE&                lhs,
@@ -2951,7 +2988,8 @@ bool operator!=(const t_LHS_TYPE&                lhs,
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_LHS_TYPE>
         && requires {
             { lhs != *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` `optional` object is ordered before
 /// the specified `rhs`, and `false` otherwise.  `lhs` is ordered before
@@ -2965,7 +3003,8 @@ bool operator<(const bsl::optional<t_LHS_TYPE>& lhs, const t_RHS_TYPE& rhs)
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_RHS_TYPE>
         && requires {
             { *lhs < rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true` if the specified `lhs` is ordered before the specified `rhs`
 /// `optional` object, and `false` otherwise.  `lhs` is ordered before `rhs` if
@@ -2979,7 +3018,8 @@ bool operator<(const t_LHS_TYPE& lhs, const bsl::optional<t_RHS_TYPE>& rhs)
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_LHS_TYPE>
         && requires {
             { lhs < *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` `optional` object is ordered after the
 /// specified `rhs`, and `false` otherwise.  `lhs` is ordered after `rhs` if
@@ -2993,7 +3033,8 @@ bool operator>(const bsl::optional<t_LHS_TYPE>& lhs, const t_RHS_TYPE& rhs)
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_RHS_TYPE>
         && requires {
             { *lhs > rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true` if the specified `lhs` is ordered after the specified `rhs`
 /// `optional` object, and `false` otherwise.  `lhs` is ordered after `rhs` if
@@ -3007,7 +3048,8 @@ bool operator>(const t_LHS_TYPE& lhs, const bsl::optional<t_RHS_TYPE>& rhs)
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_LHS_TYPE>
         && requires {
             { lhs > *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` `optional` object is ordered before
 /// the specified `rhs` or `lhs` and `rhs` have the same value, and `false`
@@ -3020,7 +3062,8 @@ bool operator<=(const bsl::optional<t_LHS_TYPE>& lhs, const t_RHS_TYPE& rhs)
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_RHS_TYPE>
         && requires {
             { *lhs <= rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true` if the specified `lhs` is ordered before the specified `rhs`
 /// `optional` object or `lhs` and `rhs` have the same value, and `false`
@@ -3033,7 +3076,8 @@ bool operator<=(const t_LHS_TYPE& lhs, const bsl::optional<t_RHS_TYPE>& rhs)
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_LHS_TYPE>
         && requires {
             { lhs <= *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` `optional` object is ordered after the
 /// specified `rhs` or if `lhs` and `rhs` have the same value, and `false`
@@ -3046,7 +3090,8 @@ bool operator>=(const bsl::optional<t_LHS_TYPE>& lhs, const t_RHS_TYPE& rhs)
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_RHS_TYPE>
         && requires {
             { *lhs >= rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 // Return `true` if the specified `lhs` is ordered after the specified `rhs`
 // `optional` object or if `lhs` and `rhs` have the same value, or `false`
@@ -3059,7 +3104,8 @@ bool operator>=(const t_LHS_TYPE& lhs, const bsl::optional<t_RHS_TYPE>& rhs)
         !BloombergLP::bslstl::Optional_DerivedFromOptional<t_LHS_TYPE>
         && requires {
             { lhs >= *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-        });
+        })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #if defined BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON \
  && defined BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
@@ -3072,7 +3118,8 @@ template <class t_LHS, three_way_comparable_with<t_LHS> t_RHS>
 BSLSTL_OPTIONAL_CONSTEXPR20
 compare_three_way_result_t<t_LHS, t_RHS> operator<=>(
                                               const bsl::optional<t_LHS>& lhs,
-                                              const bsl::optional<t_RHS>& rhs);
+                                              const bsl::optional<t_RHS>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Perform a three-way comparison of the specified `lhs` and the specified
 /// `rhs` objects by using the comparison operators of `t_LHS` and `t_RHS`;
@@ -3084,7 +3131,8 @@ requires (!BloombergLP::bslstl::Optional_DerivedFromOptional<t_RHS>) &&
 BSLSTL_OPTIONAL_CONSTEXPR20
 compare_three_way_result_t<t_LHS, t_RHS> operator<=>(
                                               const bsl::optional<t_LHS>& lhs,
-                                              const t_RHS&                rhs);
+                                              const t_RHS&                rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Perform a three-way comparison of the specified `value` and `nullopt`;
 /// return the result of that comparison.  This function can be called in
@@ -3092,7 +3140,8 @@ compare_three_way_result_t<t_LHS, t_RHS> operator<=>(
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR20
 strong_ordering operator<=>(const bsl::optional<t_TYPE>& value,
-                            bsl::nullopt_t) BSLS_KEYWORD_NOEXCEPT;
+                            bsl::nullopt_t) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
 /// Perform a three-way comparison of the specified `lhs` and the specified
 /// `rhs` objects by using the comparison operators of `t_LHS` and `t_RHS`;
@@ -3102,7 +3151,8 @@ template <class t_LHS, three_way_comparable_with<t_LHS> t_RHS>
 BSLSTL_OPTIONAL_CONSTEXPR20
 compare_three_way_result_t<t_LHS, t_RHS> operator<=>(
                                               const bsl::optional<t_LHS>& lhs,
-                                              const std::optional<t_RHS>& rhs);
+                                              const std::optional<t_RHS>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Perform a three-way comparison of the specified `lhs` and the specified
 /// `rhs` objects by using the comparison operators of `t_LHS` and `t_RHS`;
@@ -3115,7 +3165,8 @@ template <class t_LHS, three_way_comparable_with<t_LHS> t_RHS>
 BSLSTL_OPTIONAL_CONSTEXPR20
 compare_three_way_result_t<t_LHS, t_RHS> operator<=>(
                                               const std::optional<t_LHS>& lhs,
-                                              const bsl::optional<t_RHS>& rhs);
+                                              const bsl::optional<t_RHS>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 #endif
 
 # ifdef BSLSTL_OPTIONAL_USES_STD_ALIASES
@@ -3128,12 +3179,16 @@ compare_three_way_result_t<t_LHS, t_RHS> operator<=>(
 template <class t_TYPE>
 typename bsl::enable_if<!BloombergLP::bslma::UsesBslmaAllocator<t_TYPE>::value,
                         void>::type
-swap(bsl::optional<t_TYPE>& lhs, std::optional<t_TYPE>& rhs);
+swap(bsl::optional<t_TYPE>& lhs, std::optional<t_TYPE>& rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class t_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR20
 typename bsl::enable_if<!BloombergLP::bslma::UsesBslmaAllocator<t_TYPE>::value,
                         void>::type
-swap(std::optional<t_TYPE>& lhs, bsl::optional<t_TYPE>& rhs);
+swap(std::optional<t_TYPE>& lhs, bsl::optional<t_TYPE>& rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // comparison with 'std::optional'
 
@@ -3149,13 +3204,15 @@ constexpr bool operator==(const std::optional<t_LHS_TYPE>& lhs,
                           const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs == *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class t_LHS_TYPE, class t_RHS_TYPE>
 constexpr bool operator==(const bsl::optional<t_LHS_TYPE>& lhs,
                           const std::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs == *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` optional objects do not
 /// have the same value, and `false` otherwise.  Two optional objects do not
@@ -3170,13 +3227,15 @@ constexpr bool operator!=(const bsl::optional<t_LHS_TYPE>& lhs,
                           const std::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs != *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class t_LHS_TYPE, class t_RHS_TYPE>
 constexpr bool operator!=(const std::optional<t_LHS_TYPE>& lhs,
                           const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs != *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` optional object is ordered before
 /// the specified `rhs` optional object, and `false` otherwise.  `lhs` is
@@ -3191,13 +3250,15 @@ constexpr bool operator<(const bsl::optional<t_LHS_TYPE>& lhs,
                          const std::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs < *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class t_LHS_TYPE, class t_RHS_TYPE>
 constexpr bool operator<(const std::optional<t_LHS_TYPE>& lhs,
                          const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs < *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` optional object is ordered after
 /// the specified `rhs` optional object, and `false` otherwise.  `lhs` is
@@ -3211,13 +3272,15 @@ constexpr bool operator>(const bsl::optional<t_LHS_TYPE>& lhs,
                          const std::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs > *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class t_LHS_TYPE, class t_RHS_TYPE>
 constexpr bool operator>(const std::optional<t_LHS_TYPE>& lhs,
                          const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs > *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered before the specified
 /// `rhs` optional object or `lhs` and `rhs` have the same value, and
@@ -3230,13 +3293,15 @@ constexpr bool operator<=(const bsl::optional<t_LHS_TYPE>& lhs,
                           const std::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs <= *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class t_LHS_TYPE, class t_RHS_TYPE>
 constexpr bool operator<=(const std::optional<t_LHS_TYPE>& lhs,
                           const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs <= *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` optional object is ordered after
 /// the specified `rhs` optional object or `lhs` and `rhs` have the same
@@ -3249,13 +3314,15 @@ constexpr bool operator>=(const bsl::optional<t_LHS_TYPE>& lhs,
                           const std::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs >= *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class t_LHS_TYPE, class t_RHS_TYPE>
 constexpr bool operator>=(const std::optional<t_LHS_TYPE>& lhs,
                           const bsl::optional<t_RHS_TYPE>& rhs)
     BSLSTL_OPTIONAL_REQUIRES(requires {
         { *lhs >= *rhs } -> BloombergLP::bslstl::Optional_ConvertibleToBool;
-    });
+    })
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 #endif  // BSLSTL_OPTIONAL_USES_STD_ALIASES
 
 /// Return an `optional` object containing a `t_TYPE` object created by
@@ -3608,6 +3675,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
                   BloombergLP::bslstl::Optional_CopyConstructFromOtherOptional,
                   const Optional_Base<t_ANY_TYPE>& original)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.has_value()) {
         emplace(original.value());
     }
@@ -3622,6 +3690,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
   BSLSTL_OPTIONAL_DEFINE_IF_CONSTRUCT_DOES_NOT_PROPAGATE_ALLOCATOR(t_TYPE,
                                                                    t_ANY_TYPE))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     Optional_Base<t_ANY_TYPE>& lvalue = original;
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
@@ -3638,6 +3707,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
                                                                    t_ANY_TYPE))
 : d_allocator(MoveUtil::access(original).get_allocator())
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     Optional_Base<t_ANY_TYPE>& lvalue = original;
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
@@ -3652,6 +3722,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
                     BloombergLP::bslstl::Optional_CopyConstructFromStdOptional,
                     const std::optional<t_ANY_TYPE>& original)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.has_value()) {
         emplace(original.value());
     }
@@ -3664,6 +3735,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
                     BloombergLP::bslstl::Optional_MoveConstructFromStdOptional,
                     std::optional<t_ANY_TYPE>&& original)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.has_value()) {
         emplace(std::move(original.value()));
     }
@@ -3780,6 +3852,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
                   const Optional_Base<t_ANY_TYPE>& original)
 : d_allocator(allocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.has_value()) {
         emplace(original.value());
     }
@@ -3795,6 +3868,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
                   BSLMF_MOVABLEREF_DEDUCE(Optional_Base<t_ANY_TYPE>) original)
 : d_allocator(allocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     Optional_Base<t_ANY_TYPE>& lvalue = original;
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
@@ -3812,6 +3886,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
                     const std::optional<t_ANY_TYPE>& original)
 : d_allocator(allocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.has_value()) {
         emplace(original.value());
     }
@@ -3827,6 +3902,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
                     std::optional<t_ANY_TYPE>&& original)
 : d_allocator(allocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.has_value()) {
         emplace(std::move(original.value()));
     }
@@ -4322,6 +4398,7 @@ Optional_Base<t_TYPE, false>::Optional_Base(
                   BloombergLP::bslstl::Optional_CopyConstructFromOtherOptional,
                   const Optional_Base<t_ANY_TYPE>& original)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.has_value()) {
         this->emplace(original.value());
     }
@@ -4334,6 +4411,7 @@ Optional_Base<t_TYPE, false>::Optional_Base(
                   BloombergLP::bslstl::Optional_MoveConstructFromOtherOptional,
                   Optional_Base<t_ANY_TYPE>&& original)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.has_value()) {
         this->emplace(std::move(original.value()));
     }
@@ -4345,7 +4423,7 @@ BSLSTL_OPTIONAL_CONSTEXPR20 inline
 Optional_Base<t_TYPE, false>::Optional_Base(
                     BloombergLP::bslstl::Optional_CopyConstructFromStdOptional,
                     const std::optional<t_ANY_TYPE>& original)
-: StdOptionalBase(original)
+: StdOptionalBase(BSLS_ASSERT_CONVEYOR_REF(original))
 {
 }
 
@@ -4355,7 +4433,7 @@ BSLSTL_OPTIONAL_CONSTEXPR20 inline
 Optional_Base<t_TYPE, false>::Optional_Base(
                     BloombergLP::bslstl::Optional_MoveConstructFromStdOptional,
                     std::optional<t_ANY_TYPE>&& original)
-: StdOptionalBase(std::move(original))
+: StdOptionalBase(std::move(BSLS_ASSERT_CONVEYOR_REF(original)))
 {
 }
 
@@ -4508,6 +4586,7 @@ template <class t_ANY_TYPE>
 BSLSTL_OPTIONAL_CONSTEXPR20
 void Optional_Base<t_TYPE, false>::assignOrEmplace(t_ANY_TYPE&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     StdOptionalBase::operator=(std::forward<t_ANY_TYPE>(rhs));
 }
 
@@ -4593,6 +4672,7 @@ Optional_Base<t_TYPE, false>::Optional_Base(
                   BloombergLP::bslstl::Optional_CopyConstructFromOtherOptional,
                   const Optional_Base<t_ANY_TYPE>& original)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     if (original.has_value()) {
         emplace(original.value());
     }
@@ -4605,6 +4685,7 @@ Optional_Base<t_TYPE, false>::Optional_Base(
                   BloombergLP::bslstl::Optional_MoveConstructFromOtherOptional,
                   BSLMF_MOVABLEREF_DEDUCE(Optional_Base<t_ANY_TYPE>) original)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     Optional_Base<t_ANY_TYPE>& lvalue = original;
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
@@ -5990,6 +6071,7 @@ swap(bsl::optional<t_TYPE>& lhs, bsl::optional<t_TYPE>& rhs)
 template <class t_HASHALG, class t_TYPE>
 void hashAppend(t_HASHALG& hashAlg, const bsl::optional<t_TYPE>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(input));
     using ::BloombergLP::bslh::hashAppend;
 
     if (input.has_value()) {

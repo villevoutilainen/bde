@@ -209,6 +209,7 @@ BSLS_IDENT("$Id: $")
 // ```
 
 #include <bsls_alignmentfromtype.h>
+#include <bsls_assert.h>
 
 namespace BloombergLP {
 
@@ -260,7 +261,7 @@ union ObjectBuffer {
     /// Return a modifiable reference to the `TYPE` object occupying this
     /// buffer.  The referenced object has undefined state unless a valid
     /// `TYPE` object has been constructed in this buffer.
-    TYPE& object();
+    TYPE& object() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -275,7 +276,7 @@ union ObjectBuffer {
     /// Return a `const` reference to the `TYPE` object occupying this
     /// buffer.  The referenced object has undefined state unless a valid
     /// `TYPE` object has been constructed in this buffer.
-    const TYPE& object() const;
+    const TYPE& object() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // ============================================================================

@@ -817,7 +817,11 @@ struct MovableRefUtil {
 #ifdef BSLMF_MOVABLEREF_USES_RVALUE_REFERENCES
     template <class t_TYPE>
     static typename bsl::remove_reference<t_TYPE>::type& access(
-                                           t_TYPE&& ref) BSLS_KEYWORD_NOEXCEPT;
+                                           t_TYPE&& ref) BSLS_KEYWORD_NOEXCEPT
+        BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(ref)
+        BSLS_ASSERT_CONVEYOR_POST(bslmf_r,
+                       std::is_object_address(__builtin_addressof(bslmf_r)));
 #else
     template <class t_TYPE>
     static t_TYPE& access(t_TYPE& ref) BSLS_KEYWORD_NOEXCEPT;
@@ -838,7 +842,11 @@ struct MovableRefUtil {
     template <class t_TYPE>
     static BSLS_KEYWORD_CONSTEXPR
         MovableRef<typename bsl::remove_reference<t_TYPE>::type>
-        move(t_TYPE&& reference) BSLS_KEYWORD_NOEXCEPT;
+        move(t_TYPE&& reference) BSLS_KEYWORD_NOEXCEPT
+        BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(reference)
+        BSLS_ASSERT_CONVEYOR_POST(bslmf_r,
+                       std::is_object_address(__builtin_addressof(bslmf_r)));
 #else
     template <class t_TYPE>
     static MovableRef<t_TYPE> move(t_TYPE& reference) BSLS_KEYWORD_NOEXCEPT;
@@ -863,6 +871,10 @@ struct MovableRefUtil {
             bsl::is_copy_constructible<t_TYPE>::value,
         const t_TYPE&>::type
     move_if_noexcept(t_TYPE& lvalue) BSLS_KEYWORD_NOEXCEPT
+        BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(lvalue)
+        BSLS_ASSERT_CONVEYOR_POST(bslmf_r,
+                       std::is_object_address(__builtin_addressof(bslmf_r)))
     {
         // The implementation is placed here in the class definition to work
         // around a Microsoft C++ compiler (version 16) bug where the
@@ -884,6 +896,10 @@ struct MovableRefUtil {
             bsl::is_nothrow_move_constructible<t_TYPE>::value,
         MovableRef<t_TYPE> >::type
     move_if_noexcept(t_TYPE& lvalue) BSLS_KEYWORD_NOEXCEPT
+        BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(lvalue)
+        BSLS_ASSERT_CONVEYOR_POST(bslmf_r,
+                       std::is_object_address(__builtin_addressof(bslmf_r)))
     {
         // The implementation is placed here in the class definition to work
         // around a Microsoft C++ compiler (version 16) bug where the
@@ -971,6 +987,7 @@ template <class t_TYPE>
 inline
 typename bsl::remove_reference<t_TYPE>::type& MovableRefUtil::access(
                                             t_TYPE&& ref) BSLS_KEYWORD_NOEXCEPT
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     return static_cast<typename bsl::remove_reference<t_TYPE>::type&>(ref);
 }
@@ -999,6 +1016,7 @@ template <class t_TYPE>
 inline
 BSLS_KEYWORD_CONSTEXPR MovableRef<typename bsl::remove_reference<t_TYPE>::type>
 MovableRefUtil::move(t_TYPE&& rvalue) BSLS_KEYWORD_NOEXCEPT
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     return static_cast<typename bsl::remove_reference<t_TYPE>::type&&>(rvalue);
 }

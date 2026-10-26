@@ -1708,7 +1708,12 @@ BSLS_IDENT("$Id: $")
 // carries only the level: it must be a constant, and a single
 // initializer keeps commas out of macro arguments.  File and line come
 // from the contract's own source location, so (as with the Lock3
-// flavour) redefining 'BSLS_ASSERTIMPUTIL_FILE' has no effect.
+// flavour) redefining 'BSLS_ASSERTIMPUTIL_FILE' has no effect.  Over
+// libstdc++, a 'BSLS_ASSERT_CONVEYOR' build should define
+// '_GLIBCXX_CONVEYOR_ASSERTIONS' too, on the command line (libstdc++ reads
+// it in its first header): otherwise libstdc++'s templates call conveyor
+// functions of bsl types (a 'std::ranges::size' of a 'bsl::string') from
+// code with nothing to prove their objects with.
 #ifdef BSLS_ASSERT_CONVEYOR
 #define BSLS_ASSERT_ASSERT_LABEL_IMP BloombergLP::bsls::AssertConveyorLabel
 #else
@@ -2097,6 +2102,18 @@ BSLS_IDENT("$Id: $")
 // postcondition that what it returns designates an object: checked when it
 // returns, relied on by its callers (calling a conveyor member through
 // 'opt->'), asking nothing of them.
+//
+// 'BSLS_ASSERT_CONVEYOR_REQUIRES(X)' and 'BSLS_ASSERT_CONVEYOR_REQUIRES_THIS'
+// give a public API function the proven precondition that the specified
+// lvalue 'X', or '*this', is an object: its callers must show it, which is
+// how a conveyor build finds the bugs of the code using that API.
+//
+// 'BSLS_ASSERT_CONVEYOR_TRUST_PRE(X)' gives a function the never-proven
+// precondition that the specified lvalue 'X' is an object: its callers owe
+// nothing for it (nor for the implicit precondition of a 'conveyor'
+// function's reference parameter, which it stands in for), and its body can
+// rely on it.  It is for functions that only cast a reference, as
+// 'std::move' does: 'MovableRefUtil::move' is one.
 #if defined(BSLS_ASSERT_USE_CONTRACTS_P4324) && defined(BSLS_ASSERT_CONVEYOR)
 #define BSLS_ASSERT_CONVEYOR_OBJECT(P)                                        \
     contract_assert<std::contracts::never_proven_conveyor_v>(                 \
@@ -2111,12 +2128,23 @@ BSLS_IDENT("$Id: $")
 #define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF                                \
     post<std::contracts::never_proven_conveyor_v>(                            \
         bsls_result: std::is_object_address(__builtin_addressof(bsls_result)))
+#define BSLS_ASSERT_CONVEYOR_REQUIRES(X)                                      \
+    pre<std::contracts::conveyor_assert_v>(                                   \
+                               std::is_object_address(__builtin_addressof(X)))
+#define BSLS_ASSERT_CONVEYOR_REQUIRES_THIS                                    \
+    pre<std::contracts::conveyor_assert_v>(std::is_object_address(this))
+#define BSLS_ASSERT_CONVEYOR_TRUST_PRE(X)                                     \
+    pre<std::contracts::never_proven_conveyor_v>(                             \
+                               std::is_object_address(__builtin_addressof(X)))
 #else
 #define BSLS_ASSERT_CONVEYOR_OBJECT(P) do {} while (false)
 #define BSLS_ASSERT_CONVEYOR_REF(X) (X)
 #define BSLS_ASSERT_CONVEYOR_POST(RESULT, COND)
 #define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT
 #define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
+#define BSLS_ASSERT_CONVEYOR_REQUIRES(X)
+#define BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+#define BSLS_ASSERT_CONVEYOR_TRUST_PRE(X)
 #endif
 
                              // ==================
@@ -2720,9 +2748,9 @@ struct AssertConveyorUtil {
     /// Return the specified `reference`, an object (an assertion nothing
     /// proves; see `BSLS_ASSERT_CONVEYOR_OBJECT`).
     template <class t_TYPE>
-    static t_TYPE& object(t_TYPE& reference)
+    static constexpr t_TYPE& object(t_TYPE& reference)
         post<std::contracts::never_proven_conveyor_v>(
-                                     result: std::is_object_address(&result))
+                   result: std::is_object_address(__builtin_addressof(result)))
     {
         return reference;
     }
