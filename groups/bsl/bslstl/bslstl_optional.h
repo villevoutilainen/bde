@@ -1259,7 +1259,8 @@ class Optional_Base {
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object if `true == has_value()` and throw
     /// `bsl::bad_optional_access` otherwise.
-    t_TYPE&  value() &;
+    t_TYPE&  value() &
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     t_TYPE&& value() &&
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # else
@@ -1311,7 +1312,8 @@ class Optional_Base {
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if the `Optional_Base`
     /// object is disengaged.
-    t_TYPE&  operator*() &;
+    t_TYPE&  operator*() &
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     t_TYPE&& operator*() &&
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # else
@@ -1334,7 +1336,8 @@ class Optional_Base {
     /// Return a reference providing non-modifiable access to the underlying
     /// `t_TYPE` object if `true == has_value()` and throw
     /// `bsl::bad_optional_access` otherwise.
-    const t_TYPE&  value() const &;
+    const t_TYPE&  value() const &
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     const t_TYPE&& value() const &&
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # else
@@ -1354,7 +1357,8 @@ class Optional_Base {
     /// Return a reference providing non-modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if the `Optional_Base`
     /// object is disengaged.
-    const t_TYPE&  operator*() const &;
+    const t_TYPE&  operator*() const &
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     const t_TYPE&& operator*() const &&
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # else
@@ -1848,7 +1852,8 @@ class Optional_Base<t_TYPE, false> {
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object if `true == has_value()` and throw
     /// `bsl::bad_optional_access` otherwise.
-    t_TYPE&  value() &;
+    t_TYPE&  value() &
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     t_TYPE&& value() &&
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  else  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
@@ -1888,7 +1893,8 @@ class Optional_Base<t_TYPE, false> {
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if this object is
     /// disengaged.
-    t_TYPE&  operator*() &;
+    t_TYPE&  operator*() &
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     t_TYPE&& operator*() &&
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  else  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
@@ -1908,7 +1914,8 @@ class Optional_Base<t_TYPE, false> {
     /// Return a reference providing non-modifiable access to the underlying
     /// `t_TYPE` object if `true == has_value()` and throw
     /// `bsl::bad_optional_access` otherwise.
-    const t_TYPE&  value() const &;
+    const t_TYPE&  value() const &
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     const t_TYPE&& value() const &&
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  else  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
@@ -1945,7 +1952,8 @@ class Optional_Base<t_TYPE, false> {
     /// Return a reference providing non-modifiable access to the underlying
     /// `t_TYPE` object.  The behavior is undefined if this object is
     /// disengaged.
-    const t_TYPE&  operator*() const&;
+    const t_TYPE&  operator*() const&
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     const t_TYPE&& operator*() const&&
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #  else  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
