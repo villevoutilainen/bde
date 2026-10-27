@@ -1492,11 +1492,11 @@ class list {
 
     /// Remove and destroy the last element of this list.  The behavior is
     /// undefined unless this list contains at least one element.
-    void pop_back();
+    void pop_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove and destroy the first element of this list.  The behavior is
     /// undefined unless this list contains at least one element.
-    void pop_front();
+    void pop_front() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                          // *** random access erase ***
 
@@ -1506,7 +1506,7 @@ class list {
     /// returned by the `end` method if the removed element was the last in
     /// the sequence.  The behavior is undefined unless `position` refers to
     /// an element in this list.
-    iterator erase(const_iterator position);
+    iterator erase(const_iterator position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this list the elements starting at the specified
     /// `dstBegin` position up to, but not including, the specified `dstEnd`
@@ -1743,12 +1743,14 @@ class list {
 
     /// Erase all the elements having the specified `value` from this list
     /// and return the number of erased elements.
-    size_type remove(const value_type& value);
+    size_type remove(const value_type& value)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Erase all the elements in this list for which the specified unary
     /// `predicate` returns `true` and return the number of erased elements.
     template <class PREDICATE>
-    size_type remove_if(PREDICATE predicate);
+    size_type remove_if(PREDICATE predicate)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reverse the order of the elements in this list.
     void reverse() BSLS_KEYWORD_NOEXCEPT;
@@ -1815,13 +1817,14 @@ class list {
 
     /// Erase from this list all but the first element of every consecutive
     /// group of elements that have the same value.
-    void unique();
+    void unique() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Erase from this list all but the first element of every consecutive
     /// group of elements for which the specified `binaryPredicate` returns
     /// `true` for any two consecutive elements in the group.
     template <class EQ_PREDICATE>
-    void unique(EQ_PREDICATE binaryPredicate);
+    void unique(EQ_PREDICATE binaryPredicate)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                               // *** misc ***
 
@@ -2081,13 +2084,15 @@ bool operator>=(const list<VALUE, ALLOCATOR>& lhs,
 /// the specified `value`.  Return the number of elements erased.
 template <class VALUE, class ALLOCATOR, class BDE_OTHER_TYPE>
 typename list<VALUE, ALLOCATOR>::size_type
-erase(list<VALUE, ALLOCATOR>& l, const BDE_OTHER_TYPE& value);
+erase(list<VALUE, ALLOCATOR>& l, const BDE_OTHER_TYPE& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(l);
 
 /// Erase all the elements in the specified list `l` that satisfy the
 /// specified predicate `predicate`.  Return the number of elements erased.
 template <class VALUE, class ALLOCATOR, class PREDICATE>
 typename list<VALUE, ALLOCATOR>::size_type
-erase_if(list<VALUE, ALLOCATOR>& l, PREDICATE predicate);
+erase_if(list<VALUE, ALLOCATOR>& l, PREDICATE predicate)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(l);
 
 /// Exchange the value of the specified `a` object with that of the specified
 /// `b` object; also exchange the allocator of `a` with that of `b` if the
@@ -3017,7 +3022,6 @@ template <class VALUE, class ALLOCATOR>
 typename list<VALUE, ALLOCATOR>::iterator
 list<VALUE, ALLOCATOR>::erase(const_iterator position)
 {
-    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position.d_node_p != d_sentinel);
 
     NodePtr  condemned = position.d_node_p;

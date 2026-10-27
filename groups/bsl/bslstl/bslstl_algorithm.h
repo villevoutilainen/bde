@@ -598,6 +598,7 @@ typename CONTAINER::size_type
 BloombergLP::bslstl::AlgorithmUtil::containerEraseIf(CONTAINER& container,
                                                      PREDICATE  predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(container));
     typename CONTAINER::size_type oldSize = container.size();
     for (typename CONTAINER::iterator it  = container.begin();
                                       it != container.end();) {

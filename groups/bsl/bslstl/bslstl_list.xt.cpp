@@ -650,10 +650,18 @@ class Recursive {
     Recursive& front() { return d_list.front(); }
 
     /// Pop the back element off of the contained `list`
-    void pop_back()  { return d_list.pop_back();  }
+    void pop_back()
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_list.pop_back();
+    }
 
     /// Pop the front element off of the contained `list`
-    void pop_front() { return d_list.pop_front(); }
+    void pop_front()
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_list.pop_front();
+    }
 
     /// Push the specified `elem` onto the back of the contained `list`.
     void push_back(const Recursive& elem)  { return d_list.push_back(elem);  }
@@ -15069,6 +15077,7 @@ class IncompleteTypeSupportChecker {
     void pop_back()
     {
         s_functionCallCounters[27]++;
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_list.pop_back();
     }
 
@@ -15076,6 +15085,7 @@ class IncompleteTypeSupportChecker {
     void pop_front()
     {
         s_functionCallCounters[28]++;
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_list.pop_front();
     }
 
@@ -15084,6 +15094,7 @@ class IncompleteTypeSupportChecker {
     iterator erase(const_iterator position)
     {
         s_functionCallCounters[29]++;
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_list.erase(position);
     }
 
@@ -15304,6 +15315,7 @@ class IncompleteTypeSupportChecker {
     void remove(const value_type& value)
     {
         s_functionCallCounters[47]++;
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_list.remove(value);
     }
 
@@ -15313,6 +15325,7 @@ class IncompleteTypeSupportChecker {
     void remove_if(PREDICATE predicate)
     {
         s_functionCallCounters[48]++;
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_list.remove_if(predicate);
     }
 
@@ -15407,6 +15420,7 @@ class IncompleteTypeSupportChecker {
     void unique()
     {
         s_functionCallCounters[58]++;
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_list.unique();
     }
 
@@ -15416,6 +15430,7 @@ class IncompleteTypeSupportChecker {
     void unique(EQ_PREDICATE binaryPredicate)
     {
         s_functionCallCounters[59]++;
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_list.unique(binaryPredicate);
     }
 
@@ -15826,6 +15841,7 @@ using bsl::list;
     /// Remove stars with brightness less than 75 from the specified
     /// `*starList`.
     void filter(list<Star> *starList)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(*starList)
     {
         static const int threshold = 75;
 
