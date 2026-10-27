@@ -20891,6 +20891,10 @@ template <class TYPE, class TRAITS, class ALLOC>
 void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
                                                const int /* RANDOM_SEED */)
 {
+    // The elements of the `new`-allocated arrays below are objects, which
+    // a conveyor build cannot prove for itself: say so where they are used.
+#define U_OBJ(X) BSLS_ASSERT_CONVEYOR_REF(X)
+
     // --------------------------------------------------------------------
     // PERFORMANCE TEST
     //
@@ -21207,7 +21211,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         }
         timeC2short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) {
-            shortStringLength[i] = shortStrings[i].length();
+            shortStringLength[i] = U_OBJ(shortStrings[i]).length();
         }
 
         for (int i = 0; i < NLONG; ++i) {
@@ -21219,7 +21223,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         }
         timeC2long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) {
-            longStringLength[i] = longStrings[i].length();
+            longStringLength[i] = U_OBJ(longStrings[i]).length();
         }
 
         printf("\t    C2\tFrom `char*`:\t%1.5fs\t%1.5fs\t%1.6fs\n",
@@ -21332,13 +21336,13 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
                 shortStrings[i].push_back(longStringCopy[ilong][j]);
             }
 #else
-            shortStrings[i].append(longStringCopy[ilong]);
+            U_OBJ(shortStrings[i]).append(U_OBJ(longStringCopy[ilong]));
 #endif
         }
         timeP1short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStrings[i].erase(shortStringLength[i]);
-            ASSERT(shortStringLength[i] == shortStrings[i].length());
+            U_OBJ(shortStrings[i]).erase(shortStringLength[i]);
+            ASSERT(shortStringLength[i] == U_OBJ(shortStrings[i]).length());
         }
 
         t.reset(); t.start();
@@ -21351,14 +21355,14 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
             }
 #else
             for (int k = 0; k < SL_RATIO; ++k) {
-                longStrings[i].append(longStringCopy[i]);
+                U_OBJ(longStrings[i]).append(U_OBJ(longStringCopy[i]));
             }
 #endif
         }
         timeP1long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStrings[i].erase(longStringLength[i]);
-            ASSERT(longStringLength[i] == longStrings[i].length());
+            U_OBJ(longStrings[i]).erase(longStringLength[i]);
+            ASSERT(longStringLength[i] == U_OBJ(longStrings[i]).length());
         }
 
         printf("\t    P1\tAppend chars:"
@@ -21375,24 +21379,24 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         t.reset(); t.start();
         for (int i = 0, ilong = 0; i < NSHORT; ++i, ++ilong) {
             ilong = ilong < NLONG ? ilong : ilong - NLONG;
-            shortStringCopy[i].append(longStrings[ilong]);
+            U_OBJ(shortStringCopy[i]).append(U_OBJ(longStrings[ilong]));
         }
         timeP2short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStrings[i].length());
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(U_OBJ(shortStrings[i]).length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         t.reset(); t.start();
         for (int i = 0; i < NLONG; ++i) {
             for (int k = 0; k < SL_RATIO; ++k) {
-                longStringCopy[i].append(longStrings[i]);
+                U_OBJ(longStringCopy[i]).append(U_OBJ(longStrings[i]));
             }
         }
         timeP2long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStrings[i].length());
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(U_OBJ(longStrings[i]).length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    P2\tAppend string:"
@@ -21408,24 +21412,24 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         t.reset(); t.start();
         for (int i = 0, ilong = 0; i < NSHORT; ++i, ++ilong) {
             ilong = ilong < NLONG ? ilong : ilong - NLONG;
-            shortStringCopy[i].append(longStrings[ilong]);
+            U_OBJ(shortStringCopy[i]).append(U_OBJ(longStrings[ilong]));
         }
         timeP3short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStrings[i].length());
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(U_OBJ(shortStrings[i]).length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         t.reset(); t.start();
         for (int i = 0; i < NLONG; ++i, ++i) {
             for (int k = 0; k < SL_RATIO; ++k) {
-                longStringCopy[i].append(longStrings[i]);
+                U_OBJ(longStringCopy[i]).append(U_OBJ(longStrings[i]));
             }
         }
         timeP3long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStrings[i].length());
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(U_OBJ(longStrings[i]).length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    P3\tAppend string:"
@@ -21443,8 +21447,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         }
         timeP4short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStrings[i].length());
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(U_OBJ(shortStrings[i]).length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         t.reset(); t.start();
@@ -21456,8 +21460,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         }
         timeP4long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStrings[i].length());
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(U_OBJ(longStrings[i]).length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    P4\tAppend range:"
@@ -21472,7 +21476,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
 
         for (int i = 0; i < NSHORT; ++i) {  // restore length *and* capacity
             Obj(shortWords[i]).swap(shortStrings[i]);
-            ASSERT(shortStringLength[i] == shortStrings[i].length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStrings[i]).length());
             // ASSERT(shortStringLength[i] == shortStrings[i].capacity());
         }
         t.reset(); t.start();
@@ -21484,19 +21488,19 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
                                        longStrings[ilong][j]);
             }
 #else
-            shortStrings[i].insert(shortStrings[i].length(),
-                                   longStrings[ilong]);
+            U_OBJ(shortStrings[i]).insert(U_OBJ(shortStrings[i]).length(),
+                                   U_OBJ(longStrings[ilong]));
 #endif
         }
         timeI1short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) {  // restore length but not capacity
-            shortStrings[i].erase(shortStringLength[i]);
-            ASSERT(shortStringLength[i] == shortStrings[i].length());
+            U_OBJ(shortStrings[i]).erase(shortStringLength[i]);
+            ASSERT(shortStringLength[i] == U_OBJ(shortStrings[i]).length());
         }
 
         for (int i = 0; i < NLONG; ++i) {  // restore length *and* capacity
             Obj(longWords[i]).swap(longStrings[i]);
-            ASSERT(longStringLength[i] == longStrings[i].length());
+            ASSERT(longStringLength[i] == U_OBJ(longStrings[i]).length());
             // ASSERT(longStringLength[i] == longStrings[i].capacity());
         }
         t.reset(); t.start();
@@ -21510,15 +21514,15 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
             }
 #else
             for (int k = 0; k < SL_RATIO; ++k) {
-                longStrings[i].insert(longStrings[i].length(),
-                                      longStringCopy[i]);
+                U_OBJ(longStrings[i]).insert(U_OBJ(longStrings[i]).length(),
+                                      U_OBJ(longStringCopy[i]));
             }
 #endif
         }
         timeI1long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStrings[i].erase(longStringLength[i]);
-            ASSERT(longStringLength[i] == longStrings[i].length());
+            U_OBJ(longStrings[i]).erase(longStringLength[i]);
+            ASSERT(longStringLength[i] == U_OBJ(longStrings[i]).length());
         }
 
         printf("\t    I1\tInsert chars:"
@@ -21530,37 +21534,39 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
 
         for (int i = 0; i < NSHORT; ++i) {  // restore length *and* capacity
             Obj(shortWords[i]).swap(shortStringCopy[i]);
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
             // ASSERT(shortStringLength[i] == shortStringCopy[i].capacity());
         }
         t.reset(); t.start();
         for (int i = 0, ilong = 0; i < NSHORT; ++i, ++ilong) {
             ilong = ilong < NLONG ? ilong : ilong - NLONG;
-            shortStringCopy[i].insert(shortStringCopy[i].length(),
-                                      longStrings[ilong]);
+            Obj& mS = U_OBJ(shortStringCopy[i]);
+            mS.insert(mS.length(),
+                      U_OBJ(longStrings[ilong]));
         }
         timeI2short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStrings[i].length());
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(U_OBJ(shortStrings[i]).length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         for (int i = 0; i < NLONG; ++i) {  // restore length *and* capacity
             Obj(longWords[i]).swap(longStringCopy[i]);
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
             // ASSERT(longStringLength[i] == longStringCopy[i].capacity());
         }
         t.reset(); t.start();
         for (int i = 0; i < NLONG; ++i) {
             for (int k = 0; k < SL_RATIO; ++k) {
-                longStringCopy[i].insert(longStringCopy[i].length(),
-                                         longStrings[i]);
+                Obj& mS = U_OBJ(longStringCopy[i]);
+                mS.insert(mS.length(),
+                          U_OBJ(longStrings[i]));
             }
         }
         timeI2long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStrings[i].length());
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(U_OBJ(longStrings[i]).length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    I2\tInsert string:"
@@ -21576,26 +21582,28 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         t.reset(); t.start();
         for (int i = 0, ilong = 0; i < NSHORT; ++i, ++ilong) {
             ilong = ilong < NLONG ? ilong : ilong - NLONG;
-            shortStringCopy[i].insert(shortStringCopy[i].length(),
-                                      longStrings[ilong]);
+            Obj& mS = U_OBJ(shortStringCopy[i]);
+            mS.insert(mS.length(),
+                      U_OBJ(longStrings[ilong]));
         }
         timeI3short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStrings[i].length());
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(U_OBJ(shortStrings[i]).length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         t.reset(); t.start();
         for (int i = 0; i < NLONG; ++i) {
             for (int k = 0; k < SL_RATIO; ++k) {
-                longStringCopy[i].insert(longStringCopy[i].length(),
-                                         longStrings[i]);
+                Obj& mS = U_OBJ(longStringCopy[i]);
+                mS.insert(mS.length(),
+                          U_OBJ(longStrings[i]));
             }
         }
         timeI3long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStrings[i].length());
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(U_OBJ(longStrings[i]).length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    I3\tInsert string:"
@@ -21614,8 +21622,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         }
         timeI4short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStrings[i].length());
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(U_OBJ(shortStrings[i]).length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         t.reset(); t.start();
@@ -21628,8 +21636,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         }
         timeI4long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStrings[i].length());
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(U_OBJ(longStrings[i]).length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    I4\tInsert range:"
@@ -21644,7 +21652,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
 
         for (int i = 0; i < NSHORT; ++i) {  // restore length *and* capacity
             Obj(shortWords[i]).swap(shortStrings[i]);
-            ASSERT(shortStringLength[i] == shortStrings[i].length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStrings[i]).length());
             // ASSERT(shortStringLength[i] == shortStrings[i].capacity());
         }
         t.reset(); t.start();
@@ -21655,18 +21663,19 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
                 shortStrings[i].insert(j, 1, longStringCopy[ilong][j]);
             }
 #else
-            shortStrings[i].insert((size_t)0, longStringCopy[ilong]);
+            U_OBJ(shortStrings[i]).insert((size_t)0,
+                                          U_OBJ(longStringCopy[ilong]));
 #endif
         }
         timeB1short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) {  // restore length but not capacity
-            shortStrings[i].erase(shortStringLength[i]);
-            ASSERT(shortStringLength[i] == shortStrings[i].length());
+            U_OBJ(shortStrings[i]).erase(shortStringLength[i]);
+            ASSERT(shortStringLength[i] == U_OBJ(shortStrings[i]).length());
         }
 
         for (int i = 0; i < NLONG; ++i) {  // restore length *and* capacity
             Obj(longWords[i]).swap(longStrings[i]);
-            ASSERT(longStringLength[i] == longStrings[i].length());
+            ASSERT(longStringLength[i] == U_OBJ(longStrings[i]).length());
             // ASSERT(longStringLength[i] == longStrings[i].capacity());
         }
         t.reset(); t.start();
@@ -21680,14 +21689,15 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
             }
 #else
                 for (int k = 0; k < SL_RATIO; ++k, ++pos) {
-                    longStrings[i].insert(pos, longStringCopy[i]);
+                    U_OBJ(longStrings[i]).insert(pos,
+                                                 U_OBJ(longStringCopy[i]));
                 }
 #endif
         }
         timeB1long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStrings[i].erase(longStringLength[i]);
-            ASSERT(longStringLength[i] == longStrings[i].length());
+            U_OBJ(longStrings[i]).erase(longStringLength[i]);
+            ASSERT(longStringLength[i] == U_OBJ(longStrings[i]).length());
         }
 
         printf("\t    B1\tInsert chars:"
@@ -21699,36 +21709,37 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
 
         for (int i = 0; i < NSHORT; ++i) {  // restore length *and* capacity
             Obj(shortWords[i]).swap(shortStringCopy[i]);
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
             // ASSERT(shortStringLength[i] == shortStringCopy[i].capacity());
         }
         t.reset(); t.start();
         for (int i = 0, ilong = 0; i < NSHORT; ++i, ++ilong) {
             ilong = ilong < NLONG ? ilong : ilong - NLONG;
-            shortStringCopy[i].insert((size_t)0, longStrings[ilong]);
+            U_OBJ(shortStringCopy[i]).insert((size_t)0,
+                                             U_OBJ(longStrings[ilong]));
         }
         timeB2short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStringLength[i]);
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(shortStringLength[i]);
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         for (int i = 0; i < NLONG; ++i) {  // restore length *and* capacity
             Obj(longWords[i]).swap(longStringCopy[i]);
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
             // ASSERT(longStringLength[i] == longStringCopy[i].capacity());
         }
         t.reset(); t.start();
         for (int i = 0; i < NLONG; ++i) {
             size_t pos = 0;
             for (int k = 0; k < SL_RATIO; ++k, pos += longStringLength[i]) {
-                longStringCopy[i].insert(pos, longStrings[i]);
+                U_OBJ(longStringCopy[i]).insert(pos, U_OBJ(longStrings[i]));
             }
         }
         timeB2long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStringLength[i]);
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(longStringLength[i]);
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    B2\tInsert string:"
@@ -21744,25 +21755,26 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         t.reset(); t.start();
         for (int i = 0, ilong = 0; i < NSHORT; ++i, ++ilong) {
             ilong = ilong < NLONG ? ilong : ilong - NLONG;
-            shortStringCopy[i].insert((size_t)0, longStrings[ilong]);
+            U_OBJ(shortStringCopy[i]).insert((size_t)0,
+                                             U_OBJ(longStrings[ilong]));
         }
         timeB3short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStringLength[i]);
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(shortStringLength[i]);
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         t.reset(); t.start();
         for (int i = 0; i < NLONG; ++i) {
             size_t pos = 0;
             for (int k = 0; k < SL_RATIO; ++k, pos += longStringLength[i]) {
-                longStringCopy[i].insert(pos, longStrings[i]);
+                U_OBJ(longStringCopy[i]).insert(pos, U_OBJ(longStrings[i]));
             }
         }
         timeB3long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStringLength[i]);
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(longStringLength[i]);
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    B3\tInsert string:"
@@ -21781,8 +21793,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         }
         timeB4short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStrings[i].length());
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(U_OBJ(shortStrings[i]).length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         t.reset(); t.start();
@@ -21796,8 +21808,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         }
         timeB4long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStrings[i].length());
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(U_OBJ(longStrings[i]).length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    B4\tInsert range:"
@@ -21813,28 +21825,28 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         t.reset(); t.start();
         for (int i = 0, ilong = 0; i < NSHORT; ++i, ++ilong) {
             ilong = ilong < NLONG ? ilong : ilong - NLONG;
-            shortStringCopy[i].replace(shortStringCopy[i].end() - 1,
-                                       shortStringCopy[i].end(),
-                                       longStrings[ilong]);
+            U_OBJ(shortStringCopy[i]).replace(shortStringCopy[i].end() - 1,
+                                       U_OBJ(shortStringCopy[i]).end(),
+                                       U_OBJ(longStrings[ilong]));
         }
         timeR1short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStrings[i].length());
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(U_OBJ(shortStrings[i]).length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         t.reset(); t.start();
         for (int i = 0; i < NLONG; ++i) {
             for (int k = 0; k < SL_RATIO; ++k) {
-                longStringCopy[i].replace(longStringCopy[i].end() - 1,
-                                          longStringCopy[i].end(),
-                                          longStrings[i]);
+                U_OBJ(longStringCopy[i]).replace(longStringCopy[i].end() - 1,
+                                          U_OBJ(longStringCopy[i]).end(),
+                                          U_OBJ(longStrings[i]));
             }
         }
         timeR1long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStrings[i].length());
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(U_OBJ(longStrings[i]).length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    R1\tReplace at end:\t%1.5fs\t%1.5fs\t%1.6fs\n",
@@ -21846,28 +21858,28 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         t.reset(); t.start();
         for (int i = 0, ilong = 0; i < NSHORT; ++i, ++ilong) {
             ilong = ilong < NLONG ? ilong : ilong - NLONG;
-            shortStringCopy[i].replace(shortStringCopy[i].begin(),
-                                       shortStringCopy[i].begin() + 1,
-                                       longStrings[ilong]);
+            U_OBJ(shortStringCopy[i]).replace(shortStringCopy[i].begin(),
+                                       U_OBJ(shortStringCopy[i]).begin() + 1,
+                                       U_OBJ(longStrings[ilong]));
         }
         timeR2short = t.elapsedTime();
         for (int i = 0; i < NSHORT; ++i) { // restore length but not capacity
-            shortStringCopy[i].erase(shortStrings[i].length());
-            ASSERT(shortStringLength[i] == shortStringCopy[i].length());
+            U_OBJ(shortStringCopy[i]).erase(U_OBJ(shortStrings[i]).length());
+            ASSERT(shortStringLength[i] == U_OBJ(shortStringCopy[i]).length());
         }
 
         t.reset(); t.start();
         for (int i = 0; i < NLONG; ++i) {
             for (int k = 0; k < SL_RATIO; ++k) {
-                longStringCopy[i].replace(longStringCopy[i].begin(),
-                                          longStringCopy[i].begin() + 1,
-                                          longStrings[i]);
+                U_OBJ(longStringCopy[i]).replace(longStringCopy[i].begin(),
+                                          U_OBJ(longStringCopy[i]).begin() + 1,
+                                          U_OBJ(longStrings[i]));
             }
         }
         timeR2long = t.elapsedTime();
         for (int i = 0; i < NLONG; ++i) { // restore length but not capacity
-            longStringCopy[i].erase(longStrings[i].length());
-            ASSERT(longStringLength[i] == longStringCopy[i].length());
+            U_OBJ(longStringCopy[i]).erase(U_OBJ(longStrings[i]).length());
+            ASSERT(longStringLength[i] == U_OBJ(longStringCopy[i]).length());
         }
 
         printf("\t    R2\tReplace at begin: %1.5fs\t%1.5fs\t%1.6fs\n",
@@ -21904,7 +21916,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         t.reset(); t.start();
         for (int k = 0; k < SL_RATIO; ++k) {
             for (int i = 0; i < NSHORT; ++i) {
-                shortStringCopy[i] = shortStrings[i].substr(
+                U_OBJ(shortStringCopy[i]) = U_OBJ(shortStrings[i]).substr(
                                                       0, shortStringLength[i]);
             }
         }
@@ -21913,7 +21925,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
         t.reset(); t.start();
         for (int k = 0; k < SL_RATIO * SL_RATIO; ++k) {
             for (int i = 0; i < NLONG; ++i) {
-                longStringCopy[i] = longStrings[i].substr(0,
+                U_OBJ(longStringCopy[i]) = U_OBJ(longStrings[i]).substr(0,
                                                           longStringLength[i]);
             }
         }
@@ -21928,6 +21940,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCaseM1(const int /* NITER */,
     // F2) FIND_FIRST_OF AND FIND_LAST_OF OPERATIONS
 
     // F3) FIND_FIRST_NOT_OF AND FIND_LAST_NOT_OF OPERATIONS
+#undef U_OBJ
 }
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_CTAD
