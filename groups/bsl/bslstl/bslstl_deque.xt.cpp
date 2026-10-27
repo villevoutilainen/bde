@@ -477,16 +477,26 @@ struct TestAllocatorUtil {
     static void test(const bsltf::AllocEmplacableTestType& value,
                      const bslma::Allocator&               allocator)
     {
-        ASSERTV(&allocator == value.arg01().allocator());
-        ASSERTV(&allocator == value.arg02().allocator());
-        ASSERTV(&allocator == value.arg03().allocator());
-        ASSERTV(&allocator == value.arg04().allocator());
-        ASSERTV(&allocator == value.arg05().allocator());
-        ASSERTV(&allocator == value.arg06().allocator());
-        ASSERTV(&allocator == value.arg07().allocator());
-        ASSERTV(&allocator == value.arg08().allocator());
-        ASSERTV(&allocator == value.arg09().allocator());
-        ASSERTV(&allocator == value.arg10().allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg01()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg02()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg03()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg04()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg05()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg06()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg07()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg08()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg09()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg10()).allocator());
     }
 };
 
@@ -498,6 +508,7 @@ template <class CONTAINER, class VALUES>
 size_t verifyContainer(const CONTAINER& container,
                        const VALUES&    expectedValues,
                        size_t           expectedSize)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     ASSERTV(expectedSize, container.size(), expectedSize == container.size());
 
@@ -542,6 +553,7 @@ template <class CONTAINER>
 size_t numNotMovedInto(const CONTAINER& X,
                        size_t           startIndex = 0,
                        size_t           endIndex   = 0)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(X)
 {
     typedef bsltf::TemplateTestFacility TstFacility;
     typedef bsltf::MoveState            MoveState;
@@ -689,6 +701,7 @@ namespace bsl {
 
 template <class TYPE, class ALLOC>
 void debugprint(const bsl::deque<TYPE,ALLOC>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     using bsls::debugprint;
 
@@ -726,6 +739,7 @@ nthElem(const t_CONTAINER& container, ptrdiff_t index)
 
 template <class CONTAINER>
 bool verifySpec(const CONTAINER& c, const char *spec)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(c)
 {
     const size_t sz = c.size();
     if (strlen(spec) != sz) {
@@ -863,6 +877,7 @@ class ExceptionProctor {
     , d_object_p(object)
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             new (d_control.buffer()) OBJECT(*object, basicAllocator);
         }
     }
@@ -879,6 +894,7 @@ class ExceptionProctor {
     , d_object_p(object)
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             new (d_control.buffer()) OBJECT(control, basicAllocator);
         }
     }
@@ -892,6 +908,7 @@ class ExceptionProctor {
     , d_object_p(object)
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             new (d_control.buffer()) OBJECT(
                                          bslmf::MovableRefUtil::move(control));
         }
@@ -903,6 +920,7 @@ class ExceptionProctor {
     ~ExceptionProctor()
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
             const int LINE = d_line;
             ASSERTV(LINE, d_control.object(), *d_object_p,
                     d_control.object() == *d_object_p);
@@ -1463,6 +1481,7 @@ template <class TYPE>
 const TYPE&
 CharList<TYPE>::operator[](size_t index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value[index];
 }
 
@@ -1470,6 +1489,7 @@ template <class TYPE>
 typename CharList<TYPE>::const_iterator
 CharList<TYPE>::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_value.begin());
 }
 
@@ -1477,6 +1497,7 @@ template <class TYPE>
 typename CharList<TYPE>::const_iterator
 CharList<TYPE>::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_value.end());
 }
 
@@ -1523,18 +1544,21 @@ CharArray<TYPE>::CharArray(const bsl::vector<TYPE>& value)
 template <class TYPE>
 const TYPE& CharArray<TYPE>::operator[](size_t index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value[index];
 }
 
 template <class TYPE>
 typename CharArray<TYPE>::const_iterator CharArray<TYPE>::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_value.begin());
 }
 
 template <class TYPE>
 typename CharArray<TYPE>::const_iterator CharArray<TYPE>::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_value.end());
 }
 
@@ -1595,8 +1619,16 @@ class ContainerCompatibleRange {
         : d_value(std::move(value)) {}
 
     // ACCESSORS
-    auto begin() const { return const_iterator(d_value.begin()); }
-    auto end() const { return const_sentinel(d_value.end()); }
+    auto begin() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return const_iterator(d_value.begin());
+    }
+    auto end() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return const_sentinel(d_value.end());
+    }
 };
 
 static_assert(BloombergLP::bslmf::ContainerCompatibleRange<
@@ -1703,9 +1735,21 @@ class ContainerCompatibleSizedRange {
         : d_value(std::move(value)) {}
 
     // ACCESSORS
-    auto begin() const { return const_iterator(d_value.begin()); }
-    auto end() const { return const_sentinel(d_value.end()); }
-    auto size() const { return d_value.size(); }
+    auto begin() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return const_iterator(d_value.begin());
+    }
+    auto end() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return const_sentinel(d_value.end());
+    }
+    auto size() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_value.size();
+    }
 };
 
 static_assert(BloombergLP::bslmf::ContainerCompatibleRange<
@@ -2184,6 +2228,7 @@ struct TestDriver {
     /// (rather than the one taking an lvalue).
     static void primaryManipulatorBack(Obj   *container,
                                        int    identifier)
+                                   BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(container)
 
     {
         bsls::ObjectBuffer<ValueType> buffer;
@@ -2201,6 +2246,7 @@ struct TestDriver {
     /// (rather than the one taking an lvalue).
     static void primaryManipulatorFront(Obj   *container,
                                         int    identifier)
+                                   BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(container)
     {
         bsls::ObjectBuffer<ValueType> buffer;
         TstFacility::emplace(buffer.address(),
@@ -2290,17 +2336,21 @@ struct TestDriver {
     ///   clear the deque, and fill to the back of the current page.
     ///   Finally push_back one more `A` object, which should re-use one of
     ///   the existing pages rather than allocate a new page.
-    static int ggg(Obj *object, const char *spec, bool verboseFlag = true);
+    static int ggg(Obj *object, const char *spec, bool verboseFlag = true)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified `object` with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return, by value, a new vector corresponding to the specified
     /// `spec`.
     static bsl::vector<TYPE> gV(const char *spec);
 
     static void resetMovedInto(Obj *object)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
     {
         for (size_t i = 0; i < object->size(); ++i) {
             TstFacility::setMovedIntoState(BSLS_UTIL_ADDRESSOF((*object)[i]),
@@ -2315,7 +2365,8 @@ struct TestDriver {
     /// not specified.
     static void stretch(Obj         *object,
                         std::size_t  size,
-                        int          identifier = int('Z'));
+                        int          identifier = int('Z'))
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Using only primary manipulators, extend the capacity of the
     /// specified `object` by the specified `size` by adding `size` copies
@@ -2324,22 +2375,26 @@ struct TestDriver {
     /// not specified.
     static void stretchRemoveAll(Obj         *object,
                                  std::size_t  size,
-                                 int          identifier = int('Z'));
+                                 int          identifier = int('Z'))
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Determine which end of the specified `*container` has more room.
     /// Return a value > 0 if it's the front, < 0 if it's the back, and
     /// 0 if the two ends have the same amount of room.  Note that this
     /// function modifies `container` but restores it to its original state.
-    static int findRoomierEnd(Obj *container);
+    static int findRoomierEnd(Obj *container)
+                                  BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(container);
 
     /// Using `push_back`, `push_front`, `pop_back`, and `pop_front`, set
     /// the internal state of the specified `object` by moving the start and
     /// finish iterators by the specified `n` positions.
-    static void setInternalState(Obj *object, int n);
+    static void setInternalState(Obj *object, int n)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     static void storeFirstNElemAddr(typename Obj::const_pointer *pointers,
                                     const Obj&                   object,
                                     size_t                       n)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(object)
     {
         size_t i = 0;
         for (CIter b = object.cbegin(); b != object.cend() && i < n; ++b) {
@@ -2351,6 +2406,7 @@ struct TestDriver {
     int checkFirstNElemAddr(typename Obj::const_pointer *pointers,
                             const Obj&                   object,
                             size_t                       n)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(object)
     {
         int    count = 0;
         size_t i     = 0;
@@ -2412,7 +2468,8 @@ struct TestDriver {
               int N08,
               int N09,
               int N10>
-    static void testCase28a_RunTest(Obj *target, const_iterator position);
+    static void testCase28a_RunTest(Obj *target, const_iterator position)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target);
 
     /// Test `emplace` other than forwarding of arguments (see 29a).
     static void testCase28();
@@ -2435,7 +2492,8 @@ struct TestDriver {
               int N08,
               int N09,
               int N10>
-    static void testCase27a_RunTest(Obj *target);
+    static void testCase27a_RunTest(Obj *target)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target);
 
     /// Call `emplace_front` on the specified `target` container.  Forward
     /// (template parameter) `N_ARGS` arguments to the `emplace_front`
@@ -2455,7 +2513,8 @@ struct TestDriver {
               int N08,
               int N09,
               int N10>
-    static void testCase27b_RunTest(Obj *target);
+    static void testCase27b_RunTest(Obj *target)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target);
 
     /// Test forwarding of arguments in `emplace_back` method.
     static void testCase27a();
@@ -6748,6 +6807,7 @@ void TestDriver<TYPE,ALLOC>::testCase24_dispatch()
                     proctor.release();
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(srcPtr);
                 Obj& mZ = *srcPtr;  const Obj& Z = mZ;
 
                 ASSERTV(SPEC1, SPEC2, &ra == &oa, X, LENGTH1 == X.size());
@@ -15890,6 +15950,11 @@ template <class TYPE, class ALLOC>
 template <class CONTAINER>
 void TestDriver<TYPE,ALLOC>::testCaseM1Range(const CONTAINER&)
 {
+    // The elements of the `new`-allocated arrays below point to objects,
+    // which a conveyor build cannot prove for itself: say so where they
+    // are used.
+#define U_OBJ(X) BSLS_ASSERT_CONVEYOR_REF(X)
+
     // ------------------------------------------------------------------------
     // PERFORMANCE TEST (RANGE)
     //
@@ -15973,7 +16038,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1Range(const CONTAINER&)
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE; ++i) {
-            deques[i]->assign(U.begin(), U.end());
+            U_OBJ(*deques[i]).assign(U.begin(), U.end());
         }
         time = t.elapsedTime();
 
@@ -15999,7 +16064,8 @@ void TestDriver<TYPE,ALLOC>::testCaseM1Range(const CONTAINER&)
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE; ++i) {
-            deques[i]->insert(deques[i]->begin(), U.begin(), U.end());
+            U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).begin(),
+                                     U.begin(), U.end());
         }
         time = t.elapsedTime();
 
@@ -16025,7 +16091,8 @@ void TestDriver<TYPE,ALLOC>::testCaseM1Range(const CONTAINER&)
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE; ++i) {
-            deques[i]->insert(deques[i]->end(), U.begin(), U.end());
+            U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).end(),
+                                     U.begin(), U.end());
         }
         time = t.elapsedTime();
 
@@ -16050,7 +16117,8 @@ void TestDriver<TYPE,ALLOC>::testCaseM1Range(const CONTAINER&)
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE; ++i) {
-            deques[i]->insert(deques[i]->begin() + i, U.begin(), U.end());
+            U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).begin() + i,
+                                     U.begin(), U.end());
         }
         time += t.elapsedTime();
 
@@ -16059,11 +16127,17 @@ void TestDriver<TYPE,ALLOC>::testCaseM1Range(const CONTAINER&)
             delete deques[i];
         }
     }
+#undef U_OBJ
 }
 
 template <class TYPE, class ALLOC>
 void TestDriver<TYPE,ALLOC>::testCaseM1()
 {
+    // The elements of the `new`-allocated arrays below point to objects,
+    // which a conveyor build cannot prove for itself: say so where they
+    // are used.
+#define U_OBJ(X) BSLS_ASSERT_CONVEYOR_REF(X)
+
     // ------------------------------------------------------------------------
     // PERFORMANCE TEST
     //
@@ -16194,13 +16268,13 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_L; ++i) {
-            *deques[i] = deq;
+            U_OBJ(*deques[i]) = deq;
         }
         time = t.elapsedTime();
 
         printf("\t\toperator=(d):\t\t%1.6fs\n", time);
         for (int i = 0; i < NUM_DEQUE_L; ++i) {
-            ASSERT(*deques[i] == deq);
+            ASSERT(U_OBJ(*deques[i]) == deq);
             delete deques[i];
         }
     }
@@ -16224,7 +16298,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_L; ++i) {
-            deques[i]->assign(length, val);
+            U_OBJ(*deques[i]).assign(length, val);
         }
         time = t.elapsedTime();
 
@@ -16252,7 +16326,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             // Push in 1000 objects.
             for (int j = 0; j < LENGTH_L; ++j) {
-                deques[i]->push_back(VALUES[j % NUM_VALUES]);
+                U_OBJ(*deques[i]).push_back(VALUES[j % NUM_VALUES]);
             }
         }
         time = t.elapsedTime();
@@ -16281,7 +16355,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             // Push in 1000 objects.
             for (int j = 0; j < LENGTH_L; ++j) {
-                deques[i]->push_front(VALUES[j % NUM_VALUES]);
+                U_OBJ(*deques[i]).push_front(VALUES[j % NUM_VALUES]);
             }
         }
         time = t.elapsedTime();
@@ -16312,7 +16386,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             // Pop out all objects.
             for (unsigned int j = 0; j < sizes[i]; ++j) {
-                deques[i]->pop_back();
+                U_OBJ(*deques[i]).pop_back();
             }
         }
         time = t.elapsedTime();
@@ -16343,7 +16417,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             // Pop out all objects.
             for (unsigned int j = 0; j < sizes[i]; ++j) {
-                deques[i]->pop_front();
+                U_OBJ(*deques[i]).pop_front();
             }
         }
         time = t.elapsedTime();
@@ -16371,7 +16445,8 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             for (int j = 0; j < LENGTH_L; ++j) {
-                deques[i]->insert(deques[i]->begin(), VALUES[i % NUM_VALUES]);
+                U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).begin(),
+                                         VALUES[i % NUM_VALUES]);
             }
         }
         time = t.elapsedTime();
@@ -16395,8 +16470,8 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
-            deques[i]->insert(deques[i]->begin(), LENGTH_L,
-                              VALUES[i % NUM_VALUES]);
+            U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).begin(), LENGTH_L,
+                                     VALUES[i % NUM_VALUES]);
         }
         time = t.elapsedTime();
 
@@ -16423,7 +16498,8 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             for (int j = 0; j < LENGTH_L; ++j) {
-                deques[i]->insert(deques[i]->end(), VALUES[i % NUM_VALUES]);
+                U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).end(),
+                                         VALUES[i % NUM_VALUES]);
             }
         }
         time = t.elapsedTime();
@@ -16448,8 +16524,8 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
-            deques[i]->insert(deques[i]->end(), LENGTH_L,
-                              VALUES[i % NUM_VALUES]);
+            U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).end(), LENGTH_L,
+                                     VALUES[i % NUM_VALUES]);
         }
         time = t.elapsedTime();
 
@@ -16478,8 +16554,8 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             for (unsigned int j = 0; j < sizes[i]; ++j) {
-                deques[i]->insert(deques[i]->begin() + j,
-                                  VALUES[i % NUM_VALUES]);
+                U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).begin() + j,
+                                         VALUES[i % NUM_VALUES]);
             }
         }
         time = t.elapsedTime();
@@ -16507,8 +16583,9 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             // Insert in middle.
-            deques[i]->insert(deques[i]->begin() + sizes[i] / 2, LENGTH_S,
-                              VALUES[i % NUM_VALUES]);
+            U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).begin() + sizes[i] / 2,
+                                     LENGTH_S,
+                                     VALUES[i % NUM_VALUES]);
         }
         time = t.elapsedTime();
 
@@ -16532,7 +16609,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             for (int j = 0; j < LENGTH_S; ++j) {
-                deques[i]->erase(deques[i]->begin() + j);
+                U_OBJ(*deques[i]).erase(U_OBJ(*deques[i]).begin() + j);
             }
         }
         time = t.elapsedTime();
@@ -16542,6 +16619,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
             delete deques[i];
         }
     }
+#undef U_OBJ
 }
 
                         // ======================
@@ -16855,21 +16933,27 @@ class LaundryQueue {
     // MANIPULATORS
 
     /// Add the specified `customerName` to the back of the laundry queue.
-    void push(const bsl::string& customerName);
+    void push(const bsl::string& customerName)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                   BSLS_ASSERT_CONVEYOR_REQUIRES(customerName);
 
     /// Add the specified `customerName` to the laundry queue at the front.
-    void expeditedPush(const bsl::string& customerName);
+    void expeditedPush(const bsl::string& customerName)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                   BSLS_ASSERT_CONVEYOR_REQUIRES(customerName);
 
     /// Return the name from the front of the queue, removing it from the
     /// queue.  If the queue is empty, return "(* empty *)" which is not a
     /// valid name for a customer.
-    bsl::string next();
+    bsl::string next() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return `true` if the specified `customerName` is in the queue, and
     /// `false` otherwise.
-    bool find(const bsl::string& customerName);
+    bool find(const bsl::string& customerName)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                   BSLS_ASSERT_CONVEYOR_REQUIRES(customerName);
 };
 
 // Then, we define the implementation of the methods of `LaundryQueue`
@@ -16940,6 +17024,7 @@ bool LaundryQueue::find(const bsl::string& customerName)
 // ```
 template <class TYPE>
 void checkInvariants(const deque<TYPE>& d)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(d)
 {
     const size_t SZ = d.size();
 
