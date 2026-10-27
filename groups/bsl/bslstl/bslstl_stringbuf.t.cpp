@@ -217,6 +217,7 @@ void loadString(STRING *value, int length)
 template <class StringT>
 bool stringCouldBeMovedFrom(const StringT&                          s,
                             const typename StringT::allocator_type& otherAlloc)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(s)
 {
     return s.size() >= LENGTH_OF_SUFFICIENTLY_LONG_STRING &&
            s.get_allocator() == otherAlloc;
@@ -226,6 +227,7 @@ bool stringCouldBeMovedFrom(const StringT&                          s,
 /// `false` otherwise.
 template <class StringT>
 bool stringWasMovedFrom(const StringT& s)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(s)
 {
     return 0 == s.size();
 }
@@ -295,6 +297,7 @@ class StringBufTest : public bsl::basic_stringbuf<TYPE>
     static int populateString(bsl::basic_string<TYPE> *object,
                               const char              *spec,
                               int                      verboseFlag = 1)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
     {
         const TYPE *VALUES;
         getValues(&VALUES);

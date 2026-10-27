@@ -206,6 +206,7 @@ class UniversalPrinter {
     /// following statement - exactly what we want.
     static void Print(const T& value, ::std::ostream* os) {
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         PrintTo(value, os);
     }
 };

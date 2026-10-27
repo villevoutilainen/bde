@@ -29,6 +29,8 @@
 
 #include <bslscm_version.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_optional.h>
 
 #include <bsl_ostream.h>
@@ -84,7 +86,8 @@ namespace bsl {
 
 /// Write the specified `value` to the specified `*stream`, surrounded by
 /// double quotes.
-void PrintTo(const string& value, ostream *stream);
+void PrintTo(const string& value, ostream *stream)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
 /// Write the specified `value` to the specified `*stream`, surrounded by
 /// double quotes, writing non-printable characters with '\x...' escapes.
@@ -97,7 +100,8 @@ void PrintTo(const BloombergLP::bslstl::StringRef& value, ostream *stream);
 /// Write the specified `value` to the specified `*stream`, surrounded by
 /// double quotes.
 template <class TYPE>
-void PrintTo(const optional<TYPE>& value, ostream *stream);
+void PrintTo(const optional<TYPE>& value, ostream *stream)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
 // ============================================================================
 //                           INLINE DEFINITIONS

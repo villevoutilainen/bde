@@ -622,6 +622,7 @@ namespace bsl {
 /// to `wchar_t` and print them one at a time.
 template <class CHAR_TYPE, class TRAITS, class ALLOC>
 void debugprint(const bsl::basic_string<CHAR_TYPE, TRAITS, ALLOC>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     if (v.empty()) {
         printf("<empty>");
@@ -745,6 +746,7 @@ size_t computeNewCapacity(size_t newLength,
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
 namespace std {
 void debugprint(const std::initializer_list<char>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     if (0 == v.size()) {
         printf("<empty>");
@@ -761,6 +763,7 @@ void debugprint(const std::initializer_list<char>& v)
 }
 
 void debugprint(const std::initializer_list<wchar_t>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     if (0 == v.size()) {
         printf("<empty>");
@@ -817,6 +820,7 @@ struct ExceptionGuard {
 
     ~ExceptionGuard() {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
             const int LINE = d_lineNum;
             LOOP3_ASSERT(LINE, d_value, *d_object_p, d_value == *d_object_p);
         }
@@ -1620,11 +1624,14 @@ struct TestDriver {
     /// index of the first invalid character, and a negative value
     /// otherwise.  Note that this function is used to implement `gg` as
     /// well as allow for verification of syntax error detection.
-    static int ggg(Obj *object, const char *spec, int verboseFlag = 1);
+    static int ggg(Obj *object, const char *spec, int verboseFlag = 1)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified `object` with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return, by value, a new object corresponding to the specified
     /// `spec`.
@@ -1641,7 +1648,8 @@ struct TestDriver {
     /// specified `value`, or with the null character for the (template
     /// parameter) `TYPE` if `value` is not specified.  The resulting value
     /// is not specified.
-    static void stretch(Obj *object, size_t size, const TYPE& value = TYPE());
+    static void stretch(Obj *object, size_t size, const TYPE& value = TYPE())
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Using only primary manipulators, extend the capacity of the
     /// specified `object` to (at least) the specified `size` by adding
@@ -1650,7 +1658,8 @@ struct TestDriver {
     /// specified; then remove all elements leaving `object` empty.
     static void stretchRemoveAll(Obj         *object,
                                  size_t       size,
-                                 const TYPE&  value = TYPE());
+                                 const TYPE&  value = TYPE())
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Test apparatus for implicit conversion from `string_view` to string.
     static size1& fromStringView(...);
@@ -6385,11 +6394,13 @@ namespace UsageExample {
 
         /// Return a reference providing non-modifiable access to the
         /// `firstName` attribute of this object.
-        const bsl::string& firstName() const;
+        const bsl::string& firstName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         /// Return a reference providing non-modifiable access to the
         /// `lastName` attribute of this object.
-        const bsl::string& lastName() const;
+        const bsl::string& lastName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         /// Return the value of the `id` attribute of this object.
         int id() const;
@@ -6403,14 +6414,18 @@ namespace UsageExample {
     /// value if all of their corresponding values of their `firstName`,
     /// `lastName`, and `id` attributes are the same.
     inline
-    bool operator==(const Employee& lhs, const Employee& rhs);
+    bool operator==(const Employee& lhs, const Employee& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
     /// Return `true` if the specified `lhs` and `rhs` objects do not have
     /// the same value, and `false` otherwise.  Two `Employee` objects do
     /// not have the same value if any of the corresponding values of their
     /// `firstName`, `lastName`, or `id` attributes are not the same.
     inline
-    bool operator!=(const Employee& lhs, const Employee& rhs);
+    bool operator!=(const Employee& lhs, const Employee& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 // ```
 // Then, we implement the various methods of the `Employee` class:
 // ```
@@ -6538,6 +6553,8 @@ namespace UsageExample {
                  std::istream&      inputStream,
                  const bsl::string& oldString,
                  const bsl::string& newString)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(oldString)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(newString)
 // ```
 // Then, we provide the implementation for `replace`:
 // ```

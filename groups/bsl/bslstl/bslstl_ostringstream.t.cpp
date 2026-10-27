@@ -230,6 +230,7 @@ void loadString(StringT *value, int length)
 template <class StringT>
 bool stringCouldBeMovedFrom(const StringT&                          s,
                             const typename StringT::allocator_type& otherAlloc)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(s)
 {
     return s.size() >= LENGTH_OF_SUFFICIENTLY_LONG_STRING &&
            s.get_allocator() == otherAlloc;
@@ -239,6 +240,7 @@ bool stringCouldBeMovedFrom(const StringT&                          s,
 /// `false` otherwise.
 template <class StringT>
 bool stringWasMovedFrom(const StringT& s)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(s)
 {
     return 0 == s.size();
 }

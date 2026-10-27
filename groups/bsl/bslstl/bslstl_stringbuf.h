@@ -668,7 +668,7 @@ class basic_stringbuf
     /// in the buffer.  Otherwise this object has been created in neither
     /// input nor output mode and a zero length `StringType` is returned.
     /// This object is left in an empty state.
-    StringType str() &&;
+    StringType str() && BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP11_BASELINE_LIBRARY

@@ -139,6 +139,9 @@ BSLS_IDENT("$Id: $")
 
 #include <bslscm_version.h>
 
+#include <bsls_assert.h>
+#include <bsls_keyword.h>
+
 #include <bslmf_assert.h>
 
 #include <bsl_iostream.h>
@@ -326,7 +329,13 @@ struct TestUtil {
     static FUNCTION_PTR makeFunctionCallNonInline(FUNCTION_PTR functionPtr);
 
     template <class T>
-    static const T& debugRep(const T& arg) { return arg; }
+    static const T& debugRep(const T& arg) BSLS_KEYWORD_CONVEYOR
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(arg)
+        BSLS_ASSERT_CONVEYOR_POST(result,
+                         std::is_object_address(__builtin_addressof(result)))
+    {
+        return arg;
+    }
     static int      debugRep(wchar_t  arg) { return arg; }
 };
 

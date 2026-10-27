@@ -677,6 +677,7 @@ namespace bsl {
 
 template <class CHAR_TYPE, class TRAITS, class ALLOC>
 void debugprint(const bsl::basic_string<CHAR_TYPE, TRAITS, ALLOC>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     if (v.empty()) {
         printf("<empty>");
@@ -805,6 +806,7 @@ size_t computeNewCapacity(size_t newLength,
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
 namespace std {
 void debugprint(const std::initializer_list<char>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     if (0 == v.size()) {
         printf("<empty>");
@@ -838,12 +840,14 @@ void debugprint_impl(const std::initializer_list<CHAR_TYPE>& v)
 }
 
 void debugprint(const std::initializer_list<wchar_t>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     debugprint_impl(v);
 }
 
 # if defined(BSLS_COMPILERFEATURES_SUPPORT_UTF8_CHAR_TYPE)
 void debugprint(const std::initializer_list<char8_t>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     debugprint_impl(v);
 }
@@ -851,11 +855,13 @@ void debugprint(const std::initializer_list<char8_t>& v)
 
 # if defined(BSLS_COMPILERFEATURES_SUPPORT_UNICODE_CHAR_TYPES)
 void debugprint(const std::initializer_list<char16_t>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     debugprint_impl(v);
 }
 
 void debugprint(const std::initializer_list<char32_t>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     debugprint_impl(v);
 }
@@ -900,6 +906,7 @@ struct ExceptionGuard {
 
     ~ExceptionGuard() {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
             const int LINE = d_lineNum;
             LOOP3_ASSERT(LINE, d_value, *d_object_p, d_value == *d_object_p);
         }
@@ -1115,7 +1122,7 @@ class LimitAllocator : public ALLOC {
     void setMaxSize(size_type maxSize) { d_limit = maxSize; }
 
     // ACCESSORS
-    size_type max_size() const { return d_limit; }
+    size_type max_size() const BSLS_KEYWORD_CONVEYOR { return d_limit; }
     LimitAllocator select_on_container_copy_construction() const {
         return LimitAllocator();
     }
@@ -1695,11 +1702,14 @@ struct TestDriver {
     /// index of the first invalid character, and a negative value
     /// otherwise.  Note that this function is used to implement `gg` as
     /// well as allow for verification of syntax error detection.
-    static int ggg(Obj *object, const char *spec, int verboseFlag = 1);
+    static int ggg(Obj *object, const char *spec, int verboseFlag = 1)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified `object` with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return, by value, a new object corresponding to the specified
     /// `spec`.
@@ -1716,7 +1726,8 @@ struct TestDriver {
     /// specified `value`, or with the null character for the (template
     /// parameter) `TYPE` if `value` is not specified.  The resulting value
     /// is not specified.
-    static void stretch(Obj *object, size_t size, const TYPE& value = TYPE());
+    static void stretch(Obj *object, size_t size, const TYPE& value = TYPE())
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Using only primary manipulators, extend the capacity of the
     /// specified `object` to (at least) the specified `size` by adding
@@ -1725,11 +1736,14 @@ struct TestDriver {
     /// specified; then remove all elements leaving `object` empty.
     static void stretchRemoveAll(Obj         *object,
                                  size_t       size,
-                                 const TYPE&  value = TYPE());
+                                 const TYPE&  value = TYPE())
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Compare the specified `X` and `Y` strings according to the
     /// specifications, and check that the specified `result` agrees.
-    static void checkCompare(const Obj& X, const Obj& Y, int result);
+    static void checkCompare(const Obj& X, const Obj& Y, int result)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(X)
+                                              BSLS_ASSERT_CONVEYOR_REQUIRES(Y);
 
     // TEST CASES
 

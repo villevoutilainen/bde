@@ -455,6 +455,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_util.h>
 #include <bslmf_voidtype.h>
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_keyword.h>
 #include <bsls_libraryfeatures.h>
@@ -992,7 +993,7 @@ struct AllocatorTraits_CallMaxSize<
     /// with SFINAE functions.
     static SizeType max_size(const T &alloc)
     {
-        return alloc.max_size();
+        return BSLS_ASSERT_CONVEYOR_REF(alloc).max_size();
     }
 };
 #endif

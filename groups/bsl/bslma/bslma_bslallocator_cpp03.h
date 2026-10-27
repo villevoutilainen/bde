@@ -793,7 +793,7 @@ class allocator : public polymorphic_allocator<TYPE> {
     /// guarantee that attempts at allocating fewer elements than the value
     /// returned by `max_size` will not throw.
     BSLS_KEYWORD_CONSTEXPR
-    size_type max_size() const;
+    size_type max_size() const BSLS_KEYWORD_CONVEYOR;
 
     /// Return a pointer to the mechanism object to which this proxy
     /// forwards allocation and deallocation calls.
@@ -3159,6 +3159,7 @@ allocator<TYPE>::address(const_reference x) const
 template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR inline
 typename allocator<TYPE>::size_type allocator<TYPE>::max_size() const
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     // Return the largest value, `v`, such that `v * sizeof(T)` fits in a
     // `size_type`.  Note that `~size_type(0)` is the maximum value for
