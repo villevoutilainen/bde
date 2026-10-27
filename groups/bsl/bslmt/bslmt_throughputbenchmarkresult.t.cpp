@@ -1551,7 +1551,7 @@ int main(int argc, char *argv[])
                       } break;
                       default: {
                         LOOP_ASSERT(CONFIG, 0 == "Bad allocator config.");
-                      } break;
+                      } return testStatus;                            // RETURN
                     }
                     LOOP2_ASSERT(LINE,
                                  CONFIG,
@@ -1959,7 +1959,7 @@ int main(int argc, char *argv[])
                       } break;
                       default: {
                         LOOP_ASSERT(CONFIG, 0 == "Bad allocator config.");
-                      } break;
+                      } return testStatus;                            // RETURN
                     }
                     LOOP2_ASSERT(LINE,
                                  CONFIG,
@@ -2297,7 +2297,7 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(LINE,
                                      CONFIG,
                                      0 == "Bad allocator config.");
-                      } break;
+                      } return testStatus;                            // RETURN
                     }
                     LOOP2_ASSERT(LINE,
                                  CONFIG,

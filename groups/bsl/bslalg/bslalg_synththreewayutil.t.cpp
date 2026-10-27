@@ -190,8 +190,10 @@ template <class T, class A = std::allocator<T>>
 class list {
     std::list<T,A> d_list;
 public:
-    auto begin() const { return d_list.begin(); }
-    auto end() const { return d_list.end(); }
+    auto begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                                    { return d_list.begin(); }
+    auto end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                                      { return d_list.end(); }
 };
 
 }  // close unnamed namespace
@@ -215,6 +217,7 @@ namespace bsl { using std::lexicographical_compare_three_way; }
 template <class T, class A>
 bslalg::SynthThreeWayUtil::Result<T> operator<=>(const list<T,A>& lhs,
                                                  const list<T,A>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
 {
     return bsl::lexicographical_compare_three_way(
                                        lhs.begin(),

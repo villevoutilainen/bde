@@ -455,6 +455,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_istriviallycopyable.h>
 #include <bslmf_istriviallydefaultconstructible.h>
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_platform.h>
 
@@ -753,6 +754,7 @@ bslh::Hash<HASH_ALGORITHM>::operator()(TYPE const& key) const
 {
     Hash_AdlWrapper<HASH_ALGORITHM> wrapper;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     hashAppend(wrapper, key);
     return static_cast<result_type>(wrapper.computeHash());
 }
@@ -765,6 +767,7 @@ bslh::Hash<bslh::DefaultHashAlgorithm>::operator()(TYPE const& key) const
 {
     DefaultHashAlgorithm hashAlg;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     hashAppend(hashAlg, key);
     return static_cast<result_type>(hashAlg.computeHash());
 }

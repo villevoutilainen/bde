@@ -257,7 +257,9 @@ class SynchronizedAddJob {
     {
         d_start_p->lock();
         d_start_p->unlock();
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_tg_p);
         d_tg_p->addThread(d_job);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_tg_p);
         d_tg_p->addThreads(d_job, d_numThreadsToAdd - 1);
     }
 };

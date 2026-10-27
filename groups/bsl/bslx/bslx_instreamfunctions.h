@@ -483,6 +483,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_conditional.h>
 #include <bslmf_isenum.h>
 
+#include <bsls_assert.h>
 #include <bsls_performancehint.h>
 #include <bsls_types.h>
 
@@ -1153,6 +1154,7 @@ STREAM& InStreamFunctions::InStreamFunctions_AccessorHelper<STREAM>::getArray(
                                   ? length
                                   : k_INITIAL_ALLOCATION_COUNT;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&variable);
     variable.resize(initialLength);
 
     if (0 == length) {
@@ -1546,6 +1548,7 @@ STREAM& InStreamFunctions::bdexStreamIn(
                                   ? length
                                   : k_INITIAL_ALLOCATION_COUNT;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&variable);
     variable.resize(initialLength);
 
     if (0 == length) {

@@ -244,11 +244,12 @@ class ByteOutStream {
 
     /// Set the internal buffer size of this stream to be at least the
     /// specified `newCapacity` (in bytes).
-    void reserveCapacity(bsl::size_t newCapacity);
+    void reserveCapacity(bsl::size_t newCapacity)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all content in this stream and validate this stream if it is
     /// currently invalid.
-    void reset();
+    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                       // *** scalar integer values ***
 

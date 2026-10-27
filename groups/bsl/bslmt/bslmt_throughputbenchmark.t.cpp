@@ -911,17 +911,22 @@ int main(int argc, char *argv[])
 
             bslmt::ThroughputBenchmarkResult result;
 
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null 'result' at compile time.
             ASSERT_FAIL(mX.execute(0      , 1, 1));
+#endif
             ASSERT_FAIL(mX.execute(&result, 0, 1));
             ASSERT_FAIL(mX.execute(&result, 1, 0));
             ASSERT_PASS(mX.execute(&result, 1, 1));
 
+#ifndef BSLS_ASSERT_CONVEYOR
             ASSERT_FAIL(mX.execute(0,
                                    1,
                                    1,
                                    initFunctor,
                                    shutFunctor,
                                    cleanFunctor));
+#endif
             ASSERT_FAIL(mX.execute(&result,
                                    0,
                                    1,

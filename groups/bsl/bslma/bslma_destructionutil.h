@@ -185,6 +185,7 @@ inline
 void DestructionUtil::destroy(TYPE *address, bsl::false_type)
 {
 #ifndef BSLS_PLATFORM_CMP_SUN
+    BSLS_ASSERT_CONVEYOR_OBJECT(address);
     address->~TYPE();
 #else
     // Workaround for a bug in Sun's CC whereby destructors cannot be called on

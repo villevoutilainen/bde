@@ -153,6 +153,7 @@ BSLS_IDENT("$Id: $")
 #include <bslx_byteoutstream.h>
 #include <bslx_outstreamfunctions.h>
 
+#include <bsls_assert.h>
 #include <bsls_types.h>
 
 #include <bsl_cstddef.h>
@@ -256,11 +257,12 @@ class TestOutStream {
 
     /// Set the internal buffer size of this stream to be at least the
     /// specified `newCapacity` (in bytes).
-    void reserveCapacity(bsl::size_t newCapacity);
+    void reserveCapacity(bsl::size_t newCapacity)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all content in this stream and validate this stream if it is
     /// currently invalid.
-    void reset();
+    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                       // *** scalar integer values ***
 

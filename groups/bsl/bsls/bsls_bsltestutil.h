@@ -401,6 +401,7 @@ BSLS_IDENT("$Id: $")
 // }
 // ```
 
+#include <bsls_assert.h>
 #include <bsls_platform.h>
 
 #if defined(BSLS_PLATFORM_CMP_MSVC)
@@ -758,6 +759,7 @@ void BslTestUtil::callDebugprint(const TYPE&  obj,
         BloombergLP::bsls::BslTestUtil::printStringNoFlush(leadingString);
     }
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     debugprint(obj);
 
     if (trailingString) {

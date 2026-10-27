@@ -220,6 +220,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_conditional.h>
 #include <bslmf_isempty.h>
 
+#include <bsls_assert.h>
 #include <bsls_keyword.h>
 
 #include <new>  // Placement new
@@ -439,7 +440,7 @@ ContainerBase_EmptyBase<ALLOCATOR>::~ContainerBase_EmptyBase()
     // empty class, the destructor is almost certainly a no-op, but it could
     // have an external side effect such as logging or removing the allocator
     // address from a global map.
-    allocatorRef().~ALLOCATOR();
+    BSLS_ASSERT_CONVEYOR_REF(allocatorRef()).~ALLOCATOR();
 }
 
 // MANIPULATORS

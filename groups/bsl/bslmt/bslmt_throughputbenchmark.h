@@ -317,13 +317,15 @@ class ThroughputBenchmark {
     /// `0 < numThreadGroups()`.  Also see [](#Structure of a Test).
     void execute(ThroughputBenchmarkResult       *result,
                  int                              millisecondsPerSample,
-                 int                              numSamples);
+                 int                              numSamples)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
     void execute(ThroughputBenchmarkResult       *result,
                  int                              millisecondsPerSample,
                  int                              numSamples,
                  const InitializeSampleFunction&  initializeFunctor,
                  const ShutdownSampleFunction&    shutdownFunctor,
-                 const CleanupSampleFunction&     cleanupFunctor);
+                 const CleanupSampleFunction&     cleanupFunctor)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
     // ACCESSORS
 
@@ -453,7 +455,8 @@ class ThroughputBenchmark_TestUtil {
 
     /// Return a reference providing modifiable access to the
     /// `d_threadGroups` data member of `ThroughputBenchmark`.
-    bsl::vector<ThroughputBenchmark::ThreadGroup>& threadGroups();
+    bsl::vector<ThroughputBenchmark::ThreadGroup>& threadGroups()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // ============================================================================

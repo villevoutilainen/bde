@@ -2103,10 +2103,11 @@ BSLS_IDENT("$Id: $")
 // returns, relied on by its callers (calling a conveyor member through
 // 'opt->'), asking nothing of them.
 //
-// 'BSLS_ASSERT_CONVEYOR_REQUIRES(X)' and 'BSLS_ASSERT_CONVEYOR_REQUIRES_THIS'
-// give a public API function the proven precondition that the specified
-// lvalue 'X', or '*this', is an object: its callers must show it, which is
-// how a conveyor build finds the bugs of the code using that API.
+// 'BSLS_ASSERT_CONVEYOR_REQUIRES(X)', 'BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(P)'
+// and 'BSLS_ASSERT_CONVEYOR_REQUIRES_THIS' give a public API function the
+// proven precondition that the specified lvalue 'X', what the specified
+// pointer 'P' addresses, or '*this', is an object: its callers must show it,
+// which is how a conveyor build finds the bugs of the code using that API.
 //
 // 'BSLS_ASSERT_CONVEYOR_TRUST_PRE(X)' gives a function the never-proven
 // precondition that the specified lvalue 'X' is an object: its callers owe
@@ -2131,6 +2132,8 @@ BSLS_IDENT("$Id: $")
 #define BSLS_ASSERT_CONVEYOR_REQUIRES(X)                                      \
     pre<std::contracts::conveyor_assert_v>(                                   \
                                std::is_object_address(__builtin_addressof(X)))
+#define BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(P)                                  \
+    pre<std::contracts::conveyor_assert_v>(std::is_object_address(P))
 #define BSLS_ASSERT_CONVEYOR_REQUIRES_THIS                                    \
     pre<std::contracts::conveyor_assert_v>(std::is_object_address(this))
 #define BSLS_ASSERT_CONVEYOR_TRUST_PRE(X)                                     \
@@ -2143,6 +2146,7 @@ BSLS_IDENT("$Id: $")
 #define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT
 #define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 #define BSLS_ASSERT_CONVEYOR_REQUIRES(X)
+#define BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(P)
 #define BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
 #define BSLS_ASSERT_CONVEYOR_TRUST_PRE(X)
 #endif

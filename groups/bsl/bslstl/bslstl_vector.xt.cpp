@@ -622,6 +622,7 @@ namespace bsl {
 template <class TYPE, class ALLOC>
 inline
 void debugprint(const bsl::vector<TYPE, ALLOC>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     if (v.empty()) {
         printf("<empty>");
@@ -665,6 +666,7 @@ template<class CONTAINER, class VALUES>
 size_t verifyContainer(const CONTAINER& container,
                        const VALUES&    expectedValues,
                        size_t           expectedSize)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     ASSERTV(expectedSize, container.size(), expectedSize == container.size());
 
@@ -690,6 +692,7 @@ template <class CONTAINER>
 size_t numMovedInto(const CONTAINER& X,
                     size_t           startIndex = 0,
                     size_t           endIndex = 0)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(X)
 {
     int    numMoved = 0;
     size_t upTo     = endIndex > startIndex ? endIndex : X.size();
@@ -706,6 +709,7 @@ template <class CONTAINER>
 size_t numNotMovedInto(const CONTAINER& X,
                        size_t           startIndex = 0,
                        size_t           endIndex = 0)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(X)
 {
     int    numNotMoved = 0;
     size_t upTo        = endIndex > startIndex ? endIndex : X.size();
@@ -735,6 +739,7 @@ bool expectToAllocate(size_t n)
 template <class TYPE, class ALLOC>
 void primaryManipulator(bsl::vector<TYPE, ALLOC> *container,
                         int                       identifier)
+                                   BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(container)
 {
     typedef bslmf::MovableRefUtil       MoveUtil;
     typedef bsltf::TemplateTestFacility TstFacility;
@@ -750,6 +755,7 @@ void primaryManipulator(bsl::vector<TYPE, ALLOC> *container,
 
 template <class TYPE, class ALLOC>
 void resetMovedInto(bsl::vector<TYPE, ALLOC> *object)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
 {
     typedef bsltf::TemplateTestFacility TstFacility;
 
@@ -811,6 +817,7 @@ template <class TYPE, class ALLOC>
 int ggg(bsl::vector<TYPE, ALLOC> *object,
         const char               *spec,
         bool                      verboseFlag = true)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
 {
     enum { SUCCESS = -1 };
 
@@ -838,6 +845,8 @@ int ggg(bsl::vector<TYPE, ALLOC> *object,
 template <class TYPE, class ALLOC>
 bsl::vector<TYPE, ALLOC>& gg(bsl::vector<TYPE, ALLOC> *object,
                              const char               *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(ggg(object, spec) < 0);
     return *object;
@@ -907,6 +916,7 @@ class CountingHashAlgorithm {
 /// each of its elements in turn.  Use the specified `line` in any failure.
 template <class CONTAINER>
 void verifyElementWiseHashAppend(int line, const CONTAINER& container)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     using ::BloombergLP::bslh::hashAppend;
 
@@ -1026,6 +1036,7 @@ struct ExceptionProctor {
     , d_object_p(object)
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             new (d_control.buffer()) OBJECT(*object, basicAllocator);
         }
     }
@@ -1041,6 +1052,7 @@ struct ExceptionProctor {
     , d_object_p(object)
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             new (d_control.buffer()) OBJECT(control, basicAllocator);
         }
     }
@@ -1054,6 +1066,7 @@ struct ExceptionProctor {
     , d_object_p(object)
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             new (d_control.buffer()) OBJECT(
                                          bslmf::MovableRefUtil::move(control));
         }
@@ -1065,6 +1078,7 @@ struct ExceptionProctor {
     ~ExceptionProctor()
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
             const int LINE = d_line;
             ASSERTV(LINE, d_control.object(), *d_object_p,
                     d_control.object() == *d_object_p);
@@ -1155,6 +1169,7 @@ template <class TYPE>
 typename ListLike<TYPE>::const_iterator
 ListLike<TYPE>::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_value.begin());
 }
 
@@ -1162,6 +1177,7 @@ template <class TYPE>
 typename ListLike<TYPE>::const_iterator
 ListLike<TYPE>::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_value.end());
 }
 
@@ -1223,12 +1239,14 @@ const TYPE& ArrayLike<TYPE>::operator[](size_t index) const
 template <class TYPE>
 typename ArrayLike<TYPE>::const_iterator ArrayLike<TYPE>::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_value.begin());
 }
 
 template <class TYPE>
 typename ArrayLike<TYPE>::const_iterator ArrayLike<TYPE>::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_value.end());
 }
 
@@ -1289,8 +1307,16 @@ class ContainerCompatibleRange {
         : d_value(std::move(value)) {}
 
     // ACCESSORS
-    auto begin() const { return const_iterator(d_value.begin()); }
-    auto end() const { return const_sentinel(d_value.end()); }
+    auto begin() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return const_iterator(d_value.begin());
+    }
+    auto end() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return const_sentinel(d_value.end());
+    }
 };
 
 static_assert(BloombergLP::bslmf::ContainerCompatibleRange<
@@ -1397,9 +1423,21 @@ class ContainerCompatibleSizedRange {
         : d_value(std::move(value)) {}
 
     // ACCESSORS
-    auto begin() const { return const_iterator(d_value.begin()); }
-    auto end() const { return const_sentinel(d_value.end()); }
-    auto size() const { return d_value.size(); }
+    auto begin() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return const_iterator(d_value.begin());
+    }
+    auto end() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return const_sentinel(d_value.end());
+    }
+    auto size() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_value.size();
+    }
 };
 
 static_assert(BloombergLP::bslmf::ContainerCompatibleRange<
@@ -1437,7 +1475,7 @@ class InputProxy {
 
     operator const TARGET &() const
     {
-        BSLS_ASSERT_OPT(d_ptr);
+        BSLS_ASSERT_OPT_NONCONVEYOR(d_ptr);
 
         return *d_ptr;
     }
@@ -1463,28 +1501,28 @@ class InputIterator {
 
     reference operator*() const
     {
-        BSLS_ASSERT_OPT(d_ptr);
+        BSLS_ASSERT_OPT_NONCONVEYOR(d_ptr);
 
         return reference(d_ptr);
     }
 
     pointer operator->() const
     {
-        BSLS_ASSERT_OPT(d_ptr);
+        BSLS_ASSERT_OPT_NONCONVEYOR(d_ptr);
 
         return pointer(d_ptr);
     }
 
     InputIterator& operator++()
     {
-        BSLS_ASSERT_OPT(d_ptr);
+        BSLS_ASSERT_OPT_NONCONVEYOR(d_ptr);
 
         ++d_ptr; return *this;
     }
 
     InputIterator  operator++(int)
     {
-        BSLS_ASSERT_OPT(d_ptr);
+        BSLS_ASSERT_OPT_NONCONVEYOR(d_ptr);
 
         InputIterator result(*this);
         ++d_ptr;
@@ -1575,6 +1613,7 @@ template <class TYPE>
 typename InputSequence<TYPE>::const_iterator
 InputSequence<TYPE>::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_value.data() + d_value.size());
 }
 
@@ -1878,16 +1917,16 @@ class TestAllocatorUtil
     static void test(const bsltf::AllocEmplacableTestType& value,
                      const bslma::Allocator&               oa)
     {
-        ASSERTV(&oa == value.arg01().allocator());
-        ASSERTV(&oa == value.arg02().allocator());
-        ASSERTV(&oa == value.arg03().allocator());
-        ASSERTV(&oa == value.arg04().allocator());
-        ASSERTV(&oa == value.arg05().allocator());
-        ASSERTV(&oa == value.arg06().allocator());
-        ASSERTV(&oa == value.arg07().allocator());
-        ASSERTV(&oa == value.arg08().allocator());
-        ASSERTV(&oa == value.arg09().allocator());
-        ASSERTV(&oa == value.arg10().allocator());
+        ASSERTV(&oa == BSLS_ASSERT_CONVEYOR_REF(value.arg01()).allocator());
+        ASSERTV(&oa == BSLS_ASSERT_CONVEYOR_REF(value.arg02()).allocator());
+        ASSERTV(&oa == BSLS_ASSERT_CONVEYOR_REF(value.arg03()).allocator());
+        ASSERTV(&oa == BSLS_ASSERT_CONVEYOR_REF(value.arg04()).allocator());
+        ASSERTV(&oa == BSLS_ASSERT_CONVEYOR_REF(value.arg05()).allocator());
+        ASSERTV(&oa == BSLS_ASSERT_CONVEYOR_REF(value.arg06()).allocator());
+        ASSERTV(&oa == BSLS_ASSERT_CONVEYOR_REF(value.arg07()).allocator());
+        ASSERTV(&oa == BSLS_ASSERT_CONVEYOR_REF(value.arg08()).allocator());
+        ASSERTV(&oa == BSLS_ASSERT_CONVEYOR_REF(value.arg09()).allocator());
+        ASSERTV(&oa == BSLS_ASSERT_CONVEYOR_REF(value.arg10()).allocator());
     }
 };
 
@@ -2104,6 +2143,7 @@ class IncompleteTypeSupportChecker {
     IncompleteTypeSupportChecker& operator=(
                     std::initializer_list<IncompleteTypeSupportChecker> values)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[13]++;
         d_vector = values;
         return *this;
@@ -2113,6 +2153,7 @@ class IncompleteTypeSupportChecker {
     /// `values` as a parameter.
     void assign(std::initializer_list<IncompleteTypeSupportChecker> values)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[14]++;
         d_vector.assign(values);
     }
@@ -2123,6 +2164,7 @@ class IncompleteTypeSupportChecker {
     template <class INPUT_ITER>
     void assign(INPUT_ITER first, INPUT_ITER last)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[15]++;
         d_vector.assign(first, last);
     }
@@ -2132,6 +2174,7 @@ class IncompleteTypeSupportChecker {
     void assign(size_type                           numElements,
                 const IncompleteTypeSupportChecker& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[16]++;
         d_vector.assign(numElements, value);
     }
@@ -2140,6 +2183,7 @@ class IncompleteTypeSupportChecker {
     /// `bsl::vector`.
     iterator begin()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[17]++;
         return d_vector.begin();
     }
@@ -2147,6 +2191,7 @@ class IncompleteTypeSupportChecker {
     /// Return the result of calling the `end` manipulator of `bsl::vector`.
     iterator end()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[18]++;
         return d_vector.end();
     }
@@ -2155,6 +2200,7 @@ class IncompleteTypeSupportChecker {
     /// `bsl::vector`.
     reverse_iterator rbegin()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[19]++;
         return d_vector.rbegin();
     }
@@ -2163,6 +2209,7 @@ class IncompleteTypeSupportChecker {
     /// `bsl::vector`.
     reverse_iterator rend()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[20]++;
         return d_vector.rend();
     }
@@ -2172,6 +2219,7 @@ class IncompleteTypeSupportChecker {
     /// Call the subscript operator of `bsl::vector` passing the specified
     /// `position` as a parameter, and return the result.
     reference operator[](size_type position)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         s_functionCallCounters[21]++;
         return d_vector[position];
@@ -2180,7 +2228,9 @@ class IncompleteTypeSupportChecker {
     /// Call the `at` manipulator of `bsl::vector` passing the specified
     /// `position` as a parameter and return the result.
     reference at(size_type position)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[22]++;
         return d_vector.at(position);
     }
@@ -2188,6 +2238,7 @@ class IncompleteTypeSupportChecker {
     /// Return the result of calling the `front` manipulator of
     /// `bsl::vector`.
     reference front()
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         s_functionCallCounters[23]++;
         return d_vector.front();
@@ -2196,6 +2247,7 @@ class IncompleteTypeSupportChecker {
     /// Return the result of calling the `back` manipulator of
     /// `bsl::vector`.
     reference back()
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         s_functionCallCounters[24]++;
         return d_vector.back();
@@ -2213,6 +2265,7 @@ class IncompleteTypeSupportChecker {
     /// `newSize` as a parameter.
     void resize(size_type newSize)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[26]++;
         d_vector.resize(newSize);
     }
@@ -2221,6 +2274,7 @@ class IncompleteTypeSupportChecker {
     /// `newSize` and `value` as parameters.
     void resize(size_type newSize, const IncompleteTypeSupportChecker& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[27]++;
         d_vector.resize(newSize, value);
     }
@@ -2229,6 +2283,7 @@ class IncompleteTypeSupportChecker {
     /// `newCapacity` as a parameter.
     void reserve(size_type newCapacity)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[28]++;
         d_vector.reserve(newCapacity);
     }
@@ -2236,6 +2291,7 @@ class IncompleteTypeSupportChecker {
     /// Call the `shrink_to_fit` method of `bsl::vector`.
     void shrink_to_fit()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[29]++;
         d_vector.shrink_to_fit();
     }
@@ -2246,6 +2302,7 @@ class IncompleteTypeSupportChecker {
     template <class... Args>
     reference emplace_back(Args&&... arguments)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[30]++;
         return d_vector.emplace_back(
                             BSLS_COMPILERFEATURES_FORWARD(Args, arguments)...);
@@ -2269,6 +2326,7 @@ class IncompleteTypeSupportChecker {
     /// `value` as a parameter.
     void push_back(const IncompleteTypeSupportChecker& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[31]++;
         d_vector.push_back(value);
     }
@@ -2277,6 +2335,7 @@ class IncompleteTypeSupportChecker {
     /// movable `value` as a parameter.
     void push_back(MovableRef value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[32]++;
         IncompleteTypeSupportChecker& lvalue = value;
         d_vector.push_back(MoveUtil::move(lvalue));
@@ -2295,6 +2354,7 @@ class IncompleteTypeSupportChecker {
     template <class... Args>
     iterator emplace(const_iterator position, Args&&... arguments)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[34]++;
         return d_vector.emplace(
                             position,
@@ -2322,6 +2382,7 @@ class IncompleteTypeSupportChecker {
     iterator insert(const_iterator                      position,
                     const IncompleteTypeSupportChecker& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[35]++;
         return d_vector.insert(position, value);
     }
@@ -2331,6 +2392,7 @@ class IncompleteTypeSupportChecker {
     /// return the result.
     iterator insert(const_iterator position, MovableRef value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[36]++;
         IncompleteTypeSupportChecker& lvalue = value;
         return d_vector.insert(position, MoveUtil::move(lvalue));
@@ -2343,6 +2405,7 @@ class IncompleteTypeSupportChecker {
                     size_type                           numElements,
                     const IncompleteTypeSupportChecker& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[37]++;
         return d_vector.insert(position, numElements, value);
     }
@@ -2352,6 +2415,7 @@ class IncompleteTypeSupportChecker {
     template <class INPUT_ITER>
     iterator insert(const_iterator position, INPUT_ITER first, INPUT_ITER last)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[38]++;
         return d_vector.insert(position, first, last);
     }
@@ -2363,6 +2427,7 @@ class IncompleteTypeSupportChecker {
                   const_iterator                                      position,
                   std::initializer_list<IncompleteTypeSupportChecker> values)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[39]++;
         return d_vector.insert(position, values);
     }
@@ -2395,6 +2460,7 @@ class IncompleteTypeSupportChecker {
     /// Call the `clear` method of `bsl::vector`.
     void clear()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[43]++;
         d_vector.clear();
     }
@@ -2406,6 +2472,7 @@ class IncompleteTypeSupportChecker {
     /// Return the result of calling the `begin` accessor of `bsl::vector`.
     const_iterator  begin() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[44]++;
         return d_vector.begin();
     }
@@ -2420,6 +2487,7 @@ class IncompleteTypeSupportChecker {
     /// Return the result of calling the `end` accessor of `bsl::vector`.
     const_iterator end() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[46]++;
         return d_vector.end();
     }
@@ -2434,6 +2502,7 @@ class IncompleteTypeSupportChecker {
     /// Return the result of calling the `rbegin` accessor of `bsl::vector`.
     const_reverse_iterator  rbegin() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[48]++;
         return d_vector.rbegin();
     }
@@ -2442,6 +2511,7 @@ class IncompleteTypeSupportChecker {
     /// `bsl::vector`.
     const_reverse_iterator crbegin() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[49]++;
         return d_vector.crbegin();
     }
@@ -2449,6 +2519,7 @@ class IncompleteTypeSupportChecker {
     /// Return the result of calling the `rend` accessor of `bsl::vector`.
     const_reverse_iterator  rend() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[50]++;
         return d_vector.rend();
     }
@@ -2456,6 +2527,7 @@ class IncompleteTypeSupportChecker {
     /// Return the result of calling the `crend` accessor of `bsl::vector`.
     const_reverse_iterator crend() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[51]++;
         return d_vector.crend();
     }
@@ -2465,6 +2537,7 @@ class IncompleteTypeSupportChecker {
     /// Return the result of calling the `size` method of `bsl::vector`.
     size_type size() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[52]++;
         return d_vector.size();
     }
@@ -2479,6 +2552,7 @@ class IncompleteTypeSupportChecker {
     /// Return the result of calling the `empty` method of `bsl::vector`.
     bool empty() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[54]++;
         return d_vector.empty();
     }
@@ -2503,6 +2577,7 @@ class IncompleteTypeSupportChecker {
     /// Call the constantsubscript operator of `bsl::vector` passing the
     /// specified `position` as a parameter, and return the result.
     const_reference operator[](size_type position) const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         s_functionCallCounters[57]++;
         return d_vector[position];
@@ -2511,13 +2586,16 @@ class IncompleteTypeSupportChecker {
     /// Call the `at` method of `bsl::vector` passing the specified
     /// `position` as a parameter.
     const_reference at(size_type position) const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[58]++;
         return d_vector.at(position);
     }
 
     /// Return the result of calling the `front` accessor of `bsl::vector`.
     const_reference front() const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         s_functionCallCounters[59]++;
         return d_vector.front();
@@ -2525,6 +2603,7 @@ class IncompleteTypeSupportChecker {
 
     /// Return the result of calling the `back` accessor of `bsl::vector`.
     const_reference back() const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         s_functionCallCounters[60]++;
         return d_vector.back();
@@ -2539,7 +2618,8 @@ class IncompleteTypeSupportChecker {
 
     /// Return a reference providing non-modifiable access to the underlying
     /// vector.
-    const VectorType& content() const;
+    const VectorType& content() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -2592,6 +2672,8 @@ IncompleteTypeSupportChecker::content() const
 bool operator==(const IncompleteTypeSupportChecker& lhs,
                 const IncompleteTypeSupportChecker& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.content() == rhs.content();
 }
 
@@ -3286,6 +3368,7 @@ struct TestDriver {
     static int checkFirstNElemAddr(typename Obj::const_pointer *pointers,
                                    const Obj&                   object,
                                    size_t                       n)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(object)
     {
         int    count = 0;
         size_t i = 0;
@@ -3301,6 +3384,7 @@ struct TestDriver {
     static void storeFirstNElemAddr(typename Obj::const_pointer *pointers,
                                     const Obj&                   object,
                                     size_t                       n)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(object)
     {
         size_t i = 0;
         for (CIter b = object.cbegin(); b != object.cend() && i < n; ++b)
@@ -3313,14 +3397,16 @@ struct TestDriver {
     /// `object` by the specified `size` by adding copies of the specified
     /// `value`.  The resulting value is not specified.
     static void
-    stretch(Obj *object, std::size_t size, int identifier = int('Z'));
+    stretch(Obj *object, std::size_t size, int identifier = int('Z'))
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Using only primary manipulators, extend the capacity of the
     /// specified `object` to (at least) the specified `size` by adding
     /// copies of the optionally specified `value`; then remove all elements
     /// leaving `object` empty.
     static void
-    stretchRemoveAll(Obj *object, std::size_t size, int identifier = int('Z'));
+    stretchRemoveAll(Obj *object, std::size_t size, int identifier = int('Z'))
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     template <class ARG_TYPE>
     static bslmf::MovableRef<ARG_TYPE> testArg(ARG_TYPE& t, bsl::true_type )
@@ -3407,7 +3493,8 @@ struct TestDriver {
               int N08,
               int N09,
               int N10>
-    static void testCase28a_RunTest(Obj *target, const_iterator position);
+    static void testCase28a_RunTest(Obj *target, const_iterator position)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target);
 
     /// Test forwarding of arguments in `emplace` method.
     static void testCase28a();
@@ -3433,7 +3520,8 @@ struct TestDriver {
               int N08,
               int N09,
               int N10>
-    static void testCase26a_RunTest(Obj *target);
+    static void testCase26a_RunTest(Obj *target)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target);
 
     /// Test `emplace_back` other than forwarding of arguments (see `27a`).
     static void testCase26();
@@ -3449,7 +3537,8 @@ struct TestDriver {
     /// in its original state, so the caller can verify that it is is
     /// unchanged.
     static void testCase26_EmplaceDefault(Obj*, bsl::false_type);
-    static void testCase26_EmplaceDefault(Obj* objPtr, bsl::true_type);
+    static void testCase26_EmplaceDefault(Obj* objPtr, bsl::true_type)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(objPtr);
 
     /// Test `insert` method that takes a movable ref.
     static void testCase27();
@@ -7674,6 +7763,7 @@ void TestDriver<TYPE, ALLOC>::testCase24_dispatch()
                     proctor.release();
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(srcPtr);
                 Obj& mZ = *srcPtr;  const Obj& Z = mZ;
 
                 ASSERTV(SPEC1, SPEC2, &xra == &xoa, X, LENGTH1 == X.size());
@@ -18764,7 +18854,8 @@ void TestDriver<TYPE, ALLOC>::testCaseM1Range(const CONTAINER&)
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR; ++i) {
-            vectors[i]->assign(U.begin(), U.end());
+            Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+            mV.assign(U.begin(), U.end());
         }
         time = t.elapsedTime();
 
@@ -18790,7 +18881,8 @@ void TestDriver<TYPE, ALLOC>::testCaseM1Range(const CONTAINER&)
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR; ++i) {
-            vectors[i]->insert(vectors[i]->begin(), U.begin(), U.end());
+            Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+            mV.insert(mV.begin(), U.begin(), U.end());
         }
         time = t.elapsedTime();
 
@@ -18816,7 +18908,8 @@ void TestDriver<TYPE, ALLOC>::testCaseM1Range(const CONTAINER&)
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR; ++i) {
-            vectors[i]->insert(vectors[i]->end(), U.begin(), U.end());
+            Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+            mV.insert(mV.end(), U.begin(), U.end());
         }
         time = t.elapsedTime();
 
@@ -18841,7 +18934,8 @@ void TestDriver<TYPE, ALLOC>::testCaseM1Range(const CONTAINER&)
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR; ++i) {
-            vectors[i]->insert(vectors[i]->begin() + i, U.begin(), U.end());
+            Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+            mV.insert(mV.begin() + i, U.begin(), U.end());
         }
         time += t.elapsedTime();
 
@@ -18992,13 +19086,15 @@ void TestDriver<TYPE, ALLOC>::testCaseM1()
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR_L; ++i) {
-            *vectors[i] = deq;
+            Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+            mV = deq;
         }
         time = t.elapsedTime();
 
         printf("\t\toperator=(d):                   %1.6fs\n", time);
         for (int i = 0; i < NUM_VECTOR_L; ++i) {
-            ASSERT(*vectors[i] == deq);
+            Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+            ASSERT(mV == deq);
             delete vectors[i];
         }
     }
@@ -19022,7 +19118,8 @@ void TestDriver<TYPE, ALLOC>::testCaseM1()
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR_L; ++i) {
-            vectors[i]->assign(length, val);
+            Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+            mV.assign(length, val);
         }
         time = t.elapsedTime();
 
@@ -19050,7 +19147,8 @@ void TestDriver<TYPE, ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_VECTOR_S; ++i) {
             // Push in 1000 objects.
             for (int j = 0; j < LENGTH_L; ++j) {
-                vectors[i]->push_back(VALUES[j % NUM_VALUES]);
+                Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+                mV.push_back(VALUES[j % NUM_VALUES]);
             }
         }
         time = t.elapsedTime();
@@ -19081,7 +19179,8 @@ void TestDriver<TYPE, ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_VECTOR_S; ++i) {
             // Pop out all objects.
             for (size_t j = 0; j < sizes[i]; ++j) {
-                vectors[i]->pop_back();
+                Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+                mV.pop_back();
             }
         }
         time = t.elapsedTime();
@@ -19132,8 +19231,9 @@ void TestDriver<TYPE, ALLOC>::testCaseM1()
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR_S; ++i) {
-            vectors[i]->insert(vectors[i]->begin(), LENGTH_L,
-                               VALUES[i % NUM_VALUES]);
+            Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+            mV.insert(mV.begin(), LENGTH_L,
+                      VALUES[i % NUM_VALUES]);
         }
         time = t.elapsedTime();
 
@@ -19160,7 +19260,8 @@ void TestDriver<TYPE, ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR_S; ++i) {
             for (int j = 0; j < LENGTH_S; ++j) {
-                vectors[i]->insert(vectors[i]->end(), VALUES[i % NUM_VALUES]);
+                Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+                mV.insert(mV.end(), VALUES[i % NUM_VALUES]);
             }
         }
         time = t.elapsedTime();
@@ -19184,8 +19285,9 @@ void TestDriver<TYPE, ALLOC>::testCaseM1()
 
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR_S; ++i) {
-            vectors[i]->insert(vectors[i]->end(), LENGTH_L,
-                               VALUES[i % NUM_VALUES]);
+            Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+            mV.insert(mV.end(), LENGTH_L,
+                      VALUES[i % NUM_VALUES]);
         }
         time = t.elapsedTime();
 
@@ -19214,8 +19316,9 @@ void TestDriver<TYPE, ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR_S; ++i) {
             for (size_t j = 0; j < sizes[i]; ++j) {
-                vectors[i]->insert(vectors[i]->begin() + j,
-                                   VALUES[i % NUM_VALUES]);
+                Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+                mV.insert(mV.begin() + j,
+                          VALUES[i % NUM_VALUES]);
             }
         }
         time = t.elapsedTime();
@@ -19242,8 +19345,9 @@ void TestDriver<TYPE, ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR_S; ++i) {
             // Insert in middle.
-            vectors[i]->insert(vectors[i]->begin() + sizes[i] / 2, LENGTH_S,
-                               VALUES[i % NUM_VALUES]);
+            Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+            mV.insert(mV.begin() + sizes[i] / 2, LENGTH_S,
+                      VALUES[i % NUM_VALUES]);
         }
         time = t.elapsedTime();
 
@@ -19267,7 +19371,8 @@ void TestDriver<TYPE, ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_VECTOR_S; ++i) {
             for (int j = 0; j < LENGTH_S; ++j) {
-                vectors[i]->erase(vectors[i]->begin() + j);
+                Obj& mV = BSLS_ASSERT_CONVEYOR_REF(*vectors[i]);
+                mV.erase(mV.begin() + j);
             }
         }
         time = t.elapsedTime();
@@ -19420,19 +19525,22 @@ class MyMatrix {
     /// All elements of the (template parameter) `TYPE` in the column will
     /// have the default constructed value.  The behavior is undefined
     /// unless `0 <= columnIndex <= numColumns()`.
-    void insertColumn(int columnIndex);
+    void insertColumn(int columnIndex)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert, into this matrix, an row at the specified `rowIndex`.  All
     /// elements of the (template parameter) `TYPE` in the row will have the
     /// default-constructed value.  The behavior is undefined unless
     /// `0 <= rowIndex <= numRows()`.
-    void insertRow(int rowIndex);
+    void insertRow(int rowIndex)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing modifiable access to the element at the
     /// specified `rowIndex` and the specified `columnIndex` in this matrix.
     /// The behavior is undefined unless `0 <= rowIndex < numRows()` and
     /// `0 <= columnIndex < numColumns()`.
-    TYPE& theModifiableValue(int rowIndex, int columnIndex);
+    TYPE& theModifiableValue(int rowIndex, int columnIndex)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
@@ -19454,7 +19562,8 @@ class MyMatrix {
     /// the specified `rowIndex` and the specified `columnIndex` in this
     /// matrix.  The behavior is undefined unless
     /// `0 <= rowIndex < numRows()` and `0 <= columnIndex < numColumns()`.
-    const TYPE& theValue(int rowIndex, int columnIndex) const;
+    const TYPE& theValue(int rowIndex, int columnIndex) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 // ```
 // Then we declare the free operator for `MyMatrix`:
@@ -19493,6 +19602,7 @@ MyMatrix<TYPE>::MyMatrix(int numRows,
     for (typename MatrixType::iterator itr = d_matrix.begin();
          itr != d_matrix.end();
          ++itr) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(itr);
         itr->resize(d_numColumns);
     }
 }
@@ -19531,6 +19641,7 @@ void MyMatrix<TYPE>::insertColumn(int columnIndex)
     for (typename MatrixType::iterator itr = d_matrix.begin();
          itr != d_matrix.end();
          ++itr) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(itr);
         itr->insert(itr->begin() + columnIndex, TYPE());
     }
     ++d_numColumns;
@@ -19541,6 +19652,7 @@ void MyMatrix<TYPE>::insertRow(int rowIndex)
 {
     typename MatrixType::iterator itr =
         d_matrix.insert(d_matrix.begin() + rowIndex, RowType());
+    BSLS_ASSERT_CONVEYOR_OBJECT(itr);
     itr->resize(d_numColumns);
 }
 
@@ -20034,7 +20146,7 @@ int main(int argc, char *argv[])
 
             ASSERT(initialSize + 1 == IT.size());
             ASSERT(source1         == IT.back());
-            ASSERT(source1         == *mR      );
+            ASSERT(source1         == BSLS_ASSERT_CONVEYOR_REF(*mR));
 
             mIT.push_back(source1);                                       // 31
 

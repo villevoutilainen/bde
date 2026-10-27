@@ -70,6 +70,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslscm_version.h>
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_libraryfeatures.h>
 
@@ -122,6 +123,8 @@ struct SynthThreeWayUtil {
                 { t2 < t1 } -> bslmf::BooleanTestable;
             }
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&t1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&t2);
             if constexpr (std::three_way_comparable_with<t_TYPE1, t_TYPE2>)
                 return t1 <=> t2;
             else
