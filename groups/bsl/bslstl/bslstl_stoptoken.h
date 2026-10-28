@@ -146,6 +146,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_removereference.h>
 #include <bslmf_util.h>    // 'forward(V)' for C++03
 
+#include <bsls_assert.h>
 #include <bsls_atomic.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_keyword.h>
@@ -412,6 +413,7 @@ class stop_token {
     BSLA_NODISCARD friend bool operator==(
                                    const stop_token& lhs,
                                    const stop_token& rhs) BSLS_KEYWORD_NOEXCEPT
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
         return lhs.d_state_p == rhs.d_state_p;
     }
@@ -423,6 +425,7 @@ class stop_token {
     BSLA_NODISCARD friend bool operator!=(
                                    const stop_token& lhs,
                                    const stop_token& rhs) BSLS_KEYWORD_NOEXCEPT
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
         return lhs.d_state_p != rhs.d_state_p;
     }
@@ -488,7 +491,8 @@ class stop_token {
     /// and `false` otherwise.  A call to `stop_possible` that is
     /// potentially concurrent with a call to `stop_requested` or
     /// `stop_possible` does not cause a data race.
-    BSLA_NODISCARD bool stop_possible() const BSLS_KEYWORD_NOEXCEPT;
+    BSLA_NODISCARD bool stop_possible() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if `*this` refers to a stop state on which
     /// `request_stop` has been called, and `false` otherwise.  If this
@@ -496,7 +500,8 @@ class stop_token {
     /// synchronizes with this call.  A call to `stop_requested` that is
     /// potentially concurrent with a call to `stop_requested` or
     /// `stop_possible` does not cause a data race.
-    BSLA_NODISCARD bool stop_requested() const BSLS_KEYWORD_NOEXCEPT;
+    BSLA_NODISCARD bool stop_requested() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
                              // =================
@@ -535,6 +540,7 @@ class stop_source {
     BSLA_NODISCARD friend bool operator==(
                                   const stop_source& lhs,
                                   const stop_source& rhs) BSLS_KEYWORD_NOEXCEPT
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
         return lhs.d_state_p == rhs.d_state_p;
     }
@@ -546,6 +552,7 @@ class stop_source {
     BSLA_NODISCARD friend bool operator!=(
                                   const stop_source& lhs,
                                   const stop_source& rhs) BSLS_KEYWORD_NOEXCEPT
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
         return lhs.d_state_p != rhs.d_state_p;
     }
@@ -614,19 +621,22 @@ class stop_source {
     /// returns `true`.  A call to `request_stop` that is potentially
     /// concurrent with a call to `stop_requested`, `stop_possible`, or
     /// `request_stop` does not cause a data race.
-    bool request_stop() BSLS_KEYWORD_NOEXCEPT;
+    bool request_stop() BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return a `stop_token` that refers to the stop state (or lack
     /// thereof) that `*this` refers to.
-    BSLA_NODISCARD stop_token get_token() const BSLS_KEYWORD_NOEXCEPT;
+    BSLA_NODISCARD stop_token get_token() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if `*this` refers to a stop state, and `false`
     /// otherwise.  A call to `stop_possible` that is potentially concurrent
     /// with a call to `stop_requested`, `stop_possible`, or `request_stop`
     /// does not cause a data race.
-    BSLA_NODISCARD bool stop_possible() const BSLS_KEYWORD_NOEXCEPT;
+    BSLA_NODISCARD bool stop_possible() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if `*this` refers to a stop state on which
     /// `request_stop` has been called, and `false` otherwise.  If this
@@ -634,7 +644,8 @@ class stop_source {
     /// synchronizes with this call.  A call to `stop_requested` that is
     /// potentially concurrent with a call to `stop_requested`,
     /// `stop_possible`, or `request_stop` does not cause a data race.
-    BSLA_NODISCARD bool stop_requested() const BSLS_KEYWORD_NOEXCEPT;
+    BSLA_NODISCARD bool stop_requested() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
                             // ===================
@@ -997,6 +1008,7 @@ void stop_source::swap(stop_source& other) BSLS_KEYWORD_NOEXCEPT
 template <class t_CALLBACK>
 void stop_callback<t_CALLBACK>::init()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_state_p && !d_state_p->enregister(&d_node)) {
         d_state_p.reset();
     }

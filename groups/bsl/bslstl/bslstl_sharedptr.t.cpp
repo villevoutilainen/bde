@@ -1322,6 +1322,7 @@ int MyTransactionManager::enqueueTransaction(bsl::shared_ptr<MyUser>,
       public:
         // MANIPULATORS
         void addAlert(const bsl::shared_ptr<Alert>& alertPtr)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             // Add the specified `alertPtr` to the list of alerts being
             // monitored by this user.
@@ -1333,7 +1334,7 @@ int MyTransactionManager::enqueueTransaction(bsl::shared_ptr<MyUser>,
         /// method is not part of the usage example; it is used by the test
         /// driver to break the cyclic reference after the leak has been
         /// demonstrated, and may result in the destruction of this object.
-        void releaseAlerts()
+        void releaseAlerts() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             bsl::vector<bsl::shared_ptr<Alert> > alerts;
             alerts.swap(d_alerts);
@@ -1355,6 +1356,7 @@ int MyTransactionManager::enqueueTransaction(bsl::shared_ptr<MyUser>,
       public:
         // MANIPULATORS
         void addUser(const bsl::shared_ptr<User>& userPtr)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             // Add the specified `userPtr` to the list of users monitoring this
             // alert.
@@ -1390,6 +1392,7 @@ int MyTransactionManager::enqueueTransaction(bsl::shared_ptr<MyUser>,
       public:
         // MANIPULATORS
         void addAlert(const bsl::shared_ptr<ModifiedAlert>& alertPtr)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             // Add the specified `alertPtr` to the list of alerts being
             // monitored by this user.
@@ -1417,6 +1420,7 @@ int MyTransactionManager::enqueueTransaction(bsl::shared_ptr<MyUser>,
       public:
         // MANIPULATORS
         void addUser(const bsl::weak_ptr<ModifiedUser>& userPtr)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             // Add the specified `userPtr` to the list of users monitoring this
             // alert.
@@ -1523,8 +1527,11 @@ int MyTransactionManager::enqueueTransaction(bsl::shared_ptr<MyUser>,
         // ...
 
         // ACCESSORS
-        const bsl::string& filename() const { return d_filename; }
-        const bsl::weak_ptr<Peer>& peer() const { return d_peer; }
+        const bsl::string& filename() const
+                      BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return d_filename; }
+        const bsl::weak_ptr<Peer>& peer() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                      BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF { return d_peer; }
     };
 // ```
 // d) A search function that takes a list of keywords and returns available
@@ -1544,7 +1551,8 @@ int MyTransactionManager::enqueueTransaction(bsl::shared_ptr<MyUser>,
 // to the peer.  If the acquire operation succeeds then we can send the peer a
 // request to send back the file best matching the specified keywords:
 // ```
-            bsl::shared_ptr<Peer> peerSharedPtr = iter->lock();
+            bsl::shared_ptr<Peer> peerSharedPtr =
+                                        BSLS_ASSERT_CONVEYOR_REF(*iter).lock();
             if (peerSharedPtr) {
 
                 // Search the peer for file best matching the specified
@@ -1559,6 +1567,7 @@ int MyTransactionManager::enqueueTransaction(bsl::shared_ptr<MyUser>,
 // e) A download function that downloads a file selected by the user:
 // ```
     void download(const SearchResult& result)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(result)
     {
         bsl::shared_ptr<Peer> peerSharedPtr = result.peer().lock();
         if (peerSharedPtr) {
@@ -3350,7 +3359,7 @@ NonOwningRep<TYPE>::NonOwningRep(TYPE             *dataPtr_p,
 template <class TYPE>
 NonOwningRep<TYPE>::~NonOwningRep()
 {
-    BSLS_ASSERT_OPT(0 == numReferences());
+    BSLS_ASSERT_OPT_NONCONVEYOR(0 == numReferences());
 }
 
 // MANIPULATORS
@@ -3873,10 +3882,11 @@ class SelfReference
     // MANIPULATORS
 
     /// Clear the internal reference of this object.
-    void release() { d_dataPtr.reset(); }
+    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { d_dataPtr.reset(); }
 
     /// Set the internal reference of this object to the specified `value`.
     void setData(const bsl::shared_ptr<SelfReference>& value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         d_dataPtr = value;
     }
@@ -4768,20 +4778,34 @@ void Harness::prepareObject(MyInplaceAllocatableObject *target,
     ASSERTV(VA13, EXP.arg13(), VA13 == EXP.arg13() || 2 == N13);
     ASSERTV(VA14, EXP.arg14(), VA14 == EXP.arg14() || 2 == N14);
 
-    ASSERTV(da, EXP.arg01().allocator(), da == EXP.arg01().allocator());
-    ASSERTV(da, EXP.arg02().allocator(), da == EXP.arg02().allocator());
-    ASSERTV(da, EXP.arg03().allocator(), da == EXP.arg03().allocator());
-    ASSERTV(da, EXP.arg04().allocator(), da == EXP.arg04().allocator());
-    ASSERTV(da, EXP.arg05().allocator(), da == EXP.arg05().allocator());
-    ASSERTV(da, EXP.arg06().allocator(), da == EXP.arg06().allocator());
-    ASSERTV(da, EXP.arg07().allocator(), da == EXP.arg07().allocator());
-    ASSERTV(da, EXP.arg08().allocator(), da == EXP.arg08().allocator());
-    ASSERTV(da, EXP.arg09().allocator(), da == EXP.arg09().allocator());
-    ASSERTV(da, EXP.arg10().allocator(), da == EXP.arg10().allocator());
-    ASSERTV(da, EXP.arg11().allocator(), da == EXP.arg11().allocator());
-    ASSERTV(da, EXP.arg12().allocator(), da == EXP.arg12().allocator());
-    ASSERTV(da, EXP.arg13().allocator(), da == EXP.arg13().allocator());
-    ASSERTV(da, EXP.arg14().allocator(), da == EXP.arg14().allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg01()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg01()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg02()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg02()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg03()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg03()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg04()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg04()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg05()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg05()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg06()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg06()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg07()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg07()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg08()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg08()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg09()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg09()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg10()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg10()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg11()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg11()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg12()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg12()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg13()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg13()).allocator());
+    ASSERTV(da, BSLS_ASSERT_CONVEYOR_REF(EXP.arg14()).allocator(),
+            da == BSLS_ASSERT_CONVEYOR_REF(EXP.arg14()).allocator());
 }
 
 template <int N_ARGS,
@@ -8948,7 +8972,7 @@ int main(int argc, char *argv[])
 
         // Break the cycle so that the leak is not reported by sanitizers.
 
-        rawUserPtr->releaseAlerts();
+        BSLS_ASSERT_CONVEYOR_REF(*rawUserPtr).releaseAlerts();
 
         {
 
@@ -12715,7 +12739,7 @@ int main(int argc, char *argv[])
                             "\n-------------------------------------\n");
         {
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             bslma::ManagedPtr<ShareThis> manager(pThis, &ta);  // Clean-up
@@ -12740,7 +12764,7 @@ int main(int argc, char *argv[])
                 ASSERTV(disposeObjectCount,  0 == disposeObjectCount);
                 ASSERTV(REP.numReferences(), 1 == REP.numReferences());
 
-                WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = BSLS_ASSERT_CONVEYOR_REF(*pThis).weak_from_this();
                 ASSERT(!weakAfter.expired());
                 ASSERT(weakBefore.expired());
 
@@ -12770,7 +12794,7 @@ int main(int argc, char *argv[])
                             "\n----------------------------------\n");
         {
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             bslma::ManagedPtr<ShareThis> manager(pThis, &ta);  // Clean-up
@@ -12794,7 +12818,7 @@ int main(int argc, char *argv[])
                 ASSERTV(disposeObjectCount,  0 == disposeObjectCount);
                 ASSERTV(REP.numReferences(), 1 == REP.numReferences());
 
-                WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = BSLS_ASSERT_CONVEYOR_REF(*pThis).weak_from_this();
                 ASSERT(!weakAfter.expired());
                 ASSERT(weakBefore.expired());
 
@@ -12825,7 +12849,7 @@ int main(int argc, char *argv[])
         "\n---------------------------------------------------------------\n");
         {
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             bslma::ManagedPtr<ShareThis> manager(pThis, &ta);  // Clean-up
@@ -12853,7 +12877,7 @@ int main(int argc, char *argv[])
                 ASSERTV(REP.numReferences(),  1 == REP.numReferences());
                 ASSERTV(REP.numWeakReferences(), 1 == REP.numWeakReferences());
 
-                WeakPtr weakFirst = pThis->weak_from_this();
+         WeakPtr weakFirst = BSLS_ASSERT_CONVEYOR_REF(*pThis).weak_from_this();
                 ASSERT(!weakFirst.expired());
                 ASSERT(weakBefore.expired());
                 ASSERTV(REP.numReferences(),     1 == REP.numReferences());
@@ -12924,7 +12948,7 @@ int main(int argc, char *argv[])
                  "\n------------------------------------------------------\n");
         {
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             bslma::ManagedPtr<ShareThis> manager(pThis, &ta);  // Clean-up
@@ -12951,7 +12975,7 @@ int main(int argc, char *argv[])
                 ASSERTV(REP.numReferences(),  1 == REP.numReferences());
                 ASSERTV(REP.numWeakReferences(), 1 == REP.numWeakReferences());
 
-                WeakPtr weakFirst = pThis->weak_from_this();
+         WeakPtr weakFirst = BSLS_ASSERT_CONVEYOR_REF(*pThis).weak_from_this();
                 ASSERT(!weakFirst.expired());
                 ASSERT(weakBefore.expired());
                 ASSERTV(REP.numReferences(),     1 == REP.numReferences());
@@ -13023,13 +13047,13 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tBasic usage\n");
         {
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             SharedPtr ptr(pThis);
             ASSERT(ptr.use_count() == 1);
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13055,7 +13079,7 @@ int main(int argc, char *argv[])
             ConstSharedPtr ptr(pThis);
             ASSERT(ptr.use_count() == 1);
 
-            ConstWeakPtr weakAfter = pThis->weak_from_this();
+    ConstWeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13075,13 +13099,13 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\t'shared_from_this' into shared<constT>'\n");
         {
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             SharedPtr ptr(pThis);
             ASSERT(ptr.use_count() == 1);
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13101,13 +13125,13 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tBasic usage of most-derived type\n");
         {
             ShareThisDerived *pThis = new ShareThisDerived(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             SharedPtrDerived ptr(pThis);
             ASSERT(ptr.use_count() == 1);
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13134,7 +13158,7 @@ int main(int argc, char *argv[])
             ConstSharedPtrDerived ptr(pThis);
             ASSERT(ptr.use_count() == 1);
 
-            ConstWeakPtr weakAfter = pThis->weak_from_this();
+    ConstWeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13154,14 +13178,14 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tTest making a copy\n");
         {
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             SharedPtr ptr(pThis);
             SharedPtr ptrCopy(ptr);
             ASSERT(ptr.use_count() == 2);
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13181,13 +13205,13 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tTest with BDE allocator\n");
         {
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             SharedPtr ptr(pThis, &ta);
             ASSERT(ptr.use_count() == 1);
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13211,13 +13235,13 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tTest with BDE allocator and deleter\n");
         {
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             SharedPtr ptr(pThis, d1, &ta);
             ASSERT(ptr.use_count() == 1);
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13240,7 +13264,7 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tTest with standard allocator and deleter\n");
         {
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             bsltf::StdStatefulAllocator<TObj, false, false, false, false>
@@ -13248,7 +13272,7 @@ int main(int argc, char *argv[])
             SharedPtr ptr(pThis, d1, stdAlloc);
             ASSERT(ptr.use_count() == 1);
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13311,14 +13335,14 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tTest with `ManagedPtr`\n");
         {
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             bslma::ManagedPtr<ShareThis> managedPtr(pThis);
             SharedPtr ptr(managedPtr);
             ASSERT(ptr.use_count() == 1);
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13344,13 +13368,13 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tTest with `auto_ptr`\n");
         {
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             std::auto_ptr<ShareThis> autoPtr(pThis);
             SharedPtr ptr(autoPtr);
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13375,12 +13399,12 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tTest with `shared_ptr<void>`\n");
         {
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             bsl::shared_ptr<void> voidPtr(pThis);
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13400,7 +13424,7 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tTest with aliased `shared_ptr`\n");
         {
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             {
@@ -13440,11 +13464,11 @@ int main(int argc, char *argv[])
         if (verbose) printf("\n\tTest with aliased `managed_ptr`\n");
         {
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakThisBefore = pThis->weak_from_this();
+    WeakPtr weakThisBefore = pThis->weak_from_this();
             ASSERT(weakThisBefore.expired());
 
             ShareThis *pThat = new ShareThis(&destructorCount);
-            WeakPtr weakThatBefore = pThis->weak_from_this();
+    WeakPtr weakThatBefore = pThis->weak_from_this();
             ASSERT(weakThatBefore.expired());
 
             // Create aliased managed pointer, which owns `pThis` but points to
@@ -13468,7 +13492,7 @@ int main(int argc, char *argv[])
             ASSERT(!weakThisBefore.expired());
             ASSERT( weakThatBefore.expired());
 
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(!weakThisBefore.expired());
             ASSERT( weakThatBefore.expired());
@@ -13491,7 +13515,7 @@ int main(int argc, char *argv[])
                       "\n\tTest `managed_ptr` managing aliased 'shared_ptr\n");
         {
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             {
@@ -13678,7 +13702,7 @@ int main(int argc, char *argv[])
                         "\t\tFirst check that weak pointers bind correctly\n");
 
             ShareThis *pThis = new (ta) ShareThis(&destructorCount);
-            WeakPtr weakThis = pThis->weak_from_this();
+          WeakPtr weakThis = pThis->weak_from_this();
             ASSERT(weakThis.expired());
 
             WeakPtr weak1, weak2;
@@ -13809,12 +13833,12 @@ int main(int argc, char *argv[])
             SharedPtr ptr;
             ASSERT(0 == ptr.use_count());
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             ptr.reset(pThis);
             {
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -13838,12 +13862,12 @@ int main(int argc, char *argv[])
             SharedPtr ptr;
             ASSERT(0 == ptr.use_count());
             ShareThis *pThis = new ShareThisDerived(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             ptr.reset(pThis);
             {
-                WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
                 ASSERT(!weakAfter.expired());
                 ASSERT(weakBefore.expired());
 
@@ -13867,12 +13891,12 @@ int main(int argc, char *argv[])
             SharedPtr ptr;
             ASSERT(0 == ptr.use_count());
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             ptr.reset(pThis, &ta);
             {
-                WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
                 ASSERT(!weakAfter.expired());
                 ASSERT(weakBefore.expired());
 
@@ -13896,12 +13920,12 @@ int main(int argc, char *argv[])
             SharedPtr ptr;
             ASSERT(0 == ptr.use_count());
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             ptr.reset(pThis, d1);
             {
-                WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
                 ASSERT(!weakAfter.expired());
                 ASSERT(weakBefore.expired());
 
@@ -13929,12 +13953,12 @@ int main(int argc, char *argv[])
             SharedPtr ptr;
             ASSERT(0 == ptr.use_count());
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             ptr.reset(pThis, d1, &ta);
             {
-                WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
                 ASSERT(!weakAfter.expired());
                 ASSERT(weakBefore.expired());
 
@@ -13963,14 +13987,14 @@ int main(int argc, char *argv[])
             SharedPtr ptr;
             ASSERT(0 == ptr.use_count());
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             bsltf::StdStatefulAllocator<TObj, false, false, false, false>
                                                                  stdAlloc(&ta);
             ptr.reset(pThis, d1, stdAlloc);
             {
-                WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
                 ASSERT(!weakAfter.expired());
                 ASSERT(weakBefore.expired());
 
@@ -14025,12 +14049,12 @@ int main(int argc, char *argv[])
             SharedPtr ptr;
             ASSERT(0 == ptr.use_count());
             ShareThis *pThis = new ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             ptr.load(pThis);
             {
-            WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
             ASSERT(!weakAfter.expired());
             ASSERT(weakBefore.expired());
 
@@ -14054,12 +14078,12 @@ int main(int argc, char *argv[])
             SharedPtr ptr;
             ASSERT(0 == ptr.use_count());
             ShareThis *pThis = new ShareThisDerived(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             ptr.load(pThis);
             {
-                WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
                 ASSERT(!weakAfter.expired());
                 ASSERT(weakBefore.expired());
 
@@ -14083,12 +14107,12 @@ int main(int argc, char *argv[])
             SharedPtr ptr;
             ASSERT(0 == ptr.use_count());
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             ptr.load(pThis, &ta);
             {
-                WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
                 ASSERT(!weakAfter.expired());
                 ASSERT(weakBefore.expired());
 
@@ -14112,12 +14136,12 @@ int main(int argc, char *argv[])
             SharedPtr ptr;
             ASSERT(0 == ptr.use_count());
             ShareThis *pThis = new(ta) ShareThis(&destructorCount);
-            WeakPtr weakBefore = pThis->weak_from_this();
+        WeakPtr weakBefore = pThis->weak_from_this();
             ASSERT(weakBefore.expired());
 
             ptr.load(pThis, d1, &ta);
             {
-                WeakPtr weakAfter = pThis->weak_from_this();
+         WeakPtr weakAfter = pThis->weak_from_this();
                 ASSERT(!weakAfter.expired());
                 ASSERT(weakBefore.expired());
 
@@ -17724,7 +17748,7 @@ int main(int argc, char *argv[])
             ptr = mX.get();
         }
 
-        ptr->release();
+        BSLS_ASSERT_CONVEYOR_REF(*ptr).release();
       } break;
       case 20: {
         // --------------------------------------------------------------------

@@ -627,6 +627,7 @@ class ArrivingCallback : public GenericCallback {
 void threadFn(void *arg)
 {
     stop_source *ss = static_cast<stop_source*>(arg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(ss);
     ss->request_stop();
 }
 }  // close namespace test_case_20
@@ -1486,8 +1487,10 @@ int main(int argc, char **argv)
             for (int j = 0; j < 6; j++) {
                 if (veryVerbose) { T_ P_(i) P(j) }
 
-                stop_source&      lhs     = *sources[i];
-                stop_source&      rhs     = *sources[j];
+                stop_source&      lhs     =
+                                         BSLS_ASSERT_CONVEYOR_REF(*sources[i]);
+                stop_source&      rhs     =
+                                         BSLS_ASSERT_CONVEYOR_REF(*sources[j]);
                 const stop_source lhsCopy = lhs;
                 const stop_source rhsCopy = rhs;
 
@@ -1754,8 +1757,10 @@ int main(int argc, char **argv)
                                          (i == j + 3) ||
                                          (j == i + 3);
 
-                ASSERT(expectEqual == (*sources[i] == *sources[j]));
-                ASSERT(expectEqual != (*sources[i] != *sources[j]));
+                ASSERT(expectEqual == (BSLS_ASSERT_CONVEYOR_REF(*sources[i]) ==
+                                    BSLS_ASSERT_CONVEYOR_REF(*sources[j])));
+                ASSERT(expectEqual != (BSLS_ASSERT_CONVEYOR_REF(*sources[i]) !=
+                                    BSLS_ASSERT_CONVEYOR_REF(*sources[j])));
             }
         }
 
@@ -1922,8 +1927,8 @@ int main(int argc, char **argv)
             for (int j = 0; j < 6; j++) {
                 if (veryVerbose) { T_ P_(i) P(j) }
 
-                stop_token&       lhs     = t[i];
-                stop_token&       rhs     = t[j];
+                stop_token&       lhs     = BSLS_ASSERT_CONVEYOR_REF(t[i]);
+                stop_token&       rhs     = BSLS_ASSERT_CONVEYOR_REF(t[j]);
                 const stop_token  lhsCopy = lhs;
                 const stop_token  rhsCopy = rhs;
 
@@ -2409,8 +2414,12 @@ int main(int argc, char **argv)
                                              (i == j + 3) ||
                                              (j == i + 3);
 
-                    ASSERT(expectEqual == (*tokens[i] == *tokens[j]));
-                    ASSERT(expectEqual != (*tokens[i] != *tokens[j]));
+                    ASSERT(expectEqual == (
+                            BSLS_ASSERT_CONVEYOR_REF(*tokens[i]) ==
+                                    BSLS_ASSERT_CONVEYOR_REF(*tokens[j])));
+                    ASSERT(expectEqual != (
+                            BSLS_ASSERT_CONVEYOR_REF(*tokens[i]) !=
+                                    BSLS_ASSERT_CONVEYOR_REF(*tokens[j])));
                 }
             }
         }
