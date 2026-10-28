@@ -245,6 +245,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslscm_version.h>
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_keyword.h>
 
@@ -296,7 +297,8 @@ struct equal_to {
     /// Return `true` if the specified `lhs` compares equal to the specified
     /// `rhs` using the equality-comparison operator, `lhs == rhs`.
     BSLA_NODISCARD BSLS_KEYWORD_CONSTEXPR bool
-    operator()(const VALUE_TYPE& lhs, const VALUE_TYPE& rhs) const;
+    operator()(const VALUE_TYPE& lhs, const VALUE_TYPE& rhs) const
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 };
 
 /// This `struct` defines a binary comparison functor applying `operator==`
@@ -338,6 +340,7 @@ struct equal_to<void> {
     auto operator()(TYPE1&& lhs, TYPE2&& rhs) const
       noexcept(noexcept(std::forward<TYPE1>(lhs) == std::forward<TYPE2>(rhs)))
       -> decltype(      std::forward<TYPE1>(lhs) == std::forward<TYPE2>(rhs))
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     { return            std::forward<TYPE1>(lhs) == std::forward<TYPE2>(rhs); }
 #else
     /// Return `true` if the specified `lhs` compares equal to the specified

@@ -180,7 +180,7 @@ class ListSet {
     /// If the specified `value` isn't contained in this `ListSet`, add it
     /// and return `true`, otherwise, return `false` with no change to the
     /// `ListSet`.
-    bool insert(const TYPE& value)
+    bool insert(const TYPE& value) BSLS_ASSERT_CONVEYOR_REQUIRES(value)
     {
         if (count(value)) {
             return false;                                             // RETURN
@@ -198,10 +198,10 @@ class ListSet {
 
     /// Return the number of nodes whose `d_value` field is equivalent to
     /// the specified `value`, which will always be 0 or 1.
-    int count(const TYPE& value) const
+    int count(const TYPE& value) const BSLS_ASSERT_CONVEYOR_REQUIRES(value)
     {
         for (Node *node = d_nodeList; node; node = node->d_next) {
-            if (d_comparator(node->d_value, value)) {
+            if (d_comparator(BSLS_ASSERT_CONVEYOR_REF(node->d_value), value)) {
                 return 1;                                             // RETURN
             }
         }

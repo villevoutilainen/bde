@@ -494,7 +494,8 @@ namespace bslstl {
 /// for reading for debug purposes.
 template <class KEY_CONFIG, class HASHER, class COMPARATOR, class ALLOCATOR>
 void debugprint(
-        const bslstl::HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& t);
+        const bslstl::HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& t)
+                                              BSLS_ASSERT_CONVEYOR_REQUIRES(t);
 }  // close package namespace
 
 template <class KEY_CONFIG, class HASHER, class COMPARATOR, class ALLOCATOR>
@@ -2557,6 +2558,7 @@ Link *insertElement(
     if (!hashTable) {
         return 0;                                                     // RETURN
     }
+    BSLS_ASSERT_CONVEYOR_OBJECT(hashTable);
 
     if (hashTable->size() == hashTable->rehashThreshold()) {
         return 0;                                                     // RETURN
@@ -2693,8 +2695,11 @@ int verifyListContents(Link                                 *containerList,
     for (Link *cursor = containerList; cursor; cursor = cursor->nextLink()) {
         Link *next = cursor->nextLink();
         // Walk to end of key-equivalent sequence
-        while (next && doCompareKeys(ImpUtil::extractKey<KEY_CONFIG>(cursor),
-                                     ImpUtil::extractKey<KEY_CONFIG>(next))) {
+        while (next && doCompareKeys(
+                   BSLS_ASSERT_CONVEYOR_REF(
+                                     ImpUtil::extractKey<KEY_CONFIG>(cursor)),
+                   BSLS_ASSERT_CONVEYOR_REF(
+                                     ImpUtil::extractKey<KEY_CONFIG>(next)))) {
             cursor = next;
             next   = next->nextLink();
         }
@@ -2704,8 +2709,11 @@ int verifyListContents(Link                                 *containerList,
         // part of the list, as this check would have failed earlier if that
         // were the case.
         for ( ; next; next = next->nextLink()) {
-            if (doCompareKeys(ImpUtil::extractKey<KEY_CONFIG>(cursor),
-                              ImpUtil::extractKey<KEY_CONFIG>(next))) {
+            if (doCompareKeys(
+                   BSLS_ASSERT_CONVEYOR_REF(
+                                     ImpUtil::extractKey<KEY_CONFIG>(cursor)),
+                   BSLS_ASSERT_CONVEYOR_REF(
+                                     ImpUtil::extractKey<KEY_CONFIG>(next)))) {
                 return DISCONTIGUOUS;                                 // RETURN
             }
         }
@@ -3949,6 +3957,7 @@ template <class t_CONTAINER>
 void testSetTransparentComparator(t_CONTAINER& container,
                                   bool         isTransparent,
                                   int          initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     typedef typename bslalg::BidirectionalLink      *Link;
     typedef typename t_CONTAINER::SizeType           Count;
@@ -4037,6 +4046,7 @@ template <class t_CONTAINER>
 void testMapTransparentComparator(t_CONTAINER& container,
                                   bool         isTransparent,
                                   int          initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     typedef typename bslalg::BidirectionalLink      *Link;
     typedef typename t_CONTAINER::SizeType           Count;
@@ -4124,6 +4134,7 @@ template <class t_CONTAINER>
 void testSetTransparentComparatorMutable(const t_CONTAINER& container,
                                          bool               isTransparent,
                                          int                initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     typedef typename bslalg::BidirectionalLink      *Link;
     typedef typename t_CONTAINER::SizeType           Count;
@@ -4184,6 +4195,7 @@ template <class t_CONTAINER>
 void testMapTransparentComparatorMutable(const t_CONTAINER& container,
                                       bool                  isTransparent,
                                       int                   initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
 
     typedef typename bslalg::BidirectionalLink      *Link;
@@ -4553,6 +4565,8 @@ class TestCases {
     /// Return, by reference, the specified `object` with its value adjusted
     /// according to the specified `spec`.
     static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         const int result = ggg(object, spec);
         ASSERTV(result, -1 == result);
@@ -4622,6 +4636,7 @@ int TestCases<CONFIGURATION_PARAMETERS>::ggg(Obj        *object,
     if (!object) {
         return -2;                                                    // RETURN
     }
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
 
     if (!spec) {
         return -3;                                                    // RETURN
@@ -4984,6 +4999,7 @@ void TestCases<CONFIGURATION_PARAMETERS>::testCase2()
                                                        MAX_LF);
             bslma::RawDeleterGuard<Obj, bslma::TestAllocator> guardObj(objPtr,
                                                                        &fa);
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj& mX = *objPtr;  const Obj& X = mX;
 
             // Verify any attribute allocators are installed properly.
@@ -5818,6 +5834,7 @@ void TestCases<CONFIGURATION_PARAMETERS>::testCase4()
                             noa->numBlocksTotal(),
                             0 == noa->numBlocksTotal());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = gg(&mX, SPEC);
 
                     if (veryVerbose) {
@@ -7741,6 +7758,7 @@ void TestCases<CONFIGURATION_PARAMETERS>::testCase15()
                                                          , MAX_LF);
             bslma::RawDeleterGuard<Obj, bslma::TestAllocator> guardObj(objPtr,
                                                                        &fa);
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj& mX = *objPtr;  const Obj& X = mX;
 
             // Verify any attribute allocators are installed properly.
@@ -8365,6 +8383,7 @@ void TestCases<CONFIGURATION_PARAMETERS>::testCase17()
                                                    &sa);
         bslma::RawDeleterGuard<Obj, bslma::TestAllocator> guardObj(objPtr,
                                                                    &fa);
+        BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
         Obj& mX = *objPtr;  const Obj& X = mX;
 
         // Verify any attribute allocators are installed properly.
@@ -8605,26 +8624,28 @@ namespace UsageExamples {
         /// `KEY` object having `value` (according to `EQUAL`) and whose
         /// `second` member is `true` if a new element was inserted, and
         /// `false` if `value` was already present.
-        bsl::pair<const_iterator, bool> insert(const KEY& value);
+        bsl::pair<const_iterator, bool> insert(const KEY& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         // ACCESSORS
 
         /// Return the number of buckets in this set.
-        size_type bucket_count() const;
+        size_type bucket_count() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Return an iterator providing non-modifiable access to the
         /// past-the-end element (in the sequence of `KEY` objects)
         /// maintained by this set.
-        const_iterator cend() const;
+        const_iterator cend() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Return an iterator providing non-modifiable access to the `KEY`
         /// object in this set having the specified `key`, if such an entry
         /// exists, and the iterator returned by the `cend` method
         /// otherwise.
-        const_iterator find(const KEY& key) const;
+        const_iterator find(const KEY& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Return the number of elements in this set.
-        size_type size() const;
+        size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 // ```
 // Next, we implement the methods of `MyHashedSet`.  In many cases, the
@@ -8881,7 +8902,7 @@ if (veryVerbose) puts("Usage Example1");
         /// This method requires that the (template parameter) type `KEY` is
         /// "copy-constructible" and the (template parameter) `VALUE` is
         /// "default-constructible".
-        VALUE& operator[](const KEY& key);
+        VALUE& operator[](const KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 // ```
 // Then, we implement the methods `MyHashedMap`.  The construct need merely
@@ -9058,7 +9079,8 @@ if (veryVerbose) puts("Usage Example2");
         /// template parameter) `SOURCE_TYPE` be convertible to the (class
         /// template parameter) `VALUE` type.
         template <class SOURCE_TYPE>
-        iterator insert(const SOURCE_TYPE& value);
+        iterator insert(const SOURCE_TYPE& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         // ACCESSORS
 
@@ -9070,7 +9092,8 @@ if (veryVerbose) puts("Usage Example2");
         /// `value_type` objects matching `key` then the two returned
         /// iterators will have the same value.
         bsl::pair<const_iterator, const_iterator> equal_range(const KEY& key)
-                                                                         const;
+                                                                         const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 // ```
 // Then, we implement the methods `MyHashedMultiMap`.  The construct need
@@ -9465,20 +9488,22 @@ if (veryVerbose) puts("Usage Example3");
         /// is `true` if a new element was inserted, and `false` if `value`
         /// was already present.
         bsl::pair<ConstItrByOrderNumber, bool> insert(
-                                                   const MySalesRecord& value);
+                                                   const MySalesRecord& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         // ACCESSORS
 
         /// Return an iterator providing non-modifiable access to the
         /// past-the-end element (in the sequence of `MySalesRecord`
         /// objects) maintained by this set.
-        ConstItrByOrderNumber cend() const;
+        ConstItrByOrderNumber cend() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Return an iterator providing non-modifiable access to the
         /// `MySalesRecord` object in this set having the specified `value`,
         /// if such an entry exists, and the iterator returned by the `cend`
         /// method otherwise.
-        ConstItrByOrderNumber findByOrderNumber(int value) const;
+        ConstItrByOrderNumber findByOrderNumber(int value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 // ```
 // Notice that this interface provides map-like semantics for finding records.
 // We need only specify the `orderNumber` attribute of the record of interest;
@@ -9498,7 +9523,8 @@ if (veryVerbose) puts("Usage Example3");
         /// sequence.  If this container has no such objects, then the two
         /// iterators will be equal.
         bsl::pair<ConstItrById, ConstItrById> findByCustomerId(int value)
-                                                                         const;
+                                                                         const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Return a pair of iterators providing non-modifiable access to
         /// the sequence of `MySalesRecord` objects in this container having
@@ -9507,7 +9533,8 @@ if (veryVerbose) puts("Usage Example3");
         /// the second iterator is positioned one past the end of the
         /// sequence.  If this container has no such objects, then the two
         /// iterators will be equal.
-        bsl::pair<ConstItrById, ConstItrById> findByVendorId(int value) const;
+        bsl::pair<ConstItrById, ConstItrById> findByVendorId(int value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 // ```
 // Then, we implement the methods of `MySalesRecordContainer`, our customized

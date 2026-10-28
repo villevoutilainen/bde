@@ -141,7 +141,8 @@ ExceptionGuard<OBJECT>::~ExceptionGuard()
         // throws an exception.  Note that as this assertion is the whole
         // purpose of the class, we use 'BSLS_ASSERT_OPT' so that it is active
         // in most build modes.
-        BSLS_ASSERT_OPT(d_copy == *d_object_p);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
+        BSLS_ASSERT_OPT_NONCONVEYOR(d_copy == *d_object_p);
     }
 }
 

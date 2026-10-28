@@ -1372,6 +1372,7 @@ class unordered_map {
          const HASH&                              hashFunction = HASH(),
          const EQUAL&                             keyEqual = EQUAL(),
          const ALLOCATOR&                         basicAllocator = ALLOCATOR())
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     : d_impl(hashFunction,
              keyEqual,
              initialNumBuckets,
@@ -1400,6 +1401,7 @@ class unordered_map {
                   size_type                                initialNumBuckets,
                   const HASH&                              hashFunction,
                   const ALLOCATOR&                         basicAllocator)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     : d_impl(hashFunction, EQUAL(), initialNumBuckets, 1.0f, basicAllocator)
     {
         // Defined inline to avoid `clang` error.
@@ -1419,6 +1421,7 @@ class unordered_map {
                   BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
                   size_type                                initialNumBuckets,
                   const ALLOCATOR&                         basicAllocator)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     : d_impl(HASH(), EQUAL(), initialNumBuckets, 1.0f, basicAllocator)
     {
         // Defined inline to avoid `clang` error.
@@ -1437,6 +1440,7 @@ class unordered_map {
     unordered_map(bsl::from_range_t                        ,
                   BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
                   const ALLOCATOR&                         basicAllocator)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     : d_impl(HASH(), EQUAL(), 0, 1.0f, basicAllocator)
     {
         // Defined inline to avoid `clang` error.
@@ -1542,7 +1546,9 @@ class unordered_map {
     /// that the (template parameter) type `KEY` is `copy-constructible` and
     /// the (template parameter) `VALUE` is "default-constructible" (see
     /// {Requirements on `value_type`}).
-    typename add_lvalue_reference<VALUE>::type operator[](const key_type& key);
+    typename add_lvalue_reference<VALUE>::type operator[](const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the mapped-value
     /// associated with the specified `key` in this unordered map; if this
@@ -1553,7 +1559,9 @@ class unordered_map {
     /// (see {Requirements on `value_type`}).  Note that `key` may be
     /// modified; it is guaranteed to be left in a valid state.
     typename add_lvalue_reference<VALUE>::type operator[](
-                                 BloombergLP::bslmf::MovableRef<key_type> key);
+                                 BloombergLP::bslmf::MovableRef<key_type> key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Return a reference providing modifiable access to the mapped-value
@@ -1574,6 +1582,8 @@ class unordered_map {
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
         typename add_lvalue_reference<VALUE>::type>::type
     operator [](LOOKUP_KEY&& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return try_emplace(
                  BSLS_COMPILERFEATURES_FORWARD(LOOKUP_KEY, key)).first->second;
@@ -1584,7 +1594,9 @@ class unordered_map {
     /// associated with the specified `key`, if such an entry exists;
     /// otherwise throw `std::out_of_range` exception.  Note that this
     /// method is not exception-neutral.
-    typename add_lvalue_reference<VALUE>::type at(const key_type& key);
+    typename add_lvalue_reference<VALUE>::type at(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the
     /// mapped-value associated with a key that is equivalent to the
@@ -1599,7 +1611,9 @@ class unordered_map {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
         typename add_lvalue_reference<VALUE>::type>::type
-    at(const LOOKUP_KEY& key) {
+    at(const LOOKUP_KEY& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                       BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF {
         HashTableLink *node = d_impl.find(key);
 
         if (!node) {
@@ -1613,12 +1627,12 @@ class unordered_map {
     /// `value_type` object in the sequence of `value_type` objects
     /// maintained by this unordered map, or the `end` iterator if this
     /// unordered map is empty.
-    iterator begin() BSLS_KEYWORD_NOEXCEPT;
+    iterator begin() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing modifiable access to the past-the-end
     /// position in the sequence of `value_type` objects maintained by this
     /// unordered map.
-    iterator end() BSLS_KEYWORD_NOEXCEPT;
+    iterator end() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a local iterator providing modifiable access to the first
     /// `value_type` object in the sequence of `value_type` objects of the
@@ -1626,19 +1640,19 @@ class unordered_map {
     /// maintained by this unordered map, or the `end(index)` iterator if
     /// the bucket is empty.  The behavior is undefined unless 'index <
     /// bucket_count()'.
-    local_iterator begin(size_type index);
+    local_iterator begin(size_type index) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a local iterator providing modifiable access to the
     /// past-the-end position in the sequence of `value_type` objects of the
     /// bucket having the specified `index` in the array of buckets
     /// maintained by this unordered map.  The behavior is undefined unless
     /// `index < bucket_count()`.
-    local_iterator end(size_type index);
+    local_iterator end(size_type index) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all entries from this unordered map.  Note that this
     /// unordered map will be empty after calling this method, but allocated
     /// memory may be retained for future use.
-    void clear() BSLS_KEYWORD_NOEXCEPT;
+    void clear() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Insert into this unordered map a newly-created `value_type` object,
@@ -1656,7 +1670,8 @@ class unordered_map {
     /// `VALUE` both be `emplace-constructible` from `args` (see
     /// {Requirements on `value_type`}).
     template <class... Args>
-    pair<iterator, bool> emplace(Args&&... args);
+    pair<iterator, bool> emplace(Args&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this unordered map a newly-created `value_type` object,
     /// constructed by forwarding `get_allocator()` (if required) and the
@@ -1675,7 +1690,8 @@ class unordered_map {
     /// endpoints included).  Note that `hint` is ignored (other than
     /// possibly asserting its validity in some build modes).
     template <class... Args>
-    iterator emplace_hint(const_iterator hint, Args&&... args);
+    iterator emplace_hint(const_iterator hint, Args&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Insert into this map the value of each `value_type` object in the
@@ -1690,6 +1706,8 @@ class unordered_map {
     template <class RANGE>
     BSLSTL_UNORDEREDMAP_REQUIRES_CONTAINER_COMPATIBLE_RANGE(RANGE, value_type)
     void insert_range(BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     {
         // Defined inline to avoid `clang` and Windows errors.
 #if defined(BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS) \
@@ -1716,8 +1734,8 @@ class unordered_map {
     /// preserves the relative order of the elements not removed.  The
     /// behavior is undefined unless `position` refers to a `value_type`
     /// object in this unordered map.
-    iterator erase(const_iterator position);
-    iterator erase(iterator position);
+    iterator erase(const_iterator position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator erase(iterator position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this unordered map the `value_type` object having the
     /// specified `key`, if it exists, and return 1; otherwise (there is no
@@ -1726,7 +1744,7 @@ class unordered_map {
     /// references to the removed element and previously saved values of the
     /// `end()` iterator, and preserves the relative order of the elements
     /// not removed.
-    size_type erase(const key_type& key);
+    size_type erase(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     template <class t_KEY>
     typename enable_if<
         BloombergLP::bslmf::IsTransparentPredicate<HASH, t_KEY>::value &&
@@ -1736,6 +1754,7 @@ class unordered_map {
         !is_convertible<BSLS_COMPILERFEATURES_FORWARD_REF(t_KEY),
                         const_iterator>::value,
     size_type>::type erase(BSLS_COMPILERFEATURES_FORWARD_REF(t_KEY) key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Implemented inline due to Sun CC compilation error.
         iterator it = this->find(key);
@@ -1756,7 +1775,8 @@ class unordered_map {
     /// unordered map or are the `end` iterator, and the `first` position is
     /// at or before the `last` position in the iteration sequence provided
     /// by this container.
-    iterator erase(const_iterator first, const_iterator last);
+    iterator erase(const_iterator first, const_iterator last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing modifiable access to the `value_type`
     /// object in this unordered map with a key equivalent to the specified
@@ -1768,7 +1788,7 @@ class unordered_map {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       iterator>::type
-    find(const LOOKUP_KEY& key)
+    find(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             // Note: implemented inline due to Sun CC compilation error.
             return iterator(d_impl.find(key));
@@ -1778,7 +1798,7 @@ class unordered_map {
     /// object in this unordered map with a key equivalent to the specified
     /// `key`, if such an entry exists, and the past-the-end iterator
     /// (`end`) otherwise.
-    iterator find(const key_type& key);
+    iterator find(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `value` into this unordered map if the key (the
     /// `first` element) of the object referred to by `value` does not
@@ -1793,7 +1813,8 @@ class unordered_map {
     /// requires that the (template parameter) types `KEY` and `VALUE` both
     /// be `copy-insertable` into this unordered map (see {Requirements on
     /// `value_type`}).
-    pair<iterator, bool> insert(const value_type& value);
+    pair<iterator, bool> insert(const value_type& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if defined(BSLS_PLATFORM_CMP_SUN) && BSLS_PLATFORM_CMP_VERSION < 0x5130
     template <class ALT_VALUE_TYPE>
@@ -1824,6 +1845,7 @@ class unordered_map {
                        pair<iterator, bool> >::type
 #endif
     insert(BSLS_COMPILERFEATURES_FORWARD_REF(ALT_VALUE_TYPE) value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note that some compilers require functions declared with `enable_if`
         // to be defined inline.
@@ -1854,7 +1876,8 @@ class unordered_map {
     /// iterator in the range `[begin() .. end()]` (both endpoints
     /// included).  Note that `hint` is ignored (other than possibly
     /// asserting its validity in some build modes).
-    iterator insert(const_iterator hint, const value_type& value);
+    iterator insert(const_iterator hint, const value_type& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if defined(BSLS_PLATFORM_CMP_SUN) && BSLS_PLATFORM_CMP_VERSION < 0x5130
     template <class ALT_VALUE_TYPE>
@@ -1888,6 +1911,7 @@ class unordered_map {
 #endif
     insert(const_iterator                                    hint,
            BSLS_COMPILERFEATURES_FORWARD_REF(ALT_VALUE_TYPE) value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note that some compilers require functions declared with 'enable_if'
         // to be defined inline.
@@ -1924,7 +1948,8 @@ class unordered_map {
     /// requires that the (template parameter) types `KEY` and `VALUE` both
     /// be `copy-constructible` (see {Requirements on `value_type`}).
     template <class INPUT_ITERATOR>
-    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last);
+    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
     /// Create a `value_type` object for each element in the specified
@@ -1932,7 +1957,8 @@ class unordered_map {
     /// is not already contained.  Note that this method requires that the
     /// (template parameter) types `KEY` and `VALUE` both be
     /// `copy-constructible` (see {Requirements on `value_type`}).
-    void insert(std::initializer_list<value_type> values);
+    void insert(std::initializer_list<value_type> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
@@ -1946,7 +1972,8 @@ class unordered_map {
     /// `true`.
     template <class BDE_OTHER_TYPE>
     pair<iterator, bool> insert_or_assign(const KEY&       key,
-                                          BDE_OTHER_TYPE&& obj);
+                                          BDE_OTHER_TYPE&& obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// unordered_map, assign the specified `obj` to the value associated
@@ -1959,7 +1986,8 @@ class unordered_map {
     template <class BDE_OTHER_TYPE>
     pair<iterator, bool> insert_or_assign(
                                       BloombergLP::bslmf::MovableRef<KEY> key,
-                                      BDE_OTHER_TYPE&&                    obj);
+                                      BDE_OTHER_TYPE&&                    obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// unordered_map, assign the specified `obj` to the value associated
@@ -1977,6 +2005,7 @@ class unordered_map {
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
          , pair<iterator, bool> >::type
     insert_or_assign(LOOKUP_KEY&& key, BDE_OTHER_TYPE&& obj)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         typedef bsl::pair<iterator, bool> ResultType;
         bool isInsertedFlag = false;
@@ -2001,7 +2030,8 @@ class unordered_map {
     template <class BDE_OTHER_TYPE>
     iterator insert_or_assign(const_iterator   hint,
                               const KEY&       key,
-                              BDE_OTHER_TYPE&& obj);
+                              BDE_OTHER_TYPE&& obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// unordered_map, assign the specified `obj` to the value associated
@@ -2015,7 +2045,8 @@ class unordered_map {
     template <class BDE_OTHER_TYPE>
     iterator insert_or_assign(const_iterator                      hint,
                               BloombergLP::bslmf::MovableRef<KEY> key,
-                              BDE_OTHER_TYPE&&                    obj);
+                              BDE_OTHER_TYPE&&                    obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// unordered_map, assign the specified `obj` to the value associated
@@ -2035,7 +2066,7 @@ class unordered_map {
          , iterator>::type
     insert_or_assign(const_iterator   hint,
                      LOOKUP_KEY&&     key,
-                     BDE_OTHER_TYPE&& obj)
+                     BDE_OTHER_TYPE&& obj) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         bool isInsertedFlag = false;
         HashTableLink *result = d_impl.insertOrAssign(
@@ -2064,7 +2095,7 @@ class unordered_map {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                        pair<iterator, iterator> >::type
-    equal_range(const LOOKUP_KEY& key)
+    equal_range(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             typedef bsl::pair<iterator, iterator> ResultType;
 
@@ -2082,14 +2113,16 @@ class unordered_map {
     /// having `key`, then the two returned iterators will have the same
     /// value, `end()`.  Note that since an unordered map maintains unique
     /// keys, the range will contain at most one element.
-    pair<iterator, iterator> equal_range(const key_type& key);
+    pair<iterator, iterator> equal_range(const key_type& key)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the maximum load factor of this unordered map to the specified
     /// `newMaxLoadFactor`.  If `newMaxLoadFactor < loadFactor()`, this
     /// operator will cause an immediate rehash (in violation of the C++11
     /// standard); otherwise, it has a constant-time cost.  The behavior is
     /// undefined unless `0 < newMaxLoadFactor`.
-    void max_load_factor(float newMaxLoadFactor);
+    void max_load_factor(float newMaxLoadFactor)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Change the size of the array of buckets maintained by this unordered
     /// map to at least the specified `numBuckets`, and redistribute all the
@@ -2098,7 +2131,7 @@ class unordered_map {
     /// or equal to `max_load_factor`.  This operation has no effect if
     /// rehashing the elements into `numBuckets` would cause this map to
     /// exceed its `max_load_factor`.
-    void rehash(size_type numBuckets);
+    void rehash(size_type numBuckets) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Increase the number of buckets of this set to a quantity such that
     /// the ratio between the specified `numElements` and this quantity does
@@ -2108,7 +2141,7 @@ class unordered_map {
     /// allocations may still occur when growing the container to `size() ==
     /// numElements`.  Also note that this operation has no effect if
     /// `numElements <= size()`.
-    void reserve(size_type numElements);
+    void reserve(size_type numElements) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Exchange the value, hasher, key-equality functor, and
     /// `max_load_factor` of this object with those of the specified `other`
@@ -2139,7 +2172,8 @@ class unordered_map {
     /// `emplace-constructible` from `key` and `args` respectively.  For
     /// C++03, `VALUE` must also be `copy-constructible`.
     template <class... Args>
-    pair<iterator, bool> try_emplace(const KEY& key, Args&&... args);
+    pair<iterator, bool> try_emplace(const KEY& key, Args&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// unordered_map, return a pair containing an iterator referring to the
@@ -2153,7 +2187,8 @@ class unordered_map {
     template <class... Args>
     pair<iterator, bool> try_emplace(
                               BloombergLP::bslmf::MovableRef<KEY> key,
-                              Args&&...                           args);
+                              Args&&...                           args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// unordered_map, return a pair containing an iterator referring to the
@@ -2175,6 +2210,7 @@ class unordered_map {
         && !bsl::is_convertible<LOOKUP_KEY&&, iterator>::value,
            pair<iterator, bool> >::type
     try_emplace(LOOKUP_KEY&& key, Args&&... args)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         typedef bsl::pair<iterator, bool> ResultType;
         bool isInsertedFlag = false;
@@ -2199,7 +2235,8 @@ class unordered_map {
     /// C++03, `VALUE` must also be `copy-constructible`.
     template<class... Args>
     iterator
-    try_emplace(const_iterator hint, const KEY& key, Args&&... args);
+    try_emplace(const_iterator hint, const KEY& key, Args&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// unordered_map, return an iterator referring to the existing item.
@@ -2214,7 +2251,8 @@ class unordered_map {
     template <class... Args>
     iterator try_emplace(const_iterator                      hint,
                          BloombergLP::bslmf::MovableRef<KEY> key,
-                         Args&&...                           args);
+                         Args&&...                           args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// unordered_map, return an iterator referring to the existing item.
@@ -2234,6 +2272,7 @@ class unordered_map {
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
            iterator>::type
     try_emplace(const_iterator hint, LOOKUP_KEY&& key, Args&&... args)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         bool isInsertedFlag = false;
         HashTableLink *result = d_impl.tryEmplace(
@@ -2254,7 +2293,9 @@ class unordered_map {
     /// exists; otherwise throw a `std::out_of_range` exception.  Note that
     /// this method is not exception-neutral.
     typename add_lvalue_reference<const VALUE>::type at(const key_type& key)
-                                                                         const;
+                                                                         const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// mapped-value associated with a key that is equivalent to the
@@ -2269,7 +2310,9 @@ class unordered_map {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
         typename add_lvalue_reference<const VALUE>::type>::type
-    at(const LOOKUP_KEY& key) const {
+    at(const LOOKUP_KEY& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                       BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF {
         HashTableLink *node = d_impl.find(key);
 
         if (!node) {
@@ -2279,22 +2322,27 @@ class unordered_map {
         return static_cast<HashTableNode *>(node)->value().second;
     }
 
-    const_iterator  begin() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator  begin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// `value_type` object in the sequence of `value_type` objects
     /// maintained by this unordered map, or the `end` iterator if this
     /// unordered map is empty.
-    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
-    const_iterator  end() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator  end() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end position in the sequence of `value_type` objects
     /// maintained by this unordered map.
-    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
-    const_local_iterator  begin(size_type index) const;
+    const_local_iterator  begin(size_type index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a local iterator providing non-modifiable access to the first
     /// `value_type` object in the sequence of `value_type` objects of the
@@ -2302,21 +2350,25 @@ class unordered_map {
     /// maintained by this unordered map, or the `end(index)` iterator if
     /// the bucket is empty.  The behavior is undefined unless
     /// `index < bucket_count()`.
-    const_local_iterator cbegin(size_type index) const;
+    const_local_iterator cbegin(size_type index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
-    const_local_iterator  end(size_type index) const;
+    const_local_iterator  end(size_type index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a local iterator providing non-modifiable access to the
     /// past-the-end position in the sequence of `value_type` objects of the
     /// bucket having the specified `index` in the array of buckets
     /// maintained by this unordered map.  The behavior is undefined unless
     /// `index < bucket_count()`.
-    const_local_iterator cend(size_type index) const;
+    const_local_iterator cend(size_type index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the index of the bucket, in the array of buckets maintained
     /// by this unordered map, where values having a key equivalent to the
     /// specified `key` would be inserted.
-    size_type bucket(const key_type& key) const;
+    size_type bucket(const key_type& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the index of the bucket, in the array of buckets maintained
     /// by this unordered map, where values having a key equivalent to the
@@ -2328,14 +2380,15 @@ class unordered_map {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       size_type>::type
-    bucket(const LOOKUP_KEY& key) const
+    bucket(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_impl.bucketIndexForKey(key);
     }
 
     /// Return the number of buckets in the array of buckets maintained by
     /// this unordered map.
-    size_type bucket_count() const BSLS_KEYWORD_NOEXCEPT;
+    size_type bucket_count() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a theoretical upper bound on the largest number of buckets
     /// that this unordered map could possibly manage.  Note that there is
@@ -2348,7 +2401,8 @@ class unordered_map {
     /// specified `index` in the array of buckets maintained by this
     /// unordered map.  The behavior is undefined unless
     /// `index < bucket_count()`.
-    size_type bucket_size(size_type index) const;
+    size_type bucket_size(size_type index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of `value_type` objects within this unordered map
     /// that have a key equivalent to the specified `key`.  The behavior is
@@ -2362,7 +2416,7 @@ class unordered_map {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       size_type>::type
-    count(const LOOKUP_KEY& key) const
+    count(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             return d_impl.find(key) != 0;
         }
@@ -2371,11 +2425,13 @@ class unordered_map {
     /// unordered map having the specified `key`.  Note that since an
     /// unordered map maintains unique keys, the returned value will be
     /// either 0 or 1.
-    size_type count(const key_type& key) const;
+    size_type count(const key_type& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this unordered map contains an element whose key is
     /// equivalent to the specified `key`.
-    bool contains(const key_type &key) const;
+    bool contains(const key_type &key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this unordered map contains an element whose key is
     /// equivalent to the specified `key`.
@@ -2387,14 +2443,15 @@ class unordered_map {
             BloombergLP::bslmf::IsTransparentPredicate<EQUAL,
                                                        LOOKUP_KEY>::value,
         bool>::type
-    contains(const LOOKUP_KEY& key) const
+    contains(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return find(key) != end();
     }
 
     /// Return `true` if this unordered map contains no elements, and
     /// `false` otherwise.
-    bool empty() const BSLS_KEYWORD_NOEXCEPT;
+    bool empty() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a pair of iterators providing non-modifiable access to the
     /// sequence of `value_type` objects in this unordered map with a key
@@ -2413,7 +2470,7 @@ class unordered_map {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       pair<const_iterator, const_iterator> >::type
-    equal_range(const LOOKUP_KEY& key) const
+    equal_range(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             typedef bsl::pair<const_iterator, const_iterator> ResultType;
 
@@ -2432,7 +2489,8 @@ class unordered_map {
     /// value, `end()`.  Note that since an unordered map maintains unique
     /// keys, the range will contain at most one element.
     pair<const_iterator, const_iterator> equal_range(
-                                                    const key_type& key) const;
+                                                    const key_type& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// `value_type` object in this unordered map with a key equivalent to
@@ -2446,7 +2504,7 @@ class unordered_map {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       const_iterator>::type
-    find(const LOOKUP_KEY& key) const
+    find(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             return const_iterator(d_impl.find(key));
         }
@@ -2455,7 +2513,8 @@ class unordered_map {
     /// `value_type` object in this unordered map with a key equivalent to
     /// the specified `key`, if such an entry exists, and the past-the-end
     /// iterator (`end`) otherwise.
-    const_iterator find(const key_type& key) const;
+    const_iterator find(const key_type& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return (a copy of) the allocator used for memory allocation by this
     /// unordered map.
@@ -2464,29 +2523,32 @@ class unordered_map {
     /// Return (a copy of) the unary hash functor used by this unordered map
     /// to generate a hash value (of type `size_type`) for a `key_type`
     /// object.
-    HASH hash_function() const;
+    HASH hash_function() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return (a copy of) binary the key-equality functor used by this
     /// unordered map that returns `true` if two `key_type` objects are
     /// equivalent, and `false` otherwise.
-    EQUAL key_eq() const;
+    EQUAL key_eq() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the current ratio between the `size` of this unordered map
     /// and the number of buckets.  The load factor is a measure of how
     /// full the container is, and a higher load factor typically leads to
     /// an increased number of collisions, thus resulting in a loss of
     /// performance.
-    float load_factor() const BSLS_KEYWORD_NOEXCEPT;
+    float load_factor() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the maximum load factor allowed for this unordered map.  Note
     /// that if an insert operation would cause the load factor to exceed
     /// the `max_load_factor`, that same insert operation will increase the
     /// number of buckets and rehash the elements of the container into
     /// those buckets (see `rehash`).
-    float max_load_factor() const BSLS_KEYWORD_NOEXCEPT;
+    float max_load_factor() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this unordered map.
-    size_type size() const BSLS_KEYWORD_NOEXCEPT;
+    size_type size() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a theoretical upper bound on the largest number of elements
     /// that this unordered map could possibly hold.  Note that there is no
@@ -2834,12 +2896,14 @@ unordered_map(std::initializer_list<bsl::pair<const KEY, VALUE>>, ALLOC *)
 /// `value_type`}).
 template <class KEY, class VALUE, class HASH, class EQUAL, class ALLOCATOR>
 bool operator==(const unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& lhs,
-                const unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& rhs);
+                const unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #ifndef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 template <class KEY, class VALUE, class HASH, class EQUAL, class ALLOCATOR>
 bool operator!=(const unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& lhs,
-                const unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& rhs);
+                const unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the specified 'lhs' and 'rhs' objects do not have the
     // same value, and 'false' otherwise.  Two 'unordered_map' objects do not
     // have the same value if they do not have the same number of key-value
@@ -2863,7 +2927,8 @@ template <class KEY,
           class PREDICATE>
 typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 erase_if(unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>&         m,
-                                                          PREDICATE predicate);
+                                                          PREDICATE predicate)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(m);
 
 /// Exchange the value, hasher, key-equality functor, and `max_load_factor`
 /// of the specified `a` object with those of the specified `b` object; also
@@ -2901,6 +2966,7 @@ void unordered_map<KEY, VALUE,  HASH, EQUAL, ALLOCATOR>::constructFromRange(
                                                           INPUT_ITERATOR first,
                                                           SENTINEL       last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ///Implementation Notes
     ///--------------------
     // If we can calculate the number of elements, reserve space for them
@@ -2938,6 +3004,7 @@ void unordered_map<KEY, VALUE,  HASH, EQUAL, ALLOCATOR>::constructFromRange(
                                                     SENTINEL       last,
                                                     size_t         numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE((
         !BloombergLP::bslstl::IteratorUtil
                        ::canCalculateInsertDistance<INPUT_ITERATOR, SENTINEL>()
@@ -3680,6 +3747,7 @@ void unordered_map<KEY, VALUE,  HASH, EQUAL, ALLOCATOR>::insertFromRange(
                                                           INPUT_ITERATOR first,
                                                           SENTINEL       last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ///Implementation Notes
     ///--------------------
     // If we can calculate the number of elements, reserve space for them
@@ -3712,6 +3780,7 @@ void unordered_map<KEY, VALUE,  HASH, EQUAL, ALLOCATOR>::insertFromRange(
                                                     SENTINEL       last,
                                                     size_t         numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE((
         !BloombergLP::bslstl::IteratorUtil
                        ::canCalculateInsertDistance<INPUT_ITERATOR, SENTINEL>()

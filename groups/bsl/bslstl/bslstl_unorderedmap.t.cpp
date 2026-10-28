@@ -466,6 +466,7 @@ void debugprint(const bsl::pair<FIRST, SECOND>& p)
 
 template <class KEY, class VALUE, class HASH, class EQUAL, class ALLOC>
 void debugprint(const bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOC>& s)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(s)
 {
     if (s.empty()) {
         printf("<empty>");
@@ -507,16 +508,26 @@ class TestAllocatorUtil {
         // all of the fields of `value` were created with the specified
         // `allocator`.
     {
-        ASSERTV(&allocator == value.arg01().allocator());
-        ASSERTV(&allocator == value.arg02().allocator());
-        ASSERTV(&allocator == value.arg03().allocator());
-        ASSERTV(&allocator == value.arg04().allocator());
-        ASSERTV(&allocator == value.arg05().allocator());
-        ASSERTV(&allocator == value.arg06().allocator());
-        ASSERTV(&allocator == value.arg07().allocator());
-        ASSERTV(&allocator == value.arg08().allocator());
-        ASSERTV(&allocator == value.arg09().allocator());
-        ASSERTV(&allocator == value.arg10().allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg01()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg02()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg03()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg04()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg05()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg06()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg07()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg08()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg09()).allocator());
+        ASSERTV(&allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg10()).allocator());
     }
 };
 
@@ -5672,7 +5683,8 @@ if (verbose) {
                    itr->second.c_str());
 }
             ASSERT(origin != offset
-                || bsl::string("unalienable") == itr->second);
+                || bsl::string("unalienable") ==
+                                       BSLS_ASSERT_CONVEYOR_REF(itr->second));
         }
     }
 // ```
@@ -6282,6 +6294,7 @@ bool verifySpec(const OBJECT&     object,
     // outside the range "[ `A` - `Z` ]") `false` will be returned.  If the
     // optionally specified `keysOnly` is `true`, only key values in the map
     // are verified, otherwise both key values and mapped values are verified.
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(object)
 {
     typedef typename OBJECT::const_iterator CIter;
 
@@ -6551,7 +6564,8 @@ class TestDriver {
     // "ABC"        Insert three values corresponding to A, B and C.
     //-------------------------------------------------------------------------
 
-    static int ggg(Obj *object, const char *spec, int verbose = 1);
+    static int ggg(Obj *object, const char *spec, int verbose = 1)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
         // Configure the specified `object` according to the specified `spec`,
         // using only the primary manipulator function `insert` and white-box
         // manipulator `clear`.  Optionally specify a zero `verbose` to
@@ -6560,7 +6574,9 @@ class TestDriver {
         // this function is used to implement `gg` as well as allow for
         // verification of syntax error detection.
 
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return, by reference, the specified `object` with its value adjusted
         // according to the specified `spec`.
 
@@ -6572,13 +6588,15 @@ class TestDriver {
                                  const Obj&        object,
                                  const TestValues& values,
                                  const size_t      count,
-                                 bool              keysOnly = false);
+                                 bool              keysOnly = false)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(object);
         // Match that exactly the first specified `count` values of the
         // specified array `values` match all of the objects in the specified
         // `object`.
 
     static pair<Iter, bool> primaryManipulator(Obj              *container,
                                                int               identifier)
+                                  BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(container)
         // Insert into the specified `container` the value object indicated by
         // the specified `identifier`, ensuring that the overload of the
         // primary manipulator taking a modifiable rvalue is invoked (rather
@@ -8356,7 +8374,8 @@ void TestDriver<KEY, VALUE, HASH, EQUAL, ALLOC>::testCase6()
 
         OP op = bsl::operator==;
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
-        (void) [](const Obj& lhs, const Obj& rhs) -> bool {
+        (void) [](const Obj& lhs, const Obj& rhs) -> bool
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs) {
             return lhs != rhs;
         };
 #else
@@ -9820,6 +9839,7 @@ void TestDriver<KEY, VALUE, HASH, EQUAL, ALLOC>::testCase2()
             } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
             ASSERTV((!PLAT_EXC || EXP_ONE_BUCKET) == (1 == numPasses));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj&                   mX = *objPtr;  const Obj& X = mX;
 
             // Verify any attribute allocators are installed properly.
@@ -10043,6 +10063,7 @@ keyForValue(const typename CONTAINER::value_type v)
 
 template <class CONTAINER>
 void testConstEmptyContainer(const CONTAINER& x)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(x)
 {
     typedef CONTAINER TestType;
     typedef typename TestType::size_type SizeType;
@@ -10078,6 +10099,7 @@ void testConstEmptyContainer(const CONTAINER& x)
 
 template <class CONTAINER>
 void testEmptyContainer(CONTAINER& x)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(x)
 {
     typedef CONTAINER TestType;
     typedef typename TestType::size_type SizeType;
@@ -10125,6 +10147,7 @@ void testContainerHasData(const CONTAINER&                      x,
                           typename CONTAINER::size_type         nCopies,
                           const typename CONTAINER::value_type *data,
                           typename CONTAINER::size_type         size)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(x)
 {
     typedef CONTAINER TestType;
     typedef typename TestType::size_type      SizeType;
@@ -10156,6 +10179,7 @@ template <class CONTAINER>
 void fillContainerWithData(CONTAINER&                            x,
                            const typename CONTAINER::value_type *data,
                            int                                   size)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(x)
 {
     typedef CONTAINER TestType;
     typedef typename TestType::size_type SizeType;
@@ -10174,6 +10198,7 @@ void fillContainerWithData(CONTAINER&                            x,
 
 template <class CONTAINER>
 void validateIteration(CONTAINER &c)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(c)
 {
     typedef typename CONTAINER::iterator       iterator;
     typedef typename CONTAINER::const_iterator const_iterator;
@@ -10202,6 +10227,7 @@ void validateIteration(CONTAINER &c)
 
 template <class CONTAINER>
 void testBuckets(CONTAINER& mX)
+                                              BSLS_ASSERT_CONVEYOR_REQUIRES(mX)
 {
     // Basic test of buckets:
     // 1. number of buckets is returned by bucket_count
@@ -10269,6 +10295,7 @@ void testBuckets(CONTAINER& mX)
 
 template <class CONTAINER>
 void testErase(CONTAINER& mX)
+                                              BSLS_ASSERT_CONVEYOR_REQUIRES(mX)
 {
     typedef typename CONTAINER::      size_type      SizeType;
     typedef typename CONTAINER::      iterator       iterator;
@@ -10413,6 +10440,7 @@ void testErase(CONTAINER& mX)
 
 template <class CONTAINER>
 void testMapLookup(CONTAINER& mX)
+                                              BSLS_ASSERT_CONVEYOR_REQUIRES(mX)
 {
     typedef typename CONTAINER::size_type    SizeType;
     typedef typename CONTAINER::iterator     iterator;
@@ -10492,6 +10520,7 @@ void testMapLookup(CONTAINER& mX)
 
 template <class CONTAINER>
 void testImplicitInsert(CONTAINER& mX)
+                                              BSLS_ASSERT_CONVEYOR_REQUIRES(mX)
 {
     typedef typename CONTAINER::   key_type    key_type;
     typedef typename CONTAINER::mapped_type mapped_type;

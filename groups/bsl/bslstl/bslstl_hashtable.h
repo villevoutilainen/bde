@@ -2278,7 +2278,8 @@ class HashTable {
     /// `KEY_CONFIG` be `emplace-constructible` into this hash-table from
     /// `arguments` (see {Requirements on `KEY_CONFIG`});
     template <class... Args>
-    bslalg::BidirectionalLink *emplace(Args&&... arguments);
+    bslalg::BidirectionalLink *emplace(Args&&... arguments)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this hash-table a newly-created `ValueType` object,
     /// constructed by forwarding the specified (variable number of)
@@ -2303,7 +2304,8 @@ class HashTable {
     template <class... Args>
     bslalg::BidirectionalLink *emplaceWithHint(
                                          bslalg::BidirectionalLink *hint,
-                                         Args&&...                  arguments);
+                                         Args&&...                  arguments)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this hash-table a newly-created `ValueType` object,
     /// constructed by forwarding the specified (variable number of)
@@ -2326,7 +2328,8 @@ class HashTable {
     /// `arguments` (see {Requirements on `KEY_CONFIG`});
     template <class... Args>
     bslalg::BidirectionalLink *emplaceIfMissing(bool     *isInsertedFlag,
-                                                Args&&... arguments);
+                                                Args&&... arguments)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Insert into this hash-table a newly-created `ValueType` object,
@@ -2350,7 +2353,8 @@ class HashTable {
     template <class KEY_ARG>
     bslalg::BidirectionalLink *insertKeyIfMissing(
                     bool                                       *isInsertedFlag,
-                    BSLS_COMPILERFEATURES_FORWARD_REF(KEY_ARG)  key);
+                    BSLS_COMPILERFEATURES_FORWARD_REF(KEY_ARG)  key)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this hash-table a `ValueType` object created from the
     /// specified `value` if a key equivalent to that of such an object does
@@ -2376,7 +2380,8 @@ class HashTable {
     template <class SOURCE_TYPE>
     bslalg::BidirectionalLink *insertIfMissing(
                 bool                                           *isInsertedFlag,
-                BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE)  value);
+                BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE)  value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this hash-table a `ValueType` object created from the
     /// specified `value` and return the address of the newly inserted node.
@@ -2396,7 +2401,8 @@ class HashTable {
     /// instead.
     template <class SOURCE_TYPE>
     bslalg::BidirectionalLink *insert(
-                         BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE) value);
+                         BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE) value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this hash-table a `ValueType` object created from the
     /// specified `value` (immediately preceding the specified `hint` if
@@ -2421,7 +2427,8 @@ class HashTable {
     template <class SOURCE_TYPE>
     bslalg::BidirectionalLink *insert(
                           BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE) value,
-                          bslalg::BidirectionalLink                     *hint);
+                          bslalg::BidirectionalLink                     *hint)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// If a key equivalent to the specified `key` already exists in this
@@ -2439,7 +2446,8 @@ class HashTable {
                                      bool                      *isInsertedFlag,
                                      bslalg::BidirectionalLink *hint,
                                      KEY_ARG&&                  key,
-                                     BDE_OTHER_TYPE&&           obj);
+                                     BDE_OTHER_TYPE&&           obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Re-organize this hash-table to have at least the specified
@@ -2454,7 +2462,8 @@ class HashTable {
     /// empty), state.  Note that more buckets than requested may be
     /// allocated in order to preserve the bucket allocation strategy of the
     /// hash table (but never fewer).
-    void rehashForNumBuckets(SizeType newNumBuckets);
+    void rehashForNumBuckets(SizeType newNumBuckets)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove the specified `node` from this hash-table, and return the
     /// address of the node immediately after `node` in this hash-table
@@ -2464,13 +2473,14 @@ class HashTable {
     /// `end()` iterator, and preserves the relative order of the nodes not
     /// removed.  The behavior is undefined unless `node` refers to a node
     /// in this hash-table.
-    bslalg::BidirectionalLink *remove(bslalg::BidirectionalLink *node);
+    bslalg::BidirectionalLink *remove(bslalg::BidirectionalLink *node)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all the elements from this hash-table.  Note that this
     /// hash-table is empty after this call, but allocated memory may be
     /// retained for future use.  The destructor of each (non-trivial)
     /// element that is remove shall be run.
-    void removeAll();
+    void removeAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Re-organize this hash-table to have a sufficient number of buckets
     /// to accommodate at least the specified `numElements` without
@@ -2483,7 +2493,8 @@ class HashTable {
     /// operation provides the basic exception guarantee, leaving the
     /// hash-table in a valid, but otherwise unspecified (and potentially
     /// empty), state.
-    void reserveForNumElements(SizeType numElements);
+    void reserveForNumElements(SizeType numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the maximum load factor permitted by this hash table to the
     /// specified `newMaxLoadFactor`, where load factor is the statistical
@@ -2493,7 +2504,8 @@ class HashTable {
     /// allocate a number of buckets larger than can be represented by this
     /// hash table's `SizeType`, a `std::length_error` exception is thrown.
     /// The behavior is undefined unless `0 < maxLoadFactor`.
-    void setMaxLoadFactor(float newMaxLoadFactor);
+    void setMaxLoadFactor(float newMaxLoadFactor)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Exchange the value of this object, its `comparator` functor, its
     /// `hasher` functor, and its `maxLoadFactor` with those of the
@@ -2529,7 +2541,7 @@ class HashTable {
         bool                      *isInsertedFlag,
         bslalg::BidirectionalLink *hint,
         KEY_ARG&&                  key,
-        ARGS&&...                  args);
+        ARGS&&...                  args) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     // ACCESSORS
@@ -2545,27 +2557,31 @@ class HashTable {
     /// `HashTableBucket` at the specified `index` position in the array of
     /// buckets of this table.  The behavior is undefined unless 'index <
     /// numBuckets()'.
-    const bslalg::HashTableBucket& bucketAtIndex(SizeType index) const;
+    const bslalg::HashTableBucket& bucketAtIndex(SizeType index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the index of the bucket that would contain all the elements
     /// equivalent to the specified `key`.  The program is ill-formed unless
     /// `bslmf::MovableRefUtil::Decay<LOOKUP_KEY>::type` is `NonConstKeyType`
     /// or both `HASHER` and `COMPARATOR` are transparent.
     template <class LOOKUP_KEY>
-    SizeType bucketIndexForKey(const LOOKUP_KEY& key) const;
+    SizeType bucketIndexForKey(const LOOKUP_KEY& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing non-modifiable access to the
     /// key-equality comparison functor used by this hash table.
-    const COMPARATOR& comparator() const;
+    const COMPARATOR& comparator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number elements contained in the bucket at the specified
     /// `index`.  Note that this operation has linear run-time complexity
     /// with respect to the number of elements in the indexed bucket.
-    SizeType countElementsInBucket(SizeType index) const;
+    SizeType countElementsInBucket(SizeType index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the address of the first element in this hash table, or a
     /// null pointer value if this hash table is empty.
-    bslalg::BidirectionalLink *elementListRoot() const;
+    bslalg::BidirectionalLink *elementListRoot() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the address of a link whose key is equivalent to the specified
     /// `key` (according to this hash-table's `comparator`), and a null pointer
@@ -2577,7 +2593,8 @@ class HashTable {
     /// `bslmf::MovableRefUtil::Decay<LOOKUP_KEY>::type` is `NonConstKeyType`
     /// or both `HASHER` and `COMPARATOR` are transparent.
     template <class LOOKUP_KEY>
-    bslalg::BidirectionalLink *find(const LOOKUP_KEY& key) const;
+    bslalg::BidirectionalLink *find(const LOOKUP_KEY& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the address of the first node after any nodes holding a value
     /// having the same key as the specified `first` node (according to this
@@ -2587,7 +2604,8 @@ class HashTable {
     /// Note that this hash-table ensures all elements having the same key
     /// form a contiguous sequence.
     bslalg::BidirectionalLink *findEndOfRange(
-                                       bslalg::BidirectionalLink *first) const;
+                                       bslalg::BidirectionalLink *first) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Load into the specified `first` and `last` pointers the respective
     /// addresses of the first and last link (in the list of elements owned by
@@ -2606,7 +2624,8 @@ class HashTable {
     template <class LOOKUP_KEY>
     void findRange(bslalg::BidirectionalLink **first,
                    bslalg::BidirectionalLink **last,
-                   const LOOKUP_KEY&           key) const;
+                   const LOOKUP_KEY&           key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the specified `other` has the same value as this
     /// object, and `false` otherwise.  Two `HashTable` objects have the
@@ -2622,15 +2641,17 @@ class HashTable {
     /// input.  Note that this method requires that the `ValueType` of the
     /// parameterized `KEY_CONFIG` be "equality-comparable" (see
     /// {Requirements on `KEY_CONFIG`}).
-    bool hasSameValue(const HashTable& other) const;
+    bool hasSameValue(const HashTable& other) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
 
     /// Return a reference providing non-modifiable access to the hash
     /// functor used by this hash-table.
-    const HASHER& hasher() const;
+    const HASHER& hasher() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the current load factor for this table.  The load factor is
     /// the statistical mean number of elements per bucket.
-    float loadFactor() const;
+    float loadFactor() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the maximum load factor permitted by this hash table object,
     /// where the load factor is the statistical mean number of elements per
@@ -2640,7 +2661,7 @@ class HashTable {
     /// maximum load factor.  The maximum load factor may actually be less
     /// than the current load factor if the maximum load factor has been
     /// reset, but no insert operations have yet occurred.
-    float maxLoadFactor() const;
+    float maxLoadFactor() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a theoretical upper bound on the largest number of buckets
     /// that this hash-table could possibly have.  Note that there is no
@@ -2656,15 +2677,15 @@ class HashTable {
     SizeType maxSize() const;
 
     /// Return the number of buckets contained in this hash table.
-    SizeType numBuckets() const;
+    SizeType numBuckets() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements this hash table can hold without
     /// requiring a rehash operation in order to respect the
     /// `maxLoadFactor`.
-    SizeType rehashThreshold() const;
+    SizeType rehashThreshold() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this hash table.
-    SizeType size() const;
+    SizeType size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 /// Swap both the value, the hasher, the comparator, and the `maxLoadFactor`
@@ -2699,7 +2720,8 @@ void swap(HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& x,
 template <class KEY_CONFIG, class HASHER, class COMPARATOR, class ALLOCATOR>
 bool operator==(
               const HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& lhs,
-              const HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& rhs);
+              const HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
 /// same value, and `false` otherwise.  Two `HashTable` objects do not have
@@ -2717,7 +2739,8 @@ bool operator==(
 template <class KEY_CONFIG, class HASHER, class COMPARATOR, class ALLOCATOR>
 bool operator!=(
               const HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& lhs,
-              const HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& rhs);
+              const HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
                     // ============================
                     // class HashTable_ArrayProctor
@@ -3351,6 +3374,7 @@ void HashTable_Util::assertNotNullPointer(TYPE * const& ptr)
 {
     // silence "unused parameter" warning in release builds:
     (void) ptr;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&ptr);
     BSLS_ASSERT(ptr);
 }
 
@@ -3360,6 +3384,7 @@ void HashTable_Util::assertNotNullPointer(TYPE * & ptr)
 {
     // silence "unused parameter" warning in release builds:
     (void) ptr;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&ptr);
     BSLS_ASSERT(ptr);
 }
 
@@ -3761,6 +3786,7 @@ void
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::copyDataStructure(
                                              bslalg::BidirectionalLink *cursor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 != cursor);
     BSLS_ASSERT(0 < d_size);
 
@@ -3813,6 +3839,7 @@ void
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::moveDataStructure(
                                              bslalg::BidirectionalLink *cursor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 != cursor);
     BSLS_ASSERT(0 < d_size);
 
@@ -3942,6 +3969,7 @@ rehashIntoExactlyNumBuckets(SizeType newNumBuckets, SizeType capacity)
 
                 d_originalAnchor_p->setListRootAddress(
                                              d_newAnchor_p->listRootAddress());
+                BSLS_ASSERT_CONVEYOR_OBJECT(d_table_p);
                 d_table_p->removeAll();
             }
 
@@ -4099,6 +4127,7 @@ inline
 bslalg::BidirectionalLink *
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::createNode(ARGS&&...args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_size >= d_capacity) {
         this->rehashForNumBuckets(numBuckets() * 2);
     }
@@ -4187,6 +4216,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::insertIfMissingImp(
                 bsl::true_type,
                 BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE)  value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return insertValueIfMissing(isInsertedFlag,
                                 BSLS_COMPILERFEATURES_FORWARD(SOURCE_TYPE,
                                                               value));
@@ -4201,6 +4231,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::insertIfMissingImp(
                 bsl::false_type,
                 BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE)  value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplaceIfMissing(isInsertedFlag,
                             BSLS_COMPILERFEATURES_FORWARD(SOURCE_TYPE, value));
 }
@@ -4561,8 +4592,8 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::swap(HashTable& other)
         // C++11 behavior: undefined for unequal allocators
         // BSLS_ASSERT(allocator() == other.allocator());
 
-        BSLS_ASSERT(d_parameters.nodeFactory().allocator() ==
-                    other.d_parameters.nodeFactory().allocator());
+        BSLS_ASSERT_NONCONVEYOR(d_parameters.nodeFactory().allocator() ==
+                                other.d_parameters.nodeFactory().allocator());
         quickSwapRetainAllocators(&other);
     }
 }
