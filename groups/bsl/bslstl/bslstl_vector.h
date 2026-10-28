@@ -2539,6 +2539,7 @@ class vector_UintPtrConversionIterator {
 #if defined(BSLS_LIBRARYFEATURES_HAS_CPP20_RANGES)
     bool operator==(bsl::sentinel_for<ITERATOR> auto rhs) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_iter == rhs;
     }
     friend auto operator-(bsl::sentinel_for<ITERATOR> auto s,

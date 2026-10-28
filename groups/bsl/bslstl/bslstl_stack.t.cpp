@@ -392,48 +392,68 @@ struct NonAllocCont {
         return *this;
     }
 
-    reference back()                        { return d_vector.back(); }
+    reference back()
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    { return d_vector.back(); }
 
-    void pop_back()                         { d_vector.pop_back(); }
+    void pop_back()
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    { d_vector.pop_back(); }
 
-    void push_back(const value_type& value) { d_vector.push_back(value); }
+    void push_back(const value_type& value)
+              BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { d_vector.push_back(value); }
 
-    bsl::vector<value_type>& contents()     { return d_vector; }
+    bsl::vector<value_type>& contents()
+                    BSLS_ASSERT_CONVEYOR_REQUIRES_THIS     { return d_vector; }
 
     // ACCESSORS
     bool operator==(const NonAllocCont& rhs) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
         return d_vector == rhs.d_vector;
     }
 
     bool operator!=(const NonAllocCont& rhs) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
         return !operator==(rhs);
     }
 
     bool operator<(const NonAllocCont& rhs) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
         return d_vector < rhs.d_vector;
     }
 
     bool operator>=(const NonAllocCont& rhs) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
         return !operator<(rhs);
     }
 
     bool operator>(const NonAllocCont& rhs) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
         return d_vector > rhs.d_vector;
     }
 
     bool operator<=(const NonAllocCont& rhs) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
         return !operator>(rhs);
     }
 
-    const_reference back() const { return d_vector.back(); }
+    const_reference back() const
+                 BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return d_vector.back(); }
 
-    size_type size()       const { return d_vector.size(); }
+    size_type size()       const
+                 BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return d_vector.size(); }
 };
 
 namespace std {
@@ -563,6 +583,7 @@ void emptyNVerifyStack(stack<typename CONTAINER::value_type,
                        const VALUES&     expectedValues,
                        size_t            expectedSize,
                        const int         LINE)
+                                        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(pmX)
 {
     const char *cont = ContainerName<CONTAINER>::name();
     const char *val  = ValueName<typename CONTAINER::value_type>::name();
@@ -711,7 +732,8 @@ class NonMovableVector;
 
 template<class VALUE, class ALLOCATOR>
 bool operator==(const NonMovableVector<VALUE, ALLOCATOR>& lhs,
-                const NonMovableVector<VALUE, ALLOCATOR>& rhs);
+                const NonMovableVector<VALUE, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// This class is a value-semantic class template, acting as a transparent
 /// proxy for the underlying `bsl::vector` container, that holds elements of
@@ -732,9 +754,11 @@ class NonMovableVector {
     // CLASS METHODS
     static int              GGG(NonMovableVector *object,
                                 const char       *spec,
-                                int               verbose = 1);
+                                int               verbose = 1)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
     static NonMovableVector  GG(NonMovableVector *object,
-                                const char       *spec);
+                                const char       *spec)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     // PUBLIC TYPES
     typedef ALLOCATOR     allocator_type;
@@ -793,14 +817,14 @@ class NonMovableVector {
     }
 
     /// Erase the last element from this vector.
-    void pop_back()
+    void pop_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         d_vector.pop_back();
     }
 
     /// Append a copy of the specified `value` at the end of this vector.
     /// Method invocation is recorded.
-    void push_back(const value_type& value)
+    void push_back(const value_type& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         g_calledMethodFlag |= e_PUSH_BACK_CREF;
         d_vector.push_back(value);
@@ -813,33 +837,34 @@ class NonMovableVector {
     /// element.
     template <class INPUT_ITER>
     iterator insert(const_iterator position, INPUT_ITER first, INPUT_ITER last)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.insert(position, first, last);
     }
 
     /// Return an iterator pointing the first element in this modifiable
     /// vector (or the past-the-end iterator if this vector is empty).
-    iterator begin()
+    iterator begin() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.begin();
     }
 
     /// Return the past-the-end iterator for this modifiable vector.
-    iterator end()
+    iterator end() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.end();
     }
 
     /// Return a reference to the modifiable element at the first position
     /// in this vector.  The behavior is undefined if this vector is empty.
-    reference front()
+    reference front() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.front();
     }
 
     /// Return a reference to the modifiable element at the last position in
     /// this vector.  The behavior is undefined if this vector is empty.
-    reference back()
+    reference back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.back();
     }
@@ -853,6 +878,7 @@ class NonMovableVector {
     /// constructor, accepting integer value as a parameter.  Method
     /// invocation is recorded.
     template <class... Args> void emplace_back(Args&&... arguments)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          int argumentsNumber = sizeof...(arguments);
          g_calledMethodFlag |= static_cast<CalledMethod>(
@@ -867,7 +893,7 @@ class NonMovableVector {
     /// `VALUE_TYPE` has constructor, accepting integer value as a parameter.
     /// Method invocation is recorded.
     inline
-    void emplace_back()
+    void emplace_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         g_calledMethodFlag |= e_EMPLACE_0;
         d_vector.push_back(value_type(1));
@@ -882,6 +908,7 @@ class NonMovableVector {
     template <class Args_01>
     inline
     void emplace_back(BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -901,6 +928,7 @@ class NonMovableVector {
     inline
     void emplace_back(BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -922,6 +950,7 @@ class NonMovableVector {
     void emplace_back(BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -945,6 +974,7 @@ class NonMovableVector {
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -975,6 +1005,7 @@ class NonMovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1008,6 +1039,7 @@ class NonMovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1044,6 +1076,7 @@ class NonMovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1083,6 +1116,7 @@ class NonMovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1125,6 +1159,7 @@ class NonMovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1170,6 +1205,7 @@ class NonMovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1197,6 +1233,7 @@ class NonMovableVector {
     /// is recorded.
     template <class... Args>
     void emplace_back(BSLS_COMPILERFEATURES_FORWARD_REF(Args)... arguments)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         int argumentsNumber = sizeof...(arguments);
         g_calledMethodFlag |= static_cast<CalledMethod>(
@@ -1209,13 +1246,13 @@ class NonMovableVector {
 
     /// Return an iterator pointing the first element in this non-modifiable
     /// vector (or the past-the-end iterator if this vector is empty).
-    const_iterator begin() const
+    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.begin();
     }
 
     /// Return the past-the-end iterator for this non-modifiable vector.
-    const_iterator end() const
+    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.end();
     }
@@ -1223,7 +1260,7 @@ class NonMovableVector {
     /// Return a reference to the non-modifiable element at the first
     /// position in this vector.  The behavior is undefined if this vector
     /// is empty.
-    const_reference front() const
+    const_reference front() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.front();
     }
@@ -1231,19 +1268,19 @@ class NonMovableVector {
     /// Return a reference to the non-modifiable element at the last
     /// position in this vector.  The behavior is undefined if this vector
     /// is empty.
-    const_reference back() const
+    const_reference back() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.back();
     }
 
     /// Return the number of elements in this vector.
-    size_type size() const
+    size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.size();
     }
 
     /// Return `true` if this vector has size 0, and `false` otherwise.
-    bool empty() const
+    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.empty();
     }
@@ -1314,7 +1351,8 @@ class MovableVector;
 
 template<class VALUE, class ALLOCATOR>
 bool operator==(const MovableVector<VALUE, ALLOCATOR>& lhs,
-                const MovableVector<VALUE, ALLOCATOR>& rhs);
+                const MovableVector<VALUE, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// TBD
 ///
@@ -1338,9 +1376,11 @@ class MovableVector {
     // CLASS METHODS
     static int            GGG(MovableVector *object,
                               const char    *spec,
-                              int            verbose = 1);
+                              int            verbose = 1)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
     static MovableVector  GG(MovableVector *object,
-                             const char    *spec);
+                             const char    *spec)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     // PUBLIC TYPES
     typedef ALLOCATOR    allocator_type;
@@ -1428,14 +1468,14 @@ class MovableVector {
     }
 
     /// Erase the last element from this vector.
-    void pop_back()
+    void pop_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         d_vector.pop_back();
     }
 
     /// Append a copy of the specified `value` at the end of this vector.
     /// Method invocation is recorded.
-    void push_back(const value_type& value)
+    void push_back(const value_type& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         g_calledMethodFlag |= e_PUSH_BACK_CREF;
         d_vector.push_back(value);
@@ -1444,6 +1484,7 @@ class MovableVector {
     /// Append a copy of the specified `value` at the end of this vector.
     /// Method invocation is recorded.
     void push_back(bslmf::MovableRef<value_type> value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         g_calledMethodFlag |= e_PUSH_BACK_MOVE;
         d_vector.push_back(MoveUtil::move(value));
@@ -1456,32 +1497,33 @@ class MovableVector {
     /// element.
     template <class INPUT_ITER>
     iterator insert(const_iterator position, INPUT_ITER first, INPUT_ITER last)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.insert(position, first, last);
     }
 
     /// Return an iterator pointing the first element in this modifiable
     /// vector (or the past-the-end iterator if this vector is empty).
-    iterator begin()
+    iterator begin() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.begin(); }
 
     /// Return the past-the-end iterator for this modifiable vector.
-    iterator end()
+    iterator end() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.end();
     }
 
     /// Return a reference to the modifiable element at the first position
     /// in this vector.  The behavior is undefined if this vector is empty.
-    reference front()
+    reference front() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.front();
     }
 
     /// Return a reference to the modifiable element at the last position in
     /// this vector.  The behavior is undefined if this vector is empty.
-    reference back()
+    reference back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.back();
     }
@@ -1495,6 +1537,7 @@ class MovableVector {
     /// constructor, accepting integer value as a parameter.  Method
     /// invocation is recorded.
     template <class... Args> void emplace_back(Args&&... arguments)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          int argumentsNumber = sizeof...(arguments);
          g_calledMethodFlag |= static_cast<CalledMethod>(
@@ -1509,7 +1552,7 @@ class MovableVector {
     /// `VALUE_TYPE` has constructor, accepting integer value as a parameter.
     /// Method invocation is recorded.
     inline
-    void emplace_back()
+    void emplace_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         g_calledMethodFlag |= e_EMPLACE_0;
         d_vector.push_back(value_type(1));
@@ -1524,6 +1567,7 @@ class MovableVector {
     template <class Args_01>
     inline
     void emplace_back(BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1543,6 +1587,7 @@ class MovableVector {
     inline
     void emplace_back(BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1564,6 +1609,7 @@ class MovableVector {
     void emplace_back(BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1587,6 +1633,7 @@ class MovableVector {
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                       BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1617,6 +1664,7 @@ class MovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1650,6 +1698,7 @@ class MovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1686,6 +1735,7 @@ class MovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1725,6 +1775,7 @@ class MovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1767,6 +1818,7 @@ class MovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1812,6 +1864,7 @@ class MovableVector {
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                  BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          // Compiler warnings suppression.
 
@@ -1839,6 +1892,7 @@ class MovableVector {
     /// is recorded.
     template <class... Args>
     void emplace_back(BSLS_COMPILERFEATURES_FORWARD_REF(Args)... arguments)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         int argumentsNumber = sizeof...(arguments);
         g_calledMethodFlag |= static_cast<CalledMethod>(
@@ -1851,13 +1905,13 @@ class MovableVector {
 
     /// Return an iterator pointing the first element in this non-modifiable
     /// vector (or the past-the-end iterator if this vector is empty).
-    const_iterator begin() const
+    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.begin();
     }
 
     /// Return the past-the-end iterator for this non-modifiable vector.
-    const_iterator end() const
+    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.end();
     }
@@ -1865,7 +1919,7 @@ class MovableVector {
     /// Return a reference to the non-modifiable element at the first
     /// position in this vector.  The behavior is undefined if this vector
     /// is empty.
-    const_reference front() const
+    const_reference front() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.front();
     }
@@ -1873,19 +1927,19 @@ class MovableVector {
     /// Return a reference to the non-modifiable element at the last
     /// position in this vector.  The behavior is undefined if this vector
     /// is empty.
-    const_reference back() const
+    const_reference back() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.back();
     }
 
     /// Return the number of elements in this vector.
-    size_type size() const
+    size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.size();
     }
 
     /// Return `true` if this vector has size 0, and `false` otherwise.
-    bool empty() const
+    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.empty();
     }
@@ -2104,19 +2158,19 @@ class ToDoList {
     /// Add the specified `task`, a string describing a task, to the
     /// list.  Note the lifetime of the string referred to by `task` must
     /// exceed the lifetime of the task in this list.
-    void enqueueTask(const char *task);
+    void enqueueTask(const char *task) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove the current task from the list.  Return `true` if a task was
     /// removed and it was the last task on the list, and return `false`
     /// otherwise.
-    bool finishTask();
+    bool finishTask() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the string representing the current task.  If there
     /// is no current task, return the string "<EMPTY>", which is
     /// not a valid task.
-    const char *currentTask() const;
+    const char *currentTask() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // MANIPULATORS
@@ -2187,6 +2241,7 @@ struct ExceptionGuard {
     ~ExceptionGuard()
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
             const int LINE = d_line;
             ASSERTV(LINE, d_copy == *d_object_p);
         }
@@ -2276,11 +2331,14 @@ class TestDriver {
     /// first invalid character, and a negative value otherwise.  Note that
     /// this function is used to implement `gg` as well as allow for
     /// verification of syntax error detection.
-    static int ggg(Obj *object, const char *spec, int verbose = 1);
+    static int ggg(Obj *object, const char *spec, int verbose = 1)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified object with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return, by value, a new object corresponding to the specified
     /// `spec`.
@@ -2291,7 +2349,8 @@ class TestDriver {
     static void emptyAndVerify(Obj               *obj,
                                const TestValues&  testValues,
                                size_t             numTestValues,
-                               const int          LINE);
+                               const int          LINE)
+                                        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(obj);
 
     static bool typeAlloc()
     {
@@ -2312,7 +2371,8 @@ class TestDriver {
     /// object doesn't use `ta`.
     static bool use_same_allocator(Obj&                 object,
                                    int                  TYPE_ALLOC,
-                                   bslma::TestAllocator *ta);
+                                   bslma::TestAllocator *ta)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
   public:
     // TEST CASES

@@ -523,14 +523,16 @@ class stack {
     /// type matching or convertible to (template parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_STACK_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    stack(from_range_t, BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
+    stack(from_range_t, BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
     template <class t_RANGE, class t_ALLOCATOR>
     BSLSTL_STACK_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
     stack(from_range_t                               ,
           BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range,
           const t_ALLOCATOR&                         allocator,
           typename enable_if<bsl::uses_allocator<CONTAINER,t_ALLOCATOR>::value,
-                             t_ALLOCATOR>::type * = 0);
+                             t_ALLOCATOR>::type * = 0)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
     // MANIPULATORS
 
@@ -554,22 +556,25 @@ class stack {
     /// `value_type`.  Return a reference providing modifiable access to the
     /// inserted element.
     template <class... Args>
-    reference emplace(Args&&... args);
+    reference emplace(Args&&... args)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 #endif
 
     /// Remove the top element from this stack.  The behavior is undefined
     /// if this stack is empty.
-    void pop();
+    void pop() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Push the specified `value` onto the top of this stack.
-    void push(const value_type& value);
+    void push(const value_type& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Push onto this stack a `value_type` object having the value of the
     /// specified `value` (on entry) by moving the contents of `value` to
     /// the new object on this stack.  `value` is left in a valid but
     /// unspecified state.
-    void push(BloombergLP::bslmf::MovableRef<value_type> value);
+    void push(BloombergLP::bslmf::MovableRef<value_type> value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Push onto this stack the elements of the specified `range`.  Note that
     /// `range` must meet the requirements of an input range and the values
@@ -577,7 +582,9 @@ class stack {
     /// parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_STACK_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    void push_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
+    void push_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
     /// Exchange the value of this stack with the value of the specified
     /// `other` stack.
@@ -586,21 +593,25 @@ class stack {
 
     /// Return a reference to the element at the top of this stack.  The
     /// behavior is undefined if this stack is empty.
-    reference top();
+    reference top()
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
     /// Return `true` if this stack contains no elements and `false`
     /// otherwise.
-    bool empty() const;
+    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements contained in this stack.
-    size_type size() const;
+    size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing non-modifiable access to the element at
     /// the top of this stack.  The behavior is undefined if the stack is
     /// empty.
-    const_reference top() const;
+    const_reference top() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_CTAD
@@ -674,7 +685,8 @@ stack(from_range_t, t_RANGE&&, t_ALLOCATOR)
 /// be `equality-comparable` (see {Requirements on `VALUE`}).
 template <class VALUE, class CONTAINER>
 bool operator==(const stack<VALUE, CONTAINER>& lhs,
-                const stack<VALUE, CONTAINER>& rhs);
+                const stack<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
 /// same value, and `false` otherwise.  Two `stack` objects `lhs` and `rhs`
@@ -686,7 +698,8 @@ bool operator==(const stack<VALUE, CONTAINER>& lhs,
 /// `VALUE`}).
 template <class VALUE, class CONTAINER>
 bool operator!=(const stack<VALUE, CONTAINER>& lhs,
-                const stack<VALUE, CONTAINER>& rhs);
+                const stack<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` stack is
 /// lexicographically less than that of the specified `rhs` stack, and
@@ -701,7 +714,8 @@ bool operator!=(const stack<VALUE, CONTAINER>& lhs,
 /// defined for `value_type`.
 template <class VALUE, class CONTAINER>
 bool operator< (const stack<VALUE, CONTAINER>& lhs,
-                const stack<VALUE, CONTAINER>& rhs);
+                const stack<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` stack is
 /// lexicographically greater than that of the specified `rhs` stack, and
@@ -712,7 +726,8 @@ bool operator< (const stack<VALUE, CONTAINER>& lhs,
 /// operator returns `rhs < lhs`.
 template <class VALUE, class CONTAINER>
 bool operator> (const stack<VALUE, CONTAINER>& lhs,
-                const stack<VALUE, CONTAINER>& rhs);
+                const stack<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` stack is
 /// lexicographically less than or equal to that of the specified `rhs`
@@ -723,7 +738,8 @@ bool operator> (const stack<VALUE, CONTAINER>& lhs,
 /// `value_type`.  Note that this operator returns `!(rhs < lhs)`.
 template <class VALUE, class CONTAINER>
 bool operator<=(const stack<VALUE, CONTAINER>& lhs,
-                const stack<VALUE, CONTAINER>& rhs);
+                const stack<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` stack is
 /// lexicographically greater than or equal to that of the specified `rhs`
@@ -734,7 +750,8 @@ bool operator<=(const stack<VALUE, CONTAINER>& lhs,
 /// `value_type`.  Note that this operator returns `!(lhs < rhs)`.
 template <class VALUE, class CONTAINER>
 bool operator>=(const stack<VALUE, CONTAINER>& lhs,
-                const stack<VALUE, CONTAINER>& rhs);
+                const stack<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // FREE FUNCTIONS
 
@@ -996,6 +1013,8 @@ void stack<VALUE, CONTAINER>::swap(stack& other)
     BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(
                                    bsl::is_nothrow_swappable<CONTAINER>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     BloombergLP::bslalg::SwapUtil::swap(&c, &other.c);
 }
 
@@ -1085,6 +1104,7 @@ template <class VALUE, three_way_comparable CONTAINER>
 inline compare_three_way_result_t<CONTAINER>
 operator<=>(const stack<VALUE, CONTAINER>& lhs,
             const stack<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
 {
     return lhs.c <=> rhs.c;
 }

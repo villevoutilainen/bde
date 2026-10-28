@@ -452,14 +452,16 @@ class queue {
     /// type matching or convertible to (template parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    queue(from_range_t, BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
+    queue(from_range_t, BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
     template <class t_RANGE, class t_ALLOCATOR>
     BSLSTL_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
     queue(from_range_t                               ,
           BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range,
           const t_ALLOCATOR&                         allocator,
           typename enable_if<bsl::uses_allocator<CONTAINER,t_ALLOCATOR>::value,
-                             t_ALLOCATOR>::type * = 0);
+                             t_ALLOCATOR>::type * = 0)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
     // MANIPULATORS
 
@@ -482,18 +484,21 @@ class queue {
     /// `value_type`.  Return a reference providing modifiable access to the
     /// inserted element.
     template <class... Args>
-    reference emplace(Args&&... args);
+    reference emplace(Args&&... args)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
 
     /// Push onto the back of this queue a `value_type` object having the
     /// specified `value`.
-    void push(const value_type& value);
+    void push(const value_type& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Push onto the back of this queue a `value_type` object having the
     /// value of the specified `value` (on entry) by moving the
     /// contents of `value` to the new object on this queue.  `value` is
     /// left in a valid but unspecified state.
-    void push(BloombergLP::bslmf::MovableRef<value_type> value);
+    void push(BloombergLP::bslmf::MovableRef<value_type> value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Push onto the back of this queue the elements of the specified `range`.
     /// Note that `range` must meet the requirements of an input range and the
@@ -501,11 +506,13 @@ class queue {
     /// (template parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    void push_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
+    void push_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
     /// Remove the front (the earliest pushed) element from this `queue`
     /// object.
-    void pop();
+    void pop() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Efficiently exchange the value of this object with the value of the
     /// specified `other` object.  In effect, performs
@@ -515,29 +522,37 @@ class queue {
 
     /// Return a reference providing modifiable access to the front (the
     /// earliest pushed) element from this `queue` object.
-    reference front();
+    reference front()
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the back (the
     /// latest pushed) element of this `queue` object.
-    reference back();
+    reference back()
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
     /// Return `true` if this `queue` object contains no elements, and
     /// `false` otherwise.  In effect, performs `return c.empty();`.
-    bool empty() const;
+    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this queue.  In effect, performs
     /// `return c.size();`.
-    size_type size() const;
+    size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the immutable front (the earliest pushed) element from this
     /// `queue` object.  In effect, performs `c.front()`.
-    const_reference front() const;
+    const_reference front() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the immutable back (the latest pushed) element from this
     /// `queue` object.  In effect, performs `c.back()`.
-    const_reference back() const;
+    const_reference back() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_CTAD
@@ -612,7 +627,8 @@ queue(from_range_t, t_RANGE&&, t_ALLOCATOR)
 /// be `equality-comparable` (see {Requirements on `VALUE`}).
 template <class VALUE, class CONTAINER>
 bool operator==(const queue<VALUE, CONTAINER>& lhs,
-                const queue<VALUE, CONTAINER>& rhs);
+                const queue<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
 /// same value, and `false` otherwise.  Two `queue` objects `lhs` and `rhs`
@@ -624,7 +640,8 @@ bool operator==(const queue<VALUE, CONTAINER>& lhs,
 /// `VALUE`}).
 template <class VALUE, class CONTAINER>
 bool operator!=(const queue<VALUE, CONTAINER>& lhs,
-                const queue<VALUE, CONTAINER>& rhs);
+                const queue<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` queue is
 /// lexicographically less than that of the specified `rhs` queue, and
@@ -639,7 +656,8 @@ bool operator!=(const queue<VALUE, CONTAINER>& lhs,
 /// defined for `value_type`.
 template <class VALUE, class CONTAINER>
 bool operator< (const queue<VALUE, CONTAINER>& lhs,
-                const queue<VALUE, CONTAINER>& rhs);
+                const queue<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` queue is
 /// lexicographically greater than that of the specified `rhs` queue, and
@@ -650,7 +668,8 @@ bool operator< (const queue<VALUE, CONTAINER>& lhs,
 /// operator returns `rhs < lhs`.
 template <class VALUE, class CONTAINER>
 bool operator> (const queue<VALUE, CONTAINER>& lhs,
-                const queue<VALUE, CONTAINER>& rhs);
+                const queue<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` queue is
 /// lexicographically less than or equal to that of the specified `rhs`
@@ -661,7 +680,8 @@ bool operator> (const queue<VALUE, CONTAINER>& lhs,
 /// `value_type`.  Note that this operator returns `!(rhs < lhs)`.
 template <class VALUE, class CONTAINER>
 bool operator<=(const queue<VALUE, CONTAINER>& lhs,
-                const queue<VALUE, CONTAINER>& rhs);
+                const queue<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` queue is
 /// lexicographically greater than or equal to that of the specified `rhs`
@@ -672,7 +692,8 @@ bool operator<=(const queue<VALUE, CONTAINER>& lhs,
 /// `value_type`.  Note that this operator returns `!(lhs < rhs)`.
 template <class VALUE, class CONTAINER>
 bool operator>=(const queue<VALUE, CONTAINER>& lhs,
-                const queue<VALUE, CONTAINER>& rhs);
+                const queue<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // FREE FUNCTIONS
 
@@ -931,6 +952,8 @@ void queue<VALUE, CONTAINER>::swap(queue& other)
     BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(
                                    bsl::is_nothrow_swappable<CONTAINER>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     BloombergLP::bslalg::SwapUtil::swap(&c, &other.c);
 }
 
@@ -1037,6 +1060,7 @@ template <class VALUE, three_way_comparable CONTAINER>
 inline compare_three_way_result_t<CONTAINER>
 operator<=>(const queue<VALUE, CONTAINER>& lhs,
             const queue<VALUE, CONTAINER>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
 {
     return lhs.c <=> rhs.c;
 }
