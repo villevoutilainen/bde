@@ -592,8 +592,8 @@ void ExhaustiveTest::next(bool allowRepeat)
     bsls::Types::Uint64 id = s_doneId;
 
     if (s_scheduleIndex == s_scheduleSize) {
-        BSLS_ASSERT_OPT(   s_scheduleSize < EXHAUSTIVE_MAX_DEPTH
-                        && "exceeded maximum depth");
+        BSLS_ASSERT_OPT_NONCONVEYOR(   s_scheduleSize < EXHAUSTIVE_MAX_DEPTH
+                                    && "exceeded maximum depth");
         bool done = true;
         for (bsl::size_t i = 0; i < s_dataSize; ++i) {
             done &= s_data[i].d_done;
@@ -629,17 +629,18 @@ void ExhaustiveTest::next(bool allowRepeat)
                     }
                 }
             }
-            BSLS_ASSERT_OPT(i < s_dataSize && "a thread did not complete");
+            BSLS_ASSERT_OPT_NONCONVEYOR(i < s_dataSize
+                                        && "a thread did not complete");
         }
     }
 
     if (s_scheduleIndex < s_scheduleSize) {
         bsl::size_t i = s_schedule[s_scheduleIndex];
 
-        BSLS_ASSERT_OPT(   !s_data[i].d_done
-                        && (   0 == s_data[i].d_wait
-                            || s_data[i].d_wait->d_signalCount)
-                        && "invalid schedule");
+        BSLS_ASSERT_OPT_NONCONVEYOR(   !s_data[i].d_done
+                                    && (   0 == s_data[i].d_wait
+                                        || s_data[i].d_wait->d_signalCount)
+                                    && "invalid schedule");
 
         {
             // check for another
@@ -869,8 +870,9 @@ struct TestAtomicOperations {
     static bsls::Types::Int64 addInt64NvAcqRel(AtomicTypes::Int64 *pValue,
                                                bsls::Types::Int64  value)
     {
-        BSLS_ASSERT_OPT(   s_override.size()
-                        && "insufficient number of override values");
+        BSLS_ASSERT_OPT_NONCONVEYOR(
+                                   s_override.size()
+                                   && "insufficient number of override values");
 
         *pValue = s_override.front();
         s_override.pop_front();

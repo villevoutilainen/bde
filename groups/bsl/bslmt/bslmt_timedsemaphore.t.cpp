@@ -105,10 +105,11 @@ void aSsErT(bool condition, const char *message, int line)
         /// and return 0 unless the operation takes more than the optionally
         /// specified `maxWaitSeconds`, in which case return a nonzero value
         /// and leave `result` unmodified.
-        int getInt(int *result, int maxWaitSeconds = 0);
+        int getInt(int *result, int maxWaitSeconds = 0)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Push the specified `value` to this `IntQueue` object.
-        void pushInt(int value);
+        void pushInt(int value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 // ```
 // Note that the `IntQueue` constructor increments the count of the semaphore

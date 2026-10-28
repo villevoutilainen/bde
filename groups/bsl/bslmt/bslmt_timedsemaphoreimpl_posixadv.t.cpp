@@ -448,10 +448,10 @@ class IntQueue {
     // MANIPULATORS
 
     /// Get an integer from the queue.
-    int getInt();
+    int getInt() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Push the specified `number` to the queue.
-    void pushInt(int number);
+    void pushInt(int number) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 IntQueue::IntQueue(bslma::Allocator *basicAllocator)

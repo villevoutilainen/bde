@@ -147,21 +147,24 @@ int veryVerbose;
         /// `*result`, and remove the value at the front of the queue;
         /// return 0 if the queue was not initially empty, and a non-zero
         /// value (with no effect) otherwise.
-        int pop(int *result);
+        int pop(int *result) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Assign the values of all the elements from this queue, in order,
         /// to the specified `*result`, and remove them from this queue.
         /// Any previous contents of `*result` are discarded.  Note that, as
         /// with the other public manipulators, this entire operation occurs
         /// as a single, atomic action.
-        void popAll(bsl::vector<int> *result);
+        void popAll(bsl::vector<int> *result)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
         /// ...
-        void push(int value);
+        void push(int value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// ...
         template <class INPUT_ITER>
-        void pushRange(const INPUT_ITER& first, const INPUT_ITER& last);
+        void pushRange(const INPUT_ITER& first, const INPUT_ITER& last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 // ```
 // Notice that our public manipulators have two forms: push/pop a single
@@ -177,6 +180,7 @@ int veryVerbose;
     // PRIVATE MANIPULATOR
     int MyThreadSafeQueue::popImp(int *result)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLMT_MUTEXASSERT_IS_LOCKED_SAFE(&d_mutex);
 
         if (d_deque.empty()) {

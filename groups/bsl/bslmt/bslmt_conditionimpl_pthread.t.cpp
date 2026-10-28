@@ -165,6 +165,7 @@ extern "C" void *producer(void *arg_p)
 {
     Case1* arg = (Case1*)arg_p;
     my_WorkQueue *queue = arg->d_queue;
+    BSLS_ASSERT_CONVEYOR_OBJECT(queue);
 
     // For simplicity, the external source is modeled by a for loop that
     // generates k_NUM_ITEMS random numbers.
@@ -199,6 +200,7 @@ extern "C" void *consumer(void *arg_p)
 {
     Case1* arg = (Case1*)arg_p;
     my_WorkQueue *queue = arg->d_queue;
+    BSLS_ASSERT_CONVEYOR_OBJECT(queue);
 
     int finished = 0, received = 0;
     while (!finished) {

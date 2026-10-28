@@ -456,7 +456,8 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
         bsl::string d_lastName;
         int         d_age;
 
-        friend bool operator==(const MyPerson&, const MyPerson&);
+        friend bool operator==(const MyPerson& lhs, const MyPerson& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
       public:
         // CLASS METHODS
@@ -526,10 +527,12 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
         STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
         /// Return the first name of this person.
-        const bsl::string& firstName() const;
+        const bsl::string& firstName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         /// Return the last name of this person.
-        const bsl::string& lastName() const;
+        const bsl::string& lastName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         //...
 
@@ -545,7 +548,8 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
     /// Return `true` if the specified `lhs` and `rhs` person objects do not
     /// have the same value, and `false` otherwise.  Two person objects
     /// differ in value if they differ in first name, last name, or age.
-    bool operator!=(const MyPerson& lhs, const MyPerson& rhs);
+    bool operator!=(const MyPerson& lhs, const MyPerson& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
     // ========================================================================
     //                  INLINE FUNCTION DEFINITIONS
@@ -738,6 +742,7 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
 
     int MyStreamBuf::sbumpc()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_buffer.empty()) {
             const int rv = static_cast<int>(d_buffer.front());
             d_buffer.pop_front();
@@ -748,6 +753,7 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
 
     int MyStreamBuf::sgetc()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_buffer.empty()) {
             return static_cast<int>(d_buffer.front());                // RETURN
         }
@@ -756,6 +762,7 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
 
     bsl::streamsize MyStreamBuf::sgetn(char *s, bsl::streamsize length)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         for (bsl::streamsize i = 0; i < length; ++i) {
             if (d_buffer.empty()) {
                 return i;                                             // RETURN
@@ -768,6 +775,7 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
 
     int MyStreamBuf::sputc(char c)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_buffer.push_back(c);
         return static_cast<int>(c);
     }
@@ -775,6 +783,7 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
     bsl::streamsize MyStreamBuf::sputn(const char      *s,
                                        bsl::streamsize  length)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         for (bsl::streamsize i = 0; i < length; ++i) {
             d_buffer.push_back(s[i]);
         }

@@ -1387,6 +1387,7 @@ void Printer_Helper::printRaw(
                              int                                spacesPerLevel,
                              bslmf::SelectTraitCase<bslalg::HasStlIterators>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     Printer_Helper::print(stream,
                           data.begin(),
                           data.end(),
@@ -1453,6 +1454,7 @@ void Printer_Helper::printRaw(bsl::ostream&                stream,
                               int                          spacesPerLevel,
                               bslmf::SelectTraitCase<>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     Printer_Helper::printRaw(stream,
                              static_cast<const void *>(data.get()),
                              level,
@@ -1475,6 +1477,7 @@ void Printer_Helper::printRaw(bsl::ostream&              stream,
                               int                        spacesPerLevel,
                               bslmf::SelectTraitCase<>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     if (data.has_value()) {
         Printer_Helper::print(stream, *data, level, spacesPerLevel);
     }

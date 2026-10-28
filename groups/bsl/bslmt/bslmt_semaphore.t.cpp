@@ -117,10 +117,10 @@ void aSsErT(bool condition, const char *message, int line)
 
         /// Retrieve an integer from this `IntQueue` object.  Integer values
         /// are obtained from the queue in FIFO order.
-        int getInt();
+        int getInt() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Push the specified `value` to this `IntQueue` object.
-        void pushInt(int value);
+        void pushInt(int value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 // ```
 // Note that the `IntQueue` constructor increments the count of the semaphore

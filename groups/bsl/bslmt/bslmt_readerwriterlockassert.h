@@ -565,7 +565,7 @@ void ReaderWriterLockAssert_Imp::assertIsLocked(RW_LOCK    *rwLock,
     BSLS_ASSERT(text);
     BSLS_ASSERT(file);
     BSLS_ASSERT(level);
-    BSLS_ASSERT(isValidLevel(level));
+    BSLS_ASSERT_NONCONVEYOR(isValidLevel(level));
 
     if (!rwLock->isLocked()) {
         bsls::AssertViolation violation(text, file, line, level);
@@ -585,7 +585,7 @@ void ReaderWriterLockAssert_Imp::assertIsLockedRead(RW_LOCK    *rwLock,
     BSLS_ASSERT(text);
     BSLS_ASSERT(file);
     BSLS_ASSERT(level);
-    BSLS_ASSERT(isValidLevel(level));
+    BSLS_ASSERT_NONCONVEYOR(isValidLevel(level));
 
     if (!rwLock->isLockedRead()) {
         bsls::AssertViolation violation(text, file, line, level);
@@ -605,7 +605,7 @@ void ReaderWriterLockAssert_Imp::assertIsLockedWrite(RW_LOCK    *rwLock,
     BSLS_ASSERT(text);
     BSLS_ASSERT(file);
     BSLS_ASSERT(level);
-    BSLS_ASSERT(isValidLevel(level));
+    BSLS_ASSERT_NONCONVEYOR(isValidLevel(level));
 
     if (!rwLock->isLockedWrite()) {
         bsls::AssertViolation violation(text, file, line, level);

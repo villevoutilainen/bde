@@ -423,6 +423,7 @@ const int SIZEOF_FLOAT32 = 4;
 
     int MyOutStreamBuf::sputc(char c)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_buffer += c;
         return static_cast<int>(c);
     }
@@ -430,6 +431,7 @@ const int SIZEOF_FLOAT32 = 4;
     bsl::streamsize MyOutStreamBuf::sputn(const char      *s,
                                           bsl::streamsize  length)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_buffer.append(s, length);
         return length;
     }
@@ -437,11 +439,13 @@ const int SIZEOF_FLOAT32 = 4;
     // ACCESSORS
     const char *MyOutStreamBuf::data() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_buffer.data();
     }
 
     bsl::streamsize MyOutStreamBuf::size() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_buffer.size();
     }
 

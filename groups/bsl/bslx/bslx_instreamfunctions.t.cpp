@@ -436,6 +436,7 @@ class MyTestInStream {
     bool            d_error;
 
     MyTestInStream& getArrayHelper(int num, int type) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_lastLength < num) {
             d_error = true;
             return *this;                                             // RETURN
@@ -485,20 +486,34 @@ class MyTestInStream {
 
     ~MyTestInStream() { }
 
-    void putType(int value) {  d_fun.push_back(value);  }
+    void putType(int value)
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        d_fun.push_back(value);
+    }
     template <typename T>
     void putType(const typename bsl::vector<T>& v)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         for (typename bsl::vector<T>::const_iterator i = v.begin();
              i != v.end();
              ++i) {
             d_fun.push_back(*i);
         }
     }
-    void putVersion(int version) {  d_fun.push_back(k_VERSION + version);  }
-    void putLength(int length) {  d_fun.push_back(k_LENGTH + length);  }
+    void putVersion(int version)
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        d_fun.push_back(k_VERSION + version);
+    }
+    void putLength(int length)
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        d_fun.push_back(k_LENGTH + length);
+    }
 
     MyTestInStream& getLength(int& length) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() < k_LENGTH) d_error = true;
         else {
             length = d_fun.front() - k_LENGTH;
@@ -509,6 +524,7 @@ class MyTestInStream {
     }
 
     MyTestInStream& getVersion(int& version) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() < k_VERSION ||
             d_fun.front() >= k_LENGTH) {
             d_error = true;
@@ -523,12 +539,14 @@ class MyTestInStream {
     typedef bsls::Types::Uint64 Uint64;
 
     MyTestInStream& getInt64(Int64& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_INT + 8) d_error = true;
         else d_fun.pop_front();
         return *this;
     }
 
     MyTestInStream& getUint64(Uint64& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_UNSIGNED + k_INT + 8)
             d_error = true;
         else d_fun.pop_front();
@@ -536,12 +554,14 @@ class MyTestInStream {
     }
 
     MyTestInStream& getInt32(int& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_INT + 4) d_error = true;
         else d_fun.pop_front();
         return *this;
     }
 
     MyTestInStream& getUint32(unsigned int& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_UNSIGNED + k_INT + 4)
             d_error = true;
         else d_fun.pop_front();
@@ -549,12 +569,14 @@ class MyTestInStream {
     }
 
     MyTestInStream& getInt16(short& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_INT + 2) d_error = true;
         else d_fun.pop_front();
         return *this;
     }
 
     MyTestInStream& getUint16(unsigned short& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_UNSIGNED + k_INT + 2)
             d_error = true;
         else d_fun.pop_front();
@@ -562,12 +584,14 @@ class MyTestInStream {
     }
 
     MyTestInStream& getInt8(char& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_INT + 1) d_error = true;
         else d_fun.pop_front();
         return *this;
     }
 
     MyTestInStream& getInt8(signed char& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_SIGNED + k_INT + 1)
             d_error = true;
         else d_fun.pop_front();
@@ -575,6 +599,7 @@ class MyTestInStream {
     }
 
     MyTestInStream& getUint8(unsigned char& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_UNSIGNED + k_INT + 1)
             d_error = true;
         else d_fun.pop_front();
@@ -582,18 +607,21 @@ class MyTestInStream {
     }
 
     MyTestInStream& getFloat64(double& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_FLOAT + 8) d_error = true;
         else d_fun.pop_front();
         return *this;
     }
 
     MyTestInStream& getFloat32(float& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_FLOAT + 4) d_error = true;
         else d_fun.pop_front();
         return *this;
     }
 
     MyTestInStream& getString(bsl::string& /* value */) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (!d_fun.size() || d_fun.front() != k_STRING) d_error = true;
         else d_fun.pop_front();
         return *this;
@@ -647,12 +675,22 @@ class MyTestInStream {
     void invalidate() {}
     void removeAll() {}
     void reserveCapacity(int /* newCapacity */) {}
-    void clear() { d_fun.clear(); d_lastLength = -1; d_error = false; }
+    void clear()
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        d_fun.clear();
+        d_lastLength = -1;
+        d_error = false;
+    }
 
     // ACCESSORS
     operator const void *() const { return this; }
     const char *data() const { return 0; }
-    bool error() const { return d_error || false == d_fun.empty(); }
+    bool error() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_error || false == d_fun.empty();
+    }
     int length() const { return 0; }
 };
 

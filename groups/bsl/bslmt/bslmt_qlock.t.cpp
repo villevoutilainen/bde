@@ -394,6 +394,8 @@ void *testCase7(int threadNum, const MyTask& task)
 
      ASSERT(data != 0);
      ASSERT(threadNum > 0);
+     BSLS_ASSERT_CONVEYOR_OBJECT(data->d_myContext);
+     BSLS_ASSERT_CONVEYOR_OBJECT(data->d_otherContext);
 
      data->d_barrier->wait();
 
@@ -468,6 +470,7 @@ void *testCase6(int threadNum, const MyTask& task)
 
     ASSERT(data != 0);
     ASSERT(threadNum > 0);
+    BSLS_ASSERT_CONVEYOR_OBJECT(data);
 
     bsl::size_t i = 0;
 
@@ -951,10 +954,10 @@ void *testCase3a(int threadNum, const MyTask& task)
     {
         const bsl::string EXPECTED("Hello");
 
-        const bsl::string& hello1 = helloString();
+        const bsl::string& hello1 = BSLS_ASSERT_CONVEYOR_REF(helloString());
         ASSERT(hello1 == EXPECTED);
 
-        const bsl::string& hello2 = helloString();
+        const bsl::string& hello2 = BSLS_ASSERT_CONVEYOR_REF(helloString());
         ASSERT(hello2  == EXPECTED);
         ASSERT(&hello2 == &hello1);
 
@@ -1421,7 +1424,7 @@ int main(int argc, char *argv[])
         bslmt::ThreadUtil::Handle handle = bslmt::ThreadUtil::invalidHandle();
         bslmt::ThreadUtil::create(&handle, testCase2, 0);
 
-        const bsl::string& s1 = helloString();
+        const bsl::string& s1 = BSLS_ASSERT_CONVEYOR_REF(helloString());
         void              *s2 = 0;
 
         bslmt::ThreadUtil::join(handle, &s2);

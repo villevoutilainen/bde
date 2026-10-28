@@ -178,34 +178,37 @@ int veryVeryVerbose;
         /// `*result`, and remove the value at the front of the queue;
         /// return 0 if the queue was not initially empty, and a non-zero
         /// value (with no effect) otherwise.
-        int pop(int *result);
+        int pop(int *result) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Assign the values of all the elements from this queue, in order,
         /// to the specified `*result`, and remove them from this queue.
         /// Any previous contents of `*result` are discarded.  Note that, as
         /// with the other public manipulators, this entire operation occurs
         /// as a single, atomic action.
-        void popAll(bsl::vector<int> *result);
+        void popAll(bsl::vector<int> *result)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
         /// Remove all elements from this queue if their mean exceeds the
         /// specified `limit`.
-        void purgeAll(double limit);
+        void purgeAll(double limit) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Push the specified `value` onto this queue.
-        void push(int value);
+        void push(int value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Push the values from the specified `first` (inclusive) to the
         /// specified `last` (exclusive) onto this queue.
         template <class INPUT_ITER>
-        void pushRange(const INPUT_ITER& first, const INPUT_ITER& last);
+        void pushRange(const INPUT_ITER& first, const INPUT_ITER& last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         // ACCESSORS
 
         /// Return the mean value of the elements of this queue.
-        double mean() const;
+        double mean() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Return the number of elements in this queue.
-        std::size_t numElements() const;
+        std::size_t numElements() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 // ```
 // Notice that this version of the `MyThreadSafeQueue` class has two public
@@ -217,6 +220,7 @@ int veryVeryVerbose;
     // PRIVATE MANIPULATOR
     int MyThreadSafeQueue::popImp(int *result)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLMT_READERWRITERLOCKASSERT_IS_LOCKED_WRITE(&d_rwLock);
 
         if (d_deque.empty()) {
@@ -319,6 +323,7 @@ int veryVeryVerbose;
     // PRIVATE ACCESSORS
     bsl::pair<int, double> MyThreadSafeQueue::getStats() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLMT_READERWRITERLOCKASSERT_IS_LOCKED(&d_rwLock);
 
         int numElements = static_cast<int>(d_deque.size());
