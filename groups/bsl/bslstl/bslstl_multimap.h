@@ -1038,6 +1038,7 @@ class multimap {
         BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
         const COMPARATOR&                        comparator     = COMPARATOR(),
         const ALLOCATOR&                         basicAllocator = ALLOCATOR())
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     : d_compAndAlloc(comparator, basicAllocator)
     , d_tree()
     {
@@ -1062,6 +1063,7 @@ class multimap {
     multimap(from_range_t                             ,
              BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
              const ALLOCATOR&                         basicAllocator)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     : d_compAndAlloc(COMPARATOR(), basicAllocator)
     , d_tree()
     {
@@ -1150,22 +1152,24 @@ class multimap {
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this multimap, or the `end` iterator if this multimap
     /// is empty.
-    iterator begin() BSLS_KEYWORD_NOEXCEPT;
+    iterator begin() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing modifiable access to the past-the-end
     /// element in the ordered sequence of `value_type` objects maintained
     /// by this multimap.
-    iterator end() BSLS_KEYWORD_NOEXCEPT;
+    iterator end() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing modifiable access to the last
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this multimap, or `rend` if this multimap is empty.
-    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT;
+    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this multimap.
-    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT;
+    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `value` into this multimap.  If a range
     /// containing elements equivalent to `value` already exists, insert the
@@ -1174,7 +1178,8 @@ class multimap {
     /// the (template parameter) types `KEY` and `VALUE` both be
     /// `copy-insertable` into this multimap (see {Requirements on `KEY` and
     /// `VALUE`}).
-    iterator insert(const value_type& value);
+    iterator insert(const value_type& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if defined(BSLS_PLATFORM_CMP_SUN) && BSLS_PLATFORM_CMP_VERSION < 0x5130
     template <class ALT_VALUE_TYPE>
@@ -1199,6 +1204,7 @@ class multimap {
                        iterator>::type
 #endif
     insert(BSLS_COMPILERFEATURES_FORWARD_REF(ALT_VALUE_TYPE) value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note that some compilers fail when this method is defined
         // out-of-line.
@@ -1217,7 +1223,8 @@ class multimap {
     /// and `VALUE`}).  The behavior is undefined unless `hint` is an
     /// iterator in the range `[begin() .. end()]` (both endpoints
     /// included).
-    iterator insert(const_iterator hint, const value_type& value);
+    iterator insert(const_iterator hint, const value_type& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if defined(BSLS_PLATFORM_CMP_SUN) && BSLS_PLATFORM_CMP_VERSION < 0x5130
     template <class ALT_VALUE_TYPE>
@@ -1247,6 +1254,7 @@ class multimap {
 #endif
     insert(const_iterator                                    hint,
            BSLS_COMPILERFEATURES_FORWARD_REF(ALT_VALUE_TYPE) value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note that some compilers fail when this method is defined
         // out-of-line.
@@ -1267,7 +1275,8 @@ class multimap {
     /// behavior is undefined unless `first` and `last` refer to a sequence
     /// of valid values where `first` is at a position at or before `last`.
     template <class INPUT_ITERATOR>
-    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last);
+    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this multimap the value of each `value_type` object in the
     /// specified `range`.  The (template parameter) type `RANGE` must meet the
@@ -1280,6 +1289,8 @@ class multimap {
     template <class RANGE>
     BSLSTL_MULTIMAP_REQUIRES_CONTAINER_COMPATIBLE_RANGE(RANGE, value_type)
     void insert_range(BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     {
         // Defined inline to avoid Windows errors.
 
@@ -1298,7 +1309,8 @@ class multimap {
     }
 
 #if defined(BSLS_PLATFORM_CMP_SUN) && BSLS_PLATFORM_CMP_VERSION < 0x5130
-    void insert(const_iterator first, const_iterator last);
+    void insert(const_iterator first, const_iterator last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
         // This method is provided only on Sun to work around a bug in the Sun
         // Studio 12.3 compiler, which prevents us from disabling (at compile
         // time) the overload of 'insert' taking a 'const_iterator' and a
@@ -1318,7 +1330,8 @@ class multimap {
     /// the (template parameter) types `KEY` and `VALUE` both be
     /// `copy-insertable` into this multimap (see {Requirements on `KEY` and
     /// `VALUE`}).
-    void insert(std::initializer_list<value_type> values);
+    void insert(std::initializer_list<value_type> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES // $var-args=2
@@ -1332,7 +1345,7 @@ class multimap {
     /// be `emplace-constructible` from `args` (see {Requirements on `KEY`
     /// and `VALUE`}).
     template <class... Args>
-    iterator emplace(Args&&... args);
+    iterator emplace(Args&&... args) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this multimap a newly-created `value_type` object,
     /// constructed by forwarding `get_allocator()` (if required) and the
@@ -1349,7 +1362,8 @@ class multimap {
     /// `VALUE`}).  The behavior is undefined unless `hint` is an iterator
     /// in the range `[begin() .. end()]` (both endpoints included).
     template <class... Args>
-    iterator emplace_hint(const_iterator hint, Args&&... args);
+    iterator emplace_hint(const_iterator hint, Args&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Remove from this multimap the `value_type` object at the specified
@@ -1360,8 +1374,8 @@ class multimap {
     /// only iterators and references to the removed element and previously
     /// saved values of the `end()` iterator.  The behavior is undefined
     /// unless `position` refers to a `value_type` object in this multimap.
-    iterator erase(const_iterator position);
-    iterator erase(iterator position);
+    iterator erase(const_iterator position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator erase(iterator position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this multimap all `value_type` objects whose keys are
     /// equivalent to the specified `key`, if such entries exist, and return
@@ -1369,7 +1383,7 @@ class multimap {
     /// objects having an equivalent key, return 0 with no other effect.
     /// This method invalidates only iterators and references to the removed
     /// element and previously saved values of the `end()` iterator.
-    size_type erase(const key_type& key);
+    size_type erase(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     template <class t_KEY>
     typename enable_if<
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
@@ -1379,6 +1393,7 @@ class multimap {
         !is_convertible<BSLS_COMPILERFEATURES_FORWARD_REF(t_KEY),
                         const_iterator>::value,
     size_type>::type erase(BSLS_COMPILERFEATURES_FORWARD_REF(t_KEY) key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Implemented inline due to Sun CC compilation error.
         size_type count = 0;
@@ -1399,7 +1414,8 @@ class multimap {
     /// `first` and `last` either refer to elements in this multimap or are
     /// the `end` iterator, and the `first` position is at or before the
     /// `last` position in the ordered sequence provided by this container.
-    iterator erase(const_iterator first, const_iterator last);
+    iterator erase(const_iterator first, const_iterator last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     void swap(multimap& other) BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(
                                  AllocatorTraits::is_always_equal::value &&
@@ -1425,7 +1441,7 @@ class multimap {
     /// Remove all entries from this multimap.  Note that the multimap is
     /// empty after this call, but allocated memory may be retained for
     /// future use.
-    void clear() BSLS_KEYWORD_NOEXCEPT;
+    void clear() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // Turn off complaints about necessarily class-defined methods.
     // BDE_VERIFY pragma: push
@@ -1437,7 +1453,7 @@ class multimap {
     /// (`end`) iterator otherwise.
     ///
     /// Note: implemented inline due to Sun CC compilation error.
-    iterator find(const key_type& key)
+    iterator find(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
@@ -1454,7 +1470,7 @@ class multimap {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    find(const LOOKUP_KEY& key)
+    find(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
@@ -1471,6 +1487,7 @@ class multimap {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     iterator lower_bound(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
@@ -1491,7 +1508,7 @@ class multimap {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    lower_bound(const LOOKUP_KEY& key)
+    lower_bound(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
@@ -1508,6 +1525,7 @@ class multimap {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     iterator upper_bound(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
@@ -1528,7 +1546,7 @@ class multimap {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    upper_bound(const LOOKUP_KEY& key)
+    upper_bound(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
@@ -1546,6 +1564,7 @@ class multimap {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     bsl::pair<iterator,iterator> equal_range(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         iterator startIt = lower_bound(key);
         iterator endIt   = startIt;
@@ -1571,7 +1590,7 @@ class multimap {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         pair<iterator, iterator> >::type
-    equal_range(const LOOKUP_KEY& key)
+    equal_range(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         iterator startIt = lower_bound(key);
         iterator endIt   = startIt;
@@ -1593,49 +1612,58 @@ class multimap {
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this multimap, or the `end` iterator if this multimap
     /// is empty.
-    const_iterator begin() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator begin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in the ordered sequence of `value_type` objects
     /// maintained by this multimap.
-    const_iterator end() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator end() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// last `value_type` object in the ordered sequence of `value_type`
     /// objects maintained by this multimap, or `rend` if this multimap is
     /// empty.
-    const_reverse_iterator rbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator rbegin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this multimap.
-    const_reverse_iterator rend() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator rend() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this multimap, or the `cend` iterator if this multimap
     /// is empty.
-    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in the ordered sequence of `value_type` objects
     /// maintained by this multimap.
-    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// last `value_type` object in the ordered sequence of `value_type`
     /// objects maintained by this multimap, or `rend` if this multimap is
     /// empty.
-    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this multimap.
-    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this multimap contains an element whose key is
     /// equivalent to the specified `key`.
-    bool contains(const key_type &key) const;
+    bool contains(const key_type &key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this multimap contains an element whose key is
     /// equivalent to the specified `key`.
@@ -1646,17 +1674,19 @@ class multimap {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         bool>::type
-    contains(const LOOKUP_KEY& key) const
+    contains(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return find(key) != end();
     }
 
     /// Return `true` if this multimap contains no elements, and `false`
     /// otherwise.
-    bool empty() const BSLS_KEYWORD_NOEXCEPT;
+    bool empty() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this multimap.
-    size_type size() const BSLS_KEYWORD_NOEXCEPT;
+    size_type size() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a theoretical upper bound on the largest number of elements
     /// that this multimap could possibly hold.  Note that there is no
@@ -1669,13 +1699,13 @@ class multimap {
     /// value, otherwise return a default constructed `key_compare` object.
     /// Note that this comparator compares objects of type `KEY`, which is
     /// the key part of the `value_type` objects contained in this multimap.
-    key_compare key_comp() const;
+    key_compare key_comp() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a functor for comparing two `value_type` objects by comparing
     /// their respective keys using `key_comp()`.   Note that this
     /// comparator compares objects of type `value_type` (i.e., 'pair<const
     /// KEY, VALUE>').
-    value_compare value_comp() const;
+    value_compare value_comp() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // Turn off complaints about necessarily class-defined methods.
     // BDE_VERIFY pragma: push
@@ -1688,6 +1718,7 @@ class multimap {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     const_iterator find(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
@@ -1704,7 +1735,7 @@ class multimap {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    find(const LOOKUP_KEY& key) const
+    find(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
@@ -1715,6 +1746,7 @@ class multimap {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     size_type count(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         int            count = 0;
         const_iterator it    = lower_bound(key);
@@ -1735,7 +1767,7 @@ class multimap {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         size_type>::type
-    count(const LOOKUP_KEY& key) const
+    count(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         int            count = 0;
         const_iterator it    = lower_bound(key);
@@ -1759,6 +1791,7 @@ class multimap {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     const_iterator lower_bound(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
@@ -1780,7 +1813,7 @@ class multimap {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    lower_bound(const LOOKUP_KEY& key) const
+    lower_bound(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
@@ -1797,6 +1830,7 @@ class multimap {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     const_iterator upper_bound(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
@@ -1817,7 +1851,7 @@ class multimap {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    upper_bound(const LOOKUP_KEY& key) const
+    upper_bound(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
@@ -1835,6 +1869,7 @@ class multimap {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     pair<const_iterator, const_iterator> equal_range(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         const_iterator startIt = lower_bound(key);
         const_iterator endIt   = startIt;
@@ -1860,7 +1895,7 @@ class multimap {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         pair<const_iterator, const_iterator> >::type
-    equal_range(const LOOKUP_KEY& key) const
+    equal_range(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         const_iterator startIt = lower_bound(key);
         const_iterator endIt   = startIt;
@@ -2027,12 +2062,14 @@ multimap(std::initializer_list<pair<const KEY, VALUE>>, ALLOC *)
 /// {Requirements on `KEY` and `VALUE`}).
 template <class KEY, class VALUE, class COMPARATOR, class ALLOCATOR>
 bool operator==(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-                const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+                const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #ifndef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 template <class KEY, class VALUE, class COMPARATOR, class ALLOCATOR>
 bool operator!=(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-                const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+                const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the specified 'lhs' and 'rhs' objects do not have the
     // same value, and 'false' otherwise.  Two 'multimap' objects 'lhs' and
     // 'rhs' do not have the same value if they do not have the same number of
@@ -2052,13 +2089,15 @@ bool operator!=(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
 template <class KEY, class VALUE, class COMPARATOR, class ALLOCATOR>
 BloombergLP::bslalg::SynthThreeWayUtil::Result<pair<const KEY, VALUE>>
 operator<=>(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-            const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+            const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #else
 
 template <class KEY, class VALUE, class COMPARATOR, class ALLOCATOR>
 bool operator<(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-               const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+               const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the value of the specified 'lhs' multimap is
     // lexicographically less than that of the specified 'rhs' multimap, and
     // 'false' otherwise.  Given iterators 'i' and 'j' over the respective
@@ -2073,7 +2112,8 @@ bool operator<(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
 
 template <class KEY, class VALUE, class COMPARATOR, class ALLOCATOR>
 bool operator>(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-               const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+               const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the value of the specified 'lhs' multimap is
     // lexicographically greater than that of the specified 'rhs' multimap, and
     // 'false' otherwise.  The value of multimap 'lhs' is lexicographically
@@ -2084,7 +2124,8 @@ bool operator>(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
 
 template <class KEY, class VALUE, class COMPARATOR, class ALLOCATOR>
 bool operator<=(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-                const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+                const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the value of the specified 'lhs' multimap is
     // lexicographically less than or equal to that of the specified 'rhs'
     // multimap, and 'false' otherwise.  The value of multimap 'lhs' is
@@ -2095,7 +2136,8 @@ bool operator<=(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
 
 template <class KEY, class VALUE, class COMPARATOR, class ALLOCATOR>
 bool operator>=(const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-                const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+                const multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the value of the specified 'lhs' multimap is
     // lexicographically greater than or equal to that of the specified 'rhs'
     // multimap, and 'false' otherwise.  The value of multimap 'lhs' is
@@ -2117,7 +2159,8 @@ template <class KEY,
           class PREDICATE>
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::size_type
 erase_if(multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>&               m,
-                                                          PREDICATE predicate);
+                                                          PREDICATE predicate)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(m);
 
 /// Exchange the value and comparator of the specified `a` object with those
 /// of the specified `b` object; also exchange the allocator of `a` with
@@ -2272,6 +2315,7 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::constructFromRange(
                                                           INPUT_ITERATOR first,
                                                           SENTINEL       last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (first == last) {
         return;                                                       // RETURN
     }
@@ -2332,6 +2376,7 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::constructFromRange(
                                                     size_t         numElements)
 
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE((
         !BloombergLP::bslstl::IteratorUtil
                        ::canCalculateInsertDistance<INPUT_ITERATOR, SENTINEL>()
@@ -2393,6 +2438,7 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insertFromRange(
                                                           INPUT_ITERATOR first,
                                                           SENTINEL       last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ///Implementation Notes
     ///--------------------
     // First, consume currently held free nodes.  Free nodes may be available
@@ -2429,6 +2475,7 @@ void multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insertFromRange(
                                                     SENTINEL       last,
                                                     size_t         numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE((
         !BloombergLP::bslstl::IteratorUtil
                        ::canCalculateInsertDistance<INPUT_ITERATOR, SENTINEL>()
@@ -2493,6 +2540,7 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::multimap(const multimap& original)
                                            original.nodeFactory().allocator()))
 , d_tree()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     if (0 < original.size()) {
         nodeFactory().reserveNodes(original.size());
         BloombergLP::bslalg::RbTreeUtil::copyTree(&d_tree,
@@ -2520,6 +2568,7 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::multimap(
 : d_compAndAlloc(original.comparator().keyComparator(), basicAllocator)
 , d_tree()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     if (0 < original.size()) {
         nodeFactory().reserveNodes(original.size());
         BloombergLP::bslalg::RbTreeUtil::copyTree(&d_tree,
@@ -2538,6 +2587,7 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::multimap(
 , d_tree()
 {
     multimap& lvalue = original;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lvalue);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(
               nodeFactory().allocator() == lvalue.nodeFactory().allocator())) {

@@ -958,6 +958,7 @@ class set {
         BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
         const COMPARATOR&                        comparator     = COMPARATOR(),
         const ALLOCATOR&                         basicAllocator = ALLOCATOR())
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     : d_compAndAlloc(comparator, basicAllocator)
     , d_tree()
     {
@@ -982,6 +983,7 @@ class set {
     set(from_range_t                             ,
         BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
         const ALLOCATOR&                         basicAllocator)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     : d_compAndAlloc(COMPARATOR(), basicAllocator)
     , d_tree()
     {
@@ -1067,22 +1069,24 @@ class set {
     /// Return an iterator providing modifiable access to the first
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this set, or the `end` iterator if this set is empty.
-    iterator begin() BSLS_KEYWORD_NOEXCEPT;
+    iterator begin() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing modifiable access to the past-the-end
     /// element in the ordered sequence of `value_type` objects maintained
     /// by this set.
-    iterator end() BSLS_KEYWORD_NOEXCEPT;
+    iterator end() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing modifiable access to the last
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this set, or `rend` if this object is empty.
-    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT;
+    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this set.
-    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT;
+    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `value` into this set if a key equivalent to
     /// `value` does not already exist in this set; otherwise, if a key
@@ -1094,7 +1098,8 @@ class set {
     /// present.  This method requires that the (template parameter) type
     /// `KEY` be `copy-insertable` into this set (see {Requirements on
     /// `KEY`}).
-    pair<iterator, bool> insert(const value_type& value);
+    pair<iterator, bool> insert(const value_type& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `value` into this set if a key equivalent to
     /// `value` does not already exist in this set; otherwise, if a key
@@ -1107,7 +1112,8 @@ class set {
     /// requires that the (template parameter) type `KEY` be
     /// `move-insertable` (see {Requirements on `KEY`}).
     pair<iterator, bool> insert(
-                             BloombergLP::bslmf::MovableRef<value_type> value);
+                             BloombergLP::bslmf::MovableRef<value_type> value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Insert the specified `value` into this set if a key equivalent to
@@ -1125,7 +1131,7 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value
         , pair<iterator, bool> >::type
-    insert(LOOKUP_KEY&& value)
+    insert(LOOKUP_KEY&& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         typedef pair<iterator, bool> Result;
 
@@ -1163,7 +1169,8 @@ class set {
     /// this set (see {Requirements on `KEY`}).  The behavior is undefined
     /// unless `hint` is an iterator in the range `[begin() .. end()]` (both
     /// endpoints included).
-    iterator insert(const_iterator hint, const value_type& value);
+    iterator insert(const_iterator hint, const value_type& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `value` into this set (in amortized constant
     /// time if the specified `hint` is a valid immediate successor to
@@ -1178,7 +1185,8 @@ class set {
     /// `KEY`}).  The behavior is undefined unless `hint` is an iterator in
     /// the range `[begin() .. end()]` (both endpoints included).
     iterator insert(const_iterator                             hint,
-                    BloombergLP::bslmf::MovableRef<value_type> value);
+                    BloombergLP::bslmf::MovableRef<value_type> value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Insert the specified `value` into this set if a key equivalent to
@@ -1204,6 +1212,7 @@ class set {
         && !bsl::is_convertible<LOOKUP_KEY&&, const_iterator>::value
          , iterator>::type
     insert(const_iterator hint, LOOKUP_KEY&& value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
@@ -1245,7 +1254,8 @@ class set {
     /// is undefined unless `first` and `last` refer to a sequence of valid
     /// values where `first` is at a position at or before `last`.
     template <class INPUT_ITERATOR>
-    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last);
+    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
     /// Insert into this set the value of each `value_type` object in the
@@ -1253,7 +1263,8 @@ class set {
     /// object is not already contained in this set.  This method requires
     /// that the (template parameter) type `KEY` be `copy-insertable` (see
     /// {Requirements on `KEY`}).
-    void insert(std::initializer_list<KEY> values);
+    void insert(std::initializer_list<KEY> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Insert into this set the value of each `value_type` object in the
@@ -1267,6 +1278,8 @@ class set {
     template <class RANGE>
     BSLSTL_SET_REQUIRES_CONTAINER_COMPATIBLE_RANGE(RANGE, value_type)
     void insert_range(BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     {
         // Defined inline to avoid Windows errors.
 
@@ -1301,7 +1314,8 @@ class set {
     /// `emplace-constructible` from `arguments` (see {Requirements on
     /// `KEY`}).
     template <class... Args>
-    pair<iterator, bool> emplace(Args&&... arguments);
+    pair<iterator, bool> emplace(Args&&... arguments)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this set a newly created `value_type` object,
     /// constructed by forwarding `get_allocator()` (if required) and the
@@ -1322,7 +1336,8 @@ class set {
     /// `hint` is an iterator in the range `[begin() .. end()]` (both
     /// endpoints included).
     template <class... Args>
-    iterator emplace_hint(const_iterator hint, Args&&... arguments);
+    iterator emplace_hint(const_iterator hint, Args&&... arguments)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #endif
 
@@ -1334,7 +1349,7 @@ class set {
     /// iterators and references to the removed element and previously saved
     /// values of the `end()` iterator.  The behavior is undefined unless
     /// `position` refers to a `value_type` object in this set.
-    iterator erase(const_iterator position);
+    iterator erase(const_iterator position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this set the `value_type` object that is equivalent to
     /// the specified `key`, if such an entry exists, and return 1;
@@ -1342,7 +1357,7 @@ class set {
     /// `key`, return 0 with no other effect.   This method invalidates only
     /// iterators and references to the removed element and previously saved
     /// values of the `end()` iterator.
-    size_type erase(const key_type& key);
+    size_type erase(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     template <class t_KEY>
     typename enable_if<
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
@@ -1352,6 +1367,7 @@ class set {
         !is_convertible<BSLS_COMPILERFEATURES_FORWARD_REF(t_KEY),
                         const_iterator>::value,
     size_type>::type erase(BSLS_COMPILERFEATURES_FORWARD_REF(t_KEY) key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Implemented inline due to Sun CC compilation error.
         iterator it = this->find(key);
@@ -1370,7 +1386,8 @@ class set {
     /// `first` and `last` either refer to elements in this set or are the
     /// `end` iterator, and the `first` position is at or before the `last`
     /// position in the ordered sequence provided by this container.
-    iterator erase(const_iterator first, const_iterator last);
+    iterator erase(const_iterator first, const_iterator last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Exchange the value and comparator of this object with those of the
     /// specified `other` object; also exchange the allocator of this object
@@ -1395,7 +1412,7 @@ class set {
 
     /// Remove all entries from this set.  Note that the set is empty after
     /// this call, but allocated memory may be retained for future use.
-    void clear() BSLS_KEYWORD_NOEXCEPT;
+    void clear() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // Turn off complaints about necessarily class-defined methods.
     // BDE_VERIFY pragma: push
@@ -1407,7 +1424,7 @@ class set {
     /// otherwise.
     ///
     /// Note: implemented inline due to Sun CC compilation error.
-    iterator find(const key_type& key)
+    iterator find(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
@@ -1424,7 +1441,7 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    find(const LOOKUP_KEY& key)
+    find(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
@@ -1441,6 +1458,7 @@ class set {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     iterator lower_bound(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
@@ -1461,7 +1479,7 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    lower_bound(const LOOKUP_KEY& key)
+    lower_bound(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
@@ -1477,6 +1495,7 @@ class set {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     iterator upper_bound(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
@@ -1496,7 +1515,7 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    upper_bound(const LOOKUP_KEY& key)
+    upper_bound(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
@@ -1515,6 +1534,7 @@ class set {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     pair<iterator, iterator> equal_range(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         iterator startIt = lower_bound(key);
         iterator endIt   = startIt;
@@ -1544,7 +1564,7 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         pair<iterator, iterator> >::type
-    equal_range(const LOOKUP_KEY& key)
+    equal_range(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         iterator startIt = lower_bound(key);
         iterator endIt   = startIt;
@@ -1574,46 +1594,55 @@ class set {
     /// Return an iterator providing non-modifiable access to the first
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this set, or the `end` iterator if this set is empty.
-    const_iterator begin() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator begin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in the ordered sequence of `value_type`
     /// objects maintained by this set.
-    const_iterator end() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator end() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// last `value_type` object in the ordered sequence of `value_type`
     /// objects maintained by this set, or `rend` if this object is empty.
-    const_reverse_iterator rbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator rbegin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this set.
-    const_reverse_iterator rend() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator rend() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this set, or the `cend` iterator if this set is empty.
-    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in the ordered sequence of `value_type` objects
     /// maintained by this set.
-    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// last `value_type` object in the ordered sequence of `value_type`
     /// objects maintained by this set, or `crend` if this set is empty.
-    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this set.
-    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this map contains an element whose key is
     /// equivalent to the specified `key`.
-    bool contains(const key_type &key) const;
+    bool contains(const key_type &key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this map contains an element whose key is
     /// equivalent to the specified `key`.
@@ -1624,17 +1653,19 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         bool>::type
-    contains(const LOOKUP_KEY& key) const
+    contains(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return find(key) != end();
     }
 
     /// Return `true` if this set contains no elements, and `false`
     /// otherwise.
-    bool empty() const BSLS_KEYWORD_NOEXCEPT;
+    bool empty() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this set.
-    size_type size() const BSLS_KEYWORD_NOEXCEPT;
+    size_type size() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a theoretical upper bound on the largest number of elements
     /// that this set could possibly hold.  Note that there is no guarantee
@@ -1647,12 +1678,12 @@ class set {
     /// otherwise return a default constructed `key_compare` object.  Note
     /// that this comparator compares objects of type `KEY`, which is the
     /// type of the `value_type` objects contained in this set.
-    key_compare key_comp() const;
+    key_compare key_comp() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a functor for comparing two `value_type` objects using
     /// `key_comp()`.  Note that since `value_type` is an alias to `KEY` for
     /// `set`, this method returns the same functor as `key_comp()`.
-    value_compare value_comp() const;
+    value_compare value_comp() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // Turn off complaints about necessarily class-defined methods.
     // BDE_VERIFY pragma: push
@@ -1665,6 +1696,7 @@ class set {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     const_iterator find(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
@@ -1681,7 +1713,7 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    find(const LOOKUP_KEY& key) const
+    find(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
@@ -1693,6 +1725,7 @@ class set {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     size_type count(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return (find(key) != end()) ? 1 : 0;
     }
@@ -1710,7 +1743,7 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         size_type>::type
-    count(const LOOKUP_KEY& key) const
+    count(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         int            count = 0;
         const_iterator it    = lower_bound(key);
@@ -1733,6 +1766,7 @@ class set {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     const_iterator lower_bound(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
@@ -1753,7 +1787,7 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    lower_bound(const LOOKUP_KEY& key) const
+    lower_bound(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
@@ -1770,6 +1804,7 @@ class set {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     const_iterator upper_bound(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
@@ -1790,7 +1825,7 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    upper_bound(const LOOKUP_KEY& key) const
+    upper_bound(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
@@ -1809,6 +1844,7 @@ class set {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     pair<const_iterator, const_iterator> equal_range(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         const_iterator startIt = lower_bound(key);
         const_iterator endIt   = startIt;
@@ -1838,7 +1874,7 @@ class set {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         pair<const_iterator, const_iterator> >::type
-    equal_range(const LOOKUP_KEY& key) const
+    equal_range(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         const_iterator startIt = lower_bound(key);
         const_iterator endIt   = startIt;
@@ -1999,7 +2035,8 @@ set(std::initializer_list<KEY>, ALLOC *)
 /// `equality-comparable` (see {Requirements on `KEY`}).
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator==(const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const set<KEY, COMPARATOR, ALLOCATOR>& rhs);
+                const set<KEY, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #ifndef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
@@ -2011,7 +2048,8 @@ bool operator==(const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
 /// be `equality-comparable` (see {Requirements on `KEY`}).
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator!=(const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const set<KEY, COMPARATOR, ALLOCATOR>& rhs);
+                const set<KEY, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 #endif
 
 #ifdef BSLALG_SYNTHTHREEWAYUTIL_AVAILABLE
@@ -2022,7 +2060,8 @@ bool operator!=(const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 BloombergLP::bslalg::SynthThreeWayUtil::Result<KEY>
 operator<=>(const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
-            const set<KEY, COMPARATOR, ALLOCATOR>& rhs);
+            const set<KEY, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #else
 
@@ -2039,7 +2078,8 @@ operator<=>(const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
 /// defined for `value_type`.
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator< (const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const set<KEY, COMPARATOR, ALLOCATOR>& rhs);
+                const set<KEY, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` set is
 /// lexicographically greater than that of the specified `rhs` set, and
@@ -2050,7 +2090,8 @@ bool operator< (const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
 /// returns `rhs < lhs`.
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator> (const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const set<KEY, COMPARATOR, ALLOCATOR>& rhs);
+                const set<KEY, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` set is
 /// lexicographically less than or equal to that of the specified `rhs` set,
@@ -2061,7 +2102,8 @@ bool operator> (const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
 /// that this operator returns `!(rhs < lhs)`.
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator<=(const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const set<KEY, COMPARATOR, ALLOCATOR>& rhs);
+                const set<KEY, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the value of the specified `lhs` set is
 /// lexicographically greater than or equal to that of the specified `rhs`
@@ -2072,7 +2114,8 @@ bool operator<=(const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
 /// `value_type`.  Note that this operator returns `!(lhs < rhs)`.
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator>=(const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const set<KEY, COMPARATOR, ALLOCATOR>& rhs);
+                const set<KEY, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #endif  // BSLALG_SYNTHTHREEWAYUTIL_AVAILABLE
 
@@ -2082,7 +2125,8 @@ bool operator>=(const set<KEY, COMPARATOR, ALLOCATOR>& lhs,
 /// specified predicate `predicate`.  Return the number of elements erased.
 template <class KEY, class COMPARATOR, class ALLOCATOR, class PREDICATE>
 typename set<KEY, COMPARATOR, ALLOCATOR>::size_type
-erase_if(set<KEY, COMPARATOR, ALLOCATOR>& s, PREDICATE predicate);
+erase_if(set<KEY, COMPARATOR, ALLOCATOR>& s, PREDICATE predicate)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(s);
 
 /// Exchange the value and comparator of the specified `a` object with those
 /// of the specified `b` object; also exchange the allocator of `a` with
@@ -2211,6 +2255,7 @@ inline
 void set<KEY, COMPARATOR, ALLOCATOR>::constructFromRange(INPUT_ITERATOR first,
                                                          SENTINEL       last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (first == last) {
         return;                                                       // RETURN
     }
@@ -2272,6 +2317,7 @@ void set<KEY, COMPARATOR, ALLOCATOR>::constructFromRange(
                                                     size_t         numElements)
 
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE((
         !BloombergLP::bslstl::IteratorUtil
                        ::canCalculateInsertDistance<INPUT_ITERATOR, SENTINEL>()
@@ -2332,6 +2378,7 @@ inline
 void set<KEY, COMPARATOR, ALLOCATOR>::insertFromRange(INPUT_ITERATOR first,
                                                       SENTINEL       last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ///Implementation Notes
     ///--------------------
     // First, consume currently held free nodes.  Free nodes may be available
@@ -2374,6 +2421,7 @@ void set<KEY, COMPARATOR, ALLOCATOR>::insertFromRange(
                                                     SENTINEL       last,
                                                     size_t         numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE((
         !BloombergLP::bslstl::IteratorUtil
                        ::canCalculateInsertDistance<INPUT_ITERATOR, SENTINEL>()
@@ -2437,6 +2485,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::set(const set& original)
                                           original.nodeFactory().allocator()))
 , d_tree()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     if (0 < original.size()) {
         nodeFactory().reserveNodes(original.size());
         BloombergLP::bslalg::RbTreeUtil::copyTree(&d_tree,
@@ -2464,6 +2513,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::set(
 : d_compAndAlloc(original.comparator().keyComparator(), basicAllocator)
 , d_tree()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     if (0 < original.size()) {
         nodeFactory().reserveNodes(original.size());
         BloombergLP::bslalg::RbTreeUtil::copyTree(&d_tree,
@@ -2482,6 +2532,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::set(
 , d_tree()
 {
     set& lvalue = original;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lvalue);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(
               nodeFactory().allocator() == lvalue.nodeFactory().allocator())) {

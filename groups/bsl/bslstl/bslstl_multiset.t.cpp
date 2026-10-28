@@ -411,6 +411,7 @@ namespace bsl {
 // multiset-specific print function.
 template <class KEY, class COMP, class ALLOC>
 void debugprint(const bsl::multiset<KEY, COMP, ALLOC>& s)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(s)
 {
     if (s.empty()) {
         printf("<empty>");
@@ -440,6 +441,7 @@ template<class CONTAINER, class VALUES>
 size_t verifyContainer(const CONTAINER&  container,
                        const VALUES&     expectedValues,
                        size_t            expectedSize)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     ASSERTV(expectedSize, container.size(), expectedSize == container.size());
 
@@ -946,16 +948,26 @@ class TestAllocatorUtil
     static void test(const bsltf::AllocEmplacableTestType& value,
                      const bslma::Allocator&               oa)
     {
-        ASSERTV(&oa == value.arg01().allocator());
-        ASSERTV(&oa == value.arg02().allocator());
-        ASSERTV(&oa == value.arg03().allocator());
-        ASSERTV(&oa == value.arg04().allocator());
-        ASSERTV(&oa == value.arg05().allocator());
-        ASSERTV(&oa == value.arg06().allocator());
-        ASSERTV(&oa == value.arg07().allocator());
-        ASSERTV(&oa == value.arg08().allocator());
-        ASSERTV(&oa == value.arg09().allocator());
-        ASSERTV(&oa == value.arg10().allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg01()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg02()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg03()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg04()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg05()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg06()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg07()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg08()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg09()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg10()).allocator());
     }
 };
 
@@ -1065,11 +1077,14 @@ class TestDriver {
     /// first invalid character, and a negative value otherwise.  Note that
     /// this function is used to implement `gg` as well as allow for
     /// verification of syntax error detection.
-    static int ggg(Obj *object, const char *spec, int verbose = 1);
+    static int ggg(Obj *object, const char *spec, int verbose = 1)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified object with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     static void storeFirstNElemAddr(typename Obj::const_pointer *pointers,
                                     const Obj&          object,
@@ -1106,6 +1121,7 @@ class TestDriver {
     static Iter primaryManipulator(Obj   *container,
                                    int    identifier,
                                    ALLOC  allocator)
+                                   BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(container)
     {
         bsls::ObjectBuffer<ValueType> buffer;
         TstFacility::emplace(buffer.address(),
@@ -2224,7 +2240,8 @@ void TestDriver<KEY, COMP, ALLOC>::testCase6()
         (void) operatorEq;  // quash potential compiler warnings
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
-        (void) [](const Obj& lhs, const Obj& rhs) -> bool {
+        (void) [](const Obj& lhs, const Obj& rhs) -> bool
+        BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs) {
             return lhs != rhs;
         };
 #else
@@ -3548,6 +3565,7 @@ class string {
     // MANIPULATORS
     string& operator=(const string& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         string temp(rhs);
         temp.swap(*this);
         return *this;
@@ -3559,6 +3577,7 @@ class string {
     }
 
     void swap(string& other)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS BSLS_ASSERT_CONVEYOR_REQUIRES(other)
     {
         BSLS_ASSERT(d_allocator_p == other.d_allocator_p);
 
@@ -3572,7 +3591,7 @@ class string {
         return d_size;
     }
 
-    bool empty() const
+    bool empty() const BSLS_KEYWORD_CONVEYOR
     {
         return 0 == d_size;
     }
@@ -3663,7 +3682,8 @@ class ShoppingCart {
     StringSet d_items;  // multiset of items in the shopping cart
 
     // FRIENDS
-    friend bool operator==(const ShoppingCart&, const ShoppingCart&);
+    friend bool operator==(const ShoppingCart& lhs, const ShoppingCart& rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
   public:
     // PUBLIC TYPES
@@ -3698,33 +3718,33 @@ class ShoppingCart {
 
     /// Add an item with the specified `name` to this shopping cart.  The
     /// behavior is undefined unless `name` is a non-empty strings.
-    void addItem(const string& name);
+    void addItem(const string& name) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this shopping cart all items having the specified
     /// `name`, if they exist, and return the number of removed items;
     /// otherwise, return 0 with no other effects.  The behavior is
     /// undefined unless `name` is a non-empty strings.
-    size_t removeItems(const string& name);
+    size_t removeItems(const string& name) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the number of items in the shopping cart with the specified
     /// `name`.  The behavior is undefined unless `name` is a non-empty
     /// strings.
-    size_t count(const string& name) const;
+    size_t count(const string& name) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first item
     /// in the ordered sequence of item held in this shopping cart, or the
     /// past-the-end iterator if this shopping cart is empty.
-    ConstIterator begin() const;
+    ConstIterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end item in the ordered sequence of items maintained by
     /// this shopping cart.
-    ConstIterator end() const;
+    ConstIterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of items contained in this shopping cart.
-    size_t numItems() const;
+    size_t numItems() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 // ```
 // Then, we declare the free operators for `ShoppingCart`:
@@ -3744,7 +3764,8 @@ bool operator==(const ShoppingCart& lhs, const ShoppingCart& rhs);
 /// contained items, or if any of the corresponding items, in their
 /// respective ordered sequences of items, is not the same.
 inline
-bool operator!=(const ShoppingCart& lhs, const ShoppingCart& rhs);
+bool operator!=(const ShoppingCart& lhs, const ShoppingCart& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 // ```
 // Now, we define the implementations methods of the `ShoppingCart` class:
 // ```

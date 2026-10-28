@@ -520,6 +520,7 @@ void debugprint(const pair<FIRST, SECOND>& p)
 // map-specific print function.
 template <class KEY, class VALUE, class COMP, class ALLOC>
 void debugprint(const bsl::map<KEY, VALUE, COMP, ALLOC>& s)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(s)
 {
     if (s.empty()) {
         printf("<empty>");
@@ -557,6 +558,7 @@ template <class CONTAINER, class VALUES>
 int verifyContainer(const CONTAINER& container,
                     const VALUES&    expectedValues,
                     size_t           expectedSize)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     ASSERTV(expectedSize, container.size(), expectedSize == container.size());
 
@@ -1090,16 +1092,26 @@ class TestAllocatorUtil {
                      const bsltf::AllocEmplacableTestType& value,
                      const bslma::Allocator&               allocator)
     {
-        ASSERTV(line, &allocator == value.arg01().allocator());
-        ASSERTV(line, &allocator == value.arg02().allocator());
-        ASSERTV(line, &allocator == value.arg03().allocator());
-        ASSERTV(line, &allocator == value.arg04().allocator());
-        ASSERTV(line, &allocator == value.arg05().allocator());
-        ASSERTV(line, &allocator == value.arg06().allocator());
-        ASSERTV(line, &allocator == value.arg07().allocator());
-        ASSERTV(line, &allocator == value.arg08().allocator());
-        ASSERTV(line, &allocator == value.arg09().allocator());
-        ASSERTV(line, &allocator == value.arg10().allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg01()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg02()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg03()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg04()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg05()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg06()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg07()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg08()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg09()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg10()).allocator());
     }
 };
 
@@ -1290,11 +1302,14 @@ class TestDriver {
     /// negative value otherwise.  Note that this function is used to
     /// implement `gg` as well as allow for verification of syntax error
     /// detection.
-    static int ggg(Obj *object, const char *spec, bool verbose = true);
+    static int ggg(Obj *object, const char *spec, bool verbose = true)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified `object` with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Load into the specified `pointers` array, in order, the addresses
     /// that provide non-modifiable access to the specified initial `n`
@@ -1303,7 +1318,8 @@ class TestDriver {
     /// `pointers` is at least `n`.
     static void storeFirstNElemAddr(const typename Obj::value_type *pointers[],
                                     const Obj&                      object,
-                                    size_t                          n);
+                                    size_t                          n)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
     /// Return the number of items in the specified `pointers` array whose
     /// values, in order, are not the same as the addresses that provide
@@ -1313,7 +1329,8 @@ class TestDriver {
     /// is at least `n`.
     static int checkFirstNElemAddr(const typename Obj::value_type *pointers[],
                                    const Obj&                      object,
-                                   size_t                          n);
+                                   size_t                          n)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
     /// Insert into the specified `container` the `pair` object indicated by
     /// the specified `identifier`, ensuring that the overload of the
@@ -1322,7 +1339,8 @@ class TestDriver {
     /// primary manipulator.
     static pair<Iter, bool> primaryManipulator(Obj   *container,
                                                int    identifier,
-                                               ALLOC  allocator);
+                                               ALLOC  allocator)
+                                  BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(container);
 
     template <class T>
     static bslmf::MovableRef<T> testArg(T& t, bsl::true_type)
@@ -2592,7 +2610,8 @@ void TestDriver<KEY, VALUE, COMP, ALLOC>::testCase6()
         (void)operatorEq;  // quash potential compiler warnings
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
-        (void) [](const Obj& lhs, const Obj& rhs) -> bool {
+        (void) [](const Obj& lhs, const Obj& rhs) -> bool
+        BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs) {
             return lhs != rhs;
         };
 #else
@@ -3975,35 +3994,41 @@ class TradeMatcher {
     /// `price`.  The placed buy order will (possibly partially) execute
     /// when active sale orders exist in the system at or below `price`.
     /// The behavior is undefined unless `0 < price` and `0 < numShares`.
-    void placeBuyOrder(double price, int numShares);
+    void placeBuyOrder(double price, int numShares)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Place an order to sell the specified `numShares` at the specified
     /// `price`.  The placed sell order will (possibly partially) execute
     /// when active buy orders exist in the system at or above `price`.  The
     /// behavior is undefined unless `0 < price` and `0 < numShares`.
-    void placeSellOrder(double price, int numShares);
+    void placeSellOrder(double price, int numShares)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return an iterator providing non-modifiable access to the active
     /// sell order at the lowest price in the ordered sequence (from low
     /// price to high price) of sell orders maintained by this object.
-    SellOrdersConstIterator beginSellOrders() const;
+    SellOrdersConstIterator beginSellOrders() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end sell order in the ordered sequence (from low price to
     /// high price) of sell orders maintained by this object.
-    SellOrdersConstIterator endSellOrders() const;
+    SellOrdersConstIterator endSellOrders() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the active buy
     /// order at the highest price in the ordered sequence (from high price
     /// to low price) of buy orders maintained by this object.
-    BuyOrdersConstIterator beginBuyOrders() const;
+    BuyOrdersConstIterator beginBuyOrders() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end buy order in the ordered sequence (from high price to
     /// low price) of buy orders maintained by this object.
-    BuyOrdersConstIterator endBuyOrders() const;
+    BuyOrdersConstIterator endBuyOrders() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ```

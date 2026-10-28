@@ -997,6 +997,7 @@ class map {
         BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
         const COMPARATOR&                        comparator     = COMPARATOR(),
         const ALLOCATOR&                         basicAllocator = ALLOCATOR())
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     : d_compAndAlloc(comparator, basicAllocator)
     , d_tree()
     {
@@ -1021,6 +1022,7 @@ class map {
     map(from_range_t                             ,
         BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
         const ALLOCATOR&                         basicAllocator)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     : d_compAndAlloc(COMPARATOR(), basicAllocator)
     , d_tree()
     {
@@ -1116,7 +1118,9 @@ class map {
     /// `KEY` be `copy-insertable` into this map and the (template
     /// parameter) type `VALUE` be `default-insertable` into this map (see
     /// {Requirements on `KEY` and `VALUE`}).
-    typename add_lvalue_reference<VALUE>::type operator[](const key_type& key);
+    typename add_lvalue_reference<VALUE>::type operator[](const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the mapped-value
     /// associated with the specified `key`; if this `map` does not already
@@ -1128,7 +1132,9 @@ class map {
     /// and the (template parameter) type `VALUE` be `default-insertable`
     /// into this map (see {Requirements on `KEY` and `VALUE`}).
     typename add_lvalue_reference<VALUE>::type operator[](
-                                 BloombergLP::bslmf::MovableRef<key_type> key);
+                                 BloombergLP::bslmf::MovableRef<key_type> key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Return a reference providing modifiable access to the mapped-value
@@ -1147,6 +1153,8 @@ class map {
                                                    LOOKUP_KEY>::value,
         typename add_lvalue_reference<VALUE>::type>::type
     operator [](LOOKUP_KEY&& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1160,7 +1168,9 @@ class map {
     /// otherwise, throw a `std::out_of_range` exception.  Note that this
     /// method may also throw a different kind of exception if the
     /// (user-supplied) comparator throws.
-    typename add_lvalue_reference<VALUE>::type at(const key_type& key);
+    typename add_lvalue_reference<VALUE>::type at(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the
     /// mapped-value associated with a key that is equivalent to the
@@ -1173,7 +1183,9 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         typename add_lvalue_reference<VALUE>::type>::type
-    at(const LOOKUP_KEY& key) {
+    at(const LOOKUP_KEY& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                       BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF {
         // Note: implemented inline due to Sun CC compilation error.
 
         iterator iter = find(key);
@@ -1187,22 +1199,24 @@ class map {
     /// Return an iterator providing modifiable access to the first
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this map, or the `end` iterator if this map is empty.
-    iterator begin() BSLS_KEYWORD_NOEXCEPT;
+    iterator begin() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing modifiable access to the past-the-end
     /// element in the ordered sequence of `value_type` objects maintained
     /// by this map.
-    iterator end() BSLS_KEYWORD_NOEXCEPT;
+    iterator end() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing modifiable access to the last
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this map, or `rend` if this map is empty.
-    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT;
+    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this map.
-    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT;
+    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `value` into this map if a key (the `first`
     /// element) equivalent to that of `value` does not already exist in
@@ -1216,7 +1230,8 @@ class map {
     /// the (template parameter) types `KEY` and `VALUE` both be
     /// `copy-insertable` into this map (see {Requirements on `KEY` and
     /// `VALUE`}).
-    pair<iterator, bool> insert(const value_type& value);
+    pair<iterator, bool> insert(const value_type& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this map the specified `value` if a key (the `first`
     /// element) equivalent to that of `value` does not already exist in
@@ -1229,7 +1244,8 @@ class map {
     /// `VALUE` both be `move-insertable` into this map (see {Requirements
     /// on `KEY` and `VALUE`}).
     pair<iterator, bool> insert(
-                             BloombergLP::bslmf::MovableRef<value_type> value);
+                             BloombergLP::bslmf::MovableRef<value_type> value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if defined(BSLS_PLATFORM_CMP_SUN) && BSLS_PLATFORM_CMP_VERSION < 0x5130
     template <class ALT_VALUE_TYPE>
@@ -1258,6 +1274,7 @@ class map {
                        pair<iterator, bool> >::type
 #endif
     insert(BSLS_COMPILERFEATURES_FORWARD_REF(ALT_VALUE_TYPE) value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // This function has to be implemented inline, in violation of BDE
         // convention, as the MSVC compiler cannot match the out-of-class
@@ -1281,7 +1298,8 @@ class map {
     /// {Requirements on `KEY` and `VALUE`}).  The behavior is undefined
     /// unless `hint` is an iterator in the range `[begin() .. end()]` (both
     /// endpoints included).
-    iterator insert(const_iterator hint, const value_type& value);
+    iterator insert(const_iterator hint, const value_type& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this map the specified `value` (in amortized constant
     /// time if the specified `hint` is a valid immediate successor to
@@ -1297,7 +1315,8 @@ class map {
     /// undefined unless `hint` is an iterator in the range
     /// `[begin() .. end()]` (both endpoints included).
     iterator insert(const_iterator                             hint,
-                    BloombergLP::bslmf::MovableRef<value_type> value);
+                    BloombergLP::bslmf::MovableRef<value_type> value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if defined(BSLS_PLATFORM_CMP_SUN) && BSLS_PLATFORM_CMP_VERSION < 0x5130
     template <class ALT_VALUE_TYPE>
@@ -1331,6 +1350,7 @@ class map {
 #endif
     insert(const_iterator                                    hint,
            BSLS_COMPILERFEATURES_FORWARD_REF(ALT_VALUE_TYPE) value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // This function has to be implemented inline, in violation of BDE
         // convention, as the MSVC compiler cannot match the out-of-class
@@ -1355,7 +1375,8 @@ class map {
     /// refer to a sequence of valid values where `first` is at a position
     /// at or before `last`.
     template <class INPUT_ITERATOR>
-    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last);
+    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this map the value of each `value_type` object in the
     /// specified `range` if the key equivalent of that object is not
@@ -1369,6 +1390,8 @@ class map {
     template <class RANGE>
     BSLSTL_MAP_REQUIRES_CONTAINER_COMPATIBLE_RANGE(RANGE, value_type)
     void insert_range(BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     {
         // Defined inline to avoid Windows errors.
 
@@ -1387,7 +1410,8 @@ class map {
     }
 
 #if defined(BSLS_PLATFORM_CMP_SUN) && BSLS_PLATFORM_CMP_VERSION < 0x5130
-    void insert(const_iterator first, const_iterator last);
+    void insert(const_iterator first, const_iterator last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
         // This method is provided only on Sun to work around a bug in the Sun
         // Studio 12.3 compiler, which prevents us from disabling (at compile
         // time) the overload of 'insert' taking a 'const_iterator' and a
@@ -1408,7 +1432,8 @@ class map {
     /// requires that the (template parameter) types `KEY` and `VALUE` both
     /// be `copy-insertable` into this map (see {Requirements on `KEY` and
     /// `VALUE`}).
-    void insert(std::initializer_list<value_type> values);
+    void insert(std::initializer_list<value_type> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
@@ -1422,12 +1447,14 @@ class map {
     /// `true`.
     template <class BDE_OTHER_TYPE>
     pair<iterator, bool> insert_or_assign(const KEY&       key,
-                                          BDE_OTHER_TYPE&& obj);
+                                          BDE_OTHER_TYPE&& obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     template <class BDE_OTHER_TYPE>
     pair<iterator, bool> insert_or_assign(
                                       BloombergLP::bslmf::MovableRef<KEY> key,
-                                      BDE_OTHER_TYPE&&                    obj);
+                                      BDE_OTHER_TYPE&&                    obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// map, assign the specified `obj` to the value associated with that
@@ -1443,6 +1470,7 @@ class map {
                                                    LOOKUP_KEY>::value,
         pair<iterator, bool> >::type
     insert_or_assign(LOOKUP_KEY&& key, BDE_OTHER_TYPE&& obj)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1487,7 +1515,8 @@ class map {
     template <class BDE_OTHER_TYPE>
     iterator insert_or_assign(const_iterator   hint,
                               const KEY&       key,
-                              BDE_OTHER_TYPE&& obj);
+                              BDE_OTHER_TYPE&& obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// _map, assign the specified `obj` to the value associated with that
@@ -1501,7 +1530,8 @@ class map {
     template <class BDE_OTHER_TYPE>
     iterator insert_or_assign(const_iterator                      hint,
                               BloombergLP::bslmf::MovableRef<KEY> key,
-                              BDE_OTHER_TYPE&&                    obj);
+                              BDE_OTHER_TYPE&&                    obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// _map, assign the specified `obj` to the value associated with that
@@ -1519,7 +1549,7 @@ class map {
         iterator>::type
     insert_or_assign(const_iterator   hint,
                      LOOKUP_KEY&&     key,
-                     BDE_OTHER_TYPE&& obj)
+                     BDE_OTHER_TYPE&& obj) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1572,7 +1602,8 @@ class map {
     /// `VALUE` both be `emplace-constructible` from `args` (see
     /// {Requirements on `KEY` and `VALUE`}).
     template <class... Args>
-    pair<iterator, bool> emplace(Args&&... args);
+    pair<iterator, bool> emplace(Args&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this map a newly-created `value_type` object,
     /// constructed by forwarding `get_allocator()` (if required) and the
@@ -1593,7 +1624,8 @@ class map {
     /// unless `hint` is an iterator in the range `[begin() .. end()]` (both
     /// endpoints included).
     template <class... Args>
-    iterator emplace_hint(const_iterator hint, Args&&... args);
+    iterator emplace_hint(const_iterator hint, Args&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Remove from this map the `value_type` object at the specified
@@ -1604,8 +1636,8 @@ class map {
     /// iterators and references to the removed element and previously saved
     /// values of the `end()` iterator.  The behavior is undefined unless
     /// `position` refers to a `value_type` object in this map.
-    iterator erase(const_iterator position);
-    iterator erase(iterator position);
+    iterator erase(const_iterator position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator erase(iterator position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this map the `value_type` object whose key is equivalent
     /// the specified `key`, if such an entry exists, and return 1;
@@ -1613,7 +1645,7 @@ class map {
     /// key, return 0 with no other effect.   This method invalidates only
     /// iterators and references to the removed element and previously saved
     /// values of the `end()` iterator.
-    size_type erase(const key_type& key);
+    size_type erase(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     template <class t_KEY>
     typename enable_if<
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
@@ -1623,6 +1655,7 @@ class map {
         !is_convertible<BSLS_COMPILERFEATURES_FORWARD_REF(t_KEY),
                         const_iterator>::value,
     size_type>::type erase(BSLS_COMPILERFEATURES_FORWARD_REF(t_KEY) key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Implemented inline due to Sun CC compilation error.
         iterator it = this->find(key);
@@ -1641,7 +1674,8 @@ class map {
     /// `first` and `last` either refer to elements in this map or are the
     /// `end` iterator, and the `first` position is at or before the `last`
     /// position in the ordered sequence provided by this container.
-    iterator erase(const_iterator first, const_iterator last);
+    iterator erase(const_iterator first, const_iterator last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     void swap(map& other) BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(
                                  AllocatorTraits::is_always_equal::value &&
@@ -1674,10 +1708,12 @@ class map {
     /// `KEY` and `VALUE` are `emplace-constructible` from `key` and `args`
     /// respectively.  For C++03, `VALUE` must also be `copy-constructible`.
     template <class... Args>
-    pair<iterator, bool> try_emplace(const KEY& key, Args&&... args);
+    pair<iterator, bool> try_emplace(const KEY& key, Args&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     template <class... Args>
     pair<iterator, bool> try_emplace(BloombergLP::bslmf::MovableRef<KEY> key,
-                                     Args&&...                           args);
+                                     Args&&...                           args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     template<class LOOKUP_KEY, class... Args>
     typename bsl::enable_if<
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
@@ -1686,6 +1722,7 @@ class map {
         !bsl::is_convertible<LOOKUP_KEY&&, iterator>::value,
         pair<iterator, bool> >::type
     try_emplace(LOOKUP_KEY&& key, Args&&... args)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             // Note: implemented inline due to Sun CC compilation error.
 
@@ -1734,17 +1771,20 @@ class map {
     /// `KEY` and `VALUE` are `emplace-constructible` from `key` and `args`
     /// respectively.  For C++03, `VALUE` must also be `copy-constructible`.
     template<class... Args>
-    iterator try_emplace(const_iterator hint, const KEY& key, Args&&... args);
+    iterator try_emplace(const_iterator hint, const KEY& key, Args&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     template <class... Args>
     iterator try_emplace(const_iterator                      hint,
                          BloombergLP::bslmf::MovableRef<KEY> key,
-                         Args&&...                           args);
+                         Args&&...                           args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     template<class LOOKUP_KEY, class... Args>
     typename bsl::enable_if<
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
     try_emplace(const_iterator hint, LOOKUP_KEY&& key, Args&&... args)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             // Note: implemented inline due to Sun CC compilation error.
 
@@ -1790,7 +1830,7 @@ class map {
 
     /// Remove all entries from this map.  Note that the map is empty after
     /// this call, but allocated memory may be retained for future use.
-    void clear() BSLS_KEYWORD_NOEXCEPT;
+    void clear() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // Turn off complaints about necessarily class-defined methods.
     // BDE_VERIFY pragma: push
@@ -1800,7 +1840,7 @@ class map {
     /// object in this map whose key is equivalent to the specified `key`,
     /// if such an entry exists, and the past-the-end (`end`) iterator
     /// otherwise.
-    iterator find(const key_type& key)
+    iterator find(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1817,7 +1857,7 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    find(const LOOKUP_KEY& key)
+    find(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1834,6 +1874,7 @@ class map {
     /// having an equivalent key could be inserted into the ordered sequence
     /// maintained by this map, while preserving its ordering.
     iterator lower_bound(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1854,7 +1895,7 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    lower_bound(const LOOKUP_KEY& key)
+    lower_bound(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1871,6 +1912,7 @@ class map {
     /// inserted into the ordered sequence maintained by this map, while
     /// preserving its ordering.
     iterator upper_bound(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1891,7 +1933,7 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    upper_bound(const LOOKUP_KEY& key)
+    upper_bound(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1910,6 +1952,7 @@ class map {
     /// have the same value.  Note that since a map maintains unique keys,
     /// the range will contain at most one element.
     pair<iterator, iterator> equal_range(const key_type& key)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1939,7 +1982,7 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         pair<iterator, iterator> >::type
-    equal_range(const LOOKUP_KEY& key)
+    equal_range(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1971,46 +2014,55 @@ class map {
     /// Return an iterator providing non-modifiable access to the first
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this map, or the `end` iterator if this map is empty.
-    const_iterator begin() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator begin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in the ordered sequence of `value_type`
     /// objects maintained by this map.
-    const_iterator end() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator end() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// last `value_type` object in the ordered sequence of `value_type`
     /// objects maintained by this map, or `rend` if this map is empty.
-    const_reverse_iterator rbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator rbegin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this map.
-    const_reverse_iterator rend() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator rend() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this map, or the `cend` iterator if this map is empty.
-    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in the ordered sequence of `value_type` objects
     /// maintained by this map.
-    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT;
+    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// last `value_type` object in the ordered sequence of `value_type`
     /// objects maintained by this map, or `crend` if this map is empty.
-    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this map.
-    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this map contains an element whose key is
     /// equivalent to the specified `key`.
-    bool contains(const key_type &key) const;
+    bool contains(const key_type &key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this map contains an element whose key is
     /// equivalent to the specified `key`.
@@ -2019,7 +2071,7 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         bool>::type
-    contains(const LOOKUP_KEY& key) const
+    contains(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2028,10 +2080,12 @@ class map {
 
     /// Return `true` if this map contains no elements, and `false`
     /// otherwise.
-    bool empty() const BSLS_KEYWORD_NOEXCEPT;
+    bool empty() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this map.
-    size_type size() const BSLS_KEYWORD_NOEXCEPT;
+    size_type size() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a theoretical upper bound on the largest number of elements
     /// that this map could possibly hold.  Note that there is no guarantee
@@ -2046,7 +2100,9 @@ class map {
     /// a different kind of exception if the (user-supplied) comparator
     /// throws.
     typename add_lvalue_reference<const VALUE>::type at(const key_type& key)
-                                                                         const;
+                                                                         const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// mapped-value associated with a key that is equivalent to the
@@ -2059,7 +2115,9 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         typename add_lvalue_reference<const VALUE>::type>::type
-    at(const LOOKUP_KEY& key) const {
+    at(const LOOKUP_KEY& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                       BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF {
         // Note: implemented inline due to Sun CC compilation error.
 
         const_iterator iter = find(key);
@@ -2075,13 +2133,13 @@ class map {
     /// otherwise, return a default constructed `key_compare` object.  Note
     /// that this comparator compares objects of type `KEY`, which is the
     /// key part of the `value_type` objects contained in this map.
-    key_compare key_comp() const;
+    key_compare key_comp() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a functor for comparing two `value_type` objects by comparing
     /// their respective keys using `key_comp()`.   Note that this
     /// comparator compares objects of type `value_type` (i.e.,
     /// `bsl::pair<const KEY, VALUE>`).
-    value_compare value_comp() const;
+    value_compare value_comp() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // Turn off complaints about necessarily class-defined methods.
     // BDE_VERIFY pragma: push
@@ -2092,6 +2150,7 @@ class map {
     /// specified `key`, if such an entry exists, and the past-the-end
     /// (`end`) iterator otherwise.
     const_iterator find(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2108,7 +2167,7 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    find(const LOOKUP_KEY& key) const
+    find(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2120,6 +2179,7 @@ class map {
     /// are equivalent to the specified `key`.  Note that since a map
     /// maintains unique keys, the returned value will be either 0 or 1.
     size_type count(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2137,7 +2197,7 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         size_type>::type
-    count(const LOOKUP_KEY& key) const
+    count(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2160,6 +2220,7 @@ class map {
     /// having an equivalent key could be inserted into the ordered sequence
     /// maintained by this map, while preserving its ordering.
     const_iterator lower_bound(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2180,7 +2241,7 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    lower_bound(const LOOKUP_KEY& key) const
+    lower_bound(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2199,6 +2260,7 @@ class map {
     /// could be inserted into the ordered sequence maintained by this map,
     /// while preserving its ordering.
     const_iterator upper_bound(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2219,7 +2281,7 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    upper_bound(const LOOKUP_KEY& key) const
+    upper_bound(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2238,6 +2300,7 @@ class map {
     /// returned iterators will have the same value.  Note that since a map
     /// maintains unique keys, the range will contain at most one element.
     pair<const_iterator, const_iterator> equal_range(const key_type& key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2267,7 +2330,7 @@ class map {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         pair<const_iterator, const_iterator> >::type
-    equal_range(const LOOKUP_KEY& key) const
+    equal_range(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -2444,12 +2507,14 @@ map(std::initializer_list<pair<const KEY, VALUE>>, ALLOC *)
 /// on `KEY` and `VALUE`}).
 template <class KEY, class VALUE, class COMPARATOR, class ALLOCATOR>
 bool operator==(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-                const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+                const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #ifndef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 template <class KEY,  class VALUE,  class COMPARATOR,  class ALLOCATOR>
 bool operator!=(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-                const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+                const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the specified 'lhs' and 'rhs' objects do not have the
     // same value, and 'false' otherwise.  Two 'map' objects 'lhs' and 'rhs' do
     // not have the same value if they do not have the same number of key-value
@@ -2469,13 +2534,15 @@ bool operator!=(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
 template <class KEY, class VALUE, class COMPARATOR, class ALLOCATOR>
 BloombergLP::bslalg::SynthThreeWayUtil::Result<pair<const KEY, VALUE>>
 operator<=>(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-            const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+            const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #else
 
 template <class KEY,  class VALUE,  class COMPARATOR,  class ALLOCATOR>
 bool operator<(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-               const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+               const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the value of the specified 'lhs' map is
     // lexicographically less than that of the specified 'rhs' map, and 'false'
     // otherwise.  Given iterators 'i' and 'j' over the respective sequences
@@ -2490,7 +2557,8 @@ bool operator<(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
 
 template <class KEY,  class VALUE,  class COMPARATOR,  class ALLOCATOR>
 bool operator>(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-               const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+               const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the value of the specified 'lhs' map is
     // lexicographically greater than that of the specified 'rhs' map, and
     // 'false' otherwise.  The value of map 'lhs' is lexicographically greater
@@ -2501,7 +2569,8 @@ bool operator>(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
 
 template <class KEY,  class VALUE,  class COMPARATOR,  class ALLOCATOR>
 bool operator<=(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-                const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+                const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the value of the specified 'lhs' map is
     // lexicographically less than or equal to that of the specified 'rhs' map,
     // and 'false' otherwise.  The value of map 'lhs' is lexicographically less
@@ -2512,7 +2581,8 @@ bool operator<=(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
 
 template <class KEY,  class VALUE,  class COMPARATOR,  class ALLOCATOR>
 bool operator>=(const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
-                const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs);
+                const map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     // Return 'true' if the value of the specified 'lhs' map is
     // lexicographically greater than or equal to that of the specified 'rhs'
     // map, and 'false' otherwise.  The value of map 'lhs' is lexicographically
@@ -2533,7 +2603,8 @@ template <class KEY,
           class ALLOCATOR,
           class PREDICATE>
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::size_type
-erase_if(map<KEY, VALUE, COMPARATOR, ALLOCATOR>& m, PREDICATE predicate);
+erase_if(map<KEY, VALUE, COMPARATOR, ALLOCATOR>& m, PREDICATE predicate)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(m);
 
 /// Exchange the value and comparator of the specified `a` object with those
 /// of the specified `b` object; also exchange the allocator of `a` with
@@ -2708,6 +2779,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::constructFromRange(
                                                           INPUT_ITERATOR first,
                                                           SENTINEL       last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (first == last) {
         return;                                                       // RETURN
     }
@@ -2770,6 +2842,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::constructFromRange(
                                                     size_t         numElements)
 
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE((
         !BloombergLP::bslstl::IteratorUtil
                        ::canCalculateInsertDistance<INPUT_ITERATOR, SENTINEL>()
@@ -2831,6 +2904,7 @@ void map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insertFromRange(
                                                           INPUT_ITERATOR first,
                                                           SENTINEL       last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ///Implementation Notes
     ///--------------------
     // First, consume currently held free nodes.  Free nodes may be available
@@ -2875,6 +2949,7 @@ void map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insertFromRange(
                                                     SENTINEL       last,
                                                     size_t         numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE((
         !BloombergLP::bslstl::IteratorUtil
                        ::canCalculateInsertDistance<INPUT_ITERATOR, SENTINEL>()
@@ -2938,6 +3013,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::map(const map& original)
                                            original.nodeFactory().allocator()))
 , d_tree()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     if (0 < original.size()) {
         nodeFactory().reserveNodes(original.size());
         BloombergLP::bslalg::RbTreeUtil::copyTree(&d_tree,
@@ -2964,6 +3040,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::map(const map&          original,
 : d_compAndAlloc(original.comparator().keyComparator(), basicAllocator)
 , d_tree()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     if (0 < original.size()) {
         nodeFactory().reserveNodes(original.size());
         BloombergLP::bslalg::RbTreeUtil::copyTree(&d_tree,
@@ -2982,6 +3059,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::map(
 , d_tree()
 {
     map& lvalue = original;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lvalue);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(
               nodeFactory().allocator() == lvalue.nodeFactory().allocator())) {
