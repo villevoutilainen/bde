@@ -85,6 +85,8 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_removecv.h>
 #include <bslmf_util.h>
 
+#include <bsls_assert.h>
+
 #include <bsls_compilerfeatures.h>
 #include <bsls_libraryfeatures.h>
 #include <bsls_util.h>
@@ -219,12 +221,14 @@ class ForwardIterator
     /// Return a reference to the current, modifiable element.  The behavior
     /// is undefined if this iterator has the past-the-end value for an
     /// iterator over the underlying sequence.
-    T& operator*() const;
+    T& operator*() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a pointer to the current, modifiable element.  The behavior
     /// is undefined if this iterator has the past-the-end value for an
     /// iterator over the underlying sequence.
-    T *operator->() const;
+    T *operator->() const
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a non-modifiable reference to the implementation object.
     const ITER_IMP& imp() const;

@@ -338,6 +338,7 @@ namespace bsl {
 template <class FIRST, class SECOND>
 inline
 void debugprint(const bsl::pair<FIRST, SECOND>& p)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(p)
 {
     bsls::BslTestUtil::callDebugprint(p.first);
     bsls::BslTestUtil::callDebugprint(p.second);
@@ -348,6 +349,7 @@ void debugprint(const bsl::pair<FIRST, SECOND>& p)
 template <class KEY, class VALUE, class HASH, class EQUAL, class ALLOCATOR>
 void debugprint(const unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>&
                                                                              s)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(s)
 {
     if (s.empty()) {
         printf("<empty>");
@@ -566,6 +568,7 @@ struct IntToPairConverter {
 /// values and mapped values are verified.
 template <class CONTAINER>
 bool verifySpec(const CONTAINER& obj, const char *spec, bool keysOnly = false)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(obj)
 {
     typedef typename CONTAINER::key_type        Key;
     typedef typename CONTAINER::mapped_type     Value;
@@ -746,6 +749,7 @@ struct ExceptionProctor{
     ~ExceptionProctor()
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
             const int LINE = d_line;
             ASSERTV(LINE, d_control, *d_object_p, d_control == *d_object_p);
         }
@@ -785,6 +789,8 @@ struct CompareProctor {
         ASSERTV(d_line, !d_a_p == !d_b_p);
 
         if (d_a_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_a_p);
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_b_p);
             ASSERTV(d_line, *d_a_p, *d_b_p, *d_a_p == *d_b_p);
         }
     }
@@ -1144,16 +1150,26 @@ class TestAllocatorUtil
     static void test(const bsltf::AllocEmplacableTestType& value,
                      const bslma::Allocator&               oa)
     {
-        ASSERTV(&oa == value.arg01().allocator());
-        ASSERTV(&oa == value.arg02().allocator());
-        ASSERTV(&oa == value.arg03().allocator());
-        ASSERTV(&oa == value.arg04().allocator());
-        ASSERTV(&oa == value.arg05().allocator());
-        ASSERTV(&oa == value.arg06().allocator());
-        ASSERTV(&oa == value.arg07().allocator());
-        ASSERTV(&oa == value.arg08().allocator());
-        ASSERTV(&oa == value.arg09().allocator());
-        ASSERTV(&oa == value.arg10().allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg01()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg02()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg03()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg04()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg05()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg06()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg07()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg08()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg09()).allocator());
+        ASSERTV(&oa ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg10()).allocator());
     }
 };
 
@@ -1254,6 +1270,7 @@ void hashAppend(HASHALG& hashAlg, const EraseAmbiguityTestType& object)
 void runErasure(
                bsl::unordered_multimap<EraseAmbiguityTestType, int>& container,
                EraseAmbiguityTestType                                element)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     bsl::unordered_multimap<EraseAmbiguityTestType, int>::iterator it =
                                                        container.find(element);
@@ -1393,6 +1410,7 @@ template <class Container>
 void testTransparentComparator(Container& container,
                                bool       isTransparent,
                                int        initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     typedef typename Container::const_local_iterator LocalIterator;
     typedef typename Container::const_iterator       Iterator;
@@ -1539,6 +1557,7 @@ template <class t_CONTAINER>
 void testTransparentComparatorMutable(const t_CONTAINER& container,
                                       bool               isTransparent,
                                       int                initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     typedef typename t_CONTAINER::size_type Count;
 
@@ -1723,11 +1742,14 @@ class TestDriver {
     /// first invalid character, and a negative value otherwise.  Note that
     /// this function is used to implement `gg` as well as allow for
     /// verification of syntax error detection.
-    static int ggg(Obj *object, const char *spec, int verbose = 1);
+    static int ggg(Obj *object, const char *spec, int verbose = 1)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified object with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return true if exactly the first specified `count` values of the
     /// specified array `values` match all of the objects in the specified
@@ -1740,6 +1762,7 @@ class TestDriver {
     static void storeFirstNElemAddr(typename Obj::const_pointer *pointers,
                                     const Obj&                   object,
                                     size_t                       n)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(object)
     {
         size_t i = 0;
 
@@ -1753,6 +1776,7 @@ class TestDriver {
     int checkFirstNElemAddr(typename Obj::const_pointer *pointers,
                             const Obj&                   object,
                             size_t                       n)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(object)
     {
         int    count = 0;
         size_t i     = 0;
@@ -1774,6 +1798,7 @@ class TestDriver {
     static Iter primaryManipulator(Obj   *container,
                                    int    identifier,
                                    ALLOC  allocator)
+                                   BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(container)
     {
         typedef bsl::pair<KEY, VALUE> TValueType;
 
@@ -1793,8 +1818,10 @@ class TestDriver {
 
     /// Return the iterator relating to the specified `obj` with specified
     /// index `idx`.  The behavior is undefined unless `idx < obj.size()`.
-    static CIter getIterForIndex(const Obj& obj, size_t idx);
-    static Iter  getIterForIndex(      Obj& obj, size_t idx);
+    static CIter getIterForIndex(const Obj& obj, size_t idx)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
+    static Iter  getIterForIndex(      Obj& obj, size_t idx)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
 
     template <class T>
     static bslmf::MovableRef<T> testArg(T& t, bsl::true_type )
@@ -1825,7 +1852,8 @@ class TestDriver {
               int NV1,
               int NV2,
               int NV3>
-    static void testCase30a_RunTest(Obj *target);
+    static void testCase30a_RunTest(Obj *target)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target);
 
     /// Call `emplace_hint` on the specified `target` container and verify
     /// that a value was inserted.  Forward (template parameters)
@@ -1844,7 +1872,8 @@ class TestDriver {
               int NV1,
               int NV2,
               int NV3>
-    static Iter testCase31a_RunTest(Obj *target, CIter hint);
+    static Iter testCase31a_RunTest(Obj *target, CIter hint)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target);
 #endif
   public:
     // TEST CASES
@@ -3319,6 +3348,7 @@ void TestDriver<KEY, VALUE, HASH, EQUAL, ALLOC>::testCase32_outOfLine()
 
                 ASSERTV(objPtr);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                 Obj& mX = *objPtr; const Obj& X = mX;
 
                 ASSERTV(LENGTH == X.size());
@@ -3650,7 +3680,7 @@ void TestDriver<KEY, VALUE, HASH, EQUAL, ALLOC>::testCase32_inline()
             ASSERT(p);
             ASSERT(!p->empty() && 4 == p->size());
         } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
-        const Obj& X = *p;
+        const Obj& X = BSLS_ASSERT_CONVEYOR_REF(*p);
 #ifdef BDE_BUILD_TARGET_EXC
         ASSERTV(NameOf<KEY>(), numThrows, ctor, !oaPassed || 0 < numThrows);
 #endif
@@ -5493,6 +5523,7 @@ void TestDriver<KEY, VALUE, HASH, EQUAL, ALLOC>::testCase27()
                     bsl::allocator<ValueType> sza(&za);
 
                     Obj *objPtr = new (fa) Obj(soa);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr; const Obj& X = gg(&mX, SPEC2);
 
                     Obj *srcPtr = 0;
@@ -5995,6 +6026,7 @@ void TestDriver<KEY, VALUE, HASH, EQUAL, ALLOC>::testCase26()
                 bslma::TestAllocator& noa = *othAllocatorPtr;
                 bsl::allocator<ValueType> soa(&oa);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                 Obj& mX = *objPtr; const Obj& X = mX;
 
                 // Verify the value of the object.
@@ -7568,8 +7600,10 @@ void TestDriver<KEY, VALUE, HASH, EQUAL, ALLOC>::testCase13()
                     ASSERT(X.end() == it);
 
                 }
-                ASSERT(expectedCount == mX.count(VALUES[c - 'A'].first));
-                ASSERT(expectedCount ==  X.count(VALUES[c - 'A'].first));
+                ASSERT(expectedCount == mX.count(
+                          BSLS_ASSERT_CONVEYOR_REF(VALUES[c - 'A'].first)));
+                ASSERT(expectedCount ==  X.count(
+                          BSLS_ASSERT_CONVEYOR_REF(VALUES[c - 'A'].first)));
             }
 
             {
@@ -7773,7 +7807,7 @@ void TestDriver<KEY, VALUE, HASH, EQUAL, ALLOC>::testCase12()
                 }
             } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
 
-            const Obj& X = *objPtr;
+            const Obj& X = BSLS_ASSERT_CONVEYOR_REF(*objPtr);
 
             ASSERTV(0 == noa.numBlocksTotal());
 

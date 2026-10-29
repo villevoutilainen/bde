@@ -227,13 +227,15 @@ class HashTableIterator {
     /// template parameter `VALUE_TYPE`) of the node at which this iterator
     /// is positioned.  The behavior is undefined unless the iterator refers
     /// to a valid (not yet erased) node the list.
-    reference operator*() const;
+    reference operator*() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the address of the value (of the template parameter
     /// `VALUE_TYPE`) of the element at which this iterator is positioned.
     /// The behavior is undefined unless the iterator refers to a valid (not
     /// yet erased) node the list.
-    pointer operator->() const;
+    pointer operator->() const
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return the address of the node at which this iterator is positioned
     /// in the list, or 0 if this iterator is positioned after the end of a

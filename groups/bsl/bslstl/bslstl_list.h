@@ -815,14 +815,16 @@ class List_Iterator {
     /// iterator is in the range `[begin() .. end())` for some list (i.e.,
     /// the iterator is not singular, is not `end()`, and has not been
     /// invalidated).
-    reference operator*() const;
+    reference operator*() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a pointer providing modifiable access to the element
     /// referenced by this iterator.  The behavior is undefined unless this
     /// iterator is in the range `[begin() .. end())` for some list (i.e.,
     /// the iterator is not singular, is not `end()`, and has not been
     /// invalidated).
-    pointer operator->() const;
+    pointer operator->() const
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 };
 
 // FREE OPERATORS

@@ -1145,7 +1145,8 @@ class multimap {
     /// that the (template parameter) types `KEY` and `VALUE` both be
     /// `copy-insertable` into this multimap (see {Requirements on `KEY` and
     /// `VALUE`}).
-    multimap& operator=(std::initializer_list<value_type> values);
+    multimap& operator=(std::initializer_list<value_type> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Return an iterator providing modifiable access to the first

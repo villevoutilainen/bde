@@ -474,6 +474,7 @@ namespace bsl {
 template <class FIRST, class SECOND>
 inline
 void debugprint(const pair<FIRST, SECOND>& p)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(p)
 {
     bsls::BslTestUtil::callDebugprint(p.first);
     bsls::BslTestUtil::callDebugprint(p.second);
@@ -482,6 +483,7 @@ void debugprint(const pair<FIRST, SECOND>& p)
 // map-specific print function.
 template <class KEY, class VALUE, class COMP, class ALLOC>
 void debugprint(const bsl::map<KEY, VALUE, COMP, ALLOC>& s)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(s)
 {
     if (s.empty()) {
         printf("<empty>");
@@ -519,6 +521,7 @@ template <class CONTAINER, class VALUES>
 int verifyContainer(const CONTAINER& container,
                     const VALUES&    expectedValues,
                     size_t           expectedSize)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     ASSERTV(expectedSize, container.size(), expectedSize == container.size());
 
@@ -597,6 +600,7 @@ struct ExceptionProctor {
     ~ExceptionProctor()
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
             const int LINE = d_line;
             ASSERTV(LINE, d_control, *d_object_p, d_control == *d_object_p);
         }
@@ -732,6 +736,8 @@ struct TransparentComparator
     template <class LHS, class RHS>
     bool operator()(const LHS& lhs, const RHS& rhs) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs < rhs;
     }
 };
@@ -828,6 +834,7 @@ template <class Container>
 void testTransparentComparator(Container& container,
                                bool       isTransparent,
                                int        initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     typedef typename Container::const_iterator Iterator;
     typedef typename Container::size_type      Count;
@@ -993,6 +1000,7 @@ template <class t_CONTAINER>
 void testTransparentComparatorMutable(const t_CONTAINER& container,
                                       bool               isTransparent,
                                       int                initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     typedef typename t_CONTAINER::size_type      Count;
     typedef typename t_CONTAINER::iterator       Iterator;
@@ -1152,6 +1160,8 @@ struct TransparentComparatorWithMultiValueEqualRange {
     /// `rhs`, and `false` otherwise.
     bool operator()(const bsl::string& lhs, const bsl::string& rhs) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs < rhs;
     }
 
@@ -1159,6 +1169,7 @@ struct TransparentComparatorWithMultiValueEqualRange {
     /// the specified `c`, and `false` otherwise.
     bool operator()(const bsl::string& s, char c) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
         return s.length() == 0 || s[0] < c;
     }
 
@@ -1166,6 +1177,7 @@ struct TransparentComparatorWithMultiValueEqualRange {
     /// the specified `s`, and `false` otherwise.
     bool operator()(char c, const bsl::string& s) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
         return s.length() != 0 && c < s[0];
     }
 };
@@ -1355,16 +1367,26 @@ class TestAllocatorUtil {
                      const bsltf::AllocEmplacableTestType& value,
                      const bslma::Allocator&               allocator)
     {
-        ASSERTV(line, &allocator == value.arg01().allocator());
-        ASSERTV(line, &allocator == value.arg02().allocator());
-        ASSERTV(line, &allocator == value.arg03().allocator());
-        ASSERTV(line, &allocator == value.arg04().allocator());
-        ASSERTV(line, &allocator == value.arg05().allocator());
-        ASSERTV(line, &allocator == value.arg06().allocator());
-        ASSERTV(line, &allocator == value.arg07().allocator());
-        ASSERTV(line, &allocator == value.arg08().allocator());
-        ASSERTV(line, &allocator == value.arg09().allocator());
-        ASSERTV(line, &allocator == value.arg10().allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg01()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg02()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg03()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg04()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg05()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg06()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg07()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg08()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg09()).allocator());
+        ASSERTV(line, &allocator ==
+                      BSLS_ASSERT_CONVEYOR_REF(value.arg10()).allocator());
     }
 };
 
@@ -1457,6 +1479,7 @@ bool operator<(const EraseAmbiguityTestType& lhs,
 /// of the `erase` method call.
 void runErasure(bsl::map<EraseAmbiguityTestType, int>& container,
                 EraseAmbiguityTestType                 element)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     bsl::map<EraseAmbiguityTestType, int>::iterator it =
                                                        container.find(element);
@@ -1728,11 +1751,14 @@ class TestDriver {
     /// negative value otherwise.  Note that this function is used to
     /// implement `gg` as well as allow for verification of syntax error
     /// detection.
-    static int ggg(Obj *object, const char *spec, bool verbose = true);
+    static int ggg(Obj *object, const char *spec, bool verbose = true)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified `object` with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Insert into the specified `container` the `pair` object indicated by
     /// the specified `identifier`, ensuring that the overload of the
@@ -1741,7 +1767,8 @@ class TestDriver {
     /// primary manipulator.
     static pair<Iter, bool> primaryManipulator(Obj   *container,
                                                int    identifier,
-                                               ALLOC  allocator);
+                                               ALLOC  allocator)
+                                  BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(container);
 
     template <class T>
     static bslmf::MovableRef<T> testArg(T& t, bsl::true_type)
@@ -1791,7 +1818,8 @@ class TestDriver {
               int NV1,
               int NV2,
               int NV3>
-    static void testCase31a_RunTest(Obj *target, bool inserted);
+    static void testCase31a_RunTest(Obj *target, bool inserted)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target);
 
     /// Call `emplace_hint` on the specified `target` container with the
     /// specified `hint` and verify that a value was newly inserted if and
@@ -1828,7 +1856,8 @@ class TestDriver {
               int NV1,
               int NV2,
               int NV3>
-    static Iter testCase32a_RunTest(Obj *target, CIter hint, bool inserted);
+    static Iter testCase32a_RunTest(Obj *target, CIter hint, bool inserted)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target);
 #endif
 
   public:

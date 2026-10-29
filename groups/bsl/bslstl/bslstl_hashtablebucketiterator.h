@@ -242,14 +242,16 @@ class HashTableBucketIterator {
     /// a valid (not yet erased) element in a hash table bucket.  Note that
     /// this iterator is invalidated when the underlying hash table is
     /// rehashed.
-    reference operator*() const;
+    reference operator*() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the address of the element (of the template parameter
     /// `VALUE_TYPE`) at which this iterator is positioned.  The behavior is
     /// undefined unless the iterator refers to a valid (not yet erased)
     /// element a hash table bucket.  Note that this iterator is invalidated
     /// when the underlying hash table is rehashed.
-    pointer operator->() const;
+    pointer operator->() const
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return the address of the node holding the element at which this
     /// iterator is positioned, or 0 if this iterator is positioned after

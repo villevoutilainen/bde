@@ -248,7 +248,8 @@ class DequeIterator {
     /// Return a reference to the parameterized `VALUE_TYPE` object pointed
     /// to by this iterator.  Note that this value is modifiable if
     /// `VALUE_TYPE` is modifiable, and non-modifiable if it is not.
-    VALUE_TYPE& operator*() const;
+    VALUE_TYPE& operator*() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return an iterator pointing the element at the specified `offset`
     /// after this iterator.
@@ -347,7 +348,8 @@ class DequeIterator<VALUE_TYPE, 1> {
     void valuePtrIncrement();
 
     // ACCESSORS
-    VALUE_TYPE& operator*() const;
+    VALUE_TYPE& operator*() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     DequeIterator operator+(std::ptrdiff_t offset) const;
     DequeIterator operator-(std::ptrdiff_t offset) const;
     std::ptrdiff_t operator-(const DequeIterator& rhs) const;

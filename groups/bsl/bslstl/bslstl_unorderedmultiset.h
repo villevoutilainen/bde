@@ -1181,7 +1181,8 @@ class unordered_multiset
     /// providing modifiable access to this object.  This method requires
     /// that the (template parameter) type `KEY` be `copy-insertable` into
     /// this unordered multiset (see {Requirements on `KEY`}).
-    unordered_multiset& operator=(std::initializer_list<KEY> values);
+    unordered_multiset& operator=(std::initializer_list<KEY> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Return an iterator providing modifiable access to the first

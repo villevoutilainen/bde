@@ -1535,7 +1535,8 @@ class unordered_map {
     /// initializer list `rhs`, and return a reference providing modifiable
     /// access to this object.  This method requires that the (template
     /// parameter) type `value_type` be `copy-insertable` into this list.
-    unordered_map& operator=(std::initializer_list<value_type> rhs);
+    unordered_map& operator=(std::initializer_list<value_type> rhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Return a reference providing modifiable access to the mapped-value

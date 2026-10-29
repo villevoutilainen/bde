@@ -424,6 +424,7 @@ namespace bsl {
 template <class FIRST, class SECOND>
 inline
 void debugprint(const pair<FIRST, SECOND>& p)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(p)
 {
     bsls::BslTestUtil::callDebugprint(p.first);
     bsls::BslTestUtil::callDebugprint(p.second);
@@ -432,6 +433,7 @@ void debugprint(const pair<FIRST, SECOND>& p)
 // map-specific print function.
 template <class KEY, class VALUE, class COMP, class ALLOC>
 void debugprint(const bsl::map<KEY, VALUE, COMP, ALLOC>& s)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(s)
 {
     if (s.empty()) {
         printf("<empty>");
@@ -508,6 +510,7 @@ struct ExceptionProctor {
     ~ExceptionProctor()
     {
         if (d_object_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
             const int LINE = d_line;
             ASSERTV(LINE, d_control, *d_object_p, d_control == *d_object_p);
         }
@@ -907,11 +910,14 @@ class TestDriver {
     /// negative value otherwise.  Note that this function is used to
     /// implement `gg` as well as allow for verification of syntax error
     /// detection.
-    static int ggg(Obj *object, const char *spec, bool verbose = true);
+    static int ggg(Obj *object, const char *spec, bool verbose = true)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified `object` with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Load into the specified `pointers` array, in order, the addresses
     /// that provide non-modifiable access to the specified initial `n`
@@ -920,7 +926,8 @@ class TestDriver {
     /// `pointers` is at least `n`.
     static void storeFirstNElemAddr(const typename Obj::value_type *pointers[],
                                     const Obj&                      object,
-                                    size_t                          n);
+                                    size_t                          n)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
     /// Return the number of items in the specified `pointers` array whose
     /// values, in order, are not the same as the addresses that provide
@@ -930,7 +937,8 @@ class TestDriver {
     /// is at least `n`.
     static int checkFirstNElemAddr(const typename Obj::value_type *pointers[],
                                    const Obj&                      object,
-                                   size_t                          n);
+                                   size_t                          n)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
     /// Insert into the specified `container` the `pair` object indicated by
     /// the specified `identifier`, ensuring that the overload of the
@@ -939,7 +947,8 @@ class TestDriver {
     /// primary manipulator.
     static pair<Iter, bool> primaryManipulator(Obj   *container,
                                                int    identifier,
-                                               ALLOC  allocator);
+                                               ALLOC  allocator)
+                                  BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(container);
 
   public:
     // TEST CASES
@@ -1266,6 +1275,7 @@ void TestDriver<KEY, VALUE, COMP, ALLOC>::testCase28_dispatch()
                     const char CONFIG = cfg;  // how we specify the allocator
 
                     Obj *objPtr = new (foa) Obj(oa);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X  = gg(&mX, SPEC2);
 
                     bslma::TestAllocator& roa = 'a' == CONFIG ? zoa : ooa;

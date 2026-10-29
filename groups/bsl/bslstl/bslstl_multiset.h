@@ -1017,7 +1017,8 @@ class multiset {
     /// modifiable access to this object.  This method requires that the
     /// (template parameter) type `KEY` be `copy-insertable` into this
     /// multiset (see {Requirements on `KEY`}).
-    multiset& operator=(std::initializer_list<KEY> values);
+    multiset& operator=(std::initializer_list<KEY> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Return an iterator providing modifiable access to the first

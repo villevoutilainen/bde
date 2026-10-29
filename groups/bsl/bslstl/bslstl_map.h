@@ -1106,7 +1106,8 @@ class map {
     /// requires that the (template parameter) types `KEY` and `VALUE` both
     /// be `copy-insertable` into this map (see {Requirements on `KEY` and
     /// `VALUE`}).
-    map& operator=(std::initializer_list<value_type> values);
+    map& operator=(std::initializer_list<value_type> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Return a reference providing modifiable access to the mapped-value

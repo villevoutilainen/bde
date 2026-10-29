@@ -1130,7 +1130,8 @@ class unordered_multimap {
     /// that the (template parameter) types `KEY` and `VALUE` both be
     /// `copy-insertable` into this unordered multimap (see {Requirements on
     /// `KEY` and `VALUE`}).
-    unordered_multimap& operator=(std::initializer_list<value_type> values);
+    unordered_multimap& operator=(std::initializer_list<value_type> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Return an iterator providing modifiable access to the first

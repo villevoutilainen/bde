@@ -285,12 +285,14 @@ class TreeIterator
     /// parameterized `VALUE`) of the element at which this iterator is
     /// positioned.  The behavior is undefined unless this iterator is at a
     /// valid position in the tree.
-    reference operator*() const;
+    reference operator*() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the address of the value (of the parameterized `VALUE`) of
     /// the element at which this iterator is positioned.  The behavior is
     /// undefined unless this iterator is at a valid position in the tree.
-    pointer operator->() const;
+    pointer operator->() const
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return the address of the non-modifiable tree node at which this
     /// iterator is positioned, or 0 if this iterator is not at a valid
