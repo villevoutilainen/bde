@@ -315,6 +315,48 @@ void testMacroHandling()
     #ifdef BSLS_ASSERT_UNREACHABLE_DISABLED_IMP
         ASSERT(0 == "BSLS_ASSERT_UNREACHABLE_DISABLED_IMP is defined!");
     #endif
+    #ifdef BSLS_ASSERT_ASSERT_LABEL_IMP
+        ASSERT(0 == "BSLS_ASSERT_ASSERT_LABEL_IMP is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_OBJECT
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_OBJECT is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_POST
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_POST is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_REF
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_REF is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_REQUIRES
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_REQUIRES is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_REQUIRES_PTR
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_REQUIRES_PTR is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_REQUIRES_THIS is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_RESULT_OBJECT
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_RESULT_OBJECT is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_TRUST_PRE
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_TRUST_PRE is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_NONCONVEYOR
+        ASSERT(0 == "BSLS_ASSERT_NONCONVEYOR is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_NONCONVEYOR_IMP
+        ASSERT(0 == "BSLS_ASSERT_NONCONVEYOR_IMP is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_OPT_NONCONVEYOR
+        ASSERT(0 == "BSLS_ASSERT_OPT_NONCONVEYOR is defined!");
+    #endif
+    #ifdef BSLS_ASSERT_SAFE_NONCONVEYOR
+        ASSERT(0 == "BSLS_ASSERT_SAFE_NONCONVEYOR is defined!");
+    #endif
     #ifdef BSLS_ASSERT_UNREACHABLE_IMP
         ASSERT(0 == "BSLS_ASSERT_UNREACHABLE_IMP is defined!");
     #endif
@@ -435,6 +477,20 @@ void testMacroHandling()
     #define BSLS_ASSERT_SAFE_UNREACHABLE 17
     #define BSLS_ASSERT_UNREACHABLE 17
     #define BSLS_ASSERT_UNREACHABLE_DISABLED_IMP 17
+    #define BSLS_ASSERT_ASSERT_LABEL_IMP 17
+    #define BSLS_ASSERT_CONVEYOR_OBJECT 17
+    #define BSLS_ASSERT_CONVEYOR_POST 17
+    #define BSLS_ASSERT_CONVEYOR_REF 17
+    #define BSLS_ASSERT_CONVEYOR_REQUIRES 17
+    #define BSLS_ASSERT_CONVEYOR_REQUIRES_PTR 17
+    #define BSLS_ASSERT_CONVEYOR_REQUIRES_THIS 17
+    #define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT 17
+    #define BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF 17
+    #define BSLS_ASSERT_CONVEYOR_TRUST_PRE 17
+    #define BSLS_ASSERT_NONCONVEYOR 17
+    #define BSLS_ASSERT_NONCONVEYOR_IMP 17
+    #define BSLS_ASSERT_OPT_NONCONVEYOR 17
+    #define BSLS_ASSERT_SAFE_NONCONVEYOR 17
     #define BSLS_ASSERT_UNREACHABLE_IMP 17
     #define BSLS_ASSERT_OPT_UNREACHABLE 17
     #define BSLS_ASSERT_VALIDATE_DISABLED_MACROS 17
@@ -571,6 +627,49 @@ void testMacroHandling()
     #endif
     #ifdef BSLS_ASSERT_UNREACHABLE_DISABLED_IMP
         ASSERT(0 == "BSLS_ASSERT_UNREACHABLE_DISABLED_IMP is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_ASSERT_LABEL_IMP
+        ASSERT(0 == "BSLS_ASSERT_ASSERT_LABEL_IMP is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_OBJECT
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_OBJECT is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_POST
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_POST is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_REF
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_REF is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_REQUIRES
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_REQUIRES is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_REQUIRES_PTR
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_REQUIRES_PTR is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_REQUIRES_THIS is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_RESULT_OBJECT
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_RESULT_OBJECT is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
+        ASSERT(0 ==
+               "BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_CONVEYOR_TRUST_PRE
+        ASSERT(0 == "BSLS_ASSERT_CONVEYOR_TRUST_PRE is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_NONCONVEYOR
+        ASSERT(0 == "BSLS_ASSERT_NONCONVEYOR is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_NONCONVEYOR_IMP
+        ASSERT(0 == "BSLS_ASSERT_NONCONVEYOR_IMP is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_OPT_NONCONVEYOR
+        ASSERT(0 == "BSLS_ASSERT_OPT_NONCONVEYOR is still defined!");
+    #endif
+    #ifdef BSLS_ASSERT_SAFE_NONCONVEYOR
+        ASSERT(0 == "BSLS_ASSERT_SAFE_NONCONVEYOR is still defined!");
     #endif
     #ifdef BSLS_ASSERT_UNREACHABLE_IMP
         ASSERT(0 == "BSLS_ASSERT_UNREACHABLE_IMP is still defined!");
