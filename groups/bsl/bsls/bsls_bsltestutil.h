@@ -401,8 +401,11 @@ BSLS_IDENT("$Id: $")
 // }
 // ```
 
-#include <bsls_assert.h>
 #include <bsls_platform.h>
+
+#if defined(__cpp_contract_control_objects) && defined(BSLS_ASSERT_CONVEYOR)
+#include <contracts>
+#endif
 
 #if defined(BSLS_PLATFORM_CMP_MSVC)
 #   include <stddef.h>
@@ -759,7 +762,13 @@ void BslTestUtil::callDebugprint(const TYPE&  obj,
         BloombergLP::bsls::BslTestUtil::printStringNoFlush(leadingString);
     }
 
-    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
+#if defined(__cpp_contract_control_objects) && defined(BSLS_ASSERT_CONVEYOR)
+    // 'BSLS_ASSERT_CONVEYOR_OBJECT(&obj)', spelled out: this component must
+    // not include 'bsls_assert', whose macros the 'bsls_*_macroreset' test
+    // drivers check stay undefined.
+    contract_assert<std::contracts::never_proven_conveyor_v>(
+                                                 std::is_object_address(&obj));
+#endif
     debugprint(obj);
 
     if (trailingString) {
