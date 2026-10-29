@@ -431,11 +431,11 @@ class MyContainer {
     /// `newCapacity`.  Note that the capacity of a vector is the
     /// maximum number of elements it can accommodate without
     /// reallocation.  The actual storage allocated may be higher.
-    void reserve(std::size_t newCapacity);
+    void reserve(std::size_t newCapacity) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append the specified `value` at the past-the-end position in
     /// this container, increasing the container's capacity if needed.
-    void push_back(const VALUE_TYPE& value);
+    void push_back(const VALUE_TYPE& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ...
 
@@ -443,14 +443,14 @@ class MyContainer {
 
     /// Return an iterator providing non-modifiable access to the first
     /// element in this container.
-    ConstIterator begin() const;
+    ConstIterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in this container.
-    ConstIterator end() const;
+    ConstIterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this container.
-    std::size_t size() const;
+    std::size_t size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ...
 };
@@ -585,7 +585,8 @@ std::size_t MyContainer<VALUE_TYPE>::size() const
 /// has the same value as the corresponding element in `rhs`.
 template <class VALUE_TYPE>
 bool operator==(const MyContainer<VALUE_TYPE>& lhs,
-                const MyContainer<VALUE_TYPE>& rhs);
+                const MyContainer<VALUE_TYPE>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have
 /// the same value, and `false` otherwise.  Two `MyContainer` objects do
@@ -594,7 +595,8 @@ bool operator==(const MyContainer<VALUE_TYPE>& lhs,
 /// corresponding element in `rhs`.
 template <class VALUE_TYPE>
 bool operator!=(const MyContainer<VALUE_TYPE>& lhs,
-                const MyContainer<VALUE_TYPE>& rhs);
+                const MyContainer<VALUE_TYPE>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 // ```
 // Next, we implement the equality comparison operators using
 // `bslalg::RangeCompare::equal`:

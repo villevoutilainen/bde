@@ -892,7 +892,7 @@ int main(int argc, char *argv[])
 
                 ASSERTV(CONFIG, 2 * sizeof(Obj) == fa.numBytesInUse());
 
-                Obj& mX = *objPtr; const Obj& X = mX;
+                Obj& mX = BSLS_ASSERT_CONVEYOR_REF(*objPtr); const Obj& X = mX;
 
                 // Verify the value of the object.
                 ASSERTV(CONFIG, X, ZZ, X == ZZ);
@@ -1016,7 +1016,8 @@ int main(int argc, char *argv[])
 
                     ASSERTV(CONFIG, 2 * sizeof(Obj) == fa.numBytesInUse());
 
-                    Obj& mX = *objPtr; const Obj& X = mX;
+                    Obj& mX = BSLS_ASSERT_CONVEYOR_REF(*objPtr);
+                    const Obj& X = mX;
 
                     // Verify the value of the object.
                     ASSERTV(VALUE, CONFIG, X, ZZ, X == ZZ);
@@ -1514,7 +1515,8 @@ int main(int argc, char *argv[])
 
                 ASSERTV(LINE, CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
-                Obj& mX = *objPtr;  const Obj& X = mX;
+                Obj& mX = BSLS_ASSERT_CONVEYOR_REF(*objPtr);
+                const Obj& X = mX;
 
                 ASSERTV(int(Z), int(X),  Z == X);
                 ASSERTV(int(Z), int(ZZ), Z == ZZ);
@@ -1763,7 +1765,8 @@ int main(int argc, char *argv[])
 
                 ASSERTV(LINE, CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
-                Obj& mX = *objPtr;  const Obj& X = mX;
+                Obj& mX = BSLS_ASSERT_CONVEYOR_REF(*objPtr);
+                const Obj& X = mX;
 
                 // Verify the object's attribute values.
                 ASSERTV(CONFIG, VALUE, int(X), VALUE == int(X));
@@ -1939,7 +1942,8 @@ int main(int argc, char *argv[])
 
             ASSERTV(CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
-            Obj& mX = *objPtr;  const Obj& X = mX;
+            Obj& mX = BSLS_ASSERT_CONVEYOR_REF(*objPtr);
+            const Obj& X = mX;
 
             // Verify any attribute allocators are installed properly.
             ASSERTV(CONFIG, &oa, X.allocator(), &oa == X.allocator());

@@ -200,7 +200,7 @@ class Stack {
     // MANIPULATORS
 
     /// Add the specified `value` to the top of the stack.
-    void push(void *value)
+    void push(void *value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(CAPACITY != d_size);
 
@@ -210,7 +210,7 @@ class Stack {
 
     /// Remove the top value from the stack.  The behavior is undefined
     /// unless the stack is not empty.
-    void pop()
+    void pop() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(0 != d_size);
 
@@ -226,7 +226,7 @@ class Stack {
     int size() { return d_size; }
 
     /// Return the top value in the stack.
-    void *top()
+    void *top() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(0 != d_size);
 
@@ -348,7 +348,8 @@ CheckedResource::~CheckedResource()
 // PRIVATE VIRTUAL METHODS
 void *CheckedResource::do_allocate(std::size_t bytes, std::size_t alignment)
 {
-    BSLS_ASSERT_OPT(d_nextBlock < d_blocks + k_MAX_OUTSTANDING_BLOCKS);
+    BSLS_ASSERT_OPT_NONCONVEYOR(d_nextBlock <
+                                d_blocks + k_MAX_OUTSTANDING_BLOCKS);
 
     void *block_p = Base::allocate(bytes);
 
@@ -425,7 +426,9 @@ class TestDriver {
                            Stack *usedBlocks,
                            Stack *freeBlocks,
                            int    numAllocs,
-                           int    numDealloc);
+                           int    numDealloc)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(usedBlocks)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(freeBlocks);
 
     /// Perform allocations and deallocations on the specified `result` such
     /// that it will be left with the specified `numBlocks` number of free
@@ -1700,17 +1703,17 @@ void TestDriver<VALUE>::testCase2()
 
         /// Remove the top element from this stack.  The behavior is
         /// undefined unless `1 <= size()`.
-        void pop();
+        void pop() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 //
         // ACCESSORS
 
         /// Return the value of the element on the top of this stack.  The
         /// behavior is undefined unless `1 <= size()`.
-        int top();
+        int top() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 //
 
         /// Return the number of elements in this stack.
-        std::size_t size();
+        std::size_t size() BSLS_KEYWORD_CONVEYOR;
     };
 // ```
 // Now, we define the implementation of the stack.  Notice how
@@ -1760,7 +1763,7 @@ void TestDriver<VALUE>::testCase2()
     }
 //
     template <class ALLOCATOR>
-    std::size_t my_Stack<ALLOCATOR>::size()
+    std::size_t my_Stack<ALLOCATOR>::size() BSLS_KEYWORD_CONVEYOR
     {
         return d_size;
     }

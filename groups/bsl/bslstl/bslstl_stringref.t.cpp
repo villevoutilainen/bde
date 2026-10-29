@@ -2310,6 +2310,7 @@ int absMmixRandNum()
 template <class CHAR_TYPE>
 bool areEqual(const bsl::basic_string<CHAR_TYPE>& lhs,
               bsl::basic_string_view<CHAR_TYPE>   rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
 {
     if (lhs.length() != rhs.length()) {
         return false;                                                 // RETURN
@@ -2329,6 +2330,7 @@ bool areEqual(const bsl::basic_string<CHAR_TYPE>& lhs,
 template <class CHAR_TYPE>
 bool areEqual(const bsl::basic_string<CHAR_TYPE>& lhs,
               bslstl::StringRefImp<CHAR_TYPE>     rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
 {
     if (lhs.length() != rhs.length()) {
         return false;                                                 // RETURN
@@ -2390,6 +2392,7 @@ namespace bsl {
 
 template <class CHAR>
 void debugprint(const basic_string<CHAR>& value)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value)
 {
     BSLMF_ASSERT(sizeof(CHAR) <= sizeof(int));
 
@@ -5884,7 +5887,8 @@ int main(int argc, char *argv[])
             // of section for explanation.
 
             // Ensure += returns correctly
-            LOOP2_ASSERT(LINE, RESULT, RESULT == (s1 += X2));
+            LOOP2_ASSERT(LINE, RESULT,
+                         RESULT == BSLS_ASSERT_CONVEYOR_REF(s1 += X2));
             // Ensure += left operand has proper value afterwards
             LOOP3_ASSERT(LINE, RESULT, s1, RESULT == s1);
         }
@@ -7390,7 +7394,10 @@ int main(int argc, char *argv[])
         eqv.reserve(k_NUM_STRINGREFS);
         eqv.push_back(0);
         for (ii = 1; ii < k_NUM_STRINGREFS; ++ii) {
-            const int eqIdx = sv[ii - 1] == sv[ii] ? eqv[ii - 1] : ii;
+            const int eqIdx = BSLS_ASSERT_CONVEYOR_REF(sv[ii - 1]) ==
+                              BSLS_ASSERT_CONVEYOR_REF(sv[ii])
+                              ? eqv[ii - 1]
+                              : ii;
             eqv.push_back(eqIdx);
         }
 

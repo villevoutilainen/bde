@@ -168,7 +168,7 @@ class WaitTurnAndSleepCallbackJob {
     , d_stopTime(stopTime)
     {}
 
-    void operator()() {
+    void operator()() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         d_barrier->wait();
 
         do {
@@ -207,7 +207,7 @@ class WaitTurnCallbackJob {
     , d_stopTime(stopTime)
     {}
 
-    void operator()() {
+    void operator()() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         d_barrier->wait();
 
         do {
@@ -298,6 +298,7 @@ void processorWithSleep(
                           const bsl::string&  message,
                           double              rate,
                           double              duration)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(message)
     {
         // Write the specified `message` to the specified `stream` at the
         // specified `rate` (given in messages per second) for the specified

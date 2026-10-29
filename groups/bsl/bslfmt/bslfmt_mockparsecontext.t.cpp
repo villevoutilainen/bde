@@ -169,6 +169,7 @@ void aSsErT(bool condition, const char *message, int line)
        template <class t_PARSE_CONTEXT>
        BSLS_KEYWORD_CONSTEXPR_CPP20 typename t_PARSE_CONTEXT::iterator parse(
                                                       t_PARSE_CONTEXT& context)
+           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
        {
 // ```
 // `MockParseContext` completely repeats the interface and behavior of the

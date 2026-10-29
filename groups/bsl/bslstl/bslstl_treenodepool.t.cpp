@@ -301,7 +301,7 @@ class Stack
     }
 
     // MANIPULATORS
-    void push(RbNode *value)
+    void push(RbNode *value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(CAPACITY != d_size);
 
@@ -309,7 +309,7 @@ class Stack
         ++d_size;
     }
 
-    void pop()
+    void pop() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(0 != d_size);
 
@@ -321,7 +321,7 @@ class Stack
 
     int size() { return d_size; }
 
-    RbNode *back()
+    RbNode *back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(0 != d_size);
 
@@ -402,10 +402,13 @@ class TestDriver {
                      Stack *usedBlocks,
                      Stack *freeBlocks,
                      int    numAllocs,
-                     int    numDealloc);
+                     int    numDealloc)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(usedBlocks)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(freeBlocks);
 
     static
-    void createFreeBlocks(Obj *result, Stack *usedBlocks, int numBlocks);
+    void createFreeBlocks(Obj *result, Stack *usedBlocks, int numBlocks)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(usedBlocks);
 
   public:
     // TEST CASES

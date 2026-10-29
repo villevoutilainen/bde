@@ -469,7 +469,7 @@ namespace usage {
         /// Construct a `TYPE` object in this object's buffer having its
         /// default value, and return a reference to the newly created
         /// object.
-        TYPE& emplace();
+        TYPE& emplace() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         // ACCESSORS
         bool        hasValue() const { return d_hasValue; }

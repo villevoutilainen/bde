@@ -110,6 +110,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmf_movableref.h>
 
+#include <bsls_assert.h>
 #include <bsls_platform.h>
 #include <bsls_util.h>
 
@@ -262,7 +263,11 @@ bool SetComparator<KEY, COMPARATOR>::operator()(
                                            const LOOKUP_KEY&         lhs,
                                            const bslalg::RbTreeNode& rhs)
 {
-    return keyComparator()(lhs, static_cast<const NodeType&>(rhs).value());
+    // The comparator may require its arguments: the key looked up, and a
+    // node's key.
+    const KEY& key = static_cast<const NodeType&>(rhs).value();
+    return keyComparator()(BSLS_ASSERT_CONVEYOR_REF(lhs),
+                           BSLS_ASSERT_CONVEYOR_REF(key));
 }
 
 template <class KEY, class COMPARATOR>
@@ -273,7 +278,9 @@ bool SetComparator<KEY, COMPARATOR>::operator()(
                                            const LOOKUP_KEY&         rhs)
 
 {
-    return keyComparator()(static_cast<const NodeType&>(lhs).value(), rhs);
+    const KEY& key = static_cast<const NodeType&>(lhs).value();
+    return keyComparator()(BSLS_ASSERT_CONVEYOR_REF(key),
+                           BSLS_ASSERT_CONVEYOR_REF(rhs));
 }
 
 template <class KEY, class COMPARATOR>
@@ -295,7 +302,11 @@ bool SetComparator<KEY, COMPARATOR>::operator()(
                                            const LOOKUP_KEY&         lhs,
                                            const bslalg::RbTreeNode& rhs) const
 {
-    return keyComparator()(lhs, static_cast<const NodeType&>(rhs).value());
+    // The comparator may require its arguments: the key looked up, and a
+    // node's key.
+    const KEY& key = static_cast<const NodeType&>(rhs).value();
+    return keyComparator()(BSLS_ASSERT_CONVEYOR_REF(lhs),
+                           BSLS_ASSERT_CONVEYOR_REF(key));
 }
 
 template <class KEY, class COMPARATOR>
@@ -306,7 +317,9 @@ bool SetComparator<KEY, COMPARATOR>::operator()(
                                            const LOOKUP_KEY&         rhs) const
 
 {
-    return keyComparator()(static_cast<const NodeType&>(lhs).value(), rhs);
+    const KEY& key = static_cast<const NodeType&>(lhs).value();
+    return keyComparator()(BSLS_ASSERT_CONVEYOR_REF(key),
+                           BSLS_ASSERT_CONVEYOR_REF(rhs));
 }
 
 template <class KEY, class COMPARATOR>

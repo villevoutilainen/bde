@@ -2145,7 +2145,7 @@ if (verbose) {
 //
     IntSet::const_iterator IntSet::erase(const_iterator iterator)
     {
-        BSLS_ASSERT(iterator.nodePtr());
+        BSLS_ASSERT_NONCONVEYOR(iterator.nodePtr());
         IntSet_Node *node = const_cast<IntSet_Node *>(iterator.nodePtr());
 //
         // Before removing the node, we first find the subsequent node to which
@@ -2165,7 +2165,7 @@ if (verbose) {
     }
 //
     void IntSet::swap(IntSet& other) {
-        BSLS_ASSERT(d_nodeFactory.allocator() ==
+        BSLS_ASSERT_NONCONVEYOR(d_nodeFactory.allocator() ==
                     other.d_nodeFactory.allocator());
         RbTreeUtil::swap(&d_tree, &other.d_tree);
     }

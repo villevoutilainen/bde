@@ -200,6 +200,7 @@ bool operator==(const bslstl::IoManip_QuotedStringFormatter<t_CHAR_TYPE,
                 const bslstl::IoManip_QuotedStringFormatter<t_CHAR_TYPE,
                                                             t_CHAR_TRAITS,
                                                             t_ALLOC>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
 {
     return (lhs.delim() == rhs.delim() &&
             lhs.escape() == rhs.escape() &&

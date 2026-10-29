@@ -291,7 +291,7 @@ void aSsErT(bool condition, const char *message, int line)
 
         /// Return 1 if the specified `value` is found in the cross
         /// reference and 0 otherwise.
-        int count(const TYPE& value) const
+        int count(const TYPE& value) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             BSLS_ASSERT_OPT(d_valid);
 

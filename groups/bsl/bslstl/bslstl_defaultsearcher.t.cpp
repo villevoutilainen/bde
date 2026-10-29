@@ -170,8 +170,8 @@ class CharList {
 
     // ACCESSORS
     const TYPE& operator[](size_t index) const;
-    const_iterator begin() const;
-    const_iterator end() const;
+    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // CREATORS
@@ -229,8 +229,8 @@ class CharArray {
 
     // ACCESSORS
     const TYPE& operator[](size_t index) const;
-    const_iterator begin() const;
-    const_iterator end() const;
+    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // CREATORS

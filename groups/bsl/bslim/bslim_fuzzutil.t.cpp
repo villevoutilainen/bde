@@ -299,6 +299,7 @@ struct ConsumeIntegralTest {
 int ggg(bsl::vector<bsl::uint8_t> *buf,
         const bsl::string_view&    spec,
         bool                       verboseFlag = true)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(buf)
 {
     ASSERT(buf);
     buf->clear();
@@ -342,6 +343,7 @@ int ggg(bsl::vector<bsl::uint8_t> *buf,
 /// according to the specified `spec`.
 void gg(bsl::vector<bsl::uint8_t> *buf,
         const bsl::string_view&    spec)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(buf) BSLS_ASSERT_CONVEYOR_REQUIRES(spec)
 {
     ASSERT(ggg(buf, spec, true) < 0);
 }

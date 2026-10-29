@@ -231,6 +231,8 @@ int *Derived::get()
         bool operator()(const bsl::shared_ptr<T1>& lhs,
                         const bsl::shared_ptr<T2>& rhs) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
             return lhs.owner_equal(rhs);
         }
 
@@ -240,6 +242,8 @@ int *Derived::get()
         bool operator()(const bsl::shared_ptr<T1>& lhs,
                         const bsl::weak_ptr<T2>&   rhs) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
             return lhs.owner_equal(rhs);
         }
 
@@ -249,6 +253,8 @@ int *Derived::get()
         bool operator()(const bsl::weak_ptr<T1>&   lhs,
                         const bsl::shared_ptr<T2>& rhs) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
             return lhs.owner_equal(rhs);
         }
 
@@ -258,6 +264,8 @@ int *Derived::get()
         bool operator()(const bsl::weak_ptr<T1>& lhs,
                         const bsl::weak_ptr<T2>& rhs) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
             return lhs.owner_equal(rhs);
         }
     };

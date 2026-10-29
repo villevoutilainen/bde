@@ -235,6 +235,7 @@ void debugprint(const bitset<N>& rhs) {
 
 template <class StringType>
 void changeBitString(StringType* str, char zeroChar, char oneChar)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(str)
 {
     StringType& strRef = *str;
     for (size_t i = 0; i < strRef.size(); ++i) {
@@ -547,7 +548,7 @@ bool isPrime(int candidate)
         }
     }
 
-    BSLS_ASSERT(false == compositeFlags[candidate]);
+    BSLS_ASSERT_NONCONVEYOR(false == compositeFlags[candidate]);
 
     return true;
 }

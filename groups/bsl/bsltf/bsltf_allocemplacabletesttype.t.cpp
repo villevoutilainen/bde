@@ -2681,20 +2681,48 @@ void TestDriver::testCase2()
         ASSERTV(CONFIG, &aa == A13.allocator());
         ASSERTV(CONFIG, &aa == A14.allocator());
 
-        ASSERTV(CONFIG, &oa == X.arg01().allocator() || 2 == N01);
-        ASSERTV(CONFIG, &oa == X.arg02().allocator() || 2 == N02);
-        ASSERTV(CONFIG, &oa == X.arg03().allocator() || 2 == N03);
-        ASSERTV(CONFIG, &oa == X.arg04().allocator() || 2 == N04);
-        ASSERTV(CONFIG, &oa == X.arg05().allocator() || 2 == N05);
-        ASSERTV(CONFIG, &oa == X.arg06().allocator() || 2 == N06);
-        ASSERTV(CONFIG, &oa == X.arg07().allocator() || 2 == N07);
-        ASSERTV(CONFIG, &oa == X.arg08().allocator() || 2 == N08);
-        ASSERTV(CONFIG, &oa == X.arg09().allocator() || 2 == N09);
-        ASSERTV(CONFIG, &oa == X.arg10().allocator() || 2 == N10);
-        ASSERTV(CONFIG, &oa == X.arg11().allocator() || 2 == N11);
-        ASSERTV(CONFIG, &oa == X.arg12().allocator() || 2 == N12);
-        ASSERTV(CONFIG, &oa == X.arg13().allocator() || 2 == N13);
-        ASSERTV(CONFIG, &oa == X.arg14().allocator() || 2 == N14);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg01()).allocator()
+                        || 2 == N01);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg02()).allocator()
+                        || 2 == N02);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg03()).allocator()
+                        || 2 == N03);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg04()).allocator()
+                        || 2 == N04);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg05()).allocator()
+                        || 2 == N05);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg06()).allocator()
+                        || 2 == N06);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg07()).allocator()
+                        || 2 == N07);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg08()).allocator()
+                        || 2 == N08);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg09()).allocator()
+                        || 2 == N09);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg10()).allocator()
+                        || 2 == N10);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg11()).allocator()
+                        || 2 == N11);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg12()).allocator()
+                        || 2 == N12);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg13()).allocator()
+                        || 2 == N13);
+        ASSERTV(CONFIG, &oa ==
+                            BSLS_ASSERT_CONVEYOR_REF(X.arg14()).allocator()
+                        || 2 == N14);
 
         ASSERTV(MOVE_01, A01.movedFrom(),
                            MOVE_01 == (MoveState::e_MOVED == A01.movedFrom()));
@@ -3047,8 +3075,12 @@ testCaseHelper()
     ASSERT(18 == V.arg01() || N_ARGS < 1);
     ASSERT(33 == V.arg02() || N_ARGS < 2);
 
-    ASSERT(&ta == V.arg01().allocator() || N_ARGS < 1);
-    ASSERT(&ta == V.arg02().allocator() || N_ARGS < 2);
+    ASSERT(&ta ==
+               BSLS_ASSERT_CONVEYOR_REF(V.arg01()).allocator()
+           || N_ARGS < 1);
+    ASSERT(&ta ==
+               BSLS_ASSERT_CONVEYOR_REF(V.arg02()).allocator()
+           || N_ARGS < 2);
 }
 // ```
 // Finally, we call our templatized test case helper with a variety of template

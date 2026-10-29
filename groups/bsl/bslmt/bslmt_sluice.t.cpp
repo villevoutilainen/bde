@@ -318,12 +318,14 @@ class LocalThreadGroup {
 
     ~LocalThreadGroup()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT_OPT(d_handles.empty());
     }
 
     // MANIPULATORS
     template <class INVOKABLE>
     void addThreads(const INVOKABLE& func, unsigned numThreads)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(d_handles.empty());
 
@@ -335,7 +337,7 @@ class LocalThreadGroup {
         }
     }
 
-    void joinAll()
+    void joinAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(!d_handles.empty());
 

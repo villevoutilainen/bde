@@ -675,6 +675,7 @@ extern "C" void * testThread3(void *arg)
     /// atomically, i.e., all the trades succeed, or none of the trades are
     /// executed.
     bool processBasketTrade(BasketTrade& trade)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(trade)
     {
         TradeThreadArgument arguments[k_MAX_BASKET_TRADES];
         bslmt::ThreadAttributes attributes;

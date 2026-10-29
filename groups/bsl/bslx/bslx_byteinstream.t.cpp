@@ -319,7 +319,9 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
         bsl::string d_lastName;
         int         d_age;
 
-        friend bool operator==(const MyPerson&, const MyPerson&);
+        friend bool operator==(const MyPerson& lhs, const MyPerson& rhs)
+            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
       public:
         // CLASS METHODS
@@ -389,10 +391,12 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
         STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
         /// Return the first name of this person.
-        const bsl::string& firstName() const;
+        const bsl::string& firstName() const
+                                      BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         /// Return the last name of this person.
-        const bsl::string& lastName() const;
+        const bsl::string& lastName() const
+                                      BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         //...
 
@@ -408,7 +412,8 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
     /// Return `true` if the specified `lhs` and `rhs` person objects do not
     /// have the same value, and `false` otherwise.  Two person objects
     /// differ in value if they differ in first name, last name, or age.
-    bool operator!=(const MyPerson& lhs, const MyPerson& rhs);
+    bool operator!=(const MyPerson& lhs, const MyPerson& rhs)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
     // ========================================================================
     //                  INLINE FUNCTION DEFINITIONS

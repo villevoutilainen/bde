@@ -644,7 +644,7 @@ DefaultSearcher(FORWARD_ITR_NEEDLE needleFirst,
 , d_needleLast( needleLast)
 , d_equal(equal)
 {
-    BSLS_ASSERT(0 <= bsl::distance(needleFirst, needleLast));
+    BSLS_ASSERT_NONCONVEYOR(0 <= bsl::distance(needleFirst, needleLast));
 }
 
 // ACCESSORS
@@ -717,7 +717,8 @@ bsl::enable_if<
                                      const FORWARD_ITR_NEEDLE&   needleLast,
                                      const EQUAL&                equal)
 {
-    BSLS_ASSERT(0 <= bsl::distance(haystackFirst, haystackLast));
+    BSLS_ASSERT_NONCONVEYOR(0 <= bsl::distance(haystackFirst,
+                                               haystackLast));
 
     for (FORWARD_ITR_HAYSTACK itrHaystackOuter  = haystackFirst;
                               itrHaystackOuter != haystackLast;
@@ -739,7 +740,8 @@ bsl::enable_if<
                                       haystackLast);                  // RETURN
             }
 
-            if (equal(*itrHaystackInner, *itrNeedle)) {
+            if (equal(BSLS_ASSERT_CONVEYOR_REF(*itrHaystackInner),
+                      BSLS_ASSERT_CONVEYOR_REF(*itrNeedle))) {
                 continue;  // Needle match still possible.
             } else {
                 break;     // Move starting point in haystack and try again.

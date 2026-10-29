@@ -484,6 +484,7 @@ void *macroCancelTest(void *ptr)
 // manner:
 // ```
     const bsl::string& singleton0(const char *s)
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         static bsl::string *theSingletonPtr = 0;
         BSLMT_ONCE_DO {
@@ -537,6 +538,7 @@ void *macroCancelTest(void *ptr)
 // start by creating and initializing a static object of type `bslmt::Once`:
 // ```
     const bsl::string& singleton1(const char *s)
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         static bslmt::Once once = BSLMT_ONCE_INITIALIZER;
 // ```
@@ -580,6 +582,7 @@ void *macroCancelTest(void *ptr)
 // `bsl::string`:
 // ```
     const bsl::string& singleton2(const char *s)
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         static bslmt::Once once = BSLMT_ONCE_INITIALIZER;
         static bsl::string *theSingletonPtr = 0;
@@ -617,6 +620,7 @@ void *macroCancelTest(void *ptr)
 // `bslmt::Once` object and a static `bsl::string` pointer:
 // ```
     const bsl::string& singleton3(const char *s)
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         static bslmt::Once  once            = BSLMT_ONCE_INITIALIZER;
         static bsl::string *theSingletonPtr = 0;

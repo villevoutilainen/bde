@@ -303,6 +303,7 @@ class CountingHashAlgorithm {
 /// each of its elements in turn.  Use the specified `line` in any failure.
 template <class CONTAINER>
 void verifyElementWiseHashAppend(int line, const CONTAINER& container)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
     using ::BloombergLP::bslh::hashAppend;
 
@@ -341,6 +342,7 @@ namespace bsl {
 template <class TYPE, size_t SIZE>
 inline
 void debugprint(const array<TYPE, SIZE>& v)
+                                               BSLS_ASSERT_CONVEYOR_REQUIRES(v)
 {
     if (v.empty()) {
         printf("<empty>");
@@ -423,6 +425,7 @@ template <class TYPE, size_t SIZE>
 int ggg(bsl::array<TYPE, SIZE> *object,
         const char             *spec,
         bool                    verboseFlag = true)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
 {
     enum { SUCCESS = -1 };
     typedef bsltf::TemplateTestFacility TestFacility;
@@ -456,6 +459,8 @@ int ggg(bsl::array<TYPE, SIZE> *object,
 template <class TYPE, size_t SIZE>
 bsl::array<TYPE, SIZE>& gg(bsl::array<TYPE, SIZE> *object,
                            const char             *spec)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(ggg(object, spec) < 0);
     return *object;

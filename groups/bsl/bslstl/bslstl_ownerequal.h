@@ -73,6 +73,7 @@ BSLS_IDENT("$Id$ $CSID$")
 
 #include <bslstl_sharedptr.h>
 
+#include <bsls_assert.h>
 #include <bsls_keyword.h> // 'BSLS_KEYWORD_NOEXCEPT'
 
 namespace bsl {
@@ -108,15 +109,18 @@ struct owner_equal {
     template<class ELEMENT_TYPE_X, class ELEMENT_TYPE_Y>
     bool operator()(const shared_ptr<ELEMENT_TYPE_X>& x,
                     const shared_ptr<ELEMENT_TYPE_Y>& y) const
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+             BSLS_ASSERT_CONVEYOR_REQUIRES(x) BSLS_ASSERT_CONVEYOR_REQUIRES(y);
     template<class ELEMENT_TYPE_X, class ELEMENT_TYPE_Y>
     bool operator()(const shared_ptr<ELEMENT_TYPE_X>& x,
                     const weak_ptr<  ELEMENT_TYPE_Y>& y) const
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+             BSLS_ASSERT_CONVEYOR_REQUIRES(x) BSLS_ASSERT_CONVEYOR_REQUIRES(y);
     template<class ELEMENT_TYPE_X, class ELEMENT_TYPE_Y>
     bool operator()(const weak_ptr<  ELEMENT_TYPE_X>& x,
                     const shared_ptr<ELEMENT_TYPE_Y>& y) const
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+             BSLS_ASSERT_CONVEYOR_REQUIRES(x) BSLS_ASSERT_CONVEYOR_REQUIRES(y);
 
     /// Return `true` if the address of the
     /// `BloombergLP::bslma::SharedPtrRep` object used by the specified `x`
@@ -125,7 +129,8 @@ struct owner_equal {
     template<class ELEMENT_TYPE_X, class ELEMENT_TYPE_Y>
     bool operator()(const weak_ptr<ELEMENT_TYPE_X>& x,
                     const weak_ptr<ELEMENT_TYPE_Y>& y) const
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+             BSLS_ASSERT_CONVEYOR_REQUIRES(x) BSLS_ASSERT_CONVEYOR_REQUIRES(y);
 };
 
 // ============================================================================

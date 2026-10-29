@@ -257,6 +257,7 @@ namespace usage_example_2 {
 int readString(std::string    *result,
                std::streambuf *streamBuf,
                std::size_t     length)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
 {
     const std::size_t k_MIN_READ_COUNT = 4 * 1024;
 

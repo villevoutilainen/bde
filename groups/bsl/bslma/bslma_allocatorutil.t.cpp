@@ -386,7 +386,8 @@ CheckedResource::~CheckedResource()
 // PRIVATE VIRTUAL METHODS
 void *CheckedResource::do_allocate(std::size_t bytes, std::size_t alignment)
 {
-    BSLS_ASSERT_OPT(d_nextBlock < d_blocks + k_MAX_OUTSTANDING_BLOCKS);
+    BSLS_ASSERT_OPT_NONCONVEYOR(d_nextBlock <
+                                d_blocks + k_MAX_OUTSTANDING_BLOCKS);
 
     // `slack` is the amount of extra memory we need to allocate to be able to
     // correct for `alignment` greater than max alignment.

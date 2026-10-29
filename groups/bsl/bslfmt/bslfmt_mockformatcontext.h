@@ -252,7 +252,7 @@ MockFormatContext_Iterator<t_CHAR>::MockFormatContext_Iterator(t_CHAR *ptr,
 : d_ptr(ptr)
 , d_max(max)
 {
-    BSLS_ASSERT(max >=ptr);
+    BSLS_ASSERT_NONCONVEYOR(max >=ptr);
 }
 
 // MANIPULATORS

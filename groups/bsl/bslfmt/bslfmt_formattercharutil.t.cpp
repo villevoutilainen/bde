@@ -248,7 +248,7 @@ class OutputIterator {
     : d_value_p(value)
     , d_end_p(end)
     {
-        BSLS_ASSERT(d_end_p > d_value_p);
+        BSLS_ASSERT_NONCONVEYOR(d_end_p > d_value_p);
     }
 
     /// Create an iterator having the specified `array` as a sequence to
@@ -274,7 +274,7 @@ class OutputIterator {
     /// modifiable access to this iterator.  The behavior is undefined if
     /// iterator points to the past-the-end element of the sequence to iterate
     /// through.
-    OutputIterator& operator++()
+    OutputIterator& operator++() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(d_end_p != d_value_p);
         ++d_value_p;
@@ -285,7 +285,7 @@ class OutputIterator {
     /// pre-increment value of this iterator.  The behavior is undefined if
     /// iterator points to the past-the-end element of the sequence to iterate
     /// through.
-    OutputIterator operator++(int)
+    OutputIterator operator++(int) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(d_end_p != d_value_p);
         OutputIterator temp(d_value_p, d_end_p);
@@ -298,7 +298,7 @@ class OutputIterator {
     /// Return a reference to the modifiable `t_CHAR_TYPE` to which this object
     /// refers.  The behavior is undefined if iterator points to the
     /// past-the-end element of the sequence to iterate through.
-    reference operator*() const
+    reference operator*() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(d_end_p != d_value_p);
         return *d_value_p;
@@ -307,7 +307,7 @@ class OutputIterator {
     /// Return a pointer to the non-modifiable `t_CHAR_TYPE` to which this
     /// object refers.  The behavior is undefined if iterator points to the
     /// past-the-end element of the sequence to iterate through.
-    const t_CHAR_TYPE *ptr() const
+    const t_CHAR_TYPE *ptr() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         BSLS_ASSERT(d_end_p != d_value_p);
         return d_value_p;

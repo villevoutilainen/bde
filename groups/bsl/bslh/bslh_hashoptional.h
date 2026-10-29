@@ -64,6 +64,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmf_removeconst.h>
 
+#include <bsls_assert.h>
 #include <bsls_libraryfeatures.h>
 #include <bsls_platform.h>
 
@@ -88,6 +89,7 @@ template <class HASH_ALGORITHM, class TYPE>
 inline
 void
 hashAppend(HASH_ALGORITHM& algorithm, const std::optional<TYPE> &input)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(input)
 {
     if (input) {
         hashAppend(algorithm, input.value());

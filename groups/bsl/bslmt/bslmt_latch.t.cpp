@@ -429,7 +429,7 @@ class ThreadGroup {
 
     /// Add to this thread group the specified `thread` whose entry point is
     /// the `Thread::callable` member function.
-    void addThread(Thread& thread)
+    void addThread(Thread& thread) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         d_theGroup.addThread(ThreadBinder(&Thread::callable, &thread));
     }
@@ -948,7 +948,7 @@ void test(int numProducers, int numConsumers, int numProducerConsumers)
     // doing their job until the last one is started.
 
     for (size_t i = 0; i < myThreads.size(); ++i) {
-        myGroup.addThread(*myThreads[i]);
+        myGroup.addThread(BSLS_ASSERT_CONVEYOR_REF(*myThreads[i]));
     }
 
     myGroup.join();

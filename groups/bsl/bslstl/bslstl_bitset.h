@@ -435,7 +435,8 @@ class bitset :
      std::basic_string<CHAR_TYPE, TRAITS, ALLOCATOR>::size_type n   =
                   std::basic_string<CHAR_TYPE, TRAITS, ALLOCATOR>::npos,
      CHAR_TYPE zeroChar = CHAR_TYPE('0'),
-     CHAR_TYPE oneChar  = CHAR_TYPE('1'));
+     CHAR_TYPE oneChar  = CHAR_TYPE('1'))
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
 #else
     template <class CHAR_TYPE, class TRAITS, class ALLOCATOR>
     explicit
@@ -443,7 +444,8 @@ class bitset :
            bsl::string::size_type pos      = 0,
            bsl::string::size_type n        = bsl::string::npos,
            CHAR_TYPE              zeroChar = CHAR_TYPE('0'),
-           CHAR_TYPE              oneChar  = CHAR_TYPE('1'));
+           CHAR_TYPE              oneChar  = CHAR_TYPE('1'))
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
 #endif
 
     /// Create a bitset with its first `M` bit positions corresponding to 0
@@ -463,14 +465,16 @@ class bitset :
       typename bsl::basic_string<CHAR_TYPE, TRAITS, ALLOCATOR>::size_type n   =
                          bsl::basic_string<CHAR_TYPE, TRAITS, ALLOCATOR>::npos,
       CHAR_TYPE zeroChar = CHAR_TYPE('0'),
-      CHAR_TYPE oneChar  = CHAR_TYPE('1'));
+      CHAR_TYPE oneChar  = CHAR_TYPE('1'))
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
 #else
     template <class CHAR_TYPE, class TRAITS, class ALLOCATOR>
     explicit bitset(const bsl::basic_string<CHAR_TYPE, TRAITS, ALLOCATOR>& str,
                     bsl::string::size_type pos      = 0,
                     bsl::string::size_type n        = bsl::string::npos,
                     CHAR_TYPE              zeroChar = CHAR_TYPE('0'),
-                    CHAR_TYPE              oneChar  = CHAR_TYPE('1'));
+                    CHAR_TYPE              oneChar  = CHAR_TYPE('1'))
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
 #endif
 
     // MANIPULATORS
@@ -832,6 +836,7 @@ typename std::basic_string<CHAR_TYPE, TRAITS, ALLOCATOR>::size_type n,
 CHAR_TYPE zeroChar,
 CHAR_TYPE oneChar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     typedef typename std::basic_string<CHAR_TYPE,
                                        TRAITS,
                                        ALLOCATOR>::size_type size_type;
@@ -861,6 +866,7 @@ void bitset<N>::copyString(
        CHAR_TYPE zeroChar,
        CHAR_TYPE oneChar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     typedef typename bsl::basic_string<CHAR_TYPE,
                                           TRAITS,
                                           ALLOCATOR>::size_type size_type;

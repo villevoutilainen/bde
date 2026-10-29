@@ -250,7 +250,7 @@ class EntryPointFunctorAdapter : private EntryPointFunctorAdapter_Base {
     // PRIVATE MANIPULATORS
 
     /// Return a reference to the functor.
-    TYPE& functor();
+    TYPE& functor() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
   public:
     // CREATORS

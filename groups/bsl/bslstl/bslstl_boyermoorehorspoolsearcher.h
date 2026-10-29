@@ -1250,6 +1250,7 @@ BoyerMooreHorspoolSearcher_CharImp<RNDACC_ITR_NEEDLE,
                                       const BoyerMooreHorspoolSearcher_CharImp&
                                                                         object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 == d_table_p);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(
@@ -1286,8 +1287,9 @@ BoyerMooreHorspoolSearcher_CharImp<RNDACC_ITR_NEEDLE,
                                       const BoyerMooreHorspoolSearcher_CharImp&
                                                                         object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_table_p);
-    BSLS_ASSERT(privateHasSameNeedleOptimization(object));
+    BSLS_ASSERT_NONCONVEYOR(privateHasSameNeedleOptimization(object));
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(
                                         privateUseShortNeedleOptimization())) {
@@ -1430,7 +1432,7 @@ BoyerMooreHorspoolSearcher_CharImp(
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 , d_table_p(0)
 {
-    BSLS_ASSERT(needleFirst <= needleLast);
+    BSLS_ASSERT_NONCONVEYOR(needleFirst <= needleLast);
 
     if (0 == d_needleLength) {
         return;                                                       // RETURN
@@ -1715,7 +1717,7 @@ BoyerMooreHorspoolSearcher_GeneralImp(
 : d_needleLength(needleLast - needleFirst)
 , d_map(0, hash, equal, basicAllocator)
 {
-    BSLS_ASSERT(needleFirst <= needleLast);
+    BSLS_ASSERT_NONCONVEYOR(needleFirst <= needleLast);
 
     if (0 < d_needleLength) {
         for (RNDACC_ITR_NEEDLE current  = needleFirst,
@@ -1843,6 +1845,7 @@ BoyerMooreHorspoolSearcher_GeneralImp<RNDACC_ITR_NEEDLE,
                                       EQUAL>::badCharacterSkip(
                                                  const value_type& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typename Map::const_iterator result = d_map.find(value);
 
     return d_map.cend() == result ? d_needleLength : result->second;
@@ -1856,6 +1859,7 @@ HASH BoyerMooreHorspoolSearcher_GeneralImp<RNDACC_ITR_NEEDLE,
                                            HASH,
                                            EQUAL>::hash() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_map.hash_function();
 }
 
@@ -1867,6 +1871,7 @@ EQUAL BoyerMooreHorspoolSearcher_GeneralImp<RNDACC_ITR_NEEDLE,
                                             HASH,
                                             EQUAL>::equal() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_map.key_eq();
 }
 
@@ -1922,7 +1927,7 @@ BoyerMooreHorspoolSearcher(RNDACC_ITR_NEEDLE              needleFirst,
 , d_needleLength(bsl::distance(needleFirst, needleLast))
 , d_imp(needleFirst, needleLast, hash, equal, basicAllocator)
 {
-    BSLS_ASSERT(needleFirst <= needleLast);
+    BSLS_ASSERT_NONCONVEYOR(needleFirst <= needleLast);
 }
 
 template <class RNDACC_ITR_NEEDLE,
@@ -2067,8 +2072,9 @@ BoyerMooreHorspoolSearcher<RNDACC_ITR_NEEDLE,
         const EQUAL comparator(equal());
 
         for (std::size_t idx = d_needleLength - 1;
-             comparator(haystackFirst[possibleMatch + idx],
-                        d_needleFirst[idx]);
+             comparator(BSLS_ASSERT_CONVEYOR_REF(haystackFirst[possibleMatch
+                                                               + idx]),
+                        BSLS_ASSERT_CONVEYOR_REF(d_needleFirst[idx]));
              --idx) {
 
             if (0 == idx) { // No difference found

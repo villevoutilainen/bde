@@ -375,7 +375,8 @@ static void printArray(const int *array, int numElements)
         /// up by one index position.  The behavior is undefined unless
         /// `0 <= dstIndex` and `dstIndex` is less than the number of items
         /// in this array.
-        void insert(int dstIndex, const TYPE& object);
+        void insert(int dstIndex, const TYPE& object)
+            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         // ...
     };

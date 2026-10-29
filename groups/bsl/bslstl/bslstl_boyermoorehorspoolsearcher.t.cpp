@@ -191,8 +191,8 @@ class CharArray {
 
     // ACCESSORS
     const TYPE& operator[](size_t index) const;
-    const_iterator begin() const;
-    const_iterator end() const;
+    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // CREATORS
@@ -2829,6 +2829,7 @@ const std::size_t numDATA = sizeof DATA / sizeof *DATA;
 
 // Support for Example 3
 void doTestRun(bsl::vector<float> *data)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(data)
 {
     ASSERT(data);
 
@@ -2948,7 +2949,8 @@ typedef bslma::TestAllocator MyAllocator; // support for Example 4
         /// arrangement guarantees that the iterators used by this cached
         /// searcher object remain valid for the life of the searcher
         /// object.
-        const Searcher& insertSearcher(const bsl::string& key);
+        const Searcher& insertSearcher(const bsl::string& key)
+            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
       public:
         // CREATORS
@@ -2967,12 +2969,13 @@ typedef bslma::TestAllocator MyAllocator; // support for Example 4
         /// server does not exist in the cache on entry, such a searcher is
         /// constructed, added to the cache, and returned (by
         /// `const`-reference).
-        const Searcher& getSearcher(const char *needle);
+        const Searcher& getSearcher(const char *needle)
+            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         // ACCESSORS
 
         /// Return the number of searcher objects in this cache.
-        std::size_t numSearchers() const;
+        std::size_t numSearchers() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 // ```
 // Notice (see the `typedef`) that we reuse the hash functor,
@@ -3523,6 +3526,7 @@ static void convertToNonAscii(std::string *out, const std::string& input)
 /// Load to the specified `dst` vector a sequence of characters matching the
 /// sequence found in the specified `src`.
 static void loadVectorOfChars(bsl::vector<char> *dst, const char *src)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(dst)
 {
     ASSERT(dst);
     ASSERT(src);

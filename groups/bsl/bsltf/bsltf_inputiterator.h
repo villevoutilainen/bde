@@ -221,10 +221,12 @@ struct InputIteratorUtil {
     /// specified `container` or a null iterator if `container` is empty.
     template <class CONTIGUOUS_CONTAINER>
     static InputIterator<typename CONTIGUOUS_CONTAINER::value_type> begin(
-                                              CONTIGUOUS_CONTAINER& container);
+                                              CONTIGUOUS_CONTAINER& container)
+                                    BSLS_ASSERT_CONVEYOR_REQUIRES(container);
     template <class CONTIGUOUS_CONTAINER>
     static InputIterator<const typename CONTIGUOUS_CONTAINER::value_type>
-                                  begin(const CONTIGUOUS_CONTAINER& container);
+                                  begin(const CONTIGUOUS_CONTAINER& container)
+                                    BSLS_ASSERT_CONVEYOR_REQUIRES(container);
 
     /// Return an `InputIterator` referring to the first element of the
     /// specified `array`.
@@ -237,10 +239,12 @@ struct InputIteratorUtil {
     /// specified `container` or a null iterator if `container` is empty.
     template <class CONTIGUOUS_CONTAINER>
     static InputIterator<typename CONTIGUOUS_CONTAINER::value_type> end(
-                                              CONTIGUOUS_CONTAINER& container);
+                                              CONTIGUOUS_CONTAINER& container)
+                                    BSLS_ASSERT_CONVEYOR_REQUIRES(container);
     template <class CONTIGUOUS_CONTAINER>
     static InputIterator<const typename CONTIGUOUS_CONTAINER::value_type> end(
-                                        const CONTIGUOUS_CONTAINER& container);
+                                        const CONTIGUOUS_CONTAINER& container)
+                                    BSLS_ASSERT_CONVEYOR_REQUIRES(container);
 
     /// Return an `InputIterator` referring to after the last element of the
     /// specified `array`.

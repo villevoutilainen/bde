@@ -295,26 +295,26 @@ class InputIterator {
     /// of this iterator are no longer dereferenceable or comparable.  The
     /// behavior is undefined unless this iterator refers to a valid value
     /// in the container.
-    InputIterator& operator++();
+    InputIterator& operator++() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Move this iterator to the next element in the container, and return
     /// an object that can be dereferenced to refer to the same object that
     /// this iterator initially points to.  Any copies of this iterator are
     /// no longer dereferenceable or comparable.  The behavior is undefined
     /// unless this iterator refers to a valid value in the container.
-    InputIterator operator++(int);
+    InputIterator operator++(int) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the value referred to by this object.  This object is no
     /// longer dereferenceable after a call to this function.  The behavior
     /// is undefined unless this iterator is dereferenceable.
-    const VALUE& operator *() const;
+    const VALUE& operator *() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the address of the value (of the parameterized `VALUE_TYPE`)
     /// of the element at which this iterator is positioned.  The behavior
     /// is undefined unless this iterator dereferenceable.
-    const VALUE *operator->() const;
+    const VALUE *operator->() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 /// Return `true` if the specified `lhs` and `rhs` iterators refer to the

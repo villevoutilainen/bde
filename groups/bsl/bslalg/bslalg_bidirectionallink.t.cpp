@@ -317,10 +317,10 @@ class MyList {
     ~MyList();
 
     // MANIPULATORS
-    Iterator begin();
-    Iterator end();
-    void pushBack(const ValueType& value);
-    void popBack();
+    Iterator begin() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    Iterator end() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void pushBack(const ValueType& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void popBack() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 // ```
 // Next, we implment the functions for the iterator type.

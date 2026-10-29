@@ -157,9 +157,10 @@ void assignCopiedText(const std::string& value)
 
 /// Return the comparison of the specified `value` and `*s_copiedText_p`.
 bool compareCopiedText(const std::string& value)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value)
 {
     bslmt::LockGuard<bslmt::Mutex> guard(&s_copyTextMutex);
-    return *s_copiedText_p == value;
+    return BSLS_ASSERT_CONVEYOR_REF(*s_copiedText_p) == value;
 }
 
 // ============================================================================

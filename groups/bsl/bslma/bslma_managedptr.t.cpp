@@ -8054,19 +8054,19 @@ AllocEmplacableTestType<USES_BSLMA_ALLOC>::AllocEmplacableTestType(
 template <bool USES_BSLMA_ALLOC>
 AllocEmplacableTestType<USES_BSLMA_ALLOC>::~AllocEmplacableTestType()
 {
-    BSLS_ASSERT(d_arg01.allocator() == d_arg02.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg03.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg04.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg05.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg06.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg07.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg08.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg09.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg10.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg11.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg12.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg13.allocator());
-    BSLS_ASSERT(d_arg01.allocator() == d_arg14.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg02.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg03.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg04.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg05.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg06.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg07.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg08.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg09.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg10.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg11.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg12.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg13.allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_arg01.allocator() == d_arg14.allocator());
 }
 
 // ACCESSORS

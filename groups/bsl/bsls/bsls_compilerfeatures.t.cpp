@@ -1,6 +1,7 @@
 // bsls_compilerfeatures.t.cpp                                        -*-C++-*-
 #include <bsls_compilerfeatures.h>
 
+#include <bsls_assert.h>
 #include <bsls_bsltestutil.h>
 #include <bsls_buildtarget.h>
 #include <bsls_platform.h>
@@ -1431,8 +1432,17 @@ template <typename t_VALUE>
 struct TaskBase {
     std::optional<t_VALUE> d_value;
 
-    void    return_value(auto&& value) { d_value = value; }
-    t_VALUE value()                    { return *d_value; }
+    void return_value(auto&& value)
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        d_value = value;
+    }
+
+    t_VALUE value()
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return *d_value;
+    }
 };
 
 template <>
@@ -1533,6 +1543,7 @@ struct Io {
     }
 
     void complete(int fd, std::string value) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         auto it = d_outstanding.find(fd);
         if (it != d_outstanding.end()) {
             auto fun = it->second;

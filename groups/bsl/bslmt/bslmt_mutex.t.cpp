@@ -287,7 +287,7 @@ class ZeroInt {
 };
 
 struct ZeroIntMap : bsl::map<int, ZeroInt> {
-    int sum() const
+    int sum() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         const const_iterator b = begin();
         const const_iterator e = end();
@@ -303,6 +303,7 @@ struct ZeroIntMap : bsl::map<int, ZeroInt> {
 
 bsl::ostream& operator<<(bsl::ostream& stream, const ZeroIntMap& thismap)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&thismap);
     const ZeroIntMap::const_iterator b = thismap.begin();
     const ZeroIntMap::const_iterator e = thismap.end();
 
@@ -637,7 +638,8 @@ int main(int argc, char *argv[])
             ASSERT(!TC::F::s_firstThread);
             ASSERT(TC::k_NUM_THREADS == TC::F::s_finished);
 
-            urgentPlaces[URGENT_LOW][LINE] = TC::F::s_urgentPlace;
+            BSLS_ASSERT_CONVEYOR_REF(urgentPlaces[URGENT_LOW])[LINE] =
+                                                       TC::F::s_urgentPlace;
         }
 
         cout << "Urgent low:  " << urgentPlaces[true ] << endl;

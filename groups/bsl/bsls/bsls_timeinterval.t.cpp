@@ -414,6 +414,7 @@ template <class REP, class PERIOD>
 void verifyIsInDurationRange(int                       line,
                              const bsls::TimeInterval& interval,
                              bool                      expectedResult)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(interval)
 {
     using std::chrono::duration;
     using Duration   = duration<REP, PERIOD>;
@@ -873,6 +874,7 @@ namespace bsls {
 
 /// Write the specified `timeInterval` to the console.
 void debugprint(const bsls::TimeInterval& timeInterval)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(timeInterval)
 {
     printf("(%lld, %d)", timeInterval.seconds(), timeInterval.nanoseconds());
 }

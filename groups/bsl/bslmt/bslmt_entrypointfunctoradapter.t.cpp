@@ -131,7 +131,7 @@ void aSsErT(bool condition, const char *message, int line)
 
         /// Count the number of words in the message and store the count in
         /// the address specified on construction.
-        void operator()();
+        void operator()() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 
     inline

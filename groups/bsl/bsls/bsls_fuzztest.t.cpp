@@ -253,7 +253,7 @@ void triggerAssertion(FailureLocation::Enum location)
 void triggerAssertionInDifferentComponent()
 {
     BSLS_PRECONDITIONS_BEGIN_IMP();
-    BSLS_ASSERT(test_case_common::assertInDifferentComponent());
+    BSLS_ASSERT_NONCONVEYOR(test_case_common::assertInDifferentComponent());
     BSLS_PRECONDITIONS_END_IMP();
 }
 

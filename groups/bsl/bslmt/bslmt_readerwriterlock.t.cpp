@@ -507,10 +507,13 @@ void* TestUpgradeThread1(void *ptr)
         UserInfoCache();
         ~UserInfoCache();
 
-        int getUserInfo(int userId, UserInfo *userInfo);
-        int updateUserInfo(int userId, UserInfo *userInfo);
-        int addUserInfo(int userId, UserInfo *userInfo);
-        void removeUser(int userId);
+        int getUserInfo(int userId, UserInfo *userInfo)
+            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+        int updateUserInfo(int userId, UserInfo *userInfo)
+            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+        int addUserInfo(int userId, UserInfo *userInfo)
+            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+        void removeUser(int userId) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 
     inline

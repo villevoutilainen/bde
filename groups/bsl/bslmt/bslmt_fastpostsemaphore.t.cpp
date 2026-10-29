@@ -281,7 +281,7 @@ typedef bslmt::FastPostSemaphore Obj;
         /// element into the specified `value`.  If the queue is empty,
         /// block until it is not empty.  Return 0 on success, and a nonzero
         /// value if the queue is disabled.
-        int popFront(int *value);
+        int popFront(int *value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Append the specified `value` to the back of this queue, blocking
         /// until either space is available - if necessary - or the queue is

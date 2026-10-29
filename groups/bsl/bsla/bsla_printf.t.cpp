@@ -154,7 +154,7 @@ void aSsErT(bool condition, const char *message, int line)
         *numChars = ::vsnprintf(&ret[0], *numChars + 1, format, ap);
         va_end(ap);
 //
-        BSLS_ASSERT(::strlen(ret.c_str()) == *numChars);
+        BSLS_ASSERT_NONCONVEYOR(::strlen(ret.c_str()) == *numChars);
 //
         ret.resize(*numChars);
         return ret;

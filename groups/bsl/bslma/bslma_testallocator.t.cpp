@@ -849,7 +849,7 @@ void printToBuffer(char *buf, size_t sz, const bslma::TestAllocator& ta)
     BSLS_ASSERT(count < sz); // sanity check
     buf[count] = '\0';       // Add nul terminator.
 
-    BSLS_ASSERT('\0' == buf[sz - 1]);  // overrun check
+    BSLS_ASSERT_NONCONVEYOR('\0' == buf[sz - 1]);  // overrun check
 
     fclose(tmpf);
 }
@@ -870,7 +870,7 @@ bool verifyBlockList(const bslma::TestAllocator&    ta,
     // parse the string.
     BufferStream<> strm;
     strm << ta;
-    BSLS_ASSERT(! strm.overflow());
+    BSLS_ASSERT_NONCONVEYOR(! strm.overflow());
 
     // Construct a boolean array with `true` on each block present in the block
     // list.

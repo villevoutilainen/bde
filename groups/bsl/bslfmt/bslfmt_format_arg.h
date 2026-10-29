@@ -74,6 +74,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_issame.h>
 #include <bslmf_movableref.h>
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_exceptionutil.h>
 #include <bsls_libraryfeatures.h>
@@ -380,7 +381,8 @@ class basic_format_arg<basic_format_context<t_OUT, t_CHAR> > {
     // ACCESSORS
 
     /// Return whether this object holds a value.
-    operator BoolType() const BSLS_KEYWORD_NOEXCEPT;
+    operator BoolType() const BSLS_KEYWORD_NOEXCEPT
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // MANIPULATORS
 

@@ -548,7 +548,7 @@ class AllCreateTestFunctor {
     }
 
     // MANIPULATORS
-    void operator()()
+    void operator()() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         ++*d_numToInc;
         d_mutex->lock();
@@ -569,6 +569,7 @@ extern "C"
 void *allCreateTestFunction(void *arg)
 {
     AllCreateTestFunctor *p = static_cast<AllCreateTestFunctor *>(arg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(p);
     (*p)();
 
     return p;

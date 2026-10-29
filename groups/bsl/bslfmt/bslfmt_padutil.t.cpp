@@ -157,6 +157,7 @@ namespace u {
 void padOracle(bsl::string      *result,
                std::ptrdiff_t    padWidth,
                bsl::string_view  filler)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
 {
     result->clear();
     while (0 < padWidth--) {
@@ -167,6 +168,7 @@ void padOracle(bsl::string      *result,
 void padOracle(bsl::string      *result,
                std::ptrdiff_t    padWidth,
                char              filler)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
 {
     result->clear();
     while (0 < padWidth--) {
@@ -186,6 +188,7 @@ void widen(bsl::wstring            *out,
 /// how to print out `bsl::string`s.
 const char *narrow(bsl::string              *buffer,
                    const bsl::wstring_view&  in)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(buffer)
 {
     buffer->clear();
     typedef bsl::wstring_view::iterator Iter;
