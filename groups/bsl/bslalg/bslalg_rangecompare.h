@@ -323,6 +323,8 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_isconvertible.h>
 #include <bslmf_matchanytype.h>
 
+#include <bsls_assert.h>
+
 #include <climits>
 
 #include <cstddef>
@@ -809,7 +811,8 @@ bool RangeCompare_Imp::equal(INPUT_ITER        start1,
                              bsl::false_type)
 {
     for ( ; start1 != end1; ++start1, ++start2) {
-        if (!(*start1 == *start2)) {
+        if (!(BSLS_ASSERT_CONVEYOR_REF(*start1) ==
+                                          BSLS_ASSERT_CONVEYOR_REF(*start2))) {
             return false;                                             // RETURN
         }
     }
