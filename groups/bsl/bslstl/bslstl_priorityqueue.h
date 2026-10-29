@@ -349,6 +349,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_usesallocator.h>
 #include <bslmf_util.h>    // 'forward(V)'
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_keyword.h>
 #include <bsls_libraryfeatures.h>
@@ -608,7 +609,8 @@ class priority_queue {
     priority_queue(
          from_range_t                               ,
          BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range,
-         const COMPARATOR&                          comparator = COMPARATOR());
+         const COMPARATOR&                          comparator = COMPARATOR())
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
     template <class t_RANGE, class t_ALLOCATOR>
     BSLSTL_PRIORITY_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
     priority_queue(from_range_t                               ,
@@ -617,7 +619,8 @@ class priority_queue {
                    const t_ALLOCATOR&                         allocator,
                    typename enable_if<bsl::uses_allocator<CONTAINER,
                                                           t_ALLOCATOR>::value,
-                                      t_ALLOCATOR>::type * = 0);
+                                      t_ALLOCATOR>::type * = 0)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
     template <class t_RANGE, class t_ALLOCATOR>
     BSLSTL_PRIORITY_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
     priority_queue(from_range_t                               ,
@@ -625,7 +628,8 @@ class priority_queue {
                    const t_ALLOCATOR&                         allocator,
                    typename enable_if<bsl::uses_allocator<CONTAINER,
                                                           t_ALLOCATOR>::value,
-                                      t_ALLOCATOR>::type * = 0);
+                                      t_ALLOCATOR>::type * = 0)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
     // MANIPULATORS
 
@@ -643,11 +647,12 @@ class priority_queue {
 
     /// Insert the specified `value` into this priority queue.  In effect,
     /// performs `c.push_back(value);`.
-    void push(const value_type& value);
+    void push(const value_type& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `value` into this priority queue.  In effect,
     /// performs `c.push_back(value);`.
-    void push(BloombergLP::bslmf::MovableRef<value_type> value);
+    void push(BloombergLP::bslmf::MovableRef<value_type> value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the elements of the specified `range` into this priority queue.
     /// Note that `range` must meet the requirements of an input range and the
@@ -655,7 +660,9 @@ class priority_queue {
     /// (template parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_PRIORITY_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    void push_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
+    void push_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Insert into this priority queue a newly created `value_type` object,
@@ -663,14 +670,14 @@ class priority_queue {
     /// to the corresponding constructor of `value_type`.  In effect,
     /// performs `c.emplace_back(FORWARD(Args,args)...);`.
     template <class... Args>
-    void emplace(Args&&... args);
+    void emplace(Args&&... args) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Remove the top element from this `priority_queue` object that has
     /// the highest priority.  In effect, performs `c.pop_back();`.  The
     /// behavior is undefined if there is currently no elements in this
     /// object.
-    void pop();
+    void pop() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Efficiently exchange the value of this object with the value of the
     /// specified `other` object.  In effect, performs
@@ -683,17 +690,17 @@ class priority_queue {
 
     /// Return `true` if this `priority_queue` object contains no elements,
     /// and `false` otherwise.  In effect, performs `return c.empty();`.
-    bool empty() const;
+    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this `priority_queue` object.  In
     /// effect, performs `return c.size()`.
-    size_type size() const;
+    size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing non-modifiable access to the element
     /// having the highest priority in this `priority_queue` object.  In
     /// effect, performs `return c.front()`.  The behavior is undefined if
     /// the priority queue is empty.
-    const_reference top() const;
+    const_reference top() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_CTAD

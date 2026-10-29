@@ -55,6 +55,7 @@
 #include <bslma_constructionutil.h>
 #include <bslma_destructionutil.h>
 
+#include <bsls_assert.h>
 #include <bsls_exceptionutil.h>
 #include <bsls_util.h>
 
@@ -208,8 +209,10 @@ public:
   typedef const value_type& const_reference;
   typedef std::forward_iterator_tag _Iterator_category;
 
-  hasher hash_funct() const { return _M_hash; }
-  key_equal key_eq() const { return _M_equals; }
+  hasher hash_funct() const
+                         BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_hash; }
+  key_equal key_eq() const
+                       BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_equals; }
 
 private:
   typedef _Hashtable_node<_Val> _Node;
@@ -326,6 +329,7 @@ public:
 
   _Self& operator= (const _Self& __ht)
   {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (&__ht != this) {
       clear();
       _M_hash = __ht._M_hash;
@@ -338,16 +342,17 @@ public:
 
   ~hashtable() { clear(); }
 
-  size_type size() const { return _M_num_elements._M_data; }
+  size_type size() const
+         BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_num_elements._M_data; }
   size_type max_size() const { return size_type(-1); }
-  bool empty() const { return size() == 0; }
+  bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return size() == 0; }
 
   void swap(_Self& __ht)
   {
     BloombergLP::bslstp::Util::swapContainers(*this, __ht, QuickSwap());
   }
 
-  iterator begin()
+  iterator begin() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     for (size_type __n = 0; __n < _M_buckets.size(); ++__n)
       if (_M_buckets[__n])
@@ -355,9 +360,10 @@ public:
     return end();
   }
 
-  iterator end() { return iterator((_Node*)0, this); }
+  iterator end()
+       BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return iterator((_Node*)0, this); }
 
-  const_iterator begin() const
+  const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     for (size_type __n = 0; __n < _M_buckets.size(); ++__n)
       if (_M_buckets[__n])
@@ -365,19 +371,22 @@ public:
     return end();
   }
 
-  const_iterator end() const { return const_iterator((_Node*)0, this); }
+  const_iterator end() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return const_iterator((_Node*)0, this); }
 
   static bool  _M_equal (const hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>&,
                          const hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>&);
 
 public:
 
-  size_type bucket_count() const { return _M_buckets.size(); }
+  size_type bucket_count() const
+               BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_buckets.size(); }
 
   size_type max_bucket_count() const
     { return _Stl_prime_type::_M_list[(int)BSLSTP_STL_NUM_PRIMES - 1]; }
 
   size_type elems_in_bucket(size_type __bucket) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     size_type __result = 0;
     for (_Node* __cur = (_Node*)_M_buckets[__bucket]; __cur; __cur = __cur->_M_next)
@@ -386,22 +395,27 @@ public:
   }
 
   pair<iterator, bool> insert_unique(const value_type& __obj)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     resize(_M_num_elements._M_data + 1);
     return insert_unique_noresize(__obj);
   }
 
   iterator insert_equal(const value_type& __obj)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     resize(_M_num_elements._M_data + 1);
     return insert_equal_noresize(__obj);
   }
 
-  pair<iterator, bool> insert_unique_noresize(const value_type& __obj);
-  iterator insert_equal_noresize(const value_type& __obj);
+  pair<iterator, bool> insert_unique_noresize(const value_type& __obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+  iterator insert_equal_noresize(const value_type& __obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
   template <class _InputIterator>
   void insert_unique(_InputIterator __f, _InputIterator __l)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
   // MODIFIED BY ARTHUR
   //  insert_unique(__f, __l, _STLP_ITERATOR_CATEGORY(__f, _InputIterator));
@@ -410,6 +424,7 @@ public:
 
   template <class _InputIterator>
   void insert_equal(_InputIterator __f, _InputIterator __l)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
   // MODIFIED BY ARTHUR
   //  insert_equal(__f, __l, _STLP_ITERATOR_CATEGORY(__f, _InputIterator));
@@ -421,6 +436,7 @@ public:
   template <class _InputIterator>
   void insert_unique(_InputIterator __f, _InputIterator __l,
                      const std::input_iterator_tag &)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     for ( ; __f != __l; ++__f)
       insert_unique(*__f);
@@ -429,6 +445,7 @@ public:
   template <class _InputIterator>
   void insert_equal(_InputIterator __f, _InputIterator __l,
                     const std::input_iterator_tag &)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     for ( ; __f != __l; ++__f)
       insert_equal(*__f);
@@ -437,6 +454,7 @@ public:
   template <class _ForwardIterator>
   void insert_unique(_ForwardIterator __f, _ForwardIterator __l,
                      const std::forward_iterator_tag &)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     size_type __n = bsl::distance(__f, __l);
     resize(_M_num_elements._M_data + __n);
@@ -447,6 +465,7 @@ public:
   template <class _ForwardIterator>
   void insert_equal(_ForwardIterator __f, _ForwardIterator __l,
                     const std::forward_iterator_tag &)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     size_type __n = bsl::distance(__f, __l);
     resize(_M_num_elements._M_data + __n);
@@ -455,15 +474,17 @@ public:
   }
 
 
-  reference find_or_insert(const value_type& __obj);
+  reference find_or_insert(const value_type& __obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 private:
   _Node* _M_find(const key_type& __key) const
   {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     size_type __n = _M_hash(__key)% _M_buckets.size();
     _Node* __first;
     for ( __first = (_Node*)_M_buckets[__n];
-          __first && !_M_equals(_M_get_key(__first->_M_val), __key);
+          __first && !_M_keys_equal(_M_get_key(__first->_M_val), __key);
           __first = __first->_M_next)
       {}
     return __first;
@@ -471,55 +492,70 @@ private:
 
 public:
   template <class _KT>
-  iterator find(const _KT& __key)
+  iterator find(const _KT& __key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     return iterator(_M_find(__key), this);
   }
 
   template <class _KT>
   const_iterator find(const _KT& __key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     return const_iterator(_M_find(__key), this);
   }
 
   size_type count(const key_type& __key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     const size_type __n = _M_bkt_num_key(__key);
     size_type __result = 0;
 
     for (const _Node* __cur = (_Node*)_M_buckets[__n]; __cur; __cur = __cur->_M_next)
-      if (_M_equals(_M_get_key(__cur->_M_val), __key))
+      if (_M_keys_equal(_M_get_key(__cur->_M_val), __key))
         ++__result;
     return __result;
   }
 
   pair<iterator, iterator>
-  equal_range(const key_type& __key);
+  equal_range(const key_type& __key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
   pair<const_iterator, const_iterator>
-  equal_range(const key_type& __key) const;
+  equal_range(const key_type& __key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
-  size_type erase(const key_type& __key);
+  size_type erase(const key_type& __key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
   //   void erase(const iterator& __it); `
-  void erase(const const_iterator& __it) ;
+  void erase(const const_iterator& __it) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS ;
 
   //  void erase(const const_iterator& __first, const const_iterator __last) {
   //     erase((const iterator&)__first, (const iterator&)__last);
   //  }
-  void erase(const_iterator __first, const_iterator __last);
-  void resize(size_type __num_elements_hint);
-  void clear();
+  void erase(const_iterator __first, const_iterator __last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+  void resize(size_type __num_elements_hint)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+  void clear() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 public:
   // this is for hash_map::operator[]
-  reference _M_insert(const value_type& __obj);
+  reference _M_insert(const value_type& __obj)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 private:
+
+  // The key comparator, which may require its arguments: a node's key and
+  // the key looked up, or another node's.
+  bool _M_keys_equal(const key_type& __a, const key_type& __b) const
+  {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    return _M_equals(BSLS_ASSERT_CONVEYOR_REF(__a),
+                     BSLS_ASSERT_CONVEYOR_REF(__b));
+  }
 
   size_type _M_next_size(size_type __n) const;
 
   void _M_initialize_buckets(size_type __n)
   {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const size_type __n_buckets = _M_next_size(__n);
     _M_buckets.reserve(__n_buckets);
     _M_buckets.insert(_M_buckets.end(), __n_buckets, (void*) 0);
@@ -528,6 +564,7 @@ private:
 
   size_type _M_bkt_num_key(const key_type& __key) const
   {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return _M_bkt_num_key(__key, _M_buckets.size());
   }
 
@@ -668,6 +705,8 @@ hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>::_M_equal(
                           const hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>& __ht1,
                           const hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>& __ht2)
 {
+  BSLS_ASSERT_CONVEYOR_OBJECT(&__ht1);
+  BSLS_ASSERT_CONVEYOR_OBJECT(&__ht2);
   //  typedef _Hashtable_node<_Val> _Node;
   if (__ht1.bucket_count() != __ht2.bucket_count())
     return false;                                                     // RETURN
@@ -692,7 +731,7 @@ hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>
   _Node* __first = (_Node*)_M_buckets[__n];
 
   for (_Node* __cur = __first; __cur; __cur = __cur->_M_next)
-    if (_M_equals(_M_get_key(__cur->_M_val), _M_get_key(__obj)))
+    if (_M_keys_equal(_M_get_key(__cur->_M_val), _M_get_key(__obj)))
       return pair<iterator, bool>(iterator(__cur, this), false);      // RETURN
 
   _Node* __tmp = _M_new_node(__obj);
@@ -711,7 +750,7 @@ hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>
   _Node* __first = (_Node*)_M_buckets[__n];
 
   for (_Node* __cur = __first; __cur; __cur = __cur->_M_next)
-    if (_M_equals(_M_get_key(__cur->_M_val), _M_get_key(__obj))) {
+    if (_M_keys_equal(_M_get_key(__cur->_M_val), _M_get_key(__obj))) {
       _Node* __tmp = _M_new_node(__obj);
       __tmp->_M_next = __cur->_M_next;
       __cur->_M_next = __tmp;
@@ -763,9 +802,9 @@ hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>::equal_range(const key_type& __key)
   const size_type __n = _M_bkt_num_key(__key);
 
   for (_Node* __first = (_Node*)_M_buckets[__n]; __first; __first = __first->_M_next)
-    if (_M_equals(_M_get_key(__first->_M_val), __key)) {
+    if (_M_keys_equal(_M_get_key(__first->_M_val), __key)) {
       for (_Node* __cur = __first->_M_next; __cur; __cur = __cur->_M_next)
-        if (!_M_equals(_M_get_key(__cur->_M_val), __key))
+        if (!_M_keys_equal(_M_get_key(__cur->_M_val), __key))
           return _Pii(iterator(__first, this), iterator(__cur, this));
                                                                       // RETURN
       for (size_type __m = __n + 1; __m < _M_buckets.size(); ++__m)
@@ -789,11 +828,11 @@ hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>
   for (const _Node* __first = (_Node*)_M_buckets[__n] ;
        __first;
        __first = __first->_M_next) {
-    if (_M_equals(_M_get_key(__first->_M_val), __key)) {
+    if (_M_keys_equal(_M_get_key(__first->_M_val), __key)) {
       for (const _Node* __cur = __first->_M_next;
            __cur;
            __cur = __cur->_M_next)
-        if (!_M_equals(_M_get_key(__cur->_M_val), __key))
+        if (!_M_keys_equal(_M_get_key(__cur->_M_val), __key))
           return _Pii(const_iterator(__first, this),
                       const_iterator(__cur, this));                   // RETURN
       for (size_type __m = __n + 1; __m < _M_buckets.size(); ++__m)
@@ -818,7 +857,7 @@ hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>::erase(const key_type& __key)
     _Node* __cur = __first;
     _Node* __next = __cur->_M_next;
     while (__next) {
-      if (_M_equals(_M_get_key(__next->_M_val), __key)) {
+      if (_M_keys_equal(_M_get_key(__next->_M_val), __key)) {
         __cur->_M_next = __next->_M_next;
         _M_delete_node(__next);
         __next = __cur->_M_next;
@@ -830,7 +869,7 @@ hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>::erase(const key_type& __key)
         __next = __cur->_M_next;
       }
     }
-    if (_M_equals(_M_get_key(__first->_M_val), __key)) {
+    if (_M_keys_equal(_M_get_key(__first->_M_val), __key)) {
       _M_buckets[__n] = __first->_M_next;
       _M_delete_node(__first);
       ++__erased;
@@ -988,6 +1027,8 @@ template <class _Val, class _Key, class _HF, class _ExK, class _EqK, class _All>
 void hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>
   ::_M_copy_from(const hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>& __ht)
 {
+  BSLS_ASSERT_CONVEYOR_OBJECT(this);
+  BSLS_ASSERT_CONVEYOR_OBJECT(&__ht);
   _M_buckets.clear();
   _M_buckets.reserve(__ht._M_buckets.size());
   _M_buckets.insert(_M_buckets.end(), __ht._M_buckets.size(), (void*) 0);

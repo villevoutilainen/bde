@@ -441,6 +441,7 @@ template <class PERIOD>
 void verifyDurationRangeCheck(int                       line,
                               const bsls::TimeInterval& interval,
                               const RangeCheckResults&  expectedResults)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(interval)
 {
     verifyIsInDurationRange<std::int8_t,  PERIOD>(line,
                                                   interval,
@@ -466,6 +467,7 @@ template <class PERIOD>
 void verifyDurationRangeCheckUnsigned(int                       line,
                                       const bsls::TimeInterval& interval,
                                       const RangeCheckResults&  expectedResults)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(interval)
 {
     verifyIsInDurationRange<std::uint8_t,  PERIOD>(line,
                                                    interval,

@@ -334,6 +334,7 @@ int NUM_SPECIAL_INT_VALUES     =
 
 template <class VALUE, class CONTAINER, class COMPARATOR>
 void debugprint(const bsl::priority_queue<VALUE, CONTAINER, COMPARATOR>& pq)
+                                              BSLS_ASSERT_CONVEYOR_REQUIRES(pq)
 {
     if (pq.empty()) {
         printf("<empty>");
@@ -402,21 +403,21 @@ class NonAllocContainer
     }
 
     /// Erase the last element from the underlying container.
-    void pop_back()
+    void pop_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         d_vector.pop_back();
     }
 
     /// Append a copy of the specified `value` at the end of the underlying
     /// container.
-    void push_back(const value_type& value)
+    void push_back(const value_type& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         d_vector.push_back(value);
     }
 
     /// Return a reference providing modifiable access to the underlying
     /// container.
-    bsl::vector<value_type>& contents()
+    bsl::vector<value_type>& contents() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector;
     }
@@ -470,14 +471,14 @@ class NonAllocContainer
     /// Return an iterator providing non-modifiable access to the first
     /// element of the underlying container, or the `end` iterator if the
     /// underlying container is empty.
-    const_iterator begin() const
+    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.begin();
     }
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in the underlying container.
-    const_iterator end() const
+    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.end();
     }
@@ -485,13 +486,13 @@ class NonAllocContainer
     /// Return an iterator providing modifiable access to the first element
     /// of the underlying container (or the past-the-end iterator if the
     /// underlying container is empty).
-    iterator begin()
+    iterator begin() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.begin();
     }
 
     /// Return the past-the-end iterator for the underlying container.
-    iterator end()
+    iterator end() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.end();
     }
@@ -499,20 +500,20 @@ class NonAllocContainer
     /// Return a reference providing non-modifiable access to the first
     /// element of the underlying container.  The behavior is undefined if
     /// the underlying container is empty.
-    const_reference front() const
+    const_reference front() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.front();
     }
 
     /// Return the number of elements in the underlying container.
-    size_type size() const
+    size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.size();
     }
 
     /// Return `true` if the underlying container has size 0, and `false`
     /// otherwise.
-    bool empty() const
+    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.empty();
     }
@@ -677,14 +678,14 @@ class NonMovableContainer
     }
 
     /// Erase the last element from the underlying container.
-    void pop_back()
+    void pop_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         d_vector.pop_back();
     }
 
     /// Append a copy of the specified `value` at the end of the underlying
     /// container.  Method invocation is recorded.
-    void push_back(const value_type& value)
+    void push_back(const value_type& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         g_calledMethodFlag |= e_APPROPRIATE_PUSH_BACK;
         d_vector.push_back(value);
@@ -697,6 +698,7 @@ class NonMovableContainer
     /// inserted element.
     template <class INPUT_ITER>
     iterator insert(const_iterator position, INPUT_ITER first, INPUT_ITER last)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.insert(position, first, last);
     }
@@ -706,13 +708,13 @@ class NonMovableContainer
     /// Return an iterator pointing the first element in the underlying
     /// container (or the past-the-end iterator if the underlying container
     /// is empty).
-    iterator begin()
+    iterator begin() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.begin();
     }
 
     /// Return the past-the-end iterator for the underlying container.
-    iterator end()
+    iterator end() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.end();
     }
@@ -720,20 +722,20 @@ class NonMovableContainer
     /// Return a reference providing modifiable access to the first element
     /// of the underlying container.  The behavior is undefined if
     /// the underlying container is empty.
-    const_reference front() const
+    const_reference front() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.front();
     }
 
     /// Return the number of elements in the underlying container.
-    size_type size() const
+    size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.size();
     }
 
     /// Return `true` if the underlying container has size 0, and `false`
     /// otherwise.
-    bool empty() const
+    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.empty();
     }
@@ -843,14 +845,14 @@ class MovableContainer {
     }
 
     /// Erase the last element from the underlying container.
-    void pop_back()
+    void pop_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         d_vector.pop_back();
     }
 
     /// Append a copy of the specified `value` to the end of the underlying
     /// container.  Method invocation is recorded.
-    void push_back(const value_type& value)
+    void push_back(const value_type& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         g_calledMethodFlag |= e_INAPPROPRIATE_PUSH_BACK;
         d_vector.push_back(value);
@@ -859,6 +861,7 @@ class MovableContainer {
     /// Append a copy of the specified `value` to the end of the underlying
     /// container.  Method invocation is recorded.
     void push_back(bslmf::MovableRef<value_type> value)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         g_calledMethodFlag |= e_APPROPRIATE_PUSH_BACK;
         d_vector.push_back(MoveUtil::move(value));
@@ -871,6 +874,7 @@ class MovableContainer {
     /// inserted element.
     template <class INPUT_ITER>
     iterator insert(const_iterator position, INPUT_ITER first, INPUT_ITER last)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.insert(position, first, last);
     }
@@ -884,6 +888,7 @@ class MovableContainer {
     /// type `VALUE_TYPE` has constructor, accepting integer value as a
     /// parameter.  Method invocation is recorded.
     template <class... Args> void emplace_back(Args&&... arguments)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
          int argumentsNumber = sizeof...(arguments);
          g_calledMethodFlag |= static_cast<CalledMethod>(
@@ -1251,12 +1256,12 @@ class MovableContainer {
     /// Return an iterator providing modifiable access to the first element
     /// of the underlying container (or the past-the-end iterator if the
     /// underlying container is empty).
-    iterator begin()
+    iterator begin() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.begin(); }
 
     /// Return the past-the-end iterator for this modifiable vector.
-    iterator end()
+    iterator end() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.end();
     }
@@ -1264,20 +1269,20 @@ class MovableContainer {
     /// Return a reference providing non-modifiable access to the first
     /// element of the underlying container.  The behavior is undefined if
     /// the underlying container is empty.
-    const_reference front() const
+    const_reference front() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.front();
     }
 
     /// Return the number of elements in the underlying container.
-    size_type size() const
+    size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.size();
     }
 
     /// Return `true` if the underlying container has size 0, and `false`
     /// otherwise.
-    bool empty() const
+    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_vector.empty();
     }
@@ -1637,11 +1642,14 @@ class TestDriver {
     /// negative value otherwise.  Note that this function is used to
     /// implement `gg` as well as allow for verification of syntax error
     /// detection.
-    static int ggg(Obj *object, const char *spec, int verbose = 1);
+    static int ggg(Obj *object, const char *spec, int verbose = 1)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified object with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Verify that the specified `object` has the specified `expectedSize`
     /// and contains the same values as the array in the specified
@@ -1650,7 +1658,8 @@ class TestDriver {
     template <class VALUES>
     static size_t verify_object(Obj&          object,
                                 const VALUES& expectedValues,
-                                size_t        expectedSize);
+                                size_t        expectedSize)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
     /// Return `true` if the specified `object` uses the specified `ta`
     /// allocator for supplying memory.  The specified `TYPE_ALLOC`
@@ -1658,23 +1667,27 @@ class TestDriver {
     /// object doesn't use `ta`.
     static bool use_same_allocator(Obj&                 object,
                                    int                  TYPE_ALLOC,
-                                   bslma::TestAllocator *ta);
+                                   bslma::TestAllocator *ta)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
     /// Add to the specified `container` values, in accordance with the
     /// specified `SPEC` of the specified `length`.
     static void populate_container(CONTAINER&        container,
                                    const char*       SPEC,
-                                   size_t            length);
+                                   size_t            length)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(container);
 
     /// Return `true` if the specified `a` and `b` have the same values in
     /// the underlying container, placed in the same order.  Return `false`
     /// otherwise.
-    static bool is_equal(Obj& a, Obj& b);
+    static bool is_equal(Obj& a, Obj& b)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
     /// Return `true` if the specified `a` and `b` use the same comparator
     /// for the ordering of values in the underlying container, and return
     /// `false` otherwise.
-    static bool use_same_comparator(Obj& a, Obj& b);
+    static bool use_same_comparator(Obj& a, Obj& b)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
   public:
     // TEST CASES
@@ -5001,6 +5014,7 @@ void TestDriver<VALUE, CONTAINER, COMPARATOR>::testCase7()
                 }
                 ASSERTV(LINE, CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                 Obj&       mX = *objPtr;
                 const Obj& X = mX;
 
@@ -5145,6 +5159,7 @@ void TestDriver<VALUE, CONTAINER, COMPARATOR>::testCase4()
                   } break;
                 }
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                 Obj& mX = *objPtr;  const Obj& X = gg(&mX, SPEC);
                 bslma::TestAllocator&  oa = *objAllocatorPtr;
                 bslma::TestAllocator& noa = ('c' == CONFIG || 'd' == CONFIG)
@@ -5468,6 +5483,7 @@ void TestDriver<VALUE, CONTAINER, COMPARATOR>::testCase2()
               } break;
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj&                  mX = *objPtr;  const Obj& X = mX;
             bslma::TestAllocator&  oa = *objAllocatorPtr;
             bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
@@ -6028,12 +6044,13 @@ class TaskScheduler {
 
     /// Enqueue the specified `task` having the specified `priority`
     /// onto this scheduler.
-    void addTask(int taskId, TaskFunction taskFunction, int priority);
+    void addTask(int taskId, TaskFunction taskFunction, int priority)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Dequeue the task having the highest priority in this scheduler,
     /// and call its task function by passing in the specified `verbose`
     /// flag.
-    void processTasks(int verbose);
+    void processTasks(int verbose) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 // ```
 // Next, we implement the `TaskScheduler` constructor:

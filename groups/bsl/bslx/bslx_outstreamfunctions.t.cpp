@@ -189,6 +189,16 @@ class MyTestOutStream {
     bsl::vector<int> d_fun;
     int              d_lastVersion;
 
+    // PRIVATE MANIPULATORS
+
+    /// Record a call of the specified `fun`.  Note that the stream functions
+    /// under test call this object through a reference to it.
+    void record(int fun)
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        d_fun.push_back(fun);
+    }
+
   public:
     enum {
       k_CHAR     =   10,
@@ -214,117 +224,121 @@ class MyTestOutStream {
     ~MyTestOutStream() { }
 
     MyTestOutStream& putLength(int /* length */)
-                                   { d_fun.push_back(k_LENGTH); return *this; }
+                                   { record(k_LENGTH); return *this; }
     MyTestOutStream& putVersion(int version)
-        { d_fun.push_back(k_VERSION); d_lastVersion = version;  return *this; }
+        { record(k_VERSION); d_lastVersion = version;  return *this; }
 
     MyTestOutStream& putInt64(Int64 /* value */)
-                                  { d_fun.push_back(k_INT + 8); return *this; }
+                                  { record(k_INT + 8); return *this; }
     MyTestOutStream& putUint64(Int64 /* value */)
-                     { d_fun.push_back(k_UNSIGNED + k_INT + 8); return *this; }
+                     { record(k_UNSIGNED + k_INT + 8); return *this; }
     MyTestOutStream& putInt56(Int64 /* value */)
-                                  { d_fun.push_back(k_INT + 7); return *this; }
+                                  { record(k_INT + 7); return *this; }
     MyTestOutStream& putUint56(Int64 /* value */)
-                     { d_fun.push_back(k_UNSIGNED + k_INT + 7); return *this; }
+                     { record(k_UNSIGNED + k_INT + 7); return *this; }
     MyTestOutStream& putInt48(Int64 /* value */)
-                                  { d_fun.push_back(k_INT + 6); return *this; }
+                                  { record(k_INT + 6); return *this; }
     MyTestOutStream& putUint48(Int64 /* value */)
-                     { d_fun.push_back(k_UNSIGNED + k_INT + 6); return *this; }
+                     { record(k_UNSIGNED + k_INT + 6); return *this; }
     MyTestOutStream& putInt40(Int64 /* value */)
-                                  { d_fun.push_back(k_INT + 5); return *this; }
+                                  { record(k_INT + 5); return *this; }
     MyTestOutStream& putUint40(Int64 /* value */)
-                     { d_fun.push_back(k_UNSIGNED + k_INT + 5); return *this; }
+                     { record(k_UNSIGNED + k_INT + 5); return *this; }
     MyTestOutStream& putInt32(int /* value */)
-                                  { d_fun.push_back(k_INT + 4); return *this; }
+                                  { record(k_INT + 4); return *this; }
     MyTestOutStream& putUint32(unsigned int /* value */)
-                     { d_fun.push_back(k_UNSIGNED + k_INT + 4); return *this; }
+                     { record(k_UNSIGNED + k_INT + 4); return *this; }
     MyTestOutStream& putInt24(int /* value */)
-                                  { d_fun.push_back(k_INT + 3); return *this; }
+                                  { record(k_INT + 3); return *this; }
     MyTestOutStream& putUint24(int /* value */)
-                     { d_fun.push_back(k_UNSIGNED + k_INT + 3); return *this; }
+                     { record(k_UNSIGNED + k_INT + 3); return *this; }
     MyTestOutStream& putInt16(int /* value */)
-                                  { d_fun.push_back(k_INT + 2); return *this; }
+                                  { record(k_INT + 2); return *this; }
     MyTestOutStream& putUint16(int /* value */)
-                     { d_fun.push_back(k_UNSIGNED + k_INT + 2); return *this; }
+                     { record(k_UNSIGNED + k_INT + 2); return *this; }
     MyTestOutStream& putInt8(int /* value */)
-                                  { d_fun.push_back(k_INT + 1); return *this; }
+                                  { record(k_INT + 1); return *this; }
     MyTestOutStream& putUint8(int /* value */)
-                     { d_fun.push_back(k_UNSIGNED + k_INT + 1); return *this; }
+                     { record(k_UNSIGNED + k_INT + 1); return *this; }
     MyTestOutStream& putFloat64(double /* value */)
-                                { d_fun.push_back(k_FLOAT + 8); return *this; }
+                                { record(k_FLOAT + 8); return *this; }
     MyTestOutStream& putFloat32(float /* value */)
-                                { d_fun.push_back(k_FLOAT + 4); return *this; }
+                                { record(k_FLOAT + 4); return *this; }
 
     typedef bsls::Types::Uint64 Uint64;
 
     MyTestOutStream& putArrayInt64(const Int64 * /* array */, int /* count */)
-                        { d_fun.push_back(k_ARRAY + k_INT + 8); return *this; }
+                        { record(k_ARRAY + k_INT + 8); return *this; }
     MyTestOutStream& putArrayUint64(const Uint64 * /* array */,
                                     int            /* count */)
-           { d_fun.push_back(k_ARRAY + k_UNSIGNED + k_INT + 8); return *this; }
+           { record(k_ARRAY + k_UNSIGNED + k_INT + 8); return *this; }
     MyTestOutStream& putArrayInt56(const Int64 * /* array */, int /* count */)
-                        { d_fun.push_back(k_ARRAY + k_INT + 7); return *this; }
+                        { record(k_ARRAY + k_INT + 7); return *this; }
     MyTestOutStream& putArrayUint56(const Uint64 * /* array */,
                                     int            /* count */)
-           { d_fun.push_back(k_ARRAY + k_UNSIGNED + k_INT + 7); return *this; }
+           { record(k_ARRAY + k_UNSIGNED + k_INT + 7); return *this; }
     MyTestOutStream& putArrayInt48(const Int64 * /* array */, int /* count */)
-                        { d_fun.push_back(k_ARRAY + k_INT + 6); return *this; }
+                        { record(k_ARRAY + k_INT + 6); return *this; }
     MyTestOutStream& putArrayUint48(const Uint64 * /* array */,
                                     int            /* count */)
-           { d_fun.push_back(k_ARRAY + k_UNSIGNED + k_INT + 6); return *this; }
+           { record(k_ARRAY + k_UNSIGNED + k_INT + 6); return *this; }
     MyTestOutStream& putArrayInt40(const Int64 * /* array */, int /* count */)
-                        { d_fun.push_back(k_ARRAY + k_INT + 5); return *this; }
+                        { record(k_ARRAY + k_INT + 5); return *this; }
     MyTestOutStream& putArrayUint40(const Uint64 * /* array */,
                                     int            /* count */)
-           { d_fun.push_back(k_ARRAY + k_UNSIGNED + k_INT + 5); return *this; }
+           { record(k_ARRAY + k_UNSIGNED + k_INT + 5); return *this; }
     MyTestOutStream& putArrayInt32(const int * /* array */, int /* count */)
-                        { d_fun.push_back(k_ARRAY + k_INT + 4); return *this; }
+                        { record(k_ARRAY + k_INT + 4); return *this; }
     MyTestOutStream& putArrayUint32(const unsigned int * /* array */,
                                     int                 /* count */)
-           { d_fun.push_back(k_ARRAY + k_UNSIGNED + k_INT + 4); return *this; }
+           { record(k_ARRAY + k_UNSIGNED + k_INT + 4); return *this; }
     MyTestOutStream& putArrayInt24(const int * /* array */, int /* count */)
-                        { d_fun.push_back(k_ARRAY + k_INT + 3); return *this; }
+                        { record(k_ARRAY + k_INT + 3); return *this; }
     MyTestOutStream& putArrayUint24(const unsigned int * /* array */,
                                     int                 /* count */)
-           { d_fun.push_back(k_ARRAY + k_UNSIGNED + k_INT + 3); return *this; }
+           { record(k_ARRAY + k_UNSIGNED + k_INT + 3); return *this; }
     MyTestOutStream& putArrayInt16(const short * /* array */, int /* count */)
-                        { d_fun.push_back(k_ARRAY + k_INT + 2); return *this; }
+                        { record(k_ARRAY + k_INT + 2); return *this; }
     MyTestOutStream& putArrayUint16(const unsigned short * /* array */,
                                     int                   /* count */)
-           { d_fun.push_back(k_ARRAY + k_UNSIGNED + k_INT + 2); return *this; }
+           { record(k_ARRAY + k_UNSIGNED + k_INT + 2); return *this; }
     MyTestOutStream& putArrayInt8(const signed char * /* array */,
                                   int                /* count */)
-                        { d_fun.push_back(k_ARRAY + k_INT + 1); return *this; }
+                        { record(k_ARRAY + k_INT + 1); return *this; }
     MyTestOutStream& putArrayUint8(const unsigned char * /* array */,
                                    int                  /* count */)
-           { d_fun.push_back(k_ARRAY + k_UNSIGNED + k_INT + 1); return *this; }
+           { record(k_ARRAY + k_UNSIGNED + k_INT + 1); return *this; }
     MyTestOutStream& putArrayInt8(const char * /* array */, int /* count */)
-                        { d_fun.push_back(k_ARRAY + k_INT + 1); return *this; }
+                        { record(k_ARRAY + k_INT + 1); return *this; }
     MyTestOutStream& putArrayUint8(const char * /* array */, int /* count */)
-           { d_fun.push_back(k_ARRAY + k_UNSIGNED + k_INT + 1); return *this; }
+           { record(k_ARRAY + k_UNSIGNED + k_INT + 1); return *this; }
     MyTestOutStream& putArrayFloat64(const double * /* array */,
                                      int           /* count */)
-                      { d_fun.push_back(k_ARRAY + k_FLOAT + 8); return *this; }
+                      { record(k_ARRAY + k_FLOAT + 8); return *this; }
     MyTestOutStream& putArrayFloat32(const float * /* array */,
                                      int           /* count */)
-                      { d_fun.push_back(k_ARRAY + k_FLOAT + 4); return *this; }
+                      { record(k_ARRAY + k_FLOAT + 4); return *this; }
 
     MyTestOutStream& putString(const bsl::string& /* value */)
-                                   { d_fun.push_back(k_STRING); return *this; }
+                                   { record(k_STRING); return *this; }
 
     // MANIPULATORS
     void invalidate() {}
     void removeAll() {}
     void reserveCapacity(int /* newCapacity */) {}
-    void clear() { d_fun.clear();  d_lastVersion = -2; }
+    void clear()
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    { d_fun.clear();  d_lastVersion = -2; }
 
     // ACCESSORS
     operator const void *() const { return this; }
     const char *data() const { return 0; }
     int bdexVersionSelector() const { return d_versionSelector; }
     size_t length() const { return 0; }
-    size_t size() const { return d_fun.size(); }
-    int operator[](size_t index) const
+    size_t size() const
+        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    { return d_fun.size(); }
+    int operator[](size_t index) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
                                  { return index < size() ? d_fun[index] : -1; }
     int lastVersion() const { return d_lastVersion; }
 };
@@ -340,6 +354,7 @@ struct TestWithVersion {
                      int                     version,
                      const std::vector<int>& expectedFunctionIndicator,
                      bool                    usesArrayMethod = true)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(expectedFunctionIndicator)
     {
         using bslx::OutStreamFunctions::bdexStreamOut;
 
@@ -439,6 +454,8 @@ struct TestWithoutVersion {
                      const std::vector<int>& expectedFunctionIndicator,
                      bool                    usesArrayMethod = true,
                      bool                    externalizesVersion = false)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
+        BSLS_ASSERT_CONVEYOR_REQUIRES(expectedFunctionIndicator)
     {
         using bslx::OutStreamFunctions::bdexStreamOut;
 

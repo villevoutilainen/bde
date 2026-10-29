@@ -79,6 +79,7 @@
 #include <bslalg_typetraithasstliterators.h>
 
 #include <bslma_usesbslmaallocator.h>
+#include <bsls_assert.h>
 
 #include <functional>
 
@@ -116,8 +117,10 @@ public:
 
   typedef typename _Ht::allocator_type allocator_type;
 
-  hasher hash_funct() const { return _M_ht.hash_funct(); }
-  key_equal key_eq() const { return _M_ht.key_eq(); }
+  hasher hash_funct() const
+              BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.hash_funct(); }
+  key_equal key_eq() const
+                  BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.key_eq(); }
   allocator_type get_allocator() const { return _M_ht.get_allocator(); }
 
 private:
@@ -185,24 +188,31 @@ public:
       : _M_ht(__x._M_ht, __a) { }
 
 public:
-  size_type size() const { return _M_ht.size(); }
+  size_type size() const
+                    BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.size(); }
   size_type max_size() const { return _M_ht.max_size(); }
-  bool empty() const { return _M_ht.empty(); }
+  bool empty() const
+                   BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.empty(); }
   void swap(_Self& __hs) { _M_ht.swap(__hs._M_ht); }
 
-  iterator begin() const { return _M_ht.begin(); }
-  iterator end() const { return _M_ht.end(); }
+  iterator begin() const
+                   BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.begin(); }
+  iterator end() const
+                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.end(); }
 
 public:
   pair<iterator, bool> insert(const value_type& __obj)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
       pair<_ht_iterator, bool> __p = _M_ht.insert_unique(__obj);
       return pair<iterator,bool>(reinterpret_cast<const iterator&>(__p.first), __p.second);
     }
   template <class _InputIterator>
   void insert(_InputIterator __f, _InputIterator __l)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     { _M_ht.insert_unique(__f,__l); }
   pair<iterator, bool> insert_noresize(const value_type& __obj)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
   {
     pair<_ht_iterator, bool> __p =
       _M_ht.insert_unique_noresize(__obj);
@@ -210,22 +220,31 @@ public:
   }
 
   template <class _KT>
-  iterator find(const _KT& __key) const { return _M_ht.find(__key); }
-  size_type count(const key_type& __key) const { return _M_ht.count(__key); }
+  iterator find(const _KT& __key) const
+               BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.find(__key); }
+  size_type count(const key_type& __key) const
+              BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.count(__key); }
 
   pair<iterator, iterator> equal_range(const key_type& __key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     { return _M_ht.equal_range(__key); }
 
-  size_type erase(const key_type& __key) {return _M_ht.erase(__key); }
-  void erase(iterator __it) { _M_ht.erase(__it); }
-  void erase(iterator __f, iterator __l) { _M_ht.erase(__f, __l); }
-  void clear() { _M_ht.clear(); }
+  size_type erase(const key_type& __key)
+               BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {return _M_ht.erase(__key); }
+  void erase(iterator __it)
+                      BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { _M_ht.erase(__it); }
+  void erase(iterator __f, iterator __l)
+                  BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { _M_ht.erase(__f, __l); }
+  void clear() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { _M_ht.clear(); }
 
 public:
-  void resize(size_type __hint) { _M_ht.resize(__hint); }
-  size_type bucket_count() const { return _M_ht.bucket_count(); }
+  void resize(size_type __hint)
+                   BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { _M_ht.resize(__hint); }
+  size_type bucket_count() const
+            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.bucket_count(); }
   size_type max_bucket_count() const { return _M_ht.max_bucket_count(); }
   size_type elems_in_bucket(size_type __n) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     { return _M_ht.elems_in_bucket(__n); }
 
   static bool _M_equal (const _Self& __x, const _Self& __y) {
@@ -274,8 +293,10 @@ public:
 
   typedef typename _Ht::allocator_type allocator_type;
 
-  hasher hash_funct() const { return _M_ht.hash_funct(); }
-  key_equal key_eq() const { return _M_ht.key_eq(); }
+  hasher hash_funct() const
+              BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.hash_funct(); }
+  key_equal key_eq() const
+                  BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.key_eq(); }
   allocator_type get_allocator() const { return _M_ht.get_allocator(); }
 
 private:
@@ -347,41 +368,56 @@ public:
       : _M_ht(__x._M_ht, __a) { }
 
 public:
-  size_type size() const { return _M_ht.size(); }
+  size_type size() const
+                    BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.size(); }
   size_type max_size() const { return _M_ht.max_size(); }
-  bool empty() const { return _M_ht.empty(); }
+  bool empty() const
+                   BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.empty(); }
   void swap(_Self& hs) { _M_ht.swap(hs._M_ht); }
 
-  iterator begin() const { return _M_ht.begin(); }
-  iterator end() const { return _M_ht.end(); }
+  iterator begin() const
+                   BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.begin(); }
+  iterator end() const
+                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.end(); }
 
 public:
-  iterator insert(const value_type& __obj)
+  iterator insert(const value_type& __obj) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     { return _M_ht.insert_equal(__obj); }
   template <class _InputIterator>
   void insert(_InputIterator __f, _InputIterator __l)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     { _M_ht.insert_equal(__f,__l); }
   iterator insert_noresize(const value_type& __obj)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     { return _M_ht.insert_equal_noresize(__obj); }
 
   template <class _KT>
-  iterator find(const _KT& __key) const { return _M_ht.find(__key); }
+  iterator find(const _KT& __key) const
+               BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.find(__key); }
 
-  size_type count(const key_type& __key) const { return _M_ht.count(__key); }
+  size_type count(const key_type& __key) const
+              BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.count(__key); }
 
   pair<iterator, iterator> equal_range(const key_type& __key) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     { return _M_ht.equal_range(__key); }
 
-  size_type erase(const key_type& __key) {return _M_ht.erase(__key); }
-  void erase(iterator __it) { _M_ht.erase(__it); }
-  void erase(iterator __f, iterator __l) { _M_ht.erase(__f, __l); }
-  void clear() { _M_ht.clear(); }
+  size_type erase(const key_type& __key)
+               BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {return _M_ht.erase(__key); }
+  void erase(iterator __it)
+                      BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { _M_ht.erase(__it); }
+  void erase(iterator __f, iterator __l)
+                  BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { _M_ht.erase(__f, __l); }
+  void clear() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { _M_ht.clear(); }
 
 public:
-  void resize(size_type __hint) { _M_ht.resize(__hint); }
-  size_type bucket_count() const { return _M_ht.bucket_count(); }
+  void resize(size_type __hint)
+                   BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { _M_ht.resize(__hint); }
+  size_type bucket_count() const
+            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS { return _M_ht.bucket_count(); }
   size_type max_bucket_count() const { return _M_ht.max_bucket_count(); }
   size_type elems_in_bucket(size_type __n) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     { return _M_ht.elems_in_bucket(__n); }
   static bool _M_equal (const _Self& __x, const _Self& __y) {
     return _Ht::_M_equal(__x._M_ht,__y._M_ht);

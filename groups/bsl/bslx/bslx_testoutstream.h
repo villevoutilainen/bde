@@ -795,7 +795,8 @@ bsl::ostream& operator<<(bsl::ostream&        stream,
 /// documentation), and return a reference to `stream`.  The behavior is
 /// undefined unless `TYPE` is BDEX-compliant.
 template <class TYPE>
-TestOutStream& operator<<(TestOutStream& stream, const TYPE& value);
+TestOutStream& operator<<(TestOutStream& stream, const TYPE& value)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
 // ============================================================================
 //                           INLINE DEFINITIONS

@@ -484,6 +484,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_conditional.h>
 #include <bslmf_isenum.h>
 
+#include <bsls_assert.h>
 #include <bsls_types.h>
 
 #include <bsl_string.h>
@@ -759,7 +760,8 @@ namespace OutStreamFunctions {
     template <class STREAM, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                         stream,
                           const bsl::vector<char, ALLOC>& value,
-                          int                             version);
+                          int                             version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<signed char, ALLOC>` `value` to the
     /// specified output `stream`, and return a reference to `stream`.  The
@@ -770,7 +772,8 @@ namespace OutStreamFunctions {
     template <class STREAM, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                                stream,
                           const bsl::vector<signed char, ALLOC>& value,
-                          int                                    version);
+                          int                                    version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<unsigned char, ALLOC>` `value` to
     /// the specified output `stream`, and return a reference to `stream`.
@@ -781,7 +784,8 @@ namespace OutStreamFunctions {
     template <class STREAM, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                                  stream,
                           const bsl::vector<unsigned char, ALLOC>& value,
-                          int                                      version);
+                          int                                      version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<short, ALLOC>` `value` to the
     /// specified output `stream`, and return a reference to `stream`.  The
@@ -792,7 +796,8 @@ namespace OutStreamFunctions {
     template <class STREAM, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                          stream,
                           const bsl::vector<short, ALLOC>& value,
-                          int                              version);
+                          int                              version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<unsigned short, ALLOC>` `value` to
     /// the specified output `stream`, and return a reference to `stream`.
@@ -803,7 +808,8 @@ namespace OutStreamFunctions {
     template <class STREAM, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                                   stream,
                           const bsl::vector<unsigned short, ALLOC>& value,
-                          int                                       version);
+                          int                                       version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<int, ALLOC>` `value` to the
     /// specified output `stream`, and return a reference to `stream`.  The
@@ -814,7 +820,8 @@ namespace OutStreamFunctions {
     template <class STREAM, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                        stream,
                           const bsl::vector<int, ALLOC>& value,
-                          int                            version);
+                          int                            version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<unsigned int, ALLOC>` `value` to
     /// the specified output `stream`, and return a reference to `stream`.
@@ -825,7 +832,8 @@ namespace OutStreamFunctions {
     template <class STREAM, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                                 stream,
                           const bsl::vector<unsigned int, ALLOC>& value,
-                          int                                     version);
+                          int                                     version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<bsls::Types::Int64, ALLOC>` `value`
     /// to the specified output `stream`, and return a reference to
@@ -837,7 +845,8 @@ namespace OutStreamFunctions {
     STREAM& bdexStreamOut(
                         STREAM&                                       stream,
                         const bsl::vector<bsls::Types::Int64, ALLOC>& value,
-                        int                                           version);
+                        int                                           version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<bsls::Types::Uint64, ALLOC>`
     /// `value` to the specified output `stream`, and return a reference to
@@ -849,7 +858,8 @@ namespace OutStreamFunctions {
     STREAM& bdexStreamOut(
                        STREAM&                                        stream,
                        const bsl::vector<bsls::Types::Uint64, ALLOC>& value,
-                       int                                            version);
+                       int                                            version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<float, ALLOC>` `value` to the
     /// specified output `stream`, and return a reference to `stream`.  The
@@ -860,7 +870,8 @@ namespace OutStreamFunctions {
     template <class STREAM, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                          stream,
                           const bsl::vector<float, ALLOC>& value,
-                          int                              version);
+                          int                              version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<double, ALLOC>` `value` to the
     /// specified output `stream`, and return a reference to `stream`.  The
@@ -871,7 +882,8 @@ namespace OutStreamFunctions {
     template <class STREAM, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                           stream,
                           const bsl::vector<double, ALLOC>& value,
-                          int                               version);
+                          int                               version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<TYPE, ALLOC>` `value` to the
     /// specified output `stream`, and return a reference to `stream`.  If
@@ -885,7 +897,8 @@ namespace OutStreamFunctions {
     /// containers.
     template <class STREAM, class TYPE, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                         stream,
-                          const bsl::vector<TYPE, ALLOC>& value);
+                          const bsl::vector<TYPE, ALLOC>& value)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Write the specified `bsl::vector<TYPE, ALLOC>` `value`, using the
     /// specified `version` format, to the specified output `stream`, and
@@ -900,7 +913,8 @@ namespace OutStreamFunctions {
     template <class STREAM, class TYPE, class ALLOC>
     STREAM& bdexStreamOut(STREAM&                         stream,
                           const bsl::vector<TYPE, ALLOC>& value,
-                          int                             version);
+                          int                             version)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
 }  // close namespace OutStreamFunctions
 
@@ -1277,7 +1291,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
     stream.putLength(length);
 
     for (Iterator it = value.begin(); it != value.end(); ++it) {
-        bdexStreamOut(stream, *it, version);
+        bdexStreamOut(stream, BSLS_ASSERT_CONVEYOR_REF(*it), version);
     }
 
     return stream;
