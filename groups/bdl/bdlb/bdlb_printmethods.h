@@ -216,6 +216,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_nestedtraitdeclaration.h>
 #include <bslmf_selecttrait.h>
 
+#include <bsls_assert.h>
 #include <bsls_libraryfeatures.h>
 
 #include <bsl_iomanip.h>
@@ -304,15 +305,19 @@ template <class TYPE>
 bsl::ostream& print(bsl::ostream& stream,
                     const TYPE&   object,
                     int           level          = 0,
-                    int           spacesPerLevel = 4);
+                    int           spacesPerLevel = 4)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 bsl::ostream& print(bsl::ostream& stream,
                     char          object,
                     int           level          = 0,
-                    int           spacesPerLevel = 4);
+                    int           spacesPerLevel = 4)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 bsl::ostream& print(bsl::ostream& stream,
                     unsigned char object,
                     int           level          = 0,
-                    int           spacesPerLevel = 4);
+                    int           spacesPerLevel = 4)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
 /// Format the specified `object` to the specified output `stream` at the
 /// (absolute value of) the optionally specified indentation `level` and
@@ -324,7 +329,9 @@ bsl::ostream& print(bsl::ostream&                          stream,
                                             CHAR_TRAITS_T,
                                             ALLOC>&        object,
                     int                                    level          = 0,
-                    int                                    spacesPerLevel = 4);
+                    int                                    spacesPerLevel = 4)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
 /// Format the specified `object` to the specified output `stream` at the
 /// (absolute value of) the optionally specified indentation `level` and
@@ -336,7 +343,9 @@ template <class ALLOC>
 bsl::ostream& print(bsl::ostream&                   stream,
                     const bsl::vector<char, ALLOC>& object,
                     int                             level          = 0,
-                    int                             spacesPerLevel = 4);
+                    int                             spacesPerLevel = 4)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_BASELINE_LIBRARY
 
@@ -355,7 +364,9 @@ template <class TYPE>
 bsl::ostream& print(bsl::ostream&              stream,
                     const std::optional<TYPE>& object,
                     int                        level          = 0,
-                    int                        spacesPerLevel = 4);
+                    int                        spacesPerLevel = 4)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
 /// Format the specified `object` to the specified output `stream` at the
 /// (absolute value of) the optionally specified indentation `level` and
@@ -374,7 +385,9 @@ template <class ... TYPE>
 bsl::ostream& print(bsl::ostream&                 stream,
                     const std::variant<TYPE ...>& object,
                     int                           level          = 0,
-                    int                           spacesPerLevel = 4);
+                    int                           spacesPerLevel = 4)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
 /// Format the specified `object` to the specified output `stream` at the
 /// (absolute value of) the optionally specified indentation `level` and
@@ -390,7 +403,9 @@ bsl::ostream& print(bsl::ostream&                 stream,
 bsl::ostream& print(bsl::ostream&         stream,
                     const std::monostate& object,
                     int                   level          = 0,
-                    int                   spacesPerLevel = 4);
+                    int                   spacesPerLevel = 4)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
 #endif  // BSLS_LIBRARYFEATURES_HAS_CPP17_BASELINE_LIBRARY
 
@@ -500,6 +515,8 @@ bsl::ostream& PrintMethods_Imp<TYPE, bslmf::SelectTraitCase<> >::print(
                                                   int           level,
                                                   int           spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }
@@ -531,6 +548,8 @@ bsl::ostream& PrintMethods_Imp<TYPE, bslmf::SelectTraitCase<HasPrintMethod> >::
                                                   int           level,
                                                   int           spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     // A compilation error indicating the next line of code implies the 'TYPE'
     // parameter does not have a 'print' method with the expected signature.
 
@@ -550,6 +569,8 @@ bsl::ostream& PrintMethods_Imp<TYPE,
                                        int           level,
                                        int           spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }
@@ -574,7 +595,7 @@ bsl::ostream& PrintMethods_Imp<TYPE,
 
         for (Iterator it = object.begin(); it != object.end(); ++it) {
             PrintMethods::print(stream,
-                                *it,
+                                BSLS_ASSERT_CONVEYOR_REF(*it),
                                 levelPlus1,
                                 spacesPerLevel);
         }
@@ -589,7 +610,7 @@ bsl::ostream& PrintMethods_Imp<TYPE,
         stream << "[ ";
 
         for (Iterator it = object.begin(); it != object.end(); ++it) {
-            PrintMethods::print(stream, *it, 0, -1);
+            PrintMethods::print(stream, BSLS_ASSERT_CONVEYOR_REF(*it), 0, -1);
             stream << ' ';
         }
 
@@ -611,6 +632,8 @@ bsl::ostream& PrintMethods_Imp<TYPE, bslmf::SelectTraitCase<bslmf::IsPair> >::
                                                   int           level,
                                                   int           spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }
@@ -760,6 +783,7 @@ PrintMethods::print(bsl::ostream&                 stream,
                     int                           spacesPerLevel)
 {
     const auto lambda = [&](const auto& x) -> bsl::ostream& {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                             return PrintMethods::print(stream,
                                                        x,
                                                        level,

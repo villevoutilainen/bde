@@ -748,16 +748,16 @@ class TmvipSa {
     ~TmvipSa();
 
     // ACCESSORS
-    const TYPE& a1() const;
-    const TYPE& a2() const;
-    const TYPE& a3() const;
-    const TYPE& a4() const;
+    const TYPE& a1() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& a2() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& a3() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& a4() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the `aN`
     /// attribute of this object, where N is the maximum number of
     /// parameters we are supporting in our simulation of C++11 variadic
     /// templates.
-    const TYPE& a5() const;
+    const TYPE& a5() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                         // -------------
@@ -1021,16 +1021,16 @@ class TmvipAa {
     ~TmvipAa();
 
     // ACCESSORS
-    const TYPE& a1() const;
-    const TYPE& a2() const;
-    const TYPE& a3() const;
-    const TYPE& a4() const;
+    const TYPE& a1() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& a2() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& a3() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& a4() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the `aN`
     /// attribute of this object, where N is the maximum number of
     /// parameters we are supporting in our simulation of C++11 variadic
     /// templates.
-    const TYPE& a5() const;
+    const TYPE& a5() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                         // Aspect
 
@@ -1327,16 +1327,16 @@ class TmvipSa_WithThrowingCtor {
     ~TmvipSa_WithThrowingCtor();
 
     // ACCESSORS
-    const TYPE& a1() const;
-    const TYPE& a2() const;
-    const TYPE& a3() const;
-    const TYPE& a4() const;
+    const TYPE& a1() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& a2() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& a3() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& a4() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the `aN`
     /// attribute of this object, where N is the maximum number of
     /// parameters we are supporting in our simulation of C++11 variadic
     /// templates.
-    const TYPE& a5() const;
+    const TYPE& a5() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                         // ------------------------------
@@ -2793,7 +2793,8 @@ class SwappableWithAllocator {
 
     ~SwappableWithAllocator()
     {
-        BSLS_ASSERT_OPT(allocator() == d_string.get_allocator().mechanism());
+        BSLS_ASSERT_OPT_NONCONVEYOR(
+                         allocator() == d_string.get_allocator().mechanism());
     }
 
     // MANIPULATORS
@@ -2811,7 +2812,7 @@ class SwappableWithAllocator {
         return d_allocator_p;
     }
 
-    const bsl::string& string() const
+    const bsl::string& string() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return d_string;
     }
@@ -2826,6 +2827,8 @@ class SwappableWithAllocator {
 bool operator==(const SwappableWithAllocator& lhs,
                 const SwappableWithAllocator& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.value() == rhs.value() && lhs.string() == rhs.string();
 }
 
@@ -2983,11 +2986,14 @@ class TestDriver {
     /// first invalid character, and a negative value otherwise.  Note that
     /// this function is used to implement `gg` as well as allow for
     /// verification of syntax error detection.
-    static int ggg(Obj *object, const char *spec, int verbose = 1);
+    static int ggg(Obj *object, const char *spec, int verbose = 1)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
     /// Return, by reference, the specified `object` with its value adjusted
     /// according to the specified `spec`.
-    static Obj& gg(Obj *object, const char *spec);
+    static Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Assign to the specified `object` the value indicated by the
     /// specified `identifier`, ensuring that the overload of the primary
@@ -2997,7 +3003,8 @@ class TestDriver {
     /// default allocator is used.
     static void primaryManipulator(Obj              *object,
                                    int               identifier,
-                                   bslma::Allocator *basicAllocator = 0);
+                                   bslma::Allocator *basicAllocator = 0)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object);
 
   public:
     // CLASS METHODS
@@ -3205,6 +3212,7 @@ void TestDriver<TEST_TYPE>::testCase23_withoutAllocator()
 
             bslma::DestructorGuard<TEST_TYPE> guard(pW);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(pW);
             const TEST_TYPE& W = *pW;
 
             for (int tj = 0; tj < NUM_SPECS; ++tj) {
@@ -3227,12 +3235,14 @@ void TestDriver<TEST_TYPE>::testCase23_withoutAllocator()
                 TEST_TYPE *pY = bufferY.address();
                 Util::emplace(pY, *SPEC1, &scratch);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(pY);
                 TEST_TYPE& mY = *pY;  const TEST_TYPE& Y = mY;
 
                 ASSERTV(SPEC1, SPEC2, Y == W);
 
                 // Create target object `X`
                 Obj *objPtr = new (fa) Obj();
+                BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                 Obj& mX = *objPtr;  const Obj& X = gg(&mX, SPEC2);
 
                 ASSERTV(SPEC1, SPEC2, (X == Y) == (ti == tj));
@@ -3378,6 +3388,7 @@ void TestDriver<TEST_TYPE>::testCase23_withAllocator()
 
             bslma::DestructorGuard<TEST_TYPE> guard(pW);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(pW);
             const TEST_TYPE& W = *pW;
 
             for (int tj = 0; tj < NUM_SPECS; ++tj) {
@@ -3420,12 +3431,14 @@ void TestDriver<TEST_TYPE>::testCase23_withAllocator()
 
                     bslma::TestAllocator& sa = *srcAllocatorPtr;
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(srcPtr);
                     TEST_TYPE& mY = *srcPtr;  const TEST_TYPE& Y = mY;
 
                     ASSERTV(SPEC1, SPEC2, Y == W);
 
                     // Create target object `X`.
                     Obj *objPtr = new (fa) Obj(&oa);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = gg(&mX, SPEC2);
 
                     if ('~' != *SPEC2) {
@@ -3484,6 +3497,7 @@ void TestDriver<TEST_TYPE>::testCase23_withAllocator()
 
             bslma::DestructorGuard<TEST_TYPE> guard(pW);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(pW);
             const TEST_TYPE& W = *pW;
 
             for (int tj = 0; tj < NUM_SPECS; ++tj) {
@@ -3536,7 +3550,8 @@ void TestDriver<TEST_TYPE>::testCase23_withAllocator()
 
                         bslma::DestructorGuard<TEST_TYPE> guard(pY);
 
-                        TEST_TYPE& mY = *pY;  const TEST_TYPE& Y = mY;
+                        BSLS_ASSERT_CONVEYOR_OBJECT(pY);
+                TEST_TYPE& mY = *pY;  const TEST_TYPE& Y = mY;
 
                         oa.setAllocationLimit(taLimit);
 
@@ -3647,6 +3662,7 @@ void TestDriver<TEST_TYPE>::testCase22_withoutAllocator()
 
             bslma::DestructorGuard<TEST_TYPE> guard(pW);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(pW);
             const TEST_TYPE& W = *pW;
 
             bslma::TestAllocator fa("footprint", veryVeryVeryVerbose);
@@ -3659,6 +3675,7 @@ void TestDriver<TEST_TYPE>::testCase22_withoutAllocator()
 
             TEST_TYPE *pY = bufferY.address();
             Util::emplace(pY, *SPEC, &scratch);
+            BSLS_ASSERT_CONVEYOR_OBJECT(pY);
             TEST_TYPE& mY = *pY;  const TEST_TYPE& Y = mY;
 
             ASSERTV(SPEC, Y == W);
@@ -3669,6 +3686,7 @@ void TestDriver<TEST_TYPE>::testCase22_withoutAllocator()
                          || MoveState::e_NOT_MOVED == mState);
 
             Obj *objPtr = new (fa) Obj(MoveUtil::move(mY));
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj& mX = *objPtr;  const Obj& X = mX;
 
             // Verify the value of the object.
@@ -3789,6 +3807,7 @@ void TestDriver<TEST_TYPE>::testCase22_withAllocator()
 
             bslma::DestructorGuard<TEST_TYPE> guard(pW);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(pW);
             const TEST_TYPE& W = *pW;
 
             for (char cfg = 'a'; cfg <= 'd'; ++cfg) {
@@ -3808,6 +3827,7 @@ void TestDriver<TEST_TYPE>::testCase22_withAllocator()
                 TEST_TYPE *pY = bufferY.address();
                 Util::emplace(pY, *SPEC, &sa);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(pY);
                 TEST_TYPE& mY = *pY;  const TEST_TYPE& Y = mY;
 
                 ASSERTV(SPEC, CONFIG, Y == W);
@@ -3857,6 +3877,7 @@ void TestDriver<TEST_TYPE>::testCase22_withAllocator()
                 bslma::TestAllocator&  oa = *objAllocatorPtr;
                 bslma::TestAllocator& noa = *othAllocatorPtr;
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                 Obj& mX = *objPtr;  const Obj& X = mX;
 
                 // Verify the value of the object.
@@ -3994,12 +4015,14 @@ void TestDriver<TEST_TYPE>::testCase21_withoutAllocator()
 
                 // Create source object `Y`.
                 Obj *srcPtr = new (fa) Obj();
+                BSLS_ASSERT_CONVEYOR_OBJECT(srcPtr);
                 Obj& mY = *srcPtr;  const Obj& Y = gg(&mY, SPEC1);
 
                 ASSERTV(SPEC1, SPEC2, Y == W);
 
                 // Create target object `X`
                 Obj *objPtr = new (fa) Obj();
+                BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                 Obj& mX = *objPtr;  const Obj& X = gg(&mX, SPEC2);
 
                 ASSERTV(SPEC1, SPEC2, (X == Y) == (ti == tj));
@@ -4214,12 +4237,14 @@ void TestDriver<TEST_TYPE>::testCase21_withAllocator()
                     }
                     bslma::TestAllocator& sa = *srcAllocatorPtr;
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(srcPtr);
                     Obj& mY = *srcPtr;  const Obj& Y = mY;
 
                     ASSERTV(SPEC1, SPEC2, Y == W);
 
                     // Create target object `X`.
                     Obj *objPtr = new (fa) Obj(&oa);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = gg(&mX, SPEC2);
 
                     ASSERTV(SPEC1, SPEC2, (X == Y) == (ti == tj));
@@ -4457,6 +4482,7 @@ void TestDriver<TEST_TYPE>::testCase20_withoutAllocator()
 
             // Create source object `Y`.
             Obj *srcPtr = new (fa) Obj();
+            BSLS_ASSERT_CONVEYOR_OBJECT(srcPtr);
             Obj& mY = *srcPtr;  const Obj& Y = gg(&mY, SPEC);
 
             ASSERTV(SPEC, Y == W);
@@ -4467,6 +4493,7 @@ void TestDriver<TEST_TYPE>::testCase20_withoutAllocator()
                          || MoveState::e_NOT_MOVED == mState);
 
             Obj *objPtr = new (fa) Obj(MoveUtil::move(mY));
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj& mX = *objPtr;  const Obj& X = mX;
 
             // Verify the value of the object.
@@ -4615,6 +4642,7 @@ void TestDriver<TEST_TYPE>::testCase20_withAllocator()
 
                 // Create source object `Y`.
                 Obj *srcPtr = new (fa) Obj(&sa);
+                BSLS_ASSERT_CONVEYOR_OBJECT(srcPtr);
                 Obj& mY = *srcPtr;  const Obj& Y = gg(&mY, SPEC);
 
                 ASSERTV(SPEC, CONFIG, Y == W);
@@ -4664,6 +4692,7 @@ void TestDriver<TEST_TYPE>::testCase20_withAllocator()
                 bslma::TestAllocator&  oa = *objAllocatorPtr;
                 bslma::TestAllocator& noa = *othAllocatorPtr;
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                 Obj& mX = *objPtr;  const Obj& X = mX;
 
                 // Verify the value of the object.
@@ -12888,7 +12917,9 @@ int main(int argc, char *argv[])
 
             for (int i = 0; i < NUM_VALUES; ++i) {
                 const Obj& X = mX[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 const Obj& W = mW[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&W);
 
                 Obj mY(X);  const Obj& Y = mY;
 
@@ -12926,7 +12957,9 @@ int main(int argc, char *argv[])
 
             for (int i = 0; i < NUM_VALUES; ++i) {
                 const Obj& X = mX[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 const Obj& W = mW[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&W);
 
                 dam.reset();
 
@@ -12952,7 +12985,9 @@ int main(int argc, char *argv[])
 
             for (int i = 0; i < NUM_VALUES; ++i) {
                 const Obj& X = mX[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 const Obj& W = mW[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&W);
 
                 bslma::TestAllocatorMonitor oam(&oa);
 

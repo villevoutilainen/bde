@@ -451,7 +451,7 @@ void String::skipLeadingTrailing(const char **begin, const char **end)
 {
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(*begin <= *end);
+    BSLS_ASSERT_NONCONVEYOR(*begin <= *end);
 
     const char *p = *begin;
     const char *q = *end;

@@ -406,6 +406,7 @@ int main(int argc, char *argv[])
 
         for (int ti = 0; ti < k_NUM_DATA; ++ti) {
             const Data& datai = DATA[ti];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&datai);
             const int   LINEI = datai.d_line;
             const int   IDXI  = datai.d_index;
             bsl::string LHS(datai.d_str, &ta);
@@ -417,6 +418,7 @@ int main(int argc, char *argv[])
 
             for (int tj = 0; tj < k_NUM_DATA; ++tj) {
                 const Data& dataj = DATA[tj];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&dataj);
                 const int          LINEJ = dataj.d_line;
                 const int          IDXJ  = dataj.d_index;
                 bsl::string        rhs(dataj.d_str, &ta);

@@ -423,8 +423,10 @@ IndexSpanStringUtil::bindImp(
                   const bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS>& string,
                   const IndexSpan&                                      span)
 {
-    BSLS_ASSERT(span.position()                 <= string.length());
-    BSLS_ASSERT(span.position() + span.length() <= string.length());
+    BSLS_ASSERT_NONCONVEYOR(
+                           span.position()                 <= string.length());
+    BSLS_ASSERT_NONCONVEYOR(
+                           span.position() + span.length() <= string.length());
 
     return bslstl::StringRefImp<CHAR_TYPE>(string.data() + span.position(),
                                            span.length());
@@ -438,8 +440,8 @@ IndexSpanStringUtil::createFromPosImp(
                   IndexSpan::size_type                                  begin,
                   IndexSpan::size_type                                  end)
 {
-    BSLS_ASSERT(begin <= string.size());
-    BSLS_ASSERT(end   <= string.size());
+    BSLS_ASSERT_NONCONVEYOR(begin <= string.size());
+    BSLS_ASSERT_NONCONVEYOR(end   <= string.size());
     BSLS_ASSERT(begin <= end);
 
     (void)string;  // remove unused parameter warnings
@@ -455,8 +457,8 @@ IndexSpanStringUtil::createImp(
                   IndexSpan::size_type                                  begin,
                   IndexSpan::size_type                                  length)
 {
-    BSLS_ASSERT(begin          <= string.size());
-    BSLS_ASSERT(begin + length <= string.size());
+    BSLS_ASSERT_NONCONVEYOR(begin          <= string.size());
+    BSLS_ASSERT_NONCONVEYOR(begin + length <= string.size());
 
     (void)string;  // remove unused parameter warnings
 
@@ -488,10 +490,10 @@ IndexSpanStringUtil::createImp(
     (void)stringEnd;
     (void)subStringEnd;
 
-    BSLS_ASSERT(lessEqual(   subStringBegin, stringEnd  ));
-    BSLS_ASSERT(lessEqual(   subStringEnd,   stringEnd  ));
-    BSLS_ASSERT(greaterEqual(subStringBegin, stringBegin));
-    BSLS_ASSERT(greaterEqual(subStringEnd,   stringBegin));
+    BSLS_ASSERT_NONCONVEYOR(lessEqual(   subStringBegin, stringEnd  ));
+    BSLS_ASSERT_NONCONVEYOR(lessEqual(   subStringEnd,   stringEnd  ));
+    BSLS_ASSERT_NONCONVEYOR(greaterEqual(subStringBegin, stringBegin));
+    BSLS_ASSERT_NONCONVEYOR(greaterEqual(subStringEnd,   stringBegin));
 
     return IndexSpan(subStringBegin - stringBegin, subString.length());
 }
@@ -505,9 +507,9 @@ IndexSpanStringUtil::createImp(
                                            CHAR_TRAITS>::const_iterator begin,
            IndexSpan::size_type                                         length)
 {
-    BSLS_ASSERT(begin          >= string.begin());
-    BSLS_ASSERT(begin          <= string.end());
-    BSLS_ASSERT(begin + length <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(begin          >= string.begin());
+    BSLS_ASSERT_NONCONVEYOR(begin          <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(begin + length <= string.end());
 
     return IndexSpan(begin - string.begin(), length);
 }
@@ -522,10 +524,10 @@ IndexSpanStringUtil::createImp(
            typename bsl::basic_string_view<CHAR_TYPE,
                                            CHAR_TRAITS>::const_iterator end)
 {
-    BSLS_ASSERT(begin >= string.begin());
-    BSLS_ASSERT(begin <= end);
-    BSLS_ASSERT(begin <= string.end());
-    BSLS_ASSERT(end   <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(begin >= string.begin());
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(end   <= string.end());
 
     return IndexSpan(begin - string.begin(), end - begin);
 }
@@ -538,9 +540,9 @@ IndexSpanStringUtil::createImp(
            typename bslstl::StringRefImp<CHAR_TYPE>::const_iterator begin,
            IndexSpan::size_type                                     length)
 {
-    BSLS_ASSERT(begin          >= string.begin());
-    BSLS_ASSERT(begin          <= string.end()  );
-    BSLS_ASSERT(begin + length <= string.end()  );
+    BSLS_ASSERT_NONCONVEYOR(begin          >= string.begin());
+    BSLS_ASSERT_NONCONVEYOR(begin          <= string.end()  );
+    BSLS_ASSERT_NONCONVEYOR(begin + length <= string.end()  );
 
     return IndexSpan(begin - string.begin(), length);
 }
@@ -553,10 +555,10 @@ IndexSpanStringUtil::createImp(
            typename bslstl::StringRefImp<CHAR_TYPE>::const_iterator begin,
            typename bslstl::StringRefImp<CHAR_TYPE>::const_iterator end)
 {
-    BSLS_ASSERT(begin >= string.begin());
-    BSLS_ASSERT(begin <= end           );
-    BSLS_ASSERT(begin <= string.end()  );
-    BSLS_ASSERT(end   <= string.end()  );
+    BSLS_ASSERT_NONCONVEYOR(begin >= string.begin());
+    BSLS_ASSERT_NONCONVEYOR(begin <= end           );
+    BSLS_ASSERT_NONCONVEYOR(begin <= string.end()  );
+    BSLS_ASSERT_NONCONVEYOR(end   <= string.end()  );
 
     return IndexSpan(begin - string.begin(), end - begin);
 }
@@ -573,9 +575,9 @@ IndexSpanStringUtil::createImp(
                                              ALLOCATOR>::const_iterator begin,
                   IndexSpan::size_type                                  length)
 {
-    BSLS_ASSERT(begin          >= string.begin());
-    BSLS_ASSERT(begin          <= string.end());
-    BSLS_ASSERT(begin + length <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(begin          >= string.begin());
+    BSLS_ASSERT_NONCONVEYOR(begin          <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(begin + length <= string.end());
 
     return IndexSpan(begin - string.begin(), length);
 }
@@ -592,9 +594,9 @@ IndexSpanStringUtil::createImp(
                                              ALLOCATOR>::const_iterator begin,
                   IndexSpan::size_type                                  length)
 {
-    BSLS_ASSERT(begin          >= string.begin());
-    BSLS_ASSERT(begin          <= string.end());
-    BSLS_ASSERT(begin + length <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(begin          >= string.begin());
+    BSLS_ASSERT_NONCONVEYOR(begin          <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(begin + length <= string.end());
 
     return IndexSpan(begin - string.begin(), length);
 }
@@ -613,10 +615,10 @@ IndexSpanStringUtil::createImp(
                                              CHAR_TRAITS,
                                              ALLOCATOR>::const_iterator end)
 {
-    BSLS_ASSERT(begin >= string.begin());
-    BSLS_ASSERT(begin <= end);
-    BSLS_ASSERT(begin <= string.end());
-    BSLS_ASSERT(end   <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(begin >= string.begin());
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(end   <= string.end());
 
     return IndexSpan(begin - string.begin(), end - begin);
 }
@@ -635,10 +637,10 @@ IndexSpanStringUtil::createImp(
                                              CHAR_TRAITS,
                                              ALLOCATOR>::const_iterator end)
 {
-    BSLS_ASSERT(begin >= string.begin());
-    BSLS_ASSERT(begin <= end);
-    BSLS_ASSERT(begin <= string.end());
-    BSLS_ASSERT(end   <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(begin >= string.begin());
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= string.end());
+    BSLS_ASSERT_NONCONVEYOR(end   <= string.end());
 
     return IndexSpan(begin - string.begin(), end - begin);
 }

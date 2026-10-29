@@ -443,7 +443,8 @@ namespace BDEU_HASHUTIL_USAGE_EXAMPLE {
         /// undefined unless all the characters of the `initial` string are
         /// distinct.
         explicit SequentialStrings(bsl::string const& initial)
-            : d_length(initial.length()), d_current(initial)
+            : d_length(BSLS_ASSERT_CONVEYOR_REF(initial).length())
+            , d_current(initial)
         {
             bsl::sort(d_current.begin(), d_current.end());
             ASSERT(bsl::unique(d_current.begin(), d_current.end()) ==
@@ -469,12 +470,14 @@ namespace BDEU_HASHUTIL_USAGE_EXAMPLE {
         /// Return data buffer of result type.
         const char *data() const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             return d_current.data();
         }
 
         /// Return length of result type (in bytes).
         size_t length() const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             return d_current.length();
         }
     };
@@ -509,7 +512,7 @@ namespace BDEU_HASHUTIL_USAGE_EXAMPLE {
         /// entries.
         explicit SequentialVector(bsl::vector<char> const& ranges)
             : d_ranges(ranges)
-            , d_length(ranges.size())
+            , d_length(BSLS_ASSERT_CONVEYOR_REF(ranges).size())
             , d_current(d_length, (char)0)
         {
         }
@@ -536,12 +539,14 @@ namespace BDEU_HASHUTIL_USAGE_EXAMPLE {
         /// Return data buffer of current value.
         const char *data() const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             return d_current.data();
         }
 
         /// Return length of current value (in bytes).
         size_t length() const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             return d_current.length();
         }
     };

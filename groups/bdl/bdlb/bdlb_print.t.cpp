@@ -349,6 +349,8 @@ int main(int argc, char *argv[])
         for (size_t i = 0; i <= 255; ++i) {
             bsl::ostringstream oss;
             char               c = static_cast<char>(i);
+            const bsl::string& EXPECTED = ASCII_HEX_PRESENTATION[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&EXPECTED);
 
             Util::singleLineHexDump(oss, &c, 1) << bsl::flush;
 
@@ -357,13 +359,13 @@ int main(int argc, char *argv[])
                     << "Char: "      << bsl::setw(3) << i << ' '
                     << "  Stream: '" << oss.str() << '\'' << ' '
                     << "  Expected: '"
-                             << ASCII_HEX_PRESENTATION[i] << '\'' << bsl::endl;
+                             << EXPECTED << '\'' << bsl::endl;
             }
 
             LOOP_ASSERT(i,
                         0 == strncmp(oss.str().c_str(),
-                        ASCII_HEX_PRESENTATION[i].c_str(),
-                        ASCII_HEX_PRESENTATION[i].size()));
+                        EXPECTED.c_str(),
+                        EXPECTED.size()));
         }
 
         if (verbose) bsl::cout << "\nConcern 2: Test dump length" << bsl::endl;

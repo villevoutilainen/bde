@@ -307,6 +307,7 @@ int main(int argc, char *argv[])
         for (bsl::size_t i = 0; i < NUM_TESTS; ++i) {
             bslma::TestAllocator     sa("bslstring", veryVeryVerbose);
             const TestData&          k_TEST    = k_DATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long          k_LINE    = k_TEST.d_line;
             const bsl::string_view&  k_STRVIEW = k_TEST.d_str;
             const size_type          k_POS     = k_TEST.d_pos;
@@ -429,6 +430,7 @@ int main(int argc, char *argv[])
         for (bsl::size_t i = 0; i < NUM_NTESTS; ++i) {
             bslma::TestAllocator     sa("bslstring", veryVeryVerbose);
             const NegativeTestData&  k_TEST    = k_NDATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long          k_LINE    = k_TEST.d_line;
             const size_type          k_POS     = k_TEST.d_pos;
             const size_type          k_LEN     = k_TEST.d_len;
@@ -539,6 +541,7 @@ int main(int argc, char *argv[])
         for (bsl::size_t i = 0; i < NUM_WTESTS; ++i) {
             bslma::TestAllocator         sa("bslstring", veryVeryVerbose);
             const TestDataWide&          k_TEST    = k_WDATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long              k_LINE    = k_TEST.d_line;
             const bsl::wstring_view&     k_STRVIEW = k_TEST.d_str;
             const size_type              k_POS     = k_TEST.d_pos;
@@ -661,6 +664,7 @@ int main(int argc, char *argv[])
         for (bsl::size_t i = 0; i < NUM_NWTESTS; ++i) {
             bslma::TestAllocator         sa("bslstring", veryVeryVerbose);
             const NegativeTestDataWide&  k_TEST    = k_NWDATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long              k_LINE    = k_TEST.d_line;
             const size_type              k_POS     = k_TEST.d_pos;
             const size_type              k_LEN     = k_TEST.d_len;
@@ -892,6 +896,7 @@ int main(int argc, char *argv[])
         for (bsl::size_t i = 0; i < NUM_TESTS; ++i) {
             bslma::TestAllocator     sa("bslstring", veryVeryVerbose);
             const TestData&          k_TEST    = k_DATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long          k_LINE    = k_TEST.d_line;
             const bsl::string_view&  k_STRVIEW = k_TEST.d_str;
             const bslstl::StringRef& k_STRREF  = k_STRVIEW;
@@ -1062,6 +1067,7 @@ int main(int argc, char *argv[])
         for (bsl::size_t i = 0; i < NUM_NTESTS; ++i) {
             bslma::TestAllocator     sa("bslstring", veryVeryVerbose);
             const NegativeTestData&  k_TEST     = k_NDATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long          k_LINE     = k_TEST.d_line;
             const bsl::string_view&  k_STRVIEW  = k_TEST.d_str;
             const bslstl::StringRef& k_STRREF   = k_STRVIEW;
@@ -1120,6 +1126,7 @@ int main(int argc, char *argv[])
         for (bsl::size_t i = 0; i < NUM_WTESTS; ++i) {
             bslma::TestAllocator         sa("bslstring", veryVeryVerbose);
             const TestDataWide&          k_TEST     = k_WDATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long              k_LINE    = k_TEST.d_line;
             const bsl::wstring_view&     k_STRVIEW = k_TEST.d_str;
             const bslstl::StringRefWide& k_STRREF  = k_STRVIEW;
@@ -1291,6 +1298,7 @@ int main(int argc, char *argv[])
         for (bsl::size_t i = 0; i < NUM_NWTESTS; ++i) {
             bslma::TestAllocator         sa("bslstring", veryVeryVerbose);
             const NegativeTestDataWide&  k_TEST     = k_NWDATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long              k_LINE     = k_TEST.d_line;
             const bsl::wstring_view&     k_STRVIEW  = k_TEST.d_str;
             const bslstl::StringRefWide& k_STRREF   = k_STRVIEW;

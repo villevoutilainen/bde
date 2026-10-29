@@ -461,7 +461,7 @@ class TransformIterator
     /// ```
     /// functor()(*iterator())
     /// ```
-    reference operator*();
+    reference operator*() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the address of the result of applying the functor of this
     /// object to the result of dereferencing the underlying iterator.  The
@@ -482,11 +482,12 @@ class TransformIterator
     /// ```
     /// functor()(iterator()[offset])
     /// ```
-    reference operator[](difference_type offset);
+    reference operator[](difference_type offset)
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the functor of
     /// this object.
-    FUNCTOR& functor();
+    FUNCTOR& functor() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the underlying
     /// iterator of this object.
@@ -508,7 +509,7 @@ class TransformIterator
     /// ```
     /// functor()(*iterator())
     /// ```
-    reference operator*() const;
+    reference operator*() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the address of the result of applying the functor of this
     /// object to the result of dereferencing the underlying iterator.  The
@@ -529,10 +530,11 @@ class TransformIterator
     /// ```
     /// functor()(iterator()[offset])
     /// ```
-    reference operator[](difference_type offset) const;
+    reference operator[](difference_type offset) const
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a `const` reference to the functor of this object.
-    const FUNCTOR& functor() const;
+    const FUNCTOR& functor() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a `const` reference to the underlying iterator of this
     /// object.

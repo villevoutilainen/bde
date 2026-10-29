@@ -376,7 +376,7 @@ void setUpArray(uint64_t  array[SET_UP_ARRAY_DIM],
 /// `*x == maxVal`, increment it.  The behavior is undefined unless
 /// `0 <= *x`, `*x <= maxVal`, and `maxVal < INT_MAX`.
 static inline
-void incInt(int *x, int maxVal)
+void incInt(int *x, int maxVal) BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(x)
 {
     // This function is used to increment a specified loop counter `*x` with
     // increasing rapidity as it grows, eventually setting it to EXACTLY the
@@ -403,7 +403,7 @@ void incInt(int *x, int maxVal)
 /// `*x == maxVal`, increment it.  The behavior is undefined unless
 /// `0 <= *x`, `*x <= maxVal`, and `maxVal < INT_MAX`.
 static inline
-void incSizeT(size_t *x, size_t maxVal)
+void incSizeT(size_t *x, size_t maxVal) BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(x)
 {
     // This function is used to increment a specified loop counter `*x` with
     // increasing rapidity as it grows, eventually setting it to EXACTLY the

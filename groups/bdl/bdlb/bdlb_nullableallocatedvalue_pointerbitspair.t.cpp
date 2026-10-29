@@ -147,6 +147,7 @@ bool as_expected(
   const bdlb::NullableAllocatedValue_PointerBitsPair<TYPE, NUM_BITS>&  value,
   TYPE                                                                *pointer,
   unsigned                                                             flags)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value)
 {
     if (value.getPointer() != pointer) {
         return false;                                                 // RETURN

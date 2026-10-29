@@ -940,8 +940,8 @@ bool bitsInWordsDiffer(uint64_t word1,
                        int      pos2,
                        int      numBits)
 {
-    BSLS_ASSERT(numBits + pos1 <= k_BITS_PER_UINT64);
-    BSLS_ASSERT(numBits + pos2 <= k_BITS_PER_UINT64);
+    BSLS_ASSERT_NONCONVEYOR(numBits + pos1 <= k_BITS_PER_UINT64);
+    BSLS_ASSERT_NONCONVEYOR(numBits + pos2 <= k_BITS_PER_UINT64);
 
     // If two down-shifted bits don't match, the XOR of them will be 1.  We
     // mask out the low-order 'numBits' (the bits we are interested in), and
@@ -975,8 +975,8 @@ void swapBitsInWords(uint64_t *word1,
     BSLS_ASSERT(word1);
     BSLS_ASSERT(word2);
     BSLS_ASSERT(0 < numBits);
-    BSLS_ASSERT(index1 + numBits <= k_BITS_PER_UINT64);
-    BSLS_ASSERT(index2 + numBits <= k_BITS_PER_UINT64);
+    BSLS_ASSERT_NONCONVEYOR(index1 + numBits <= k_BITS_PER_UINT64);
+    BSLS_ASSERT_NONCONVEYOR(index2 + numBits <= k_BITS_PER_UINT64);
 
     const uint64_t mask  = BitMaskUtil::lt64(numBits);
     const uint64_t bits1 = (*word1 >> index1) & mask;

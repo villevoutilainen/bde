@@ -17,6 +17,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bdlscm_version.h>
 
+#include <bsls_assert.h>
 #include <bsls_libraryfeatures.h>
 
 #include <bsl_string.h>
@@ -45,7 +46,9 @@ struct LiteralUtil {
     template <class OUT_STR>
     static void createQuotedEscapedCString_Impl(
                                                OUT_STR                 *result,
-                                               const bsl::string_view&  input);
+                                               const bsl::string_view&  input)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(input);
 
   public:
     // CLASS METHODS
@@ -58,9 +61,13 @@ struct LiteralUtil {
     /// string.  Note that this code uses the (ASCII) '\' character, rather
     /// than Unicode code points for escapes.
     static void createQuotedEscapedCString(bsl::string              *result,
-                                           const bsl::string_view&   input);
+                                           const bsl::string_view&   input)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(input);
     static void createQuotedEscapedCString(std::string              *result,
-                                           const bsl::string_view&   input);
+                                           const bsl::string_view&   input)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(input);
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
     /// Load into the specified `result` string the `"` delimited and
@@ -71,7 +78,9 @@ struct LiteralUtil {
     /// string.  Note that this code uses the (ASCII) '\' character, rather
     /// than Unicode code points for escapes.
     static void createQuotedEscapedCString(std::pmr::string         *result,
-                                           const bsl::string_view&   input);
+                                           const bsl::string_view&   input)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(input);
 #endif
 };
 

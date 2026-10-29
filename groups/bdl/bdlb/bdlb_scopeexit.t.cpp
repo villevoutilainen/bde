@@ -332,6 +332,7 @@ ExitFunctionParam::ExitFunctionParam(int *counter_p)
 // ACCESSORS
 void ExitFunctionParam::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     *d_counter_p += theIncrement();
 }
 
@@ -394,6 +395,7 @@ ExitFunctionParamThrows::ExitFunctionParamThrows(int *counter_p)
 // ACCESSORS
 void ExitFunctionParamThrows::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     *d_counter_p += theIncrement();
 }
 
@@ -464,7 +466,7 @@ ExitFunction::ExitFunction(int *counter_p)
 ExitFunction::ExitFunction(const ExitFunctionParam& param)
 : d_counter_p(param.counterPtr())
 {
-    BSLS_ASSERT(param.counterPtr());
+    BSLS_ASSERT_NONCONVEYOR(param.counterPtr());
 }
 
 #ifdef BDE_BUILD_TARGET_EXC
@@ -477,6 +479,7 @@ ExitFunction::ExitFunction(const ExitFunctionParamThrows&)
 // ACCESSORS
 void ExitFunction::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     *d_counter_p += theIncrement();
 }
 
@@ -551,6 +554,7 @@ MoveThrowsExitFunction::MoveThrowsExitFunction(
 // ACCESSORS
 void MoveThrowsExitFunction::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     *d_counter_p += theIncrement();
 }
 #endif // BDE_BUILD_TARGET_EXC
@@ -626,6 +630,7 @@ CopyThrowsExitFunction::CopyThrowsExitFunction(const CopyThrowsExitFunction&)
 // ACCESSORS
 void CopyThrowsExitFunction::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     *d_counter_p += theIncrement();
 }
 #endif // BDE_BUILD_TARGET_EXC
@@ -707,6 +712,7 @@ BothThrowExitFunction::BothThrowExitFunction(
 // ACCESSORS
 void BothThrowExitFunction::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     *d_counter_p += theIncrement();
 }
 #endif // BDE_BUILD_TARGET_EXC
@@ -792,7 +798,7 @@ MoveOnlyExitFunctionParam::MoveOnlyExitFunctionParam(
                          bslmf::MovableRef<MoveOnlyExitFunctionParam> original)
 : d_counter_p(bslmf::MovableRefUtil::access(original).d_counter_p)
 {
-    BSLS_ASSERT(bslmf::MovableRefUtil::access(original).d_counter_p != 0);
+    BSLS_ASSERT(d_counter_p != 0);
 
     bslmf::MovableRefUtil::access(original).d_counter_p = 0;
 }
@@ -806,6 +812,7 @@ void MoveOnlyExitFunctionParam::reset()
 // ACCESSORS
 void MoveOnlyExitFunctionParam::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_counter_p);
 
     *d_counter_p += theIncrement();
@@ -908,7 +915,7 @@ MoveOnlyExitFunction::MoveOnlyExitFunction(
                               bslmf::MovableRef<MoveOnlyExitFunction> original)
 : d_counter_p(bslmf::MovableRefUtil::access(original).d_counter_p)
 {
-    BSLS_ASSERT(bslmf::MovableRefUtil::access(original).d_counter_p != 0);
+    BSLS_ASSERT(d_counter_p != 0);
 
     bslmf::MovableRefUtil::access(original).d_counter_p = 0;
 }
@@ -917,7 +924,7 @@ MoveOnlyExitFunction::MoveOnlyExitFunction(
                             bslmf::MovableRef<MoveOnlyExitFunctionParam> param)
 : d_counter_p(bslmf::MovableRefUtil::access(param).counterPtr())
 {
-    BSLS_ASSERT(0 != bslmf::MovableRefUtil::access(param).counterPtr());
+    BSLS_ASSERT(0 != d_counter_p);
 
     bslmf::MovableRefUtil::access(param).reset();
 }
@@ -925,6 +932,7 @@ MoveOnlyExitFunction::MoveOnlyExitFunction(
 // ACCESSORS
 void MoveOnlyExitFunction::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_counter_p);
 
     *d_counter_p += theIncrement();
@@ -1023,6 +1031,7 @@ CopyOnlyExitFunction::CopyOnlyExitFunction(
 // ACCESSORS
 void CopyOnlyExitFunction::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_counter_p);
 
     *d_counter_p += theIncrement();
@@ -1175,7 +1184,7 @@ MoveCopyExitFunction(bslmf::MovableRef<MoveCopyExitFunction> original)
                           BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(MOVE_IS_NOEXCEPT)
 : d_counter_p(bslmf::MovableRefUtil::access(original).d_counter_p)
 {
-    BSLS_ASSERT(bslmf::MovableRefUtil::access(original).d_counter_p != 0);
+    BSLS_ASSERT(d_counter_p != 0);
 
     bslmf::MovableRefUtil::access(original).d_counter_p = 0;
 
@@ -1188,6 +1197,7 @@ void
 MoveCopyExitFunction<MOVE_IS_NOEXCEPT, COPY_IS_NOEXCEPT>::
 operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_counter_p);
 
     *d_counter_p += theIncrement();
@@ -1378,6 +1388,7 @@ int removedAddressId = 0;
 
         void operator()() const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             removeAddress(d_id);
         }
     };
@@ -1538,6 +1549,7 @@ static bsl::string outStreamContent()
 
         void operator()() const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             outStream << d_closingChars_p; // To a fixed stream for brevity
         }
     };
@@ -1549,6 +1561,7 @@ static bsl::string outStreamContent()
                              const bsl::string_view&              templateName,
                              const bsl::vector<bsl::string_view>& args)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&args);
 // ```
 // Next, we can move the printing of the opening delimiter and the closing one
 // near each other in code, so it is clearly visible if an opened delimiter is

@@ -694,7 +694,10 @@ struct TopologicalSortUtil {
     static bool sort(
            bsl::vector<NODE_TYPE>                               *result,
            bsl::vector<NODE_TYPE>                               *unsorted,
-           const bsl::vector<bsl::pair<NODE_TYPE, NODE_TYPE> >&  relations);
+           const bsl::vector<bsl::pair<NODE_TYPE, NODE_TYPE> >&  relations)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(unsorted)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(relations);
 };
 
 // ============================================================================
@@ -788,6 +791,7 @@ template <class OUTPUT_ITER>
 bool TopologicalSortUtil_Helper<INPUT_ITER>::processNextNodeInOrder(
                                                   OUTPUT_ITER *resultOutIter_p)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_readyNodes.empty()) {
         // If the queue is empty but the input set is not then we have at least
         // one cycle.  We know *here* that the input set is not empty because
@@ -831,6 +835,7 @@ bool TopologicalSortUtil_Helper<INPUT_ITER>::sortImpl(
                                              OUTPUT_ITER       resultOutIter,
                                              UNSORTED_OUT_ITER unsortedOutIter)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (!d_workSet.empty()) {
         if (!processNextNodeInOrder(&resultOutIter)) {
             // A cycle was detected.  Write all the nodes still present in the

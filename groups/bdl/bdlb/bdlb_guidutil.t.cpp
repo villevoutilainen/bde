@@ -157,6 +157,7 @@ void debugprint(const Guid& guid)
 
 /// Print the specified `string` to the standard output stream.
 void debugprint(const bsl::string& string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(string)
 {
     bsl::cout << string;
 }

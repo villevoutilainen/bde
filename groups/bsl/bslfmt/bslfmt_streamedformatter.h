@@ -73,6 +73,7 @@ BSLS_IDENT("$Id: $")
 #include <bslstl_ostringstream.h>
 #include <bslstl_string.h>
 
+#include <bsls_assert.h>
 #include <bsls_keyword.h>
 
 namespace BloombergLP {
@@ -141,6 +142,7 @@ typename t_FORMAT_CONTEXT::iterator StreamedFormatter<t_STREAMABLE>::format(
                                        const t_STREAMABLE& value,
                                        t_FORMAT_CONTEXT&   formatContext) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bsl::ostringstream os;
     os << value;
 

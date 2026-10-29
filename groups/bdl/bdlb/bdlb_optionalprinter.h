@@ -82,7 +82,8 @@ class OptionalPrinter {
     /// not valid on entry, this operation has no effect.
     bsl::ostream& print(bsl::ostream&              stream,
                         int                        level          = 0,
-                        int                        spacesPerLevel = 4) const;
+                        int                        spacesPerLevel = 4) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // FREE OPERATORS
@@ -97,7 +98,9 @@ class OptionalPrinter {
 /// ```
 template <class TYPE>
 bsl::ostream&
-operator<<(bsl::ostream& stream, const OptionalPrinter<TYPE>& printer);
+operator<<(bsl::ostream& stream, const OptionalPrinter<TYPE>& printer)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(printer);
 
                           // ==========================
                           // struct OptionalPrinterUtil
@@ -137,6 +140,7 @@ bsl::ostream& OptionalPrinter<TYPE>::print(bsl::ostream& stream,
                                            int           level,
                                            int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_data_p);
     if (!d_data_p->has_value()) {
         return bdlb::PrintMethods::print(stream,
                                          "NULL",

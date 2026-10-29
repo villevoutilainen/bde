@@ -347,6 +347,7 @@ static void testLocalFunctions()
 static void split(bsl::vector<bsl::string_view> *result,
                   bsl::string_view               string,
                   char                           delimiter)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
 {
     const char                  *shuttle         = string.data();
     bsl::string_view::size_type  position        = 0;
@@ -1137,6 +1138,7 @@ int main(int argc, char *argv[])
 
         for (bsl::size_t i = 0; i < k_NUM_TESTS; ++i) {
             const TestData&  k_TEST     = k_DATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long  k_LINE     = k_TEST.d_line;
             const SV         k_STRING   = k_TEST.d_string;
             const SV         k_CHARS    = k_TEST.d_chars;

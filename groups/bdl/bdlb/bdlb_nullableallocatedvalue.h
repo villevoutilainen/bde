@@ -164,7 +164,7 @@ class NullableAllocatedValue {
 
     /// Returns `true` if an object of the template parameter `TYPE` can be
     /// stored locally, instead of being allocated on the heap.
-    static bool isLocal() BSLS_KEYWORD_NOEXCEPT;
+    static bool isLocal() BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR;
 
     // PRIVATE ACCESSORS
 
@@ -280,12 +280,15 @@ class NullableAllocatedValue {
     /// Return a pointer providing modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined if the object has no
     /// value.
-    TYPE *operator->();
+    TYPE *operator->() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference providing modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined if the object has no
     /// value.
-    TYPE& operator*();
+    TYPE& operator*()
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Assign to this object the value of the (template parameter) `TYPE`
@@ -296,7 +299,9 @@ class NullableAllocatedValue {
     /// created.  Note that if the constructor of `TYPE` throws an exception
     /// this object is left in a disengaged state.
     template <class... ARGS>
-    TYPE& emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)...);
+    TYPE& emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)...)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 #   if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
     /// Assign to this object the value of the (template parameter) `TYPE`
@@ -308,7 +313,9 @@ class NullableAllocatedValue {
     /// this object is left in a disengaged state.
     template <class INIT_LIST_TYPE, class... ARGS>
     TYPE& emplace(std::initializer_list<INIT_LIST_TYPE>      il,
-                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)...);
+                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)...)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 #   endif  // BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS
 #endif
@@ -324,20 +331,25 @@ class NullableAllocatedValue {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version);
+    STREAM& bdexStreamIn(STREAM& stream, int version)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Assign to this object the specified `val`, and return a reference
     /// providing modifiable access to the underlying `TYPE` object.
-    TYPE& makeValue(const TYPE& val);
+    TYPE& makeValue(const TYPE& val)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Assign to this object the default value for `TYPE`, and return a
     /// reference providing modifiable access to the underlying `TYPE`
     /// object.
-    TYPE& makeValue();
+    TYPE& makeValue()
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Reset this object to the default constructed state (i.e., to have
     /// the null value).
-    void reset();
+    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Efficiently exchange the value of this object with the value of the
     /// specified `other` object.  This method provides the no-throw
@@ -348,7 +360,9 @@ class NullableAllocatedValue {
     /// Return a reference providing modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined unless this object is
     /// non-null.
-    TYPE& value();
+    TYPE& value()
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -361,7 +375,8 @@ class NullableAllocatedValue {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a `bsl::allocator` constructed from the `bslma::Allocator`
     /// used by this object to supply memory.  Note that if no allocator was
@@ -371,11 +386,13 @@ class NullableAllocatedValue {
 
     /// Return `true` if this object contains a value, and `false`
     /// otherwise.
-    bool has_value() const BSLS_KEYWORD_NOEXCEPT;
+    bool has_value() const BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `false` if this object contains a value, and `true`
     /// otherwise.  Note that this is the opposite of `has_value`.
-    bool isNull() const BSLS_KEYWORD_NOEXCEPT;
+    bool isNull() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the maximum valid BDEX format version, as indicated by the
     /// specified `versionSelector`, to be passed to the `bdexStreamOut`
@@ -386,13 +403,14 @@ class NullableAllocatedValue {
     /// unexternalizer.  See the `bslx` package-level documentation for more
     /// information on BDEX streaming of value-semantic types and
     /// containers.
-    int maxSupportedBdexVersion(int versionSelector) const;
+    int maxSupportedBdexVersion(int versionSelector) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
     /// Return the most current BDEX streaming version number supported by
     /// this class.  (See the package-group-level documentation for more
     /// information on BDEX streaming of container types.)
-    int maxSupportedBdexVersion() const;
+    int maxSupportedBdexVersion() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED
 
     /// Return the value of the underlying object of a (template parameter)
@@ -400,27 +418,33 @@ class NullableAllocatedValue {
     /// otherwise.  Note that this method returns *by* *value*, so may be
     /// inefficient in some contexts.
     template <class ANY_TYPE>
-    TYPE value_or(const ANY_TYPE& default_value) const;
+    TYPE value_or(const ANY_TYPE& default_value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a pointer providing non-modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined if the object has no
     /// value.
-    const TYPE *operator->() const;
+    const TYPE *operator->() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference providing non-modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined if the object has no
     /// value.
-    const TYPE& operator*() const;
+    const TYPE& operator*() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 
 #  ifdef BSLS_COMPILERFEATURES_SUPPORT_OPERATOR_EXPLICIT
     /// Return `true` if this object is contains a value, and `true`
     /// otherwise.
-    BSLS_KEYWORD_EXPLICIT operator bool() const BSLS_KEYWORD_NOEXCEPT;
+    BSLS_KEYWORD_EXPLICIT operator bool() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #  else  // BSLS_COMPILERFEATURES_SUPPORT_OPERATOR_EXPLICIT
     /// Simulation of explicit conversion to bool.  Inlined to work around xlC
     /// bug when out-of-line.
     operator UnspecifiedBool() const BSLS_NOTHROW_SPEC
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return UnspecifiedBoolUtil::makeValue(has_value());
     }
@@ -429,7 +453,7 @@ class NullableAllocatedValue {
                               // Aspects
 
     /// Return the allocator used by this object to supply memory.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Format this object to the specified output `stream` at the (absolute
     /// value of) the optionally specified indentation `level` and return a
@@ -442,12 +466,15 @@ class NullableAllocatedValue {
     /// not valid on entry, this operation has no effect.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level          = 0,
-                        int           spacesPerLevel = 4) const;
+                        int           spacesPerLevel = 4) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing non-modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined unless this object is
     /// non-null.
-    const TYPE& value() const;
+    const TYPE& value() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // DEPRECATED FUNCTIONS
     //  provided for compatibility with NullableValue
@@ -457,7 +484,8 @@ class NullableAllocatedValue {
     /// and the specified `address` otherwise.
     BSLS_DEPRECATE_FEATURE("bdl", "NullableAllocatedValue::addressOr",
                               "Use 'has_value() ? &value() : address' instead")
-    const TYPE *addressOr(const TYPE *address) const;
+    const TYPE *addressOr(const TYPE *address) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES // $var-args=10
 
@@ -477,7 +505,9 @@ class NullableAllocatedValue {
     template <class... ARGS>
     BSLS_DEPRECATE_FEATURE("bdl", "NullableAllocatedValue::makeValueInplace",
                                                        "Use 'emplace' instead")
-    TYPE& makeValueInplace(ARGS&&... args);
+    TYPE& makeValueInplace(ARGS&&... args)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
 
     /// Return the value of the underlying object of a (template parameter)
@@ -486,14 +516,15 @@ class NullableAllocatedValue {
     /// inefficient in some contexts.
     BSLS_DEPRECATE_FEATURE("bdl", "NullableAllocatedValue::valueOr",
                                                       "Use 'value_or' instead")
-    TYPE valueOr(const TYPE& otherValue) const;
+    TYPE valueOr(const TYPE& otherValue) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an address providing non-modifiable access to the underlying
     /// object of a (template parameter) `TYPE` if this object is non-null,
     /// and 0 otherwise.
     BSLS_DEPRECATE_FEATURE("bdl", "NullableAllocatedValue::valueOrNull",
                                  "Use 'has_value() ? &value() : NULL' instead")
-    const TYPE *valueOrNull() const;
+    const TYPE *valueOrNull() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 };
 
@@ -506,7 +537,8 @@ class NullableAllocatedValue {
 /// compile if `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects have the same
 /// value, and `false` otherwise.  A nullable object and a value of some
@@ -516,10 +548,12 @@ bool operator==(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const RHS_TYPE&                         rhs);
+                const RHS_TYPE&                         rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const LHS_TYPE&                         lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` nullable objects do not
 /// have the same value, and `false` otherwise.  Two nullable objects do not
@@ -529,7 +563,8 @@ bool operator==(const LHS_TYPE&                         lhs,
 /// `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
 /// same value, and `false` otherwise.  A nullable object and a value of
@@ -539,10 +574,12 @@ bool operator!=(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const RHS_TYPE&                         rhs);
+                const RHS_TYPE&                         rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const LHS_TYPE&                         lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable object is ordered before
 /// the specified `rhs` nullable object, and `false` otherwise.  `lhs` is
@@ -552,21 +589,24 @@ bool operator!=(const LHS_TYPE&                         lhs,
 /// not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const NullableAllocatedValue<LHS_TYPE>& lhs,
-               const NullableAllocatedValue<RHS_TYPE>& rhs);
+               const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable object is ordered before
 /// the specified `rhs`, and `false` otherwise.  `lhs` is ordered before
 /// `rhs` if `lhs` is null or `lhs.value()` is ordered before `rhs`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const NullableAllocatedValue<LHS_TYPE>& lhs,
-               const RHS_TYPE&                         rhs);
+               const RHS_TYPE&                         rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered before the specified
 /// `rhs` nullable object, and `false` otherwise.  `lhs` is ordered before
 /// `rhs` if `rhs` is not null and `lhs` is ordered before `rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const LHS_TYPE&                         lhs,
-               const NullableAllocatedValue<RHS_TYPE>& rhs);
+               const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 
 /// Return `true` if the specified `lhs` nullable object is ordered before
@@ -577,7 +617,8 @@ bool operator<(const LHS_TYPE&                         lhs,
 /// if `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable object is ordered before
 /// the specified `rhs` or `lhs` and `rhs` have the same value, and `false`
@@ -585,7 +626,8 @@ bool operator<=(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// returns `!(rhs < lhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const RHS_TYPE&                         rhs);
+                const RHS_TYPE&                         rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered before the specified
 /// `rhs` nullable object or `lhs` and `rhs` have the same value, and
@@ -593,7 +635,8 @@ bool operator<=(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// operator returns `!(rhs < lhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const LHS_TYPE&                         lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
 /// the specified `rhs` nullable object, and `false` otherwise.  `lhs` is
@@ -604,7 +647,8 @@ bool operator<=(const LHS_TYPE&                         lhs,
 /// if `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const NullableAllocatedValue<LHS_TYPE>& lhs,
-               const NullableAllocatedValue<RHS_TYPE>& rhs);
+               const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
 /// the specified `rhs`, and `false` otherwise.  `lhs` is ordered after
@@ -612,7 +656,8 @@ bool operator>(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// Note that this operator returns `rhs < lhs`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const NullableAllocatedValue<LHS_TYPE>& lhs,
-               const RHS_TYPE&                         rhs);
+               const RHS_TYPE&                         rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered after the specified
 /// `rhs` nullable object, and `false` otherwise.  `lhs` is ordered after
@@ -620,7 +665,8 @@ bool operator>(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// that this operator returns `rhs < lhs`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const LHS_TYPE&                         lhs,
-               const NullableAllocatedValue<RHS_TYPE>& rhs);
+               const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
 /// the specified `rhs` nullable object or `lhs` and `rhs` have the same
@@ -630,7 +676,8 @@ bool operator>(const LHS_TYPE&                         lhs,
 /// if `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
 /// the specified `rhs` or `lhs` and `rhs` have the same value, and `false`
@@ -638,7 +685,8 @@ bool operator>=(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// returns `!(lhs < rhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const RHS_TYPE&                         rhs);
+                const RHS_TYPE&                         rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered after the specified
 /// `rhs` nullable object or `lhs` and `rhs` have the same value, and
@@ -646,7 +694,8 @@ bool operator>=(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// operator returns `!(lhs < rhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const LHS_TYPE&                         lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Write the value of the specified `object` to the specified output
 /// `stream` in a single-line format, and return a reference to `stream`.
@@ -658,7 +707,9 @@ bool operator>=(const LHS_TYPE&                         lhs,
 /// ```
 template <class TYPE>
 bsl::ostream& operator<<(bsl::ostream&                       stream,
-                         const NullableAllocatedValue<TYPE>& object);
+                         const NullableAllocatedValue<TYPE>& object)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
                   //================================
                   // Comparisons with bsl::nullopt_t
@@ -667,23 +718,27 @@ bsl::ostream& operator<<(bsl::ostream&                       stream,
 /// Return `true` if the specified `lhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator==(const NullableAllocatedValue<TYPE>& lhs, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true` if the specified `rhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator==(const bsl::nullopt_t&, const NullableAllocatedValue<TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is not null, and `false` otherwise.
 template <class TYPE>
 bool operator!=(const NullableAllocatedValue<TYPE>& lhs, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true` if the specified `rhs` is not null, and `false`
 /// otherwise.
 template <class TYPE>
 bool operator!=(const bsl::nullopt_t&, const NullableAllocatedValue<TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `false`.  Note that `bsl::nullopt` never orders after a
 /// `NullableAllocatedValue`.
@@ -696,13 +751,15 @@ bool operator<(const NullableAllocatedValue<TYPE>&, const bsl::nullopt_t&)
 /// that is not null.
 template <class TYPE>
 bool operator<(const bsl::nullopt_t&, const NullableAllocatedValue<TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is not null, and `false`
 /// otherwise.
 template <class TYPE>
 bool operator>(const NullableAllocatedValue<TYPE>& lhs, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `false`.  Note that `bsl::nullopt` never orders after a
 /// `NullableAllocatedValue`.
@@ -713,7 +770,8 @@ bool operator>(const bsl::nullopt_t&, const NullableAllocatedValue<TYPE>&)
 /// Return `true` if the specified `lhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator<=(const NullableAllocatedValue<TYPE>& lhs, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true`.
 template <class TYPE>
@@ -728,7 +786,8 @@ bool operator>=(const NullableAllocatedValue<TYPE>&, const bsl::nullopt_t&)
 /// Return `true` if the specified `rhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator>=(const bsl::nullopt_t&, const NullableAllocatedValue<TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
                   //===============================
                   // Comparisons with bsl::optional
@@ -739,20 +798,24 @@ bool operator>=(const bsl::nullopt_t&, const NullableAllocatedValue<TYPE>& rhs)
 /// `false`.  Otherwise, return `lhs.value == rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const bsl::optional<RHS_TYPE>&          rhs);
+                const bsl::optional<RHS_TYPE>&          rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const bsl::optional<LHS_TYPE>&          lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// If neither of the specified `lhs` and `rhs` contain a value, return
 /// `false`.  If one contains a value, and the other does not, return
 /// `true`.  Otherwise, return `lhs.value != rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const bsl::optional<RHS_TYPE>&          rhs);
+                const bsl::optional<RHS_TYPE>&          rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const bsl::optional<LHS_TYPE>&          lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// If neither of the specified `lhs` and `rhs` contain a value, return
 /// `false`.  If `lhs` contains a value, and `rhs` does not, return `false`.
@@ -760,7 +823,8 @@ bool operator!=(const bsl::optional<LHS_TYPE>&          lhs,
 /// Otherwise, return `lhs.value < rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const NullableAllocatedValue<LHS_TYPE>& lhs,
-               const bsl::optional<RHS_TYPE>&          rhs);
+               const bsl::optional<RHS_TYPE>&          rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// If neither of the specified `lhs` and `rhs` contain a value, return
 /// `false`.  If `lhs` contains a value, and `rhs` does not, return `false`.
@@ -768,7 +832,8 @@ bool operator<(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// Otherwise, return `lhs.value < rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const bsl::optional<LHS_TYPE>&          lhs,
-               const NullableAllocatedValue<RHS_TYPE>& rhs);
+               const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// If neither of the specified `lhs` and `rhs` contain a value, return
 /// `false`.  If `lhs` contains a value, and `rhs` does not, return `true`.
@@ -776,7 +841,8 @@ bool operator<(const bsl::optional<LHS_TYPE>&          lhs,
 /// Otherwise, return `lhs.value > rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const NullableAllocatedValue<LHS_TYPE>& lhs,
-               const bsl::optional<RHS_TYPE>&          rhs);
+               const bsl::optional<RHS_TYPE>&          rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// If neither of the specified `lhs` and `rhs` contain a value, return
 /// `false`.  If `lhs` contains a value, and `rhs` does not, return `true`.
@@ -784,7 +850,8 @@ bool operator>(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// Otherwise, return `lhs.value > rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const bsl::optional<LHS_TYPE>&          lhs,
-               const NullableAllocatedValue<RHS_TYPE>& rhs);
+               const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// If neither of the specified `lhs` and `rhs` contain a value, return
 /// `true`.  If `lhs` contains a value, and `rhs` does not, return `false`.
@@ -792,7 +859,8 @@ bool operator>(const bsl::optional<LHS_TYPE>&          lhs,
 /// Otherwise, return `lhs.value <= rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const bsl::optional<RHS_TYPE>&          rhs);
+                const bsl::optional<RHS_TYPE>&          rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// If neither of the specified `lhs` and `rhs` contain a value, return
 /// `true`.  If `lhs` contains a value, and `rhs` does not, return `false`.
@@ -800,7 +868,8 @@ bool operator<=(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// Otherwise, return `lhs.value <= rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const bsl::optional<LHS_TYPE>&          lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// If neither of the specified `lhs` and `rhs` contain a value, return
 /// `true`.  If `lhs` contains a value, and `rhs` does not, return `true`.
@@ -808,7 +877,8 @@ bool operator<=(const bsl::optional<LHS_TYPE>&          lhs,
 /// Otherwise, return `lhs.value >= rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const NullableAllocatedValue<LHS_TYPE>& lhs,
-                const bsl::optional<RHS_TYPE>&          rhs);
+                const bsl::optional<RHS_TYPE>&          rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// If neither of the specified `lhs` and `rhs` contain a value, return
 /// `true`.  If `lhs` contains a value, and `rhs` does not, return `true`.
@@ -816,7 +886,8 @@ bool operator>=(const NullableAllocatedValue<LHS_TYPE>& lhs,
 /// Otherwise, return `lhs.value >= rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const bsl::optional<LHS_TYPE>&          lhs,
-                const NullableAllocatedValue<RHS_TYPE>& rhs);
+                const NullableAllocatedValue<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // FREE FUNCTIONS
 
@@ -825,14 +896,17 @@ bool operator>=(const bsl::optional<LHS_TYPE>&          lhs,
 /// type `HASHALG`.  If `input` contains a value, additionally pass that
 /// value to `hashAlg`.
 template <class HASHALG, class TYPE>
-void hashAppend(HASHALG& hashAlg, const NullableAllocatedValue<TYPE>& input);
+void hashAppend(HASHALG& hashAlg, const NullableAllocatedValue<TYPE>& input)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(input);
 
 /// Exchange the values of the specified `a` and `b` objects.  This function
 /// provides the no-throw exception-safety guarantee if the two objects were
 /// created with the same allocator and the basic guarantee otherwise.
 template <class TYPE>
 void swap(NullableAllocatedValue<TYPE>& a,
-          NullableAllocatedValue<TYPE>& b);
+          NullableAllocatedValue<TYPE>& b)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
 // ============================================================================
 //                           INLINE DEFINITIONS
@@ -884,6 +958,8 @@ NullableAllocatedValue<TYPE>
 ::NullableAllocatedValue(const NullableAllocatedValue<TYPE>&  original)
 : d_allocator(bslma::Default::defaultAllocator())
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     if (original.has_value()) {
         makeValue(original.value());
     }
@@ -899,6 +975,8 @@ NullableAllocatedValue<TYPE>
                          const bsl::allocator<char>&          allocator)
 : d_allocator(allocator.mechanism())
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     if (original.has_value()) {
         makeValue(original.value());
     }
@@ -935,6 +1013,7 @@ NullableAllocatedValue<TYPE>::~NullableAllocatedValue()
 // PRIVATE CLASS METHODS
 template <class TYPE>
 bool NullableAllocatedValue<TYPE>::isLocal() BSLS_KEYWORD_NOEXCEPT
+                                                          BSLS_KEYWORD_CONVEYOR
 {
 //  we can store it locally if it will fit into a pointer, and it doesn't have
 //  an exceptionally large alignment requirement.
@@ -951,6 +1030,8 @@ NullableAllocatedValue<TYPE>&
 NullableAllocatedValue<TYPE>::operator=(
                                        const NullableAllocatedValue<TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (rhs.has_value()) {
         makeValue(rhs.value());
     }
@@ -966,6 +1047,7 @@ inline
 NullableAllocatedValue<TYPE>&
 NullableAllocatedValue<TYPE>::operator=(const bsl::nullopt_t&)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
     return *this;
 }
@@ -975,6 +1057,8 @@ inline
 NullableAllocatedValue<TYPE>&
 NullableAllocatedValue<TYPE>::operator=(const TYPE& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     makeValue(rhs);
     return *this;
 }
@@ -1081,9 +1165,11 @@ void NullableAllocatedValue<TYPE>::reset()
 template <class TYPE>
 void NullableAllocatedValue<TYPE>::swap(NullableAllocatedValue& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     // Member 'swap' is undefined for non-equal allocators.
 
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
 
     // Nothing to do if both objects are null.
     if (isNull() && other.isNull()) {
@@ -1259,6 +1345,8 @@ template <class TYPE>
 inline
 void NullableAllocatedValue<TYPE>::swapLocal(NullableAllocatedValue& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
 //  At most one of 'isNull()' and 'other.isNull()' is true
 //  Swapping the 'd_allocator's would be wrong here.
     if (isNull()) {
@@ -1278,6 +1366,8 @@ template <class TYPE>
 inline
 void NullableAllocatedValue<TYPE>::swapRemote(NullableAllocatedValue& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     bslalg::SwapUtil::swap(&d_allocator, &other.d_allocator);
     bslalg::SwapUtil::swap(&      d_storage.d_pointer_p,
                            &other.d_storage.d_pointer_p);
@@ -1304,6 +1394,7 @@ template <class TYPE>
 inline
 bsl::allocator<char> NullableAllocatedValue<TYPE>::get_allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return allocator();
 }
 
@@ -1311,6 +1402,7 @@ bsl::allocator<char> NullableAllocatedValue<TYPE>::get_allocator() const
 template <class TYPE>
 inline
 bool NullableAllocatedValue<TYPE>::has_value() const BSLS_KEYWORD_NOEXCEPT
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     return d_allocator.readFlag(k_HAS_VALUE);
 }

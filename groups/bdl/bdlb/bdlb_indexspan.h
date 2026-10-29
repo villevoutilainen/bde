@@ -384,7 +384,8 @@ IndexSpan::IndexSpan(size_type position, size_type length)
 : d_position(position)
 , d_length(length)
 {
-    BSLS_ASSERT(position <= bsl::numeric_limits<size_t>::max() - length);
+    BSLS_ASSERT_NONCONVEYOR(
+                      position <= bsl::numeric_limits<size_t>::max() - length);
 }
 
 // ACCESSORS

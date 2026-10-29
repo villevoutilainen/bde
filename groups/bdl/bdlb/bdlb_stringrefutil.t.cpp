@@ -346,6 +346,8 @@ static void testLocalFunctions()
 static void split(bsl::vector<bslstl::StringRef> *result,
                   const bslstl::StringRef&        string,
                   char                            delimiter)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(string)
 {
     typedef bslstl::StringRef::const_iterator Cit;
 
@@ -828,6 +830,7 @@ int main(int argc, char *argv[])
 
         for (bsl::size_t i = 0; i < k_NUM_TESTS; ++i) {
             const TestData&  k_TEST     = k_DATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long  k_LINE     = k_TEST.d_line;
             const StringRef& k_STRING   = k_TEST.d_string;
             const StringRef& k_CHARS    = k_TEST.d_chars;

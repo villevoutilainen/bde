@@ -752,13 +752,13 @@ struct Optional_DataImp {
     /// Return the `value_type` object in `d_buffer` with const
     /// qualification adjusted to match that of `t_TYPE`.  The behavior is
     /// undefined unless `this->hasValue() == true`.
-    t_TYPE&  value() &;
-    t_TYPE&& value() &&;
+    t_TYPE&  value() & BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    t_TYPE&& value() && BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # else
     /// Return the `value_type` object in `d_buffer` with const
     /// qualification adjusted to match that of `t_TYPE`.  The behavior is
     /// undefined unless `this->hasValue() == true`.
-    t_TYPE& value();
+    t_TYPE& value() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 
     // ACCESSORS
@@ -770,14 +770,14 @@ struct Optional_DataImp {
     /// Return the `value_type` object in `d_buffer` with const
     /// qualification adjusted to match that of `t_TYPE`.  The behavior is
     /// undefined unless `this->hasValue() == true`.
-    const t_TYPE&  value() const &;
-    const t_TYPE&& value() const &&;
+    const t_TYPE&  value() const & BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const t_TYPE&& value() const && BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 # else
     /// Return the `value_type` object in `d_buffer` with const qualification
     /// adjusted to match that of `t_TYPE`.  The behavior is undefined unless
     /// `this->hasValue() == true`.
-    const t_TYPE& value() const;
+    const t_TYPE& value() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 };
 

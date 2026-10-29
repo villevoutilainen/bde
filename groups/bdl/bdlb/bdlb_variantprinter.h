@@ -235,6 +235,7 @@ template <class t_TYPE>
 inline
 void VariantPrinter_Visitor::operator()(const t_TYPE& object) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     // Note that we don't return the reference to `*d_stream_p` returned by
     // `PrintMethods::print` because we're called by `bdl::visit` which on
     // C++03 returns a const ref while `VariantPrinter::print` need to return a
@@ -264,6 +265,7 @@ bsl::ostream& VariantPrinter<t_VARIANT>::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_data_p);
     if (d_data_p->valueless_by_exception()) {
         return bdlb::PrintMethods::print(stream,
                                          "(valueless)",

@@ -93,11 +93,13 @@ void query(bsl::string       *result,
            int                numberOfColumns);
 
 /// Assert that the specified `data` equals the expected values.
-void checkData(const bsl::vector<bsl::string>& data);
+void checkData(const bsl::vector<bsl::string>& data)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(data);
 
 /// Load the specified `data` the results of querying an unspecified
 /// database table for certain columns.
-void loadData(bsl::vector<bsl::string> *data);
+void loadData(bsl::vector<bsl::string> *data)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(data);
 
 /// Assert that the values obtained from a certain database equal their
 /// expected values.  If the specified `verbose` is `true`, write a trace
@@ -176,6 +178,8 @@ void getAndCheckData(bool verbose);
         // Query the database.
 
         for (size_t i = 0; i != numberOfColumns; ++i) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&result[i]);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&columns[i]);
             result[i] = "queried " + columns[i];
         }
     }

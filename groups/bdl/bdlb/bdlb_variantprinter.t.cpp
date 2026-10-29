@@ -723,6 +723,7 @@ int main(int argc, char *argv[])
 
             for (int ti = 0; ti < k_NUM_DATA; ++ti) {
                 const Data&         data  = DATA[ti];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&data);
                 const int           LINE  = data.d_line;
                 const int           L     = data.d_level;
                 const int           SPL   = data.d_spacesPerLevel;

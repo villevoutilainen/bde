@@ -266,7 +266,9 @@ struct UniqueStringGenerator {
     /// `base` string placing the result into the specified `unique` string
     /// pointer.
     static int uniqueStringFromBase(bsl::string        *unique,
-                                    const bsl::string&  base);
+                                    const bsl::string&  base)
+                                    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(unique)
+                                    BSLS_ASSERT_CONVEYOR_REQUIRES(base);
 };
 
 int

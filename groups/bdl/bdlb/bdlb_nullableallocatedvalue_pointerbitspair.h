@@ -34,6 +34,7 @@ BSLS_IDENT("$Id: $")
 #include <bsls_assert.h>
 #include <bsls_alignmentfromtype.h>
 #include <bsls_compilerfeatures.h>
+#include <bsls_keyword.h>
 #include <bsls_platform.h>
 
 #include <bsl_cstddef.h>    // bsl::size_t
@@ -107,7 +108,7 @@ class NullableAllocatedValue_PointerBitsPair {
 
     /// Return the value of the flag specified by `idx`.  The behavior is
     /// undefined unless `idx < t_NUM_BITS`.
-    bool readFlag(unsigned idx) const;
+    bool readFlag(unsigned idx) const BSLS_KEYWORD_CONVEYOR;
 
     // MANIPULATORS
 
@@ -218,6 +219,7 @@ template <class t_TYPE, unsigned t_NUM_BITS>
 inline
 bool bdlb::NullableAllocatedValue_PointerBitsPair<t_TYPE, t_NUM_BITS>
                                                  ::readFlag(unsigned idx) const
+                                                          BSLS_KEYWORD_CONVEYOR
 {
     BSLS_ASSERT_OPT(idx <= t_NUM_BITS);
     return 0 != (d_Value & (1 << idx));

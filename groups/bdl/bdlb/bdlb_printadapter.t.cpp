@@ -160,6 +160,8 @@ void streamValueImp(bsl::ostream& stream,
                     int           level,
                     int           spacesPerLevel,
                     bsl::true_type)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value)
 {
     value.print(stream, level, spacesPerLevel);
 }
@@ -173,6 +175,8 @@ void streamValueImp(bsl::ostream& stream,
                     int           level,
                     int           spacesPerLevel,
                     bsl::false_type)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value)
 {
     bdlb::PrintMethods::print(stream, value, level, spacesPerLevel);
 }
@@ -185,6 +189,8 @@ void streamValue(bsl::ostream& stream,
                  const TYPE&   value,
                  int           level,
                  int           spacesPerLevel)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value)
 {
     u::streamValueImp(stream,
                       value,
@@ -318,6 +324,7 @@ void testValues(const TYPE *valueArray, int valueArrayLen)
 
     for (int ti = 0; ti < valueArrayLen; ++ti) {
         const TYPE& X = valueArray[ti];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
         for (int lev = -2; lev < 4; ++lev) {
             for (int spcPerLev = -2; spcPerLev < 6; ++spcPerLev) {
@@ -384,6 +391,7 @@ void testValues(const TYPE *valueArray, int valueArrayLen)
 }
 
 void randIntVec(bsl::vector<int> *result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
 {
     static int seed = 12345678;
     const unsigned len = bdlb::Random::generate15(&seed) & 7;

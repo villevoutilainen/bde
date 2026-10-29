@@ -153,6 +153,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bdlb_printmethods.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_ostream.h>
 
 namespace BloombergLP {
@@ -194,13 +196,15 @@ class PrintAdapter {
     // ACCESSORS
 
     /// Return the `level` attribute.
-    int level() const;
+    int level() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the object referred to by this print adapter.
-    const TYPE& object() const;
+    const TYPE& object() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the `spacesPerLevel` attribute.
-    int spacesPerLevel() const;
+    int spacesPerLevel() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
                             // ======================
@@ -235,7 +239,9 @@ struct PrintAdapterUtil {
 /// notice.
 template <class TYPE>
 bsl::ostream& operator<<(bsl::ostream&             stream,
-                         const PrintAdapter<TYPE>& adapter);
+                         const PrintAdapter<TYPE>& adapter)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(adapter);
 
 // ============================================================================
 //                         INLINE FUNCTION DEFINITIONS

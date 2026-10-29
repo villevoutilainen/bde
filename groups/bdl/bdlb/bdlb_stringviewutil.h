@@ -374,7 +374,7 @@ bsl::string_view StringViewUtil::substr(const bsl::string_view& string,
                                         size_type               position,
                                         size_type               numChars)
 {
-    BSLS_ASSERT(position <= string.length());
+    BSLS_ASSERT_NONCONVEYOR(position <= string.length());
 
     return bsl::string_view(string.data() + position,
                             bsl::min(numChars, string.length() - position));

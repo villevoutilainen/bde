@@ -33,12 +33,12 @@ DoubleCompareUtil::fuzzyCompare(double a,
                                 double absTol)
 {
     BSLS_ASSERT(relTol == relTol);
-    BSLS_ASSERT(bdlb::Float::isFinite(relTol));
-    BSLS_ASSERT(bdlb::Float::signBit(relTol) == false);
+    BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isFinite(relTol));
+    BSLS_ASSERT_NONCONVEYOR(bdlb::Float::signBit(relTol) == false);
 
     BSLS_ASSERT(absTol == absTol);
-    BSLS_ASSERT(bdlb::Float::isFinite(absTol));
-    BSLS_ASSERT(bdlb::Float::signBit(absTol) == false);
+    BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isFinite(absTol));
+    BSLS_ASSERT_NONCONVEYOR(bdlb::Float::signBit(absTol) == false);
 
     // Note that a previous iteration of this component allowed for negative
     // tolerance values, but the expressions for evaluating the comparison

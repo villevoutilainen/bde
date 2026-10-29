@@ -548,6 +548,7 @@ bool  testContainedValue(const TYPE&        containedValue,
                          int                level,
                          int                spacesPerLevel,
                          int                useDefault)
+                                  BSLS_ASSERT_CONVEYOR_REQUIRES(containedValue)
 {
     std::ostringstream ssContained;
 
@@ -674,7 +675,8 @@ bsl::ostream& MyDate::print(bsl::ostream& stream,
         /// this operation has no effect.
         bsl::ostream& print(bsl::ostream& stream,
                             int           level          = 0,
-                            int           spacesPerLevel = 4) const;
+                            int           spacesPerLevel = 4) const
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
     };
 // ```
 // Now, we implement the `print` method of `MyWrapper` using the

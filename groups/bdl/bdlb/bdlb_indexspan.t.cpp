@@ -184,7 +184,7 @@ typedef bdlb::IndexSpan Obj;
         bslstl::StringRef ext()  const;
 
         /// Return a const reference to the full path parsed by this object.
-        const bsl::string& full() const;
+        const bsl::string& full() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         /// Return a string reference to the path part.  Note that it may be
         /// an empty string reference.
@@ -264,8 +264,9 @@ typedef bdlb::IndexSpan Obj;
     bslstl::StringRef bindSpan(const bslstl::StringRef& full,
                                const bdlb::IndexSpan&   part)
     {
-        BSLS_ASSERT(part.position() <= full.length());
-        BSLS_ASSERT(part.position() + part.length() <= full.length());
+        BSLS_ASSERT_NONCONVEYOR(part.position() <= full.length());
+        BSLS_ASSERT_NONCONVEYOR(
+                             part.position() + part.length() <= full.length());
 
         return bslstl::StringRef(full.data() + part.position(), part.length());
     }

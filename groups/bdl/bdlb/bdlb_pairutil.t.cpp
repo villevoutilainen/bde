@@ -300,7 +300,7 @@ struct Record {
     }
 
     /// Return this object's name attribute.
-    const bsl::string& name() const
+    const bsl::string& name() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return d_name;
     }
@@ -672,6 +672,8 @@ namespace {
 bool getFirst(int                              *key,
               bsl::string                      *value,
               const bsl::map<int, bsl::string>& map)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(value)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(map)
 {
     if (map.empty()) {
         *key = 0;
@@ -1009,6 +1011,7 @@ int main(int argc, char *argv[])
 
         ASSERT(!bslFilteredByLambdaView.empty());
         for (const auto& record : bslFilteredByLambdaView) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&record);
             ASSERTV(record.identifier(),   22    == record.identifier());
             ASSERTV(record.name().c_str(), "222" == record.name());
             ++counter;
@@ -1026,6 +1029,7 @@ int main(int argc, char *argv[])
 
         ASSERT(!bslFilteredByAdaptorView.empty());
         for (const auto& record : bslFilteredByAdaptorView) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&record);
             ASSERTV(record.identifier(),   22    == record.identifier());
             ASSERTV(record.name().c_str(), "222" == record.name());
             ++counter;
@@ -1041,6 +1045,7 @@ int main(int argc, char *argv[])
 
         ASSERT(!bslFilteredByFunctionView.empty());
         for (const auto& record : bslFilteredByFunctionView) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&record);
             ASSERTV(record.identifier(),   22    == record.identifier());
             ASSERTV(record.name().c_str(), "222" == record.name());
             ++counter;

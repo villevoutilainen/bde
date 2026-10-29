@@ -151,16 +151,18 @@ class NullableValueRef {
     /// Return a reference providing non-const access to the held
     /// `NullableAllocatedValue` object.  The behavior is undefined if the
     /// target is not a `NullableAllocatedValue`.
-    NullableAllocatedValue<TYPE>& getNAV() const;
+    NullableAllocatedValue<TYPE>& getNAV() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-const access to the held
     /// `bsl::optional` object.  The behavior is undefined if the target is
     /// not a `bdlb::bsl::optional`.
-    bsl::optional<TYPE>& getOpt() const;
+    bsl::optional<TYPE>& getOpt() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the target of this object is a `bsl::optional`, and
     /// `false` otherwise.
-    bool hasOpt() const;
+    bool hasOpt() const BSLS_KEYWORD_CONVEYOR;
 
     // FRIENDS
     friend class ConstNullableValueRef<TYPE>;
@@ -209,36 +211,45 @@ class NullableValueRef {
     // ACCESSORS
 
     /// Return `true` if the target contains a value, and `false` otherwise.
-    bool has_value() const BSLS_KEYWORD_NOEXCEPT;
+    bool has_value() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `false` if the target contains a value, and `true` otherwise.
     /// Note that this accessor is provided purely for compatibility with
     /// `NullableValue` and `NullableAllocatedValue`, and its use is
     /// discouraged in favor of `has_value`.
-    bool isNull() const BSLS_KEYWORD_NOEXCEPT;
+    bool isNull() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing non-modifiable access to the underlying
     /// object of a (template parameter) `TYPE`.  The behavior is undefined
     /// if the target has no value.
-    const value_type& value() const;
+    const value_type& value() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a pointer providing non-modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined if the target has no
     /// value.
-    const value_type *operator->() const;
+    const value_type *operator->() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference providing non-modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined if the target has no
     /// value.
-    const value_type& operator*() const;
+    const value_type& operator*() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_OPERATOR_EXPLICIT
     /// Return `true` if the target holds a value, and `false` otherwise.
-    BSLS_KEYWORD_EXPLICIT operator bool() const BSLS_KEYWORD_NOEXCEPT;
+    BSLS_KEYWORD_EXPLICIT operator bool() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #else
     /// Simulation of explicit conversion to bool.  Inlined to work around xlC
     /// but when out-of-line.
     operator UnspecifiedBool() const BSLS_NOTHROW_SPEC
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return UnspecifiedBoolUtil::makeValue(has_value());
     }
@@ -249,7 +260,8 @@ class NullableValueRef {
     /// otherwise.  Note that this method returns *by* *value*, so may be
     /// inefficient in some contexts.
     template <class ANY_TYPE>
-    TYPE value_or(const ANY_TYPE& default_value) const;
+    TYPE value_or(const ANY_TYPE& default_value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // MANIPULATORS
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
@@ -261,18 +273,23 @@ class NullableValueRef {
     /// created.  Note that if the constructor of `TYPE` throws an exception
     /// this object is left in a disengaged state.
     template <class... ARGS>
-    TYPE& emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)...);
+    TYPE& emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)...)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
 
     /// Return a pointer providing modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined if the target has no
     /// value.
-    value_type *operator->();
+    value_type *operator->() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference providing modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined if the target has no
     /// value.
-    value_type& operator*();
+    value_type& operator*()
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Reset the target to the default constructed state (i.e., to have the
     /// null value).
@@ -297,12 +314,14 @@ class NullableValueRef {
 
     /// Reset the target to the default constructed state (i.e., to have the
     /// null value).
-    void reset();
+    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined unless this object is
     /// non-null.
-    value_type& value();
+    value_type& value()
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // DEPRECATED FUNCTIONS
     //  provided for compatibility with NullableValue
@@ -312,7 +331,8 @@ class NullableValueRef {
     /// and the specified `address` otherwise.
     BSLS_DEPRECATE_FEATURE("bdl", "NullableValueRef::addressOr",
                               "Use 'has_value() ? &value() : address' instead")
-    const TYPE *addressOr(const TYPE *address) const;
+    const TYPE *addressOr(const TYPE *address) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES // $var-args=5
 
@@ -332,7 +352,9 @@ class NullableValueRef {
     template <class... ARGS>
     BSLS_DEPRECATE_FEATURE("bdl", "NullableValueRef::makeValueInplace",
                                                        "Use 'emplace' instead")
-    TYPE& makeValueInplace(ARGS&&... args);
+    TYPE& makeValueInplace(ARGS&&... args)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
 
     /// Return the value of the underlying object of a (template parameter)
@@ -341,14 +363,15 @@ class NullableValueRef {
     /// inefficient in some contexts.
     BSLS_DEPRECATE_FEATURE("bdl", "NullableValueRef::valueOr",
                                                       "Use 'value_or' instead")
-    TYPE valueOr(const TYPE& otherValue) const;
+    TYPE valueOr(const TYPE& otherValue) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an address providing non-modifiable access to the underlying
     /// object of a (template parameter) `TYPE` if this object is non-null,
     /// and 0 otherwise.
     BSLS_DEPRECATE_FEATURE("bdl", "NullableValueRef::valueOrNull",
                                  "Use 'has_value() ? &value() : NULL' instead")
-    const TYPE *valueOrNull() const;
+    const TYPE *valueOrNull() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // FREE FUNCTIONS
@@ -358,7 +381,9 @@ class NullableValueRef {
 /// (template parameter) type `HASHALG`.  If `input.has_value` is true,
 /// additionally pass the value to `hashAlg`.
 template <class HASHALG, class TYPE>
-void hashAppend(HASHALG& hashAlg, const NullableValueRef<TYPE>& input);
+void hashAppend(HASHALG& hashAlg, const NullableValueRef<TYPE>& input)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(input);
 
 // FREE OPERATORS
 
@@ -370,7 +395,8 @@ void hashAppend(HASHALG& hashAlg, const NullableValueRef<TYPE>& input);
 /// compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const NullableValueRef<LHS_TYPE>& lhs,
-                const NullableValueRef<RHS_TYPE>& rhs);
+                const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects have the same
 /// value, and `false` otherwise.  A nullable wrapper and a value of some
@@ -380,10 +406,12 @@ bool operator==(const NullableValueRef<LHS_TYPE>& lhs,
 /// not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const NullableValueRef<LHS_TYPE>& lhs,
-                const RHS_TYPE&                   rhs);
+                const RHS_TYPE&                   rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const LHS_TYPE&                   lhs,
-                const NullableValueRef<RHS_TYPE>& rhs);
+                const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` nullable objects do not
 /// have the same value, and `false` otherwise.  Two nullable wrappers do
@@ -393,7 +421,8 @@ bool operator==(const LHS_TYPE&                   lhs,
 /// `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const NullableValueRef<LHS_TYPE>& lhs,
-                const NullableValueRef<RHS_TYPE>& rhs);
+                const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
 /// same value, and `false` otherwise.  A nullable wrappers and a value of
@@ -403,10 +432,12 @@ bool operator!=(const NullableValueRef<LHS_TYPE>& lhs,
 /// `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const NullableValueRef<LHS_TYPE>& lhs,
-                const RHS_TYPE&                   rhs);
+                const RHS_TYPE&                   rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const LHS_TYPE&                   lhs,
-                const NullableValueRef<RHS_TYPE>& rhs);
+                const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered before
 /// the specified `rhs` nullable object, and `false` otherwise.  `lhs` is
@@ -416,21 +447,24 @@ bool operator!=(const LHS_TYPE&                   lhs,
 /// not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const NullableValueRef<LHS_TYPE>& lhs,
-               const NullableValueRef<RHS_TYPE>& rhs);
+               const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered before
 /// the specified `rhs`, and `false` otherwise.  `lhs` is ordered before
 /// `rhs` if `lhs` is null or `lhs.value()` is ordered before `rhs`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const NullableValueRef<LHS_TYPE>& lhs,
-               const RHS_TYPE&                   rhs);
+               const RHS_TYPE&                   rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered before the specified
 /// `rhs` nullable wrappers, and `false` otherwise.  `lhs` is ordered before
 /// `rhs` if `rhs` is not null and `lhs` is ordered before `rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const LHS_TYPE&                   lhs,
-               const NullableValueRef<RHS_TYPE>& rhs);
+               const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered before
@@ -440,7 +474,8 @@ bool operator<(const LHS_TYPE&                   lhs,
 /// are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const NullableValueRef<LHS_TYPE>& lhs,
-                const NullableValueRef<RHS_TYPE>& rhs);
+                const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered before
 /// the specified `rhs` or `lhs` and `rhs` have the same value, and `false`
@@ -448,7 +483,8 @@ bool operator<=(const NullableValueRef<LHS_TYPE>& lhs,
 /// returns `!(rhs < lhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const NullableValueRef<LHS_TYPE>& lhs,
-                const RHS_TYPE&                   rhs);
+                const RHS_TYPE&                   rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered before the specified
 /// `rhs` nullable wrapper or `lhs` and `rhs` have the same value, and
@@ -456,7 +492,8 @@ bool operator<=(const NullableValueRef<LHS_TYPE>& lhs,
 /// operator returns `!(rhs < lhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const LHS_TYPE&                   lhs,
-                const NullableValueRef<RHS_TYPE>& rhs);
+                const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered after
 /// the specified `rhs` nullable object, and `false` otherwise.  `lhs` is
@@ -467,7 +504,8 @@ bool operator<=(const LHS_TYPE&                   lhs,
 /// if `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const NullableValueRef<LHS_TYPE>& lhs,
-               const NullableValueRef<RHS_TYPE>& rhs);
+               const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered after
 /// the specified `rhs`, and `false` otherwise.  `lhs` is ordered after
@@ -475,7 +513,8 @@ bool operator>(const NullableValueRef<LHS_TYPE>& lhs,
 /// Note that this operator returns `rhs < lhs`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const NullableValueRef<LHS_TYPE>& lhs,
-               const RHS_TYPE&                   rhs);
+               const RHS_TYPE&                   rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered after the specified
 /// `rhs` nullable wrapper, and `false` otherwise.  `lhs` is ordered after
@@ -483,7 +522,8 @@ bool operator>(const NullableValueRef<LHS_TYPE>& lhs,
 /// that this operator returns `rhs < lhs`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const LHS_TYPE&                   lhs,
-               const NullableValueRef<RHS_TYPE>& rhs);
+               const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
 /// the specified `rhs` nullable wrapper or `lhs` and `rhs` have the same
@@ -493,7 +533,8 @@ bool operator>(const LHS_TYPE&                   lhs,
 /// if `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const NullableValueRef<LHS_TYPE>& lhs,
-                const NullableValueRef<RHS_TYPE>& rhs);
+                const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered after
 /// the specified `rhs` or `lhs` and `rhs` have the same value, and `false`
@@ -501,7 +542,8 @@ bool operator>=(const NullableValueRef<LHS_TYPE>& lhs,
 /// returns `!(lhs < rhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const NullableValueRef<LHS_TYPE>& lhs,
-                const RHS_TYPE&                   rhs);
+                const RHS_TYPE&                   rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is wrapper after the specified
 /// `rhs` nullable object or `lhs` and `rhs` have the same value, and
@@ -509,7 +551,8 @@ bool operator>=(const NullableValueRef<LHS_TYPE>& lhs,
 /// operator returns `!(lhs < rhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const LHS_TYPE&                   lhs,
-                const NullableValueRef<RHS_TYPE>& rhs);
+                const NullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 
                   //================================
@@ -519,23 +562,27 @@ bool operator>=(const LHS_TYPE&                   lhs,
 /// Return `true` if the specified `lhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator==(const NullableValueRef<TYPE>& lhs, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true` if the specified `rhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator==(const bsl::nullopt_t&, const NullableValueRef<TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is not null, and `false` otherwise.
 template <class TYPE>
 bool operator!=(const NullableValueRef<TYPE>& lhs, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true` if the specified `rhs` is not null, and `false`
 /// otherwise.
 template <class TYPE>
 bool operator!=(const bsl::nullopt_t&, const NullableValueRef<TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `false`.  `bsl::nullopt` never orders after a
 /// `NullableValueRef`.
@@ -548,13 +595,15 @@ bool operator<(const NullableValueRef<TYPE>&, const bsl::nullopt_t&)
 /// is not null.
 template <class TYPE>
 bool operator<(const bsl::nullopt_t&, const NullableValueRef<TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is not null, and `false`
 /// otherwise.
 template <class TYPE>
 bool operator>(const NullableValueRef<TYPE>& lhs, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `false`.  `bsl::nullopt` never orders after a
 /// `NullableValueRef`.
@@ -565,7 +614,8 @@ bool operator>(const bsl::nullopt_t&, const NullableValueRef<TYPE>&)
 /// Return `true` if the specified `lhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator<=(const NullableValueRef<TYPE>& lhs, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true`.
 template <class TYPE>
@@ -580,7 +630,8 @@ bool operator>=(const NullableValueRef<TYPE>&, const bsl::nullopt_t&)
 /// Return `true` if the specified `rhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator>=(const bsl::nullopt_t&, const NullableValueRef<TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                         BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
                       // =================================
                       // class ConstNullableValueRef<TYPE>
@@ -619,15 +670,17 @@ class ConstNullableValueRef {
     /// Return a pointer to the held `bdlb::NullableAllocatedValue`.  The
     /// behavior is undefined if the target is not a
     /// `bdlb::NullableAllocatedValue`.
-    const NullableAllocatedValue<TYPE>& getNAV() const;
+    const NullableAllocatedValue<TYPE>& getNAV() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a pointer to the held `bdlb::bsl::optional`. The behavior is
     /// undefined if the target is not a `bdlb::bsl::optional`.
-    const bsl::optional<TYPE>& getOpt() const;
+    const bsl::optional<TYPE>& getOpt() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if this object currently holds a pointer to a
     /// bdlb::bsl::optional, and `false` otherwise.
-    bool hasOpt() const;
+    bool hasOpt() const BSLS_KEYWORD_CONVEYOR;
 
     // TRAITS
 
@@ -681,36 +734,45 @@ class ConstNullableValueRef {
     // ACCESSORS
 
     /// Return `true` if the target contains a value, and `false` otherwise.
-    bool has_value() const BSLS_KEYWORD_NOEXCEPT;
+    bool has_value() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `false` if the target contains a value, and `true` otherwise.
     /// Note that this accessor is provided purely for compatibility with
     /// `NullableValue` and `NullableAllocatedValue`, and its use is
     /// discouraged in favor of `has_value`.
-    bool isNull() const BSLS_KEYWORD_NOEXCEPT;
+    bool isNull() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing non-modifiable access to the underlying
     /// object of a (template parameter) `TYPE`.  The behavior is undefined
     /// if the target has no value.
-    const value_type& value() const;
+    const value_type& value() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a pointer providing non-modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined if the target has no
     /// value.
-    const value_type *operator->() const;
+    const value_type *operator->() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference providing non-modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined if the target has no
     /// value.
-    const value_type& operator*() const;
+    const value_type& operator*() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_OPERATOR_EXPLICIT
     /// Return `true` if the target holds a value, and `false` otherwise.
-    BSLS_KEYWORD_EXPLICIT operator bool() const BSLS_KEYWORD_NOEXCEPT;
+    BSLS_KEYWORD_EXPLICIT operator bool() const BSLS_KEYWORD_NOEXCEPT
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #else
     /// Simulation of explicit conversion to bool.  Inlined to work around xlC
     /// but when out-of-line.
     operator UnspecifiedBool() const BSLS_NOTHROW_SPEC
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return UnspecifiedBoolUtil::makeValue(has_value());
     }
@@ -721,7 +783,8 @@ class ConstNullableValueRef {
     /// otherwise.  Note that this method returns *by* *value*, so may be
     /// inefficient in some contexts.
     template <class ANY_TYPE>
-    TYPE value_or(const ANY_TYPE& default_value) const;
+    TYPE value_or(const ANY_TYPE& default_value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // DEPRECATED FUNCTIONS
     //  provided for compatibility with NullableValue
@@ -731,7 +794,8 @@ class ConstNullableValueRef {
     /// and the specified `address` otherwise.
     BSLS_DEPRECATE_FEATURE("bdl", "ConstNullableValueRef::addressOr",
                               "Use 'has_value() ? &value() : address' instead")
-    const TYPE *addressOr(const TYPE *address) const;
+    const TYPE *addressOr(const TYPE *address) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the value of the underlying object of a (template parameter)
     /// `TYPE` if this object is non-null, and the specified `otherValue`
@@ -739,14 +803,15 @@ class ConstNullableValueRef {
     /// inefficient in some contexts.
     BSLS_DEPRECATE_FEATURE("bdl", "ConstNullableValueRef::valueOr",
                                                       "Use 'value_or' instead")
-    TYPE valueOr(const TYPE& otherValue) const;
+    TYPE valueOr(const TYPE& otherValue) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an address providing non-modifiable access to the underlying
     /// object of a (template parameter) `TYPE` if this object is non-null,
     /// and 0 otherwise.
     BSLS_DEPRECATE_FEATURE("bdl", "ConstNullableValueRef::valueOrNull",
                                  "Use 'has_value() ? &value() : NULL' instead")
-    const TYPE *valueOrNull() const;
+    const TYPE *valueOrNull() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 };
 
@@ -757,7 +822,9 @@ class ConstNullableValueRef {
 /// (template parameter) type `HASHALG`.  If `input.has_value` is true,
 /// additionally pass the value to `hashAlg`.
 template <class HASHALG, class TYPE>
-void hashAppend(HASHALG& hashAlg, const ConstNullableValueRef<TYPE>& input);
+void hashAppend(HASHALG& hashAlg, const ConstNullableValueRef<TYPE>& input)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(input);
 
 // FREE OPERATORS
 
@@ -769,7 +836,8 @@ void hashAppend(HASHALG& hashAlg, const ConstNullableValueRef<TYPE>& input);
 /// compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects have the same
 /// value, and `false` otherwise.  A nullable wrapper and a value of some
@@ -779,10 +847,12 @@ bool operator==(const ConstNullableValueRef<LHS_TYPE>& lhs,
 /// not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const RHS_TYPE&                        rhs);
+                const RHS_TYPE&                        rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const LHS_TYPE&                        lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` nullable objects do not
 /// have the same value, and `false` otherwise.  Two nullable wrappers do
@@ -792,7 +862,8 @@ bool operator==(const LHS_TYPE&                        lhs,
 /// `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
 /// same value, and `false` otherwise.  A nullable wrappers and a value of
@@ -802,10 +873,12 @@ bool operator!=(const ConstNullableValueRef<LHS_TYPE>& lhs,
 /// `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const RHS_TYPE&                        rhs);
+                const RHS_TYPE&                        rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const LHS_TYPE&                        lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered before
 /// the specified `rhs` nullable object, and `false` otherwise.  `lhs` is
@@ -815,21 +888,24 @@ bool operator!=(const LHS_TYPE&                        lhs,
 /// not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const ConstNullableValueRef<LHS_TYPE>& lhs,
-               const ConstNullableValueRef<RHS_TYPE>& rhs);
+               const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered before
 /// the specified `rhs`, and `false` otherwise.  `lhs` is ordered before
 /// `rhs` if `lhs` is null or `lhs.value()` is ordered before `rhs`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const ConstNullableValueRef<LHS_TYPE>& lhs,
-               const RHS_TYPE&                        rhs);
+               const RHS_TYPE&                        rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered before the specified
 /// `rhs` nullable wrappers, and `false` otherwise.  `lhs` is ordered before
 /// `rhs` if `rhs` is not null and `lhs` is ordered before `rhs.value()`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const LHS_TYPE&                        lhs,
-               const ConstNullableValueRef<RHS_TYPE>& rhs);
+               const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered before
 /// the specified `rhs` nullable object or `lhs` and `rhs` have the same
@@ -838,7 +914,8 @@ bool operator<(const LHS_TYPE&                        lhs,
 /// are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered before
 /// the specified `rhs` or `lhs` and `rhs` have the same value, and `false`
@@ -846,7 +923,8 @@ bool operator<=(const ConstNullableValueRef<LHS_TYPE>& lhs,
 /// returns `!(rhs < lhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const RHS_TYPE&                        rhs);
+                const RHS_TYPE&                        rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered before the specified
 /// `rhs` nullable wrapper or `lhs` and `rhs` have the same value, and
@@ -854,7 +932,8 @@ bool operator<=(const ConstNullableValueRef<LHS_TYPE>& lhs,
 /// operator returns `!(rhs < lhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const LHS_TYPE&                        lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered after
 /// the specified `rhs` nullable object, and `false` otherwise.  `lhs` is
@@ -865,7 +944,8 @@ bool operator<=(const LHS_TYPE&                        lhs,
 /// if `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const ConstNullableValueRef<LHS_TYPE>& lhs,
-               const ConstNullableValueRef<RHS_TYPE>& rhs);
+               const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered after
 /// the specified `rhs`, and `false` otherwise.  `lhs` is ordered after
@@ -873,7 +953,8 @@ bool operator>(const ConstNullableValueRef<LHS_TYPE>& lhs,
 /// Note that this operator returns `rhs < lhs`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const ConstNullableValueRef<LHS_TYPE>& lhs,
-               const RHS_TYPE&                        rhs);
+               const RHS_TYPE&                        rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is ordered after the specified
 /// `rhs` nullable wrapper, and `false` otherwise.  `lhs` is ordered after
@@ -881,7 +962,8 @@ bool operator>(const ConstNullableValueRef<LHS_TYPE>& lhs,
 /// that this operator returns `rhs < lhs`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const LHS_TYPE&                        lhs,
-               const ConstNullableValueRef<RHS_TYPE>& rhs);
+               const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
 /// the specified `rhs` nullable wrapper or `lhs` and `rhs` have the same
@@ -891,7 +973,8 @@ bool operator>(const LHS_TYPE&                        lhs,
 /// if `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered after
 /// the specified `rhs` or `lhs` and `rhs` have the same value, and `false`
@@ -899,7 +982,8 @@ bool operator>=(const ConstNullableValueRef<LHS_TYPE>& lhs,
 /// returns `!(lhs < rhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const RHS_TYPE&                        rhs);
+                const RHS_TYPE&                        rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is wrapper after the specified
 /// `rhs` nullable object or `lhs` and `rhs` have the same value, and
@@ -907,7 +991,8 @@ bool operator>=(const ConstNullableValueRef<LHS_TYPE>& lhs,
 /// operator returns `!(lhs < rhs)`.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const LHS_TYPE&                        lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
                        //================================
                        // Comparisons with bsl::nullopt_t
@@ -916,23 +1001,27 @@ bool operator>=(const LHS_TYPE&                        lhs,
 /// Return `true` if the specified `lhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator==(const ConstNullableValueRef<TYPE>& lhs,
-                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT;
+                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true` if the specified `rhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator==(const bsl::nullopt_t&,
-                const ConstNullableValueRef<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
+                const ConstNullableValueRef<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is not null, and `false` otherwise.
 template <class TYPE>
 bool operator!=(const ConstNullableValueRef<TYPE>& lhs,
-                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT;
+                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true` if the specified `rhs` is not null, and `false`
 /// otherwise.
 template <class TYPE>
 bool operator!=(const bsl::nullopt_t&,
-                const ConstNullableValueRef<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
+                const ConstNullableValueRef<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `false`.  `bsl::nullopt` never orders after a
 /// `ConstNullableValueRef`.
@@ -945,13 +1034,15 @@ bool operator<(const ConstNullableValueRef<TYPE>&, const bsl::nullopt_t&)
 /// that is not null.
 template <class TYPE>
 bool operator<(const bsl::nullopt_t&,
-               const ConstNullableValueRef<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
+               const ConstNullableValueRef<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` is not null, and `false`
 /// otherwise.
 template <class TYPE>
 bool operator>(const ConstNullableValueRef<TYPE>& lhs,
-               const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT;
+               const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `false`.  `bsl::nullopt` never orders after a
 /// `NullableValueRef`.
@@ -962,7 +1053,8 @@ bool operator>(const bsl::nullopt_t&, const ConstNullableValueRef<TYPE>&)
 /// Return `true` if the specified `lhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator<=(const ConstNullableValueRef<TYPE>& lhs,
-                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT;
+                const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
 
 /// Return `true`.
 template <class TYPE>
@@ -977,7 +1069,8 @@ bool operator>=(const ConstNullableValueRef<TYPE>&, const bsl::nullopt_t&)
 /// Return `true` if the specified `rhs` is null, and `false` otherwise.
 template <class TYPE>
 bool operator>=(const bsl::nullopt_t&,
-                const ConstNullableValueRef<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
+                const ConstNullableValueRef<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
      //===================================================================
      // Comparisons between 'ConstNullableValueRef' and 'NullableValueRef'
@@ -991,10 +1084,12 @@ bool operator>=(const bsl::nullopt_t&,
 /// compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const NullableValueRef<RHS_TYPE>&      rhs);
+                const NullableValueRef<RHS_TYPE>&      rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const NullableValueRef<LHS_TYPE>&      lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` nullable objects do not
 /// have the same value, and `false` otherwise.  Two nullable wrappers do
@@ -1004,10 +1099,12 @@ bool operator==(const NullableValueRef<LHS_TYPE>&      lhs,
 /// `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const NullableValueRef<RHS_TYPE>&      rhs);
+                const NullableValueRef<RHS_TYPE>&      rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const NullableValueRef<LHS_TYPE>&      lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered before
 /// the specified `rhs` nullable object, and `false` otherwise.  `lhs` is
@@ -1017,10 +1114,12 @@ bool operator!=(const NullableValueRef<LHS_TYPE>&      lhs,
 /// not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const ConstNullableValueRef<LHS_TYPE>& lhs,
-               const NullableValueRef<RHS_TYPE>&      rhs);
+               const NullableValueRef<RHS_TYPE>&      rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const NullableValueRef<LHS_TYPE>&      lhs,
-               const ConstNullableValueRef<RHS_TYPE>& rhs);
+               const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered before
 /// the specified `rhs` nullable object or `lhs` and `rhs` have the same
@@ -1029,10 +1128,12 @@ bool operator<(const NullableValueRef<LHS_TYPE>&      lhs,
 /// are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const NullableValueRef<RHS_TYPE>&      rhs);
+                const NullableValueRef<RHS_TYPE>&      rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const NullableValueRef<LHS_TYPE>&      lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable wrapper is ordered after
 /// the specified `rhs` nullable object, and `false` otherwise.  `lhs` is
@@ -1043,10 +1144,12 @@ bool operator<=(const NullableValueRef<LHS_TYPE>&      lhs,
 /// if `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const ConstNullableValueRef<LHS_TYPE>& lhs,
-               const NullableValueRef<RHS_TYPE>&      rhs);
+               const NullableValueRef<RHS_TYPE>&      rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const NullableValueRef<LHS_TYPE>&      lhs,
-               const ConstNullableValueRef<RHS_TYPE>& rhs);
+               const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
 /// the specified `rhs` nullable wrapper or `lhs` and `rhs` have the same
@@ -1056,10 +1159,12 @@ bool operator>(const NullableValueRef<LHS_TYPE>&      lhs,
 /// if `LHS_TYPE` and `RHS_TYPE` are not compatible.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const ConstNullableValueRef<LHS_TYPE>& lhs,
-                const NullableValueRef<RHS_TYPE>&      rhs);
+                const NullableValueRef<RHS_TYPE>&      rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const NullableValueRef<LHS_TYPE>&      lhs,
-                const ConstNullableValueRef<RHS_TYPE>& rhs);
+                const ConstNullableValueRef<RHS_TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 }  // close package namespace
 
@@ -1073,6 +1178,7 @@ inline
 bdlb::NullableAllocatedValue<TYPE>&
 bdlb::NullableValueRef<TYPE>::getNAV() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(!hasOpt());
     return *static_cast<bdlb::NullableAllocatedValue<TYPE> *>(d_target_p);
 }
@@ -1082,13 +1188,14 @@ inline
 bsl::optional<TYPE>&
 bdlb::NullableValueRef<TYPE>::getOpt() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(hasOpt());
     return *static_cast<bsl::optional<TYPE> *>(d_target_p);
 }
 
 template <class TYPE>
 inline
-bool bdlb::NullableValueRef<TYPE>::hasOpt() const
+bool bdlb::NullableValueRef<TYPE>::hasOpt() const BSLS_KEYWORD_CONVEYOR
 {
     return d_isTargetOptional;
 }
@@ -1230,6 +1337,7 @@ inline
 bdlb::NullableValueRef<TYPE>&
 bdlb::NullableValueRef<TYPE>::operator=(const bsl::nullopt_t&)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
     return *this;
 }
@@ -1239,6 +1347,8 @@ inline
 bdlb::NullableValueRef<TYPE>&
 bdlb::NullableValueRef<TYPE>::operator=(const TYPE& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (hasOpt()) {
         getOpt() = rhs;
     }
@@ -1254,6 +1364,8 @@ inline
 bdlb::NullableValueRef<TYPE>&
 bdlb::NullableValueRef<TYPE>::operator=(const bsl::optional<TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (rhs.has_value()) {
         *this = rhs.value();
     }
@@ -1269,6 +1381,8 @@ bdlb::NullableValueRef<TYPE>&
 bdlb::NullableValueRef<TYPE>::operator=(
                                        const NullableAllocatedValue<TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (rhs.has_value()) {
         *this = rhs.value();
     }
@@ -1284,6 +1398,8 @@ inline
 bdlb::NullableValueRef<TYPE>&
 bdlb::NullableValueRef<TYPE>::operator=(const NullableValueRef& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (rhs.has_value()) {
         *this = rhs.value();
     }
@@ -1648,6 +1764,7 @@ inline
 const bdlb::NullableAllocatedValue<TYPE>&
 bdlb::ConstNullableValueRef<TYPE>::getNAV() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(!hasOpt());
     return *static_cast<const NullableAllocatedValue<value_type> *>(
                                                                    d_target_p);
@@ -1658,13 +1775,14 @@ inline
 const bsl::optional<TYPE>&
 bdlb::ConstNullableValueRef<TYPE>::getOpt() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(hasOpt());
     return *static_cast<const bsl::optional<value_type> *>(d_target_p);
 }
 
 template <class TYPE>
 inline
-bool bdlb::ConstNullableValueRef<TYPE>::hasOpt() const
+bool bdlb::ConstNullableValueRef<TYPE>::hasOpt() const BSLS_KEYWORD_CONVEYOR
 {
     return d_isTargetOptional;
 }

@@ -645,7 +645,7 @@ bsl::ostream& Print::singleLineHexDump(bsl::ostream&  stream,
                                        const char    *begin,
                                        const char    *end)
 {
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     return singleLineHexDump<const char *>(stream, begin, end);
 }

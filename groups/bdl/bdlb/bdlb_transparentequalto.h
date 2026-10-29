@@ -70,6 +70,8 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_istriviallydefaultconstructible.h>
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
+
 namespace BloombergLP {
 namespace bdlb {
 
@@ -130,6 +132,8 @@ template <class LHS, class RHS>
 inline
 bool TransparentEqualTo::operator()(const LHS& lhs, const RHS& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs == rhs;
 }
 

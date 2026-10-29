@@ -268,7 +268,10 @@ Parenthesizer::Parenthesizer(const Parenthesizer&  other,
 // ACCESSORS
 bsl::string& Parenthesizer::operator()(bsl::string& s) const
 {
-    return s = (d_before += "(") + s + (d_after += ")");
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+    return s = BSLS_ASSERT_CONVEYOR_REF(d_before += "(") + s +
+               BSLS_ASSERT_CONVEYOR_REF(d_after += ")");
 }
 
 bslma::Allocator *Parenthesizer::allocator() const
@@ -627,7 +630,10 @@ int main(int argc, char *argv[])
     #ifndef BSLS_COMPILERFEATURES_SUPPORT_DECLTYPE
     Pricer pricer(&prices);
     #else
-    auto pricer = [&](const bsl::string &product) { return prices[product]; };
+    auto pricer = [&](const bsl::string &product) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&prices);
+        return prices[product];
+    };
     #endif
 // ```
 // Now, we need a pair of transform iterators to process our grocery list.  We
@@ -1214,7 +1220,8 @@ int main(int argc, char *argv[])
         if (veryVerbose) {
             cout << "functor() const\n";
         }
-        ASSERT("((((a))))" == X.functor()(DATA[0]));
+        ASSERT("((((a))))" ==
+                     BSLS_ASSERT_CONVEYOR_REF(X.functor()(DATA[0])));
 
         if (veryVerbose) {
             cout << "iterator() const\n";
@@ -1346,7 +1353,7 @@ int main(int argc, char *argv[])
             cout << "functor()\n";
         }
         mX.functor() = Parenthesizer(&ta);
-        ASSERT("(a)" == X.functor()(DATA[0]));
+        ASSERT("(a)" == BSLS_ASSERT_CONVEYOR_REF(X.functor()(DATA[0])));
 
         if (veryVerbose) {
             cout << "iterator()\n";

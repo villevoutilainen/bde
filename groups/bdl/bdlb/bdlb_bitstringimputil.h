@@ -312,7 +312,7 @@ void BitStringImpUtil::andEqBits(bsl::uint64_t *dstValue,
     BSLS_ASSERT(dstValue);
     BSLS_ASSERT(                 0 <= dstIndex);
     BSLS_ASSERT(                 0 <= numBits);
-    BSLS_ASSERT(dstIndex + numBits <= k_BITS_PER_UINT64);
+    BSLS_ASSERT_NONCONVEYOR(dstIndex + numBits <= k_BITS_PER_UINT64);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(dstIndex < k_BITS_PER_UINT64)) {
         *dstValue &= BitMaskUtil::zero64(dstIndex, numBits) |
@@ -338,7 +338,7 @@ void BitStringImpUtil::minusEqBits(bsl::uint64_t *dstValue,
     BSLS_ASSERT(dstValue);
     BSLS_ASSERT(                 0 <= dstIndex);
     BSLS_ASSERT(                 0 <= numBits);
-    BSLS_ASSERT(dstIndex + numBits <= k_BITS_PER_UINT64);
+    BSLS_ASSERT_NONCONVEYOR(dstIndex + numBits <= k_BITS_PER_UINT64);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(dstIndex < k_BITS_PER_UINT64)) {
         *dstValue &= BitMaskUtil::zero64(dstIndex, numBits) |
@@ -364,7 +364,7 @@ void BitStringImpUtil::orEqBits(bsl::uint64_t *dstValue,
     BSLS_ASSERT(dstValue);
     BSLS_ASSERT(                 0 <= dstIndex);
     BSLS_ASSERT(                 0 <= numBits);
-    BSLS_ASSERT(dstIndex + numBits <= k_BITS_PER_UINT64);
+    BSLS_ASSERT_NONCONVEYOR(dstIndex + numBits <= k_BITS_PER_UINT64);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(dstIndex < k_BITS_PER_UINT64)) {
         *dstValue |= (srcValue & BitMaskUtil::lt64(numBits)) << dstIndex;
@@ -389,7 +389,7 @@ void BitStringImpUtil::setEqBits(bsl::uint64_t *dstValue,
     BSLS_ASSERT(dstValue);
     BSLS_ASSERT(0                  <= dstIndex);
     BSLS_ASSERT(0                  <= numBits);
-    BSLS_ASSERT(dstIndex + numBits <= k_BITS_PER_UINT64);
+    BSLS_ASSERT_NONCONVEYOR(dstIndex + numBits <= k_BITS_PER_UINT64);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(dstIndex < k_BITS_PER_UINT64)) {
         const bsl::uint64_t mask = BitMaskUtil::lt64(numBits);
@@ -417,7 +417,7 @@ void BitStringImpUtil::xorEqBits(bsl::uint64_t *dstValue,
     BSLS_ASSERT(dstValue);
     BSLS_ASSERT(                 0 <= dstIndex);
     BSLS_ASSERT(                 0 <= numBits);
-    BSLS_ASSERT(dstIndex + numBits <= k_BITS_PER_UINT64);
+    BSLS_ASSERT_NONCONVEYOR(dstIndex + numBits <= k_BITS_PER_UINT64);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(dstIndex < k_BITS_PER_UINT64)) {
         *dstValue ^= (srcValue & BitMaskUtil::lt64(numBits)) << dstIndex;

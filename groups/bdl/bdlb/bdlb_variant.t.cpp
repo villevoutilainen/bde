@@ -451,6 +451,8 @@ bool operator==(const TestAllocObj&, const TestAllocObj&)
 
 bool operator!=(const TestAllocObj& lhs, const TestAllocObj& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -600,11 +602,15 @@ class TestInt {
 // FREE OPERATORS
 bool operator==(const TestInt& lhs, const TestInt& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.theInt() == rhs.theInt();
 }
 
 bool operator!=(const TestInt& lhs, const TestInt& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -656,7 +662,7 @@ class TestString {
     }
 
     TestString(const TestString& original, bslma::Allocator *allocator = 0)
-    : d_value(original.theString(), allocator)
+    : d_value(BSLS_ASSERT_CONVEYOR_REF(original).theString(), allocator)
     {
     }
 
@@ -719,6 +725,7 @@ class TestString {
     template <class STREAM>
     STREAM& bdexStreamOut(STREAM& stream, int version) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         switch (version) {
           case 1: {
             stream.putString(d_value);
@@ -746,6 +753,7 @@ class TestString {
                         int           level          = 0,
                         int           spacesPerLevel = 4) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (0 > level) {
             level = -level;
         }
@@ -760,7 +768,7 @@ class TestString {
         return stream;
     }
 
-    const bsl::string& theString() const
+    const bsl::string& theString() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return d_value;
     }
@@ -769,11 +777,15 @@ class TestString {
 // FREE OPERATORS
 bool operator==(const TestString& lhs, const TestString& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.theString() == rhs.theString();
 }
 
 bool operator!=(const TestString& lhs, const TestString& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -924,12 +936,16 @@ class TestArg {
 template <int N>
 bool operator==(const TestArg<N>& lhs, const TestArg<N>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.theInt() == rhs.theInt();
 }
 
 template <int N>
 bool operator!=(const TestArg<N>& lhs, const TestArg<N>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -1519,6 +1535,14 @@ const TestInt     TEST_INT_DATA[]    = { VF, VG, VH, VI, VJ };
 const TestString  TEST_STRING_DATA[] = { VK, VL, VM, VN, VO };
 const bsl::string STRING_DATA[]      = { VS, VT, VU, VV, VW };
 
+/// Return a reference to the element of `STRING_DATA` at the specified
+/// `index`.  The behavior is undefined unless `0 <= index < 5`.
+const bsl::string& stringData(int index)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
+{
+    return STRING_DATA[index];
+}
+
 // Define the expected move state for tests that involve "true" rvalue
 // references (i.e., `bslmf::MovableRefUtil` is not used to explicitly impose
 // move semantics).
@@ -1594,7 +1618,7 @@ class my_ModifyingVisitor {
 
     void operator()(bsl::string& value) const
     {
-        value = STRING_DATA[d_valueIdx];
+        value = stringData(d_valueIdx);
     }
 
     void operator()(TestString& value) const
@@ -1715,21 +1739,25 @@ class my_ConstVisitor {
     // ACCESSORS
     void operator()(const int& value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         ASSERT(INT_DATA[d_valueIdx] == value);
     }
 
     void operator()(const TestInt& value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         ASSERT(TEST_INT_DATA[d_valueIdx] == value);
     }
 
     void operator()(const bsl::string& value) const
     {
-        ASSERT(STRING_DATA[d_valueIdx] == value);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+        ASSERT(stringData(d_valueIdx) == value);
     }
 
     void operator()(const TestString& value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         ASSERT(TEST_STRING_DATA[d_valueIdx] == value);
     }
 
@@ -1773,24 +1801,28 @@ class my_ConstReturningVisitor {
     // ACCESSORS
     ResultType operator()(const int& value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         ASSERT(INT_DATA[d_valueIdx] == value);
         return INT_TYPE;
     }
 
     ResultType operator()(const TestInt& value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         ASSERT(TEST_INT_DATA[d_valueIdx] == value);
         return TEST_INT_TYPE;
     }
 
     ResultType operator()(const bsl::string& value) const
     {
-        ASSERT(STRING_DATA[d_valueIdx] == value);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+        ASSERT(stringData(d_valueIdx) == value);
         return STRING_TYPE;
     }
 
     ResultType operator()(const TestString& value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         ASSERT(TEST_STRING_DATA[d_valueIdx] == value);
         return TEST_STRING_TYPE;
     }
@@ -2678,26 +2710,32 @@ class my_VariantWrapper {
 /// and `false` otherwise.
 template <class VARIANT>
 bool operator==(const my_VariantWrapper<VARIANT>& lhs,
-                const my_VariantWrapper<VARIANT>& rhs);
+                const my_VariantWrapper<VARIANT>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class VARIANT>
 bool operator==(const VARIANT&                    lhs,
-                const my_VariantWrapper<VARIANT>& rhs);
+                const my_VariantWrapper<VARIANT>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class VARIANT>
 bool operator==(const my_VariantWrapper<VARIANT>& lhs,
-                const VARIANT&                    rhs);
+                const VARIANT&                    rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the (variant object wrapped by the) specified `lhs`
 /// does not have the same value as the (variant object wrapped by the)
 /// specified `rhs`, and `false` otherwise.
 template <class VARIANT>
 bool operator!=(const my_VariantWrapper<VARIANT>& lhs,
-                const my_VariantWrapper<VARIANT>& rhs);
+                const my_VariantWrapper<VARIANT>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class VARIANT>
 bool operator!=(const VARIANT&                    lhs,
-                const my_VariantWrapper<VARIANT>& rhs);
+                const my_VariantWrapper<VARIANT>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 template <class VARIANT>
 bool operator!=(const my_VariantWrapper<VARIANT>& lhs,
-                const VARIANT&                    rhs);
+                const VARIANT&                    rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // CLASS METHODS
 template <class VARIANT>
@@ -2842,18 +2880,24 @@ template <class VARIANT>
 bool operator==(const my_VariantWrapper<VARIANT>& lhs,
                 const my_VariantWrapper<VARIANT>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.variant() == rhs.variant();
 }
 
 template <class VARIANT>
 bool operator==(const VARIANT& lhs, const my_VariantWrapper<VARIANT>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs == rhs.variant();
 }
 
 template <class VARIANT>
 bool operator==(const my_VariantWrapper<VARIANT>& lhs, const VARIANT& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.variant() == rhs;
 }
 
@@ -2861,18 +2905,24 @@ template <class VARIANT>
 bool operator!=(const my_VariantWrapper<VARIANT>& lhs,
                 const my_VariantWrapper<VARIANT>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.variant() != rhs.variant();
 }
 
 template <class VARIANT>
 bool operator!=(const VARIANT& lhs, const my_VariantWrapper<VARIANT>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs != rhs.variant();
 }
 
 template <class VARIANT>
 bool operator!=(const my_VariantWrapper<VARIANT>& lhs, const VARIANT& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.variant() != rhs;
 }
 
@@ -3966,7 +4016,7 @@ typedef bsl::vector<bdlb::Variant<Currency *, Security *> > MyVector;
 class Currency {
   public:
     /// Append `this` to the specified `v`.
-    void method(MyVector *v)
+    void method(MyVector *v) BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(v)
     {
         v->emplace_back(this);
     }
@@ -3975,7 +4025,7 @@ class Currency {
 class Security {
   public:
     /// Append `this` to the specified `v`.
-    void method(MyVector *v)
+    void method(MyVector *v) BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(v)
     {
         v->emplace_back(this);
     }
@@ -3996,6 +4046,7 @@ void applyTestRTNS(const VALUE_TYPE& defaultValue,
                    int               stringOpCalled,
                    int               testStringOpCalled,
                    int               nilOpCalled)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(defaultValue)
 {
     typedef typename VISITOR::VisitorResultType RetType;
 
@@ -4157,6 +4208,7 @@ void applyTestRTS(const VALUE_TYPE& defaultValue,
                   int               stringOpCalled,
                   int               testStringOpCalled,
                   int               nilOpCalled)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(defaultValue)
 {
     typedef typename VISITOR::ResultType RetType;
 
@@ -21109,7 +21161,7 @@ void TestUtil::testCase21()
                 ASSERT(TEST_INT_DATA[VALUE_IDX2] == X.the<TestInt>());
               } break;
               case STRING_TYPE: {
-                ASSERT(STRING_DATA[VALUE_IDX2] == X.the<bsl::string>());
+                ASSERT(stringData(VALUE_IDX2) == X.the<bsl::string>());
               } break;
               case TEST_STRING_TYPE: {
                 ASSERT(TEST_STRING_DATA[VALUE_IDX2] == Y.the<TestString>());
@@ -21130,7 +21182,7 @@ void TestUtil::testCase21()
                 ASSERT(TEST_INT_DATA[VALUE_IDX1] == Y.the<TestInt>());
               } break;
               case STRING_TYPE: {
-                ASSERT(STRING_DATA[VALUE_IDX1] == Y.the<bsl::string>());
+                ASSERT(stringData(VALUE_IDX1) == Y.the<bsl::string>());
               } break;
               case TEST_STRING_TYPE: {
                 ASSERT(TEST_STRING_DATA[VALUE_IDX1] == Y.the<TestString>());
@@ -28258,8 +28310,8 @@ void TestUtil::testCase15()
 
         {
             bsl::string& xs = mXs[2].createInPlace<bsl::string>(
-                                                               STRING_DATA[0]);
-            ASSERT(STRING_DATA[0] == xs);
+                                                               stringData(0));
+            ASSERT(stringData(0) == xs);
             ASSERT(&xs == &mXs[2].the<bsl::string>());
         }
 
@@ -28272,7 +28324,7 @@ void TestUtil::testCase15()
 
         mYs[0].createInPlace<int>(INT_DATA[0]);
         mYs[1].createInPlace<TestInt>(TEST_INT_DATA[0]);
-        mYs[2].createInPlace<bsl::string>(STRING_DATA[0]);
+        mYs[2].createInPlace<bsl::string>(stringData(0));
         mYs[3].createInPlace<TestString>(TEST_STRING_DATA[0]);
 
         for (int i = 0;
@@ -28310,18 +28362,18 @@ void TestUtil::testCase15()
                 const TestString&  theTestString=mXs[3].the<TestString>();
 
                 T_ P_(i) P_(INT_DATA[i])    P_(TEST_INT_DATA[i])
-                   P_(STRING_DATA[i]) P(TEST_STRING_DATA[i])
+                   P_(stringData(i)) P(TEST_STRING_DATA[i])
                    P_(theInt) P_(theTestInt) P_(theString) P(theTestString)
             }
 
             ASSERTV(i, INT_DATA[i]         == mXs[0].the<int>());
             ASSERTV(i, TEST_INT_DATA[i]    == mXs[1].the<TestInt>());
-            ASSERTV(i, STRING_DATA[i]      == mXs[2].the<bsl::string>());
+            ASSERTV(i, stringData(i)      == mXs[2].the<bsl::string>());
             ASSERTV(i, TEST_STRING_DATA[i] == mXs[3].the<TestString>());
 
             ASSERTV(i, INT_DATA[i]         == mYs[0].the<int>());
             ASSERTV(i, TEST_INT_DATA[i]    == mYs[1].the<TestInt>());
-            ASSERTV(i, STRING_DATA[i]      == mYs[2].the<bsl::string>());
+            ASSERTV(i, stringData(i)      == mYs[2].the<bsl::string>());
             ASSERTV(i, TEST_STRING_DATA[i] == mYs[3].the<TestString>());
         }
     }
@@ -28457,15 +28509,15 @@ void TestUtil::testCase15()
         Obj   tmp(1);  // dummy used to initialize the variant
         VWrap wrappedVariant(tmp, &oa);
         VWrap wrappedVariant2(tmp, &oa);
-        wrappedVariant.variant().createInPlace<bsl::string>(STRING_DATA[1]);
-        wrappedVariant2.variant().createInPlace<bsl::string>(STRING_DATA[1]);
+        wrappedVariant.variant().createInPlace<bsl::string>(stringData(1));
+        wrappedVariant2.variant().createInPlace<bsl::string>(stringData(1));
 
         my_ConstVisitor visitor(1);
         wrappedVariant.apply(visitor);
         wrappedVariant2.applyRaw(visitor);
 
-        ASSERT(STRING_DATA[1] == wrappedVariant.variant().the<bsl::string>());
-        ASSERT(STRING_DATA[1] == wrappedVariant2.variant().the<bsl::string>());
+        ASSERT(stringData(1) == wrappedVariant.variant().the<bsl::string>());
+        ASSERT(stringData(1) == wrappedVariant2.variant().the<bsl::string>());
     }
 
     if (verbose) cout << "\nTesting reference returning visitors."  << endl;
@@ -29340,11 +29392,11 @@ void TestUtil::testCase13()
                   } break;
                   case STRING_TYPE: {
 
-                    bsl::string Y = STRING_DATA[VALUE_IDX2];
+                    bsl::string Y = stringData(VALUE_IDX2);
 
-                    ASSERTV(LINE1, LINE2, STRING_DATA[VALUE_IDX2] ==
+                    ASSERTV(LINE1, LINE2, stringData(VALUE_IDX2) ==
                                               (mX = Y).the<bsl::string>());
-                    ASSERTV(LINE1, LINE2, STRING_DATA[VALUE_IDX2] == Y);
+                    ASSERTV(LINE1, LINE2, stringData(VALUE_IDX2) == Y);
                     ASSERTV(LINE1, LINE2, Y == X.the<bsl::string>());
 
                   } break;
@@ -29385,7 +29437,7 @@ void TestUtil::testCase13()
                             TEST_INT_DATA[VALUE_IDX2] == X.the<TestInt>());
                   } break;
                   case STRING_TYPE: {
-                    ASSERTV(LINE1, LINE2, STRING_DATA[VALUE_IDX2] ==
+                    ASSERTV(LINE1, LINE2, stringData(VALUE_IDX2) ==
                                                          X.the<bsl::string>());
                   } break;
                   case TEST_STRING_TYPE: {
@@ -29456,9 +29508,9 @@ void TestUtil::testCase13()
                           TEST_INT_DATA[VALUE_IDX2] == X.the<TestInt>());
                 } break;
                 case STRING_TYPE: {
-                  mX = STRING_DATA[VALUE_IDX2];
+                  mX = stringData(VALUE_IDX2);
                   ASSERTV(LINE1, LINE2,
-                          STRING_DATA[VALUE_IDX2] == X.the<bsl::string>());
+                          stringData(VALUE_IDX2) == X.the<bsl::string>());
                 } break;
                 case TEST_STRING_TYPE: {
                   mX = TEST_STRING_DATA[VALUE_IDX2];
@@ -29595,11 +29647,11 @@ void TestUtil::testCase12()
 
             // `0 == VALUE_IDX` triggers allocation.
 
-            Obj mX(STRING_DATA[VALUE_IDX]);       const Obj& X = mX;
+            Obj mX(stringData(VALUE_IDX));       const Obj& X = mX;
 
             ASSERT(STRING_TYPE            == X.typeIndex());
             ASSERT(1                      == X.is<bsl::string>());
-            ASSERT(STRING_DATA[VALUE_IDX] == X.the<bsl::string>());
+            ASSERT(stringData(VALUE_IDX) == X.the<bsl::string>());
 
             if (0 == VALUE_IDX) {
                 ASSERT(dam.isInUseUp());
@@ -29610,11 +29662,11 @@ void TestUtil::testCase12()
             }
             ASSERT(oam.isTotalSame());
 
-            Obj mY(STRING_DATA[VALUE_IDX], &oa);  const Obj& Y = mY;
+            Obj mY(stringData(VALUE_IDX), &oa);  const Obj& Y = mY;
 
             ASSERT(STRING_TYPE            == Y.typeIndex());
             ASSERT(1                      == Y.is<bsl::string>());
-            ASSERT(STRING_DATA[VALUE_IDX] == Y.the<bsl::string>());
+            ASSERT(stringData(VALUE_IDX) == Y.the<bsl::string>());
 
             if (0 == VALUE_IDX) {
                 ASSERT(oam.isInUseUp());
@@ -29625,7 +29677,7 @@ void TestUtil::testCase12()
             ASSERT(dam.isTotalSame());
 
             Obj mZ(&scratch);                     const Obj& Z = mZ;
-            mZ.assign(STRING_DATA[VALUE_IDX]);
+            mZ.assign(stringData(VALUE_IDX));
 
             ASSERT(Z.typeIndex()        == X.typeIndex());
             ASSERT(Z.is<bsl::string>()  == X.is<bsl::string>());
@@ -29730,6 +29782,7 @@ void TestUtil::testCase12()
         template <class TYPE>
         void operator()(const TYPE& value) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
             bsl::cout << value << bsl::endl;
         }
 
@@ -32319,7 +32372,7 @@ int main(int argc, char *argv[])
                 ASSERTV(LINE, VALUE_IDX, !X.is<TestString>());
                 ASSERTV(LINE, VALUE_IDX, !X.is<TestVoid>());
                 ASSERTV(LINE, VALUE_IDX,  X.the<bsl::string>(),
-                        STRING_DATA[VALUE_IDX] == X.the<bsl::string>());
+                        stringData(VALUE_IDX) == X.the<bsl::string>());
 
                 bsl::string *mR = &mX.the<bsl::string>();
 
@@ -32514,7 +32567,7 @@ int main(int argc, char *argv[])
               } break;
               case STRING_TYPE: {
                 ASSERTV(LINE, VALUE_IDX, X.the<bsl::string>(),
-                        STRING_DATA[VALUE_IDX] == X.the<bsl::string>());
+                        stringData(VALUE_IDX) == X.the<bsl::string>());
               } break;
               case TEST_STRING_TYPE: {
                 ASSERTV(LINE, VALUE_IDX, X.the<TestString>(),

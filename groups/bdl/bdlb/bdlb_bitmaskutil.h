@@ -369,7 +369,8 @@ bsl::uint32_t BitMaskUtil::one(int index, int numBits)
 {
     BSLS_ASSERT(0 <= index);
     BSLS_ASSERT(0 <= numBits);
-    BSLS_ASSERT(index + numBits <= static_cast<int>(k_BITS_PER_UINT32));
+    BSLS_ASSERT_NONCONVEYOR(
+                       index + numBits <= static_cast<int>(k_BITS_PER_UINT32));
 
     return lt(index + numBits) & ge(index);
 }
@@ -379,7 +380,8 @@ bsl::uint64_t BitMaskUtil::one64(int index, int numBits)
 {
     BSLS_ASSERT(0 <= index);
     BSLS_ASSERT(0 <= numBits);
-    BSLS_ASSERT(index + numBits <= static_cast<int>(k_BITS_PER_UINT64));
+    BSLS_ASSERT_NONCONVEYOR(
+                       index + numBits <= static_cast<int>(k_BITS_PER_UINT64));
 
     return lt64(index + numBits) & ge64(index);
 }
@@ -389,7 +391,8 @@ bsl::uint32_t BitMaskUtil::zero(int index, int numBits)
 {
     BSLS_ASSERT(0 <= index);
     BSLS_ASSERT(0 <= numBits);
-    BSLS_ASSERT(index + numBits <= static_cast<int>(k_BITS_PER_UINT32));
+    BSLS_ASSERT_NONCONVEYOR(
+                       index + numBits <= static_cast<int>(k_BITS_PER_UINT32));
 
     return lt(index) | ge(index + numBits);
 }
@@ -399,7 +402,8 @@ bsl::uint64_t BitMaskUtil::zero64(int index, int numBits)
 {
     BSLS_ASSERT(0 <= index);
     BSLS_ASSERT(0 <= numBits);
-    BSLS_ASSERT(index + numBits <= static_cast<int>(k_BITS_PER_UINT64));
+    BSLS_ASSERT_NONCONVEYOR(
+                       index + numBits <= static_cast<int>(k_BITS_PER_UINT64));
 
     return lt64(index) | ge64(index + numBits);
 }

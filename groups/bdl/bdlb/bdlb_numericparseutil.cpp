@@ -86,7 +86,7 @@ static
 inline
 bsl::string_view stripOptionalPlus(const bsl::string_view& positiveNum)
 {
-    BSLS_ASSERT(!positiveNum.empty());
+    BSLS_ASSERT_NONCONVEYOR(!positiveNum.empty());
 
     return ('+' == positiveNum[0]) ? positiveNum.substr(1) : positiveNum;
 }

@@ -117,7 +117,8 @@ struct String {
                                  const char *rhsString,
                                  int         rhsLength);
     static bool areEqualCaseless(const char         *lhsString,
-                                 const bsl::string&  rhsString);
+                                 const bsl::string&  rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhsString);
     static bool areEqualCaseless(const char *lhsString,
                                  int         lhsLength,
                                  const char *rhsString);
@@ -127,21 +128,27 @@ struct String {
                                  int         rhsLength);
     static bool areEqualCaseless(const char         *lhsString,
                                  int                 lhsLength,
-                                 const bsl::string&  rhsString);
+                                 const bsl::string&  rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhsString);
     static bool areEqualCaseless(const bsl::string&  lhsString,
-                                 const char         *rhsString);
+                                 const char         *rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhsString);
     static bool areEqualCaseless(const bsl::string&  lhsString,
                                  const char         *rhsString,
-                                 int                 rhsLength);
+                                 int                 rhsLength)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhsString);
     static bool areEqualCaseless(const bsl::string& lhsString,
-                                 const bsl::string& rhsString);
+                                 const bsl::string& rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhsString);
 
     /// Create a null-terminated copy of the specified `string`, using the
     /// specified `basicAllocator` to supply memory, and return the address
     /// of the newly-created modifiable string.  The string that is returned
     /// is owned by the caller.  The behavior is undefined unless
     /// `bsl::strlen(string) <= INT_MAX` and `basicAllocator` is non-null.
-    static char *copy(const char *string, bslma::Allocator *basicAllocator);
+    static char *copy(const char *string, bslma::Allocator *basicAllocator)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(basicAllocator);
 
     /// Create a null-terminated copy of the specified `string` having the
     /// specified `length` (in bytes), using the specified `basicAllocator`
@@ -152,7 +159,8 @@ struct String {
     /// embedded null ('\0') characters they will be propagated to the copy.
     static char *copy(const char       *string,
                       int               length,
-                      bslma::Allocator *basicAllocator);
+                      bslma::Allocator *basicAllocator)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(basicAllocator);
 
     /// Create a null-terminated copy of the specified `string`, using the
     /// specified `basicAllocator` to supply memory, and return the address
@@ -162,7 +170,9 @@ struct String {
     /// that if `string` contains any embedded null ('\0') characters they
     /// will be propagated to the copy.
     static char *copy(const bsl::string&  string,
-                      bslma::Allocator   *basicAllocator);
+                      bslma::Allocator   *basicAllocator)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(basicAllocator);
 
     /// Compare the specified `lhsString` and `rhsString` having the
     /// optionally specified `lhsLength` and `rhsLength`, respectively.
@@ -178,7 +188,8 @@ struct String {
                             const char *rhsString,
                             int         rhsLength);
     static int lowerCaseCmp(const char         *lhsString,
-                            const bsl::string&  rhsString);
+                            const bsl::string&  rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhsString);
 
     static int lowerCaseCmp(const char *lhsString,
                             int         lhsLength,
@@ -189,14 +200,19 @@ struct String {
                             int         rhsLength);
     static int lowerCaseCmp(const char         *lhsString,
                             int                 lhsLength,
-                            const bsl::string&  rhsString);
+                            const bsl::string&  rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhsString);
     static int lowerCaseCmp(const bsl::string&  lhsString,
-                            const char         *rhsString);
+                            const char         *rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhsString);
     static int lowerCaseCmp(const bsl::string&  lhsString,
                             const char         *rhsString,
-                            int                 rhsLength);
+                            int                 rhsLength)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhsString);
     static int lowerCaseCmp(const bsl::string& lhsString,
-                            const bsl::string& rhsString);
+                            const bsl::string& rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhsString);
 
     /// Remove all leading whitespace characters from the specified
     /// `string`.  If `string` consists of only whitespace then it will be
@@ -205,10 +221,13 @@ struct String {
     /// `bdlb_stringviewutil` for an identically named method having
     /// similar semantics taking (and returning) `bsl::string_view`.
     static void ltrim(char *string);
-    static void ltrim(bsl::string *string);
-    static void ltrim(std::string *string);
+    static void ltrim(bsl::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
+    static void ltrim(std::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
-    static void ltrim(std::pmr::string *string);
+    static void ltrim(std::pmr::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #endif
 
     /// Remove all leading whitespace characters from the specified `string`
@@ -219,15 +238,18 @@ struct String {
     /// Note that `length` is both an input and output parameter.  See
     /// `bdlb_stringviewutil` for an identically named method having
     /// similar semantics taking (and returning) `bsl::string_view`.
-    static void ltrim(char *string, int *length);
+    static void ltrim(char *string, int *length)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(length);
 
     /// Append repeatedly to the specified `string` the optionally specified
     /// `padChar` until `string` has the specified `length`.  If `padChar`
     /// is not specified the space (` `) character is appended.  This
     /// operation has no effect if `string.size() >= length`.  The behavior
     /// is undefined unless `0 <= length`.
-    static void pad(bsl::string *string, int length, char padChar = ' ');
-    static void pad(std::string *string, int length, char padChar = ' ');
+    static void pad(bsl::string *string, int length, char padChar = ' ')
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
+    static void pad(std::string *string, int length, char padChar = ' ')
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
     /// Append repeatedly to the specified `string` the optionally specified
@@ -236,7 +258,8 @@ struct String {
     /// operation has no effect if `string.size() >= length`.
     static void pad(std::pmr::string            *string,
                     std::pmr::string::size_type  length,
-                    char                         padChar = ' ');
+                    char                         padChar = ' ')
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #endif
 
     /// Remove all trailing whitespace characters from the specified
@@ -246,10 +269,13 @@ struct String {
     /// `bdlb_stringviewutil` for an identically named method having
     /// similar semantics taking (and returning) `bsl::string_view`.
     static void rtrim(char *string);
-    static void rtrim(bsl::string *string);
-    static void rtrim(std::string *string);
+    static void rtrim(bsl::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
+    static void rtrim(std::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
-    static void rtrim(std::pmr::string *string);
+    static void rtrim(std::pmr::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #endif
 
     /// Determine the number of characters that the specified `string`
@@ -258,7 +284,8 @@ struct String {
     /// `string` is *not* modified.  The behavior is undefined unless
     /// `0 <= *length`.  Note that `length` is both an input and output
     /// parameter.
-    static void rtrim(const char *string, int *length);
+    static void rtrim(const char *string, int *length)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(length);
 
     /// Return the address providing non-modifiable access to the first
     /// position in the specified `string` having `stringLen` characters at
@@ -342,10 +369,13 @@ struct String {
     /// `string->size() <= INT_MAX` (if applicable).
     static void toLower(char *string);
     static void toLower(char *string, int length);
-    static void toLower(bsl::string *string);
-    static void toLower(std::string *string);
+    static void toLower(bsl::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
+    static void toLower(std::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
-    static void toLower(std::pmr::string *string);
+    static void toLower(std::pmr::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #endif
 
     /// Replace all lower case characters in the specified `string` having
@@ -354,10 +384,13 @@ struct String {
     /// `string->size() <= INT_MAX` (if applicable).
     static void toUpper(char *string);
     static void toUpper(char *string, int length);
-    static void toUpper(bsl::string *string);
-    static void toUpper(std::string *string);
+    static void toUpper(bsl::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
+    static void toUpper(std::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
-    static void toUpper(std::pmr::string *string);
+    static void toUpper(std::pmr::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #endif
 
     /// Remove all leading and trailing whitespace characters from the
@@ -368,10 +401,13 @@ struct String {
     /// method having similar semantics taking (and returning)
     /// `bsl::string_view`.
     static void trim(char *string);
-    static void trim(bsl::string *string);
-    static void trim(std::string *string);
+    static void trim(bsl::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
+    static void trim(std::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
-    static void trim(std::pmr::string *string);
+    static void trim(std::pmr::string *string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
 #endif
 
     /// Remove all leading and trailing whitespace characters from the
@@ -383,7 +419,8 @@ struct String {
     /// output parameter.  See `bdlb_stringviewutil` for an identically
     /// named method having similar semantics taking (and returning)
     /// `bsl::string_view`.
-    static void trim(char *string, int *length);
+    static void trim(char *string, int *length)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(length);
 
     /// Skip leading and trailing whitespace characters in the string
     /// indicated by the specified `*begin` and `*end` iterators by
@@ -414,7 +451,8 @@ struct String {
                             const char *rhsString,
                             int         rhsLength);
     static int upperCaseCmp(const char         *lhsString,
-                            const bsl::string&  rhsString);
+                            const bsl::string&  rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhsString);
 
     static int upperCaseCmp(const char *lhsString,
                             int         lhsLength,
@@ -425,14 +463,19 @@ struct String {
                             int         rhsLength);
     static int upperCaseCmp(const char         *lhsString,
                             int                 lhsLength,
-                            const bsl::string&  rhsString);
+                            const bsl::string&  rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhsString);
     static int upperCaseCmp(const bsl::string&  lhsString,
-                            const char         *rhsString);
+                            const char         *rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhsString);
     static int upperCaseCmp(const bsl::string&  lhsString,
                             const char         *rhsString,
-                            int                 rhsLength);
+                            int                 rhsLength)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhsString);
     static int upperCaseCmp(const bsl::string& lhsString,
-                            const bsl::string& rhsString);
+                            const bsl::string& rhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhsString)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhsString);
 };
 
 // ============================================================================

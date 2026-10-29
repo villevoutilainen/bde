@@ -192,9 +192,9 @@ struct BitUtil {
     static int log2(unsigned long long value);
 
     /// Return the number of 1 bits in the specified `value`.
-    static int numBitsSet(unsigned int value);
+    static int numBitsSet(unsigned int value) BSLS_KEYWORD_CONVEYOR;
     static int numBitsSet(unsigned long value);
-    static int numBitsSet(unsigned long long value);
+    static int numBitsSet(unsigned long long value) BSLS_KEYWORD_CONVEYOR;
 
     /// Return the number of consecutive 0 bits starting from the
     /// most-significant bit in the specified `value`.
@@ -312,7 +312,7 @@ int BitUtil::log2(unsigned long value)
 }
 
 inline
-int BitUtil::numBitsSet(unsigned int value)
+int BitUtil::numBitsSet(unsigned int value) BSLS_KEYWORD_CONVEYOR
 {
 #if defined(BDLB_BITUTIL_USE_GNU_INTRINSICS)
     return __builtin_popcount(value);
@@ -328,7 +328,7 @@ int BitUtil::numBitsSet(unsigned int value)
 }
 
 inline
-int BitUtil::numBitsSet(unsigned long long value)
+int BitUtil::numBitsSet(unsigned long long value) BSLS_KEYWORD_CONVEYOR
 {
 #if defined(BDLB_BITUTIL_USE_GNU_INTRINSICS)
     return __builtin_popcountll(value);

@@ -98,6 +98,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bdlscm_version.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_string.h>      // 'bsl::basic_string'
 #include <bsl_string_view.h> // 'bsl::basic_string_view'
 
@@ -196,6 +198,7 @@ inline std::size_t
 TransparentStringHash::operator()(
                    const bsl::basic_string<CHAR, TRAITS, ALLOCATOR>& str) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     bsl::basic_string_view<CHAR> sv(str.data(), str.size());
     return bsl::hash<bsl::basic_string_view<CHAR> >().operator()(sv);
 }
@@ -205,6 +208,7 @@ inline std::size_t
 TransparentStringHash::operator()(
                    const std::basic_string<CHAR, TRAITS, ALLOCATOR>& str) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     bsl::basic_string_view<CHAR> sv(str.data(), str.size());
     return bsl::hash<bsl::basic_string_view<CHAR> >().operator()(sv);
 }
@@ -215,6 +219,7 @@ inline std::size_t
 TransparentStringHash::operator()(
                          const std::basic_string_view<CHAR, TRAITS>& str) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     bsl::basic_string_view<CHAR> sv(str.data(), str.size());
     return bsl::hash<bsl::basic_string_view<CHAR> >().operator()(sv);
 }

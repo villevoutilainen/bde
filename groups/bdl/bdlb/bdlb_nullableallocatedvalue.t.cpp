@@ -263,6 +263,7 @@ BSLMF_ASSERT(true == bdlb::HasPrintMethod<NullableString>::value);
     /// Add the specified `value` to the end of the list that contains the
     /// specified `node`.
     void addValueAtEnd(LinkedListNode *node, int value)
+                                        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(node)
     {
         while (!node->d_next.isNull()) {
             node = &node->d_next.value();
@@ -366,6 +367,8 @@ class SwappableSmall {
 /// Return `true` if the specified `lhs` and `rhs` contain the same value,
 /// and `false` otherwise.
 bool operator==(const SwappableSmall& lhs, const SwappableSmall& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
 {
     return lhs.value() == rhs.value();
 }
@@ -373,6 +376,8 @@ bool operator==(const SwappableSmall& lhs, const SwappableSmall& rhs)
 /// Return `true` if the specified `lhs` and `rhs` do not contain the same
 /// value, and `false` otherwise.
 bool operator!=(const SwappableSmall& lhs, const SwappableSmall& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
 {
     return !(lhs == rhs);
 }
@@ -476,11 +481,15 @@ class SwappableLarge {
 
 // FREE OPERATORS
 bool operator==(const SwappableLarge& lhs, const SwappableLarge& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
 {
     return lhs.value() == rhs.value();
 }
 
 bool operator!=(const SwappableLarge& lhs, const SwappableLarge& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
 {
     return !(lhs == rhs);
 }
@@ -575,7 +584,8 @@ class SwappableWithAllocator {
     /// Destroy the object.
     ~SwappableWithAllocator()
     {
-        BSLS_ASSERT_OPT(allocator() == d_string.get_allocator().mechanism());
+        BSLS_ASSERT_OPT_NONCONVEYOR(
+                         allocator() == d_string.get_allocator().mechanism());
     }
 
     // MANIPULATORS
@@ -599,7 +609,7 @@ class SwappableWithAllocator {
 
     /// Return a reference offering non-modifiable access to the string
     /// managed by this object.
-    const bsl::string& string() const
+    const bsl::string& string() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return d_string;
     }
@@ -652,12 +662,16 @@ struct ConstructorThatThrows {
 // FREE OPERATORS
 bool operator==(const SwappableWithAllocator& lhs,
                 const SwappableWithAllocator& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
 {
     return lhs.value() == rhs.value() && lhs.string() == rhs.string();
 }
 
 bool operator!=(const SwappableWithAllocator& lhs,
                 const SwappableWithAllocator& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
 {
     return !(lhs == rhs);
 }
@@ -1675,6 +1689,9 @@ void breathingTest(const TYPE& VA,
                    const TYPE& VC,
                    bool        verbose,
                    bool        veryVerbose)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(VA)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(VB)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(VC)
 {
     typedef TYPE                                    ValueType;
     typedef bdlb::NullableAllocatedValue<ValueType> Obj;
@@ -2744,7 +2761,9 @@ int main(int argc, char *argv[])
 
                     mV = vals[j];
 
-                    ASSERTV(i, j, mV, mX[j], mV == mX[j]);
+                    const Obj& XJ = mX[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&XJ);
+                    ASSERTV(i, j, mV, XJ, mV == XJ);
                 }
             }
         }
@@ -2770,7 +2789,9 @@ int main(int argc, char *argv[])
 
                     mV = vals[j];
 
-                    ASSERTV(i, j, mV, mX[j], mV == mX[j]);
+                    const Obj& XJ = mX[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&XJ);
+                    ASSERTV(i, j, mV, XJ, mV == XJ);
                 }
             }
         }
@@ -2993,7 +3014,9 @@ int main(int argc, char *argv[])
 
             for (int i = 0; i < NUM_VALUES; ++i) {
                 const Obj& X = mX[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 const Obj& W = mW[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&W);
 
                 Obj mY(X);  const Obj& Y = mY;
 
@@ -3028,7 +3051,9 @@ int main(int argc, char *argv[])
 
             for (int i = 0; i < NUM_VALUES; ++i) {
                 const Obj& X = mX[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 const Obj& W = mW[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&W);
 
                 Obj mY(X, ALLOC);  const Obj& Y = mY;
 

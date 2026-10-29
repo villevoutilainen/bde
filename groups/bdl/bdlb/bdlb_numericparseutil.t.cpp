@@ -2827,17 +2827,18 @@ class BriefCallData {
                   Conclusion::Enum        conclusion);
 
     // ACCESSORS
-    Conclusion::Enum conclusion() const;
-    bsl::string_view input()      const;
-    int              line()       const;
+    Conclusion::Enum conclusion() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::string_view input()      const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int              line()       const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the requested data from this object.
-    const Result&    result()     const;
+    const Result&    result()     const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ASPECTS
     friend
     bsl::ostream& operator<<(bsl::ostream& os, const BriefCallData& call)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&call);
         return os << call.d_line << ": " << '"' << call.d_input << "\" => "
                   << call.d_result << " => "
                   << call.d_conclusion;
@@ -2904,12 +2905,22 @@ class ConclusionsMatrix {
         /// `ConclusionsMatrix`.
         void addCall(bool isExpectedResult, bsl::size_t index)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             (isExpectedResult ? d_asExpected : d_unexpected).push_back(index);
         }
 
         // ACCESSORS
-        const CallRefs &asExpectedCalls() const { return d_asExpected; }
-        const CallRefs &unexpectedCalls() const { return d_unexpected; }
+        const CallRefs &asExpectedCalls() const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
+        {
+            return d_asExpected;
+        }
+
+        const CallRefs &unexpectedCalls() const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
+        {
+            return d_unexpected;
+        }
     };
 
     /// Bind the call references to calls just for printing.
@@ -2927,6 +2938,7 @@ class ConclusionsMatrix {
 
         // ACCESSORS
         const Calls::value_type& operator[](bsl::size_t idx) const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
         {
             return d_calls[idx];
         }
@@ -2935,6 +2947,8 @@ class ConclusionsMatrix {
         friend
         bsl::ostream& operator<<(bsl::ostream& os, const CatMapDataBoundRef& r)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&r);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&r.d_catMapData);
             const CallRefs& okidx = r.d_catMapData.asExpectedCalls();
             const CallRefs& noidx = r.d_catMapData.unexpectedCalls();
 
@@ -3001,12 +3015,14 @@ class ConclusionsMatrix {
     // MANIPULATORS
 
     /// Add the specified `call` into the database.
-    void pushBack(const BriefCallData& call);
+    void pushBack(const BriefCallData& call)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ASPECTS
     friend
     bsl::ostream& operator<<(bsl::ostream& os, const ConclusionsMatrix& m)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&m);
         for (CatMap::const_iterator i = m.d_catMap.begin();
                                     i != m.d_catMap.end();
                                   ++i) {
@@ -3314,60 +3330,70 @@ class LapTimes {
     }
 
     // MANIPULATORS
-    void recordWarmupStartTime() {
+    void recordWarmupStartTime() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         d_warmupStartTime = bsls::SystemTime::nowMonotonicClock();
     }
 
-    void recordWarmupLapTimes(const bsls::Stopwatch& lapWatch) {
+    void recordWarmupLapTimes(const bsls::Stopwatch& lapWatch)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         d_warmupLapTimesList.emplace_back(lapWatch);
     }
 
-    void recordWarmupFullTimes(const bsls::Stopwatch& fullWatch) {
+    void recordWarmupFullTimes(const bsls::Stopwatch& fullWatch)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         d_warmupFullTimes.set(fullWatch);
     }
 
-    void recordMeasuringStartTime() {
+    void recordMeasuringStartTime() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         d_measuringStartTime = bsls::SystemTime::nowMonotonicClock();
     }
 
-    void recordMeasuredLapTimes(const bsls::Stopwatch& lapWatch) {
+    void recordMeasuredLapTimes(const bsls::Stopwatch& lapWatch)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         d_measuredLapTimesList.emplace_back(lapWatch);
     }
 
-    void recordMeasuredFullTimes(const bsls::Stopwatch& fullWatch) {
+    void recordMeasuredFullTimes(const bsls::Stopwatch& fullWatch)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         d_measuringFullTime.set(fullWatch);
     }
 
-    void recordMeasuringEndTime() {
+    void recordMeasuringEndTime() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         d_measuringEndTime = bsls::SystemTime::nowMonotonicClock();
     }
 
     // ACCESSORS
-    double warmupStartTime() const {
+    double warmupStartTime() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         return d_warmupStartTime.totalSecondsAsDouble();
     }
 
-    const LapTimesList& warmupLapTimesList() const {
+    const LapTimesList& warmupLapTimesList() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                       BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF {
         return d_warmupLapTimesList;
     }
 
-    const LapTimesDatum& warmupFullTimes() const {
+    const LapTimesDatum& warmupFullTimes() const
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         return d_warmupFullTimes;
     }
 
-    double measuringStartTime() const {
+    double measuringStartTime() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         return d_measuringStartTime.totalSecondsAsDouble();
     }
 
-    const LapTimesList& measuredLapTimesList() const {
+    const LapTimesList& measuredLapTimesList() const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                       BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF {
         return d_measuredLapTimesList;
     }
 
-    double measuringEndTime() const {
+    double measuringEndTime() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         return d_measuringEndTime.totalSecondsAsDouble();
     }
 
-    const LapTimesDatum& measuringFullTime() const {
+    const LapTimesDatum& measuringFullTime() const
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS {
         return d_measuringFullTime;
     }
 };
@@ -3386,6 +3412,7 @@ class TimerRecorder {
     explicit TimerRecorder(LapTimes *results)
     : d_lapTimes(*results)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(results);
         BSLS_ASSERT(results);
 
         ASSERTV(results->measuredLapTimesList().size(),
@@ -3397,6 +3424,8 @@ class TimerRecorder {
 
     // MANIPULATORS
     void startWarmup() {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_lapTimes);
         d_lapTimes.recordWarmupStartTime();
         d_sumWatch.start(bsls::Stopwatch::k_COLLECT_WALL_AND_CPU_TIMES);
     }
@@ -3406,16 +3435,22 @@ class TimerRecorder {
     }
 
     void recordWarmupLap() {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_lapTimes);
         d_lapTimes.recordWarmupLapTimes(d_stopWatch);
         d_stopWatch.reset();
     }
 
     void stopWarmup() {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_lapTimes);
         d_sumWatch.stop();
         d_lapTimes.recordWarmupFullTimes(d_sumWatch);
     }
 
     void startMeasuring() {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_lapTimes);
         d_lapTimes.recordMeasuringStartTime();
         d_sumWatch.start(bsls::Stopwatch::k_COLLECT_WALL_AND_CPU_TIMES);
     }
@@ -3425,11 +3460,15 @@ class TimerRecorder {
     }
 
     void recordMeasuredLap() {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_lapTimes);
         d_lapTimes.recordMeasuredLapTimes(d_stopWatch);
         d_stopWatch.reset();
     }
 
     void stopMeasuring() {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_lapTimes);
         d_sumWatch.stop();
         d_lapTimes.recordMeasuredFullTimes(d_sumWatch);
         d_lapTimes.recordMeasuringEndTime();
@@ -3560,6 +3599,7 @@ void measure(LapTimes                             *results,
              int                                   numWarmupLaps,
              int                                   numMeasuredLaps)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&inputs);
     const bsl::size_t NUM_INPUTS = inputs.size();
 
     bsl::cout << "Starting warmup laps...\n";
@@ -3642,6 +3682,7 @@ void writeReport(bsl::streambuf          *outputStreamHandle,
                  bsl::size_t              numData,
                  const LapTimes&          lapTimes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lapTimes);
     BSLS_ASSERT(outputStreamHandle);
     BSLS_ASSERT(utcStartTime);
     ASSERTV(lapTimes.measuredLapTimesList().size(),
@@ -3783,6 +3824,7 @@ void runBenchmark(bsl::fstream                         *reportFile,
                   unsigned                              numWarmupLaps,
                   unsigned                              numMeasuredLaps)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&inputs);
     LapTimes lapTimes(numWarmupLaps, numMeasuredLaps);
 
     // Save the time before we measure
@@ -3862,7 +3904,7 @@ void benchmarkParseDouble_OnFile(const char *inputFilename,
     openReportFile(&reportFile);
 
     BSLS_ASSERT(inputFilename);
-    BSLS_ASSERT(inputFilename[0]);
+    BSLS_ASSERT_NONCONVEYOR(inputFilename[0]);
 
     bsl::ifstream inputs;
     const bool isDash = ('-' == inputFilename[0] && '\0' == inputFilename[1]);

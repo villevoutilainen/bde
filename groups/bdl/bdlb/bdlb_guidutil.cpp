@@ -142,7 +142,7 @@ void makeRfc4122Compliant(unsigned char *bytes, const unsigned char *end)
 {
     BSLS_ASSERT(bytes);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(bytes <= end);
+    BSLS_ASSERT_NONCONVEYOR(bytes <= end);
     BSLS_ASSERT(0 == (end - bytes) % Guid::k_GUID_NUM_BYTES);
 
     typedef unsigned char Uchar;

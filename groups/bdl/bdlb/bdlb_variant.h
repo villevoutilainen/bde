@@ -1777,7 +1777,8 @@ class VariantImp : public VariantImp_Traits<TYPES>::BaseType {
     /// template arguments was chosen so that `TYPE` must always be
     /// specified.
     template <class TYPE, class... ARGS>
-    TYPE& createInPlace(ARGS&&... arguments);
+    TYPE& createInPlace(ARGS&&... arguments)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
 
     /// Destroy the current value held by this variant (if any), and reset
@@ -1798,7 +1799,8 @@ class VariantImp : public VariantImp_Traits<TYPES>::BaseType {
     /// is not `void`.  Note that `TYPE` must be specified explicitly, e.g.,
     /// `myValue.the<int>()`.
     template <class TYPE>
-    TYPE& the();
+    TYPE& the()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2144,7 +2146,8 @@ class VariantImp : public VariantImp_Traits<TYPES>::BaseType {
     /// is not `void`.  Note that `TYPE` must be specified explicitly, e.g.,
     /// `myValue.the<int>()`.
     template <class TYPE>
-    const TYPE& the() const;
+    const TYPE& the() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the index in the list of `TYPES` corresponding to the type of
     /// the value currently held by this variant object (starting at 1), or
@@ -6219,6 +6222,7 @@ struct Variant_PrintVisitor {
     template <class TYPE>
     void operator()(const TYPE& value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         PrintMethods::print(*d_stream_p, value, d_level, d_spacesPerLevel);
     }
 
@@ -6256,7 +6260,9 @@ struct Variant_EqualityTestVisitor {
     template <class TYPE>
     void operator()(const TYPE& value) const
     {
-        d_result = *reinterpret_cast<const TYPE *>(d_buffer_p) == value;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+        d_result = BSLS_ASSERT_CONVEYOR_REF(
+                          *reinterpret_cast<const TYPE *>(d_buffer_p)) == value;
     }
 
     void operator()(bslmf::Nil) const

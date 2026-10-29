@@ -159,8 +159,9 @@ typedef bdlb::IndexSpanUtil Util;
     bslstl::StringRef bindSpan(const bslstl::StringRef& full,
                                const bdlb::IndexSpan&   part)
     {
-        BSLS_ASSERT(part.position() <= full.length());
-        BSLS_ASSERT(part.position() + part.length() <= full.length());
+        BSLS_ASSERT_NONCONVEYOR(part.position() <= full.length());
+        BSLS_ASSERT_NONCONVEYOR(
+                             part.position() + part.length() <= full.length());
 
         return bslstl::StringRef(full.data() + part.position(), part.length());
     }
@@ -169,7 +170,7 @@ typedef bdlb::IndexSpanUtil Util;
 // ```
     bslstl::StringRef ParsedUrl::getIPv6Host() const
     {
-        BSLS_ASSERT(isIPv6Host());
+        BSLS_ASSERT_NONCONVEYOR(isIPv6Host());
 
         return bindSpan(d_url, bdlb::IndexSpanUtil::shrink(d_host, 1, 1));
     }
@@ -271,6 +272,7 @@ int main(int argc, char *argv[])
 
         for (bsl::size_t i = 0; i < k_NUM_TESTS; ++i) {
             const TestData&   k_TEST = k_DATA[i];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k_TEST);
             const long long   k_LINE         = k_TEST.d_line;
             const bsl::size_t k_POS          = k_TEST.d_pos;
             const bsl::size_t k_LEN          = k_TEST.d_len;

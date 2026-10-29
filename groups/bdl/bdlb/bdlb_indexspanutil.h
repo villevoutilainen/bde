@@ -149,7 +149,7 @@ IndexSpan IndexSpanUtil::shrink(const IndexSpan&     original,
                                 IndexSpan::size_type shrinkBegin,
                                 IndexSpan::size_type shrinkEnd)
 {
-    BSLS_ASSERT(shrinkBegin + shrinkEnd <= original.length());
+    BSLS_ASSERT_NONCONVEYOR(shrinkBegin + shrinkEnd <= original.length());
 
     return IndexSpan(original.position() + shrinkBegin,
                      original.length() - (shrinkBegin + shrinkEnd));

@@ -262,6 +262,8 @@ void testHashString()
         template <class LHS, class RHS>
         bool operator()(const LHS& lhs, const RHS& rhs) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
             return lhs == rhs;
         }
     };
