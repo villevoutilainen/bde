@@ -157,6 +157,7 @@ BSLS_IDENT("$Id: $")
 #include <bslma_bslallocator.h>
 
 #include <bsls_alignmentutil.h>
+#include <bsls_assert.h>
 #include <bsls_libraryfeatures.h>
 
 #include <iterator>
@@ -519,7 +520,8 @@ class TestValuesArray {
     /// Return a reference providing non-modifiable access to the element at
     /// the specified `index`.  The behavior is undefined unless
     /// `0 < size() && index < size()`.
-    const VALUE& operator[](size_t index) const;
+    const VALUE& operator[](size_t index) const
+                                       BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return number of elements in this container.
     size_t size() const;

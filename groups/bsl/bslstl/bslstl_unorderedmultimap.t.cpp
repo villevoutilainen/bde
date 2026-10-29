@@ -5498,6 +5498,7 @@ void testContainerHasData(const CONTAINER&                      x,
                  x.size() == nCopies * size);
 
     for (SizeType i = 0; i != size; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&data[i]);
         TestIterator it = x.find(keyForValue<CONTAINER>(data[i]));
         ASSERT(x.end() != it);
         ASSERT(*it == data[i]);
@@ -5532,6 +5533,7 @@ void fillContainerWithData(CONTAINER&                            x,
     ASSERT(x.size() == initialSize + size);
 
     for (size_t i = 0; i != size; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&data[i]);
         typename TestType::iterator it =
                                        x.find(keyForValue<CONTAINER>(data[i]));
         ASSERT(x.end() != it);

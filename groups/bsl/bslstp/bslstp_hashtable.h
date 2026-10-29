@@ -713,7 +713,9 @@ hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>::_M_equal(
   for (size_t __n = 0; __n < __ht1.bucket_count(); ++__n) {
     const _Node* __cur1 = __ht1._M_get_bucket(__n);
     const _Node* __cur2 = __ht2._M_get_bucket(__n);
-    for ( ; __cur1 && __cur2 && __cur1->_M_val == __cur2->_M_val;
+    for ( ; __cur1 && __cur2 &&
+            BSLS_ASSERT_CONVEYOR_REF(__cur1->_M_val) ==
+                                      BSLS_ASSERT_CONVEYOR_REF(__cur2->_M_val);
           __cur1 = __cur1->_M_next, __cur2 = __cur2->_M_next)
       {}
     if (__cur1 || __cur2)

@@ -301,6 +301,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_usesallocatorargt.h>
 #include <bslmf_util.h>
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_keyword.h>
 #include <bsls_libraryfeatures.h>
@@ -1757,7 +1758,8 @@ pair(std::pair<T1, T2>, ALLOC *) -> pair<T1, T2>;
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator==(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
+bool operator==(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #if !defined(BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON)
 /// Return true if the specified `lhs` and `rhs` pair objects do not have
@@ -1767,7 +1769,8 @@ bool operator==(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator!=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
+bool operator!=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 #endif
 
 #if defined(BSLALG_SYNTHTHREEWAYUTIL_AVAILABLE)
@@ -1780,7 +1783,8 @@ constexpr
 std::common_comparison_category_t<
     BloombergLP::bslalg::SynthThreeWayUtil::Result<T1>,
     BloombergLP::bslalg::SynthThreeWayUtil::Result<T2>
-> operator<=>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
+> operator<=>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #else
 
@@ -1794,7 +1798,8 @@ std::common_comparison_category_t<
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator<(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
+bool operator<(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return true if the specified `lhs` has a value greater than the
 /// specified `rhs` and false otherwise.  `lhs` has a value greater than
@@ -1803,7 +1808,8 @@ bool operator<(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
+bool operator>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return true if the specified `lhs` has a value less than or equal to the
 /// specified `rhs` and false otherwise.  `lhs` has a value less than or
@@ -1812,7 +1818,8 @@ bool operator>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator<=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
+bool operator<=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return true if the specified `lhs` has a value greater than or equal to
 /// the specified `rhs` and false otherwise.  `lhs` has a value greater than
@@ -1821,7 +1828,8 @@ bool operator<=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator>=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
+bool operator>=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
+         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 #endif  // BSLALG_SYNTHTHREEWAYUTIL_AVAILABLE
 
@@ -1991,7 +1999,7 @@ namespace bsl {
 /// is either 0 or 1.
 template<std::size_t INDEX, class T1, class T2>
 typename std::tuple_element<INDEX, bsl::pair<T1, T2> >::type&
-get(bsl::pair<T1, T2>& p) noexcept;
+get(bsl::pair<T1, T2>& p) noexcept BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 /// Return a reference providing non-modifiable access to the element of the
 /// specified `p`, having the ordinal number specified by the (template
@@ -1999,7 +2007,8 @@ get(bsl::pair<T1, T2>& p) noexcept;
 /// is either 0 or 1.
 template<std::size_t INDEX, class T1, class T2>
 const typename std::tuple_element<INDEX, bsl::pair<T1, T2> >::type&
-get(const bsl::pair<T1, T2>& p) noexcept;
+get(const bsl::pair<T1, T2>& p) noexcept
+    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 /// Return a rvalue reference providing modifiable access to the element of
 /// the specified `p`, having the ordinal number specified by the (template
@@ -2007,35 +2016,39 @@ get(const bsl::pair<T1, T2>& p) noexcept;
 /// is either 0 or 1.
 template<std::size_t INDEX, class T1, class T2>
 typename std::tuple_element<INDEX, bsl::pair<T1, T2> >::type&&
-get(bsl::pair<T1, T2>&& p) noexcept;
+get(bsl::pair<T1, T2>&& p) noexcept BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 /// Return a reference providing modifiable access to the element of the
 /// specified `p`, having the (template parameter) `TYPE`.  This function
 /// will not compile unless the types `T1` and `T2` are different and the
 /// `TYPE` is the same as either `T1` or `T2`.
 template<class TYPE, class T1, class T2>
-TYPE& get(bsl::pair<T1, T2>& p) noexcept;
+TYPE& get(bsl::pair<T1, T2>& p) noexcept
+    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 /// Return a reference providing non-modifiable access to the element of the
 /// specified `p`, having the (template parameter) `TYPE`.  This function
 /// will not compile unless the types `T1` and `T2` are different and the
 /// `TYPE` is the same as either `T1` or `T2`.
 template<class TYPE, class T1, class T2>
-const TYPE& get(const bsl::pair<T1, T2>& p) noexcept;
+const TYPE& get(const bsl::pair<T1, T2>& p) noexcept
+    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 /// Return a rvalue reference providing modifiable access to the element of
 /// the specified `p`, having the (template parameter) `TYPE`.  This
 /// function will not compile unless the types `T1` and `T2` are different
 /// and the `TYPE` is the same as either `T1` or `T2`.
 template<class TYPE, class T1, class T2>
-TYPE&& get(bsl::pair<T1, T2>&& p) noexcept;
+TYPE&& get(bsl::pair<T1, T2>&& p) noexcept
+    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 /// Return a rvalue reference providing non-modifiable access to the element
 /// of the specified `p`, having the (template parameter) `TYPE`.  This
 /// function will not compile unless the types `T1` and `T2` are different
 /// and the `TYPE` is the same as either `T1` or `T2`.
 template<class TYPE, class T1, class T2>
-const TYPE&& get(const bsl::pair<T1, T2>&& p) noexcept;
+const TYPE&& get(const bsl::pair<T1, T2>&& p) noexcept
+    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 }  // close bsl namespace
 

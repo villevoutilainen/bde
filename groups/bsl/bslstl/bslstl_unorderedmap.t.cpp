@@ -10156,6 +10156,7 @@ void testContainerHasData(const CONTAINER&                      x,
     ASSERT(x.size() == nCopies * size);
 
     for (SizeType i = 0; i != size; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&data[i]);
         TestIterator it = x.find(keyForValue<CONTAINER>(data[i]));
         ASSERT(x.end() != it);
         ASSERT(*it == data[i]);
@@ -11232,6 +11233,7 @@ int main(int argc, char *argv[])
         if (veryVerbose) printf("Try to fill `x` with duplicate values\n");
 
         for (int i = 0; i != MAX_SAMPLE; ++i) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dataSamples[i]);
             typedef pair<TestType::iterator, bool> InsertResult;
             InsertResult iterBool = mX.insert(dataSamples[i]);
             ASSERT(!iterBool.second); // Already inserted with initial value
@@ -11247,6 +11249,7 @@ int main(int argc, char *argv[])
         if (veryVerbose) printf("Fill `y` with the same values as `x`\n");
 
         for (int i = 0; i != MAX_SAMPLE; ++i) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dataSamples[i]);
             typedef pair<TestType::iterator, bool> InsertResult;
             InsertResult iterBool = mY.insert(dataSamples[i]);
             ASSERT(iterBool.second); // Already inserted with initial value

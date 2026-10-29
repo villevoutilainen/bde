@@ -4833,8 +4833,10 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::hasSameValue(
         // comparator stored in the hash table.
 
         while (cursor != endRange &&
-                 (ImpUtil::extractValue<KEY_CONFIG>(cursor) ==
-                  ImpUtil::extractValue<KEY_CONFIG>(rhsFirst)))
+                 (BSLS_ASSERT_CONVEYOR_REF(
+                         ImpUtil::extractValue<KEY_CONFIG>(cursor)) ==
+                  BSLS_ASSERT_CONVEYOR_REF(
+                          ImpUtil::extractValue<KEY_CONFIG>(rhsFirst))))
         {
             cursor   = cursor->nextLink();
             rhsFirst = rhsFirst->nextLink();
@@ -4862,14 +4864,16 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::hasSameValue(
              marker = marker->nextLink())
         {
             const ValueType& valueAtMarker =
-                                    ImpUtil::extractValue<KEY_CONFIG>(marker);
+                                    BSLS_ASSERT_CONVEYOR_REF(
+                                    ImpUtil::extractValue<KEY_CONFIG>(marker));
 
             if (cursor != marker) {  // skip on first pass only
                 // Check if the value at 'marker' has already be seen.
 
                 bslalg::BidirectionalLink *scanner = cursor;
                 while (scanner != marker &&
-                 ImpUtil::extractValue<KEY_CONFIG>(scanner) != valueAtMarker) {
+                 BSLS_ASSERT_CONVEYOR_REF(
+                ImpUtil::extractValue<KEY_CONFIG>(scanner)) != valueAtMarker) {
                     scanner = scanner->nextLink();
                 }
                 if (scanner != marker) {  // We have seen 'lhs' one before.
@@ -4881,7 +4885,8 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::hasSameValue(
             for (bslalg::BidirectionalLink *scanner = rhsFirst;
                  scanner != rhsLast;
                  scanner = scanner->nextLink()) {
-                if (ImpUtil::extractValue<KEY_CONFIG>(scanner) ==
+                if (BSLS_ASSERT_CONVEYOR_REF(
+                        ImpUtil::extractValue<KEY_CONFIG>(scanner)) ==
                                                                valueAtMarker) {
                     ++matches;
                 }
@@ -4896,7 +4901,8 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::hasSameValue(
                  scanner != endRange;
                  scanner = scanner->nextLink()) {
 
-                if (ImpUtil::extractValue<KEY_CONFIG>(scanner) ==
+                if (BSLS_ASSERT_CONVEYOR_REF(
+                        ImpUtil::extractValue<KEY_CONFIG>(scanner)) ==
                                                                valueAtMarker) {
                     if (!--matches) {  // equal matches, but excluding initial
                         return false;                                 // RETURN

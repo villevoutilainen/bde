@@ -461,6 +461,7 @@ struct AllocatorMatchesImp<TYPE, 1> {
     bool operator()(const TYPE&       object,
                     bslma::Allocator *alloc) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&object);
         bool ret;
         ASSERTV(NameOf<TYPE>(), (ret = alloc == object.allocator()));
 
