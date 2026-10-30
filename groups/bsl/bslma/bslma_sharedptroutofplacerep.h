@@ -770,7 +770,9 @@ void SharedPtrOutofplaceRep_DeleterHelper::deleteObject(
                    DELETER&  deleter,
                    bsl::integral_constant<int, DeleterType::BSLMA_FACTORY_PTR>)
 {
-    deleter->deleteObject(ptr);
+    DELETER factory = deleter;
+    BSLS_ASSERT_CONVEYOR_OBJECT(factory);
+    factory->deleteObject(ptr);
 }
 
 template <class TYPE, class DELETER>

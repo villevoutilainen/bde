@@ -2109,7 +2109,9 @@ int SkipList<KEY, DATA>::addNodeUnique(bool *newFrontFlag, Node *newNode)
     lookupImpLowerBound(location, newNode->d_key);
 
     Node *q = location[0];
-    if (q != d_tail_p && q->d_key == newNode->d_key) {
+    if (q != d_tail_p &&
+        BSLS_ASSERT_CONVEYOR_REF(q->d_key) ==
+                                  BSLS_ASSERT_CONVEYOR_REF(newNode->d_key)) {
         return e_DUPLICATE;                                           // RETURN
     }
 
@@ -2131,7 +2133,9 @@ int SkipList<KEY, DATA>::addNodeUniqueR(bool *newFrontFlag, Node *newNode)
     lookupImpLowerBoundR(location, newNode->d_key);
 
     Node *q = location[0];
-    if (q != d_tail_p && q->d_key == newNode->d_key) {
+    if (q != d_tail_p &&
+        BSLS_ASSERT_CONVEYOR_REF(q->d_key) ==
+                                  BSLS_ASSERT_CONVEYOR_REF(newNode->d_key)) {
         return e_DUPLICATE;                                           // RETURN
     }
 
@@ -2443,7 +2447,8 @@ int SkipList<KEY, DATA>::updateNode(bool       *newFrontFlag,
 
     if (!allowDuplicates) {
         Node *q = location[0];
-        if (q != d_tail_p && q != node && q->d_key == newKey) {
+        if (q != d_tail_p && q != node &&
+                               BSLS_ASSERT_CONVEYOR_REF(q->d_key) == newKey) {
             return e_DUPLICATE;                                       // RETURN
         }
     }
@@ -2476,7 +2481,8 @@ int SkipList<KEY, DATA>::updateNodeR(bool       *newFrontFlag,
     if (!allowDuplicates) {
         lookupImpLowerBoundR(location, newKey);
         Node *p = location[0];
-        if (p != d_tail_p && p != node && p->d_key == newKey) {
+        if (p != d_tail_p && p != node &&
+                               BSLS_ASSERT_CONVEYOR_REF(p->d_key) == newKey) {
             return e_DUPLICATE;                                       // RETURN
         }
     }
@@ -2542,13 +2548,14 @@ void SkipList<KEY, DATA>::checkInvariants() const
 template<class KEY, class DATA>
 SkipList_Node<KEY, DATA> *SkipList<KEY, DATA>::findNode(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     Node *locator[k_MAX_NUM_LEVELS];
 
     LockGuard guard(&d_lock);
     lookupImpLowerBound(locator, key);
 
     Node *q = locator[0];
-    if (q != d_tail_p && q->d_key == key) {
+    if (q != d_tail_p && BSLS_ASSERT_CONVEYOR_REF(q->d_key) == key) {
         ++q->d_refCount;
         return q;                                                     // RETURN
     }
@@ -2567,7 +2574,7 @@ SkipList_Node<KEY, DATA> *SkipList<KEY, DATA>::findNodeR(const KEY& key) const
     Node *p = locator[0];
     if (d_head_p != p) {
         p = p->d_ptrs[0].d_prev_p;
-        if (d_head_p != p && key == p->d_key) {
+        if (d_head_p != p && key == BSLS_ASSERT_CONVEYOR_REF(p->d_key)) {
             ++p->d_refCount;
             return p;                                                 // RETURN
         }
@@ -2687,7 +2694,7 @@ void SkipList<KEY, DATA>::lookupImpLowerBoundR(Node       *location[],
     Node *q = d_tail_p;
     for (int k = d_listLevel; k >= 0; --k) {
         Node *p = q->d_ptrs[k].d_prev_p;
-        while (p != d_head_p && !(p->d_key < key)) {
+        while (p != d_head_p && !(BSLS_ASSERT_CONVEYOR_REF(p->d_key) < key)) {
             q = p;
             p = p->d_ptrs[k].d_prev_p;
         }
@@ -2701,10 +2708,11 @@ template<class KEY, class DATA>
 void SkipList<KEY, DATA>::lookupImpUpperBound(Node       *location[],
                                               const KEY&  key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     Node *p = d_head_p;
     for (int k = d_listLevel; k >= 0; --k) {
         Node *q = p->d_ptrs[k].d_next_p;
-        while (q != d_tail_p && !(key < q->d_key)) {
+        while (q != d_tail_p && !(key < BSLS_ASSERT_CONVEYOR_REF(q->d_key))) {
             p = q;
             q = p->d_ptrs[k].d_next_p;
         }
@@ -3380,7 +3388,7 @@ bool SkipList<KEY, DATA>::exists(const KEY& key) const
     lookupImpLowerBound(locator, key);
 
     Node *q = locator[0];
-    if (q != d_tail_p && q->d_key == key) {
+    if (q != d_tail_p && BSLS_ASSERT_CONVEYOR_REF(q->d_key) == key) {
         return true;                                                  // RETURN
     }
 

@@ -206,6 +206,7 @@ struct MemFn_Dereference {
     template <class TYPE>
     static inline OBJTYPE& derefImp(const TYPE& obj, bsl::true_type *)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return *obj;
     }
 
