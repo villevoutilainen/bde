@@ -611,6 +611,7 @@ void verifyStack(const stack<typename CONTAINER::value_type,
                  const int                LINE,
                  bslma::Allocator         *allocator = 0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&expectedValues);
     stack<typename CONTAINER::value_type, CONTAINER>
                                 copyX(X, bslma::Default::allocator(allocator));
     emptyNVerifyStack(&copyX, expectedValues, expectedSize, LINE);
@@ -6338,12 +6339,12 @@ void TestDriver<CONTAINER>::testCase1_NoAlloc(int    *testValues,
                             size_t xIndex = (i + length) % numValues;
                             size_t yIndex = (j + length) % numValues;
 
-                            x.push(      testValues[xIndex]);
-                            xx.push_back(testValues[xIndex]);
+                            x.push(      BSLS_ASSERT_CONVEYOR_REF(testValues[xIndex]));
+                            xx.push_back(BSLS_ASSERT_CONVEYOR_REF(testValues[xIndex]));
 
                             if (k < m) {
-                                y.push(      testValues[yIndex]);
-                                yy.push_back(testValues[yIndex]);
+                                y.push(      BSLS_ASSERT_CONVEYOR_REF(testValues[yIndex]));
+                                yy.push_back(BSLS_ASSERT_CONVEYOR_REF(testValues[yIndex]));
                             }
                         }
 
@@ -6566,12 +6567,12 @@ void TestDriver<CONTAINER>::testCase1(int    *testValues,
                             size_t xIndex = (i + length) % numValues;
                             size_t yIndex = (j + length) % numValues;
 
-                            x.push(      testValues[xIndex]);
-                            xx.push_back(testValues[xIndex]);
+                            x.push(      BSLS_ASSERT_CONVEYOR_REF(testValues[xIndex]));
+                            xx.push_back(BSLS_ASSERT_CONVEYOR_REF(testValues[xIndex]));
 
                             if (k < m) {
-                                y.push(      testValues[yIndex]);
-                                yy.push_back(testValues[yIndex]);
+                                y.push(      BSLS_ASSERT_CONVEYOR_REF(testValues[yIndex]));
+                                yy.push_back(BSLS_ASSERT_CONVEYOR_REF(testValues[yIndex]));
                             }
                         }
 

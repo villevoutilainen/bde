@@ -500,6 +500,7 @@ int ThroughputBenchmark::numThreadGroups() const
 inline
 int ThroughputBenchmark::numThreadsInGroup(int threadGroupIndex) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0                 <= threadGroupIndex);
     BSLS_ASSERT_NONCONVEYOR(numThreadGroups() >  threadGroupIndex);
 

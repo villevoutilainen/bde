@@ -290,6 +290,7 @@ void verifyParsedState(const FormatSpecificationParser<t_CHAR>&  parser,
                        const TestSpecificationGenerator<t_CHAR>& generator,
                        const Enums::Sections                     sections)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     const char * const SPEC = generator.spec().c_str();
     ASSERTV(SPEC, Enums::e_STATE_PARSED == parser.processingState());
 
@@ -587,6 +588,7 @@ void verifyPostprocessedState(
                            int                                       arg1,
                            int                                       arg2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     const t_CHAR * const SPEC = generator.spec().c_str();
     ASSERTV(SPEC, Enums::e_STATE_POSTPROCESSED == parser.processingState());
 

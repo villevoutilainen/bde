@@ -5579,6 +5579,7 @@ void TestDriver<VALUE, CONTAINER, COMPARATOR>::testCase1_NoAlloc(
                                                   const VALUE      *testValues,
                                                   size_t            numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(testValues);
     // --------------------------------------------------------------------
     // BREATHING TEST:
     //   This case exercises (but does not fully test) basic functionality.
@@ -5662,8 +5663,8 @@ void TestDriver<VALUE, CONTAINER, COMPARATOR>::testCase1_NoAlloc(
     if (veryVerbose) printf("\n 5) Append two more elements B,C to x2)."
                             "\t\t{ x1:A x2:ABC }\n");
 
-    mX2.push(testValues[1]);
-    mX2.push(testValues[2]);
+    mX2.push(BSLS_ASSERT_CONVEYOR_REF(testValues[1]));
+    mX2.push(BSLS_ASSERT_CONVEYOR_REF(testValues[2]));
 
     int maxIndex;
     if (comparator(testValues[0], testValues[1]))
@@ -5740,6 +5741,7 @@ void TestDriver<VALUE, CONTAINER, COMPARATOR>::testCase1(
                                                   const VALUE      *testValues,
                                                   size_t            numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(testValues);
     // --------------------------------------------------------------------
     // BREATHING TEST:
     //   This case exercises (but does not fully test) basic functionality.
@@ -5825,8 +5827,8 @@ void TestDriver<VALUE, CONTAINER, COMPARATOR>::testCase1(
     if (veryVerbose) printf("\n 5) Append two more elements B,C to x2)."
                             "\t\t{ x1:A x2:ABC }\n");
 
-    mX2.push(testValues[1]);
-    mX2.push(testValues[2]);
+    mX2.push(BSLS_ASSERT_CONVEYOR_REF(testValues[1]));
+    mX2.push(BSLS_ASSERT_CONVEYOR_REF(testValues[2]));
 
     int maxIndex;
     if (comparator(testValues[0], testValues[1]))

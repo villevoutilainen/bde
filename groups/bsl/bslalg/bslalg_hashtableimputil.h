@@ -598,7 +598,8 @@ struct HashTableImpUtil {
     /// ```
     template<class KEY_CONFIG>
     static typename HashTableImpUtil_ExtractKeyResult<KEY_CONFIG>::Type
-                                           extractKey(BidirectionalLink *link);
+                                            extractKey(BidirectionalLink *link)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// value (of type `KEY_CONFIG::ValueType`) held by the specified

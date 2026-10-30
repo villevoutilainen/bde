@@ -799,10 +799,12 @@ void testErase(CONTAINER& mX)
     cIter = x.begin();
     key = keyForValue<CONTAINER>(*cIter);
     const_iterator next = cIter;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
     while (key == keyForValue<CONTAINER>(*++next)) {
         cIter = next;
     }
     key = keyForValue<CONTAINER>(*next);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
     while (key == keyForValue<CONTAINER>(*++next)) {}
     // cIter/next now point to elements either side of a key-range
     // confirm they are not in the same bucket:
@@ -824,10 +826,12 @@ void testErase(CONTAINER& mX)
     cIter = x.begin();
     key = keyForValue<CONTAINER>(*cIter);
     next = cIter;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
     while (key == keyForValue<CONTAINER>(*++next)) {
         cIter = next;
     }
     key = keyForValue<CONTAINER>(*next);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
     while (key == keyForValue<CONTAINER>(*++next)) {}
     ++next;
     // cIter/next now point to elements either side of a key-range
@@ -5176,7 +5180,7 @@ int main(int argc, char *argv[])
 
         for (int i = 0; i != MAX_SAMPLE; ++i) {
             LOOP_ASSERT(i, 1 == X.count(BSLS_ASSERT_CONVEYOR_REF(dataSamples[i])));
-            TestType::iterator it = mX.insert(dataSamples[i]);
+            TestType::iterator it = mX.insert(BSLS_ASSERT_CONVEYOR_REF(dataSamples[i]));
             ASSERT(X.end() != it);
             ASSERT(*it == dataSamples[i]);
             LOOP_ASSERT(i, 2 == X.count(BSLS_ASSERT_CONVEYOR_REF(dataSamples[i])));

@@ -3910,7 +3910,8 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>&
 operator<<(std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>&          os,
            const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& str)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str)
+                                            BSLS_ASSERT_CONVEYOR_TRUST_PRE(os);
 
 /// Replace the contents of the specified `str` string with a word read from
 /// the specified `is` input stream, and return `is`.  The word begins at
@@ -3925,7 +3926,8 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&
 operator>>(std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&     is,
            basic_string<CHAR_TYPE,CHAR_TRAITS, ALLOCATOR>& str)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str)
+                                            BSLS_ASSERT_CONVEYOR_TRUST_PRE(is);
 
 #if defined (BSLS_LIBRARYFEATURES_HAS_CPP11_BASELINE_LIBRARY) && \
     defined (BSLS_COMPILERFEATURES_SUPPORT_INLINE_NAMESPACE)

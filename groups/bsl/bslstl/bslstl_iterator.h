@@ -488,7 +488,8 @@ class reverse_iterator :
     /// iterator.  The behavior is undefined if, on entry, this reverse
     /// iterator has the past-the-end value for a reverse iterator over the
     /// underlying sequence.
-    reverse_iterator& operator++();
+    reverse_iterator& operator++()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Increment to the next element in the reverse iteration sequence and
     /// return a reverse iterator having the pre-increment value of this
@@ -510,7 +511,8 @@ class reverse_iterator :
     /// iterator.  The behavior is undefined if, on entry, this reverse
     /// iterator has the same value as a reverse iterator to the start of the
     /// underlying sequence.
-    reverse_iterator& operator--();
+    reverse_iterator& operator--()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Decrement to the previous element in the reverse iteration sequence and
     /// return a reverse iterator having the pre-decrement value of this

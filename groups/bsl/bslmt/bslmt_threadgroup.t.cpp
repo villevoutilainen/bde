@@ -255,6 +255,7 @@ class SynchronizedAddJob {
 
     void operator()()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_start_p->lock();
         d_start_p->unlock();
         BSLS_ASSERT_CONVEYOR_OBJECT(d_tg_p);

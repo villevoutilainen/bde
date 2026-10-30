@@ -357,6 +357,7 @@ void verifyTimeIntervalRangeCheck(int                      line,
                                   std::uint64_t            count,
                                   const RangeCheckResults& expectedResults)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&expectedResults);
     verifyIsInTimeIntervalRange<std::int64_t, std::int8_t,  PERIOD>(
                                                      line,
                                                      count,
@@ -387,6 +388,7 @@ void verifyTimeIntervalRangeCheckUnsigned(
                                       std::uint64_t            count,
                                       const RangeCheckResults& expectedResults)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&expectedResults);
     verifyIsInTimeIntervalRange<std::uint64_t, std::uint8_t,  PERIOD>(
                                                      line,
                                                      count,

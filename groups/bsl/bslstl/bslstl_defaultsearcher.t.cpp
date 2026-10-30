@@ -3870,6 +3870,7 @@ int main(int argc, char *argv[])
 
             bsl::vector<char> needleChars;
             for (const char *itr = NEEDLE; 0 != *itr; ++itr) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(itr);
                 needleChars.push_back(*itr);
             }
             const CharList< char> needleFwd(needleChars);
@@ -3885,6 +3886,7 @@ int main(int argc, char *argv[])
 
             bsl::vector<char> haystackChars;
             for (const char *itr = HAYSTACK; 0 != *itr; ++itr) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(itr);
                 haystackChars.push_back(*itr);
             }
             const CharList< char> haystackFwd(haystackChars);

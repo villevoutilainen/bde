@@ -10372,11 +10372,13 @@ void testErase(CONTAINER& mX)
     cIter = x.begin();
     key = keyForValue<CONTAINER>(*cIter);
     const_iterator next = cIter;
-    while (key == keyForValue<CONTAINER>(*++next)) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
+    while (key == keyForValue<CONTAINER>(*BSLS_ASSERT_CONVEYOR_REF(++next))) {
         cIter = next;
     }
     key = keyForValue<CONTAINER>(*next);
-    while (key == keyForValue<CONTAINER>(*++next)) {}
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
+    while (key == keyForValue<CONTAINER>(*BSLS_ASSERT_CONVEYOR_REF(++next))) {}
 
     //  - cIter/next now point to elements either side of a key-range
     //  - confirm they are not in the same bucket:
@@ -10396,11 +10398,13 @@ void testErase(CONTAINER& mX)
     cIter = x.begin();
     key = keyForValue<CONTAINER>(*cIter);
     next = cIter;
-    while (key == keyForValue<CONTAINER>(*++next)) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
+    while (key == keyForValue<CONTAINER>(*BSLS_ASSERT_CONVEYOR_REF(++next))) {
         cIter = next;
     }
     key = keyForValue<CONTAINER>(*next);
-    while (key == keyForValue<CONTAINER>(*++next)) {}
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
+    while (key == keyForValue<CONTAINER>(*BSLS_ASSERT_CONVEYOR_REF(++next))) {}
     ++next;
     //  - cIter/next now point to elements either side of a key-range
     //  - confirm they are not in the same bucket:

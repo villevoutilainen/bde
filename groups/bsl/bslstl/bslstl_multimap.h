@@ -2338,12 +2338,17 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::constructFromRange(
     // right child of the previous node, and can call 'insertAt' without
     // 'findInsertLocation'.
 
-    insert(*first);
+    {
+        const value_type& firstValue = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+        insert(firstValue);
+    }
     BloombergLP::bslalg::RbTreeNode *prevNode = d_tree.rootNode();
 
     while (++first != last) {
 
         const value_type& value = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(value));
         if (this->comparator()(value.first, *prevNode)) {
             // The values are not in order, so insert them normally.
             insert(value);
@@ -2402,12 +2407,18 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::constructFromRange(
     // right child of the previous node, and can call 'insertAt' without
     // 'findInsertLocation'.
 
-    insert(*first); --numElements;
+    {
+        const value_type& firstValue = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+        insert(firstValue);
+    }
+    --numElements;
     BloombergLP::bslalg::RbTreeNode *prevNode = d_tree.rootNode();
 
     while (++first != last) {
 
         const value_type& value = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(value));
         if (this->comparator()(value.first, *prevNode)) {
             // The values are not in order, so insert them normally.
             insert(value); --numElements;
@@ -2460,7 +2471,11 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insertFromRange(
                BloombergLP::bslstl::IteratorUtil::insertDistance(first, last));
         }
 
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         ++first;
     }
 }
@@ -2490,7 +2505,11 @@ void multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insertFromRange(
             nodeFactory().reserveNodes(numElements);
         }
 
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         --numElements;
         ++first;
     }
@@ -2637,12 +2656,17 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::multimap(
         // inserted as the right child of the previous node, and can call
         // 'insertAt'.
 
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         BloombergLP::bslalg::RbTreeNode *prevNode = d_tree.rootNode();
         while (++first != last) {
             // The values are not in order, so insert them normally.
 
             const value_type& value = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(value));
             if (this->comparator()(value.first, *prevNode)) {
                 insert(value);
                 insert(++first, last);
@@ -2689,12 +2713,17 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::multimap(
         // inserted as the right child of the previous node, and can call
         // 'insertAt'.
 
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         BloombergLP::bslalg::RbTreeNode *prevNode = d_tree.rootNode();
         while (++first != last) {
             // The values are not in order, so insert them normally.
 
             const value_type& value = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(value));
             if (this->comparator()(value.first, *prevNode)) {
                 insert(value);
                 insert(++first, last);
@@ -2880,7 +2909,11 @@ void multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(INPUT_ITERATOR first,
 
             nodeFactory().reserveNodes(numElements);
         }
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         ++first;
     }
 }
@@ -2892,7 +2925,11 @@ void multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(const_iterator first,
                                                          const_iterator last)
 {
     while (first != last) {
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         ++first;
     }
 }

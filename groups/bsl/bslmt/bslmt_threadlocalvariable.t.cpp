@@ -945,7 +945,7 @@ int main(int argc, char *argv[])
             if (veryVerbose) {
                 P_(i);  P(args[i].d_address);
             }
-            addresses.insert(args[i].d_address);
+            addresses.insert(BSLS_ASSERT_CONVEYOR_REF(args[i].d_address));
         }
         ASSERT(NUM_THREADS == addresses.size());
       } break;
@@ -991,7 +991,7 @@ int main(int argc, char *argv[])
             if (veryVerbose) {
                 P_(i);  P(args[i].d_address);
             }
-            addresses.insert(args[i].d_address);
+            addresses.insert(BSLS_ASSERT_CONVEYOR_REF(args[i].d_address));
         }
         ASSERT(NUM_THREADS == addresses.size());
       } break;

@@ -2919,7 +2919,8 @@ void TestDriver<KEY, COMP, ALLOC>::testCase2()
                 for (size_t tj = 0; tj < LENGTH; ++tj) {
                     int id = TstFacility::getIdentifier(VALUES[tj]);
                     ITER[tj] = primaryManipulator(&mX, id, xscratch);
-                    ASSERTV(LENGTH, tj, CONFIG, VALUES[tj] == *ITER[tj]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&ITER);
+                    ASSERTV(LENGTH, tj, CONFIG, VALUES[tj] == *BSLS_ASSERT_CONVEYOR_REF(ITER[tj]));
                 }
                 ITER[LENGTH] = X.end();
 
@@ -3109,9 +3110,9 @@ void TestDriver<KEY, COMP, ALLOC>::testCase1(const COMP&  comparator,
             ASSERTV(false == X.empty());
 
             // Test lower_bound, upper_bound, and find
-            const_iterator start = X.lower_bound(testKeys[i]);
-            const_iterator end   = X.upper_bound(testKeys[i]);
-            ASSERTV(*result == *X.find(testKeys[i]));
+            const_iterator start = X.lower_bound(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
+            const_iterator end   = X.upper_bound(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
+            ASSERTV(*result == *X.find(BSLS_ASSERT_CONVEYOR_REF(testKeys[i])));
             ASSERTV(X.end() == end || *end != *result);
             if (X.begin() != start) {
                 const_iterator prev = start; --prev;
@@ -3205,7 +3206,7 @@ void TestDriver<KEY, COMP, ALLOC>::testCase1(const COMP&  comparator,
 
         // Use erase(iterator) on all the elements.
         for (size_t i = 0; i < numValues; ++i) {
-            const_iterator it     = x.find(testKeys[i]);
+            const_iterator it     = x.find(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
             const_iterator nextIt = it;
             ++nextIt;
 
@@ -3244,10 +3245,10 @@ void TestDriver<KEY, COMP, ALLOC>::testCase1(const COMP&  comparator,
 
         size_t totalRemoved = 0;
         for (size_t i = 0; i < numValues; ++i) {
-            size_t count = bsl::distance(X.lower_bound(testKeys[i]),
-                                         X.upper_bound(testKeys[i]));
-            ASSERTV(count == x.erase(testKeys[i]));
-            ASSERTV(0     == x.erase(testKeys[i]));
+            size_t count = bsl::distance(X.lower_bound(BSLS_ASSERT_CONVEYOR_REF(testKeys[i])),
+                                         X.upper_bound(BSLS_ASSERT_CONVEYOR_REF(testKeys[i])));
+            ASSERTV(count == x.erase(BSLS_ASSERT_CONVEYOR_REF(testKeys[i])));
+            ASSERTV(0     == x.erase(BSLS_ASSERT_CONVEYOR_REF(testKeys[i])));
 
             totalRemoved += count;
             ASSERTV(numValues - totalRemoved == X.size());
@@ -3268,8 +3269,8 @@ void TestDriver<KEY, COMP, ALLOC>::testCase1(const COMP&  comparator,
                     x.insert(value);
                 }
 
-                const_iterator a = X.find(testKeys[i]);
-                const_iterator b = X.find(testKeys[j]);
+                const_iterator a = X.find(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
+                const_iterator b = X.find(BSLS_ASSERT_CONVEYOR_REF(testKeys[j]));
 
                 if (!comparator(testKeys[i], testKeys[j])) {
                     std::swap(a, b);
@@ -3288,10 +3289,10 @@ void TestDriver<KEY, COMP, ALLOC>::testCase1(const COMP&  comparator,
                 for (size_t k = 0; k < numValues; ++k) {
                     if (comparator(testKeys[k], min) ||
                         !comparator(testKeys[k], max)) {
-                        ASSERTV(testKeys[k] == *X.find(testKeys[k]));
+                        ASSERTV(BSLS_ASSERT_CONVEYOR_REF(testKeys[k]) == *X.find(BSLS_ASSERT_CONVEYOR_REF(testKeys[k])));
                     }
                     else {
-                        ASSERTV(X.end() == X.find(testKeys[k]));
+                        ASSERTV(X.end() == X.find(BSLS_ASSERT_CONVEYOR_REF(testKeys[k])));
                     }
                 }
             }
@@ -3307,7 +3308,7 @@ void TestDriver<KEY, COMP, ALLOC>::testCase1(const COMP&  comparator,
                 x.insert(value);
             }
 
-            const_iterator a = X.find(testKeys[i]);
+            const_iterator a = X.find(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
             const_iterator b = X.end();
             typename Obj::difference_type numElements = bsl::distance(a, b);
             iterator endPoint = x.erase(a, b);
@@ -3335,7 +3336,7 @@ void TestDriver<KEY, COMP, ALLOC>::testCase1(const COMP&  comparator,
                 Obj x(comparator, &objectAllocator); const Obj& X = x;
                 for (size_t k = 0; k < length; ++k) {
                     size_t index = i + k;
-                    x.insert(myValues[index]);
+                    x.insert(BSLS_ASSERT_CONVEYOR_REF(myValues[index]));
                 }
                 Obj y(comparator, &objectAllocator); const Obj& Y = y;
                 y.insert(myValues + i, myValues + (i + length));
@@ -3365,9 +3366,9 @@ void TestDriver<KEY, COMP, ALLOC>::testCase1(const COMP&  comparator,
         }
 
         for (size_t i = 0; i < numValues; ++i) {
-            pair<iterator, iterator> RESULT = x.equal_range(testKeys[i]);
+            pair<iterator, iterator> RESULT = x.equal_range(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
             pair<const_iterator, const_iterator> cresult =
-                                                  X.equal_range(testKeys[i]);
+                                                  X.equal_range(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
 
             ASSERTV(cresult.first  == RESULT.first);
             ASSERTV(cresult.second == RESULT.second);
@@ -3385,15 +3386,15 @@ void TestDriver<KEY, COMP, ALLOC>::testCase1(const COMP&  comparator,
             ASSERTV(X.end() == end || testKeys[i] != *end);
         }
         for (size_t i = 0; i < numValues; ++i) {
-            x.erase(testKeys[i]);
-            pair<iterator, iterator> RESULT = x.equal_range(testKeys[i]);
+            x.erase(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
+            pair<iterator, iterator> RESULT = x.equal_range(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
             pair<const_iterator, const_iterator> cresult =
-                                                  x.equal_range(testKeys[i]);
+                                                  x.equal_range(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
 
-            iterator       li = x.lower_bound(testKeys[i]);
-            const_iterator LI = X.lower_bound(testKeys[i]);
-            iterator       ui = x.upper_bound(testKeys[i]);
-            const_iterator UI = X.upper_bound(testKeys[i]);
+            iterator       li = x.lower_bound(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
+            const_iterator LI = X.lower_bound(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
+            iterator       ui = x.upper_bound(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
+            const_iterator UI = X.upper_bound(BSLS_ASSERT_CONVEYOR_REF(testKeys[i]));
 
             ASSERTV(RESULT.first   == li);
             ASSERTV(RESULT.second  == ui);

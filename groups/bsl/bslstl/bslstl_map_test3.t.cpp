@@ -1772,12 +1772,16 @@ class TestDriver {
 
     template <class T>
     static bslmf::MovableRef<T> testArg(T& t, bsl::true_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return MoveUtil::move(t);
     }
 
     template <class T>
     static const T&             testArg(T& t, bsl::false_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return t;
     }
@@ -2607,7 +2611,7 @@ void TestDriver<KEY, VALUE, COMP, ALLOC>::testCase43()
         for (size_t j = 0; j < keysLen; ++j)
         {
             ASSERTV(LINE, j, map_size == mX.size());
-            PAIR res = mX.try_emplace(keys[j], values[j]);
+            PAIR res = mX.try_emplace(BSLS_ASSERT_CONVEYOR_REF(keys[j]), BSLS_ASSERT_CONVEYOR_REF(values[j]));
             ASSERTV(LINE, j, ('Y' == results[j]) == res.second);
             ASSERTV(LINE, j, KEY(keys[j]) == res.first->first);
             if (res.second) {
@@ -2635,7 +2639,7 @@ void TestDriver<KEY, VALUE, COMP, ALLOC>::testCase43()
             MoveHolder<KEY> k(static_cast<KEY>(keys[j]));
 
             ASSERTV(LINE, j, map_size == mX.size());
-            PAIR res = mX.try_emplace(MoveUtil::move(k), values[j]);
+            PAIR res = mX.try_emplace(MoveUtil::move(k), BSLS_ASSERT_CONVEYOR_REF(values[j]));
             ASSERTV(LINE, j, ('Y' == results[j]) == res.second);
             ASSERTV(LINE, j, ('Y' == results[j]) == k.hasBeenMoved());
             ASSERTV(LINE, j, KEY(keys[j]) == res.first->first);
@@ -2662,7 +2666,7 @@ void TestDriver<KEY, VALUE, COMP, ALLOC>::testCase43()
         {
             ASSERTV(LINE, j, map_size == mX.size());
             typename Obj::iterator it =
-                                  mX.try_emplace(mX.end(), keys[j], values[j]);
+                                  mX.try_emplace(mX.end(), BSLS_ASSERT_CONVEYOR_REF(keys[j]), BSLS_ASSERT_CONVEYOR_REF(values[j]));
             ASSERTV(LINE, j, KEY(keys[j]) == it->first);
             if ('Y' == results[j]) {
                 ASSERTV(LINE, j, VALUE(values[j]) == it->second);
@@ -2689,7 +2693,7 @@ void TestDriver<KEY, VALUE, COMP, ALLOC>::testCase43()
 
             ASSERTV(LINE, j, map_size == mX.size());
             typename MH_map::iterator it =
-                        mX.try_emplace(mX.end(), MoveUtil::move(k), values[j]);
+                        mX.try_emplace(mX.end(), MoveUtil::move(k), BSLS_ASSERT_CONVEYOR_REF(values[j]));
             ASSERTV(LINE, j, KEY(keys[j]) == it->first);
             ASSERTV(LINE, j, ('Y' == results[j]) == k.hasBeenMoved());
             if ('Y' == results[j]) {
@@ -2715,7 +2719,7 @@ void TestDriver<KEY, VALUE, COMP, ALLOC>::testCase43()
         for (size_t j = 0; j < keysLen; ++j)
         {
             ASSERTV(LINE, j, map_size == mX.size());
-            PAIR res = mX.insert_or_assign(keys[j], values[j]);
+            PAIR res = mX.insert_or_assign(BSLS_ASSERT_CONVEYOR_REF(keys[j]), BSLS_ASSERT_CONVEYOR_REF(values[j]));
             ASSERTV(LINE, j, ('Y' == results[j]) == res.second);
             ASSERTV(LINE, j, KEY(keys[j])     == res.first->first);
             ASSERTV(LINE, j, VALUE(values[j]) == res.first->second);
@@ -2743,7 +2747,7 @@ void TestDriver<KEY, VALUE, COMP, ALLOC>::testCase43()
             MoveHolder<KEY> k(static_cast<KEY>(keys[j]));
 
             ASSERTV(LINE, j, map_size == mX.size());
-            PAIR res = mX.insert_or_assign(MoveUtil::move(k), values[j]);
+            PAIR res = mX.insert_or_assign(MoveUtil::move(k), BSLS_ASSERT_CONVEYOR_REF(values[j]));
             ASSERTV(LINE, j, ('Y' == results[j]) == res.second);
             ASSERTV(LINE, j, ('Y' == results[j]) == k.hasBeenMoved());
             ASSERTV(LINE, j, KEY(keys[j])     == res.first->first);
@@ -2770,7 +2774,7 @@ void TestDriver<KEY, VALUE, COMP, ALLOC>::testCase43()
         {
             ASSERTV(LINE, j, map_size == mX.size());
             typename Obj::iterator it =
-                            mX.insert_or_assign(mX.end(), keys[j], values[j]);
+                            mX.insert_or_assign(mX.end(), BSLS_ASSERT_CONVEYOR_REF(keys[j]), BSLS_ASSERT_CONVEYOR_REF(values[j]));
             ASSERTV(LINE, j, KEY(keys[j])     == it->first);
             ASSERTV(LINE, j, VALUE(values[j]) == it->second);
             if ('Y' == results[j]) {
@@ -2797,7 +2801,7 @@ void TestDriver<KEY, VALUE, COMP, ALLOC>::testCase43()
 
             ASSERTV(LINE, j, map_size == mX.size());
             typename MH_map::iterator it =
-                   mX.insert_or_assign(mX.end(), MoveUtil::move(k), values[j]);
+                   mX.insert_or_assign(mX.end(), MoveUtil::move(k), BSLS_ASSERT_CONVEYOR_REF(values[j]));
             ASSERTV(LINE, j, KEY(keys[j])     == it->first);
             ASSERTV(LINE, j, VALUE(values[j]) == it->second);
             ASSERTV(LINE, j, ('Y' == results[j]) == k.hasBeenMoved());
@@ -6346,7 +6350,8 @@ int main(int argc, char *argv[])
             TransparentMapValue       MAP_VALUE(VALUE, i);
 
             mX.insert(MAP_VALUE);
-            symbolEntryNumMap[VALUE[0]] += 1;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&VALUE);
+            symbolEntryNumMap[BSLS_ASSERT_CONVEYOR_REF(VALUE[0])] += 1;
 
             for (char c = 'a'; c < 'h'; ++c) {
                 // Testing `find`.

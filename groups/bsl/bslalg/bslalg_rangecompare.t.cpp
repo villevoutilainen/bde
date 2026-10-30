@@ -499,6 +499,7 @@ MyContainer<VALUE_TYPE>::~MyContainer()
 template <class VALUE_TYPE>
 void MyContainer<VALUE_TYPE>::reserve(std::size_t newCapacity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(newCapacity >= d_size);
 
     if (newCapacity == d_capacity) {
@@ -511,7 +512,7 @@ void MyContainer<VALUE_TYPE>::reserve(std::size_t newCapacity)
     BSLS_ASSERT(d_start_p || 0 == d_size);
     BSLS_ASSERT(0 == replacement.d_size);
     while (replacement.d_size < d_size) {
-        replacement.push_back(d_start_p[replacement.d_size]);
+        replacement.push_back(BSLS_ASSERT_CONVEYOR_REF(d_start_p[replacement.d_size]));
     }
 
     // Swap our state with replacement.

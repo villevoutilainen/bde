@@ -222,12 +222,16 @@ class MapComparator : private bslalg::FunctorAdapter<COMPARATOR>::Type {
     /// Return a reference providing modifiable access to the function
     /// pointer or functor to which this comparator delegates comparison
     /// operations.
-    COMPARATOR& keyComparator();
+    COMPARATOR& keyComparator()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the function
     /// pointer or functor to which this comparator delegates comparison
     /// operations.
-    const COMPARATOR& keyComparator() const;
+    const COMPARATOR& keyComparator() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE FUNCTIONS
@@ -282,6 +286,7 @@ bool MapComparator<KEY, VALUE, COMPARATOR>::operator()(
                                                  const LOOKUP_KEY&         lhs,
                                                  const bslalg::RbTreeNode& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // The comparator may require its arguments: the key looked up, and a
     // node's key.
     const KEY& key = static_cast<const NodeType&>(rhs).value().first;
@@ -310,6 +315,7 @@ bool MapComparator<KEY, VALUE, COMPARATOR>::operator()(
                                                  const bslalg::RbTreeNode& lhs,
                                                  const LOOKUP_KEY&         rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const KEY& key = static_cast<const NodeType&>(lhs).value().first;
     return keyComparator()(BSLS_ASSERT_CONVEYOR_REF(key),
                            BSLS_ASSERT_CONVEYOR_REF(rhs));

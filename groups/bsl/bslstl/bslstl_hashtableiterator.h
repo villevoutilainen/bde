@@ -219,7 +219,8 @@ class HashTableIterator {
     /// reference providing modifiable access to this iterator.  The
     /// behavior is undefined unless the iterator refers to a valid (not yet
     /// erased) node in the list.
-    HashTableIterator& operator++();
+    HashTableIterator& operator++()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -457,6 +458,7 @@ inline
 HashTableIterator<VALUE_TYPE, DIFFERENCE_TYPE>
 operator++(HashTableIterator<VALUE_TYPE, DIFFERENCE_TYPE>& iter, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
     BSLS_ASSERT_SAFE(iter.node());
 
     HashTableIterator<VALUE_TYPE, DIFFERENCE_TYPE> temp(iter);

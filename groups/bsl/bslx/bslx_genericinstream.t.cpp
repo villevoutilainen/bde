@@ -785,7 +785,7 @@ int maxSupportedBdexVersion(const MyStruct::EnumValue *,
     {
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         for (bsl::streamsize i = 0; i < length; ++i) {
-            d_buffer.push_back(s[i]);
+            d_buffer.push_back(BSLS_ASSERT_CONVEYOR_REF(s[i]));
         }
         return length;
     }

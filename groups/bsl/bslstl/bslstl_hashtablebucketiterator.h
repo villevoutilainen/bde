@@ -232,7 +232,8 @@ class HashTableBucketIterator {
     /// The behavior is undefined unless the iterator refers to a valid (not
     /// yet erased) element in a bucket.  Note that this iterator is
     /// invalidated when the underlying hash table is rehashed.
-    HashTableBucketIterator& operator++();
+    HashTableBucketIterator& operator++()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -546,6 +547,7 @@ inline
 HashTableBucketIterator<VALUE_TYPE, DIFFERENCE_TYPE>
 operator++(HashTableBucketIterator<VALUE_TYPE, DIFFERENCE_TYPE> &iter, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
     BSLS_ASSERT_SAFE(iter.node());
     BSLS_ASSERT_SAFE(iter.bucket());
 

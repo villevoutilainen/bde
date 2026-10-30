@@ -289,13 +289,15 @@ class RandomAccessIterator
     /// modifiable iterator.  The behavior is undefined if, on entry, this
     /// iterator has the past-the-end value for an iterator over the
     /// underlying sequence.
-    RandomAccessIterator& operator++();
+    RandomAccessIterator& operator++()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Decrement to the previous element.  Return a reference to this
     /// modifiable iterator.  The behavior is undefined if, on entry, this
     /// iterator has the same value as an iterator to the start of the
     /// underlying sequence.
-    RandomAccessIterator& operator--();
+    RandomAccessIterator& operator--()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Increment by the specified `offset` number of elements.  Return a
     /// reference to this modifiable iterator.  The behavior is undefined
@@ -542,6 +544,7 @@ inline
 bslstl::RandomAccessIterator<T,ITER_IMP,TAG_TYPE>
 bslstl::operator++(RandomAccessIterator<T,ITER_IMP,TAG_TYPE>& iter, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
     RandomAccessIterator<T,ITER_IMP,TAG_TYPE> tmp(iter);
     ++iter;
     return tmp;
@@ -552,6 +555,7 @@ inline
 bslstl::RandomAccessIterator<T,ITER_IMP,TAG_TYPE>
 bslstl::operator--(RandomAccessIterator<T,ITER_IMP,TAG_TYPE>& iter, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
     RandomAccessIterator<T,ITER_IMP,TAG_TYPE> tmp(iter);
     --iter;
     return tmp;

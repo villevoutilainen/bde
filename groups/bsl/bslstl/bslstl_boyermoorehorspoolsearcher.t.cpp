@@ -3532,6 +3532,7 @@ static void loadVectorOfChars(bsl::vector<char> *dst, const char *src)
     ASSERT(src);
 
     for (const char *ptr = src; *ptr; ++ptr) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(ptr);
         dst->push_back(*ptr);
     }
 }
@@ -6262,6 +6263,7 @@ int main(int argc, char *argv[])
 
             bsl::vector<char> needleChars;
             for (const char *itr = NEEDLE; 0 != *itr; ++itr) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(itr);
                 needleChars.push_back(*itr);
             }
             const CharArray<char> needleRnd(needleChars);
@@ -6273,6 +6275,7 @@ int main(int argc, char *argv[])
 
             bsl::vector<char> haystackChars;
             for (const char *itr = HAYSTACK; 0 != *itr; ++itr) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(itr);
                 haystackChars.push_back(*itr);
             }
             const CharArray<char> haystackRnd(haystackChars);

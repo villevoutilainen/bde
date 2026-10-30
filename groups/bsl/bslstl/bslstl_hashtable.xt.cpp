@@ -2647,6 +2647,7 @@ int verifyListContents(Link                                 *containerList,
         const int nextId = bsltf::TemplateTestFacility::getIdentifier(element);
 
         for (size_t j = 0; j != expectedSize; ++j) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&expectedValues);
             if (bsltf::TemplateTestFacility::getIdentifier(expectedValues[j])
                                                                    == nextId) {
                 if (!foundValues[j]) {
@@ -2823,6 +2824,8 @@ struct BasicKeyConfig {
 
     /// Return the specified `value`.
     static const KeyType& extractKey(const ValueType& value)
+                                       BSLS_ASSERT_CONVEYOR_TRUST_PRE(value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return value;
     }
@@ -9438,11 +9441,13 @@ if (veryVerbose) puts("Usage Example3");
             // ACCESSORS
             const MySalesRecord& operator*() const
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(this);
                 return *ItrPtrById::operator*();
             }
 
             const MySalesRecord *operator->() const
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(this);
                 return &(*ItrPtrById::operator*());
             }
         };

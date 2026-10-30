@@ -3003,9 +3003,10 @@ deque<VALUE_TYPE, ALLOCATOR>::privatePrepend(
                                           // 'insertPoint'
         }
         --insertPoint;
+        --last;
         AllocatorTraits::construct(this->allocatorRef(),
                                    BSLS_UTIL_ADDRESSOF(*insertPoint),
-                                   *--last);
+                                   *last);
         ++guard;
     } while (first != last);
 
@@ -3062,9 +3063,10 @@ deque<VALUE_TYPE, ALLOCATOR>::privatePrepend(
                                           // 'insertPoint'
         }
         --insertPoint;
+        --end;
         AllocatorTraits::construct(this->allocatorRef(),
                                    BSLS_UTIL_ADDRESSOF(*insertPoint),
-                                   *--end);
+                                   *end);
         ++guard;
     } while (first != end);
 

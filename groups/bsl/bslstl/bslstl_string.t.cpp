@@ -2537,12 +2537,14 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase9()
                             const int V_N = EXTEND[vj];
 
                             Obj mU(Z);  const Obj& U = mU;
-                            stretchRemoveAll(&mU, U_N, VALUES[0]);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                            stretchRemoveAll(&mU, U_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                             gg(&mU, U_SPEC);
                             {
                     // ---------v
                     Obj mV(Z);  const Obj& V = mV;
-                    stretchRemoveAll(&mV, V_N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mV, V_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     gg(&mV, V_SPEC);
 
                     static int firstFew = 2 * NUM_EXTEND * NUM_EXTEND;
@@ -2691,11 +2693,13 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase9()
                     const Int64 AL = testAllocator.allocationLimit();
                     testAllocator.setAllocationLimit(-1);
                     Obj mU(Z);  const Obj& U = mU;
-                    stretchRemoveAll(&mU, U_N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mU, U_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     gg(&mU, U_SPEC);
                     {
                         Obj mV(Z);  const Obj& V = mV;
-                        stretchRemoveAll(&mV, V_N, VALUES[0]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                        stretchRemoveAll(&mV, V_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                         gg(&mV, V_SPEC);
 
                         static int firstFew = 2 * NUM_EXTEND * NUM_EXTEND;
@@ -2826,7 +2830,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase9()
 
                     const int N = EXTEND[tj];
                     Obj mY(Z);  const Obj& Y = mY;
-                    stretchRemoveAll(&mY, N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mY, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     gg(&mY, SPEC);
 
                     if (veryVerbose) { T_; T_; P_(N); P(Y); }
@@ -2890,7 +2895,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase9()
 
                     const int N = EXTEND[tj];
                     Obj mY(Z);  const Obj& Y = mY;
-                    stretchRemoveAll(&mY, N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mY, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     gg(&mY, SPEC);
 
                     if (veryVerbose) { T_; T_; P_(N); P(Y); }
@@ -3192,12 +3198,14 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase9Move()
                         const int V_N = EXTEND[vj];
 
                         Obj mU(Z);  const Obj& U = mU;
-                        stretchRemoveAll(&mU, U_N, VALUES[0]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                        stretchRemoveAll(&mU, U_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                         gg(&mU, U_SPEC);
                         {
                     // v--------
                     Obj mV(Z);  const Obj& V = mV;
-                    stretchRemoveAll(&mV, V_N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mV, V_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     gg(&mV, V_SPEC);
 
                     static int firstFew = 2 * NUM_EXTEND * NUM_EXTEND;
@@ -3274,12 +3282,14 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase9Move()
                         const int V_N = EXTEND[vj];
 
                         Obj mU; const Obj& U = mU;
-                        stretchRemoveAll(&mU, U_N, VALUES[0]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                        stretchRemoveAll(&mU, U_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                         gg(&mU, U_SPEC);
                         {
                     // v--------
                     Obj mV(Z); const Obj& V = mV;
-                    stretchRemoveAll(&mV, V_N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mV, V_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     gg(&mV, V_SPEC);
 
                     static int firstFew = 2 * NUM_EXTEND * NUM_EXTEND;
@@ -3395,11 +3405,13 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase9Move()
                     const Int64 AL = testAllocator.allocationLimit();
                     testAllocator.setAllocationLimit(-1);
                     Obj mU(Z);  const Obj& U = mU;
-                    stretchRemoveAll(&mU, U_N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mU, U_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     gg(&mU, U_SPEC);
                     {
                         Obj mV(Z); const Obj& V = mV;
-                        stretchRemoveAll(&mV, V_N, VALUES[0]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                        stretchRemoveAll(&mV, V_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                         gg(&mV, V_SPEC);
 
                         static int firstFew = 2 * NUM_EXTEND * NUM_EXTEND;
@@ -3478,11 +3490,13 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase9Move()
                     const Int64 AL = testAllocator.allocationLimit();
                     testAllocator.setAllocationLimit(-1);
                     Obj mU(Z);  const Obj& U = mU;
-                    stretchRemoveAll(&mU, U_N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mU, U_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     gg(&mU, U_SPEC);
                     {
                         Obj mV; const Obj& V = mV;
-                        stretchRemoveAll(&mV, V_N, VALUES[0]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                        stretchRemoveAll(&mV, V_N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                         gg(&mV, V_SPEC);
 
                         static int firstFew = 2 * NUM_EXTEND * NUM_EXTEND;
@@ -3558,7 +3572,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase9Move()
 
                     const int N = EXTEND[tj];
                     Obj mY(Z);  const Obj& Y = mY;
-                    stretchRemoveAll(&mY, N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mY, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     gg(&mY, SPEC);
 
                     if (veryVerbose) { T_; T_; P_(N); P(Y); }
@@ -3899,7 +3914,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7()
                 Obj *pX = new Obj(Z);
                 Obj& mX = *pX;
 
-                stretchRemoveAll(&mX, N, VALUES[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                stretchRemoveAll(&mX, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                 const Obj& X = mX;  gg(&mX, SPEC);
 
                 if (veryVerbose) { printf("\t\tDynamic Obj: "); P(X); }
@@ -3942,7 +3958,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7()
                                                                 oldCap,
                                                                 Y1.max_size());
 
-                        stretch(&Y1, 1, VALUES[i % NUM_VALUES]);
+                        stretch(&Y1, 1, BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
 
                         if (veryVerbose) {
                             printf("\t\t\t\tAfter Insert : ");
@@ -4011,7 +4027,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7()
                         const Int64 CC = testAllocator.numBlocksTotal();
                         const Int64  C = testAllocator.numBlocksInUse();
 
-                        stretch(&Y11, 1, VALUES[i % NUM_VALUES]);
+                        stretch(&Y11, 1, BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
 
                         const Int64 DD = testAllocator.numBlocksTotal();
                         const Int64  D = testAllocator.numBlocksInUse();
@@ -4100,7 +4116,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7()
                     LOOP2_ASSERT(SPEC, N, W == Y5);
 
                     for (int i = 1; i < N+1; ++i) {
-                        stretch(&Y5, 1, VALUES[i % NUM_VALUES]);
+                        stretch(&Y5, 1, BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
                         if (veryVerbose) {
                             printf("\t\t\t\tAfter Append to new obj : ");
                             P_(i);P(Y5);
@@ -4242,7 +4258,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                 {   // Testing concern 1a with implicit allocator.
                     Obj *pX = new Obj(Z);
                     Obj& mX = *pX;
-                    stretchRemoveAll(&mX, N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mX, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     const Obj& X = mX;  gg(&mX, SPEC);
 
                     const bool XAllocated = X.capacity() != DEFAULT_CAPACITY;
@@ -4285,7 +4302,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                     ASSERTV(AA, BB, AA == BB);
 
                     // Testing concern 1d by modifying X.
-                    stretch(&mX, 1, VALUES[ei % NUM_VALUES]);
+                    stretch(&mX, 1, BSLS_ASSERT_CONVEYOR_REF(VALUES[ei % NUM_VALUES]));
                     LOOP2_ASSERT(SPEC, N, W == Y0);
 
                     delete pX;
@@ -4296,7 +4313,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                 {   // Testing concern 1a with specified different allocator.
                     Obj *pX = new Obj();
                     Obj& mX = *pX;
-                    stretchRemoveAll(&mX, N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mX, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     const Obj& X = mX;  gg(&mX, SPEC);
 
                     bool isShort = X.size() <= DEFAULT_CAPACITY;
@@ -4340,7 +4358,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                     }
 
                     // Testing concern 1d by modifying X.
-                    stretch(&mX, 1, VALUES[ei % NUM_VALUES]);
+                    stretch(&mX, 1, BSLS_ASSERT_CONVEYOR_REF(VALUES[ei % NUM_VALUES]));
                     LOOP2_ASSERT(SPEC, N, W == Y0);
 
                     delete pX;
@@ -4351,7 +4369,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                 {   // Testing concern 1e.
                     Obj *pX = new Obj();
                     Obj& mX = *pX;
-                    stretchRemoveAll(&mX, N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mX, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     const Obj& X = mX;  gg(&mX, SPEC);
 
                     if (veryVerbose) printf("\t\t\tMove into created obj, "
@@ -4375,7 +4394,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                                                                 oldCap,
                                                                 Y1.max_size());
 
-                        stretch(&Y1, 1, VALUES[i % NUM_VALUES]);
+                        stretch(&Y1, 1, BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
 
                         if (veryVerbose) {
                             printf("\t\t\t\tAfter Insert : ");
@@ -4401,7 +4420,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                 {   // Testing concern 1e with test allocator.
                     Obj *pX = new Obj(Z);
                     Obj& mX = *pX;
-                    stretchRemoveAll(&mX, N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mX, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     const Obj& X = mX;  gg(&mX, SPEC);
 
                     if (veryVerbose)
@@ -4438,7 +4458,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                         const Int64 CC = testAllocator.numBlocksTotal();
                         const Int64  C = testAllocator.numBlocksInUse();
 
-                        stretch(&Y11, 1, VALUES[i % NUM_VALUES]);
+                        stretch(&Y11, 1, BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
 
                         const Int64 DD = testAllocator.numBlocksTotal();
                         const Int64  D = testAllocator.numBlocksInUse();
@@ -4478,7 +4498,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                 {   // Testing concern 1e with different allocator.
                     Obj *pX = new Obj();
                     Obj& mX = *pX;
-                    stretchRemoveAll(&mX, N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mX, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     const Obj& X = mX;  gg(&mX, SPEC);
 
                     bool isShort = X.size() <= DEFAULT_CAPACITY;
@@ -4520,7 +4541,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                         const Int64 CC = testAllocator.numBlocksTotal();
                         const Int64  C = testAllocator.numBlocksInUse();
 
-                        stretch(&Y11, 1, VALUES[i % NUM_VALUES]);
+                        stretch(&Y11, 1, BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
 
                         const Int64 DD = testAllocator.numBlocksTotal();
                         const Int64  D = testAllocator.numBlocksInUse();
@@ -4562,7 +4583,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                 {   // Exception checking with same allocators.
                     Obj *pX = new Obj(Z);
                     Obj& mX = *pX;
-                    stretchRemoveAll(&mX, N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mX, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     const Obj& X = mX;  gg(&mX, SPEC);
 
                     const Int64 BB = testAllocator.numBlocksTotal();
@@ -4609,7 +4631,8 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase7Move()
                 {   // Exception checking with different allocators.
                     Obj *pX = new Obj();
                     Obj& mX = *pX;
-                    stretchRemoveAll(&mX, N, VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                    stretchRemoveAll(&mX, N, BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                     const Obj& X = mX;  gg(&mX, SPEC);
 
                     const Int64 BB = testAllocator.numBlocksTotal();
@@ -4856,7 +4879,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase6()
                             gg(&mV, V_SPEC);
 
                             stretchRemoveAll(&mV, EXTEND[e],
-                                             VALUES[e % NUM_VALUES]);
+                                             BSLS_ASSERT_CONVEYOR_REF(VALUES[e % NUM_VALUES]));
                             gg(&mV, V_SPEC);
 
                             if (veryVerbose) {
@@ -5186,7 +5209,7 @@ void TestDriver<TYPE,TRAITS,ALLOC>::testCase4()
                     for (int ei = 0; ei < NUM_EXTEND; ++ei) {
 
                         stretchRemoveAll(&mY, EXTEND[ei],
-                                         VALUES[ei % NUM_VALUES]);
+                                         BSLS_ASSERT_CONVEYOR_REF(VALUES[ei % NUM_VALUES]));
                         gg(&mY, SPEC);
 
                         if (veryVerbose) { T_; T_; T_; P(Y); }

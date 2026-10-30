@@ -9220,9 +9220,13 @@ void TestDriver<TYPE,ALLOC>::test16_iterators()
         ASSERT(! is_mutable(* X.begin()));
         ASSERT(  is_mutable(*mX.rbegin()));
         ASSERT(! is_mutable(* X.rbegin()));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
         ASSERT(  is_mutable(*--mX.end()));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(! is_mutable(*-- X.end()));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
         ASSERT(  is_mutable(*--mX.rend()));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(! is_mutable(*-- X.rend()));
 
         ASSERT(  is_mutable(*iter));
@@ -9365,8 +9369,10 @@ void TestDriver<TYPE,ALLOC>::test16_iterators()
 
                 ASSERTV(LINE, i, citer == criter1.base());
                 ASSERTV(LINE, i, iter  == riter1.base());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&riter1);
                 ASSERTV(LINE, i, bsls::Util::addressOf(*iter)  ==
                                              bsls::Util::addressOf(*--riter1));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&criter1);
                 ASSERTV(LINE, i, bsls::Util::addressOf(*citer) ==
                                             bsls::Util::addressOf(*--criter1));
 
@@ -15314,6 +15320,7 @@ class IncompleteTypeSupportChecker {
     /// `value` as a parameter.
     void remove(const value_type& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         s_functionCallCounters[47]++;
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_list.remove(value);

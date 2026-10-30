@@ -1650,15 +1650,20 @@ BoyerMooreHorspoolSearcher_CharImp<RNDACC_ITR_NEEDLE,
                                                        const value_type& value)
                                                                           const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unsigned char index = static_cast<unsigned char>(value);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(
                                         privateUseShortNeedleOptimization())) {
-        return (*static_cast<ShortNeedleSkipArray *>(d_table_p))[index];
-                                                                      // RETURN
+        ShortNeedleSkipArray *table =
+                               static_cast<ShortNeedleSkipArray *>(d_table_p);
+        BSLS_ASSERT_CONVEYOR_OBJECT(table);
+        return (*table)[index];                                       // RETURN
     } else {
-        return (*static_cast< LongNeedleSkipArray *>(d_table_p))[index];
-                                                                      // RETURN
+        LongNeedleSkipArray *table =
+                                static_cast<LongNeedleSkipArray *>(d_table_p);
+        BSLS_ASSERT_CONVEYOR_OBJECT(table);
+        return (*table)[index];                                       // RETURN
     }
 }
 
@@ -1845,6 +1850,7 @@ BoyerMooreHorspoolSearcher_GeneralImp<RNDACC_ITR_NEEDLE,
                                       EQUAL>::badCharacterSkip(
                                                  const value_type& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typename Map::const_iterator result = d_map.find(value);
 

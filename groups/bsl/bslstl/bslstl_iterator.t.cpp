@@ -1232,12 +1232,14 @@ int main(int argc, char *argv[])
             ASSERT(3 == *--it);
             ASSERT(3 == *rbegin(mY));
             rit = rend(mY);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rit);
             ASSERT(1 == *--rit);
             ASSERT(1 == *cbegin(mY));
             it = cend(mY);
             ASSERT(3 == *--it);
             ASSERT(3 == *crbegin(mY));
             rit = crend(mY);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rit);
             ASSERT(1 == *--rit);
 
             ASSERT(3 == size(mY));
@@ -1256,6 +1258,7 @@ int main(int argc, char *argv[])
             ASSERT(end(mY) - begin(mY) == ssize(mY));
             ASSERT(5 == *rbegin(mY));
             rp = rend(mY);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rp);
             ASSERT(1 == *--rp);
             ASSERT(rend(mY) - rbegin(mY) == ssize(mY));
             ASSERT(1 == *cbegin(mY));
@@ -1264,6 +1267,7 @@ int main(int argc, char *argv[])
             ASSERT(cend(mY) - cbegin(mY) == ssize(mY));
             ASSERT(5 == *crbegin(mY));
             rp = crend(mY);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rp);
             ASSERT(1 == *--rp);
             ASSERT(crend(mY) - crbegin(mY) == ssize(mY));
 
@@ -2018,6 +2022,7 @@ int main(int argc, char *argv[])
 
             ASSERT( *pit4 == it2);
             ASSERT(  *it2 == testData[numElements - 1]);
+            BSLS_ASSERT_CONVEYOR_OBJECT(pit4);
             ASSERT(**pit4 == testData[numElements - 1]);
 
 
@@ -2029,10 +2034,12 @@ int main(int argc, char *argv[])
             ++it2;
             ASSERT( *pit4 != it2);
             ASSERT(  *it2 == testData[numElements - 2]);
+            BSLS_ASSERT_CONVEYOR_OBJECT(pit4);
             ASSERT(**pit4 == testData[numElements - 1]);
         }
 
         ASSERT( *pit4 == it1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(pit4);
         ASSERT(**pit4 == testData[numElements - 1]);
 
         if (verbose) printf(

@@ -1483,24 +1483,24 @@ int main(int argc, char *argv[])
                     script.push_back(TestImpl::k_INIT);
                     script.push_back(0);
                     if (0 == depth) {
-                        script.push_back(DATA_WRITER[i]);
+                        script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_WRITER[i]));
                         script.push_back(TestImpl::k_GET);
                     }
                     else {
-                        script.push_back(DATA_NO_WRITER[d1]);
+                        script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d1]));
                         script.push_back(TestImpl::k_GET);
-                        script.push_back(DATA_NO_WRITER[d1]);
+                        script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d1]));
                         if (1 < depth) {
-                            script.push_back(DATA_NO_WRITER[d2]);
+                            script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d2]));
                             script.push_back(TestImpl::k_CAS);
-                            script.push_back(DATA_NO_WRITER[d2]);
+                            script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d2]));
                             if (2 < depth) {
-                                script.push_back(DATA_NO_WRITER[d3]);
+                                script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d3]));
                                 script.push_back(TestImpl::k_CAS);
-                                script.push_back(DATA_NO_WRITER[d3]);
+                                script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d3]));
                             }
                         }
-                        script.push_back(DATA_WRITER[i]);
+                        script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_WRITER[i]));
                         script.push_back(TestImpl::k_CAS);
                     }
                     script.push_back(TestImpl::k_LOCK);
@@ -1570,27 +1570,27 @@ int main(int argc, char *argv[])
                     script.push_back(TestImpl::k_INIT);
                     script.push_back(0);
                     if (0 == depth) {
-                        script.push_back(DATA_NO_WRITER[i]);
+                        script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[i]));
                         script.push_back(TestImpl::k_GET);
                     }
                     else {
-                        script.push_back(DATA_NO_WRITER[d1]);
+                        script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d1]));
                         script.push_back(TestImpl::k_GET);
-                        script.push_back(DATA_NO_WRITER[d1]);
+                        script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d1]));
                         if (1 < depth) {
-                            script.push_back(DATA_NO_WRITER[d2]);
+                            script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d2]));
                             script.push_back(TestImpl::k_CAS);
-                            script.push_back(DATA_NO_WRITER[d2]);
+                            script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d2]));
                             if (2 < depth) {
-                                script.push_back(DATA_NO_WRITER[d3]);
+                                script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d3]));
                                 script.push_back(TestImpl::k_CAS);
-                                script.push_back(DATA_NO_WRITER[d3]);
+                                script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[d3]));
                             }
                         }
-                        script.push_back(DATA_NO_WRITER[i]);
+                        script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[i]));
                         script.push_back(TestImpl::k_CAS);
                     }
-                    script.push_back(DATA_NO_WRITER[i]);
+                    script.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA_NO_WRITER[i]));
                     script.push_back(TestImpl::k_CAS);
                     script.push_back(DATA_NO_WRITER[i] + 1);
                 }

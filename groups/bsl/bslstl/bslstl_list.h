@@ -787,13 +787,15 @@ class List_Iterator {
     /// new value.  The behavior is undefined unless this iterator is in the
     /// range `[begin() .. end())` for some list (i.e., the iterator is not
     /// singular, is not `end()`, and has not been invalidated).
-    List_Iterator& operator++();
+    List_Iterator& operator++()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Regress this iterator to the previous element in the list and return
     /// its new value.  The behavior is undefined unless this iterator is in
     /// the range `(begin() .. end()]` for some list (i.e., the iterator is
     /// not singular, is not `begin()`, and has not been invalidated).
-    List_Iterator& operator--();
+    List_Iterator& operator--()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Advance this iterator to the next element in the list and return its
     /// previous value.  The behavior is undefined unless this iterator is
@@ -2172,6 +2174,7 @@ template <class VALUE>
 inline
 List_Iterator<VALUE> List_Iterator<VALUE>::operator++(int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     List_Iterator temp = *this;
     this->operator++();
     return temp;
@@ -2181,6 +2184,7 @@ template <class VALUE>
 inline
 List_Iterator<VALUE> List_Iterator<VALUE>::operator--(int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     List_Iterator temp = *this;
     this->operator--();
     return temp;

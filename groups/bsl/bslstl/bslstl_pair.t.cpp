@@ -3356,6 +3356,8 @@ class TupleTestDriver {
     /// If the second argument is a `true_type`, return the argument moved.
     template <class T>
     static bslmf::MovableRef<T> testArg(T& t, bsl::true_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return MoveUtil::move(t);
     }
@@ -3364,6 +3366,8 @@ class TupleTestDriver {
     /// providing non-modifiable access to the argument.
     template <class T>
     static const T& testArg(T& t, bsl::false_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return t;
     }
@@ -3372,6 +3376,8 @@ class TupleTestDriver {
     /// moved.
     template <class T>
     static bslmf::MovableRef<T> testArg(u::ArgHolder<T>& t, bsl::true_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return MoveUtil::move(t.arg());
     }
@@ -3380,6 +3386,8 @@ class TupleTestDriver {
     /// providing non-modifiable access to the held argument.
     template <class T>
     static const T& testArg(u::ArgHolder<T>& t, bsl::false_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return t.arg();
     }

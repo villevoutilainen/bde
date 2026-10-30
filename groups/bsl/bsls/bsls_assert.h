@@ -2139,6 +2139,9 @@ BSLS_IDENT("$Id: $")
 #define BSLS_ASSERT_CONVEYOR_TRUST_PRE(X)                                     \
     pre<std::contracts::never_proven_conveyor_v>(                             \
                                std::is_object_address(__builtin_addressof(X)))
+#define BSLS_ASSERT_CONVEYOR_TRUST_PRE_PACK(P)                                \
+    pre<std::contracts::never_proven_conveyor_v>(                             \
+                       (std::is_object_address(__builtin_addressof(P)) && ...))
 #else
 #define BSLS_ASSERT_CONVEYOR_OBJECT(P) do {} while (false)
 #define BSLS_ASSERT_CONVEYOR_REF(X) (X)
@@ -2149,6 +2152,7 @@ BSLS_IDENT("$Id: $")
 #define BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(P)
 #define BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
 #define BSLS_ASSERT_CONVEYOR_TRUST_PRE(X)
+#define BSLS_ASSERT_CONVEYOR_TRUST_PRE_PACK(P)
 #endif
 
                              // ==================
@@ -2750,9 +2754,13 @@ struct AssertConveyorUtil {
     // CLASS METHODS
 
     /// Return the specified `reference`, an object (an assertion nothing
-    /// proves; see `BSLS_ASSERT_CONVEYOR_OBJECT`).
+    /// proves; see `BSLS_ASSERT_CONVEYOR_OBJECT`).  Its caller owes nothing
+    /// for `reference`: the precondition is never proven, standing in for
+    /// the one a reference parameter would otherwise get.
     template <class t_TYPE>
     static constexpr t_TYPE& object(t_TYPE& reference)
+        pre<std::contracts::never_proven_conveyor_v>(
+                        std::is_object_address(__builtin_addressof(reference)))
         post<std::contracts::never_proven_conveyor_v>(
                    result: std::is_object_address(__builtin_addressof(result)))
     {

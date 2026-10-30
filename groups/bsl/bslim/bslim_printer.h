@@ -1444,6 +1444,7 @@ void Printer_Helper::printTupleElements(Printer&       printer,
                                         const t_TUPLE& data,
                                         bsl::integral_constant<int, t_SIZE>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     printTupleElements(printer, data, bsl::integral_constant<int, t_SIZE-1>{});
     printer.printValue(bsl::get<t_SIZE-1>(data));
 }

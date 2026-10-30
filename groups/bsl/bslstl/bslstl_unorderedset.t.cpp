@@ -723,6 +723,7 @@ void testErase(CONTAINER& mX)
     key = keyForValue<CONTAINER>(*cIter);
     const_iterator next = cIter;
     size_t         bucketA = x.bucket(key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
     while (bucketA == x.bucket(keyForValue<CONTAINER>(*++next))) {}
 
     // cIter/next now point to elements either side of a key-range
@@ -745,10 +746,12 @@ void testErase(CONTAINER& mX)
     cIter = x.begin();
     key = keyForValue<CONTAINER>(*cIter);
     next = cIter;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
     while (key == keyForValue<CONTAINER>(*++next)) {
         cIter = next;
     }
     key = keyForValue<CONTAINER>(*next);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&next);
     while (key == keyForValue<CONTAINER>(*++next)) {}
     ++next;
     // cIter/next now point to elements either side of a key-range
@@ -5232,7 +5235,7 @@ if (verbose) {
 
         for (int i = 0; i != MAX_SAMPLE; ++i) {
             typedef bsl::pair<TestType::iterator, bool> InsertResult;
-            InsertResult iterBool = mX.insert(dataSamples[i]);
+            InsertResult iterBool = mX.insert(BSLS_ASSERT_CONVEYOR_REF(dataSamples[i]));
             ASSERT(!iterBool.second); // Already inserted with initial value
             ASSERT(X.end() != iterBool.first);
             ASSERT(*iterBool.first == dataSamples[i]);
@@ -5254,7 +5257,7 @@ if (verbose) {
 
         for (int i = 0; i != MAX_SAMPLE; ++i) {
             typedef bsl::pair<TestType::iterator, bool> InsertResult;
-            InsertResult iterBool = mY.insert(dataSamples[i]);
+            InsertResult iterBool = mY.insert(BSLS_ASSERT_CONVEYOR_REF(dataSamples[i]));
             ASSERT(iterBool.second); // Successfully inserted
             ASSERT(Y.end() != iterBool.first);
             ASSERT(*iterBool.first == dataSamples[i]);

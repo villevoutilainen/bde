@@ -598,7 +598,9 @@ extern "C" void * testThread3(void *arg)
 
     TradeThreadArgument *processTrade(TradeThreadArgument *arguments)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(arguments);
         int retval;
+        BSLS_ASSERT_CONVEYOR_OBJECT(arguments->d_trades_p);
         Trade &trade = (*arguments->d_trades_p)[arguments->d_tradeNum];
 
         retval = validateTrade(trade);

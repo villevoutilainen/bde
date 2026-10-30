@@ -752,13 +752,16 @@ struct Optional_DataImp {
     /// Return the `value_type` object in `d_buffer` with const
     /// qualification adjusted to match that of `t_TYPE`.  The behavior is
     /// undefined unless `this->hasValue() == true`.
-    t_TYPE&  value() & BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    t_TYPE&& value() && BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    t_TYPE&  value() & BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    t_TYPE&& value() && BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # else
     /// Return the `value_type` object in `d_buffer` with const
     /// qualification adjusted to match that of `t_TYPE`.  The behavior is
     /// undefined unless `this->hasValue() == true`.
-    t_TYPE& value() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    t_TYPE& value() BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 
     // ACCESSORS
@@ -770,14 +773,17 @@ struct Optional_DataImp {
     /// Return the `value_type` object in `d_buffer` with const
     /// qualification adjusted to match that of `t_TYPE`.  The behavior is
     /// undefined unless `this->hasValue() == true`.
-    const t_TYPE&  value() const & BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    const t_TYPE&& value() const && BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const t_TYPE&  value() const & BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const t_TYPE&& value() const && BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 # else
     /// Return the `value_type` object in `d_buffer` with const qualification
     /// adjusted to match that of `t_TYPE`.  The behavior is undefined unless
     /// `this->hasValue() == true`.
-    const t_TYPE& value() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const t_TYPE& value() const BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 # endif  // BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS else
 };
 
@@ -3646,6 +3652,7 @@ inline
 Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
                                                  const Optional_Base& original)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     if (original.has_value()) {
         emplace(*original);
     }
@@ -3660,6 +3667,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
 : d_allocator(MoveUtil::access(original).get_allocator())
 {
     Optional_Base& lvalue = original;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
 
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
@@ -3700,6 +3708,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     Optional_Base<t_ANY_TYPE>& lvalue = original;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
     }
@@ -3717,6 +3726,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     Optional_Base<t_ANY_TYPE>& lvalue = original;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
     }
@@ -3817,6 +3827,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
                                                 const Optional_Base& original)
 : d_allocator(allocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     if (original.has_value()) {
         emplace(*original);
     }
@@ -3831,6 +3842,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
 : d_allocator(allocator)
 {
     Optional_Base& lvalue = original;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
 
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
@@ -3878,6 +3890,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::Optional_Base(
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     Optional_Base<t_ANY_TYPE>& lvalue = original;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
     }
@@ -4022,6 +4035,7 @@ void Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::swap(Optional_Base& other)
                            bsl::is_nothrow_move_constructible<t_TYPE>::value &&
                            bsl::is_nothrow_swappable<t_TYPE>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     BSLS_ASSERT_NONCONVEYOR(d_allocator == other.d_allocator);
 
     if (this->has_value() && other.has_value()) {
@@ -4116,6 +4130,7 @@ inline
 Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>&
 Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator=(const Optional_Base& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (rhs.has_value()) {
         if (this->has_value()) {
             d_value.value() = *rhs;
@@ -4137,6 +4152,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator=(
                              BloombergLP::bslmf::MovableRef<Optional_Base> rhs)
 {
     Optional_Base& lvalue = rhs;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
 
     if (lvalue.has_value()) {
         if (this->has_value()) {
@@ -4660,6 +4676,7 @@ Optional_Base<t_TYPE, false>::Optional_Base(
                              bsl::is_nothrow_move_constructible<t_TYPE>::value)
 {
     Optional_Base& lvalue = original;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
 
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
@@ -4698,6 +4715,7 @@ Optional_Base<t_TYPE, false>::Optional_Base(
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(__builtin_addressof(original));
     Optional_Base<t_ANY_TYPE>& lvalue = original;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
     if (lvalue.has_value()) {
         emplace(MoveUtil::move(*lvalue));
     }
@@ -5004,6 +5022,7 @@ Optional_Base<t_TYPE, false>::operator=(
                              BloombergLP::bslmf::MovableRef<Optional_Base> rhs)
 {
     Optional_Base& lvalue = rhs;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
     if (lvalue.has_value()) {
         if (this->has_value()) {
             d_value.value() = MoveUtil::move(*lvalue);
@@ -5635,6 +5654,7 @@ BSLSTL_OPTIONAL_ENABLE_ASSIGN_FROM_DERIVED(t_TYPE, t_DERIVED) &
 optional<t_TYPE>::operator=(BloombergLP::bslmf::MovableRef<t_DERIVED> rhs)
 {
     BaseType& lvalue = rhs;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
     BaseType::operator=(MoveUtil::move(lvalue));
     return *this;
 }

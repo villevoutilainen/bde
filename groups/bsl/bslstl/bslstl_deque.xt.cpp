@@ -2420,11 +2420,15 @@ struct TestDriver {
 
     template <class T>
     static bslmf::MovableRef<T> testArg(T& t, bsl::true_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return MoveUtil::move(t);
     }
     template <class T>
     static const T&             testArg(T& t, bsl::false_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return t;
     }
@@ -2961,7 +2965,7 @@ bsl::vector<TYPE> TestDriver<TYPE,ALLOC>::gV(const char *spec)
     bsl::vector<TYPE> result;
     for (int i = 0; spec[i]; ++i) {
         if ('A' <= spec[i] && spec[i] <= 'E') {
-            result.push_back(VALUES[spec[i] - 'A']);
+            result.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[spec[i] - 'A']));
         }
         else if ('<' == spec[i]) {
             result.pop_back();
@@ -10797,7 +10801,8 @@ void TestDriver<TYPE,ALLOC>::testCase13()
         ASSERT(~(size_t)0 / sizeof(TYPE) >= X.max_size());
 
         Int64 initBlocks = oa.numBlocksInUse();
-        mX.push_back(TEST_VALUES[0]);
+        BSLS_ASSERT_CONVEYOR_OBJECT(TEST_VALUES);
+        mX.push_back(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[0]));
         numAllocsPerItem = oa.numBlocksInUse() - initBlocks;
     }
 
@@ -10851,7 +10856,7 @@ void TestDriver<TYPE,ALLOC>::testCase13()
 
         // Note that `findRoomierEnd` may both deallocate and allocate.
 
-        mX.push_back(TEST_VALUES[2]);
+        mX.push_back(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[2]));
         typename Obj::const_iterator it = mX.begin();
 
         int room;
@@ -10860,12 +10865,13 @@ void TestDriver<TYPE,ALLOC>::testCase13()
             if (0 < room) {
                 // More room in front.
 
-                mX.push_front(TEST_VALUES[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(TEST_VALUES);
+                mX.push_front(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[0]));
             }
             else {
                 // Symmetrical or more room in back.
 
-                mX.push_back(TEST_VALUES[1]);
+                mX.push_back(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[1]));
             }
             newBlocks = oa.numBlocksInUse();
             ASSERTV(newBlocks <= numAllocsPerItem * (int) X.size() +
@@ -10954,11 +10960,12 @@ void TestDriver<TYPE,ALLOC>::testCase13()
 
         ASSERT(2 == initBlocks);   // first block + array of block pointers
 
-        mX.push_back(TEST_VALUES[2]);
+        mX.push_back(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[2]));
         typename Obj::const_iterator it = mX.begin();
 
         while (!backIsFull) {
-            mX.push_back(TEST_VALUES[0]);
+            BSLS_ASSERT_CONVEYOR_OBJECT(TEST_VALUES);
+            mX.push_back(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[0]));
             const size_type BACK_CAPACITY  = X.capacity();
 
             // `push_back` does not affect `capacity` if less room at the
@@ -10990,7 +10997,7 @@ void TestDriver<TYPE,ALLOC>::testCase13()
         iterations = 0;   // Reset safety-valve counter
 
         while (!frontIsFull) {
-            mX.push_front(TEST_VALUES[1]);
+            mX.push_front(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[1]));
             const size_type FRONT_CAPACITY = X.capacity();
             ASSERTV(FRONT_CAPACITY,   lastCapacity,
                     FRONT_CAPACITY == lastCapacity ||
@@ -11000,7 +11007,7 @@ void TestDriver<TYPE,ALLOC>::testCase13()
             if (frontIsFull) {
                 // Restore the previously popped element to fill deque.
 
-                mX.push_back(TEST_VALUES[1]);
+                mX.push_back(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[1]));
             }
 
             newBlocks = oa.numBlocksInUse();
@@ -11080,11 +11087,12 @@ void TestDriver<TYPE,ALLOC>::testCase13()
         bool      frontIsFull = 0 == INITIAL_CAPACITY;
         size_type iterations  = 0;
 
-        mX.push_front(TEST_VALUES[2]);
+        mX.push_front(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[2]));
         typename Obj::const_iterator it = mX.begin();
 
         while (!frontIsFull) {
-            mX.push_front(TEST_VALUES[0]);
+            BSLS_ASSERT_CONVEYOR_OBJECT(TEST_VALUES);
+            mX.push_front(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[0]));
             const size_type FRONT_CAPACITY = X.capacity();
 
             // `push_front` does not affect `capacity` if less room at the
@@ -11122,7 +11130,7 @@ void TestDriver<TYPE,ALLOC>::testCase13()
         iterations = 0;   // Reset safety-valve counter
 
         while (!backIsFull) {
-            mX.push_back(TEST_VALUES[1]);
+            mX.push_back(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[1]));
             const size_type BACK_CAPACITY  = X.capacity();
 
             // `push_back` does not affect `capacity` if less room at the
@@ -11136,7 +11144,8 @@ void TestDriver<TYPE,ALLOC>::testCase13()
             if (backIsFull) {
                 // Restore the previously popped element to fill deque.
 
-                mX.push_front(TEST_VALUES[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(TEST_VALUES);
+                mX.push_front(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[0]));
             }
 
             newBlocks = oa.numBlocksInUse();
@@ -11234,10 +11243,11 @@ void TestDriver<TYPE,ALLOC>::testCase13()
             int room;
             while (0 != (room = findRoomierEnd(&mX))) {
                 if (0 < room) {
-                    mX.push_front(TEST_VALUES[1]);
+                    mX.push_front(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[1]));
                 }
                 else if (0 > room) {
-                    mX.push_back( TEST_VALUES[0]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(TEST_VALUES);
+                    mX.push_back( BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[0]));
                 }
             }
             ASSERT(0 == findRoomierEnd(&mX));
@@ -11250,8 +11260,8 @@ void TestDriver<TYPE,ALLOC>::testCase13()
 
             numBlocksBefore = oa.numBlocksInUse();
             for (size_t tk = 0; tk < space; ++tk) {
-                mX.push_back( TEST_VALUES[2]);
-                mX.push_front(TEST_VALUES[3]);
+                mX.push_back( BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[2]));
+                mX.push_front(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[3]));
             }
             numBlocksAfter = oa.numBlocksInUse();
             const size_t distToV = it - mX.begin();
@@ -11300,8 +11310,9 @@ void TestDriver<TYPE,ALLOC>::testCase13()
                  (BSLS_UTIL_ADDRESSOF(X[1]) == BSLS_UTIL_ADDRESSOF(X[0]) + 1));
             size_t preSuperCap = X.size();
             numBlocksBefore = oa.numBlocksInUse();
-            mX.push_back( TEST_VALUES[0]);
-            mX.push_front(TEST_VALUES[1]);
+            BSLS_ASSERT_CONVEYOR_OBJECT(TEST_VALUES);
+            mX.push_back( BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[0]));
+            mX.push_front(BSLS_ASSERT_CONVEYOR_REF(TEST_VALUES[1]));
             numBlocksAfter = oa.numBlocksInUse();
             typename Obj::iterator itB = mX.begin() + distToV + 1;
             ASSERT(v ==   *itB);
@@ -12715,7 +12726,8 @@ void TestDriver<TYPE,ALLOC>::testCase10()
     }
     {
         Obj mX(&oa);  const Obj& X = mX;
-        mX.push_back(VALUES[0]);
+        BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+        mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
         ASSERT(&oa == X[0].allocator());
     }
 
@@ -14336,6 +14348,7 @@ void TestDriver<TYPE,ALLOC>::testCase3()
 
         Obj         mX(xoa);
         const Int64 PRE_A = oa.numAllocations();
+        BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
         mX.push_back(VALUES[0]);
         numAllocsPerItem = oa.numAllocations() - PRE_A;
     }
@@ -14483,6 +14496,7 @@ void TestDriver<TYPE,ALLOC>::testCase3()
 
             // Confirm that one additional push allocates a fresh data page.
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(values);
             mX.push_back(values[0]);          // push_back onto next data page
             const Int64 CB = oa.numAllocations();
 
@@ -14518,6 +14532,7 @@ void TestDriver<TYPE,ALLOC>::testCase3()
             (void) gg(&mX, SPEC);    // generate
 
             const Int64 PRE_PUSH  = oa.numAllocations();
+            BSLS_ASSERT_CONVEYOR_OBJECT(values);
             mX.push_back(values[0]);
             const Int64 POST_PUSH = oa.numAllocations();
 
@@ -14606,7 +14621,7 @@ void TestDriver<TYPE,ALLOC>::testCase3()
 
             // Confirm that one additional push allocates a fresh data page.
 
-            mX.push_front(VALUES[1]);
+            mX.push_front(BSLS_ASSERT_CONVEYOR_REF(VALUES[1]));
             const Int64 CF = oa.numAllocations();
 
             // Reconfirm expected value, including expected length.
@@ -14641,6 +14656,7 @@ void TestDriver<TYPE,ALLOC>::testCase3()
             (void) gg(&mX, SPEC);    // generate
 
             const Int64 PRE_PUSH  = oa.numAllocations();
+            BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
             mX.push_front(VALUES[0]);
             const Int64 POST_PUSH = oa.numAllocations();
 
@@ -14847,6 +14863,7 @@ void TestDriver<TYPE,ALLOC>::testCase3()
             // Confirm pushing to either end allocates exactly one more page.
 
             Int64 prePush  = oa.numAllocations();
+            BSLS_ASSERT_CONVEYOR_OBJECT(values);
             mX.push_back(values[0]);
             Int64 postPush = oa.numAllocations();
 
@@ -14855,6 +14872,7 @@ void TestDriver<TYPE,ALLOC>::testCase3()
             ASSERT(prePush + 1 + numAllocsPerItem == postPush);
 
             prePush = oa.numAllocations();
+            BSLS_ASSERT_CONVEYOR_OBJECT(values);
             mX.push_front(values[0]);
             postPush = oa.numAllocations();
 
@@ -15034,7 +15052,7 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
             Obj mX;  const Obj& X = mX;
 
             for (size_t i = 0; i < li; ++i) {
-                mX.push_back(VALUES[i % NUM_VALUES]);
+                mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
             }
 
             LOOP_ASSERT(li, li == X.size());
@@ -15043,7 +15061,7 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
                 printf("\t\t\tBEFORE: "); P_(X.capacity()); P(X);
             }
 
-            mX.push_back(VALUES[li % NUM_VALUES]);
+            mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[li % NUM_VALUES]));
 
             if (veryVerbose){
                 printf("\t\t\tAFTER : "); P_(X.capacity()); P(X);
@@ -15075,7 +15093,7 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
             Obj mX(xoa);  const Obj& X = mX;
 
             for (size_t i = 0; i < li; ++i) {
-                mX.push_back(VALUES[i % NUM_VALUES]);
+                mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
             }
 
             LOOP_ASSERT(li, li == X.size());
@@ -15088,7 +15106,7 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
                 P_(BB); P_(B); P_(X.capacity()); P(X);
             }
 
-            mX.push_back(VALUES[li % NUM_VALUES]);
+            mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[li % NUM_VALUES]));
 
             const Int64 AA = oa.numBlocksTotal();
             const Int64 A  = oa.numBlocksInUse();
@@ -15124,7 +15142,7 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
             Obj mX;  const Obj& X = mX;
 
             for (size_t i = 0; i < li; ++i) {
-                mX.push_back(VALUES[i % NUM_VALUES]);
+                mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
             }
 
             if (veryVerbose){
@@ -15144,7 +15162,7 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
             LOOP_ASSERT(li, 0 == X.size());
 
             for (size_t i = 0; i < li; ++i) {
-                mX.push_back(VALUES[i % NUM_VALUES]);
+                mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
             }
 
             LOOP_ASSERT(li, li == X.size());
@@ -15173,7 +15191,7 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
             Obj mX(xoa);  const Obj& X = mX;
 
             for (size_t i = 0; i < li; ++i) {
-                mX.push_back(VALUES[i % NUM_VALUES]);
+                mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
             }
 
             LOOP_ASSERT(li, li == X.size());
@@ -15197,7 +15215,7 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
             }
 
             for (size_t i = 0; i < li; ++i) {
-                mX.push_back(VALUES[i % NUM_VALUES]);
+                mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
             }
 
             LOOP_ASSERT(li, li == X.size());
@@ -15240,7 +15258,7 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
                 Obj mX(xoa);  const Obj& X = mX;                         // 1.
                 for (size_t i = 0; i < li; ++i) {                        // 2.
                     ExceptionProctor<Obj, ALLOC> proctor(&mX, X, L_);
-                    mX.push_back(VALUES[i % NUM_VALUES]);
+                    mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
                     proctor.release();
                 }
 
@@ -15287,7 +15305,8 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
                     Obj mX(xoa);  const Obj& X = mX;                    // 1.
                     for (k = 0; k < i; ++k) {                           // 2.
                         ExceptionProctor<Obj, ALLOC> proctor(&mX, X, L_);
-                        mX.push_back(VALUES[0]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+                        mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
                         proctor.release();
                     }
 
@@ -15301,7 +15320,7 @@ void TestDriver<TYPE,ALLOC>::testCase2a()
 
                     for (k = 0; k < j; ++k) {                           // 6.
                         ExceptionProctor<Obj, ALLOC> proctor(&mX, X, L_);
-                        mX.push_back(VALUES[k % NUM_VALUES]);
+                        mX.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[k % NUM_VALUES]));
                         proctor.release();
                     }
 
@@ -15788,7 +15807,8 @@ void TestDriver<TYPE,ALLOC>::testCase1()
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (verbose) printf("\n 3) Append an element value A to x1)."
                         "\t\t\t{ x1:A x2: }\n");
-    mX1.push_back(VALUES[0]);
+    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+    mX1.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
     if (verbose) { T_;  P(X1); }
 
     if (verbose) printf(
@@ -15804,7 +15824,8 @@ void TestDriver<TYPE,ALLOC>::testCase1()
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (verbose) printf("\n 4) Append the same element value A to x2)."
                          "\t\t{ x1:A x2:A }\n");
-    mX2.push_back(VALUES[0]);
+    BSLS_ASSERT_CONVEYOR_OBJECT(VALUES);
+    mX2.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[0]));
     if (verbose) { T_;  P(X2); }
 
     if (verbose) printf(
@@ -15820,7 +15841,7 @@ void TestDriver<TYPE,ALLOC>::testCase1()
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (verbose) printf("\n 5) Append another element value B to x2)."
                          "\t\t{ x1:A x2:AB }\n");
-    mX2.push_back(VALUES[1]);
+    mX2.push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[1]));
     if (verbose) { T_;  P(X2); }
 
     if (verbose) printf(
@@ -16326,7 +16347,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             // Push in 1000 objects.
             for (int j = 0; j < LENGTH_L; ++j) {
-                U_OBJ(*deques[i]).push_back(VALUES[j % NUM_VALUES]);
+                U_OBJ(*deques[i]).push_back(BSLS_ASSERT_CONVEYOR_REF(VALUES[j % NUM_VALUES]));
             }
         }
         time = t.elapsedTime();
@@ -16355,7 +16376,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             // Push in 1000 objects.
             for (int j = 0; j < LENGTH_L; ++j) {
-                U_OBJ(*deques[i]).push_front(VALUES[j % NUM_VALUES]);
+                U_OBJ(*deques[i]).push_front(BSLS_ASSERT_CONVEYOR_REF(VALUES[j % NUM_VALUES]));
             }
         }
         time = t.elapsedTime();
@@ -16446,7 +16467,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             for (int j = 0; j < LENGTH_L; ++j) {
                 U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).begin(),
-                                         VALUES[i % NUM_VALUES]);
+                                         BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
             }
         }
         time = t.elapsedTime();
@@ -16471,7 +16492,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).begin(), LENGTH_L,
-                                     VALUES[i % NUM_VALUES]);
+                                     BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
         }
         time = t.elapsedTime();
 
@@ -16499,7 +16520,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             for (int j = 0; j < LENGTH_L; ++j) {
                 U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).end(),
-                                         VALUES[i % NUM_VALUES]);
+                                         BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
             }
         }
         time = t.elapsedTime();
@@ -16525,7 +16546,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         t.reset(); t.start();
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).end(), LENGTH_L,
-                                     VALUES[i % NUM_VALUES]);
+                                     BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
         }
         time = t.elapsedTime();
 
@@ -16555,7 +16576,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
         for (int i = 0; i < NUM_DEQUE_S; ++i) {
             for (unsigned int j = 0; j < sizes[i]; ++j) {
                 U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).begin() + j,
-                                         VALUES[i % NUM_VALUES]);
+                                         BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
             }
         }
         time = t.elapsedTime();
@@ -16585,7 +16606,7 @@ void TestDriver<TYPE,ALLOC>::testCaseM1()
             // Insert in middle.
             U_OBJ(*deques[i]).insert(U_OBJ(*deques[i]).begin() + sizes[i] / 2,
                                      LENGTH_S,
-                                     VALUES[i % NUM_VALUES]);
+                                     BSLS_ASSERT_CONVEYOR_REF(VALUES[i % NUM_VALUES]));
         }
         time = t.elapsedTime();
 

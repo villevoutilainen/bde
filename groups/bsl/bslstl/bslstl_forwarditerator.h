@@ -211,7 +211,8 @@ class ForwardIterator
     /// modifiable iterator.  The behavior is undefined if, on entry, this
     /// iterator has the past-the-end value for an iterator over the
     /// underlying sequence.
-    ForwardIterator& operator++();
+    ForwardIterator& operator++()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a modifiable reference to the implementation object.
     ITER_IMP& imp();
@@ -352,6 +353,7 @@ inline
 bslstl::ForwardIterator<T,ITER_IMP,TAG_TYPE>
 bslstl::operator++(ForwardIterator<T,ITER_IMP,TAG_TYPE>& iter, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
     ForwardIterator<T,ITER_IMP,TAG_TYPE> tmp(iter);
     ++iter;
     return tmp;

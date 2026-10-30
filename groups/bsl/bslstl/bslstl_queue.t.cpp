@@ -5290,6 +5290,7 @@ template <class VALUE, class CONTAINER>
 void TestDriver<VALUE, CONTAINER>::testCase1_NoAlloc(const VALUE  *testValues,
                                                      size_t        numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(testValues);
     // --------------------------------------------------------------------
     // BREATHING TEST:
     //   This case exercises (but does not fully test) basic functionality.
@@ -5386,7 +5387,7 @@ void TestDriver<VALUE, CONTAINER>::testCase1_NoAlloc(const VALUE  *testValues,
     if (veryVerbose) printf("\n 5) Append another element of value B to x2)."
                             "\t\t{ x1:A x2:AB }\n");
 
-    mX2.push(testValues[1]);
+    mX2.push(BSLS_ASSERT_CONVEYOR_REF(testValues[1]));
 
     ASSERT(            2 == X2.size ());
     ASSERT(testValues[0] == X2.front());
@@ -5486,6 +5487,7 @@ template <class VALUE, class CONTAINER>
 void TestDriver<VALUE, CONTAINER>::testCase1(const VALUE  *testValues,
                                              size_t        numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(testValues);
     // --------------------------------------------------------------------
     // BREATHING TEST:
     //   This case exercises (but does not fully test) basic functionality.
@@ -5584,7 +5586,7 @@ void TestDriver<VALUE, CONTAINER>::testCase1(const VALUE  *testValues,
     if (veryVerbose) printf("\n 5) Append another element of value B to x2)."
                             "\t\t{ x1:A x2:AB }\n");
 
-    mX2.push(testValues[1]);
+    mX2.push(BSLS_ASSERT_CONVEYOR_REF(testValues[1]));
 
     ASSERT(            2 == X2.size ());
     ASSERT(testValues[0] == X2.front());

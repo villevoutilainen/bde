@@ -271,13 +271,15 @@ class TreeIterator
     /// reference providing modifiable access to this iterator.  The
     /// behavior is undefined unless the iterator refers to an element in
     /// the tree.
-    TreeIterator& operator++();
+    TreeIterator& operator++()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Move this iterator to the previous element in the tree and return a
     /// reference providing modifiable access to this iterator.  The
     /// behavior is undefined unless the iterator refers to the past-the-end
     /// address or the non-leftmost element in the tree.
-    TreeIterator& operator--();
+    TreeIterator& operator--()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -433,6 +435,7 @@ inline
 TreeIterator<VALUE, NODE, DIFFERENCE_TYPE>
 operator++(TreeIterator<VALUE, NODE, DIFFERENCE_TYPE>& iter, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
     TreeIterator<VALUE, NODE, DIFFERENCE_TYPE> temp = iter;
     ++iter;
     return temp;
@@ -443,6 +446,7 @@ inline
 TreeIterator<VALUE, NODE, DIFFERENCE_TYPE>
 operator--(TreeIterator<VALUE, NODE, DIFFERENCE_TYPE>& iter, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
     TreeIterator<VALUE, NODE, DIFFERENCE_TYPE> temp = iter;
     --iter;
     return temp;

@@ -1728,6 +1728,7 @@ class map {
             // Note: implemented inline due to Sun CC compilation error.
 
             const LOOKUP_KEY& lvalue = key;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
 
             int comparisonResult;
             BloombergLP::bslalg::RbTreeNode *insertLocation =
@@ -1790,6 +1791,7 @@ class map {
             // Note: implemented inline due to Sun CC compilation error.
 
             const LOOKUP_KEY& lvalue = key;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
 
             BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
@@ -2803,12 +2805,17 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::constructFromRange(
     // right child of the previous node, and can call 'insertAt' without
     // 'findUniqueInsertLocation'.
 
-    insert(*first);
+    {
+        const value_type& firstValue = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+        insert(firstValue);
+    }
     BloombergLP::bslalg::RbTreeNode *prevNode = d_tree.rootNode();
 
     while (++first != last) {
 
         const value_type& value = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(value));
         if (this->comparator()(value.first, *prevNode)) {
             // The values are not in order, so insert them normally.
             insert(value);
@@ -2868,12 +2875,18 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::constructFromRange(
     // right child of the previous node, and can call 'insertAt' without
     // 'findUniqueInsertLocation'.
 
-    insert(*first); --numElements;
+    {
+        const value_type& firstValue = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+        insert(firstValue);
+    }
+    --numElements;
     BloombergLP::bslalg::RbTreeNode *prevNode = d_tree.rootNode();
 
     while (++first != last) {
 
         const value_type& value = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(value));
         if (this->comparator()(value.first, *prevNode)) {
             // The values are not in order, so insert them normally.
             insert(value); --numElements;
@@ -2934,7 +2947,11 @@ void map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insertFromRange(
             nodeFactory().reserveNodes(numElements);
         }
 
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         ++first;
     }
 }
@@ -2964,7 +2981,11 @@ void map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insertFromRange(
             nodeFactory().reserveNodes(numElements);
         }
 
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         --numElements;
         ++first;
     }
@@ -3230,6 +3251,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::operator[](
                                   BloombergLP::bslmf::MovableRef<key_type> key)
 {
     key_type& lvalue = key;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
 
     iterator iter = lower_bound(lvalue);
     if (iter == end() || this->comparator()(lvalue, *iter.node())) {
@@ -3372,7 +3394,11 @@ void map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(const_iterator first,
                                                     const_iterator last)
 {
     while (first != last) {
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         ++first;
     }
 }
@@ -3824,6 +3850,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                                  Args&&...                                args)
 {
     key_type& lvalue = key;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
 
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
@@ -3865,6 +3892,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                                  Args&&...                                args)
 {
     key_type& lvalue = key;
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());

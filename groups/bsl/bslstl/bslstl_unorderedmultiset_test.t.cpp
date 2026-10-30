@@ -2060,12 +2060,16 @@ class TestDriver {
 
     template <class T>
     static bslmf::MovableRef<T> testArg(T& t, bsl::true_type )
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return MoveUtil::move(t);
     }
 
     template <class T>
     static const T&             testArg(T& t, bsl::false_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return t;
     }
@@ -2494,12 +2498,12 @@ void TestDriver<KEY, HASH, EQUAL, ALLOC>::testCase38()
 
         for (size_t j = 0; j < initialLen; ++j)
         {
-            mX.insert(initial[j]);
+            mX.insert(BSLS_ASSERT_CONVEYOR_REF(initial[j]));
         }
 
         for (size_t j = 0; j < resultsLen; ++j)
         {
-            mRes.insert(results[j]);
+            mRes.insert(BSLS_ASSERT_CONVEYOR_REF(results[j]));
         }
 
         EqPred<KEY> pred(DATA[i].d_element);

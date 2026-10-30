@@ -125,6 +125,7 @@ void hashTuple_Util<BACK_INDEX, HASH_ALGORITHM, TUPLE_TYPE>::visit(
                                                    HASH_ALGORITHM&   algorithm,
                                                    const TUPLE_TYPE& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     // Hash current element.
 
     const std::size_t tupleSize = std::tuple_size<TUPLE_TYPE>::value;

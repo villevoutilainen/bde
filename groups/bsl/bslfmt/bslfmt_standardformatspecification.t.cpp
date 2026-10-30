@@ -270,6 +270,7 @@ void verifyParsedState(
           const TestSpecificationGenerator<t_CHAR>&              generator,
           typename StandardFormatSpecification<t_CHAR>::Category category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     typedef TestSpecificationGenerator<t_CHAR>  Generator;
     typedef StandardFormatSpecification<t_CHAR> Obj;
 
@@ -664,6 +665,7 @@ void verifyPostprocessedState(
                       int                                        arg1,
                       int                                        arg2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     const t_CHAR * const SPEC = generator.spec().c_str();
     ASSERTV(SPEC,
             Enums::e_STATE_POSTPROCESSED == specification.processingState());

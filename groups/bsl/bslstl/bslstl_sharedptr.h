@@ -2844,7 +2844,8 @@ class shared_ptr {
     /// unless this shared pointer refers to an object, and `ELEMENT_TYPE`
     /// is not (potentially `const` or `volatile` qualified) `void`.
     typename add_lvalue_reference<ELEMENT_TYPE>::type
-    operator*() const BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    operator*() const BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the address providing modifiable access to the object
     /// referred to by this shared pointer, or 0 if this shared pointer does

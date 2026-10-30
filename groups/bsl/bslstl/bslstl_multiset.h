@@ -2102,12 +2102,17 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::constructFromRange(INPUT_ITERATOR first,
     // right child of the previous node, and can call 'insertAt' without
     // 'findUniqueInsertLocation'.
 
-    insert(*first);
+    {
+        const value_type& firstValue = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+        insert(firstValue);
+    }
     BloombergLP::bslalg::RbTreeNode *prevNode = d_tree.rootNode();
 
     while (++first != last) {
 
         const value_type& value = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(value));
         if (this->comparator()(value, *prevNode)) {
             // The values are not in order, so insert them normally.
             insert(value);
@@ -2166,12 +2171,18 @@ void multiset<KEY, COMPARATOR, ALLOCATOR>::constructFromRange(
     // right child of the previous node, and can call 'insertAt' without
     // 'findUniqueInsertLocation'.
 
-    insert(*first); --numElements;
+    {
+        const value_type& firstValue = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+        insert(firstValue);
+    }
+    --numElements;
     BloombergLP::bslalg::RbTreeNode *prevNode = d_tree.rootNode();
 
     while (++first != last) {
 
         const value_type& value = *first;
+        BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(value));
         if (this->comparator()(value, *prevNode)) {
             // The values are not in order, so insert them normally.
             insert(value); --numElements;
@@ -2230,7 +2241,11 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::insertFromRange(INPUT_ITERATOR first,
                BloombergLP::bslstl::IteratorUtil::insertDistance(first, last));
         }
 
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         ++first;
     }
 }
@@ -2260,7 +2275,11 @@ void multiset<KEY, COMPARATOR, ALLOCATOR>::insertFromRange(
             nodeFactory().reserveNodes(numElements);
         }
 
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         --numElements;
         ++first;
     }
@@ -2405,12 +2424,17 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::multiset(
         // inserted as the right child of the previous node, and can call
         // 'insertAt' without 'findUniqueInsertLocation'.
 
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         BloombergLP::bslalg::RbTreeNode *prevNode = d_tree.rootNode();
         while (++first != last) {
             // The values are not in order, so insert them normally.
 
             const value_type& value = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(value));
             if (this->comparator()(value, *prevNode)) {
                 insert(value);
                 insert(++first, last);
@@ -2458,12 +2482,17 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::multiset(
         // inserted as the right child of the previous node, and can call
         // 'insertAt' without 'findUniqueInsertLocation'.
 
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         BloombergLP::bslalg::RbTreeNode *prevNode = d_tree.rootNode();
         while (++first != last) {
             // The values are not in order, so insert them normally.
 
             const value_type& value = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(value));
             if (this->comparator()(value, *prevNode)) {
                 insert(value);
                 insert(++first, last);
@@ -2733,7 +2762,11 @@ void multiset<KEY, COMPARATOR, ALLOCATOR>::insert(INPUT_ITERATOR first,
 
             nodeFactory().reserveNodes(numElements);
         }
-        insert(*first);
+        {
+            const value_type& firstValue = *first;
+            BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(firstValue));
+            insert(firstValue);
+        }
         ++first;
     }
 }

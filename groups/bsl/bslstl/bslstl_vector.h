@@ -2591,6 +2591,7 @@ inline
 vector_UintPtrConversionIterator<VALUE_TYPE, ITERATOR>&
 vector_UintPtrConversionIterator<VALUE_TYPE, ITERATOR>::operator++()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ++d_iter;
     return *this;
 }
@@ -2611,6 +2612,7 @@ inline
 BloombergLP::bsls::Types::UintPtr
 vector_UintPtrConversionIterator<VALUE_TYPE, ITERATOR>::operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     VALUE_TYPE const ptr = *d_iter;
     return reinterpret_cast<UintPtr>(ptr);
 }
@@ -4944,6 +4946,7 @@ typename vector<VALUE_TYPE *, ALLOCATOR>::iterator
 vector<VALUE_TYPE *, ALLOCATOR>::begin() BSLS_KEYWORD_NOEXCEPT
                                                           BSLS_KEYWORD_CONVEYOR
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (iterator) d_impl.begin();
 }
 
@@ -4953,6 +4956,7 @@ typename vector<VALUE_TYPE *, ALLOCATOR>::iterator
 vector<VALUE_TYPE *, ALLOCATOR>::end() BSLS_KEYWORD_NOEXCEPT
                                                           BSLS_KEYWORD_CONVEYOR
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (iterator) d_impl.end();
 }
 
@@ -4961,6 +4965,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::reverse_iterator
 vector<VALUE_TYPE *, ALLOCATOR>::rbegin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator((iterator) d_impl.rbegin().base());
 }
 
@@ -4969,6 +4974,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::reverse_iterator
 vector<VALUE_TYPE *, ALLOCATOR>::rend() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator((iterator) d_impl.rend().base());
 }
 
@@ -4980,6 +4986,7 @@ typename vector<VALUE_TYPE *, ALLOCATOR>::size_type
 vector<VALUE_TYPE *, ALLOCATOR>::size() const BSLS_KEYWORD_NOEXCEPT
                                                           BSLS_KEYWORD_CONVEYOR
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.size();
 }
 
@@ -4988,6 +4995,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::size_type
 vector<VALUE_TYPE *, ALLOCATOR>::capacity() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.capacity();
 }
 
@@ -4997,6 +5005,7 @@ bool
 vector<VALUE_TYPE *, ALLOCATOR>::empty() const BSLS_KEYWORD_NOEXCEPT
                                                           BSLS_KEYWORD_CONVEYOR
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.empty();
 }
 
@@ -5007,6 +5016,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::reference
 vector<VALUE_TYPE *, ALLOCATOR>::operator[](size_type position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (reference) d_impl.operator[](position);
 }
 
@@ -5015,6 +5025,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::reference
 vector<VALUE_TYPE *, ALLOCATOR>::at(size_type position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (reference) d_impl.at(position);
 }
 
@@ -5023,6 +5034,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::reference
 vector<VALUE_TYPE *, ALLOCATOR>::front()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (reference) d_impl.front();
 }
 
@@ -5031,6 +5043,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::reference
 vector<VALUE_TYPE *, ALLOCATOR>::back()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (reference) d_impl.back();
 }
 
@@ -5092,6 +5105,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::reference
 vector<VALUE_TYPE *, ALLOCATOR>::emplace_back()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.emplace_back();
     return back();
 }
@@ -5103,6 +5117,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::reference
 vector<VALUE_TYPE *, ALLOCATOR>::emplace_back(ARG&& arg)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     VALUE_TYPE *ptr(arg);  // Support explicit conversion operators
     d_impl.emplace_back(reinterpret_cast<UintPtr>(ptr));
     return back();
@@ -5113,6 +5128,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::reference
 vector<VALUE_TYPE *, ALLOCATOR>::emplace_back(VALUE_TYPE *ptr)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.emplace_back(reinterpret_cast<UintPtr>(ptr));
     return back();
 }
@@ -5137,6 +5153,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::iterator
 vector<VALUE_TYPE *, ALLOCATOR>::emplace(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (iterator) d_impl.emplace((const UintPtr*) position);
 }
 
@@ -5147,6 +5164,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::iterator
 vector<VALUE_TYPE *, ALLOCATOR>::emplace(const_iterator position, ARG&& arg)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     VALUE_TYPE *ptr(arg);  // Support explicit conversion operators
     return (iterator) d_impl.emplace((const UintPtr *)position,
                                      reinterpret_cast<UintPtr>(ptr));
@@ -5158,6 +5176,7 @@ typename vector<VALUE_TYPE *, ALLOCATOR>::iterator
 vector<VALUE_TYPE *, ALLOCATOR>::emplace(const_iterator  position,
                                          VALUE_TYPE     *ptr)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (iterator) d_impl.emplace((const UintPtr*) position,
                                      reinterpret_cast<UintPtr>(ptr));
 }
@@ -5169,6 +5188,7 @@ typename vector<VALUE_TYPE *, ALLOCATOR>::iterator
 vector<VALUE_TYPE *, ALLOCATOR>::insert(const_iterator  position,
                                         VALUE_TYPE     *value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (iterator) d_impl.emplace((const UintPtr*) position,
                                      reinterpret_cast<UintPtr>(value));
 }
@@ -5180,6 +5200,7 @@ vector<VALUE_TYPE *, ALLOCATOR>::insert(const_iterator  position,
                                         size_type       numElements,
                                         VALUE_TYPE     *value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (iterator) d_impl.insert(
         (const UintPtr *)position, numElements, (UintPtr)value);
 }
@@ -5192,6 +5213,7 @@ vector<VALUE_TYPE *, ALLOCATOR>::insert(
                                   const_iterator                      position,
                                   std::initializer_list<VALUE_TYPE *> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef typename std::initializer_list<VALUE_TYPE *>::const_iterator
                                                                       InitIter;
 
@@ -5212,6 +5234,7 @@ vector<VALUE_TYPE *, ALLOCATOR>::insert_range(
                            const_iterator                             position,
                            BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (iterator) d_impl.insert_range(
              (const UintPtr*) position,
              vector_makeUintPtrRangeAdapter<VALUE_TYPE *>(ranges::begin(range),
@@ -5223,6 +5246,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::iterator
 vector<VALUE_TYPE *, ALLOCATOR>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (iterator) d_impl.erase((const UintPtr*) position);
 }
 
@@ -5232,6 +5256,7 @@ typename vector<VALUE_TYPE *, ALLOCATOR>::iterator
 vector<VALUE_TYPE *, ALLOCATOR>::erase(const_iterator first,
                                        const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (iterator) d_impl.erase((const UintPtr*) first,
                                    (const UintPtr*) last);
 }
@@ -5259,6 +5284,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::allocator_type
 vector<VALUE_TYPE *, ALLOCATOR>::get_allocator() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return ALLOCATOR(d_impl.get_allocator());
 }
 
@@ -5267,6 +5293,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::size_type
 vector<VALUE_TYPE *, ALLOCATOR>::max_size() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.max_size();
 }
 
@@ -5279,6 +5306,7 @@ typename vector<VALUE_TYPE *, ALLOCATOR>::const_iterator
 vector<VALUE_TYPE *, ALLOCATOR>::begin() const BSLS_KEYWORD_NOEXCEPT
                                                           BSLS_KEYWORD_CONVEYOR
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (const_iterator) d_impl.begin();
 }
 
@@ -5287,6 +5315,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::const_iterator
 vector<VALUE_TYPE *, ALLOCATOR>::cbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (const_iterator) d_impl.cbegin();
 }
 
@@ -5296,6 +5325,7 @@ typename vector<VALUE_TYPE *, ALLOCATOR>::const_iterator
 vector<VALUE_TYPE *, ALLOCATOR>::end() const BSLS_KEYWORD_NOEXCEPT
                                                           BSLS_KEYWORD_CONVEYOR
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (const_iterator) d_impl.end();
 }
 
@@ -5304,6 +5334,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::const_iterator
 vector<VALUE_TYPE *, ALLOCATOR>::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (const_iterator) d_impl.cend();
 }
 
@@ -5312,6 +5343,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::const_reverse_iterator
 vector<VALUE_TYPE *, ALLOCATOR>::rbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator((const_iterator) d_impl.rbegin().base());
 }
 
@@ -5320,6 +5352,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::const_reverse_iterator
 vector<VALUE_TYPE *, ALLOCATOR>::crbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator((const_iterator) d_impl.crbegin().base());
 }
 
@@ -5328,6 +5361,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::const_reverse_iterator
 vector<VALUE_TYPE *, ALLOCATOR>::rend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator((const_iterator) d_impl.rend().base());
 }
 
@@ -5336,6 +5370,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::const_reverse_iterator
 vector<VALUE_TYPE *, ALLOCATOR>::crend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator((const_iterator) d_impl.crend().base());
 }
 
@@ -5347,6 +5382,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::const_reference
 vector<VALUE_TYPE *, ALLOCATOR>::operator[](size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (const_reference) d_impl.operator[](position);
 }
 
@@ -5355,6 +5391,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::const_reference
 vector<VALUE_TYPE *, ALLOCATOR>::at(size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (const_reference) d_impl.at(position);
 }
 
@@ -5363,6 +5400,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::const_reference
 vector<VALUE_TYPE *, ALLOCATOR>::front() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (const_reference) d_impl.front();
 }
 
@@ -5371,6 +5409,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::const_reference
 vector<VALUE_TYPE *, ALLOCATOR>::back() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (const_reference) d_impl.back();
 }
 

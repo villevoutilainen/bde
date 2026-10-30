@@ -412,6 +412,7 @@ int main(int argc, char *argv[])
 // Now, we iterate, pushing ints to the list:
 // ```
         for (const int *pInt = intArray; pInt != intArray + NUM_INTS; ++pInt) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(pInt);
             intList.pushBack(*pInt);
         }
 // ```

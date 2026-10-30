@@ -2279,7 +2279,8 @@ class HashTable {
     /// `arguments` (see {Requirements on `KEY_CONFIG`});
     template <class... Args>
     bslalg::BidirectionalLink *emplace(Args&&... arguments)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                BSLS_ASSERT_CONVEYOR_TRUST_PRE_PACK(arguments);
 
     /// Insert into this hash-table a newly-created `ValueType` object,
     /// constructed by forwarding the specified (variable number of)
@@ -2305,7 +2306,8 @@ class HashTable {
     bslalg::BidirectionalLink *emplaceWithHint(
                                          bslalg::BidirectionalLink *hint,
                                          Args&&...                  arguments)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                BSLS_ASSERT_CONVEYOR_TRUST_PRE_PACK(arguments);
 
     /// Insert into this hash-table a newly-created `ValueType` object,
     /// constructed by forwarding the specified (variable number of)
@@ -2329,7 +2331,8 @@ class HashTable {
     template <class... Args>
     bslalg::BidirectionalLink *emplaceIfMissing(bool     *isInsertedFlag,
                                                 Args&&... arguments)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                BSLS_ASSERT_CONVEYOR_TRUST_PRE_PACK(arguments);
 #endif
 
     /// Insert into this hash-table a newly-created `ValueType` object,
@@ -2354,7 +2357,8 @@ class HashTable {
     bslalg::BidirectionalLink *insertKeyIfMissing(
                     bool                                       *isInsertedFlag,
                     BSLS_COMPILERFEATURES_FORWARD_REF(KEY_ARG)  key)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                           BSLS_ASSERT_CONVEYOR_TRUST_PRE(key);
 
     /// Insert into this hash-table a `ValueType` object created from the
     /// specified `value` if a key equivalent to that of such an object does
@@ -2381,7 +2385,8 @@ class HashTable {
     bslalg::BidirectionalLink *insertIfMissing(
                 bool                                           *isInsertedFlag,
                 BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE)  value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(value);
 
     /// Insert into this hash-table a `ValueType` object created from the
     /// specified `value` and return the address of the newly inserted node.
@@ -2402,7 +2407,8 @@ class HashTable {
     template <class SOURCE_TYPE>
     bslalg::BidirectionalLink *insert(
                          BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE) value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(value);
 
     /// Insert into this hash-table a `ValueType` object created from the
     /// specified `value` (immediately preceding the specified `hint` if
@@ -2428,7 +2434,8 @@ class HashTable {
     bslalg::BidirectionalLink *insert(
                           BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE) value,
                           bslalg::BidirectionalLink                     *hint)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(value);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// If a key equivalent to the specified `key` already exists in this
@@ -2541,7 +2548,9 @@ class HashTable {
         bool                      *isInsertedFlag,
         bslalg::BidirectionalLink *hint,
         KEY_ARG&&                  key,
-        ARGS&&...                  args) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+        ARGS&&...                  args) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_TRUST_PRE(key)
+                                  BSLS_ASSERT_CONVEYOR_TRUST_PRE_PACK(args);
 #endif
 
     // ACCESSORS
@@ -3100,6 +3109,7 @@ inline
 std::size_t
 HashTable_HashWrapper<FUNCTOR>::operator()(ARG_TYPE& arg) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_functor(bslmf::MovableRefUtil::access(arg));
 }
 
@@ -3165,6 +3175,7 @@ inline
 std::size_t
 HashTable_HashWrapper<FUNCTOR &>::operator()(ARG_TYPE& arg) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(d_functor));
     return d_functor(bslmf::MovableRefUtil::access(arg));
 }
 
@@ -3201,6 +3212,7 @@ bool
 HashTable_ComparatorWrapper<FUNCTOR>::operator()(ARG1_TYPE& arg1,
                                                  ARG2_TYPE& arg2) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_functor(bslmf::MovableRefUtil::access(arg1),
                      bslmf::MovableRefUtil::access(arg2));
 }
@@ -3244,6 +3256,7 @@ bool
 HashTable_ComparatorWrapper<const FUNCTOR>::operator()(ARG1_TYPE& arg1,
                                                        ARG2_TYPE& arg2) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_functor(bslmf::MovableRefUtil::access(arg1),
                      bslmf::MovableRefUtil::access(arg2));
 }
@@ -3271,6 +3284,8 @@ bool
 HashTable_ComparatorWrapper<FUNCTOR &>::operator()(ARG1_TYPE& arg1,
                                                    ARG2_TYPE& arg2) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(d_functor));
     return d_functor(bslmf::MovableRefUtil::access(arg1),
                      bslmf::MovableRefUtil::access(arg2));
 }

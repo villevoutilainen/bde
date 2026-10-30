@@ -1762,12 +1762,16 @@ class TestDriver {
 
     template <class T>
     static bslmf::MovableRef<T> testArg(T& t, bsl::true_type )
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return MoveUtil::move(t);
     }
 
     template <class T>
     static const T& testArg(T& t, bsl::false_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return t;
     }
@@ -2138,12 +2142,12 @@ void TestDriver<KEY, COMP, ALLOC>::testCase37()
 
         for (size_t j = 0; j < initialLen; ++j)
         {
-            mX.insert(initial[j]);
+            mX.insert(BSLS_ASSERT_CONVEYOR_REF(initial[j]));
         }
 
         for (size_t j = 0; j < resultsLen; ++j)
         {
-            mRes.insert(results[j]);
+            mRes.insert(BSLS_ASSERT_CONVEYOR_REF(results[j]));
         }
 
         EqPred<KEY> pred(DATA[i].d_element);
@@ -8766,7 +8770,8 @@ int main(int argc, char *argv[])
             const bsl::string         VALUE = DATA[i].d_keyValue_p;
 
             mX.insert(VALUE);
-            symbolEntryNumMap[VALUE[0]] += 1;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&VALUE);
+            symbolEntryNumMap[BSLS_ASSERT_CONVEYOR_REF(VALUE[0])] += 1;
 
             for (char c = 'a'; c < 'h'; ++c) {
                 // Testing `find`.

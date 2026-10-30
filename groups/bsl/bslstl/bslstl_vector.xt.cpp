@@ -1162,6 +1162,7 @@ template <class TYPE>
 const TYPE&
 ListLike<TYPE>::operator[](size_t index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value[index];
 }
 
@@ -1233,6 +1234,7 @@ ArrayLike<TYPE>::ArrayLike(const bsl::vector<TYPE>& value)
 template <class TYPE>
 const TYPE& ArrayLike<TYPE>::operator[](size_t index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value[index];
 }
 
@@ -1599,6 +1601,7 @@ template <class TYPE>
 const TYPE&
 InputSequence<TYPE>::operator[](size_t index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value[index];
 }
 
@@ -2174,6 +2177,7 @@ class IncompleteTypeSupportChecker {
     void assign(size_type                           numElements,
                 const IncompleteTypeSupportChecker& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[16]++;
         d_vector.assign(numElements, value);
@@ -2274,6 +2278,7 @@ class IncompleteTypeSupportChecker {
     /// `newSize` and `value` as parameters.
     void resize(size_type newSize, const IncompleteTypeSupportChecker& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[27]++;
         d_vector.resize(newSize, value);
@@ -2326,6 +2331,7 @@ class IncompleteTypeSupportChecker {
     /// `value` as a parameter.
     void push_back(const IncompleteTypeSupportChecker& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[31]++;
         d_vector.push_back(value);
@@ -2382,6 +2388,7 @@ class IncompleteTypeSupportChecker {
     iterator insert(const_iterator                      position,
                     const IncompleteTypeSupportChecker& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[35]++;
         return d_vector.insert(position, value);
@@ -2405,6 +2412,7 @@ class IncompleteTypeSupportChecker {
                     size_type                           numElements,
                     const IncompleteTypeSupportChecker& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         s_functionCallCounters[37]++;
         return d_vector.insert(position, numElements, value);
@@ -3410,12 +3418,16 @@ struct TestDriver {
 
     template <class ARG_TYPE>
     static bslmf::MovableRef<ARG_TYPE> testArg(ARG_TYPE& t, bsl::true_type )
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return MoveUtil::move(t);
     }
 
     template <class ARG_TYPE>
     static const ARG_TYPE&             testArg(ARG_TYPE& t, bsl::false_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return t;
     }

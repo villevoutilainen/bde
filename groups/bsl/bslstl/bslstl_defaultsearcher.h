@@ -717,6 +717,7 @@ bsl::enable_if<
                                      const FORWARD_ITR_NEEDLE&   needleLast,
                                      const EQUAL&                equal)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&equal);
     BSLS_ASSERT_NONCONVEYOR(0 <= bsl::distance(haystackFirst,
                                                haystackLast));
 

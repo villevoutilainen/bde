@@ -8563,12 +8563,16 @@ struct Harness {
 
     /// Return the specified `t` moved.
     template <class T>
-    static bslmf::MovableRef<T> testArg(T& t, bsl::true_type);
+    static bslmf::MovableRef<T> testArg(T& t, bsl::true_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the specified
     /// `t`.
     template <class T>
-    static const T&             testArg(T& t, bsl::false_type);
+    static const T&             testArg(T& t, bsl::false_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 static bslma::TestAllocator g_argAlloc("test arguments allocator",

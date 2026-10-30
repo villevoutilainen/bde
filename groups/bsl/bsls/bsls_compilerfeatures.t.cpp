@@ -1434,6 +1434,7 @@ struct TaskBase {
 
     void return_value(auto&& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_value = value;
     }

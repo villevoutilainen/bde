@@ -556,12 +556,14 @@ class ConstructorProxy {
 
     /// Return a reference to the modifiable object held by this proxy.
     OBJECT_TYPE& object() BSLS_KEYWORD_NOEXCEPT
+                              BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
                               BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
     /// Return a reference to the non-modifiable object held by this proxy.
     const OBJECT_TYPE& object() const BSLS_KEYWORD_NOEXCEPT
+                              BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
                               BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 

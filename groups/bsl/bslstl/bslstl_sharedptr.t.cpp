@@ -3661,7 +3661,7 @@ void PerformanceTester<POINTER>::test(bool verbose, bool allocVerbose)
     numBytes = ta.numBytesInUse();
     timer.start();
     for (int i = 0; i < BIG_VECTOR_SIZE; ++i) {
-        mX[i].createInplace(&ta, *Z[i]);
+        mX[i].createInplace(&ta, BSLS_ASSERT_CONVEYOR_REF(*Z[i]));
     }
     timer.stop();
     printf("Creating %d distinct in-place shared pointers in %gs (%gs each)\n",
@@ -4545,9 +4545,13 @@ struct Harness {
 
     /// TBD write a contract for these overloads
     template <class T>
-    static bslmf::MovableRef<T> testArg(T& t, bsl::true_type );
+    static bslmf::MovableRef<T> testArg(T& t, bsl::true_type )
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     template <class T>
-    static const T&             testArg(T& t, bsl::false_type);
+    static const T&             testArg(T& t, bsl::false_type)
+                   BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+                   BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // Inline methods are defined before the remaining class methods.

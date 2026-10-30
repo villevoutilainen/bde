@@ -581,12 +581,16 @@ ConstructTestType<ALLOC>::arg10() const
 
 template <class T>
 bslmf::MovableRef<T> testArg(T& t, bsl::true_type )
+               BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+               BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     return bslmf::MovableRefUtil::move(t);
 }
 
 template <class T>
 const T&             testArg(T& t, bsl::false_type)
+               BSLS_ASSERT_CONVEYOR_TRUST_PRE(t)
+               BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     return t;
 }

@@ -261,7 +261,8 @@ union ObjectBuffer {
     /// Return a modifiable reference to the `TYPE` object occupying this
     /// buffer.  The referenced object has undefined state unless a valid
     /// `TYPE` object has been constructed in this buffer.
-    TYPE& object() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    TYPE& object() BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -276,7 +277,8 @@ union ObjectBuffer {
     /// Return a `const` reference to the `TYPE` object occupying this
     /// buffer.  The referenced object has undefined state unless a valid
     /// `TYPE` object has been constructed in this buffer.
-    const TYPE& object() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& object() const BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // ============================================================================

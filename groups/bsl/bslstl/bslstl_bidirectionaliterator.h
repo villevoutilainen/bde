@@ -292,13 +292,15 @@ class BidirectionalIterator
     /// modifiable iterator.  The behavior is undefined if, on entry, this
     /// iterator has the past-the-end value for an iterator over the
     /// underlying sequence.
-    BidirectionalIterator& operator++();
+    BidirectionalIterator& operator++()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Decrement to the previous element.  Return a reference to this
     /// modifiable iterator.  The behavior is undefined if, on entry, this
     /// iterator has the same value as an iterator the refers to the start
     /// of the underlying sequence.
-    BidirectionalIterator& operator--();
+    BidirectionalIterator& operator--()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -423,6 +425,7 @@ inline
 bslstl::BidirectionalIterator<T,ITER_IMP,TAG_TYPE>
 bslstl::operator++(BidirectionalIterator<T,ITER_IMP,TAG_TYPE>& iter, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
     BidirectionalIterator<T,ITER_IMP,TAG_TYPE> tmp(iter);
     ++iter;
     return tmp;
@@ -433,6 +436,7 @@ inline
 bslstl::BidirectionalIterator<T,ITER_IMP,TAG_TYPE>
 bslstl::operator--(BidirectionalIterator<T,ITER_IMP,TAG_TYPE>& iter, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
     BidirectionalIterator<T,ITER_IMP,TAG_TYPE> tmp(iter);
     --iter;
     return tmp;

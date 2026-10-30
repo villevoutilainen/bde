@@ -1066,6 +1066,7 @@ template <class HASH_ALGORITHM, class TYPE, size_t SIZE>
 void hashAppend(HASH_ALGORITHM&               hashAlgorithm,
                 const std::array<TYPE, SIZE>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     using ::BloombergLP::bslh::hashAppend;
 
     hashAppend(hashAlgorithm, SIZE);
