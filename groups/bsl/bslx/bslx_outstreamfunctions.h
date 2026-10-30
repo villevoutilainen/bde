@@ -951,6 +951,7 @@ STREAM& OutStreamFunctions::bdexStreamOutImp(STREAM&              stream,
                                              int                  version,
                                              const IsNotEnumType&)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     // A compilation error indicating the next line of code implies the class
     // of 'TYPE' does not support the 'bdexStreamOut' method.
 

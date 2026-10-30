@@ -790,6 +790,7 @@ bool FormatterTestUtil_Impl<t_CHAR>::evaluateBslfmtResult(
     }
     catch (const bsl::format_error& e) {
         if (message) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(message);
             *message = "Exception bsl::format_error: ";
             *message += e.what();
         }
@@ -823,6 +824,7 @@ bool FormatterTestUtil_Impl<t_CHAR>::testEvaluateVFormatBslfmtImpl(
 
     if (expectedResult != bslfmtResult) {
         if (message) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(message);
             *message = "bslfmt result does not match: Format: \"";
             *message += toNarrow(fmtStr);
             *message += "\", result: \"";
@@ -857,6 +859,7 @@ bool FormatterTestUtil_Impl<t_CHAR>::testEvaluateVFormatStdImpl(
     }
     catch (const std::format_error& e) {
         if (message) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(message);
             *message = "Exception std::format_error: ";
             *message += e.what();
         }
@@ -865,6 +868,7 @@ bool FormatterTestUtil_Impl<t_CHAR>::testEvaluateVFormatStdImpl(
 
     if (expectedResult != stdResult) {
         if (message) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(message);
             *message = "oracle result does not match: Format: \"";
             *message += toNarrow(fmtStr);
             *message += "\", Oracle: \"";

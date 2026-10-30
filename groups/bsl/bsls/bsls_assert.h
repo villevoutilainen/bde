@@ -2754,17 +2754,19 @@ struct AssertConveyorUtil {
     // CLASS METHODS
 
     /// Return the specified `reference`, an object (an assertion nothing
-    /// proves; see `BSLS_ASSERT_CONVEYOR_OBJECT`).  Its caller owes nothing
-    /// for `reference`: the precondition is never proven, standing in for
-    /// the one a reference parameter would otherwise get.
+    /// proves; see `BSLS_ASSERT_CONVEYOR_OBJECT`), with its own value
+    /// category: an lvalue stays one, and an rvalue (a dereferenced move
+    /// iterator, say) is passed on as one.  Its caller owes nothing for
+    /// `reference`: the precondition is never proven, standing in for the
+    /// one a reference parameter would otherwise get.
     template <class t_TYPE>
-    static constexpr t_TYPE& object(t_TYPE& reference)
+    static constexpr t_TYPE&& object(t_TYPE&& reference)
         pre<std::contracts::never_proven_conveyor_v>(
                         std::is_object_address(__builtin_addressof(reference)))
         post<std::contracts::never_proven_conveyor_v>(
                    result: std::is_object_address(__builtin_addressof(result)))
     {
-        return reference;
+        return static_cast<t_TYPE&&>(reference);
     }
 };
 #endif  // BSLS_ASSERT_USE_CONTRACTS_P4324
