@@ -281,7 +281,7 @@ Datum_ArrayProctor<ELEMENT>::Datum_ArrayProctor(
 {
     BSLS_ASSERT(base);
     BSLS_ASSERT(begin);
-    BSLS_ASSERT(!end || begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(!end || begin <= end);
 }
 
 template <class ELEMENT>
@@ -299,7 +299,7 @@ Datum_ArrayProctor<ELEMENT>::~Datum_ArrayProctor()
 template <class ELEMENT>
 void Datum_ArrayProctor<ELEMENT>::destroy()
 {
-    BSLS_ASSERT(d_begin_p <= d_end_p);
+    BSLS_ASSERT_NONCONVEYOR(d_begin_p <= d_end_p);
 
     for (ELEMENT *ptr = d_begin_p; ptr < d_end_p; ++ptr) {
         Datum::destroy(*ptr, d_allocator);
@@ -312,7 +312,7 @@ void Datum_ArrayProctor<ELEMENT>::destroy()
 template <>
 void Datum_ArrayProctor<DatumMapEntry>::destroy()
 {
-    BSLS_ASSERT(d_begin_p <= d_end_p);
+    BSLS_ASSERT_NONCONVEYOR(d_begin_p <= d_end_p);
 
     for (DatumMapEntry *ptr = d_begin_p; ptr < d_end_p; ++ptr) {
         Datum::destroy(ptr->value(), d_allocator);
@@ -324,7 +324,7 @@ void Datum_ArrayProctor<DatumMapEntry>::destroy()
 template <>
 void Datum_ArrayProctor<DatumIntMapEntry>::destroy()
 {
-    BSLS_ASSERT(d_begin_p <= d_end_p);
+    BSLS_ASSERT_NONCONVEYOR(d_begin_p <= d_end_p);
 
     for (DatumIntMapEntry *ptr = d_begin_p; ptr < d_end_p; ++ptr) {
         Datum::destroy(ptr->value(), d_allocator);
@@ -440,6 +440,7 @@ void Datum_StreamVisitor::operator()(const bslstl::StringRef& value) const
 template <class BDLD_TYPE>
 void Datum_StreamVisitor::operator()(const BDLD_TYPE& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (!d_stream.bad()) {
         bdlb::PrintMethods::print(d_stream, value, d_level, d_spacesPerLevel);
     }
@@ -767,7 +768,7 @@ Datum Datum::copyBinary(const void            *value,
         return result;                                                // RETURN
     }
 
-    BSLS_ASSERT(size <= static_cast<SizeType>(
+    BSLS_ASSERT_NONCONVEYOR(size <= static_cast<SizeType>(
                                     bsl::numeric_limits<unsigned int>::max()));
 
     result.d_as.d_type  = e_INTERNAL_BINARY_ALLOC;
@@ -843,7 +844,8 @@ Datum Datum::copyString(const char           *string,
         return result;                                                // RETURN
     }
 
-    BSLS_ASSERT(length <= bsl::numeric_limits<unsigned int>::max());
+    BSLS_ASSERT_NONCONVEYOR(
+                           length <= bsl::numeric_limits<unsigned int>::max());
 
     result.d_as.d_type  = e_INTERNAL_STRING;
     result.d_as.d_int32 = static_cast<int>(length);
@@ -859,7 +861,7 @@ void Datum::createUninitializedArray(DatumMutableArrayRef *result,
                                      const AllocatorType&  allocator)
 {
     BSLS_ASSERT(result);
-    BSLS_ASSERT(capacity < bsl::numeric_limits<SizeType>::max()/
+    BSLS_ASSERT_NONCONVEYOR(capacity < bsl::numeric_limits<SizeType>::max()/
                                                               sizeof(Datum)-1);
 
     // Allocate one extra element to store length of the array.
@@ -881,7 +883,7 @@ void Datum::createUninitializedMap(DatumMutableMapRef   *result,
                                    const AllocatorType&  allocator)
 {
     BSLS_ASSERT(result);
-    BSLS_ASSERT(capacity < bsl::numeric_limits<SizeType>::max()/
+    BSLS_ASSERT_NONCONVEYOR(capacity < bsl::numeric_limits<SizeType>::max()/
                                                       sizeof(DatumMapEntry)-1);
     BSLMF_ASSERT(sizeof(DatumMapEntry) >= sizeof(Datum_MapHeader));
 
@@ -911,7 +913,7 @@ void Datum::createUninitializedIntMap(DatumMutableIntMapRef *result,
                                       const AllocatorType&   allocator)
 {
     BSLS_ASSERT(result);
-    BSLS_ASSERT(capacity < bsl::numeric_limits<SizeType>::max() /
+    BSLS_ASSERT_NONCONVEYOR(capacity < bsl::numeric_limits<SizeType>::max() /
                                                  sizeof(DatumIntMapEntry) - 1);
     BSLMF_ASSERT(sizeof(DatumIntMapEntry) >= sizeof(Datum_IntMapHeader));
 
@@ -939,7 +941,8 @@ void Datum::createUninitializedMap(DatumMutableMapOwningKeysRef *result,
                                    const AllocatorType&          allocator)
 {
     BSLS_ASSERT(result);
-    BSLS_ASSERT(capacity < (bsl::numeric_limits<SizeType>::max()-keysCapacity)/
+    BSLS_ASSERT_NONCONVEYOR(
+                capacity < (bsl::numeric_limits<SizeType>::max()-keysCapacity)/
                                                       sizeof(DatumMapEntry)-1);
     BSLMF_ASSERT(sizeof(DatumMapEntry) >= sizeof(Datum_MapHeader));
 
@@ -1015,7 +1018,8 @@ char *Datum::createUninitializedString(Datum                *result,
         return str;                                                   // RETURN
     }
 
-    BSLS_ASSERT(length <= bsl::numeric_limits<unsigned int>::max());
+    BSLS_ASSERT_NONCONVEYOR(
+                           length <= bsl::numeric_limits<unsigned int>::max());
 
     result->d_as.d_type = e_INTERNAL_STRING;
     result->d_as.d_int32 = static_cast<int>(length);
@@ -1050,7 +1054,7 @@ void *Datum::createUninitializedBinary(Datum                *result,
         return result->theInlineStorage();                            // RETURN
     }
 
-    BSLS_ASSERT(size <= static_cast<SizeType>(
+    BSLS_ASSERT_NONCONVEYOR(size <= static_cast<SizeType>(
                                     bsl::numeric_limits<unsigned int>::max()));
 
     result->d_as.d_type  = e_INTERNAL_BINARY_ALLOC;
@@ -1300,7 +1304,7 @@ Datum Datum::clone(const AllocatorType& allocator) const
 
 bdldfp::Decimal64 Datum::theDecimal64() const
 {
-    BSLS_ASSERT(isDecimal64());
+    BSLS_ASSERT_NONCONVEYOR(isDecimal64());
 #ifdef BSLS_PLATFORM_CPU_32_BIT
     using namespace bdldfp;
 

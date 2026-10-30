@@ -217,6 +217,7 @@ template <class STR_TYPE>
 static inline
 const char *leafDelimiter(const STR_TYPE &path, int rootEnd)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&path);
     return leafDelimiter(path.c_str(),
                          rootEnd,
                          static_cast<int>(path.length()));
@@ -225,6 +226,7 @@ const char *leafDelimiter(const STR_TYPE &path, int rootEnd)
 template <class STR_TYPE>
 int u_appendIfValid(STR_TYPE *path, const bsl::string_view& filename)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(path);
     BSLS_ASSERT(path);
 
     // If 'filename' refers to characters in 'path', create a copy of
@@ -277,6 +279,7 @@ int u_appendIfValid(STR_TYPE *path, const bsl::string_view& filename)
 template <class STR_TYPE>
 void u_appendRaw(STR_TYPE *path, const char *filename, int length, int rootEnd)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(path);
     BSLS_ASSERT(path);
     BSLS_ASSERT(filename);
 
@@ -301,6 +304,7 @@ void u_appendRaw(STR_TYPE *path, const char *filename, int length, int rootEnd)
 template <class STR_TYPE>
 int u_popLeaf(STR_TYPE *path, int rootEnd)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(path);
     BSLS_ASSERT(path);
 
     if (0 > rootEnd) {
@@ -334,7 +338,7 @@ int u_getLeaf(STR_TYPE *leaf, const bsl::string_view& path, int rootEnd)
 
     leaf->clear();
     const char *lastSeparator = leafDelimiter(path.data(), rootEnd, length);
-    BSLS_ASSERT(lastSeparator != path.data() + length);
+    BSLS_ASSERT_NONCONVEYOR(lastSeparator != path.data() + length);
 
     while (0 < length && isSeparator(path[length-1])) {
         --length;
@@ -608,7 +612,7 @@ void PathUtil::splitFilename(bsl::string_view        *head,
         return;                                                       // RETURN
     }
 
-    BSLS_ASSERT(INT_MAX >= path.length());
+    BSLS_ASSERT_NONCONVEYOR(INT_MAX >= path.length());
     int numCharsToHandle = static_cast<int>(path.length());
 
     const char *pathBegin     = path.data();

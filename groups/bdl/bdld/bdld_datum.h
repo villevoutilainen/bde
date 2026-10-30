@@ -3537,7 +3537,7 @@ bsl::size_t Datum::theIntMapAllocNumBytes() const
 inline
 bsl::size_t Datum::theErrorAllocNumBytes() const
 {
-    BSLS_ASSERT(isError());
+    BSLS_ASSERT_NONCONVEYOR(isError());
 
 #ifdef BSLS_PLATFORM_CPU_32_BIT
     // If the extended type is 'e_EXTENDED_INTERNAL_ERROR', we are storing
@@ -3637,7 +3637,8 @@ Datum Datum::createArrayReference(const Datum          *array,
 #else   // end - 32 bit / begin - 64 bit
     (void)allocator;
 
-    BSLS_ASSERT(length <= bsl::numeric_limits<unsigned int>::max());
+    BSLS_ASSERT_NONCONVEYOR(
+                           length <= bsl::numeric_limits<unsigned int>::max());
 
     Datum result;
     result.d_as.d_type  = e_INTERNAL_ARRAY_REFERENCE;
@@ -3732,6 +3733,7 @@ inline
 Datum Datum::createDatetimeInterval(const bdlt::DatetimeInterval& value,
                                     const AllocatorType&          allocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     Datum result;
 #ifdef BSLS_PLATFORM_CPU_32_BIT
     const int                usValue = value.microseconds();
@@ -3870,7 +3872,8 @@ Datum Datum::createStringRef(const char           *string,
 #else   // end - 32 bit / begin - 64 bit
     (void)allocator;
 
-    BSLS_ASSERT(length <= bsl::numeric_limits<unsigned int>::max());
+    BSLS_ASSERT_NONCONVEYOR(
+                           length <= bsl::numeric_limits<unsigned int>::max());
 
     Datum result;
     result.d_as.d_type  = e_INTERNAL_STRING_REFERENCE;
@@ -4366,7 +4369,7 @@ double Datum::theDouble() const
 inline
 DatumError Datum::theError() const
 {
-    BSLS_ASSERT(isError());
+    BSLS_ASSERT_NONCONVEYOR(isError());
 
 #ifdef BSLS_PLATFORM_CPU_32_BIT
     // If the extended type is 'e_EXTENDED_INTERNAL_ERROR', we are storing
@@ -4932,7 +4935,7 @@ inline
 DatumArrayRef::const_reference
 DatumArrayRef::front() const
 {
-    BSLS_ASSERT(!empty());
+    BSLS_ASSERT_NONCONVEYOR(!empty());
     return *begin();
 }
 
@@ -4940,7 +4943,7 @@ inline
 DatumArrayRef::const_reference
 DatumArrayRef::back()  const
 {
-    BSLS_ASSERT(!empty());
+    BSLS_ASSERT_NONCONVEYOR(!empty());
     return *(end() - 1);
 }
 
@@ -5091,7 +5094,7 @@ inline
 DatumIntMapRef::const_reference
 DatumIntMapRef::front() const
 {
-    BSLS_ASSERT(!empty());
+    BSLS_ASSERT_NONCONVEYOR(!empty());
     return *begin();
 }
 
@@ -5099,7 +5102,7 @@ inline
 DatumIntMapRef::const_reference
 DatumIntMapRef::back()  const
 {
-    BSLS_ASSERT(!empty());
+    BSLS_ASSERT_NONCONVEYOR(!empty());
     return *(end() - 1);
 }
 
@@ -5261,7 +5264,7 @@ inline
 DatumMapRef::const_reference
 DatumMapRef::front() const
 {
-    BSLS_ASSERT(!empty());
+    BSLS_ASSERT_NONCONVEYOR(!empty());
     return *begin();
 }
 
@@ -5269,7 +5272,7 @@ inline
 DatumMapRef::const_reference
 DatumMapRef::back()  const
 {
-    BSLS_ASSERT(!empty());
+    BSLS_ASSERT_NONCONVEYOR(!empty());
     return *(end() - 1);
 }
 
@@ -5564,6 +5567,7 @@ bsl::ostream& bdld::operator<<(bsl::ostream& stream, const Datum& rhs)
 template <class t_HASH_ALGORITHM>
 void bdld::hashAppend(t_HASH_ALGORITHM& hashAlg, const bdld::Datum& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
     using bslh::hashAppend;
     hashAppend(hashAlg, input.type());
 

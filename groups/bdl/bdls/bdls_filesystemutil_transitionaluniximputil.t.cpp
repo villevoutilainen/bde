@@ -523,13 +523,14 @@ TestTransitionalUnixInterface::TestTransitionalUnixInterface(
 // MANIPULATORS
 int TestTransitionalUnixInterface::fstat64(int fildes, stat64 *buf)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Call call;
     call.d_functionId       = FunctionId::e_FSTAT64;
     call.d_fstat64.d_fildes = fildes;
     call.d_fstat64.d_buf    = buf;
     d_calls.push_back(call);
 
-    BSLS_ASSERT(0 < d_responses.size());
+    BSLS_ASSERT_NONCONVEYOR(0 < d_responses.size());
     const Response& response = d_responses.front();
     BSLS_ASSERT(FunctionId::e_FSTAT64 == response.d_functionId);
     const int result = response.d_fstat64.d_result;
@@ -540,24 +541,29 @@ int TestTransitionalUnixInterface::fstat64(int fildes, stat64 *buf)
 
 void TestTransitionalUnixInterface::popFrontCall(Call *call)
 {
-    BSLS_ASSERT(0 < d_calls.size());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(0 < d_calls.size());
     *call = d_calls.front();
     d_calls.pop_front();
 }
 
 void TestTransitionalUnixInterface::pushBackResponse(const Response& response)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&response);
     d_responses.push_back(response);
 }
 
 // ACCESSORS
 int TestTransitionalUnixInterface::numCalls() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_calls.size());
 }
 
 int TestTransitionalUnixInterface::numResponses() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_responses.size());
 }
 

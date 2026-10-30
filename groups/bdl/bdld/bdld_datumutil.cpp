@@ -57,6 +57,7 @@ void safeTypedPrintImpl(bsl::ostream&                     outputStream,
                         int                               level,
                         int                               spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&seenSet);
     if (outputStream.bad()) {
         return;                                                       // RETURN
     }
@@ -244,6 +245,7 @@ static
 void dumpInterval(bsl::ostream&                 outputStream,
                   const bdlt::DatetimeInterval& dtInterval)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&dtInterval);
     bsl::string_view padding;
 
     if (dtInterval == bdlt::DatetimeInterval(0)) {  // Zero duration
@@ -339,6 +341,7 @@ void typedPrintMapEntry(bsl::ostream&        outputStream,
                         int                  level,
                         int                  spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mapEntry);
     if (level >= 0) {
         bdlb::Print::indent(outputStream, level, spacesPerLevel);
     }
@@ -350,7 +353,7 @@ void typedPrintMapEntry(bsl::ostream&        outputStream,
         using bdlb::LiteralUtil;
 
         bdlma::LocalBufferedObject<bsl::string, 64> toPrint;
-        LiteralUtil::createQuotedEscapedCString(&*toPrint, mapEntry.key());
+        LiteralUtil::createQuotedEscapedCString(&*toPrint, BSLS_ASSERT_CONVEYOR_REF(mapEntry.key()));
         outputStream << *toPrint << ": ";
     }
     bdld::DatumUtil::typedPrint(outputStream,
@@ -366,6 +369,7 @@ void safeTypedPrintMapEntry(bsl::ostream&                     outputStream,
                             int                               level,
                             int                               spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mapEntry);
     if (level >= 0) {
         bdlb::Print::indent(outputStream, level, spacesPerLevel);
     }
@@ -377,7 +381,7 @@ void safeTypedPrintMapEntry(bsl::ostream&                     outputStream,
         using bdlb::LiteralUtil;
 
         bdlma::LocalBufferedObject<bsl::string, 64> toPrint;
-        LiteralUtil::createQuotedEscapedCString(&*toPrint, mapEntry.key());
+        LiteralUtil::createQuotedEscapedCString(&*toPrint, BSLS_ASSERT_CONVEYOR_REF(mapEntry.key()));
         outputStream << *toPrint << ": ";
     }
     safeTypedPrintImpl(outputStream,

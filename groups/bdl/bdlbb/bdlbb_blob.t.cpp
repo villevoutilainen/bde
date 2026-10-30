@@ -213,6 +213,7 @@ void unknownFactoryHandler(const char *, const char *, int) {
 /// two buffers are aliased.
 void checkNoAliasedBlobBuffers(const bdlbb::Blob& blob)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&blob);
     for (int jump = 0; jump < blob.numBuffers(); ++jump) {
         // Fill in forward order with increasing values, with jump in between
         // buffers.
@@ -239,6 +240,7 @@ void checkNoAliasedBlobBuffers(const bdlbb::Blob& blob)
 /// be aliased.
 void checkBlobBuffers(const bdlbb::Blob& blob)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&blob);
     char filler = 0;
     for (int i = 0; i < blob.numBuffers(); ++i, ++filler) {
         // Fill in forward order with increasing values, and check result.
@@ -252,6 +254,7 @@ void checkBlobBuffers(const bdlbb::Blob& blob)
 /// check d_totalSize is accurate and sane
 bool checkTotalSize(const bdlbb::Blob& blob)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&blob);
     int total = 0;
     for (int i = 0; i < blob.numBuffers(); ++i) {
         total += blob.buffer(i).size();
@@ -263,6 +266,8 @@ bool checkTotalSize(const bdlbb::Blob& blob)
 
 void loadBlob(bdlbb::Blob *blob, bsl::string& dataString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(blob);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&dataString);
     const char *data = dataString.data();
     const int NUM_DATA_BUFFERS = blob->numDataBuffers();
     const int DATA_LENGTH      = blob->length();
@@ -282,6 +287,8 @@ void loadBlob(bdlbb::Blob *blob, bsl::string& dataString)
 }
 
 void blobToStr(bsl::string *str, const bdlbb::Blob& blob) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&blob);
+    BSLS_ASSERT_CONVEYOR_OBJECT(str);
     const int NUM_PRE_DATA_BUFFERS = blob.numDataBuffers() - 1;
     const int DATA_LENGTH          = blob.length();
 
@@ -312,6 +319,8 @@ void blobToStr(bsl::string *str, const bdlbb::Blob& blob) {
 
 bool checkBlob(const bdlbb::Blob& blob, const bsl::string& dataString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&blob);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&dataString);
     if (blob.length() != (int) dataString.length()) {
         return false;                                                 // RETURN
     }
@@ -340,6 +349,7 @@ bool checkBlob(const bdlbb::Blob& blob, const bsl::string& dataString)
 /// specified `value`.
 void populateBuffersWithData(bdlbb::Blob *blob, int numBuffers, char value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(blob);
     if (0 == numBuffers) {
         return;                                                       // RETURN
     }
@@ -370,6 +380,7 @@ bool compareBuffersData(const bdlbb::Blob& blob,
                         char              value,
                         int               exceptIndex = -1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&blob);
     ASSERT(-1 <= exceptIndex && exceptIndex < numBuffers);
 
     if (0 == numBuffers) {
@@ -595,9 +606,9 @@ class NullDeleter {
                        bslma::Allocator   *allocator)
     {
         BSLS_ASSERT(blob);
-        BSLS_ASSERT(blob->totalSize() <=
+        BSLS_ASSERT_NONCONVEYOR(blob->totalSize() <=
                              INT_MAX - length - static_cast<int>(sizeof(int)));
-        BSLS_ASSERT(blob->numBuffers() < INT_MAX);
+        BSLS_ASSERT_NONCONVEYOR(blob->numBuffers() < INT_MAX);
 
         (void)allocator;
 
@@ -611,7 +622,7 @@ class NullDeleter {
         bsl::memcpy(prologBuffer.data() + sizeof(int),
                     prolog,
                     length);
-        BSLS_ASSERT(prologBuffer.size() == prologBufferSize);
+        BSLS_ASSERT_NONCONVEYOR(prologBuffer.size() == prologBufferSize);
 
         blob->prependDataBuffer(prologBuffer);
     }
@@ -668,7 +679,7 @@ class NullDeleter {
     int timestampMessage(bdlbb::Blob *blob, bslma::Allocator *allocator)
     {
         BSLS_ASSERT(blob);
-        BSLS_ASSERT(0 < blob->numDataBuffers());
+        BSLS_ASSERT_NONCONVEYOR(0 < blob->numDataBuffers());
 
         bdlbb::BlobBuffer buffer;
         bdlt::Datetime now = bdlt::CurrentTime::utc();
@@ -679,8 +690,8 @@ class NullDeleter {
 
         bslx::ByteOutStream bdexStream(20150826);
         now.bdexStreamOut(bdexStream, 1);
-        BSLS_ASSERT(bdexStream);
-        BSLS_ASSERT(bdexStream.length() < 128);
+        BSLS_ASSERT_NONCONVEYOR(bdexStream);
+        BSLS_ASSERT_NONCONVEYOR(bdexStream.length() < 128);
         bsl::memcpy(timestampBuffer.data(),
                     bdexStream.data(),
                     bdexStream.length());
@@ -809,6 +820,7 @@ int main(int argc, char *argv[])
 // from the first buffer of `blob` will be appended to `blob`.
 // ```
         ASSERT(0 != blob.numBuffers());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&blob);
         ASSERT(16 <= blob.buffer(0).size());
 
         // `shptr` is now an alias of `blob.buffer(0).buffer()`.
@@ -3244,6 +3256,7 @@ int main(int argc, char *argv[])
                 Obj mX(&fa, &ta);   const Obj& X = mX;
                 mX.setLength(BUFFER_SIZE * NUM_BUFFERS);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                 mX.setLength(DATA_LENGTH);
 
                 if (TRIM_BUFFER_IDX != -1) {

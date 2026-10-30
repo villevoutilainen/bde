@@ -95,6 +95,7 @@ void testCase1_makeCanonicalName(const STRING_TYPE& typeName,
                                  int                test,
                                  int                verbose)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&typeName);
     (void) verbose; (void) test;
 
     if (verbose) cout << "\n\t+++++++++++++++ Testing " << typeName << endl;

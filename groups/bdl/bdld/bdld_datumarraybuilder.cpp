@@ -99,7 +99,7 @@ DatumArrayBuilder::~DatumArrayBuilder()
 // MANIPULATORS
 void DatumArrayBuilder::append(const Datum *values, SizeType length)
 {
-    BSLS_ASSERT(0 == d_capacity || 0 != d_array.data());
+    BSLS_ASSERT_NONCONVEYOR(0 == d_capacity || 0 != d_array.data());
 
     // Get the new array capacity.
     SizeType newCapacity = d_capacity ?

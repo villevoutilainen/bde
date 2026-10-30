@@ -826,13 +826,14 @@ TestWindowsInterface::TestWindowsInterface(const allocator_type& allocator)
 BOOL TestWindowsInterface::FileTimeToSystemTime(const FILETIME *lpFileTime,
                                                 LPSYSTEMTIME    lpSystemTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Call call;
     call.d_functionId = FunctionId::e_FILE_TIME_TO_SYSTEM_TIME;
     call.d_fileTimeToSystemTime.d_lpFileTime   = lpFileTime;
     call.d_fileTimeToSystemTime.d_lpSystemTime = lpSystemTime;
     d_calls.push_back(call);
 
-    BSLS_ASSERT(0 < d_responses.size());
+    BSLS_ASSERT_NONCONVEYOR(0 < d_responses.size());
     const Response& response = d_responses.front();
     BSLS_ASSERT(FunctionId::e_FILE_TIME_TO_SYSTEM_TIME ==
                 response.d_functionId);
@@ -844,13 +845,14 @@ BOOL TestWindowsInterface::FileTimeToSystemTime(const FILETIME *lpFileTime,
 
 DWORD TestWindowsInterface::GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Call call;
     call.d_functionId                   = FunctionId::e_GET_FILE_SIZE;
     call.d_getFileSize.d_hFile          = hFile;
     call.d_getFileSize.d_lpFileSizeHigh = lpFileSizeHigh;
     d_calls.push_back(call);
 
-    BSLS_ASSERT(0 < d_responses.size());
+    BSLS_ASSERT_NONCONVEYOR(0 < d_responses.size());
     const Response& response = d_responses.front();
     BSLS_ASSERT(FunctionId::e_GET_FILE_SIZE == response.d_functionId);
     const DWORD result = response.d_getFileSize.d_result;
@@ -864,6 +866,7 @@ BOOL TestWindowsInterface::GetFileTime(HANDLE     hFile,
                                        LPFILETIME lpLastAccessTime,
                                        LPFILETIME lpLastWriteTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Call call;
     call.d_functionId = FunctionId::e_GET_FILE_TIME;
     call.d_getFileTime.d_hFile            = hFile;
@@ -872,7 +875,7 @@ BOOL TestWindowsInterface::GetFileTime(HANDLE     hFile,
     call.d_getFileTime.d_lpLastWriteTime  = lpLastWriteTime;
     d_calls.push_back(call);
 
-    BSLS_ASSERT(0 < d_responses.size());
+    BSLS_ASSERT_NONCONVEYOR(0 < d_responses.size());
     const Response& response = d_responses.front();
     BSLS_ASSERT(FunctionId::e_GET_FILE_TIME == response.d_functionId);
     const BOOL result = response.d_getFileTime.d_result;
@@ -891,11 +894,12 @@ BOOL TestWindowsInterface::GetFileTime(HANDLE     hFile,
 
 DWORD TestWindowsInterface::GetLastError()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Call call;
     call.d_functionId = FunctionId::e_GET_LAST_ERROR;
     d_calls.push_back(call);
 
-    BSLS_ASSERT(0 < d_responses.size());
+    BSLS_ASSERT_NONCONVEYOR(0 < d_responses.size());
     const Response& response = d_responses.front();
     BSLS_ASSERT(FunctionId::e_GET_LAST_ERROR == response.d_functionId);
     const DWORD result = response.d_getLastError.d_result;
@@ -906,13 +910,14 @@ DWORD TestWindowsInterface::GetLastError()
 BOOL TestWindowsInterface::SystemTimeToFileTime(const SYSTEMTIME *lpSystemTime,
                                                 LPFILETIME        lpFileTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Call call;
     call.d_functionId = FunctionId::e_SYSTEM_TIME_TO_FILE_TIME;
     call.d_systemTimeToFileTime.d_lpFileTime   = lpFileTime;
     call.d_systemTimeToFileTime.d_lpSystemTime = lpSystemTime;
     d_calls.push_back(call);
 
-    BSLS_ASSERT(0 < d_responses.size());
+    BSLS_ASSERT_NONCONVEYOR(0 < d_responses.size());
     const Response& response = d_responses.front();
     BSLS_ASSERT(FunctionId::e_SYSTEM_TIME_TO_FILE_TIME ==
                 response.d_functionId);
@@ -924,24 +929,29 @@ BOOL TestWindowsInterface::SystemTimeToFileTime(const SYSTEMTIME *lpSystemTime,
 
 void TestWindowsInterface::popFrontCall(Call *call)
 {
-    BSLS_ASSERT(0 < d_calls.size());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(0 < d_calls.size());
     *call = d_calls.front();
     d_calls.pop_front();
 }
 
 void TestWindowsInterface::pushBackResponse(const Response& response)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&response);
     d_responses.push_back(response);
 }
 
 // ACCESSORS
 int TestWindowsInterface::numCalls() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_calls.size());
 }
 
 int TestWindowsInterface::numResponses() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_responses.size());
 }
 
@@ -1067,6 +1077,7 @@ int initEpochFileTime()
 /// Windows.  Return the value generated.
 FILETIME toFT(const bdlt::Datetime& dt, bool doublecheck = true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&dt);
     bsls::Types::Int64 microseconds =
                            (dt - bdlt::EpochUtil::epoch()).totalMicroseconds();
 

@@ -285,6 +285,7 @@ enum FillType {
 
 int ggg(bsl::string *result, int length, FillType fill = e_LETTERS)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     // Clear the specified `result` and append a subset of the string
     // "abcdefghijklmnopqrstuvwxyz" or "0123456789", repeating the pattern
     // until the total length of `result` reaches the specified `length`.
@@ -333,6 +334,7 @@ bsl::string g(int length, FillType fill = e_LETTERS)
 
 void copyStringToBlob(bdlbb::Blob *dest, const bsl::string& str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     dest->setLength(static_cast<int>(str.length()));
     int         numBytesRemaining = static_cast<int>(str.length());
     const char *data              = str.data();

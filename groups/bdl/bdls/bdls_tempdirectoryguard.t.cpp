@@ -213,11 +213,13 @@ int main(int argc, char *argv[])
 
                 guard.release();
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&guard);
                 ASSERTV(guard.getTempDirName(),
                         true == guard.getTempDirName().empty());
 
                 guard.release();
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&guard);
                 ASSERTV(guard.getTempDirName(),
                         true == guard.getTempDirName().empty());
 

@@ -637,6 +637,7 @@ namespace {
 template <class VECTOR_TYPE>
 void pushBackWrapper(VECTOR_TYPE *vector, const char *item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(vector);
     BSLS_ASSERT(vector);
 
     vector->push_back(item);
@@ -911,6 +912,7 @@ int u_removeContentsOfTree(
            const BloombergLP::bdls::FilesystemUtil::FileDescriptor dirFD,
            const bsls::TimeInterval&                               nfsDeadline)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&nfsDeadline);
     typedef bdls::FilesystemUtil::FileDescriptor FileDescriptor;
 
     // This function is declared as returing 0 on success and non-zero
@@ -1098,7 +1100,7 @@ int u_removeContentsOfTree(
                 prevName.reserve(nameMax);
             }
 #endif
-            BSLS_ASSERT(name.length() <= prevName.capacity());
+            BSLS_ASSERT_NONCONVEYOR(name.length() <= prevName.capacity());
             prevName   = name;
             removedAny = true;
         }
@@ -1311,6 +1313,7 @@ int u_getWorkingDirectory(STRING_TYPE *path)
 template <class VECTOR_TYPE>
 int u_findMatchingPaths(VECTOR_TYPE *result, const char *pattern)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(result);
 
     result->clear();
@@ -1359,6 +1362,7 @@ template <class STRING_TYPE>
 void u_makeUnsafeTemporaryFilename(STRING_TYPE             *outPath,
                                    const bsl::string_view&  prefix)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(outPath);
     BSLS_ASSERT(outPath);
 
     char suffix[8];
@@ -2514,7 +2518,7 @@ int FilesystemUtil::remove(const char *path, bool recursiveFlag)
     for (size_t idx = 0; npos != (idx = sPath.find(slashSlash, idx)); ) {
         sPath.erase(sPath.begin() + idx);
     }
-    BSLS_ASSERT_OPT(npos == sPath.find(slashSlash));
+    BSLS_ASSERT_OPT_NONCONVEYOR(npos == sPath.find(slashSlash));
 
     // trim meaningless stuff off the end to help us identify paths ending with
     // "/..".
@@ -2724,7 +2728,8 @@ int FilesystemUtil::sync(char *address, bsl::size_t numBytes, bool syncFlag)
     static int pageSizeMask = MemoryUtil::pageSize() - 1;  (void) pageSizeMask;
 
     BSLS_ASSERT(0 == (numBytes & pageSizeMask));
-    BSLS_ASSERT(0 == (reinterpret_cast<bsls::Types::UintPtr>(address) &
+    BSLS_ASSERT_NONCONVEYOR(
+                        0 == (reinterpret_cast<bsls::Types::UintPtr>(address) &
                                                                 pageSizeMask));
 
     int rc = ::msync(address, numBytes, syncFlag ? MS_SYNC : MS_ASYNC);
@@ -2738,7 +2743,7 @@ int FilesystemUtil::sync(char *address, bsl::size_t numBytes, bool syncFlag)
 
 int FilesystemUtil::truncateFileSize(FileDescriptor descriptor, Offset size)
 {
-    BSLS_ASSERT(size <= getFileSize(descriptor));
+    BSLS_ASSERT_NONCONVEYOR(size <= getFileSize(descriptor));
 
 #if defined(U_USE_TRANSITIONAL_UNIX_FILE_SYSTEM_INTERFACE)
     int rc = ::ftruncate64(descriptor, size);
@@ -2842,6 +2847,7 @@ bool FilesystemUtil::isSymbolicLink(const char *path)
 int FilesystemUtil::getLastModificationTime(bdlt::Datetime *time,
                                             const char     *path)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(time);
     BSLS_ASSERT(time);
     BSLS_ASSERT(path);
 
@@ -2898,7 +2904,7 @@ int FilesystemUtil::visitPaths(
 
         unsigned numFiles = 0;
         for (unsigned ii = 0; ii < pglob.gl_pathc; ++ii) {
-            BSLS_ASSERT(pglob.gl_pathv[ii]);
+            BSLS_ASSERT_NONCONVEYOR(pglob.gl_pathv[ii]);
             if (!isDotOrDots(pglob.gl_pathv[ii])) {
                 ++numFiles;
                 visitor(pglob.gl_pathv[ii]);
@@ -3013,7 +3019,7 @@ int FilesystemUtil::visitTree(
             const char *fullPath = pglob.gl_pathv[ii];
             BSLS_ASSERT(fullPath);
             const char *basename = fullPath + truncTo;
-            BSLS_ASSERT('/' == basename[-1]);
+            BSLS_ASSERT_NONCONVEYOR('/' == basename[-1]);
 
             // Ignore '.', '..', symlinks and any other weird files that aren't
             // directories or plain files.
@@ -3097,7 +3103,7 @@ int FilesystemUtil::visitTree(
     const CIt end = nameRecs.end();
     for  (CIt it  = nameRecs.begin(); end != it; ++it) {
         fullFn.resize(truncTo);
-        fullFn += it->d_basename;
+        fullFn += BSLS_ASSERT_CONVEYOR_REF(it->d_basename);
 
         if (it->d_foundAsPattern) {
             visitor(fullFn.c_str());

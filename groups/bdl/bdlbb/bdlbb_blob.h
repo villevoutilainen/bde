@@ -477,7 +477,8 @@ class BlobBuffer {
 
     /// Return a reference to the shared pointer to the modifiable buffer
     /// represented by this object.
-    bsl::shared_ptr<char>& buffer();
+    bsl::shared_ptr<char>& buffer() BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Set the size of this blob buffer to the specified `size`.  The
     /// behavior is undefined unless `0 <= size` and the capacity of the
@@ -498,7 +499,9 @@ class BlobBuffer {
 
     /// Return a reference to the non-modifiable shared pointer to the
     /// buffer represented by this object.
-    const bsl::shared_ptr<char>& buffer() const;
+    const bsl::shared_ptr<char>& buffer() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the address of the modifiable buffer represented by this
     /// object.
@@ -915,7 +918,9 @@ class Blob {
     /// Return a reference to the non-modifiable blob buffer at the
     /// specified `index` in this blob.  The behavior is undefined unless
     /// `0 <= index < numBuffers()`.
-    const BlobBuffer& buffer(int index) const;
+    const BlobBuffer& buffer(int index) const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the factory used by this object.
     BlobBufferFactory *factory() const;
@@ -997,8 +1002,9 @@ BlobBuffer::BlobBuffer(const bsl::shared_ptr<char>& buffer, int size)
 : d_buffer(buffer)
 , d_size(size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&buffer);
     BSLS_ASSERT(0 <= size);
-    BSLS_ASSERT(size == 0 || buffer);
+    BSLS_ASSERT_NONCONVEYOR(size == 0 || buffer);
 }
 
 inline
@@ -1008,7 +1014,7 @@ BlobBuffer::BlobBuffer(bslmf::MovableRef<bsl::shared_ptr<char> > buffer,
 , d_size(size)
 {
     BSLS_ASSERT(0 <= size);
-    BSLS_ASSERT(size == 0 || d_buffer);
+    BSLS_ASSERT_NONCONVEYOR(size == 0 || d_buffer);
 }
 
 inline
@@ -1057,6 +1063,7 @@ const bsl::shared_ptr<char>& BlobBuffer::buffer() const
 inline
 char *BlobBuffer::data() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_buffer.get();
 }
 
@@ -1071,6 +1078,8 @@ int BlobBuffer::size() const
 inline
 bool bdlbb::operator==(const BlobBuffer& lhs, const BlobBuffer& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_buffer.get() == rhs.d_buffer.get() &&
            lhs.d_size == rhs.d_size;
 }
@@ -1078,6 +1087,8 @@ bool bdlbb::operator==(const BlobBuffer& lhs, const BlobBuffer& rhs)
 inline
 bool bdlbb::operator!=(const BlobBuffer& lhs, const BlobBuffer& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_buffer.get() != rhs.d_buffer.get() ||
            lhs.d_size != rhs.d_size;
 }
@@ -1120,6 +1131,7 @@ void Blob::prependDataBuffer(const BlobBuffer& buffer)
 inline
 void Blob::reserveBufferCapacity(int numBuffers)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= numBuffers);
 
     typedef bsl::vector<BlobBuffer>::size_type size_t;
@@ -1141,6 +1153,7 @@ bslma::Allocator *Blob::allocator() const
 inline
 const BlobBuffer& Blob::buffer(int index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 <= index);
     BSLS_ASSERT_SAFE(index < static_cast<int>(d_buffers.size()));
 
@@ -1168,6 +1181,7 @@ int Blob::length() const
 inline
 int Blob::numBuffers() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_buffers.size());
 }
 

@@ -373,12 +373,14 @@ FilesystemUtil_WindowsImpUtil<WINDOWS_INTERFACE>::getFileSize(
                                                      FileDescriptor descriptor)
 {
     BSLMF_ASSERT(bsl::is_integral<DWORD>::value);
-    BSLS_ASSERT(0            == bsl::numeric_limits<DWORD>::min());
-    BSLS_ASSERT(0xFFFFFFFFul == bsl::numeric_limits<DWORD>::max());
+    BSLS_ASSERT_NONCONVEYOR(0            == bsl::numeric_limits<DWORD>::min());
+    BSLS_ASSERT_NONCONVEYOR(0xFFFFFFFFul == bsl::numeric_limits<DWORD>::max());
 
     BSLMF_ASSERT(bsl::is_integral<ULONG64>::value);
-    BSLS_ASSERT(0                     == bsl::numeric_limits<ULONG64>::min());
-    BSLS_ASSERT(0xFFFFFFFFFFFFFFFFull == bsl::numeric_limits<ULONG64>::max());
+    BSLS_ASSERT_NONCONVEYOR(
+                 0                     == bsl::numeric_limits<ULONG64>::min());
+    BSLS_ASSERT_NONCONVEYOR(
+                 0xFFFFFFFFFFFFFFFFull == bsl::numeric_limits<ULONG64>::max());
 
     // The Windows implementation of this function uses 'GetFileSize' on
     // purpose, even though the Win32 API documentation instructs the reader to

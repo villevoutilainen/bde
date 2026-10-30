@@ -303,6 +303,7 @@ void convertToWindowsSeparator(STRING_TYPE *path)
 /// Replace each occurrence of '\\' with '\' in the specified `path`.
 void convertToUnixSeparator(bsl::string *path)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(path);
     bsl::string::size_type position = path->find('\\');
     for ( ;
          position != bsl::string::npos;

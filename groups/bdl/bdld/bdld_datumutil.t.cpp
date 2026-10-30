@@ -128,6 +128,7 @@ inline
 bsl::ostream&
 operator<<(bsl::ostream& os, const QuotedEscapedStringPrinterRef& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     bdlma::LocalBufferedObject<bsl::string, 128> quotedAndEscaped;
 
     typedef bdlb::LiteralUtil LitUtil;
@@ -286,7 +287,7 @@ bool isHexId(const bsl::string_view& str)
 bool verifySafePrintResult(const bsl::string_view& safeResult,
                            const bsl::string_view& expected)
 {
-    BSLS_ASSERT(!expected.empty());
+    BSLS_ASSERT_NONCONVEYOR(!expected.empty());
 
     ASSERT(!safeResult.empty());
     if (safeResult.empty()) {

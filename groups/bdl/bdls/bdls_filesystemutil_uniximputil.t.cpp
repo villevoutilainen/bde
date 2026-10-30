@@ -502,13 +502,14 @@ TestUnixInterface::TestUnixInterface(const allocator_type& allocator)
 // MANIPULATORS
 int TestUnixInterface::fstat(int fildes, stat *buf)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Call call;
     call.d_functionId     = FunctionId::e_FSTAT;
     call.d_fstat.d_fildes = fildes;
     call.d_fstat.d_buf    = buf;
     d_calls.push_back(call);
 
-    BSLS_ASSERT(0 < d_responses.size());
+    BSLS_ASSERT_NONCONVEYOR(0 < d_responses.size());
     const Response& response = d_responses.front();
     BSLS_ASSERT(FunctionId::e_FSTAT == response.d_functionId);
     const int result = response.d_fstat.d_result;
@@ -519,24 +520,29 @@ int TestUnixInterface::fstat(int fildes, stat *buf)
 
 void TestUnixInterface::popFrontCall(Call *call)
 {
-    BSLS_ASSERT(0 < d_calls.size());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(0 < d_calls.size());
     *call = d_calls.front();
     d_calls.pop_front();
 }
 
 void TestUnixInterface::pushBackResponse(const Response& response)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&response);
     d_responses.push_back(response);
 }
 
 // ACCESSORS
 int TestUnixInterface::numCalls() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_calls.size());
 }
 
 int TestUnixInterface::numResponses() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_responses.size());
 }
 

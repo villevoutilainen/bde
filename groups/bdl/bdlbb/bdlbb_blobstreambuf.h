@@ -321,7 +321,7 @@ void InBlobStreamBuf::reset(const bdlbb::Blob *blob)
 inline
 int InBlobStreamBuf::currentBufferIndex() const
 {
-    BSLS_ASSERT(d_getBufferIndex < d_blob_p->numBuffers());
+    BSLS_ASSERT_NONCONVEYOR(d_getBufferIndex < d_blob_p->numBuffers());
     return d_getBufferIndex;
 }
 
@@ -367,7 +367,7 @@ void OutBlobStreamBuf::reset(bdlbb::Blob *blob)
 inline
 int OutBlobStreamBuf::currentBufferIndex() const
 {
-    BSLS_ASSERT(d_putBufferIndex < d_blob_p->numBuffers());
+    BSLS_ASSERT_NONCONVEYOR(d_putBufferIndex < d_blob_p->numBuffers());
     return d_putBufferIndex;
 }
 

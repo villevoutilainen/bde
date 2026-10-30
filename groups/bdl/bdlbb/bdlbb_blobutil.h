@@ -564,6 +564,7 @@ void BlobUtil::append(Blob *dest, const char *source, int length)
         if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(lastBuf.size() - offsetInBuf >=
                                                 length)) {
             dest->setLength(dest->length() + length);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&lastBuf);
             bsl::memcpy(lastBuf.buffer().get() + offsetInBuf, source, length);
             return;                                                   // RETURN
         }
@@ -857,6 +858,7 @@ inline
 bsl::ostream& bdlbb::operator<<(bsl::ostream&              stream,
                                 const BlobUtilAsciiDumper& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     int offset = bsl::min(rhs.d_offset, rhs.d_blob_p->length());
     int length = bsl::min(rhs.d_length, rhs.d_blob_p->length() - offset);
     return BlobUtil::asciiDump(stream, *rhs.d_blob_p, offset, length);
@@ -902,6 +904,7 @@ inline
 bsl::ostream& bdlbb::operator<<(bsl::ostream&            stream,
                                 const BlobUtilHexDumper& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     int offset = bsl::min(rhs.d_offset, rhs.d_blob_p->length());
     int length = bsl::min(rhs.d_length, rhs.d_blob_p->length() - offset);
     return BlobUtil::hexDump(stream, *rhs.d_blob_p, offset, length);

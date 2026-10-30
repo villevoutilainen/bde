@@ -659,6 +659,7 @@ void populateWithNonAggregateValues(vector<Datum>    *elements,
                                     bslma::Allocator *allocator,
                                     bool              withNaNs = true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(elements);
     elements->push_back(Datum::createBoolean(true));
     elements->push_back(Datum::createBoolean(false));
     elements->push_back(Datum::createDate(Date()) );
@@ -803,6 +804,7 @@ void loadRandomString(bsl::string *result, bsls::Types::size_type length)
 void loadRandomBinary(bsl::vector<unsigned char> *result,
                       bsls::Types::size_type      length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     result->resize(length);
 
     for (bsls::Types::size_type i = 0; i < length; ++i) {
@@ -1260,21 +1262,25 @@ void Benchmark_Visitor::operator()(const VISITOR& v)
 
 void Benchmark_Visitor::operator()(const bdlt::Date& v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&v);
     d_sum += v.day();
 }
 
 void Benchmark_Visitor::operator()(const bdlt::Datetime& v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&v);
     d_sum += v.second();
 }
 
 void Benchmark_Visitor::operator()(const bdlt::DatetimeInterval& v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&v);
     d_sum += v.seconds();
 }
 
 void Benchmark_Visitor::operator()(const bdlt::Time& v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&v);
     d_sum += v.second();
 }
 
@@ -1406,6 +1412,7 @@ void BenchmarkSuite::run(int   iterations,
                          int   activeCount,
                          char *activeArg[])
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     d_iterations = iterations;
     d_scale = double(d_iterations) * k_DATUMS / (1000. * 1000 * 1000);
@@ -1504,6 +1511,7 @@ void BenchmarkSuite::run(int   iterations,
     BENCHMARK(createDouble(1.23), isDouble(), theDouble(), double);
 
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         const size_t k_MAX_ENCODED_SIZE_IN_BYTES = 16;
         unsigned char buffer[k_MAX_ENCODED_SIZE_IN_BYTES];  (void)buffer;
 
@@ -1524,7 +1532,7 @@ void BenchmarkSuite::run(int   iterations,
 #endif  // end - 64 bit
 
         Decimal64 aDecimal64(BDLDFP_DECIMAL_DD(1.23456789));
-        BSLS_ASSERT(bdldfp::DecimalConvertUtil::
+        BSLS_ASSERT_NONCONVEYOR(bdldfp::DecimalConvertUtil::
                     decimal64ToVariableWidthEncoding(
                         const_cast<unsigned char*>(buffer),
                         aDecimal64) > buffer + 6);
@@ -1706,15 +1714,17 @@ void BenchmarkSuite::run(int   iterations,
 
 bool BenchmarkSuite::next()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ++d_current;
 
     return (d_active.empty()) ||
            (d_current < static_cast<int>(d_active.size()) &&
-            d_active[d_current]);
+            BSLS_ASSERT_CONVEYOR_REF(d_active[d_current]));
 }
 
 void BenchmarkSuite::runVisit()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bdlma::BufferedSequentialAllocator oa(d_buf.begin(), k_ALLOC_SIZE);
 
     vector<Datum> combo;
@@ -1816,6 +1826,7 @@ void BenchmarkSuite::runVisit()
 
 void BenchmarkSuite::runClone()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Clone for non-allocating values.
     bdlma::BufferedSequentialAllocator oa(d_buf.begin(), k_ALLOC_SIZE);
     bdlma::CountingAllocator ca(&oa);
@@ -2062,7 +2073,7 @@ class MockAccumulatingHashingAlgorithm {
     bool regionsAtIndexAre(bsl::size_t idx, const void *          value) const;
 
     /// Return a `const` reference to the collected data.
-    const Regions& getData() const;
+    const Regions& getData() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the number of memory regions hashed.
     bsl::size_t numOfHashedRegions() const;
@@ -2077,6 +2088,8 @@ template <class T>
 bool MockAccumulatingHashingAlgorithm::regionsAtIdxImp(bsl::size_t idx,
                                                        const T&    value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (idx > d_data.size()) {
         return false;                                                 // RETURN
     }
@@ -2113,6 +2126,7 @@ inline
 void MockAccumulatingHashingAlgorithm::operator()(const void  *voidPtr,
                                                   bsl::size_t  length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const unsigned char *p = static_cast<const unsigned char *>(voidPtr);
     d_data.emplace_back(p, p + length);
 }
@@ -2120,6 +2134,7 @@ void MockAccumulatingHashingAlgorithm::operator()(const void  *voidPtr,
 inline
 void MockAccumulatingHashingAlgorithm::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_data.clear();
 }
 
@@ -2128,10 +2143,11 @@ inline
 RegionHexPrinter
 MockAccumulatingHashingAlgorithm::regionAsHex(bsl::size_t index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (index >= d_data.size()) {
         return hexPrintMissing();                                     // RETURN
     }
-    return hexPrintRegion(d_data[index].data(), d_data[index].size());
+    return hexPrintRegion(BSLS_ASSERT_CONVEYOR_REF(d_data[index]).data(), BSLS_ASSERT_CONVEYOR_REF(d_data[index]).size());
 }
 
 inline
@@ -2139,12 +2155,14 @@ bool MockAccumulatingHashingAlgorithm::regionAtIndexIs(
                                                     bsl::size_t   idx,
                                                     const Region& region) const
 {
-    if (idx > d_data.size() || d_data[idx].size() != region.size()) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&region);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    if (idx > d_data.size() || BSLS_ASSERT_CONVEYOR_REF(d_data[idx]).size() != region.size()) {
         return false;                                                 // RETURN
     }
 
     return region.size() == 0 ||
-        memcmp(d_data[idx].data(), region.data(), region.size()) == 0;
+        memcmp(BSLS_ASSERT_CONVEYOR_REF(d_data[idx]).data(), region.data(), region.size()) == 0;
 }
 
 inline
@@ -2253,6 +2271,7 @@ MockAccumulatingHashingAlgorithm::getData() const
 inline
 bsl::size_t MockAccumulatingHashingAlgorithm::numOfHashedRegions() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_data.size();
 }
 
@@ -2297,6 +2316,7 @@ class HashHexPrinter {
         os << "[ ";
         for (bsl::size_t i = start; i < end; ++i) {
             if (i != 0) os << ", ";
+            BSLS_ASSERT_CONVEYOR_OBJECT(&hasher);
             const bsl::size_t regionBytes = hasher.getData()[i].size();
             os << regionBytes << "byte" << (regionBytes == 1 ? ":" : "s:");
             if (i < hasher.numOfHashedRegions()) {

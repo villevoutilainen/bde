@@ -150,6 +150,7 @@ char getAlpha()
 /// alphabet, repeating if necessary.
 void fillAlpha(const BlobBuffer& blobBuffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&blobBuffer);
     char *dst    = &*blobBuffer.buffer();
     int   length = blobBuffer.size();
 
@@ -164,6 +165,7 @@ void fillAlpha(const BlobBuffer& blobBuffer)
 /// memory all matches and `false` otherwise.
 bool checkAlpha(const BlobBuffer& blobBuffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&blobBuffer);
     const char *src    = &*blobBuffer.buffer();
     const int   length = blobBuffer.size();
 
@@ -313,7 +315,7 @@ int main(int argc, char *argv[])
         bsl::size_t pos = 0;
         for (bsl::size_t i = 0; i < dataSize; ++i) {
             pos += i * i;
-            data.push_back("Sphinx of black quartz, judge my vow!"[pos % 37]);
+            data.push_back(BSLS_ASSERT_CONVEYOR_REF("Sphinx of black quartz, judge my vow!"[pos % 37]));
         }
 
         if (verbose) P(dataSize);
@@ -349,6 +351,7 @@ int main(int argc, char *argv[])
                 ASSERTV(bBuf.size(), bufferSize == bBuf.size());
                 ASSERTV(iChar, blob.lastDataBufferLength(),
                                      iChar + 1 == blob.lastDataBufferLength());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&bBuf);
                 ASSERTV(blob.numDataBuffers(), blob.numBuffers(),
                                    blob.numDataBuffers() == blob.numBuffers());
                 char              *buf   = &*bBuf.buffer();

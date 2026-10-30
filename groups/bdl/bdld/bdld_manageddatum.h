@@ -530,7 +530,7 @@ Datum ManagedDatum::release()
 inline
 void ManagedDatum::swap(ManagedDatum& other)
 {
-    BSLS_ASSERT(d_allocator == other.get_allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_allocator == other.get_allocator());
 
     using bsl::swap;
     swap(d_data, other.d_data);

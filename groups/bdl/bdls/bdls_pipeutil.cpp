@@ -201,7 +201,8 @@ namespace bdls {
 int PipeUtil::send(const bsl::string_view& pipeName,
                    const bsl::string_view& message)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(pipeName.data(), pipeName.length()));
+    BSLS_ASSERT_NONCONVEYOR(
+                 bdlde::Utf8Util::isValid(pipeName.data(), pipeName.length()));
 
     bsl::string safeName(pipeName);
     int pipe = open(safeName.c_str(), O_WRONLY);
@@ -220,7 +221,8 @@ int PipeUtil::send(const bsl::string_view& pipeName,
 bool
 PipeUtil::isOpenForReading(const bsl::string_view& pipeName)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(pipeName.data(), pipeName.length()));
+    BSLS_ASSERT_NONCONVEYOR(
+                 bdlde::Utf8Util::isValid(pipeName.data(), pipeName.length()));
 
     bsl::string safeName(pipeName);
     int fd = open(safeName.c_str(), O_WRONLY | O_NONBLOCK);

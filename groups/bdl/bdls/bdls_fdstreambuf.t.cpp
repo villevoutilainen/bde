@@ -291,6 +291,7 @@ bsl::string printableString(const bsl::string& str,
                             bsl::size_t        start,
                             bsl::size_t        len)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     // Return a string containing the first specified `len` characters of the
     // specified `str`, with carriage returns translated to "\\r" and newlines
     // translated to "\\n" to facilitate human readability.

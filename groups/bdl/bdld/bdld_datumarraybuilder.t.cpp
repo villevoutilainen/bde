@@ -152,6 +152,7 @@ namespace {
     /// Return the index of the next value within `input`.
     bsl::size_t nextValue(bsl::string *value, const bsl::string& input)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&input);
         if (input.empty()) {
             return bsl::string::npos;
         }
@@ -176,6 +177,7 @@ namespace {
     bdld::Datum convertToDatum(const bsl::string&  token,
                                bslma::Allocator   *basicAllocator)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&token);
         bool isInteger = true;
         bool isDouble = false;
         bool isBoolean = false;

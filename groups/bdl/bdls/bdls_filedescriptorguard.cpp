@@ -10,6 +10,7 @@ namespace bdls {
 // MANIPULATORS
 void FileDescriptorGuard::closeAndRelease()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(FilesystemUtil::k_INVALID_FD != d_descriptor);
 
     int rc = FilesystemUtil::close(d_descriptor);

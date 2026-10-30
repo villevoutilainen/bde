@@ -33,11 +33,11 @@ void copyFromPlace(char                *dstBuffer,
                    bsl::pair<int, int>  place,
                    int                  length)
 {
-    BSLS_ASSERT(place.first < srcBlob.numBuffers());
-    BSLS_ASSERT(place.second < srcBlob.buffer(place.first).size());
+    BSLS_ASSERT_NONCONVEYOR(place.first < srcBlob.numBuffers());
+    BSLS_ASSERT_NONCONVEYOR(place.second < srcBlob.buffer(place.first).size());
     BSLS_ASSERT(0 < length);
     BSLS_ASSERT(0 != dstBuffer);
-    BSLS_ASSERT(length <= srcBlob.totalSize());
+    BSLS_ASSERT_NONCONVEYOR(length <= srcBlob.totalSize());
     // Verifying place + length is in bounds would be messy. Callers do it.
 
     int copied = 0;
@@ -68,7 +68,7 @@ bsl::ostream& asciiDumpFromBufferStart(bsl::ostream&      stream,
     BSLS_ASSERT(0 <= bufferIndex);
     BSLS_ASSERT(0 <= numBytes);
     while (0 < numBytes) {
-        BSLS_ASSERT(source.numDataBuffers() > bufferIndex);
+        BSLS_ASSERT_NONCONVEYOR(source.numDataBuffers() > bufferIndex);
         const bdlbb::BlobBuffer& buffer = source.buffer(bufferIndex);
 
         if (0 != buffer.size()) {
@@ -98,8 +98,8 @@ void BlobUtil::append(Blob *dest, const Blob& source, int offset, int length)
     BSLS_ASSERT(0 != dest);
     BSLS_ASSERT(0 <= offset);
     BSLS_ASSERT(0 <= length);
-    BSLS_ASSERT(offset <= source.length());
-    BSLS_ASSERT(length <= source.length() - offset);
+    BSLS_ASSERT_NONCONVEYOR(offset <= source.length());
+    BSLS_ASSERT_NONCONVEYOR(length <= source.length() - offset);
 
     if (0 == length) {
         return;                                                       // RETURN
@@ -135,6 +135,7 @@ void BlobUtil::append(Blob *dest, const Blob& source, int offset, int length)
         BlobBuffer src = source.buffer(sourceBufferIndex);
 
         if (0 < offsetInThisBuffer) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&src);
             src.buffer().loadAlias(src.buffer(),
                                    src.data() + offsetInThisBuffer);
             src.setSize(src.size() - offsetInThisBuffer);
@@ -153,7 +154,7 @@ void BlobUtil::append(Blob *dest, const Blob& source, int offset, int length)
     // Add remaining buffers.
 
     while (0 < numBytesRemaining) {
-        BSLS_ASSERT(sourceBufferIndex < source.numBuffers());
+        BSLS_ASSERT_NONCONVEYOR(sourceBufferIndex < source.numBuffers());
 
         BlobBuffer src = source.buffer(sourceBufferIndex);
 
@@ -171,8 +172,9 @@ void BlobUtil::append(Blob *dest, const Blob& source, int offset, int length)
 
     int newLength = destStartLength + length;
 
-    BSLS_ASSERT(-numBytesRemaining == dest->totalSize() - newLength);
-    BSLS_ASSERT(newLength <= dest->totalSize());
+    BSLS_ASSERT_NONCONVEYOR(
+                          -numBytesRemaining == dest->totalSize() - newLength);
+    BSLS_ASSERT_NONCONVEYOR(newLength <= dest->totalSize());
 
     (void)newLength;  // quash potential compiler warning
 }
@@ -238,7 +240,7 @@ void BlobUtil::append(Blob *dest, int length, char fill)
     }
 
     BSLS_ASSERT(0 < length);
-    BSLS_ASSERT(length <= dest->totalSize() - dest->length() ||
+    BSLS_ASSERT_NONCONVEYOR(length <= dest->totalSize() - dest->length() ||
                                                          0 != dest->factory());
 
     int bufIdx       = bsl::max(0, dest->numDataBuffers() - 1);
@@ -317,8 +319,8 @@ void BlobUtil::erase(Blob *blob, int offset, int length)
     BSLS_ASSERT(0 != blob);
     BSLS_ASSERT(offset >= 0);
     BSLS_ASSERT(length >= 0);
-    BSLS_ASSERT(offset <= blob->length());
-    BSLS_ASSERT(length <= blob->length() - offset);
+    BSLS_ASSERT_NONCONVEYOR(offset <= blob->length());
+    BSLS_ASSERT_NONCONVEYOR(length <= blob->length() - offset);
 
     if (0 == length) {
         return;                                                       // RETURN
@@ -334,6 +336,7 @@ void BlobUtil::erase(Blob *blob, int offset, int length)
 
     if (leadingBufferLen) {
         const BlobBuffer&     leadingBuffer = blob->buffer(currBufferIdx);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&leadingBuffer);
         bsl::shared_ptr<char> leadingShptr(leadingBuffer.buffer(),
                                            leadingBuffer.data());
         BlobBuffer            leadingPartialBuffer;
@@ -380,6 +383,7 @@ void BlobUtil::erase(Blob *blob, int offset, int length)
             numBytesToAdjust = currBufferSize - lastDataBufLen;
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&currBlobBuffer);
         bsl::shared_ptr<char> trailingShptr(currBlobBuffer.buffer(),
                                             currBlobBuffer.data() + length);
 
@@ -419,14 +423,14 @@ bsl::pair<int, int> BlobUtil::findBufferIndexAndOffset(const Blob& blob,
                                                        int         position)
 {
     BSLS_ASSERT(0 <= position);
-    BSLS_ASSERT(position < blob.totalSize());
+    BSLS_ASSERT_NONCONVEYOR(position < blob.totalSize());
 
     bsl::pair<int, int>  result(0, position);
     const BlobBuffer    *buffer = &(blob.buffer(0));
     for (; buffer->size() <= result.second; ++buffer) {
         result.first++;
         result.second -= buffer->size();
-        BSLS_ASSERT(result.first < blob.numBuffers());
+        BSLS_ASSERT_NONCONVEYOR(result.first < blob.numBuffers());
     }
     return result;
 }
@@ -438,7 +442,7 @@ void BlobUtil::copy(char        *dstBuffer,
 {
     BSLS_ASSERT(0 <= position);
     BSLS_ASSERT(0 <= length);
-    BSLS_ASSERT(position <= srcBlob.totalSize() - length);
+    BSLS_ASSERT_NONCONVEYOR(position <= srcBlob.totalSize() - length);
     BSLS_ASSERT(dstBuffer != 0);
 
     if (0 < length) {
@@ -457,7 +461,7 @@ void BlobUtil::copy(Blob *dst, int dstOffset, const char *src, int length)
     if (0 != length) {
         BSLS_ASSERT(dst);
         BSLS_ASSERT(src);
-        BSLS_ASSERT(dstOffset <= dst->length() - length);
+        BSLS_ASSERT_NONCONVEYOR(dstOffset <= dst->length() - length);
 
         bsl::pair<int, int> place = findBufferIndexAndOffset(*dst, dstOffset);
 
@@ -485,11 +489,11 @@ void BlobUtil::copy(Blob        *dst,
     BSLS_ASSERT(0 <= dstOffset);
     BSLS_ASSERT(0 <= srcOffset);
     BSLS_ASSERT(0 <= length);
-    BSLS_ASSERT(srcOffset <= src.length() - length);
+    BSLS_ASSERT_NONCONVEYOR(srcOffset <= src.length() - length);
 
     if (0 != length) {
         BSLS_ASSERT(dst);
-        BSLS_ASSERT(dstOffset <= dst->length() - length);
+        BSLS_ASSERT_NONCONVEYOR(dstOffset <= dst->length() - length);
 
         bsl::pair<int, int> dstPlace =
             findBufferIndexAndOffset(*dst, dstOffset);
@@ -538,8 +542,8 @@ void BlobUtil::copy(Blob        *dst,
 void BlobUtil::deepCopy(Blob *dst, const Blob& src)
 {
     BSLS_ASSERT(dst);
-    BSLS_ASSERT(dst->factory());
-    BSLS_ASSERT(dst->totalSize() == 0);
+    BSLS_ASSERT_NONCONVEYOR(dst->factory());
+    BSLS_ASSERT_NONCONVEYOR(dst->totalSize() == 0);
 
     dst->setLength(src.length());
     copy(dst, 0, src, 0, src.length());
@@ -554,11 +558,12 @@ char *BlobUtil::getContiguousRangeOrCopy(char        *dstBuffer,
     BSLS_ASSERT(dstBuffer != 0);
     BSLS_ASSERT(0 <= position);
     BSLS_ASSERT(0 < length);
-    BSLS_ASSERT(length <= srcBlob.totalSize());
-    BSLS_ASSERT(position <= srcBlob.totalSize() - length);
+    BSLS_ASSERT_NONCONVEYOR(length <= srcBlob.totalSize());
+    BSLS_ASSERT_NONCONVEYOR(position <= srcBlob.totalSize() - length);
     BSLS_ASSERT(0 < alignment);
     BSLS_ASSERT(0 == (alignment & (alignment - 1)));
-    BSLS_ASSERT(0 == (reinterpret_cast<bsls::Types::IntPtr>(dstBuffer) &
+    BSLS_ASSERT_NONCONVEYOR(
+                       0 == (reinterpret_cast<bsls::Types::IntPtr>(dstBuffer) &
                       (alignment - 1)));
 
     bsl::pair<int, int>  place  = findBufferIndexAndOffset(srcBlob, position);
@@ -593,7 +598,7 @@ char *BlobUtil::getContiguousDataBuffer(Blob              *blob,
             index = blob->numDataBuffers();  // found nothing usable
             BlobBuffer buffer;
             factory->allocate(&buffer);
-            BSLS_ASSERT(addLength <= buffer.size());
+            BSLS_ASSERT_NONCONVEYOR(addLength <= buffer.size());
             blob->insertBuffer(index, buffer);
         }
     }
@@ -613,8 +618,8 @@ bsl::ostream& BlobUtil::asciiDump(bsl::ostream& stream,
 {
     BSLS_ASSERT(0 <= offset);
     BSLS_ASSERT(0 <= length);
-    BSLS_ASSERT(length <= source.length());
-    BSLS_ASSERT(offset <= source.length() - length);
+    BSLS_ASSERT_NONCONVEYOR(length <= source.length());
+    BSLS_ASSERT_NONCONVEYOR(offset <= source.length() - length);
 
     if (0 == source.length() || 0 == length) {
         return stream;                                                // RETURN
@@ -650,8 +655,8 @@ bsl::ostream& BlobUtil::hexDump(bsl::ostream& stream,
 {
     BSLS_ASSERT(0 <= offset);
     BSLS_ASSERT(0 <= length);
-    BSLS_ASSERT(length <= source.length());
-    BSLS_ASSERT(offset <= source.length() - length);
+    BSLS_ASSERT_NONCONVEYOR(length <= source.length());
+    BSLS_ASSERT_NONCONVEYOR(offset <= source.length() - length);
 
     if (0 == source.length() || 0 == length) {
         return stream;                                                // RETURN
@@ -691,7 +696,7 @@ bsl::ostream& BlobUtil::hexDump(bsl::ostream& stream,
     int numBytesCopied = 0;
 
     while (0 < numBytesLeft) {
-        BSLS_ASSERT(bufferIndex < source.numDataBuffers());
+        BSLS_ASSERT_NONCONVEYOR(bufferIndex < source.numDataBuffers());
 
         const BlobBuffer& buffer = source.buffer(bufferIndex);
 
@@ -813,7 +818,7 @@ int BlobUtil::compare(const Blob& a, const Blob& b)
         rhsBufSize -= numBytesToCompare;
 
         ++lhsBufIdx;  // advance to next 'lhs' blob buffer
-        BSLS_ASSERT(lhsBufIdx < lhsBlob->numDataBuffers());
+        BSLS_ASSERT_NONCONVEYOR(lhsBufIdx < lhsBlob->numDataBuffers());
 
         const BlobBuffer& nextLhsBlobBuffer = lhsBlob->buffer(lhsBufIdx);
         const int         nextLhsBufSize    = nextLhsBlobBuffer.size();

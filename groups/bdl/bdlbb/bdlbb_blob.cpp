@@ -57,8 +57,9 @@ BlobBuffer& BlobBuffer::operator=(bslmf::MovableRef<BlobBuffer> rhs)
 
 void BlobBuffer::reset(const bsl::shared_ptr<char>& buffer, int size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&buffer);
     BSLS_ASSERT(0 <= size);
-    BSLS_ASSERT(size == 0 || buffer);
+    BSLS_ASSERT_NONCONVEYOR(size == 0 || buffer);
 
     d_buffer = buffer;
     d_size   = size;
@@ -67,15 +68,17 @@ void BlobBuffer::reset(const bsl::shared_ptr<char>& buffer, int size)
 void BlobBuffer::reset(bslmf::MovableRef<bsl::shared_ptr<char> > buffer,
                        int                                       size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_buffer = MoveUtil::move(buffer);
     d_size   = size;
 
     BSLS_ASSERT(0 <= size);
-    BSLS_ASSERT(size == 0 || d_buffer);
+    BSLS_ASSERT_NONCONVEYOR(size == 0 || d_buffer);
 }
 
 void BlobBuffer::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_buffer.reset();
     d_size = 0;
 }
@@ -88,7 +91,7 @@ void BlobBuffer::swap(BlobBuffer& other)
 
 BlobBuffer BlobBuffer::trim(int toSize)
 {
-    BSLS_ASSERT(0 <= toSize && toSize <= size());
+    BSLS_ASSERT_NONCONVEYOR(0 <= toSize && toSize <= size());
 
     BlobBuffer leftover(bsl::shared_ptr<char>(d_buffer, data() + toSize),
                         d_size - toSize);
@@ -99,6 +102,7 @@ BlobBuffer BlobBuffer::trim(int toSize)
 // ACCESSORS
 bsl::ostream& BlobBuffer::print(bsl::ostream& stream, int, int) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bdlb::Print::hexDump(stream, d_buffer.get(), d_size);
     return stream << bsl::flush;
 }
@@ -136,6 +140,7 @@ BlobBufferFactory::~BlobBufferFactory()
 // PRIVATE ACCESSORS
 int Blob::assertInvariants() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= d_totalSize);
     BSLS_ASSERT(0 <= d_dataLength);
     BSLS_ASSERT(d_dataLength <= d_totalSize);
@@ -168,7 +173,8 @@ int Blob::assertInvariants() const
     if (0 < d_dataLength) {
         BSLS_ASSERT(NUM_BUFFERS != index                              );
         BSLS_ASSERT(d_dataIndex <  static_cast<int>(d_buffers.size()) );
-        BSLS_ASSERT(0           <= d_dataLength - d_preDataIndexLength);
+        BSLS_ASSERT_NONCONVEYOR(
+                           0           <= d_dataLength - d_preDataIndexLength);
     }
     else {
         BSLS_ASSERT(0 == d_preDataIndexLength);
@@ -180,6 +186,7 @@ int Blob::assertInvariants() const
 // PRIVATE MANIPULATORS
 void Blob::slowSetLength(int length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= length);
 
     if (0 == length) {
@@ -291,7 +298,7 @@ Blob::Blob(const BlobBuffer  *buffers,
 {
     for (BlobBufferConstIterator it = d_buffers.begin(); it != d_buffers.end();
          ++it) {
-        BSLS_ASSERT(0 <= it->size());
+        BSLS_ASSERT_NONCONVEYOR(0 <= it->size());
         d_totalSize += it->size();
     }
     BSLS_ASSERT_SAFE(0 == assertInvariants());
@@ -358,6 +365,7 @@ Blob::~Blob()
 // MANIPULATORS
 Blob& Blob::operator=(const Blob& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_buffers.reserve(rhs.numBuffers());
 
     d_buffers            = rhs.d_buffers;
@@ -387,11 +395,12 @@ Blob& Blob::operator=(bslmf::MovableRef<Blob> rhs)
 
 void Blob::appendBuffer(bslmf::MovableRef<BlobBuffer> buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BlobBuffer& lvalue     = buffer;
     const int   bufferSize = lvalue.size();
 
-    BSLS_ASSERT(d_totalSize <= INT_MAX - lvalue.size());
-    BSLS_ASSERT(numBuffers() < INT_MAX);
+    BSLS_ASSERT_NONCONVEYOR(d_totalSize <= INT_MAX - lvalue.size());
+    BSLS_ASSERT_NONCONVEYOR(numBuffers() < INT_MAX);
 
     d_buffers.push_back(MoveUtil::move(lvalue));
     d_totalSize += bufferSize;
@@ -399,7 +408,8 @@ void Blob::appendBuffer(bslmf::MovableRef<BlobBuffer> buffer)
 
 void Blob::appendDataBuffer(bslmf::MovableRef<BlobBuffer> buffer)
 {
-    BSLS_ASSERT(numBuffers() < INT_MAX);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(numBuffers() < INT_MAX);
 
     BlobBuffer& lvalue        = buffer;
     const int   bufferSize    = lvalue.size();
@@ -410,7 +420,7 @@ void Blob::appendDataBuffer(bslmf::MovableRef<BlobBuffer> buffer)
         // all non-zero sized buffers were full or there was no data, but
         // empty buffers could be present.
 
-        BSLS_ASSERT(d_totalSize <= INT_MAX - bufferSize);
+        BSLS_ASSERT_NONCONVEYOR(d_totalSize <= INT_MAX - bufferSize);
 
         d_buffers.insert(d_buffers.begin() + numDataBuffers(),
                          MoveUtil::move(lvalue));
@@ -433,7 +443,8 @@ void Blob::appendDataBuffer(bslmf::MovableRef<BlobBuffer> buffer)
         const int TRIMMED_SIZE =
             d_buffers[d_dataIndex].size() - lastDataBufferLength();
 
-        BSLS_ASSERT(d_totalSize - TRIMMED_SIZE <= INT_MAX - bufferSize);
+        BSLS_ASSERT_NONCONVEYOR(
+                           d_totalSize - TRIMMED_SIZE <= INT_MAX - bufferSize);
         BSLS_ASSERT(d_dataLength > 0);
         BSLS_ASSERT(d_dataLength < d_totalSize);
         BSLS_ASSERT((unsigned)d_dataIndex < d_buffers.size());
@@ -442,7 +453,8 @@ void Blob::appendDataBuffer(bslmf::MovableRef<BlobBuffer> buffer)
         BlobBuffer&    prevBuf        = d_buffers[d_dataIndex];
         const unsigned newPrevBufSize = oldDataLength - d_preDataIndexLength;
 
-        BSLS_ASSERT(TRIMMED_SIZE <= static_cast<int>(prevBuf.size()));
+        BSLS_ASSERT_NONCONVEYOR(
+                             TRIMMED_SIZE <= static_cast<int>(prevBuf.size()));
 
         prevBuf.setSize(newPrevBufSize);
         d_totalSize -= TRIMMED_SIZE;
@@ -458,13 +470,14 @@ void Blob::appendDataBuffer(bslmf::MovableRef<BlobBuffer> buffer)
 
 void Blob::insertBuffer(int index, bslmf::MovableRef<BlobBuffer> buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= index);
     BSLS_ASSERT(index <= static_cast<int>(d_buffers.size()));
 
     BlobBuffer& lvalue     = buffer;
     const int   bufferSize = lvalue.size();
-    BSLS_ASSERT(d_totalSize <= INT_MAX - bufferSize);
-    BSLS_ASSERT(numBuffers() < INT_MAX);
+    BSLS_ASSERT_NONCONVEYOR(d_totalSize <= INT_MAX - bufferSize);
+    BSLS_ASSERT_NONCONVEYOR(numBuffers() < INT_MAX);
 
     d_buffers.insert(d_buffers.begin() + index, MoveUtil::move(lvalue));
 
@@ -480,11 +493,12 @@ void Blob::insertBuffer(int index, bslmf::MovableRef<BlobBuffer> buffer)
 
 void Blob::prependDataBuffer(bslmf::MovableRef<BlobBuffer> buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BlobBuffer& lvalue     = buffer;
     const int   bufferSize = lvalue.size();
 
-    BSLS_ASSERT(d_totalSize <= INT_MAX - bufferSize);
-    BSLS_ASSERT(numBuffers() < INT_MAX);
+    BSLS_ASSERT_NONCONVEYOR(d_totalSize <= INT_MAX - bufferSize);
+    BSLS_ASSERT_NONCONVEYOR(numBuffers() < INT_MAX);
 
     d_buffers.insert(d_buffers.begin(), MoveUtil::move(lvalue));
 
@@ -498,6 +512,7 @@ void Blob::prependDataBuffer(bslmf::MovableRef<BlobBuffer> buffer)
 
 void Blob::removeAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_buffers.clear();
     d_totalSize          =  0;
     d_dataLength         =  0;
@@ -507,6 +522,7 @@ void Blob::removeAll()
 
 void Blob::removeBuffer(int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= index);
     BSLS_ASSERT(index < static_cast<int>(d_buffers.size()));
 
@@ -530,9 +546,10 @@ void Blob::removeBuffer(int index)
 
 void Blob::removeBuffers(int index, int numBuffers)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= index);
     BSLS_ASSERT(0 <= numBuffers);
-    BSLS_ASSERT(index + numBuffers <= this->numBuffers());
+    BSLS_ASSERT_NONCONVEYOR(index + numBuffers <= this->numBuffers());
 
     // As we iterate through the buffers the values of the class data members
     // will change constantly making it difficult to iterate correctly.  Make a
@@ -578,6 +595,7 @@ void Blob::removeBuffers(int index, int numBuffers)
 
 void Blob::removeUnusedBuffers()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (numDataBuffers() < numBuffers()) {
         d_totalSize = d_dataLength > 0 ? d_preDataIndexLength +
                                              d_buffers[d_dataIndex].size()
@@ -589,9 +607,10 @@ void Blob::removeUnusedBuffers()
 
 void Blob::replaceDataBuffer(int index, const BlobBuffer& buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= index);
-    BSLS_ASSERT(index < numDataBuffers());
-    BSLS_ASSERT(d_totalSize <= INT_MAX - buffer.size());
+    BSLS_ASSERT_NONCONVEYOR(index < numDataBuffers());
+    BSLS_ASSERT_NONCONVEYOR(d_totalSize <= INT_MAX - buffer.size());
 
     int sizeDiff = buffer.size() - d_buffers[index].size();
 
@@ -609,6 +628,7 @@ void Blob::replaceDataBuffer(int index, const BlobBuffer& buffer)
 
 void Blob::setLength(int length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= length);
 
     if (d_dataLength == length) {
@@ -630,7 +650,7 @@ void Blob::setLength(int length)
 
 void Blob::swap(Blob& other)
 {
-    BSLS_ASSERT(this->allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(this->allocator() == other.allocator());
 
     bslalg::SwapUtil::swap(&this->d_buffers, &other.d_buffers);
     bslalg::SwapUtil::swap(&this->d_totalSize, &other.d_totalSize);
@@ -643,15 +663,18 @@ void Blob::swap(Blob& other)
 
 void Blob::swapBufferRaw(int index, BlobBuffer *srcBuffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(srcBuffer);
     BSLS_ASSERT(0 <= index);
-    BSLS_ASSERT(index < numBuffers());
-    BSLS_ASSERT(srcBuffer->size() == buffer(index).size());
+    BSLS_ASSERT_NONCONVEYOR(index < numBuffers());
+    BSLS_ASSERT_NONCONVEYOR(srcBuffer->size() == buffer(index).size());
 
     d_buffers[index].buffer().swap(srcBuffer->buffer());
 }
 
 BlobBuffer Blob::trimLastDataBuffer()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == d_dataLength) {
         return BlobBuffer();                                          // RETURN
     }
@@ -664,11 +687,15 @@ BlobBuffer Blob::trimLastDataBuffer()
 
 void Blob::moveBuffers(Blob *srcBlob)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(srcBlob);
     d_buffers.resize(srcBlob->d_buffers.size());
 
     BlobBufferIterator dstIter = d_buffers.begin();
     BlobBufferIterator srcIter = srcBlob->d_buffers.begin();
     for (; srcIter != srcBlob->d_buffers.end(); ++srcIter, ++dstIter) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(dstIter);
+        BSLS_ASSERT_CONVEYOR_OBJECT(srcIter);
         dstIter->buffer().swap(srcIter->buffer());
         dstIter->setSize(srcIter->size());
     }
@@ -681,6 +708,8 @@ void Blob::moveBuffers(Blob *srcBlob)
 
 void Blob::moveDataBuffers(Blob *srcBlob)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(srcBlob);
     if (0 == srcBlob->length()) {
         d_dataIndex          = -1;
         d_dataLength         =  0;
@@ -696,6 +725,8 @@ void Blob::moveDataBuffers(Blob *srcBlob)
     BlobBufferIterator srcIter = srcBlob->d_buffers.begin();
 
     for (int i = 0; i < numSrcDataBuffers; ++i, ++srcIter, ++dstIter) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(dstIter);
+        BSLS_ASSERT_CONVEYOR_OBJECT(srcIter);
         dstIter->buffer().swap(srcIter->buffer());
         dstIter->setSize(srcIter->size());
     }
@@ -716,14 +747,16 @@ void Blob::moveDataBuffers(Blob *srcBlob)
 
 void Blob::moveAndAppendDataBuffers(Blob *srcBlob)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(srcBlob);
     if (0 == srcBlob->length()) {
         return;                                                       // RETURN
     }
 
     trimLastDataBuffer();  // Note that this call may update 'd_totalSize'.
 
-    BSLS_ASSERT(d_totalSize <= INT_MAX - srcBlob->totalSize());
-    BSLS_ASSERT(numBuffers() <= INT_MAX - srcBlob->numBuffers());
+    BSLS_ASSERT_NONCONVEYOR(d_totalSize <= INT_MAX - srcBlob->totalSize());
+    BSLS_ASSERT_NONCONVEYOR(numBuffers() <= INT_MAX - srcBlob->numBuffers());
 
     const int numSrcDataBuffers = srcBlob->numDataBuffers();
     const int numDstDataBuffers = numDataBuffers();
@@ -737,6 +770,8 @@ void Blob::moveAndAppendDataBuffers(Blob *srcBlob)
     d_buffers.insert(dstIter, numSrcDataBuffers, BlobBuffer());
 
     for (int i = 0; i < numSrcDataBuffers; ++i, ++srcIter, ++dstIter) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(dstIter);
+        BSLS_ASSERT_CONVEYOR_OBJECT(srcIter);
         dstIter->buffer().swap(srcIter->buffer());
         dstIter->setSize(srcIter->size());
     }
@@ -763,6 +798,8 @@ void Blob::moveAndAppendDataBuffers(Blob *srcBlob)
 // FREE OPERATORS
 bool bdlbb::operator==(const Blob& lhs, const Blob& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_buffers == rhs.d_buffers &&
            lhs.d_totalSize == rhs.d_totalSize &&
            lhs.d_dataLength == rhs.d_dataLength &&
@@ -772,6 +809,8 @@ bool bdlbb::operator==(const Blob& lhs, const Blob& rhs)
 
 bool bdlbb::operator!=(const Blob& lhs, const Blob& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs.d_buffers != rhs.d_buffers ||
            lhs.d_totalSize != rhs.d_totalSize ||
            lhs.d_dataLength != rhs.d_dataLength ||

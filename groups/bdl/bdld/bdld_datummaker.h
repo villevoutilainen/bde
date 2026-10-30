@@ -7788,6 +7788,7 @@ inline
 bdld::Datum DatumMaker::operator()(
                                   const bdlb::NullableValue<TYPE>& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return value.isNull() ? (*this)() : (*this)(value.value());
 }
 

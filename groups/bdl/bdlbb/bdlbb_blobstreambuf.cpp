@@ -29,7 +29,9 @@ namespace bdlbb {
 // PRIVATE MANIPULATORS
 void InBlobStreamBuf::setGetPosition(bsl::size_t position)
 {
-    BSLS_ASSERT(position <= static_cast<unsigned>(d_blob_p->length()));
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(
+                        position <= static_cast<unsigned>(d_blob_p->length()));
     if (d_blob_p->length() == 0) {
         setg(0, 0, 0);
         return;                                                       // RETURN
@@ -39,7 +41,7 @@ void InBlobStreamBuf::setGetPosition(bsl::size_t position)
         // Initialization.  Buffer now has a length but we did not have the
         // chance to actually initialize the streambuf pointers.
 
-        BSLS_ASSERT(d_blob_p->numBuffers() != 0);
+        BSLS_ASSERT_NONCONVEYOR(d_blob_p->numBuffers() != 0);
         setg(d_blob_p->buffer(0).data(),
              d_blob_p->buffer(0).data(),
              d_blob_p->buffer(0).data() +
@@ -56,7 +58,7 @@ void InBlobStreamBuf::setGetPosition(bsl::size_t position)
 
         BSLS_ASSERT(position >=
                                static_cast<unsigned>(d_previousBuffersLength));
-        BSLS_ASSERT((position - d_previousBuffersLength) <=
+        BSLS_ASSERT_NONCONVEYOR((position - d_previousBuffersLength) <=
              static_cast<unsigned>(d_blob_p->buffer(d_getBufferIndex).size()));
         setg(eback(), eback() + position - d_previousBuffersLength, egptr());
         return;                                                       // RETURN
@@ -102,21 +104,22 @@ void InBlobStreamBuf::setGetPosition(bsl::size_t position)
 // PRIVATE ACCESSORS
 int InBlobStreamBuf::checkInvariant() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::size_t numBuffers = d_blob_p->numBuffers();
 
     if (gptr()) {
-        BSLS_ASSERT(eback());
-        BSLS_ASSERT(egptr());
-        BSLS_ASSERT(gptr() - eback() <= egptr() - eback());
+        BSLS_ASSERT_NONCONVEYOR(eback());
+        BSLS_ASSERT_NONCONVEYOR(egptr());
+        BSLS_ASSERT_NONCONVEYOR(gptr() - eback() <= egptr() - eback());
         BSLS_ASSERT(static_cast<unsigned>(d_getBufferIndex) < numBuffers);
-        BSLS_ASSERT(egptr() - eback() <=
+        BSLS_ASSERT_NONCONVEYOR(egptr() - eback() <=
                     d_blob_p->buffer(d_getBufferIndex).size());
-        BSLS_ASSERT(d_previousBuffersLength + egptr() - eback() <=
+        BSLS_ASSERT_NONCONVEYOR(d_previousBuffersLength + egptr() - eback() <=
                     d_blob_p->length());
     }
     else {
-        BSLS_ASSERT(0 == eback());
-        BSLS_ASSERT(0 == egptr());
+        BSLS_ASSERT_NONCONVEYOR(0 == eback());
+        BSLS_ASSERT_NONCONVEYOR(0 == egptr());
         (void)numBuffers;
         BSLS_ASSERT(static_cast<unsigned>(d_getBufferIndex) <= numBuffers);
     }
@@ -133,7 +136,7 @@ InBlobStreamBuf::int_type InBlobStreamBuf::overflow(InBlobStreamBuf::int_type)
 InBlobStreamBuf::int_type InBlobStreamBuf::pbackfail(
                                                    InBlobStreamBuf::int_type c)
 {
-    BSLS_ASSERT(checkInvariant() == 0);
+    BSLS_ASSERT_NONCONVEYOR(checkInvariant() == 0);
 
     if (gptr() == eback()) {
         if (0 == d_getBufferIndex) {
@@ -168,7 +171,7 @@ InBlobStreamBuf::pos_type InBlobStreamBuf::seekoff(
                                          bsl::ios_base::seekdir  fixedPosition,
                                          bsl::ios_base::openmode which)
 {
-    BSLS_ASSERT(0 == checkInvariant());
+    BSLS_ASSERT_NONCONVEYOR(0 == checkInvariant());
 
     bool gseek = which & bsl::ios_base::in;
     bool pseek = which & bsl::ios_base::out;
@@ -214,21 +217,21 @@ InBlobStreamBuf::pos_type InBlobStreamBuf::seekpos(
 
 bsl::streamsize InBlobStreamBuf::showmanyc()
 {
-    BSLS_ASSERT(0 == checkInvariant());
+    BSLS_ASSERT_NONCONVEYOR(0 == checkInvariant());
 
     return d_blob_p->length() - (d_previousBuffersLength + gptr() - eback());
 }
 
 int InBlobStreamBuf::sync()
 {
-    BSLS_ASSERT(0 == checkInvariant());
+    BSLS_ASSERT_NONCONVEYOR(0 == checkInvariant());
     return 0;
 }
 
 InBlobStreamBuf::int_type InBlobStreamBuf::underflow()
 {
-    BSLS_ASSERT(0 == checkInvariant());
-    BSLS_ASSERT(egptr() == gptr());
+    BSLS_ASSERT_NONCONVEYOR(0 == checkInvariant());
+    BSLS_ASSERT_NONCONVEYOR(egptr() == gptr());
 
     int totalSize = d_blob_p->length();
     int getPosition =
@@ -245,7 +248,7 @@ InBlobStreamBuf::int_type InBlobStreamBuf::underflow()
 
         d_previousBuffersLength += d_blob_p->buffer(d_getBufferIndex).size();
         ++d_getBufferIndex;
-        BSLS_ASSERT(d_getBufferIndex < d_blob_p->numBuffers());
+        BSLS_ASSERT_NONCONVEYOR(d_getBufferIndex < d_blob_p->numBuffers());
         curOffset = 0;  // start of the buffer.
     }
     else {
@@ -312,7 +315,7 @@ InBlobStreamBuf::InBlobStreamBuf(const bdlbb::Blob *blob)
 
 InBlobStreamBuf::~InBlobStreamBuf()
 {
-    BSLS_ASSERT(0 == checkInvariant());
+    BSLS_ASSERT_NONCONVEYOR(0 == checkInvariant());
 }
 
                            // ======================
@@ -322,7 +325,9 @@ InBlobStreamBuf::~InBlobStreamBuf()
 // PRIVATE MANIPULATORS
 void OutBlobStreamBuf::setPutPosition(bsl::size_t position)
 {
-    BSLS_ASSERT(position <= static_cast<unsigned>(d_blob_p->totalSize()));
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(
+                     position <= static_cast<unsigned>(d_blob_p->totalSize()));
     if (d_blob_p->totalSize() == 0) {
         setp(0, 0);
         d_putBufferIndex        = 0;
@@ -334,7 +339,7 @@ void OutBlobStreamBuf::setPutPosition(bsl::size_t position)
         // Initialization.  Buffer now has a length but we did not have the
         // chance to actually initialize the streambuf pointers.
 
-        BSLS_ASSERT(d_blob_p->numBuffers() != 0);
+        BSLS_ASSERT_NONCONVEYOR(d_blob_p->numBuffers() != 0);
         const bdlbb::BlobBuffer& buffer = d_blob_p->buffer(0);
         setp(buffer.data(), buffer.data() + buffer.size());
     }
@@ -349,7 +354,7 @@ void OutBlobStreamBuf::setPutPosition(bsl::size_t position)
 
         BSLS_ASSERT(position >=
                                static_cast<unsigned>(d_previousBuffersLength));
-        BSLS_ASSERT((position - d_previousBuffersLength) <=
+        BSLS_ASSERT_NONCONVEYOR((position - d_previousBuffersLength) <=
              static_cast<unsigned>(d_blob_p->buffer(d_putBufferIndex).size()));
         const bdlbb::BlobBuffer& buffer = d_blob_p->buffer(d_putBufferIndex);
         setp(buffer.data(), buffer.data() + buffer.size());
@@ -395,7 +400,7 @@ void OutBlobStreamBuf::setPutPosition(bsl::size_t position)
     // happens during a first call to this method (from the constructor) for a
     // non-empty blob which finishes on a buffer boundary.
 
-    BSLS_ASSERT(position - d_previousBuffersLength <=
+    BSLS_ASSERT_NONCONVEYOR(position - d_previousBuffersLength <=
              static_cast<unsigned>(d_blob_p->buffer(d_putBufferIndex).size()));
 
     char *base = d_blob_p->buffer(d_putBufferIndex).data();
@@ -407,22 +412,23 @@ void OutBlobStreamBuf::setPutPosition(bsl::size_t position)
 // PRIVATE ACCESSORS
 int OutBlobStreamBuf::checkInvariant() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::size_t numBuffers = d_blob_p->numBuffers();
 
     if (pptr()) {
-        BSLS_ASSERT(pbase());
-        BSLS_ASSERT(epptr());
+        BSLS_ASSERT_NONCONVEYOR(pbase());
+        BSLS_ASSERT_NONCONVEYOR(epptr());
         BSLS_ASSERT(static_cast<unsigned>(d_putBufferIndex) < numBuffers);
-        BSLS_ASSERT(epptr() - pbase() ==
+        BSLS_ASSERT_NONCONVEYOR(epptr() - pbase() ==
                     d_blob_p->buffer(d_putBufferIndex).size());
-        BSLS_ASSERT(pptr() - pbase() <=
+        BSLS_ASSERT_NONCONVEYOR(pptr() - pbase() <=
                     d_blob_p->buffer(d_putBufferIndex).size());
-        BSLS_ASSERT(d_previousBuffersLength + epptr() - pbase() <=
+        BSLS_ASSERT_NONCONVEYOR(d_previousBuffersLength + epptr() - pbase() <=
                     d_blob_p->totalSize());
     }
     else {
-        BSLS_ASSERT(0 == pbase());
-        BSLS_ASSERT(0 == epptr());
+        BSLS_ASSERT_NONCONVEYOR(0 == pbase());
+        BSLS_ASSERT_NONCONVEYOR(0 == epptr());
         (void)numBuffers;
         BSLS_ASSERT(static_cast<unsigned>(d_putBufferIndex) == numBuffers);
     }
@@ -434,7 +440,7 @@ int OutBlobStreamBuf::checkInvariant() const
 OutBlobStreamBuf::int_type OutBlobStreamBuf::overflow(
                                                   OutBlobStreamBuf::int_type c)
 {
-    BSLS_ASSERT(0 == checkInvariant());
+    BSLS_ASSERT_NONCONVEYOR(0 == checkInvariant());
 
     if (EOF == c) {
         return traits_type::not_eof(c);                               // RETURN
@@ -456,7 +462,7 @@ OutBlobStreamBuf::int_type OutBlobStreamBuf::overflow(
         setPutPosition(currentPos);
     }
 
-    BSLS_ASSERT(pptr() != epptr());
+    BSLS_ASSERT_NONCONVEYOR(pptr() != epptr());
     *pptr() = static_cast<char_type>(c);
     pbump(1);
     return c;
@@ -473,7 +479,7 @@ OutBlobStreamBuf::pos_type OutBlobStreamBuf::seekoff(
                                          bsl::ios_base::seekdir  fixedPosition,
                                          bsl::ios_base::openmode which)
 {
-    BSLS_ASSERT(0 == checkInvariant());
+    BSLS_ASSERT_NONCONVEYOR(0 == checkInvariant());
 
     bool gseek = which & bsl::ios_base::in;
     bool pseek = which & bsl::ios_base::out;
@@ -519,14 +525,14 @@ OutBlobStreamBuf::pos_type OutBlobStreamBuf::seekpos(
 
 bsl::streamsize OutBlobStreamBuf::showmanyc()
 {
-    BSLS_ASSERT(0 == checkInvariant());
+    BSLS_ASSERT_NONCONVEYOR(0 == checkInvariant());
 
     return 0;
 }
 
 int OutBlobStreamBuf::sync()
 {
-    BSLS_ASSERT(0 == checkInvariant());
+    BSLS_ASSERT_NONCONVEYOR(0 == checkInvariant());
 
     int totalSize = d_blob_p->length();
     int putPosition =
@@ -559,7 +565,7 @@ bsl::streamsize OutBlobStreamBuf::xsputn(const char_type *source,
         bsl::streamsize canCopy        = bsl::min(remainingChars, numLeft);
 
         if (canCopy > 0) {
-            BSLS_ASSERT(pptr());
+            BSLS_ASSERT_NONCONVEYOR(pptr());
             bsl::memcpy(pptr(), source + numCopied, canCopy);
             pbump(static_cast<int>(canCopy));
             numCopied += canCopy;
@@ -591,7 +597,7 @@ OutBlobStreamBuf::OutBlobStreamBuf(bdlbb::Blob *blob)
 
 OutBlobStreamBuf::~OutBlobStreamBuf()
 {
-    BSLS_ASSERT(0 == checkInvariant());
+    BSLS_ASSERT_NONCONVEYOR(0 == checkInvariant());
     sync();
 }
 }  // close package namespace

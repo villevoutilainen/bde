@@ -168,6 +168,7 @@ FileDescriptorGuard::~FileDescriptorGuard()
 inline
 FilesystemUtil::FileDescriptor FileDescriptorGuard::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(FilesystemUtil::k_INVALID_FD != d_descriptor);
 
     FilesystemUtil::FileDescriptor ret = d_descriptor;

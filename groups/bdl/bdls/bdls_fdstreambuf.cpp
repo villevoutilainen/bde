@@ -574,6 +574,7 @@ int FdStreamBuf::switchToInputMode()
 
 int FdStreamBuf::exitInputMode(bool correctSeek)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (e_INPUT_PUTBACK_MODE == d_mode) {
         exitPutbackMode();
     }
@@ -617,6 +618,7 @@ int FdStreamBuf::exitInputMode(bool correctSeek)
 
 int FdStreamBuf::switchToOutputMode()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_mode) {
       case e_OUTPUT_MODE: {
         return 0;                                                     // RETURN
@@ -1017,6 +1019,7 @@ bsl::streambuf::pos_type FdStreamBuf::seekoff(off_type                offset,
                                               bsl::ios_base::seekdir  whence,
                                               bsl::ios_base::openmode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const FilesystemUtil::Whence CUR = FileUtil::e_SEEK_FROM_CURRENT;
 
     FilesystemUtil::Whence dir;

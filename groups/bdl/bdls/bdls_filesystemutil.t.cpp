@@ -364,7 +364,7 @@ void localForkExec(bsl::string command)
 
         bsl::vector<char *>  argvec;
         const char          *endp = command.data() + command.length();
-        BSLS_ASSERT_OPT(*endp == 0);
+        BSLS_ASSERT_OPT_NONCONVEYOR(*endp == 0);
 
         char *pc;
         for (pc = &command[0]; pc < endp; ) {
@@ -407,6 +407,7 @@ void localForkExec(bsl::string command)
 template <class VECTOR_TYPE, class STRING_TYPE>
 STRING_TYPE rollupPaths(VECTOR_TYPE& paths)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&paths);
     STRING_TYPE result;
 
     sort(paths.begin(), paths.end());
@@ -414,7 +415,7 @@ STRING_TYPE rollupPaths(VECTOR_TYPE& paths)
     for (typename VECTOR_TYPE::const_iterator it = paths.begin();
          it != paths.end();
          ++it) {
-        result.append(*it);
+        result.append(BSLS_ASSERT_CONVEYOR_REF(*it));
         result.push_back(':');
     }
 
@@ -446,6 +447,7 @@ void makeArbitraryFile(const char *path)
 /// not assert on its status.
 static void listDirectory(const bsl::string& path)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&path);
     const bsl::string cmd = e_UNIX ? "ls -laR " + path
                                    : "DIR /A /S " + path;
     cout << "Running: " << cmd << endl;
@@ -465,6 +467,7 @@ static void listDirectory(const bsl::string& path)
 /// actually last.
 static void retryRemove(const bsl::string& path)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&path);
     const bsls::TimeInterval start   = bsls::SystemTime::nowMonotonicClock();
     const bsls::TimeInterval maxWait(15, 0);
     int                      tries   = 0;
@@ -518,6 +521,8 @@ struct VisitTreeTestVisitor {
 
     void operator()(const char *filePath)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_vec);
         d_vec->push_back(filePath);
     }
 };
@@ -1297,8 +1302,9 @@ int TestUtil::setFileSize(FileDescriptor descriptor, Offset numBytes)
 int TestUtil::setLastModificationTime(FileDescriptor        descriptor,
                                       const bdlt::Datetime& utcTime)
 {
-    BSLS_ASSERT(utcTime >= TestUtil_UnixImpUtil::getMinFileTime());
-    BSLS_ASSERT(utcTime <= TestUtil_UnixImpUtil::getMaxFileTime());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utcTime);
+    BSLS_ASSERT_NONCONVEYOR(utcTime >= TestUtil_UnixImpUtil::getMinFileTime());
+    BSLS_ASSERT_NONCONVEYOR(utcTime <= TestUtil_UnixImpUtil::getMaxFileTime());
 
     return TestUtil_UnixImpUtil::setLastModificationTime(descriptor, utcTime);
 }
@@ -1615,7 +1621,8 @@ bdlt::Datetime TestUtil_UnixImpUtil::convertEpochOffsetToDatetime(
                                                             time_t seconds,
                                                             long   nanoseconds)
 {
-    BSLS_ASSERT(epochOffsetIsConvertibleToDatetime(seconds, nanoseconds));
+    BSLS_ASSERT_NONCONVEYOR(
+                     epochOffsetIsConvertibleToDatetime(seconds, nanoseconds));
 
     const bsls::TimeInterval maxTimeSinceEpoch(
         static_cast<bsls::Types::Int64>(seconds),
@@ -1816,15 +1823,16 @@ int TestUtil_UnixImpUtil::setLastModificationTime(
                                           int                   fileDescriptor,
                                           const bdlt::Datetime& utcTime)
 {
-    BSLS_ASSERT(utcTime >= getMinFileTime());
-    BSLS_ASSERT(utcTime <= getMaxFileTime());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utcTime);
+    BSLS_ASSERT_NONCONVEYOR(utcTime >= getMinFileTime());
+    BSLS_ASSERT_NONCONVEYOR(utcTime <= getMaxFileTime());
 
     const bsls::TimeInterval utcTimeSinceEpoch =
         bdlt::EpochUtil::convertToTimeInterval(utcTime);
 
     const bsls::Types::Int64 utcSeconds = utcTimeSinceEpoch.seconds();
-    BSLS_ASSERT(utcSeconds >= bsl::numeric_limits<time_t>::min());
-    BSLS_ASSERT(utcSeconds <= bsl::numeric_limits<time_t>::max());
+    BSLS_ASSERT_NONCONVEYOR(utcSeconds >= bsl::numeric_limits<time_t>::min());
+    BSLS_ASSERT_NONCONVEYOR(utcSeconds <= bsl::numeric_limits<time_t>::max());
 
     const int utcNanoseconds = utcTimeSinceEpoch.nanoseconds();
     BSLS_ASSERT(utcNanoseconds >= -999999999LL);
@@ -2044,6 +2052,9 @@ namespace UsageExample2 {
                                  const bdlt::Datetime&     start,
                                  const bdlt::Datetime&     end)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&end);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&start);
+        BSLS_ASSERT_CONVEYOR_OBJECT(vector);
         bdlt::Datetime datetime;
         int ret = bdls::FilesystemUtil::getLastModificationTime(&datetime,
                                                                 item);
@@ -2069,6 +2080,7 @@ namespace UsageExample2 {
                                       const bdlt::Datetime&     start,
                                       const bdlt::Datetime&     end)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(result);
         result->clear();
         bdls::FilesystemUtil::visitPaths(
                                  pattern,
@@ -2571,8 +2583,10 @@ void TestObject<STRING_TYPE>::buildLinks()
                                                         target.length() - 4)));
 
         const bsl::string& prefix = rec.d_isAbsolute ? d_homeDir : nullString;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&prefix);
 
         // the path `prefix + target` always works, because if it's an absolute
+        BSLS_ASSERT_CONVEYOR_OBJECT(&prefix);
         // path, prefix never ends with '/' and `target` always begins with
         // '/', and otherwise `prefix == ""` and target is a relative path.
 
@@ -3094,6 +3108,7 @@ void TestObject<STRING_TYPE>::operator()()
                     ASSERT(rec.d_isAbsolute == ('/' == rec.d_linkTarget_p[0]));
                     const bsl::string& prefix = rec.d_isAbsolute ? d_homeDir
                                                                  : nullString;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&prefix);
                     TC::linkIfNeeded(prefix + rec.d_linkTarget_p,
                                      rec.d_linkRelName_p);
                 }
@@ -3574,6 +3589,7 @@ void testCase10_getFileSize(const char         *typeName,
                             int                 veryVerbose,
                             int                 veryVeryVerbose)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&tmpWorkingDir);
     (void) verbose; (void) veryVerbose; (void) veryVeryVerbose;
     (void) tmpWorkingDir;
 
@@ -3951,6 +3967,7 @@ void testCase9_createSystemTemporaryDirectory(
                                            int                 veryVerbose,
                                            int                 veryVeryVerbose)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&tmpWorkingDir);
     (void) verbose; (void) veryVeryVerbose;
 
 #if BSLS_PLATFORM_OS_UNIX
@@ -4065,6 +4082,7 @@ enum Test6_FileKind {
 void testCase6_createFile(const bsl::string& name,
                           Test6_FileKind     kind)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     ASSERT(!Obj::exists(name));
 
     switch (kind) {
@@ -4122,6 +4140,8 @@ void testCase6_move_general(const bsl::string& oldName,
                             Test6_FileKind     newKind,
                             bool               expectSuccess)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&newName);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&oldName);
     testCase6_createFile(oldName, oldKind);
     if (oldName != newName) {
         testCase6_createFile(newName, newKind);
@@ -4487,10 +4507,11 @@ void testCase4_findMatchingPaths(const char         *vectorTypeName,
         lookup.resize(1);
         lookup.front() = "woof";
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lookup);
         int rc = Obj::findMatchingPaths(&lookup, path.c_str());
         ASSERT(1 == rc);
         ASSERT(1 == lookup.size());
-        ASSERT(path == lookup.front());
+        ASSERT(path == BSLS_ASSERT_CONVEYOR_REF(lookup.front()));
         bsl::string rollup =
             ::rollupPaths<VECTOR_TYPE, bsl::string>(lookup);
 #ifdef BSLS_PLATFORM_OS_WINDOWS
@@ -4527,10 +4548,11 @@ void testCase4_findMatchingPaths(const char         *vectorTypeName,
         lookup.front() = "woof";
 
         int rc = Obj::findMatchingPaths(&lookup, path.c_str());
+BSLS_ASSERT_CONVEYOR_OBJECT(&lookup);
 
         ASSERT(1 == rc);
         ASSERT(1 == lookup.size());
-        ASSERT(path == lookup.front());
+        ASSERT(path == BSLS_ASSERT_CONVEYOR_REF(lookup.front()));
         bsl::string rollup =
             ::rollupPaths<VECTOR_TYPE, bsl::string>(lookup);
 #ifdef BSLS_PLATFORM_OS_WINDOWS
@@ -6316,12 +6338,12 @@ int main(int argc, char *argv[])
                 cout << "woofExpVec:\n";
                 for (FileNameVec::iterator it = woofExpVec.begin();
                                                 woofExpVec.end() != it; ++it) {
-                    cout << *it << endl;
+                    cout << BSLS_ASSERT_CONVEYOR_REF(*it) << endl;
                 }
                 cout << "woofTravVec:\n";
                 for (FileNameVec::iterator it = woofTravVec.begin();
                                                woofTravVec.end() != it; ++it) {
-                    cout << *it << endl;
+                    cout << BSLS_ASSERT_CONVEYOR_REF(*it) << endl;
                 }
             }
             if (!sortFlag) {
@@ -6343,7 +6365,7 @@ int main(int argc, char *argv[])
                 cout << "meowTravVec:\n";
                 for (FileNameVec::iterator it = meowTravVec.begin();
                                                meowTravVec.end() != it; ++it) {
-                    cout << *it << endl;
+                    cout << BSLS_ASSERT_CONVEYOR_REF(*it) << endl;
                 }
             }
             if (!sortFlag) {
