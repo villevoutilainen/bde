@@ -744,8 +744,10 @@ template <class KEY>
 inline
 Cache_QueueProctor<KEY>::~Cache_QueueProctor()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_queue_p) {
         while (last() != d_last_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_queue_p);
             d_queue_p->pop_back();
         }
     }
@@ -820,13 +822,15 @@ Cache<KEY, VALUE, HASH, EQUAL>::Cache(
 template <class KEY, class VALUE, class HASH, class EQUAL>
 void Cache<KEY, VALUE, HASH, EQUAL>::enforceHighWatermark()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_map.size() < d_highWatermark) {
         return;                                                       // RETURN
     }
 
     while (d_map.size() >= d_lowWatermark && d_map.size() > 0) {
-        const typename MapType::iterator mapIt = d_map.find(d_queue.front());
-        BSLS_ASSERT(mapIt != d_map.end());
+        const typename MapType::iterator mapIt =
+                        d_map.find(BSLS_ASSERT_CONVEYOR_REF(d_queue.front()));
+        BSLS_ASSERT_NONCONVEYOR(mapIt != d_map.end());
         evictItem(mapIt);
     }
 }
@@ -835,6 +839,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 void Cache<KEY, VALUE, HASH, EQUAL>::evictItem(
                                        const typename MapType::iterator& mapIt)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mapIt);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ValuePtrType value = mapIt->second.first;
 
     d_queue.erase(mapIt->second.second);
@@ -852,6 +858,7 @@ bool Cache<KEY, VALUE, HASH, EQUAL>::insertValuePtrMoveImp(
                                                     ValuePtrType *valuePtr_p,
                                                     bool          moveValuePtr)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #if defined(BSLMF_MOVABLEREF_USES_RVALUE_REFERENCES)
     enum { k_RVALUE_ASSIGN = true };
 #else
@@ -860,6 +867,8 @@ bool Cache<KEY, VALUE, HASH, EQUAL>::insertValuePtrMoveImp(
 
     enforceHighWatermark();
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(key_p);
+    BSLS_ASSERT_CONVEYOR_OBJECT(valuePtr_p);
     KEY&          key      = *key_p;
     ValuePtrType& valuePtr = *valuePtr_p;
 
@@ -920,6 +929,7 @@ bool Cache<KEY, VALUE, HASH, EQUAL>::insertValuePtrMoveImp(
 template <class KEY, class VALUE, class HASH, class EQUAL>
 void Cache<KEY, VALUE, HASH, EQUAL>::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<LockType> guard(&d_rwlock);
     d_map.clear();
     d_queue.clear();
@@ -928,6 +938,8 @@ void Cache<KEY, VALUE, HASH, EQUAL>::clear()
 template <class KEY, class VALUE, class HASH, class EQUAL>
 int Cache<KEY, VALUE, HASH, EQUAL>::erase(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bslmt::WriteLockGuard<LockType> guard(&d_rwlock);
 
     const typename MapType::iterator mapIt = d_map.find(key);
@@ -944,11 +956,13 @@ template <class INPUT_ITERATOR>
 int Cache<KEY, VALUE, HASH, EQUAL>::eraseBulk(INPUT_ITERATOR begin,
                                               INPUT_ITERATOR end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<LockType> guard(&d_rwlock);
 
     int count = 0;
     for (; begin != end; ++begin) {
-        const typename MapType::iterator mapIt = d_map.find(*begin);
+        const typename MapType::iterator mapIt =
+                             d_map.find(BSLS_ASSERT_CONVEYOR_REF(*begin));
         if (mapIt == d_map.end()) {
             continue;
         }
@@ -963,6 +977,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 int Cache<KEY, VALUE, HASH, EQUAL>::eraseBulk(const bsl::vector<KEY>& keys)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&keys);
     return eraseBulk(keys.begin(), keys.end());
 }
 
@@ -1068,6 +1083,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 int Cache<KEY, VALUE, HASH, EQUAL>::insertBulk(const bsl::vector<KVType>& data)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     return insertBulk(data.begin(), data.end());
 }
 
@@ -1078,6 +1094,7 @@ int Cache<KEY, VALUE, HASH, EQUAL>::insertBulk(
     typedef bsl::vector<KVType> Vec;
 
     Vec& local = data;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&local);
 
     int                             count = 0;
     bslmt::WriteLockGuard<LockType> guard(&d_rwlock);
@@ -1095,11 +1112,13 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 int Cache<KEY, VALUE, HASH, EQUAL>::popFront()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<LockType> guard(&d_rwlock);
 
     if (d_map.size() > 0) {
-        const typename MapType::iterator mapIt = d_map.find(d_queue.front());
-        BSLS_ASSERT(mapIt != d_map.end());
+        const typename MapType::iterator mapIt =
+                        d_map.find(BSLS_ASSERT_CONVEYOR_REF(d_queue.front()));
+        BSLS_ASSERT_NONCONVEYOR(mapIt != d_map.end());
         evictItem(mapIt);
         return 0;                                                     // RETURN
     }
@@ -1121,6 +1140,8 @@ int Cache<KEY, VALUE, HASH, EQUAL>::tryGetValue(
                                    const KEY&              key,
                                    bool                    modifyEvictionQueue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int writeLock = d_evictionPolicy == CacheEvictionPolicy::e_LRU &&
          modifyEvictionQueue ? 1 : 0;
     if (writeLock) {
@@ -1160,6 +1181,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 EQUAL Cache<KEY, VALUE, HASH, EQUAL>::equalFunction() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_map.key_eq();
 }
 
@@ -1175,6 +1197,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 HASH Cache<KEY, VALUE, HASH, EQUAL>::hashFunction() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_map.hash_function();
 }
 
@@ -1196,6 +1219,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bsl::size_t Cache<KEY, VALUE, HASH, EQUAL>::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<LockType> guard(&d_rwlock);
     return d_map.size();
 }
@@ -1208,10 +1232,11 @@ void Cache<KEY, VALUE, HASH, EQUAL>::visit(VISITOR& visitor) const
 
     for (typename QueueType::const_iterator queueIt = d_queue.begin();
          queueIt != d_queue.end(); ++queueIt) {
+             BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
         const KEY&                             key = *queueIt;
         const typename MapType::const_iterator mapIt = d_map.find(key);
-        BSLS_ASSERT(mapIt != d_map.end());
+        BSLS_ASSERT_NONCONVEYOR(mapIt != d_map.end());
         const ValuePtrType& valuePtr = mapIt->second.first;
 
         if (!visitor(key, *valuePtr)) {

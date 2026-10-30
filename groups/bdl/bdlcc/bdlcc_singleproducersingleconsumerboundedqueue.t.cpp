@@ -570,6 +570,7 @@ extern "C" void *orderingPop(void *arg)
             bsls::Types::Uint64 pushThreadId   = value.d_pushThreadId;
             bsls::Types::Uint64 sequenceNumber = value.d_sequenceNumber;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(data);
             bsls::Types::Uint64& lastSequenceNumber =
                                           data->d_sequenceNumber[pushThreadId];
 

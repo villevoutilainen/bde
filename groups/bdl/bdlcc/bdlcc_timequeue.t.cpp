@@ -232,7 +232,9 @@ class TestString {
     // ACCESSORS
 
     /// Return the string value of this object.
-    operator const bsl::string& () const;
+    operator const bsl::string& () const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -361,13 +363,14 @@ void populate(Container               *container_p,
               int                      numItems,
               int                     *randSeed_p)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeValues);
     const UintPtr tvSize = timeValues.size();
     ASSERT(0 < tvSize);
 
     // Verify that time values are unique & sorted.
 
     for (unsigned ii = 1; ii < tvSize; ++ii) {
-        ASSERT(timeValues[ii - 1] < timeValues[ii]);
+        ASSERT(BSLS_ASSERT_CONVEYOR_REF(timeValues[ii - 1]) < BSLS_ASSERT_CONVEYOR_REF(timeValues[ii]));
     }
 
     container_p->removeAll();
@@ -378,7 +381,7 @@ void populate(Container               *container_p,
         // Note that there are 3 `add` methods, but the other two just call
         // this one.
 
-        container_p->add(timeValues[rand % tvSize], ii, Container::Key(ii));
+        container_p->add(BSLS_ASSERT_CONVEYOR_REF(timeValues[rand % tvSize]), ii, Container::Key(ii));
     }
 
     ASSERT(container_p->length() == numItems);
@@ -436,8 +439,9 @@ void gg(bdlcc::TimeQueue<char> *result, const bsl::string_view& input)
                  bdlb::NumericParseUtil::parseInt(&timeSecs, &remainder, node);
 
         BSLS_ASSERT_OPT(0 == rc);
-        BSLS_ASSERT_OPT(1 == remainder.size());
-        BSLS_ASSERT_OPT(bdlb::CharType::isAlpha(remainder.front()));
+        BSLS_ASSERT_OPT_NONCONVEYOR(1 == remainder.size());
+        BSLS_ASSERT_OPT_NONCONVEYOR(
+                                   bdlb::CharType::isAlpha(remainder.front()));
 
         result->add(bsls::TimeInterval(timeSecs, 0), remainder.front());
     }
@@ -505,11 +509,13 @@ void *testAddUpdatePopRemoveAll(void *arg)
         }
         const bsls::TimeInterval TIME((i * (i + 3)) % k_NUM_ITERATIONS);
         int h = timequeue.add(TIME, V);
+        BSLS_ASSERT_CONVEYOR_OBJECT(vPtr);
         timequeue.update(h, TIME);
         if (0 == timequeue.popFront(&item, &newLen, &newMinTime)) {
             vPtr->push_back(item);
         }
         h = timequeue.add(newMinTime, V);
+        BSLS_ASSERT_CONVEYOR_OBJECT(vPtr);
         timequeue.popLE(newMinTime, vPtr);
         if (0 == timequeue.remove(h, &newLen, &newMinTime, &item)) {
             vPtr->push_back(item);
@@ -814,7 +820,7 @@ void testCasePopLE()
                         P(buffer[j].data());
                     }
 
-                    ASSERTV(j, EXPTIME == buffer[j].time());
+                    ASSERTV(j, EXPTIME == BSLS_ASSERT_CONVEYOR_REF(buffer[j]).time());
                     ASSERTV(j, EXPVAL  == buffer[j].data());
                     ASSERTV(j,
                                 true != X.isRegisteredHandle(handles[I]));
@@ -907,7 +913,7 @@ void testCasePopLE()
                         P(buffer[j].data());
                     }
 
-                    ASSERTV(j, EXPTIME == buffer[OLDSIZE + j].time());
+                    ASSERTV(j, EXPTIME == BSLS_ASSERT_CONVEYOR_REF(buffer[OLDSIZE + j]).time());
                     ASSERTV(j, EXPVAL  == buffer[OLDSIZE + j].data());
                     ASSERTV(j,
                                 true != X.isRegisteredHandle(handles[I]));
@@ -1238,6 +1244,7 @@ namespace TIMEQUEUE_USAGE_EXAMPLE {
 // ```
     void my_Server::newConnection(my_Connection *connection)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_connections.push_back(connection);
         int isNewTop = 0;
         bslmt::LockGuard<bslmt::Mutex> lock(&d_timerMonitorMutex);
@@ -1271,6 +1278,7 @@ namespace TIMEQUEUE_USAGE_EXAMPLE {
 // ```
     void my_Server::removeConnection(my_Connection *connection)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         // Remove from d_timeQueue
         d_timeQueue.remove(connection->d_timerId);
         // Remove from d_connections
@@ -1703,8 +1711,8 @@ int main(int argc, char *argv[])
 
                 mX.removeAll(&c);
                 ASSERTV(1 == C.size());
-                ASSERTV('a' == C[0].data());
-                ASSERTV(bsls::TimeInterval(1) == C[0].time());
+                ASSERTV('a' == BSLS_ASSERT_CONVEYOR_REF(C[0]).data());
+                ASSERTV(bsls::TimeInterval(1) == BSLS_ASSERT_CONVEYOR_REF(C[0]).time());
             }
 
             {
@@ -1717,10 +1725,10 @@ int main(int argc, char *argv[])
                 mX.removeAll(&c);
                 ASSERTV(2 == C.size());
 
-                ASSERTV('Z' == C[0].data());
-                ASSERTV(bsls::TimeInterval(1) == C[0].time());
-                ASSERTV('a' == C[1].data());
-                ASSERTV(bsls::TimeInterval(10) == C[1].time());
+                ASSERTV('Z' == BSLS_ASSERT_CONVEYOR_REF(C[0]).data());
+                ASSERTV(bsls::TimeInterval(1) == BSLS_ASSERT_CONVEYOR_REF(C[0]).time());
+                ASSERTV('a' == BSLS_ASSERT_CONVEYOR_REF(C[1]).data());
+                ASSERTV(bsls::TimeInterval(10) == BSLS_ASSERT_CONVEYOR_REF(C[1]).time());
             }
 
             // testing invalid inuts
@@ -2074,15 +2082,18 @@ int main(int argc, char *argv[])
             int prevData = -1;
             int ii;
             for (ii = 0; 0 == mX.popFront(&item); ++ii) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&item);
                 const TC::Container::Key expKey(item.data());
                 ASSERT(expKey == item.key());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&item);
                 if (prevTime == item.time()) {
                     ASSERTV(prevData, item.data(), prevData < item.data());
                 }
                 else {
                     if (veryVerbose) { P_(item.time());    P(ii); }
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
                     ASSERTV(prevTime, item.time(), prevTime < item.time());
                 }
 
@@ -2176,9 +2187,11 @@ int main(int argc, char *argv[])
                 for (int kk = 0; kk < outLen; ++kk, ++ii) {
                     const TC::Item& item = outVec[kk];
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
                     const TC::Container::Key expKey(item.data());
                     ASSERT(expKey == item.key());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
                     ASSERT(time == item.time());
                     ASSERT(prevData < item.data());
 
@@ -2728,10 +2741,11 @@ int main(int argc, char *argv[])
                         if (veryVerbose) {
                             T_; T_; P_(I); P_(EXPVAL); P(EXPTIME);
                             T_; T_; P_(buffer[j].time());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&buffer);
                             P(buffer[j].data());
                         }
 
-                        ASSERTV(j, EXPTIME == buffer[j].time());
+                        ASSERTV(j, EXPTIME == BSLS_ASSERT_CONVEYOR_REF(buffer[j]).time());
                         ASSERTV(j, EXPVAL  == buffer[j].data());
                         ASSERTV(j,
                                     true != X.isRegisteredHandle(handles[I]));
@@ -2846,10 +2860,11 @@ int main(int argc, char *argv[])
                         if (veryVerbose) {
                             T_; T_; P_(I); P_(EXPVAL);P(EXPTIME);
                             T_; T_; P_(buffer[OLDSIZE + j].time());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&buffer);
                             P(buffer[j].data());
                         }
 
-                        ASSERTV(j, EXPTIME == buffer[OLDSIZE + j].time());
+                        ASSERTV(j, EXPTIME == BSLS_ASSERT_CONVEYOR_REF(buffer[OLDSIZE + j]).time());
                         ASSERTV(j, EXPVAL  == buffer[OLDSIZE + j].data());
                         ASSERTV(j,
                                     true != X.isRegisteredHandle(handles[I]));
@@ -2959,7 +2974,9 @@ int main(int argc, char *argv[])
 
                 Item item(&ta);
                 ASSERTV(LINE, true == X.isRegisteredHandle(handles[I]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&item);
                 ASSERTV(LINE, 0 == mX.popFront(&item));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&item);
                 ASSERTV(LINE, EXPTIME == item.time());
                 ASSERTV(LINE, EXPVAL == item.data());
                 ASSERTV(LINE, true != X.isRegisteredHandle(handles[I]));
@@ -3068,7 +3085,9 @@ int main(int argc, char *argv[])
 
                 Item item(&ta);
                 ASSERTV(i, true == X.isRegisteredHandle(handles[I]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&item);
                 ASSERTV(i, 0 == mX.popFront(&item));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&item);
                 ASSERTV(i, EXPTIME == item.time());
                 ASSERTV(i, EXPVAL == item.data());
                 ASSERTV(i, handles[I] == item.handle());
@@ -3172,6 +3191,7 @@ int main(int argc, char *argv[])
                 ASSERTV(i, true == X.isRegisteredHandle(handles[I]));
                 ASSERTV(i, 0 == mX.popFront(&item, &newLength,
                                                &newMinTime));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&item);
                 ASSERTV(i, EXPTIME == item.time());
                 ASSERTV(i, EXPVAL == item.data());
                 ASSERTV(i, handles[I] == item.handle());
@@ -3323,10 +3343,11 @@ int main(int argc, char *argv[])
                 const int   LINE   = VALUES[i].d_lineNum;
                 const char *VAL    = VALUES[i].d_value;
                 const int   SECS   = VALUES[i].d_secs;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&buffer);
                 const int   NSECS  = VALUES[i].d_nsecs;
                 const bsls::TimeInterval TIME(SECS,NSECS);
 
-                ASSERTV(LINE, TIME == buffer[i].time());
+                ASSERTV(LINE, TIME == BSLS_ASSERT_CONVEYOR_REF(buffer[i]).time());
                 ASSERTV(LINE, VAL == buffer[i].data());
                 ASSERTV(LINE, handles[i] == buffer[i].handle());
                 ASSERTV(LINE, true != X.isRegisteredHandle(handles[i]));
@@ -3466,7 +3487,9 @@ int main(int argc, char *argv[])
                 ASSERTV(LINE, 0 == mX.remove(handles[i], &newLength,
                                                 &newMinTime, &buffer));
                 ASSERTV(LINE, NUM_VALUES-i-1 == newLength);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&buffer);
                 ASSERTV(LINE, NUM_VALUES-i-1 == X.length());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&buffer);
                 ASSERTV(LINE, TIME == buffer.time());
                 ASSERTV(LINE, VAL == buffer.data());
                 ASSERTV(LINE, handles[i] == buffer.handle());
@@ -3710,6 +3733,7 @@ int main(int argc, char *argv[])
             // CREATORS, ACCESSORS
             if (verbose) cout << "\t\tDefault constructor.\n";
             Obj mX;  const Obj& X = mX;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(bsls::TimeInterval() == X.time());
             ASSERT(NULL                == X.data());
             // ASSERT(0 == X.handle());
@@ -3717,6 +3741,7 @@ int main(int argc, char *argv[])
 
             if (verbose) cout << "\t\tConstructor without key.\n";
             Obj mY(TIME, STRDATA, HANDLE);  const Obj& Y = mY;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
             ASSERT(TIME                == Y.time());
             ASSERT(STRDATA             == Y.data());
             ASSERT(HANDLE              == Y.handle());
@@ -3724,6 +3749,7 @@ int main(int argc, char *argv[])
 
             if (verbose) cout << "\t\tConstructor with key.\n";
             Obj mZ(TIME, STRDATA, HANDLE, KEY);  const Obj& Z = mZ;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
             ASSERT(TIME                == Z.time());
             ASSERT(STRDATA             == Z.data());
             ASSERT(HANDLE              == Z.handle());
@@ -3731,6 +3757,7 @@ int main(int argc, char *argv[])
 
             if (verbose) cout << "\t\tCopy constructor.\n";
             Obj mU(Z);  const Obj& U = mU;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&U);
             ASSERT(TIME                == U.time());
             ASSERT(STRDATA             == U.data());
             ASSERT(HANDLE              == U.handle());
@@ -3738,14 +3765,18 @@ int main(int argc, char *argv[])
 
             if (verbose) cout << "\t\tCopy assignment.\n";
             Obj mV;  const Obj& V = mV;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             mV = U;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             ASSERT(TIME                == V.time());
             ASSERT(STRDATA             == V.data());
             ASSERT(HANDLE              == V.handle());
             ASSERT(KEY                 == V.key());
 
             // MANIPULATORS
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             mX.time() = TIME;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(TIME == X.time());
 
             mX.data() = STRDATA;
@@ -3775,7 +3806,9 @@ int main(int argc, char *argv[])
             if (verbose) cout << "\t\tDefault constructor.\n";
             Obj mX(&ta);  const Obj& X = mX;
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 const bsls::Types::Int64 NUM_ALLOC = ta.numAllocations();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(bsls::TimeInterval() == X.time());
                 const TestString dfltTestString;    // Appease bug in gcc-4.1.2
                 ASSERT(dfltTestString       == X.data());
@@ -3788,7 +3821,9 @@ int main(int argc, char *argv[])
             if (verbose) cout << "\t\tConstructor without key.\n";
             Obj mY(TIME, STRDATA, HANDLE, &ta);  const Obj& Y = mY;
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
                 const bsls::Types::Int64 NUM_ALLOC = ta.numAllocations();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
                 ASSERT(TIME                == Y.time());
                 ASSERT(STRDATA             == Y.data());
                 ASSERT(HANDLE              == Y.handle());
@@ -3800,7 +3835,9 @@ int main(int argc, char *argv[])
             if (verbose) cout << "\t\tConstructor with key.\n";
             Obj mZ(TIME, STRDATA, HANDLE, KEY, &ta);  const Obj& Z = mZ;
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
                 const bsls::Types::Int64 NUM_ALLOC = ta.numAllocations();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
                 ASSERT(TIME                == Z.time());
                 ASSERT(STRDATA             == Z.data());
                 ASSERT(HANDLE              == Z.handle());
@@ -3814,6 +3851,7 @@ int main(int argc, char *argv[])
 
             if (verbose) cout << "\t\tCopy constructor.\n";
             Obj mU(Z, &ta3);  const Obj& U = mU;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&U);
             ASSERT(TIME                    == U.time());
             ASSERT(STRDATA                 == U.data());
             ASSERT(HANDLE                  == U.handle());
@@ -3823,7 +3861,9 @@ int main(int argc, char *argv[])
 
             if (verbose) cout << "\t\tCopy assignment.\n";
             Obj mV(&ta3);  const Obj& V = mV;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             mV = U;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             ASSERT(TIME                    == V.time());
             ASSERT(STRDATA                 == V.data());
             ASSERT(HANDLE                  == V.handle());
@@ -3833,7 +3873,9 @@ int main(int argc, char *argv[])
             if (veryVeryVerbose) { P(ta3); }
 
             // MANIPULATORS
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             mX.time() = TIME;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(TIME == X.time());
 
             const bsls::Types::Int64 NUM_ALLOC3 = ta3.numAllocations();
@@ -3896,15 +3938,21 @@ int main(int argc, char *argv[])
             bsls::TimeInterval newMinTime;
             int newLength;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(0  == x1.popFront(&tItem));
             if (verbose) cout << tItem.time() << " " << tItem.data() << endl;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(VA == tItem.data());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(TA == tItem.time());
             ASSERT(HA == tItem.handle());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(0  == x1.popFront(&tItem, &newLength, &newMinTime));
             ASSERT(3  == newLength);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(TC == newMinTime);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(TB == tItem.time());
             ASSERT(VB == tItem.data());
             ASSERT(HB == tItem.handle());
@@ -3916,10 +3964,10 @@ int main(int argc, char *argv[])
             ASSERT(2  == A1.size());
             ASSERT(1  == newLength);
             ASSERT(TE == newMinTime);
-            ASSERT(TC == A1[0].time());
+            ASSERT(TC == BSLS_ASSERT_CONVEYOR_REF(A1[0]).time());
             ASSERT(VC == A1[0].data());
-            ASSERT(HC == A1[0].handle());
-            ASSERT(TD == A1[1].time());
+            ASSERT(HC == BSLS_ASSERT_CONVEYOR_REF(A1[0]).handle());
+            ASSERT(TD == BSLS_ASSERT_CONVEYOR_REF(A1[1]).time());
             ASSERT(VD == A1[1].data());
             ASSERT(HD == A1[1].handle());
 
@@ -3937,7 +3985,7 @@ int main(int argc, char *argv[])
             x1.popLE(TE, &a3, &newLength, &newMinTime);
             ASSERT(1  == A3.size());
             ASSERT(0  == newLength);
-            ASSERT(TE == A3[0].time());
+            ASSERT(TE == BSLS_ASSERT_CONVEYOR_REF(A3[0]).time());
             ASSERT(VE == A3[0].data());
             ASSERT(HE == A3[0].handle());
         }
@@ -3982,16 +4030,22 @@ int main(int argc, char *argv[])
             bsls::TimeInterval newMinTime;
             int newLength;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(0  == x1.popFront(&tItem));
             if (verbose) cout << tItem.time() << " " << tItem.data() << endl;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(VA == tItem.data());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(TA == tItem.time());
             ASSERT(HA == tItem.handle());
             ASSERT(KA == tItem.key());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(0  == x1.popFront(&tItem, &newLength, &newMinTime));
             ASSERT(3  == newLength);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(TC == newMinTime);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tItem);
             ASSERT(TB == tItem.time());
             ASSERT(VB == tItem.data());
             ASSERT(HB == tItem.handle());
@@ -4004,11 +4058,11 @@ int main(int argc, char *argv[])
             ASSERT(2  == A1.size());
             ASSERT(1  == newLength);
             ASSERT(TE == newMinTime);
-            ASSERT(TC == A1[0].time());
+            ASSERT(TC == BSLS_ASSERT_CONVEYOR_REF(A1[0]).time());
             ASSERT(VC == A1[0].data());
             ASSERT(HC == A1[0].handle());
-            ASSERT(KC == A1[0].key());
-            ASSERT(TD == A1[1].time());
+            ASSERT(KC == BSLS_ASSERT_CONVEYOR_REF(A1[0]).key());
+            ASSERT(TD == BSLS_ASSERT_CONVEYOR_REF(A1[1]).time());
             ASSERT(VD == A1[1].data());
             ASSERT(HD == A1[1].handle());
             ASSERT(KD == A1[1].key());
@@ -4027,7 +4081,7 @@ int main(int argc, char *argv[])
             x1.popLE(TE, &a3, &newLength, &newMinTime);
             ASSERT(1  == A3.size());
             ASSERT(0  == newLength);
-            ASSERT(TE == A3[0].time());
+            ASSERT(TE == BSLS_ASSERT_CONVEYOR_REF(A3[0]).time());
             ASSERT(VE == A3[0].data());
             ASSERT(HE == A3[0].handle());
             ASSERT(KE == A3[0].key());

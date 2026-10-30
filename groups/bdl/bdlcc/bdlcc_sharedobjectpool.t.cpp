@@ -171,6 +171,7 @@ void TestRun<POOL>::threadProc(int id)
 template <class POOL>
 void TestRun<POOL>::run()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
    bslmt::ThreadGroup tg;
 
    for (int i = 0; i < d_numThreads; ++i) {
@@ -211,6 +212,7 @@ class SlowerCharArrayPool {
 
    void getCharArray(bsl::shared_ptr<CharArray> *charArray_sp)
    {
+       BSLS_ASSERT_CONVEYOR_OBJECT(charArray_sp);
        charArray_sp->reset(d_charArrayPool.getObject(),
                       bdlf::MemFnUtil::memFn(
                               &bdlcc::ObjectPool<CharArray>::releaseObject,
@@ -241,6 +243,7 @@ class SlowerCharArrayPool {
                                        CharArray                    *charArray,
                                        bdlcc::ObjectPool<CharArray> *pool)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(charArray);
             charArray->clear();
             pool->releaseObject(charArray);
         }
@@ -263,6 +266,7 @@ class SlowerCharArrayPool {
 
         void getCharArray(bsl::shared_ptr<CharArray> *charArray_sp)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(charArray_sp);
             charArray_sp->reset(d_charArrayPool.getObject(),
                                 bdlf::BindUtil::bind(
                                    &SlowCharArrayPool::resetAndReturnCharArray,
@@ -322,6 +326,7 @@ struct SpLink
 
     void reset()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ASSERT(false == static_cast<bool>(d_next));
     }
 };
@@ -416,6 +421,7 @@ void LinkTestRun<POOL>::threadProc(int id)
 template <class POOL>
 void LinkTestRun<POOL>::run()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
    bslmt::ThreadGroup tg;
 
    for (int i = 0; i < d_numThreads; ++i) {
@@ -667,6 +673,7 @@ public:
    {}
 
    void getLink(bsl::shared_ptr<SpLink> *link_sp) {
+       BSLS_ASSERT_CONVEYOR_OBJECT(link_sp);
       link_sp->reset(d_linkPool.getObject(),
                      bdlf::MemFnUtil::memFn(
                               &bdlcc::ObjectPool<SpLink>::releaseObject,

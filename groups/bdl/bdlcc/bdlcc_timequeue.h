@@ -1175,10 +1175,14 @@ class TimeQueueItem {
     TimeQueueItem& operator=(const TimeQueueItem<DATA>& rhs);
 
     /// Return the modifiable time value associated with this item.
-    bsls::TimeInterval& time();
+    bsls::TimeInterval& time()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the modifiable data instance associated with this item.
-    DATA& data();
+    DATA& data()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the modifiable handle value associated with this item.
     Handle& handle()
@@ -1190,15 +1194,21 @@ class TimeQueueItem {
     }
 
     /// Return the modifiable key value associated with this item.
-    Key& key();
+    Key& key()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
     /// Return the non-modifiable time value associated with this item.
-    const bsls::TimeInterval& time() const;
+    const bsls::TimeInterval& time() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the non-modifiable data associated with this item.
-    const DATA& data() const;
+    const DATA& data() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the non-modifiable handle value associated with this item.
     Handle handle() const
@@ -1210,7 +1220,9 @@ class TimeQueueItem {
     }
 
     /// Return the non-modifiable key value associated with this item.
-    const Key& key() const;
+    const Key& key() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                         // =========================
@@ -1264,6 +1276,9 @@ void TimeQueue<DATA>::popLEImp(const bsls::TimeInterval&  time,
                                int                       *newLength,
                                bsls::TimeInterval        *newMinTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -1316,6 +1331,9 @@ void TimeQueue<DATA>::popLEImp(const bsls::TimeInterval&  time,
                                int                       *newLength,
                                bsls::TimeInterval        *newMinTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLS_ASSERT(0 <= maxTimers);
 
     BSLMF_ASSERT(IsVector<VECTOR>::value);
@@ -1417,6 +1435,7 @@ typename TimeQueue<DATA>::Node *TimeQueue<DATA>::getNodeFromHandle(
                                                               Handle handle,
                                                               Key    key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unsigned int uhandle = static_cast<unsigned int>(handle) & d_indexMask;
     if (0 == uhandle || uhandle > d_nodeArray.size()) {
         return 0;                                                     // RETURN
@@ -1533,6 +1552,8 @@ typename TimeQueue<DATA>:: Handle TimeQueue<DATA>::add(
                                           int                       *newLength)
 
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
     Node *node;
@@ -1611,6 +1632,7 @@ int TimeQueue<DATA>::popFront(TimeQueueItem<DATA> *buffer,
                               int                 *newLength,
                               bsls::TimeInterval  *newMinTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
     MapIter it = d_map.begin();
 
@@ -1753,6 +1775,7 @@ int TimeQueue<DATA>::remove(typename TimeQueue<DATA>::Handle  handle,
                             bsls::TimeInterval               *newMinTime,
                             TimeQueueItem<DATA>              *item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
     Node *node = getNodeFromHandle(handle, key);
@@ -1772,13 +1795,13 @@ int TimeQueue<DATA>::remove(typename TimeQueue<DATA>::Handle  handle,
         node->d_prev_p->d_next_p = node->d_next_p;
         node->d_next_p->d_prev_p = node->d_prev_p;
 
-        MapIter it = d_map.find(node->d_time);
+        MapIter it = d_map.find(BSLS_ASSERT_CONVEYOR_REF(node->d_time));
         if (it->second == node) {
             it->second = node->d_next_p;
         }
     }
     else {
-        d_map.erase(node->d_time);
+        d_map.erase(BSLS_ASSERT_CONVEYOR_REF(node->d_time));
     }
     freeNode(node);
     --d_length;
@@ -1788,7 +1811,7 @@ int TimeQueue<DATA>::remove(typename TimeQueue<DATA>::Handle  handle,
     }
 
     if (d_length && newMinTime) {
-        BSLS_ASSERT(! d_map.empty());
+        BSLS_ASSERT_NONCONVEYOR(! d_map.empty());
 
         *newMinTime = d_map.begin()->first;
     }
@@ -1802,6 +1825,8 @@ int TimeQueue<DATA>::remove(typename TimeQueue<DATA>::Handle  handle,
 template <class DATA>
 void TimeQueue<DATA>::removeAll(bsl::vector<TimeQueueItem<DATA> > *removedItems)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(removedItems);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
     MapIter it = d_map.begin();
 
@@ -1844,6 +1869,8 @@ void TimeQueue<DATA>::removeIf(
                            bsls::TimeInterval                      *newMinTime,
                            bsl::vector<TimeQueueItem<DATA> >       *removedItems)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(removedItems);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
     MapIter  it           = d_map.begin();
@@ -1902,7 +1929,7 @@ void TimeQueue<DATA>::removeIf(
         *newLength = d_length;
     }
     if (d_length && newMinTime) {
-        BSLS_ASSERT(! d_map.empty());
+        BSLS_ASSERT_NONCONVEYOR(! d_map.empty());
 
         *newMinTime = d_map.begin()->first;
     }
@@ -1925,6 +1952,8 @@ int TimeQueue<DATA>::update(typename TimeQueue<DATA>::Handle  handle,
                             const bsls::TimeInterval&         newTime,
                             int                              *isNewTop)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&newTime);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
     Node *node = getNodeFromHandle(handle, key);
@@ -1937,13 +1966,13 @@ int TimeQueue<DATA>::update(typename TimeQueue<DATA>::Handle  handle,
         node->d_prev_p->d_next_p = node->d_next_p;
         node->d_next_p->d_prev_p = node->d_prev_p;
 
-        MapIter it = d_map.find(node->d_time);
+        MapIter it = d_map.find(BSLS_ASSERT_CONVEYOR_REF(node->d_time));
         if (it->second == node) {
             it->second = node->d_next_p;
         }
     }
     else {
-        d_map.erase(node->d_time);
+        d_map.erase(BSLS_ASSERT_CONVEYOR_REF(node->d_time));
     }
     node->d_time = newTime;
 
@@ -2000,6 +2029,7 @@ template <class DATA>
 inline
 int TimeQueue<DATA>::minTime(bsls::TimeInterval *buffer) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
     if (d_map.empty()) {
@@ -2014,6 +2044,8 @@ template <class DATA>
 inline
 int TimeQueue<DATA>::countLE(const bsls::TimeInterval& time) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     int count = 0;
 
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);

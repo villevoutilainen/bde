@@ -417,7 +417,7 @@ int FixedQueueIndexManager::reservePushIndex(unsigned int *generation,
             // optimized expression of:
             // '0 < circularDifference(currGeneration, elementGeneration)'.
 
-            BSLS_ASSERT(1 == circularDifference(currGeneration,
+            BSLS_ASSERT_NONCONVEYOR(1 == circularDifference(currGeneration,
                                                 elementGeneration,
                                                 d_maxGeneration+1));
 
@@ -448,7 +448,7 @@ int FixedQueueIndexManager::reservePushIndex(unsigned int *generation,
             }
             return e_QUEUE_FULL;                                      // RETURN
         }
-        BSLS_ASSERT(0 >= circularDifference(currGeneration,
+        BSLS_ASSERT_NONCONVEYOR(0 >= circularDifference(currGeneration,
                                             elementGeneration,
                                             d_maxGeneration+1));
 
@@ -470,10 +470,12 @@ int FixedQueueIndexManager::reservePushIndex(unsigned int *generation,
 void FixedQueueIndexManager::commitPushIndex(unsigned int generation,
                                              unsigned int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(generation <= d_maxGeneration);
     BSLS_ASSERT(index      <  d_capacity);
-    BSLS_ASSERT(e_WRITING  == decodeStateFromElementState(d_states[index]));
-    BSLS_ASSERT(generation ==
+    BSLS_ASSERT_NONCONVEYOR(
+                   e_WRITING  == decodeStateFromElementState(d_states[index]));
+    BSLS_ASSERT_NONCONVEYOR(generation ==
                 decodeGenerationFromElementState(d_states[index]));
 
     // We cannot guarantee the full pre-conditions of this function.  The
@@ -551,13 +553,13 @@ int FixedQueueIndexManager::reservePopIndex(unsigned int *generation,
             // still being popped from the previous generation.
 
             BSLS_ASSERT(state == e_READING);
-            BSLS_ASSERT(1 == circularDifference(currGeneration,
+            BSLS_ASSERT_NONCONVEYOR(1 == circularDifference(currGeneration,
                                                 elementGeneration,
                                                 d_maxGeneration + 1));
 
             return e_QUEUE_EMPTY;                                     // RETURN
         }
-        BSLS_ASSERT(0 >= circularDifference(currGeneration,
+        BSLS_ASSERT_NONCONVEYOR(0 >= circularDifference(currGeneration,
                                             elementGeneration,
                                             d_maxGeneration + 1));
 
@@ -600,10 +602,12 @@ int FixedQueueIndexManager::reservePopIndex(unsigned int *generation,
 void FixedQueueIndexManager::commitPopIndex(unsigned int generation,
                                             unsigned int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(generation <= d_maxGeneration);
     BSLS_ASSERT(index      <  d_capacity);
-    BSLS_ASSERT(e_READING  == decodeStateFromElementState(d_states[index]));
-    BSLS_ASSERT(generation ==
+    BSLS_ASSERT_NONCONVEYOR(
+                   e_READING  == decodeStateFromElementState(d_states[index]));
+    BSLS_ASSERT_NONCONVEYOR(generation ==
                 decodeGenerationFromElementState(d_states[index]));
 
     // We cannot guarantee the full preconditions of this function.  The
@@ -671,6 +675,7 @@ int FixedQueueIndexManager::reservePopIndexForClear (
                                               unsigned int  endGeneration,
                                               unsigned int  endIndex)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(disposedGeneration);
     BSLS_ASSERT(disposedIndex);
     BSLS_ASSERT(endGeneration <= d_maxGeneration);
@@ -693,7 +698,7 @@ int FixedQueueIndexManager::reservePopIndexForClear (
         // 'endIndex' if the preconditions of this function (that it holds a
         // write reservation) are met.
 
-        BSLS_ASSERT(0 < circularDifference(endCombinedIndex,
+        BSLS_ASSERT_NONCONVEYOR(0 < circularDifference(endCombinedIndex,
                                            loadedCombinedIndex,
                                            d_maxCombinedIndex + 1));
 
@@ -746,12 +751,15 @@ int FixedQueueIndexManager::reservePopIndexForClear (
 void FixedQueueIndexManager::abortPushIndexReservation(unsigned int generation,
                                                        unsigned int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(generation <= d_maxGeneration);
     BSLS_ASSERT(index      <  d_capacity);
-    BSLS_ASSERT(static_cast<unsigned int>(d_popIndex.loadRelaxed()) ==
+    BSLS_ASSERT_NONCONVEYOR(
+                         static_cast<unsigned int>(d_popIndex.loadRelaxed()) ==
                 generation * d_capacity + index);
-    BSLS_ASSERT(e_WRITING  == decodeStateFromElementState(d_states[index]));
-    BSLS_ASSERT(generation ==
+    BSLS_ASSERT_NONCONVEYOR(
+                   e_WRITING  == decodeStateFromElementState(d_states[index]));
+    BSLS_ASSERT_NONCONVEYOR(generation ==
                 decodeGenerationFromElementState(d_states[index]));
 
     unsigned int loadedPopIndex = d_popIndex.loadRelaxed();
@@ -761,8 +769,8 @@ void FixedQueueIndexManager::abortPushIndexReservation(unsigned int generation,
     // has called 'clearPopIndex' on all the preceding generation and index
     // values -- require that 'd_popIndex' refer to 'generation' and 'index.
 
-    BSLS_ASSERT(generation == loadedPopIndex / d_capacity);
-    BSLS_ASSERT(index      == loadedPopIndex % d_capacity);
+    BSLS_ASSERT_NONCONVEYOR(generation == loadedPopIndex / d_capacity);
+    BSLS_ASSERT_NONCONVEYOR(index      == loadedPopIndex % d_capacity);
 
     // Marking the cell first for reading in the current generation, and then
     // after incrementing the pop index, marking it empty for the subsequent
@@ -782,6 +790,7 @@ void FixedQueueIndexManager::abortPushIndexReservation(unsigned int generation,
 // ACCESSORS
 bsl::size_t FixedQueueIndexManager::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that 'FixedQueue::pushBack' and 'FixedQueue::popFront' rely on the
     // fact that the following atomic loads are sequentially consistent.  If
     // this were to change, 'FixedQueue::tryPushBack' and
@@ -816,7 +825,7 @@ bsl::size_t FixedQueueIndexManager::length() const
             // acquired after it wraps around to 0, resulting in a very large
             // positive value.
 
-            BSLS_ASSERT(0 > circularDifference(combinedPushIndex,
+            BSLS_ASSERT_NONCONVEYOR(0 > circularDifference(combinedPushIndex,
                                                combinedPopIndex,
                                                d_maxCombinedIndex + 1));
 
@@ -827,7 +836,7 @@ bsl::size_t FixedQueueIndexManager::length() const
 
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(
             difference < -static_cast<int>(d_maxCombinedIndex / 2))) {
-        BSLS_ASSERT(0 < circularDifference(combinedPushIndex,
+        BSLS_ASSERT_NONCONVEYOR(0 < circularDifference(combinedPushIndex,
                                            combinedPopIndex,
                                            d_maxCombinedIndex + 1));
 

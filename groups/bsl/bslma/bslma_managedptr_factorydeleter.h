@@ -63,6 +63,7 @@ void ManagedPtr_FactoryDeleter<OBJECT_TYPE, FACTORY>::deleter(void *object,
     BSLS_ASSERT_SAFE(0 != object);
     BSLS_ASSERT_SAFE(0 != factory);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(static_cast<FACTORY *>(factory));
     static_cast<FACTORY *>(factory)->deleteObject(
                                            static_cast<OBJECT_TYPE *>(object));
 }

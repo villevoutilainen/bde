@@ -963,6 +963,7 @@ void ObjectPool<TYPE, CREATOR, RESETTER>::replenish()
 template <class TYPE, class CREATOR, class RESETTER>
 void ObjectPool<TYPE, CREATOR, RESETTER>::addObjects(int numObjects)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Allocate a single memory block to be used for creating block nodes,
     // object nodes, and objects.  Too large a value for 'numObjects' would
     // cause overflow in 'NUM_BYTES_PER_BLOCK' below.
@@ -1474,6 +1475,7 @@ template <class TYPE>
 inline
 void ObjectPoolFunctors::Clear<TYPE>::operator()(TYPE *object) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
    object->clear();
 }
 
@@ -1511,6 +1513,7 @@ ObjectPool<TYPE, CREATOR, RESETTER>::AutoCleanup::AutoCleanup(
 template <class TYPE, class CREATOR, class RESETTER>
 ObjectPool<TYPE, CREATOR, RESETTER>::AutoCleanup::~AutoCleanup()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum {
         k_NUM_OBJECTS_PER_FRAME =
            ObjectPool<TYPE, CREATOR, RESETTER>::k_NUM_OBJECTS_PER_FRAME
@@ -1520,6 +1523,7 @@ ObjectPool<TYPE, CREATOR, RESETTER>::AutoCleanup::~AutoCleanup()
             ((TYPE *)d_head_p)->~TYPE();
             d_head_p += k_NUM_OBJECTS_PER_FRAME;
         }
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_allocator_p);
         d_allocator_p->deallocate(d_block_p);
     }
 }

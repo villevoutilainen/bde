@@ -746,7 +746,7 @@ bsl::size_t StripedUnorderedMultiMap<KEY, VALUE, HASH, EQUAL>::eraseBulkAll(
                                                              RANDOM_ITER first,
                                                              RANDOM_ITER last)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     return d_imp.eraseBulkAll(first, last);
 }
@@ -794,7 +794,7 @@ void StripedUnorderedMultiMap<KEY, VALUE, HASH, EQUAL>::insertBulk(
                                                              RANDOM_ITER first,
                                                              RANDOM_ITER last)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     d_imp.insertBulkAlways(first, last);
 }
@@ -902,7 +902,7 @@ inline
 bsl::size_t StripedUnorderedMultiMap<KEY, VALUE, HASH, EQUAL>::bucketSize(
                                                        bsl::size_t index) const
 {
-    BSLS_ASSERT(bucketCount() > index);
+    BSLS_ASSERT_NONCONVEYOR(bucketCount() > index);
 
     return d_imp.bucketSize(index);
 }

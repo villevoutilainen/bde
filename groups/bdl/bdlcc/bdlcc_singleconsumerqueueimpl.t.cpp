@@ -596,7 +596,9 @@ TestMutex::~TestMutex()
 
 void TestMutex::lock()
 {
-    bool doWait = (*s_TestMutex_script_p)[++s_TestMutex_count - 1];
+    bsl::vector<bool> *script = s_TestMutex_script_p;
+    BSLS_ASSERT_CONVEYOR_OBJECT(script);
+    bool doWait = (*script)[++s_TestMutex_count - 1];
     if (doWait) {
         s_TestMutex_barrier.wait();
         s_TestMutex_barrier.wait();
@@ -704,6 +706,7 @@ extern "C" void *orderingPop(void *arg)
             bsls::Types::Uint64 pushThreadId   = value.d_pushThreadId;
             bsls::Types::Uint64 sequenceNumber = value.d_sequenceNumber;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(data);
             bsls::Types::Uint64& lastSequenceNumber =
                                           data->d_sequenceNumber[pushThreadId];
 

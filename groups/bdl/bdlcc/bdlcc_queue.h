@@ -754,7 +754,9 @@ class Queue {
     /// The (error-prone) usage of this method will be replaced by an
     /// appropriate smart-pointer-like proctor object in the future.
     /// Meanwhile, use this method with caution.
-    bdlc::Queue<TYPE>& queue();
+    bdlc::Queue<TYPE>& queue()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -796,6 +798,8 @@ template <class TYPE>
 template <class VECTOR>
 void Queue<TYPE>::removeAllImp(VECTOR *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -821,6 +825,8 @@ template <class TYPE>
 template <class VECTOR>
 void Queue<TYPE>::tryPopFrontImp(int maxNumItems, VECTOR *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     int numSignal = 0;
@@ -853,6 +859,8 @@ template <class TYPE>
 template <class VECTOR>
 void Queue<TYPE>::tryPopBackImp(int maxNumItems, VECTOR *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     int numSignal = 0;
@@ -945,6 +953,7 @@ Queue<TYPE>::~Queue()
 template <class TYPE>
 void Queue<TYPE>::popBack(TYPE *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unsigned int length;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -965,6 +974,7 @@ void Queue<TYPE>::popBack(TYPE *buffer)
 template <class TYPE>
 TYPE Queue<TYPE>::popBack()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that this method is not implemented in terms of 'popBack(TYPE*)'
     // because that would require TYPE to have a default constructor.
 
@@ -990,6 +1000,7 @@ TYPE Queue<TYPE>::popBack()
 template <class TYPE>
 int Queue<TYPE>::timedPopBack(TYPE *buffer, const bsls::TimeInterval& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unsigned int length;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -1013,6 +1024,7 @@ int Queue<TYPE>::timedPopBack(TYPE *buffer, const bsls::TimeInterval& timeout)
 template <class TYPE>
 void Queue<TYPE>::popFront(TYPE *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unsigned int length;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -1033,6 +1045,7 @@ void Queue<TYPE>::popFront(TYPE *buffer)
 template <class TYPE>
 TYPE Queue<TYPE>::popFront()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that this method is not implemented in terms of 'popFront(TYPE*)'
     // because that would require TYPE to have a default constructor.
 
@@ -1058,6 +1071,7 @@ TYPE Queue<TYPE>::popFront()
 template <class TYPE>
 int Queue<TYPE>::timedPopFront(TYPE *buffer, const bsls::TimeInterval& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unsigned int length;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -1081,6 +1095,7 @@ int Queue<TYPE>::timedPopFront(TYPE *buffer, const bsls::TimeInterval& timeout)
 template <class TYPE>
 int Queue<TYPE>::tryPopFront(TYPE *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unsigned int length;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -1132,6 +1147,7 @@ void Queue<TYPE>::tryPopFront(int maxNumItems, std::pmr::vector<TYPE> *buffer)
 template <class TYPE>
 int Queue<TYPE>::tryPopBack(TYPE *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unsigned int length;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -1209,6 +1225,8 @@ void Queue<TYPE>::removeAll(std::pmr::vector<TYPE> *buffer)
 template <class TYPE>
 void Queue<TYPE>::pushBack(const TYPE& item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
         if (d_highWaterMark >= 0) {
@@ -1225,6 +1243,8 @@ void Queue<TYPE>::pushBack(const TYPE& item)
 template <class TYPE>
 void Queue<TYPE>::pushFront(const TYPE& item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
         if (d_highWaterMark >= 0) {
@@ -1242,6 +1262,8 @@ template <class TYPE>
 int Queue<TYPE>::timedPushBack(const TYPE&               item,
                                const bsls::TimeInterval& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
         if (d_highWaterMark >= 0) {
@@ -1262,6 +1284,8 @@ template <class TYPE>
 int Queue<TYPE>::timedPushFront(const TYPE&               item,
                                 const bsls::TimeInterval& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
         if (d_highWaterMark >= 0) {
@@ -1282,6 +1306,8 @@ template <class TYPE>
 inline
 void Queue<TYPE>::forcePushFront(const TYPE& item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
         d_queue.pushFront(item);
@@ -1345,6 +1371,7 @@ template <class TYPE>
 inline
 int Queue<TYPE>::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
     return d_queue.length();

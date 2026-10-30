@@ -237,6 +237,7 @@ class PseudoObjectCatalog
     // MANIPULATORS
     int add(TYPE const& object)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT(d_topIndex != k_MAX-1);
 
         new (d_arr[++d_topIndex].d_obj.address()) TYPE(object);
@@ -396,6 +397,8 @@ void verifyMatch(Obj               *o1,
                  bsl::vector<int>&  handles2,
                  int                maxHandles)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handles1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handles2);
     int v1 = 0, v2 = 0;
     ASSERT(o1->length() == o2->length());
 
@@ -431,6 +434,8 @@ void ggInt(bdlcc::ObjectCatalog<TYPE> *o1,
            const char                 *spec,
            const int                   gens = 0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handles1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handles2);
     // First invoke `add` `strlen(spec)` times, this will cause first
     // `strlen(spec)` entries of `o1->d_nodes` to be busy.  Then invoke
     // `remove` for all the entries corresponding to char '0' of the `spec`,
@@ -456,12 +461,12 @@ void ggInt(bdlcc::ObjectCatalog<TYPE> *o1,
             handles1[i] = h;
         }
 
-        ASSERT((handles1[i] & k_INDEX_MASK) == (unsigned)i);
-        ASSERT((handles1[i] & k_BUSY_INDICATOR) == k_BUSY_INDICATOR);
+        ASSERT((BSLS_ASSERT_CONVEYOR_REF(handles1[i]) & k_INDEX_MASK) == (unsigned)i);
+        ASSERT((BSLS_ASSERT_CONVEYOR_REF(handles1[i]) & k_BUSY_INDICATOR) == k_BUSY_INDICATOR);
         ASSERT((((unsigned)handles1[i]) >> k_GENERATION_SHIFT) ==
                                                      (gens % k_RECYCLE_COUNT));
 
-        handles2[i] = o2->add(i);
+        BSLS_ASSERT_CONVEYOR_REF(handles2[i]) = o2->add(i);
         ASSERT(handles2[i] == i);
     }
 
@@ -474,7 +479,7 @@ void ggInt(bdlcc::ObjectCatalog<TYPE> *o1,
             ASSERT(r == 0);
             ASSERT(v1 == i);
 
-            r = o2->remove(handles2[i], &v2);
+            r = o2->remove(BSLS_ASSERT_CONVEYOR_REF(handles2[i]), &v2);
             ASSERT(r == 0);
             ASSERT(v2 == i);
         }
@@ -624,8 +629,8 @@ DATA_init::DATA_init()
     for (int ii = 0; ii < k_NUM_DATA; ++ii) {
         DATA[ii].d_length = static_cast<int>(bsl::strlen(DATA[ii].d_spec));
         for (const char *pc = DATA[ii].d_spec; *pc; ++pc) {
-            BSLS_ASSERT('A' <= *pc);
-            BSLS_ASSERT(*pc <= 'Z');
+            BSLS_ASSERT_NONCONVEYOR('A' <= *pc);
+            BSLS_ASSERT_NONCONVEYOR(*pc <= 'Z');
         }
     }
 };
@@ -1215,6 +1220,7 @@ template <class VECTOR>
 bool TestDriver<ELEMENT>::hasSpecElements(const VECTOR&  container,
                                           const char    *spec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&container);
     char c = 0;
     bsl::string tmpSpecBuffer(spec);
     const bsl::size_t LENGTH = tmpSpecBuffer.length();
@@ -1247,6 +1253,7 @@ void TestDriver<ELEMENT>::gg(Obj              *object,
                              const char       *spec,
                              bsl::vector<int> *handles)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(handles);
     bslma::Allocator *alloc = object->allocator();
 
     object->removeAll();
@@ -2158,6 +2165,7 @@ void queryCallBack(const QueryResult& result)
     void sendMessage(RequestMsg msg, RemoteAddress peer)
     {
         serverMutex.lock();
+        BSLS_ASSERT_CONVEYOR_OBJECT(peer);
         peer->push(msg.handle());
         serverNotEmptyCondition.signal();
         serverMutex.unlock();
@@ -2166,7 +2174,9 @@ void queryCallBack(const QueryResult& result)
     /// Get the response from the specified `peer` into the specified `msg`.
     void recvMessage(ResponseMsg *msg, RemoteAddress peer)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(peer);
         serverMutex.lock();
+        BSLS_ASSERT_CONVEYOR_OBJECT(peer);
         while (peer->empty()) {
             serverNotEmptyCondition.wait(&serverMutex);
         }
@@ -2547,6 +2557,8 @@ void verifyAccessors(Obj               *o1,
                      bsl::vector<int>&  handles2,
                      int                maxHandles)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handles1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handles2);
     int v1 = 0, v2 = 0, v = 0;
 
     if (veryVerbose) { cout << "\tverifying `length`\n"; }

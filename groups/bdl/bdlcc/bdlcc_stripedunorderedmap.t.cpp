@@ -726,24 +726,28 @@ inline
 void GlobalHashMap<KEY, VALUE, HASH, EQUAL>::insert(const KEY&   key,
                                                     const VALUE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bslmt::WriteLockGuard<LockType> guard(&d_lock);
-    d_map[key] = value;
+    BSLS_ASSERT_CONVEYOR_REF(d_map[key]) = value;
 }
 
 template <class KEY, class VALUE, class HASH, class EQUAL>
 bsl::size_t GlobalHashMap<KEY, VALUE, HASH, EQUAL>::insertBulk(
                                                const bsl::vector<KVType>& data)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::size_t                     count = 0;
     bslmt::WriteLockGuard<LockType> guard(&d_lock);
 
     for (bsl::size_t i = 0; i < data.size(); ++i) {
-        typename MapType::iterator mapIt = d_map.find(data[i].first);
+        typename MapType::iterator mapIt = d_map.find(BSLS_ASSERT_CONVEYOR_REF(data[i]).first);
         if (mapIt != d_map.end()) {
-            mapIt->second = data[i].second;
+            mapIt->second = BSLS_ASSERT_CONVEYOR_REF(data[i]).second;
         }
         else {
-            d_map[data[i].first] = data[i].second;
+            d_map[BSLS_ASSERT_CONVEYOR_REF(data[i]).first] = BSLS_ASSERT_CONVEYOR_REF(data[i]).second;
             ++count;
         }
     }
@@ -789,6 +793,8 @@ bsl::size_t GlobalHashMap<KEY, VALUE, HASH, EQUAL>::getValue(
                                                          VALUE      *value,
                                                          const KEY&  key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bslmt::ReadLockGuard<LockType> guard(&d_lock);
 
     typename MapType::const_iterator mapIt = d_map.find(key);
@@ -1138,6 +1144,8 @@ void HashPerformance::runTests(VecTimeType              *times,
                                VecIntType&               args,
                                HashPerformance::RunFunc  func)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(times);
     for (int i = 0; i < 3; ++i) {
         d_seWTime [i] = 0;
         d_seUTime [i] = 0;
@@ -1174,24 +1182,24 @@ void HashPerformance::runTests(VecTimeType              *times,
             d_vecWTime.push_back(curWTime);
             d_vecUTime.push_back(curUTime);
             d_vecSTime.push_back(curSTime);
-            d_avgWTime[0    ] += curWTime;
-            d_avgUTime[0    ] += curUTime;
-            d_avgSTime[0    ] += curSTime;
-            d_avgWTime[rwIdx] += curWTime;
-            d_avgUTime[rwIdx] += curUTime;
-            d_avgSTime[rwIdx] += curSTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_avgWTime[0    ]) += curWTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_avgUTime[0    ]) += curUTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_avgSTime[0    ]) += curSTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_avgWTime[rwIdx]) += curWTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_avgUTime[rwIdx]) += curUTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_avgSTime[rwIdx]) += curSTime;
             sortedWTimes[0    ].push_back(curWTime);
             sortedUTimes[0    ].push_back(curUTime);
             sortedSTimes[0    ].push_back(curSTime);
             sortedWTimes[rwIdx].push_back(curWTime);
             sortedUTimes[rwIdx].push_back(curUTime);
             sortedSTimes[rwIdx].push_back(curSTime);
-            d_seWTime[0    ] += curWTime * curWTime;
-            d_seUTime[0    ] += curUTime * curUTime;
-            d_seSTime[0    ] += curSTime * curSTime;
-            d_seWTime[rwIdx] += curWTime * curWTime;
-            d_seUTime[rwIdx] += curUTime * curUTime;
-            d_seSTime[rwIdx] += curSTime * curSTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_seWTime[0    ]) += curWTime * curWTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_seUTime[0    ]) += curUTime * curUTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_seSTime[0    ]) += curSTime * curSTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_seWTime[rwIdx]) += curWTime * curWTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_seUTime[rwIdx]) += curUTime * curUTime;
+            BSLS_ASSERT_CONVEYOR_REF(d_seSTime[rwIdx]) += curSTime * curSTime;
             if (i == 0) {
                 maxWTime[0    ] = curWTime;
                 maxUTime[0    ] = curUTime;
@@ -1213,9 +1221,9 @@ void HashPerformance::runTests(VecTimeType              *times,
             sortedMaxWTimes[i].push_back(maxWTime[i]);
             sortedMaxUTimes[i].push_back(maxUTime[i]);
             sortedMaxSTimes[i].push_back(maxSTime[i]);
-            d_avgMaxWTime[i] += maxWTime[i];
-            d_avgMaxUTime[i] += maxUTime[i];
-            d_avgMaxSTime[i] += maxSTime[i];
+            BSLS_ASSERT_CONVEYOR_REF(d_avgMaxWTime[i]) += maxWTime[i];
+            BSLS_ASSERT_CONVEYOR_REF(d_avgMaxUTime[i]) += maxUTime[i];
+            BSLS_ASSERT_CONVEYOR_REF(d_avgMaxSTime[i]) += maxSTime[i];
         }
     } // END loop on numRepeats
 
@@ -1227,25 +1235,25 @@ void HashPerformance::runTests(VecTimeType              *times,
     bsls::Types::Int64 temp;
     for (int i = 0; i < 3; ++i) {
         if (numSamples[i] > 0) {
-            d_avgWTime[i] /= numSamples[i];
-            d_avgUTime[i] /= numSamples[i];
-            d_avgSTime[i] /= numSamples[i];
+            BSLS_ASSERT_CONVEYOR_REF(d_avgWTime[i]) /= numSamples[i];
+            BSLS_ASSERT_CONVEYOR_REF(d_avgUTime[i]) /= numSamples[i];
+            BSLS_ASSERT_CONVEYOR_REF(d_avgSTime[i]) /= numSamples[i];
             // SD = SQRT(E(X^2) - E(X)^2)
             d_seWTime [i] /= numSamples[i];
             d_seUTime [i] /= numSamples[i];
             d_seSTime [i] /= numSamples[i];
-            temp = d_seWTime[i] - d_avgWTime[i] * d_avgWTime[i];
+            temp = BSLS_ASSERT_CONVEYOR_REF(d_seWTime[i]) - BSLS_ASSERT_CONVEYOR_REF(d_avgWTime[i]) * BSLS_ASSERT_CONVEYOR_REF(d_avgWTime[i]);
             d_seWTime[i] = temp <= 0 ? 0 : static_cast<TimeType>(
                                          bsl::sqrt(static_cast<double>(temp)));
-            temp = d_seUTime[i] - d_avgUTime[i] * d_avgUTime[i];
+            temp = BSLS_ASSERT_CONVEYOR_REF(d_seUTime[i]) - BSLS_ASSERT_CONVEYOR_REF(d_avgUTime[i]) * BSLS_ASSERT_CONVEYOR_REF(d_avgUTime[i]);
             d_seUTime[i] = temp <= 0 ? 0 : static_cast<TimeType>(
                                          bsl::sqrt(static_cast<double>(temp)));
-            temp = d_seSTime[i] - d_avgSTime[i] * d_avgSTime[i];
+            temp = BSLS_ASSERT_CONVEYOR_REF(d_seSTime[i]) - BSLS_ASSERT_CONVEYOR_REF(d_avgSTime[i]) * BSLS_ASSERT_CONVEYOR_REF(d_avgSTime[i]);
             d_seSTime[i] = temp <= 0 ? 0 : static_cast<TimeType>(
                                          bsl::sqrt(static_cast<double>(temp)));
-            d_avgWTime[i] /= 1000;
-            d_avgUTime[i] /= 1000;
-            d_avgSTime[i] /= 1000;
+            BSLS_ASSERT_CONVEYOR_REF(d_avgWTime[i]) /= 1000;
+            BSLS_ASSERT_CONVEYOR_REF(d_avgUTime[i]) /= 1000;
+            BSLS_ASSERT_CONVEYOR_REF(d_avgSTime[i]) /= 1000;
             d_seWTime [i] /= 1000;
             d_seUTime [i] /= 1000;
             d_seSTime [i] /= 1000;
@@ -1258,21 +1266,21 @@ void HashPerformance::runTests(VecTimeType              *times,
             d_medUTime[i] = sortedUTimes[i][medianIdx] / 1000;
             d_medSTime[i] = sortedSTimes[i][medianIdx] / 1000;
         }
-        d_avgMaxWTime[i] /= d_numRepeats;
-        d_avgMaxUTime[i] /= d_numRepeats;
-        d_avgMaxSTime[i] /= d_numRepeats;
-        d_avgMaxWTime[i] /= 1000;
-        d_avgMaxUTime[i] /= 1000;
-        d_avgMaxSTime[i] /= 1000;
+        BSLS_ASSERT_CONVEYOR_REF(d_avgMaxWTime[i]) /= d_numRepeats;
+        BSLS_ASSERT_CONVEYOR_REF(d_avgMaxUTime[i]) /= d_numRepeats;
+        BSLS_ASSERT_CONVEYOR_REF(d_avgMaxSTime[i]) /= d_numRepeats;
+        BSLS_ASSERT_CONVEYOR_REF(d_avgMaxWTime[i]) /= 1000;
+        BSLS_ASSERT_CONVEYOR_REF(d_avgMaxUTime[i]) /= 1000;
+        BSLS_ASSERT_CONVEYOR_REF(d_avgMaxSTime[i]) /= 1000;
         bsl::sort(sortedMaxWTimes[i].begin(), sortedMaxWTimes[i].end());
         bsl::sort(sortedMaxUTimes[i].begin(), sortedMaxUTimes[i].end());
         bsl::sort(sortedMaxSTimes[i].begin(), sortedMaxSTimes[i].end());
         d_medMaxWTime[i] = sortedMaxWTimes[i][d_numRepeats / 2] / 1000;
         d_medMaxUTime[i] = sortedMaxUTimes[i][d_numRepeats / 2] / 1000;
         d_medMaxSTime[i] = sortedMaxSTimes[i][d_numRepeats / 2] / 1000;
-        times->push_back(d_avgWTime[i]);
-        times->push_back(d_avgUTime[i]);
-        times->push_back(d_avgSTime[i]);
+        times->push_back(BSLS_ASSERT_CONVEYOR_REF(d_avgWTime[i]));
+        times->push_back(BSLS_ASSERT_CONVEYOR_REF(d_avgUTime[i]));
+        times->push_back(BSLS_ASSERT_CONVEYOR_REF(d_avgSTime[i]));
     }
 }
 
@@ -1280,6 +1288,8 @@ void HashPerformance::runTest(VecTimeType              *times,
                               VecIntType&               args,
                               HashPerformance::RunFunc  func)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
+    BSLS_ASSERT_CONVEYOR_OBJECT(times);
     if (d_numThreads == 1) {
         // For a single thread, run calculation on the caller
         TimeType startWTime = bsls::TimeUtil::getTimer();
@@ -1313,6 +1323,7 @@ void HashPerformance::runTest(VecTimeType              *times,
     for (int i = 0; i < d_numThreads; ++i) {
         bslmt::ThreadUtil::join(handles[i], &results[i]);
         VecTimeType *pRes = reinterpret_cast<VecTimeType*>(results[i]);
+        BSLS_ASSERT_CONVEYOR_OBJECT(pRes);
         for (bsl::size_t j = 0; j < pRes->size(); ++j) {
             times->push_back((*pRes)[j]);
         }
@@ -1322,6 +1333,7 @@ void HashPerformance::runTest(VecTimeType              *times,
 
 void HashPerformance::printResult()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // print the output from the calculation
     bsl::cout << "Title=" << d_title << "\n";
     bsl::cout << bsl::fixed << bsl::setprecision(1);
@@ -1340,40 +1352,40 @@ void HashPerformance::printResult()
     double      temp;
     for (int i = 0; i < 3; ++i) {
         if (numSamples[i] > 0 && (i == 0 || numSamples[i] != numSamples[0])) {
-            temp = d_avgWTime[i] == 0 ? 0.0 :
-                     100.0 * static_cast<double>(d_seWTime[i]) /
-                             static_cast<double>(d_avgWTime[i]);
-            bsl::cout << subTitles[i] << "WTime=" << d_avgWTime[i] << "+/-"
+            temp = BSLS_ASSERT_CONVEYOR_REF(d_avgWTime[i]) == 0 ? 0.0 :
+                     100.0 * static_cast<double>(BSLS_ASSERT_CONVEYOR_REF(d_seWTime[i])) /
+                             static_cast<double>(BSLS_ASSERT_CONVEYOR_REF(d_avgWTime[i]));
+            bsl::cout << subTitles[i] << "WTime=" << BSLS_ASSERT_CONVEYOR_REF(d_avgWTime[i]) << "+/-"
                       << temp << "%,";
-            temp = d_avgUTime[i] == 0 ? 0.0 :
-                     100.0 * static_cast<double>(d_seUTime[i]) /
-                             static_cast<double>(d_avgUTime[i]);
-            bsl::cout << "UTime=" << d_avgUTime[i] << "+/-" << temp << "%,";
-            temp = d_avgSTime[i] == 0 ? 0.0 :
-                     100.0 * static_cast<double>(d_seSTime[i]) /
-                             static_cast<double>(d_avgSTime[i]);
-            bsl::cout << "STime=" << d_avgSTime[i] << "+/-" << temp << "%\n";
+            temp = BSLS_ASSERT_CONVEYOR_REF(d_avgUTime[i]) == 0 ? 0.0 :
+                     100.0 * static_cast<double>(BSLS_ASSERT_CONVEYOR_REF(d_seUTime[i])) /
+                             static_cast<double>(BSLS_ASSERT_CONVEYOR_REF(d_avgUTime[i]));
+            bsl::cout << "UTime=" << BSLS_ASSERT_CONVEYOR_REF(d_avgUTime[i]) << "+/-" << temp << "%,";
+            temp = BSLS_ASSERT_CONVEYOR_REF(d_avgSTime[i]) == 0 ? 0.0 :
+                     100.0 * static_cast<double>(BSLS_ASSERT_CONVEYOR_REF(d_seSTime[i])) /
+                             static_cast<double>(BSLS_ASSERT_CONVEYOR_REF(d_avgSTime[i]));
+            bsl::cout << "STime=" << BSLS_ASSERT_CONVEYOR_REF(d_avgSTime[i]) << "+/-" << temp << "%\n";
         }
     }
     for (int i = 0; i < 3; ++i) {
         if (numSamples[i] > 0 && (i == 0 || numSamples[i] != numSamples[0])) {
-            bsl::cout << subTitles[i] << "WMed=" << d_medWTime[i] << ",";
-            bsl::cout << "UMed=" << d_medUTime[i] << ",";
-            bsl::cout << "SMed=" << d_medSTime[i] << "\n";
+            bsl::cout << subTitles[i] << "WMed=" << BSLS_ASSERT_CONVEYOR_REF(d_medWTime[i]) << ",";
+            bsl::cout << "UMed=" << BSLS_ASSERT_CONVEYOR_REF(d_medUTime[i]) << ",";
+            bsl::cout << "SMed=" << BSLS_ASSERT_CONVEYOR_REF(d_medSTime[i]) << "\n";
         }
     }
     for (int i = 0; i < 3; ++i) {
         if (numSamples[i] > 0 && (i == 0 || numSamples[i] != numSamples[0])) {
-            bsl::cout << subTitles[i] << "WMAvg=" << d_avgMaxWTime[i] << ",";
-            bsl::cout << "UMAvg=" << d_avgMaxUTime[i] << ",";
-            bsl::cout << "SMAvg=" << d_avgMaxSTime[i] << "\n";
+            bsl::cout << subTitles[i] << "WMAvg=" << BSLS_ASSERT_CONVEYOR_REF(d_avgMaxWTime[i]) << ",";
+            bsl::cout << "UMAvg=" << BSLS_ASSERT_CONVEYOR_REF(d_avgMaxUTime[i]) << ",";
+            bsl::cout << "SMAvg=" << BSLS_ASSERT_CONVEYOR_REF(d_avgMaxSTime[i]) << "\n";
         }
     }
     for (int i = 0; i < 3; ++i) {
         if (numSamples[i] > 0 && (i == 0 || numSamples[i] != numSamples[0])) {
-            bsl::cout << subTitles[i] << "WMMed=" << d_medMaxWTime[i] << ",";
-            bsl::cout << "UMMed=" << d_medMaxUTime[i] << ",";
-            bsl::cout << "SMMed=" << d_medMaxSTime[i] << "\n";
+            bsl::cout << subTitles[i] << "WMMed=" << BSLS_ASSERT_CONVEYOR_REF(d_medMaxWTime[i]) << ",";
+            bsl::cout << "UMMed=" << BSLS_ASSERT_CONVEYOR_REF(d_medMaxUTime[i]) << ",";
+            bsl::cout << "SMMed=" << BSLS_ASSERT_CONVEYOR_REF(d_medMaxSTime[i]) << "\n";
         }
     }
 }
@@ -1475,6 +1487,7 @@ const char* HashPerformance::title() const
 int HashPerformance::testInsert(HashPerformance *hashPerf_p,
                                 VecIntType&      args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     // Insert rows one at a time into the specified `hashPerf_p` using the
     // specified `args` vector.  Only value in `args` is the current thread
     // index, 0 to `numThreads - 1`.
@@ -1483,7 +1496,7 @@ int HashPerformance::testInsert(HashPerformance *hashPerf_p,
 
     // Current thread number is the last (and only) argument
 
-    int  threadIdx = args[0];
+    int  threadIdx = BSLS_ASSERT_CONVEYOR_REF(args[0]);
     int  offset = size * threadIdx;
 
     if (hashPerf_p->numStripes() > 0) {
@@ -1509,13 +1522,14 @@ int HashPerformance::testInsert(HashPerformance *hashPerf_p,
 int HashPerformance::testInsertBulk(HashPerformance *hashPerf_p,
                                     VecIntType&      args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     // Insert rows in bulk into the specified `hashPerf_p` using the specified
     // `args` vector.  `args[0]` is the number of batches to use.  `args[1]`
     // (last parameter) is the current thread index,
     // 0 to `numThreads - 1`.
 
-    int  numBatches = args[0];
-    int  threadIdx = args[1];
+    int  numBatches = BSLS_ASSERT_CONVEYOR_REF(args[0]);
+    int  threadIdx = BSLS_ASSERT_CONVEYOR_REF(args[1]);
     int  size = hashPerf_p->numCalcs() / numBatches;
     int  offset = size * numBatches * threadIdx;
 
@@ -1553,14 +1567,15 @@ int HashPerformance::testInsertBulk(HashPerformance *hashPerf_p,
 
 int HashPerformance::initRead(HashPerformance *hashPerf_p, VecIntType& args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     // Preload the specified hash in `hashPerf_p` for subsequent tests using
     // the specified `args` vector.  `args[0]` is the number of values to load.
     // `arg[1]` is the sparsity of the data, that is, the distance between
     // consecutive values.  I.e: sparsity of 1 will preload 0, 1, 2, ...
     // Sparsity of 2 will preload 0, 2, 4, ..., etc.
 
-    int  size = args[0];
-    int  sparsity = args[1];
+    int  size = BSLS_ASSERT_CONVEYOR_REF(args[0]);
+    int  sparsity = BSLS_ASSERT_CONVEYOR_REF(args[1]);
     int  key = 0;
     char buf[12];
 
@@ -1585,14 +1600,15 @@ int HashPerformance::initRead(HashPerformance *hashPerf_p, VecIntType& args)
 
 int HashPerformance::initRead2(HashPerformance *hashPerf_p, VecIntType& args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     // Preload the specified hash in `hashPerf_p` for subsequent tests using
     // the specified `args` vector.  `args[0]` is the number of values to load.
     // `arg[1]` is the sparsity of the data, that is, the distance between
     // consecutive values.  I.e: sparsity of 1 will preload 0, 1, 2, ...
     // Sparsity of 2 will preload 0, 2, 4, ..., etc.
 
-    int  size = args[0];
-    int  sparsity = args[1];
+    int  size = BSLS_ASSERT_CONVEYOR_REF(args[0]);
+    int  sparsity = BSLS_ASSERT_CONVEYOR_REF(args[1]);
     int  keyGen = 0;
     char buf[85];
 
@@ -1627,6 +1643,7 @@ int HashPerformance::initRead2(HashPerformance *hashPerf_p, VecIntType& args)
 
 int HashPerformance::testRead(HashPerformance *hashPerf_p, VecIntType& args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     // Run getValue multiple times against the specified `hashPerf_p`, using
     // the specified `args` vector.  `0 to arg[0] - 1` is the range to read
     // from.  `args[1]` is the thread index, and is used as the seed for the
@@ -1635,8 +1652,8 @@ int HashPerformance::testRead(HashPerformance *hashPerf_p, VecIntType& args)
     int numThreads = hashPerf_p->numThreads();
     int numCalcs   = hashPerf_p->numCalcs();
     int size = numCalcs / numThreads;
-    int range = args[0];
-    int threadIdx = args[1];
+    int range = BSLS_ASSERT_CONVEYOR_REF(args[0]);
+    int threadIdx = BSLS_ASSERT_CONVEYOR_REF(args[1]);
     int countErr = 0;
     srand(threadIdx);
     bsl::string value;
@@ -1667,6 +1684,7 @@ int HashPerformance::testRead(HashPerformance *hashPerf_p, VecIntType& args)
 int HashPerformance::testReadWrite(HashPerformance *hashPerf_p,
                                    VecIntType&      args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     // Run either insert of getValue multiple times.  `args[0]` is the number
     // of values to load.  `arg[1]` is the sparsity: 1 - 0, 1, 2, ...;
     // 2 - 0, 2, 4, ..., etc.  `0 to arg[2] - 1` is the range to read from.
@@ -1676,8 +1694,8 @@ int HashPerformance::testReadWrite(HashPerformance *hashPerf_p,
     int numWThreads = hashPerf_p->numWThreads();
     int numCalcs    = hashPerf_p->numCalcs();
     int size = numCalcs;
-    int range = args[0];
-    int threadIdx = args[1];
+    int range = BSLS_ASSERT_CONVEYOR_REF(args[0]);
+    int threadIdx = BSLS_ASSERT_CONVEYOR_REF(args[1]);
     int offset = size * threadIdx;
 
     bool        isWThread = threadIdx < numWThreads ? true : false;
@@ -1730,6 +1748,7 @@ int HashPerformance::testReadWrite(HashPerformance *hashPerf_p,
 int HashPerformance::testReadWrite2(HashPerformance *hashPerf_p,
                                     VecIntType&      args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     // Run either insert of getValue multiple times.  `args[0]` is the number
     // of values to load.  `arg[1]` is the sparsity: 1 - 0, 1, 2, ...;
     // 2 - 0, 2, 4, ..., etc.  `0 to arg[2] - 1` is the range to read from.
@@ -1739,8 +1758,8 @@ int HashPerformance::testReadWrite2(HashPerformance *hashPerf_p,
     int numWThreads = hashPerf_p->numWThreads();
     int numCalcs    = hashPerf_p->numCalcs();
     int size = numCalcs;
-    int range = args[0];
-    int threadIdx = args[1];
+    int range = BSLS_ASSERT_CONVEYOR_REF(args[0]);
+    int threadIdx = BSLS_ASSERT_CONVEYOR_REF(args[1]);
 
     bool isWThread = threadIdx < numWThreads ? true : false;
     char buf[88];
@@ -2400,11 +2419,15 @@ bool TestDriver<KEY, VALUE, HASH, EQUAL>::TestCase19Reader::operator()(
                                                             const VALUE& value,
                                                             const KEY&   key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d_values);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     // Search for key within d_values.  As we need to copy from next value,
     // assume that it must be within the first 51 members.
     int keyIdx;
     for (keyIdx = 0; keyIdx < 51; ++keyIdx) {
-        if (areEqual(key, d_values[keyIdx].first)) {
+        if (areEqual(key, BSLS_ASSERT_CONVEYOR_REF(d_values[keyIdx]).first)) {
             break;
         }
     }
@@ -2453,18 +2476,20 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 bool TestDriver<KEY, VALUE, HASH, EQUAL>::TestCase14Updater::operator()(
                                                   VALUE *value, const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d_values);
     // Search for key within d_values.  As we need to copy from next value,
     // assume that it must be within the first 51 members.
     int keyIdx;
     for (keyIdx = 0; keyIdx < 51; ++keyIdx) {
-        if (areEqual(key, d_values[keyIdx].first)) {
+        if (areEqual(key, BSLS_ASSERT_CONVEYOR_REF(d_values[keyIdx]).first)) {
             break;
         }
     }
     if (keyIdx == 51) { // Should not happen!
         return false;                                                 // RETURN
     }
-    *value = d_values[keyIdx+1].second;
+    *value = BSLS_ASSERT_CONVEYOR_REF(d_values[keyIdx+1]).second;
 
     // Increase count, and return true / false based on count.
     ++s_testCase14_count;

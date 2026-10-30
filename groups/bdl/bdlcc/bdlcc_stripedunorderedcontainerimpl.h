@@ -304,18 +304,24 @@ class StripedUnorderedContainerImpl_Node {
 
     /// Return a reference providing modifiable access to the `value`
     /// attribute of this object.
-    VALUE& value();
+    VALUE& value()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
     /// Return a `const` reference to the `key` attribute of this object.
-    const KEY& key() const;
+    const KEY& key() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the pointer to the next node.
     StripedUnorderedContainerImpl_Node *next() const;
 
     /// Return a `const` reference to the `value` attribute of this object.
-    const VALUE& value() const;
+    const VALUE& value() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                // Aspects
 
@@ -1785,7 +1791,7 @@ inline
 void StripedUnorderedContainerImpl_Bucket<KEY, VALUE>::addNode(
                        StripedUnorderedContainerImpl_Node<KEY, VALUE> *nodePtr)
 {
-    BSLS_ASSERT(nodePtr->next() == NULL);
+    BSLS_ASSERT_NONCONVEYOR(nodePtr->next() == NULL);
 
     if (d_head_p == NULL) {
         d_head_p = nodePtr;
@@ -1862,6 +1868,8 @@ bsl::size_t StripedUnorderedContainerImpl_Bucket<KEY, VALUE>::setValue(
                                                             const VALUE& value,
                                                             BucketScope  scope)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&equal);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     if (d_head_p == NULL) {
         d_head_p = new (*d_allocator_p)
                                 StripedUnorderedContainerImpl_Node<KEY, VALUE>(
@@ -1907,6 +1915,8 @@ bsl::size_t StripedUnorderedContainerImpl_Bucket<KEY, VALUE>::setValue(
                                                 const EQUAL&             equal,
                                                 bslmf::MovableRef<VALUE> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&equal);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     if (d_head_p == NULL) {
         d_head_p = new (*d_allocator_p)
                                 StripedUnorderedContainerImpl_Node<KEY, VALUE>(
@@ -1956,6 +1966,8 @@ bool StripedUnorderedContainerImpl_Bucket<KEY, VALUE>::
                                                hasKey(const KEY&   key,
                                                       const EQUAL& equal) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&equal);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     StripedUnorderedContainerImpl_Node<KEY, VALUE> *curNode = d_head_p;
     while (curNode != NULL) {
         if (equal(curNode->key(), key)) {
@@ -2127,6 +2139,7 @@ inline
 void StripedUnorderedContainerImpl_ArrayOfLocksWriteGuard::lock(
                              StripedUnorderedContainerImpl_LockElement *lock_p)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(lock_p == (d_firstLock_p + d_numLocked));
 
     lock_p->lockW();
@@ -2214,7 +2227,8 @@ bsl::size_t StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::eraseBulk(
                                                              RANDOM_ITER last,
                                                              Scope       scope)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     bool        eraseAll = scope == e_SCOPE_ALL;
     bsl::size_t count    = 0;
@@ -2252,7 +2266,7 @@ bsl::size_t StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::eraseBulk(
             StripedUnorderedContainerImpl_Bucket<KEY, VALUE> &bucket =
                                                           d_buckets[bucketIdx];
 
-            const KEY& key  = first[dataIdx];
+            const KEY& key  = BSLS_ASSERT_CONVEYOR_REF(first[dataIdx]);
 
             Node **prevNodeAddress = bucket.headAddress();
             Node  *prevNode        = NULL;
@@ -2288,6 +2302,8 @@ bsl::size_t StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::eraseIf(
                                         Scope                        scope,
                                         const EraseIfValuePredicate& predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        eraseAll = scope == e_SCOPE_ALL;
     bsl::size_t bucketIdx;
     LEWGuard    guard(lockWrite(&bucketIdx, key));
@@ -2333,6 +2349,7 @@ bsl::size_t StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::emplace(
                                                      const KEY&   key,
                                                      Args&&...    args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::size_t bucketIdx;
     LEWGuard    guard(lockWrite(&bucketIdx, key));
 
@@ -2366,6 +2383,7 @@ bsl::size_t StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::insert(
                                                      const VALUE& value,
                                                      Multiplicity multiplicity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool insertAlways = multiplicity == e_ALWAYS;
 
     bsl::size_t bucketIdx;
@@ -2405,6 +2423,7 @@ bsl::size_t StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::insert(
                                          bslmf::MovableRef<VALUE> value,
                                          Multiplicity             multiplicity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool insertAlways = multiplicity == e_ALWAYS;
 
     bsl::size_t bucketIdx;
@@ -2440,7 +2459,8 @@ bsl::size_t StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::insertBulk(
                                                      RANDOM_ITER  last,
                                                      Multiplicity multiplicity)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     bool        insertAlways = multiplicity == e_ALWAYS;
     bsl::size_t count        = 0;
@@ -2515,6 +2535,8 @@ int StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::setComputedValue(
                                                 const VisitorFunction& visitor,
                                                 Scope                  scope)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef StripedUnorderedContainerImpl_Bucket<KEY, VALUE> BucketClass;
     typename BucketClass::BucketScope setAll = scope == e_SCOPE_ALL
                                             ? BucketClass::e_BUCKETSCOPE_ALL
@@ -2582,6 +2604,7 @@ bsl::size_t StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::setValue(
                                                             const VALUE& value,
                                                             Scope        scope)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef StripedUnorderedContainerImpl_Bucket<KEY, VALUE> BucketClass;
     typename BucketClass::BucketScope setAll = scope == e_SCOPE_ALL
                                             ? BucketClass::e_BUCKETSCOPE_ALL
@@ -2633,6 +2656,9 @@ StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::getValueImpl(
                                                           VECTOR    *valuesPtr,
                                                           const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(valuesPtr);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     static const bool isVector =
                            bsl::is_same<bsl::vector<VALUE>, VECTOR>::value
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR
@@ -2788,6 +2814,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 void StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Locking all stripes will inherently block until a rehash will complete
     for (bsl::size_t i = 0; i < d_numStripes; ++i) {
         d_locks_p[i].lockW();
@@ -2874,7 +2901,7 @@ StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::eraseBulkAll(
                                                              RANDOM_ITER first,
                                                              RANDOM_ITER last)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     return eraseBulk(first, last, e_SCOPE_ALL);
 }
@@ -2887,7 +2914,7 @@ StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::eraseBulkFirst(
                                                              RANDOM_ITER first,
                                                              RANDOM_ITER last)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     return eraseBulk(first, last, e_SCOPE_FIRST);
 }
@@ -2935,7 +2962,7 @@ void StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::insertBulkAlways(
                                                              RANDOM_ITER first,
                                                              RANDOM_ITER last)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     insertBulk(first, last, e_ALWAYS);
 }
@@ -2948,7 +2975,7 @@ StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::insertBulkUnique(
                                                              RANDOM_ITER first,
                                                              RANDOM_ITER last)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     return insertBulk(first, last, e_UNIQUE);
 }
@@ -2977,6 +3004,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 void StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::rehash(
                                                         bsl::size_t numBuckets)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // 'numBuckets' must not less than 2, and must be a power of 2.  To avoid
     // unused stripes, we also require numBuckets >= numStripes.
     if (numBuckets < 2) {
@@ -3090,6 +3118,7 @@ StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::setValueFirst(
                                                 const KEY&               key,
                                                 bslmf::MovableRef<VALUE> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::size_t bucketIdx;
     LEWGuard    guard(lockWrite(&bucketIdx, key));
 
@@ -3120,6 +3149,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 int StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::visit(
                                                 const VisitorFunction& visitor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Main loop on stripes: lock a stripe and process all buckets in it
     int count = 0;
     for (bsl::size_t i = 0; i < d_numStripes; ++i) {
@@ -3154,6 +3184,8 @@ int StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::visit(
                                                 const KEY&             key,
                                                 const VisitorFunction& visitor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bsl::size_t bucketIdx;
     LEWGuard    guard(lockWrite(&bucketIdx, key));
 
@@ -3198,7 +3230,8 @@ inline
 bsl::size_t StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::bucketSize(
                                                        bsl::size_t index) const
 {
-    BSLS_ASSERT(index < bucketCount());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(index < bucketCount());
 
     return d_buckets[index].size();
 }
@@ -3214,6 +3247,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bool StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::empty() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (bsl::size_t i = 0; i < d_numBuckets; ++i) {
         if (!d_buckets[i].empty()) {
             return false;                                             // RETURN
@@ -3236,6 +3270,8 @@ bsl::size_t StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::getValue(
                                                          VALUE      *value,
                                                          const KEY&  key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BSLS_ASSERT(NULL != value);
 
     bsl::size_t bucketIdx;
@@ -3328,6 +3364,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 int StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::visitReadOnly(
                                   const ReadOnlyVisitorFunction& visitor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Main loop on stripes: lock a stripe and process all buckets in it
     int count = 0;
     for (bsl::size_t i = 0; i < d_numStripes; ++i) {
@@ -3362,6 +3399,8 @@ int StripedUnorderedContainerImpl<KEY, VALUE, HASH, EQUAL>::visitReadOnly(
                                   const KEY&                     key,
                                   const ReadOnlyVisitorFunction& visitor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bsl::size_t bucketIdx;
     LERGuard    guard(lockRead(&bucketIdx, key));
 

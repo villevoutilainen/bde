@@ -1017,6 +1017,7 @@ struct ProducerThread {
 
     int operator()()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         int pushPriority = 0;
 
         s_barrier->wait();
@@ -1138,6 +1139,7 @@ struct ProducerThread {
 
     int operator()()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         int pushPriority = 0;
 
         s_barrier->wait();

@@ -1228,7 +1228,8 @@ class Deque<TYPE>::DequeThrowGuard {
     /// specified `*monoDeque_p`.  The behavior is undefined if
     /// `0 == monoDeque_p`.
     explicit
-    DequeThrowGuard(MonoDeque *monoDeque_p);
+    DequeThrowGuard(MonoDeque *monoDeque_p)
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(*monoDeque_p);
 
     /// If a `MonoDeque` is being managed by this `ThrowGuard`, restore it
     /// to the state it was in when this object was created.
@@ -1272,7 +1273,8 @@ class Deque<TYPE>::VectorThrowGuard {
     /// `*vector_p`.  Note that the case where `0 == vector_p` is explicitly
     /// permitted, in which case this object will not manage anything.
     explicit
-    VectorThrowGuard(VECTOR *vector_p);
+    VectorThrowGuard(VECTOR *vector_p)
+        BSLS_ASSERT_CONVEYOR_TRUST_PRE(*vector_p);
 
     /// If a `vector` is being managed by this `VectorThrowGuard`, restore
     /// it to the state it was in when this object was created.
@@ -1358,12 +1360,16 @@ class Deque<TYPE>::Proctor {
     /// Return a pointer to the `bsl::deque` contained in the `Deque`
     /// managed by this `Proctor` object'.  The behavior is undefined if
     /// this `Proctor` has been released.
-    MonoDeque *operator->() const;
+    MonoDeque *operator->() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference to the `bsl::deque` managed by this `Proctor`
     /// object.  The behavior is undefined if this `Proctor` has been
     /// released.
-    MonoDeque& operator*() const;
+    MonoDeque& operator*() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the element at the
     /// specified `position` in the `bsl::deque` held by this proctor.  The
@@ -1432,12 +1438,16 @@ class Deque<TYPE>::ConstProctor {
     /// Return a pointer to the `bsl::deque` contained in the `Deque`
     /// managed by this object.  The behavior is undefined if this
     /// `ConstProctor` has been released.
-    const MonoDeque *operator->() const;
+    const MonoDeque *operator->() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference to the `bsl::deque` managed by this `Proctor`
     /// object.  The behavior is undefined if this `ConstProctor` has been
     /// released.
-    const MonoDeque& operator*() const;
+    const MonoDeque& operator*() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the element at
     /// the specified `position` in the `bsl::deque` held by this proctor.
@@ -1482,6 +1492,7 @@ template <class TYPE>
 inline
 void Deque<TYPE>::Proctor::load(Deque<TYPE> *container)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 != container);
 
     if (0 != d_container_p) {
@@ -1490,16 +1501,19 @@ void Deque<TYPE>::Proctor::load(Deque<TYPE> *container)
 
     container->d_mutex.lock();
     d_container_p = container;
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_container_p);
     d_startLength = d_container_p->d_monoDeque.size();
 }
 
 template <class TYPE>
 void Deque<TYPE>::Proctor::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == d_container_p) {
         return;                                                       // RETURN
     }
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_container_p);
     const size_type sz = d_container_p->d_monoDeque.size();
     size_type       ii = d_startLength;
 
@@ -1527,6 +1541,7 @@ template <class TYPE>
 inline
 bsl::deque<TYPE> *Deque<TYPE>::Proctor::operator->() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_container_p);
 
     return &d_container_p->d_monoDeque;
@@ -1536,6 +1551,7 @@ template <class TYPE>
 inline
 bsl::deque<TYPE>& Deque<TYPE>::Proctor::operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_container_p);
 
     return d_container_p->d_monoDeque;
@@ -1545,7 +1561,9 @@ template <class TYPE>
 inline
 TYPE& Deque<TYPE>::Proctor::operator[](size_type position) const
 {
-    BSLS_ASSERT(position < d_container_p->d_monoDeque.size());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_container_p);
+    BSLS_ASSERT_NONCONVEYOR(position < d_container_p->d_monoDeque.size());
 
     return d_container_p->d_monoDeque[position];
 }
@@ -1586,12 +1604,14 @@ template <class TYPE>
 inline
 void Deque<TYPE>::ConstProctor::load(const Deque<TYPE> *container)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 != container);
 
     this->release();
 
     container->d_mutex.lock();
     d_container_p = container;
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_container_p);
     d_startLength = d_container_p->d_monoDeque.size();
 }
 
@@ -1599,6 +1619,7 @@ template <class TYPE>
 inline
 void Deque<TYPE>::ConstProctor::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // It is important that nobody did a const_cast and modified the underlying
     // 'bsls::deque' since this destructor won't signal the appropriate
     // condtions in the 'Deque' in that case.  If they wanted to modify the
@@ -1609,7 +1630,9 @@ void Deque<TYPE>::ConstProctor::release()
         return;                                                       // RETURN
     }
 
-    BSLS_ASSERT_OPT(d_container_p->d_monoDeque.size() == d_startLength &&
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_container_p);
+    BSLS_ASSERT_OPT_NONCONVEYOR(
+                          d_container_p->d_monoDeque.size() == d_startLength &&
                      "Underlying 'bsl::deque' modified through ConstProcter.");
 
     bslmt::Mutex *mutex = &d_container_p->d_mutex;
@@ -1622,6 +1645,7 @@ template <class TYPE>
 inline
 const bsl::deque<TYPE> *Deque<TYPE>::ConstProctor::operator->() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_container_p);
 
     return &d_container_p->d_monoDeque;
@@ -1631,6 +1655,7 @@ template <class TYPE>
 inline
 const bsl::deque<TYPE>& Deque<TYPE>::ConstProctor::operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_container_p);
 
     return d_container_p->d_monoDeque;
@@ -1640,7 +1665,9 @@ template <class TYPE>
 inline
 const TYPE& Deque<TYPE>::ConstProctor::operator[](size_type position) const
 {
-    BSLS_ASSERT(position < d_container_p->d_monoDeque.size());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_container_p);
+    BSLS_ASSERT_NONCONVEYOR(position < d_container_p->d_monoDeque.size());
 
     return d_container_p->d_monoDeque[position];
 }
@@ -1672,8 +1699,10 @@ template <class TYPE>
 inline
 Deque<TYPE>::DequeThrowGuard::~DequeThrowGuard()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_monoDeque_p)  {
         if (d_mdWasEmpty) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_monoDeque_p);
             // In the case where the mono deque started out empty, pushing to
             // it can invalidate the iterators that were copied to 'd_mdBegin'
             // and 'd_mdEnd' when it was empty, so comparisons between
@@ -1686,6 +1715,7 @@ Deque<TYPE>::DequeThrowGuard::~DequeThrowGuard()
             return;                                                   // RETURN
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_monoDeque_p);
         const MDCIter newBegin = d_monoDeque_p->cbegin();
         const MDCIter newEnd   = d_monoDeque_p->cend();
 
@@ -1698,18 +1728,19 @@ Deque<TYPE>::DequeThrowGuard::~DequeThrowGuard()
         // other.  It should never have been deleted from.
 
         if (newBegin < d_mdBegin) {
-            BSLS_ASSERT(d_mdEnd == newEnd);
+            BSLS_ASSERT_NONCONVEYOR(d_mdEnd == newEnd);
 
             d_monoDeque_p->erase(newBegin, d_mdBegin);
         }
         else {
-            BSLS_ASSERT(newBegin == d_mdBegin);
+            BSLS_ASSERT_NONCONVEYOR(newBegin == d_mdBegin);
 
             if (d_mdEnd < newEnd) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(d_monoDeque_p);
                 d_monoDeque_p->erase(d_mdEnd, newEnd);
             }
             else {
-                BSLS_ASSERT(d_mdEnd == newEnd);
+                BSLS_ASSERT_NONCONVEYOR(d_mdEnd == newEnd);
             }
         }
     }
@@ -1735,6 +1766,7 @@ Deque<TYPE>::VectorThrowGuard<VECTOR>::VectorThrowGuard(VECTOR *vector_p)
 : d_vector_p(vector_p)
 , d_vSize(vector_p ? vector_p->size() : 0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 template <class TYPE>
@@ -1742,7 +1774,9 @@ template <class VECTOR>
 inline
 Deque<TYPE>::VectorThrowGuard<VECTOR>::~VectorThrowGuard()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_vector_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_vector_p);
         const VSize newSize = d_vector_p->size();
 
         // While 'vector::resize' does not always provide the no-throw
@@ -1752,6 +1786,7 @@ Deque<TYPE>::VectorThrowGuard<VECTOR>::~VectorThrowGuard()
         // The vector may have grown, it should never have been shrunk.
 
         if (d_vSize < newSize) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_vector_p);
             d_vector_p->resize(d_vSize);
         }
         else {
@@ -1779,6 +1814,8 @@ template <class VECTOR>
 inline
 void Deque<TYPE>::removeAllImp(VECTOR *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     Proctor proctor(this);
@@ -1805,6 +1842,8 @@ template <class VECTOR>
 void Deque<TYPE>::tryPopBackImp(typename Deque<TYPE>::size_type  maxNumItems,
                                 VECTOR                          *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     Proctor proctor(this);
@@ -1836,6 +1875,8 @@ template <class VECTOR>
 void Deque<TYPE>::tryPopFrontImp(typename Deque<TYPE>::size_type  maxNumItems,
                                  VECTOR                          *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     typedef typename MonoDeque::iterator Iterator;
@@ -2146,6 +2187,8 @@ template <class TYPE>
 inline
 void Deque<TYPE>::forcePushBack(const TYPE& item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2159,6 +2202,7 @@ template <class TYPE>
 inline
 void Deque<TYPE>::forcePushBack(bslmf::MovableRef<TYPE> item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2174,6 +2218,7 @@ inline
 void Deque<TYPE>::forcePushBack(INPUT_ITER begin,
                                 INPUT_ITER end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     size_type growth;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2196,6 +2241,8 @@ template <class TYPE>
 inline
 void Deque<TYPE>::forcePushFront(const TYPE& item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2209,6 +2256,7 @@ template <class TYPE>
 inline
 void Deque<TYPE>::forcePushFront(bslmf::MovableRef<TYPE> item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2224,6 +2272,8 @@ inline
 void Deque<TYPE>::forcePushFront(INPUT_ITER begin,
                                  INPUT_ITER end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(begin);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     size_type growth;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2232,7 +2282,7 @@ void Deque<TYPE>::forcePushFront(INPUT_ITER begin,
 
         const size_type initialSize = d_monoDeque.size();
         for (; end != begin; ++begin) {
-            d_monoDeque.push_front(*begin);
+            d_monoDeque.push_front(BSLS_ASSERT_CONVEYOR_REF(*begin));
         }
         growth = d_monoDeque.size() - initialSize;
 
@@ -2247,6 +2297,7 @@ void Deque<TYPE>::forcePushFront(INPUT_ITER begin,
 template <class TYPE>
 TYPE Deque<TYPE>::popBack()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
     while (d_monoDeque.empty()) {
@@ -2268,6 +2319,7 @@ TYPE Deque<TYPE>::popBack()
 template <class TYPE>
 void Deque<TYPE>::popBack(TYPE *item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool shouldSignal;
 
     {
@@ -2294,6 +2346,7 @@ void Deque<TYPE>::popBack(TYPE *item)
 template <class TYPE>
 TYPE Deque<TYPE>::popFront()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
     while (d_monoDeque.empty()) {
@@ -2315,6 +2368,7 @@ TYPE Deque<TYPE>::popFront()
 template <class TYPE>
 void Deque<TYPE>::popFront(TYPE *item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool shouldSignal;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2340,6 +2394,8 @@ void Deque<TYPE>::popFront(TYPE *item)
 template <class TYPE>
 void Deque<TYPE>::pushBack(const TYPE& item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2355,6 +2411,7 @@ void Deque<TYPE>::pushBack(const TYPE& item)
 template <class TYPE>
 void Deque<TYPE>::pushBack(bslmf::MovableRef<TYPE> item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2370,6 +2427,8 @@ void Deque<TYPE>::pushBack(bslmf::MovableRef<TYPE> item)
 template <class TYPE>
 void Deque<TYPE>::pushFront(const TYPE& item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2385,6 +2444,7 @@ void Deque<TYPE>::pushFront(const TYPE& item)
 template <class TYPE>
 void Deque<TYPE>::pushFront(bslmf::MovableRef<TYPE> item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2431,6 +2491,7 @@ template <class TYPE>
 int Deque<TYPE>::timedPopBack(TYPE                      *item,
                               const bsls::TimeInterval&  timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool shouldSignal;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2461,6 +2522,7 @@ template <class TYPE>
 int Deque<TYPE>::timedPopFront(TYPE                      *item,
                                const bsls::TimeInterval&  timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool shouldSignal;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2491,6 +2553,8 @@ template <class TYPE>
 int Deque<TYPE>::timedPushBack(const TYPE&               item,
                                const bsls::TimeInterval& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2511,6 +2575,7 @@ template <class TYPE>
 int Deque<TYPE>::timedPushBack(bslmf::MovableRef<TYPE>   item,
                                const bsls::TimeInterval& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2531,6 +2596,8 @@ template <class TYPE>
 int Deque<TYPE>::timedPushFront(const TYPE&               item,
                                 const bsls::TimeInterval &timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2551,6 +2618,7 @@ template <class TYPE>
 int Deque<TYPE>::timedPushFront(bslmf::MovableRef<TYPE>   item,
                                 const bsls::TimeInterval &timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2574,6 +2642,7 @@ int Deque<TYPE>::timedPopBack(
                       TYPE                                           *item,
                       const bsl::chrono::time_point<CLOCK, DURATION>& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool shouldSignal;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2606,6 +2675,7 @@ int Deque<TYPE>::timedPopFront(
                       TYPE                                           *item,
                       const bsl::chrono::time_point<CLOCK, DURATION>& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool shouldSignal;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2638,6 +2708,8 @@ int Deque<TYPE>::timedPushBack(
                       const TYPE&                                     item,
                       const bsl::chrono::time_point<CLOCK, DURATION>& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2660,6 +2732,7 @@ int Deque<TYPE>::timedPushBack(
                       bslmf::MovableRef<TYPE>                         item,
                       const bsl::chrono::time_point<CLOCK, DURATION>& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2682,6 +2755,8 @@ int Deque<TYPE>::timedPushFront(
                       const TYPE&                                     item,
                       const bsl::chrono::time_point<CLOCK, DURATION>& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2704,6 +2779,7 @@ int Deque<TYPE>::timedPushFront(
                       bslmf::MovableRef<TYPE>                         item,
                       const bsl::chrono::time_point<CLOCK, DURATION>& timeout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2724,6 +2800,7 @@ int Deque<TYPE>::timedPushFront(
 template <class TYPE>
 int Deque<TYPE>::tryPopBack(TYPE *item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool shouldSignal;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2784,6 +2861,7 @@ void Deque<TYPE>::tryPopBack(typename Deque<TYPE>::size_type  maxNumItems,
 template <class TYPE>
 int Deque<TYPE>::tryPopFront(TYPE *item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool shouldSignal;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2840,6 +2918,8 @@ void Deque<TYPE>::tryPopFront(typename Deque<TYPE>::size_type  maxNumItems,
 template <class TYPE>
 int Deque<TYPE>::tryPushBack(const TYPE& item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2858,6 +2938,7 @@ int Deque<TYPE>::tryPushBack(const TYPE& item)
 template <class TYPE>
 int Deque<TYPE>::tryPushBack(bslmf::MovableRef<TYPE> item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2879,6 +2960,7 @@ typename Deque<TYPE>::size_type
 Deque<TYPE>::tryPushBack(INPUT_ITER begin,
                          INPUT_ITER end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     size_type growth;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2889,7 +2971,7 @@ Deque<TYPE>::tryPushBack(INPUT_ITER begin,
         size_type       length      = startLength;
 
         for (; length < d_highWaterMark && end != begin; ++length, ++begin) {
-            d_monoDeque.push_back(*begin);
+            d_monoDeque.push_back(BSLS_ASSERT_CONVEYOR_REF(*begin));
         }
 
         tg.release();
@@ -2907,6 +2989,8 @@ Deque<TYPE>::tryPushBack(INPUT_ITER begin,
 template <class TYPE>
 int Deque<TYPE>::tryPushFront(const TYPE& item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&item);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2925,6 +3009,7 @@ int Deque<TYPE>::tryPushFront(const TYPE& item)
 template <class TYPE>
 int Deque<TYPE>::tryPushFront(bslmf::MovableRef<TYPE> item)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -2946,6 +3031,7 @@ typename Deque<TYPE>::size_type
 Deque<TYPE>::tryPushFront(INPUT_ITER begin,
                           INPUT_ITER end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     size_type growth;
     {
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -2956,7 +3042,7 @@ Deque<TYPE>::tryPushFront(INPUT_ITER begin,
         size_type       length      = startLength;
 
         for (; length < d_highWaterMark && end != begin; ++length, ++begin) {
-            d_monoDeque.push_front(*begin);
+            d_monoDeque.push_front(BSLS_ASSERT_CONVEYOR_REF(*begin));
         }
 
         tg.release();
@@ -3002,6 +3088,7 @@ template <class TYPE>
 inline
 typename Deque<TYPE>::size_type Deque<TYPE>::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that it is VITAL to lock the mutex here.  'size' on a deque is a
     // potentially complex operation as the deque might be managing multiple
     // blocks of memory.  If 'd_monoDeque' were being modified while we perform

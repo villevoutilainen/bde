@@ -664,9 +664,10 @@ VectorRandGen::VectorRandGen()
 
 unsigned VectorRandGen::operator()()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_idx = (d_idx + 1) & d_mask;
 
-    return d_randTable[d_idx];
+    return BSLS_ASSERT_CONVEYOR_REF(d_randTable[d_idx]);
 }
 
 }  // close namespace u
@@ -4200,6 +4201,7 @@ namespace USAGE {
                         bdlt::IntervalConversionUtil::convertToTimeInterval(
                                    firstItem.key() - bdlt::CurrentTime::utc());
                     if (when.totalSecondsAsDouble() <= 0) {
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&firstItem);
                         // Execute now and remove from schedule, then iterate.
 
                         d_list.remove(firstItem);
@@ -4218,8 +4220,19 @@ namespace USAGE {
 
                         bslmt::LockGuard<bslmt::Mutex> guard(&d_condMutex);
                         List::PairHandle newFirst;
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&firstItem);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&newFirst);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&firstItem);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&newFirst);
                         if (!d_doneFlag && (0 != d_list.front(&newFirst) ||
                                           newFirst.key() == firstItem.key())) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&firstItem);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&newFirst);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&firstItem);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&newFirst);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&firstItem);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&newFirst);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&firstItem);
                             d_notEmptyCond.timedWait(&d_condMutex,
                                               bdlt::CurrentTime::now() + when);
                         }
@@ -4319,6 +4332,7 @@ namespace USAGE {
     /// Push the specified `item` onto the specified `vector`.
     void pushBackWrapper(bsl::vector<int> *vector, int item)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(vector);
         vector->push_back(item);
     }
 
@@ -4389,6 +4403,7 @@ class KeyValue {
     /// `false` otherwise.
     bool operator<(const KeyValue rhs) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_i < rhs.d_i;
     }
 };
@@ -5247,6 +5262,7 @@ int ThrashFunctor::cmpKeyAndData(const PairHandle ph, int key, bool flatten)
 // PRIVATE MANIPULATORS
 int ThrashFunctor::addRand()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_LIMIT = 10 };
 
     Pair       *h     = 0;
@@ -5579,6 +5595,7 @@ void ThrashFunctor::changeMinor()
 
 void ThrashFunctor::findChangeMinorHandle(int key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_LIMIT = 10 };
 
     int numMisses = 0;
@@ -6071,6 +6088,7 @@ void threadFunc(TimeQ *timeQueue,
             }
 
             const bsls::TimeInterval& k = resubmit->key();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&k);
             if (k <= now) {
                 timeQueue->remove(resubmit);
                 int newdelay = resubmit->data() * 2;
@@ -6915,27 +6933,43 @@ int main(int argc, char *argv[])
 
             Obj::PairHandle h;
             mX.popFront(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 0);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "0");
 
             mX.popFront(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "fwd 1");
 
             mX.popFront(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "middle-fwd 1");
 
             mX.popFront(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "middle-back  1 ");
 
             mX.popFront(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "back 1");
 
             if (veryVerbose) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&h);
                 mX.print(cout);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             } else if (verbose) mX.print(cout, 0, -1) << endl;
         }
 
@@ -6952,26 +6986,41 @@ int main(int argc, char *argv[])
 
             Obj::PairHandle h;
             mX.popFront(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 0);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "0");
 
             mX.popFront(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "back 1");
 
             mX.popFront(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "middle-back  1 ");
 
             mX.popFront(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "middle-fwd 1");
 
             mX.popFront(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "fwd 1");
 
             if (veryVerbose) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&h);
                 mX.print(cout);
             } else if (verbose) mX.print(cout, 0, -1) << endl;
         }
@@ -7024,50 +7073,78 @@ int main(int argc, char *argv[])
             ASSERT(mX.findLowerBoundR(&h, 10));
             ASSERT(mX.findUpperBoundR(&h, 10));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             //validate success when trying to find something smaller
             //than min key
             ASSERT(!mX.findLowerBoundR(&h,-1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 0);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "0");
 
             ASSERT(!mX.findUpperBoundR(&h,-1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 0);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "0");
 
             //check front edge
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(!mX.findUpperBoundR(&h, 0));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "fwd 1");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(!mX.findLowerBoundR(&h, 0));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 0);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "0");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             //check somewhere inside of list
             ASSERT(!mX.findLowerBoundR(&h,6));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 8);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "first 8");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(!mX.findUpperBoundR(&h,6));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 8);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "first 8");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             //check back edge
             ASSERT(mX.findUpperBoundR(&h, 8));
 
             ASSERT(!mX.findLowerBoundR(&h, 8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 8);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "first 8");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             //check middle
             ASSERT(!mX.findUpperBoundR(&h, 4));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 8);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "first 8");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(!mX.findLowerBoundR(&h, 4));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 4);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "first 4");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             if (veryVerbose) {
                 mX.print(cout);
             } else if (verbose) mX.print(cout, 0, -1) << endl;
@@ -7101,6 +7178,7 @@ int main(int argc, char *argv[])
                         for (int jj = key + 1; jj < k_NUM_VALS; ++jj) {
                             if (numNodesForKey[jj]) {
                                 expected = true;
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
                                 break;
                             }
                         }
@@ -7112,9 +7190,12 @@ int main(int argc, char *argv[])
                         ASSERT(pr == phF);
                         ASSERT(found == expected);
                         if (found) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&phF);
                             ASSERT(key <  phF.key());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&phF);
                             ASSERT(s   == phF.data());
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&phF);
                             Obj::PairHandle phSB = phF;
                             mX.skipBackward(&phSB);
                             if (phSB) {
@@ -7127,15 +7208,23 @@ int main(int argc, char *argv[])
                         bool foundR    = (0 == X.findUpperBoundR(   &ph, key));
                         bool foundRRaw = (0 == X.findUpperBoundRRaw(&pr, key));
                         ASSERT(found == foundR);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&phF);
                         ASSERT(found == foundRRaw);
                         ASSERT(found == !!pr);
                         ASSERT(phF == ph);
                         ASSERT(pr == ph);
                         ASSERT(found == expected);
                         if (found) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
                             ASSERT(key <  ph.key());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
                             ASSERT(s   == ph.data());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
                             mX.releaseReferenceRaw(pr);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
                             ph.release();
                         }
                     }
@@ -7148,6 +7237,7 @@ int main(int argc, char *argv[])
                         for (int jj = key; jj < k_NUM_VALS; ++jj) {
                             if (numNodesForKey[jj]) {
                                 expected = true;
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
                                 break;
                             }
                         }
@@ -7159,9 +7249,12 @@ int main(int argc, char *argv[])
                         ASSERT(pr == phF);
                         ASSERT(found == expected);
                         if (found) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&phF);
                             ASSERT(key <= phF.key());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&phF);
                             ASSERT(s   == phF.data());
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&phF);
                             Obj::PairHandle phSB = phF;
                             mX.skipBackward(&phSB);
                             if (phSB) {
@@ -7180,9 +7273,16 @@ int main(int argc, char *argv[])
                         ASSERT(pr == ph);
                         ASSERT(found == expected);
                         if (found) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
                             ASSERT(key <= ph.key());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
                             ASSERT(s   == ph.data());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
                             mX.releaseReferenceRaw(pr);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&ph);
                             ph.release();
                         }
                     }
@@ -7237,50 +7337,78 @@ int main(int argc, char *argv[])
             ASSERT(mX.findLowerBound(&h, 10));
             ASSERT(mX.findUpperBound(&h, 10));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             //validate success when trying to find something smaller
             //than min key
             ASSERT(!mX.findLowerBound(&h,-1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 0);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "0");
 
             ASSERT(!mX.findUpperBound(&h,-1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 0);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "0");
 
             //check front edge
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(!mX.findUpperBound(&h, 0));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 1);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "fwd 1");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(!mX.findLowerBound(&h, 0));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 0);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "0");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             //check somewhere inside of list
             ASSERT(!mX.findLowerBound(&h,6));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 8);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "first 8");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(!mX.findUpperBound(&h,6));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 8);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "first 8");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             //check back edge
             ASSERT(mX.findUpperBound(&h, 8));
 
             ASSERT(!mX.findLowerBound(&h, 8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 8);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "first 8");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             //check middle
             ASSERT(!mX.findUpperBound(&h, 4));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 8);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "first 8");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(!mX.findLowerBound(&h, 4));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.key() == 4);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             ASSERT(h.data() == "first 4");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h);
             if (veryVerbose) {
                 mX.print(cout);
             } else if (verbose) mX.print(cout, 0, -1) << endl;
@@ -7922,22 +8050,36 @@ if (veryVerbose) cout << "Elapsed: " << elapsed << " seconds\n";
             V(h2->data());
             V(h2->key());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
             ASSERT("0" == h2->data());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
             mX2.releaseReferenceRaw(h2);
 
             ret = mX2.popFrontRaw(&h2);
             ASSERT(ret==0);
             V(h2->data());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
             V(h2->key());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
             ASSERT("1" == h2->data());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
             mX2.releaseReferenceRaw(h2);
 
             ret = mX2.popFrontRaw(&h2);
             ASSERT(ret==0);
             ASSERT(1 == X2.length());
             V(h2->data());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
             V(h2->key());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
             ASSERT("2" == h2->data());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2);
             mX2.releaseReferenceRaw(h2);
 
             Obj2::PairHandle h2h;
@@ -7946,8 +8088,10 @@ if (veryVerbose) cout << "Elapsed: " << elapsed << " seconds\n";
             V(h2h.data());
             V(h2h.key());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2h);
             ASSERT("3" == h2h.data());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&h2h);
             ASSERT(0 == X2.length());
             ASSERT(X2.isEmpty());
 

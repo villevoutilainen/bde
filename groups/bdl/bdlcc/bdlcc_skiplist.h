@@ -611,10 +611,14 @@ class SkipListPair {
     // ACCESSORS
 
     /// Return a reference to the modifiable "data" of this pair.
-    DATA& data() const;
+    DATA& data() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "key" value of this pair.
-    const KEY& key() const;
+    const KEY& key() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                           // ========================
@@ -693,7 +697,9 @@ class SkipListPairHandle {
     /// Return a reference to the "data" value of the pair referred to by
     /// this object.  The behavior is undefined unless `isValid` returns
     ///  `true`.
-    DATA& data() const;
+    DATA& data() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Load into the specified `value` the "data" value of the pair referred
     /// to by this object.  The behavior is undefined unless `isValid` returns
@@ -703,7 +709,9 @@ class SkipListPairHandle {
     /// Return a reference to the non-modifiable "key" value of the pair
     /// referred to by this object.  The behavior is undefined unless
     /// `isValid` returns `true`.
-    const KEY& key() const;
+    const KEY& key() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Load into the specified `value` the "key" value of the pair referred to
     /// by this object.  The behavior is undefined unless `isValid` returns
@@ -1803,6 +1811,7 @@ template <class KEY, class DATA>
 inline
 void SkipListPairHandle<KEY, DATA>::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_node_p) {
         BSLS_ASSERT(0 != d_list_p);
 
@@ -1928,6 +1937,7 @@ inline
 void SkipList_NodeCreationHelper<KEY, DATA>::construct(const KEY&  key,
                                                        const DATA& data)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_node_p);
 
     bslalg::ScalarPrimitives::copyConstruct(
@@ -2047,6 +2057,7 @@ typename SkipList<KEY, DATA>::Node
 template<class KEY, class DATA>
 void SkipList<KEY, DATA>::addNode(bool *newFrontFlag, Node *newNode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(newNode);
     LockGuard guard(&d_lock);
 
     BSLS_ASSERT(newNode);
@@ -2063,6 +2074,7 @@ void SkipList<KEY, DATA>::addNodeImpR(bool *newFrontFlag,
                                       Node *newNode,
                                       bool  lock)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(newNode);
     LockGuard lockGuard(&d_lock, !lock);
     if (!lock) {
         lockGuard.release();
@@ -2087,6 +2099,7 @@ void SkipList<KEY, DATA>::addNodeR(bool *newFrontFlag, Node *newNode)
 template<class KEY, class DATA>
 int SkipList<KEY, DATA>::addNodeUnique(bool *newFrontFlag, Node *newNode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(newNode);
     LockGuard guard(&d_lock);
 
     BSLS_ASSERT(newNode);
@@ -2108,6 +2121,7 @@ int SkipList<KEY, DATA>::addNodeUnique(bool *newFrontFlag, Node *newNode)
 template<class KEY, class DATA>
 int SkipList<KEY, DATA>::addNodeUniqueR(bool *newFrontFlag, Node *newNode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(newNode);
     LockGuard guard(&d_lock);
 
     BSLS_ASSERT(newNode);
@@ -2151,6 +2165,7 @@ SkipList<KEY, DATA>::allocateNode(int level, const KEY& key, const DATA& data)
 template<class KEY, class DATA>
 void SkipList<KEY, DATA>::initialize()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::Types::IntPtr IntPtr;
 
     static const int alignMask = bsls::AlignmentFromType<Node>::VALUE - 1;
@@ -2196,7 +2211,7 @@ void SkipList<KEY, DATA>::insertImp(bool *newFrontFlag,
 
     int level = node->d_level;
     if (level > d_listLevel) {
-        BSLS_ASSERT(level == d_listLevel + 1);
+        BSLS_ASSERT_NONCONVEYOR(level == d_listLevel + 1);
 
         d_listLevel = level;
 
@@ -2236,7 +2251,7 @@ void SkipList<KEY, DATA>::moveImp(bool *newFrontFlag,
     BSLS_ASSERT(node);
 
     int level = node->d_level;
-    BSLS_ASSERT(level <= d_listLevel);
+    BSLS_ASSERT_NONCONVEYOR(level <= d_listLevel);
 
     for (int k = 0; k <= level; ++k) {
         Node *newP = location[k]->d_ptrs[k].d_prev_p;
@@ -2295,6 +2310,7 @@ template<class KEY, class DATA>
 inline
 void SkipList<KEY, DATA>::releaseNode(Node *node)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
     BSLS_ASSERT(node);
 
     const int refCnt = --node->d_refCount;
@@ -2315,6 +2331,7 @@ template<class KEY, class DATA>
 template<class VECTOR>
 int SkipList<KEY, DATA>::removeAllMaybeUnlock(VECTOR *removed, bool unlock)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(removed);
     typedef typename VECTOR::value_type ValueType;
 
     BSLMF_ASSERT((IsVector<VECTOR, ValueType>::value));
@@ -2359,7 +2376,7 @@ int SkipList<KEY, DATA>::removeAllMaybeUnlock(VECTOR *removed, bool unlock)
         for (Node *q = end; begin != q; q = q->d_ptrs[0].d_prev_p) {
             *removedIt++ = factory(q);
         }
-        BSLS_ASSERT(oldSize == removed->rend() - removedIt);
+        BSLS_ASSERT_NONCONVEYOR(oldSize == removed->rend() - removedIt);
     }
     else {
         for (Node *q = end; begin != q; ) {
@@ -2649,10 +2666,11 @@ template<class KEY, class DATA>
 void SkipList<KEY, DATA>::lookupImpLowerBound(Node       *location[],
                                               const KEY&  key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     Node *p = d_head_p;
     for (int k = d_listLevel; k >= 0; --k) {
         Node *q = p->d_ptrs[k].d_next_p;
-        while (q != d_tail_p && q->d_key < key) {
+        while (q != d_tail_p && BSLS_ASSERT_CONVEYOR_REF(q->d_key) < key) {
             p = q;
             q = p->d_ptrs[k].d_next_p;
         }
@@ -2701,10 +2719,12 @@ template<class KEY, class DATA>
 void SkipList<KEY, DATA>::lookupImpUpperBoundR(Node       *location[],
                                                const KEY&  key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Node *q = d_tail_p;
     for (int k = d_listLevel; k >= 0; --k) {
         Node *p = q->d_ptrs[k].d_prev_p;
-        while (p != d_head_p && key < p->d_key) {
+        while (p != d_head_p && key < BSLS_ASSERT_CONVEYOR_REF(p->d_key)) {
             q = p;
             p = q->d_ptrs[k].d_prev_p;
         }
@@ -2718,6 +2738,7 @@ template<class KEY, class DATA>
 SkipList_Node<KEY, DATA> *
 SkipList<KEY, DATA>::nextNode(Node *node) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(node != d_head_p);
     BSLS_ASSERT(node != d_tail_p);
 
@@ -2736,6 +2757,7 @@ template<class KEY, class DATA>
 SkipList_Node<KEY, DATA> *
 SkipList<KEY, DATA>::prevNode(Node *node) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(node != d_head_p);
     BSLS_ASSERT(node != d_tail_p);
 
@@ -2756,6 +2778,7 @@ SkipList<KEY, DATA>::prevNode(Node *node) const
 template<class KEY, class DATA>
 int SkipList<KEY, DATA>::skipBackward(Node **node) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(node);
 
     Node *current = *node;
@@ -2789,6 +2812,7 @@ int SkipList<KEY, DATA>::skipBackward(Node **node) const
 template<class KEY, class DATA>
 int SkipList<KEY, DATA>::skipForward(Node **node) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(node);
 
     Node *current = *node;
@@ -2862,7 +2886,7 @@ SkipList<KEY, DATA>::~SkipList()
 #endif
 
     for (Node *p = d_tail_p->d_ptrs[0].d_prev_p; d_head_p != p; ) {
-        BSLS_ASSERT(1 == p->d_refCount);
+        BSLS_ASSERT_NONCONVEYOR(1 == p->d_refCount);
 
         Node *condemned = p;
         p = p->d_ptrs[0].d_prev_p;
@@ -3456,7 +3480,7 @@ SkipList<KEY, DATA>::print(bsl::ostream& stream,
             stream << "level = " << node->d_level << "\n";
 
             bdlb::PrintMethods::print(stream,
-                                      node->d_key,
+                                      BSLS_ASSERT_CONVEYOR_REF(node->d_key),
                                       levelPlus2,
                                       spacesPerLevel);
 
@@ -3464,7 +3488,7 @@ SkipList<KEY, DATA>::print(bsl::ostream& stream,
             stream << "=>\n";
 
             bdlb::PrintMethods::print(stream,
-                                      node->d_data,
+                                      BSLS_ASSERT_CONVEYOR_REF(node->d_data),
                                       levelPlus2,
                                       spacesPerLevel);
             bdlb::Print::indent(stream, levelPlus1, spacesPerLevel);
@@ -3485,9 +3509,15 @@ SkipList<KEY, DATA>::print(bsl::ostream& stream,
              node = node->d_ptrs[0].d_next_p) {
             stream << "[ (level = " << node->d_level << ") ";
 
-            bdlb::PrintMethods::print(stream, node->d_key, 0, -1);
+            bdlb::PrintMethods::print(stream,
+                                      BSLS_ASSERT_CONVEYOR_REF(node->d_key),
+                                      0,
+                                      -1);
             stream << " => ";
-            bdlb::PrintMethods::print(stream, node->d_data, 0, -1);
+            bdlb::PrintMethods::print(stream,
+                                      BSLS_ASSERT_CONVEYOR_REF(node->d_data),
+                                      0,
+                                      -1);
 
             stream << " ]";
 
@@ -3724,7 +3754,7 @@ template<class KEY, class DATA>
 inline
 int SkipList<KEY, DATA>::skipBackward(PairHandle *item) const
 {
-    BSLS_ASSERT(item->isValid());
+    BSLS_ASSERT_NONCONVEYOR(item->isValid());
 
     Node **node_p = reinterpret_cast<Node **>(&item->d_node_p);
     return skipBackward(node_p);
@@ -3744,7 +3774,7 @@ template<class KEY, class DATA>
 inline
 int SkipList<KEY, DATA>::skipForward(PairHandle *item) const
 {
-    BSLS_ASSERT(item->isValid());
+    BSLS_ASSERT_NONCONVEYOR(item->isValid());
 
     Node **node_p = reinterpret_cast<Node **>(&item->d_node_p);
     return skipForward(node_p);

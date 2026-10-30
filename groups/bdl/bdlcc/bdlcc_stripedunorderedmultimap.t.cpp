@@ -941,11 +941,15 @@ bool TestDriver<KEY, VALUE, HASH, EQUAL>::TestCase19Reader::operator()(
                                                             const VALUE& value,
                                                             const KEY&   key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d_values);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     // Search for key within d_values.  As we need to copy from next value,
     // assume that it must be within the first 51 members.
     int keyIdx;
     for (keyIdx = 0; keyIdx < 51; ++keyIdx) {
-        if (areEqual(key, d_values[keyIdx].first)) {
+        if (areEqual(key, BSLS_ASSERT_CONVEYOR_REF(d_values[keyIdx]).first)) {
             break;
         }
     }
@@ -994,18 +998,20 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 bool TestDriver<KEY, VALUE, HASH, EQUAL>::TestCase14Updater::operator()(
                                                   VALUE *value, const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d_values);
     // Search for key within d_values.  As we need to copy from next value,
     // assume that it must be within the first 51 members.
     int keyIdx;
     for (keyIdx = 0; keyIdx < 51; ++keyIdx) {
-        if (areEqual(key, d_values[keyIdx].first)) {
+        if (areEqual(key, BSLS_ASSERT_CONVEYOR_REF(d_values[keyIdx]).first)) {
             break;
         }
     }
     if (keyIdx == 51) { // Should not happen!
         return false;                                                 // RETURN
     }
-    *value = d_values[keyIdx+1].second;
+    *value = BSLS_ASSERT_CONVEYOR_REF(d_values[keyIdx+1]).second;
 
     // Increase count, and return true / false based on count.
     ++s_testCase14_count;

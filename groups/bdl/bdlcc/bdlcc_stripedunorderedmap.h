@@ -833,7 +833,7 @@ bsl::size_t StripedUnorderedMap<KEY, VALUE, HASH, EQUAL>::eraseBulk(
                                                              RANDOM_ITER first,
                                                              RANDOM_ITER last)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     return d_imp.eraseBulkFirst(first, last);
 }
@@ -872,7 +872,7 @@ bsl::size_t StripedUnorderedMap<KEY, VALUE, HASH, EQUAL>::insertBulk(
                                                              RANDOM_ITER first,
                                                              RANDOM_ITER last)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     return d_imp.insertBulkUnique(first, last);
 }
@@ -971,7 +971,7 @@ inline
 bsl::size_t StripedUnorderedMap<KEY, VALUE, HASH, EQUAL>::bucketSize(
                                                        bsl::size_t index) const
 {
-    BSLS_ASSERT(bucketCount() > index);
+    BSLS_ASSERT_NONCONVEYOR(bucketCount() > index);
 
     return d_imp.bucketSize(index);
 }

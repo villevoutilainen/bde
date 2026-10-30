@@ -357,6 +357,8 @@ template <class ALLOCATOR>
 inline
 void DeallocateBytesProctor<ALLOCATOR>::doDeallocate(bsl::true_type)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_allocator);
     d_allocator->deallocate(d_bytes_p);
 }
 

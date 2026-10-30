@@ -287,6 +287,8 @@ void SkipList_PoolManager::initPool(Pool *pool, int level, int objectSize)
 
 void SkipList_PoolManager::replenish(Pool *pool)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(pool);
     BSLMT_MUTEXASSERT_IS_LOCKED(&pool->d_poolMutex);
 
     bslmt::LockGuard<bslmt::Mutex> guard(&d_blockMutex);

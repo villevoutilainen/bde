@@ -297,11 +297,11 @@ void myWork()
     // Take two elements from the queue atomically
 {
     queueMutex.lock();
-    if (2 <= rawQueue.length()) {
-        data1 = rawQueue.front();
-        rawQueue.popFront();
-        data2 = rawQueue.front();
-        rawQueue.popFront();
+    if (2 <= BSLS_ASSERT_CONVEYOR_REF(rawQueue).length()) {
+        data1 = BSLS_ASSERT_CONVEYOR_REF(rawQueue).front();
+        BSLS_ASSERT_CONVEYOR_REF(rawQueue).popFront();
+        data2 = BSLS_ASSERT_CONVEYOR_REF(rawQueue).front();
+        BSLS_ASSERT_CONVEYOR_REF(rawQueue).popFront();
         pairFoundFlag = true;
     }
     queueMutex.unlock();
@@ -2024,6 +2024,7 @@ namespace TEST_CASE_2 {
 
 int myLength(bdlcc::Queue<Element> *q)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(q);
     const bdlcc::Queue<Element>& Q = *q;
 
     int ret = Q.length();
@@ -2622,7 +2623,7 @@ int main(int argc, char *argv[])
             myWorkQueue.pushBack( MyData() );
             myWorkQueue.pushBack( MyData() );
             myWork();
-            ASSERT(0 == rawQueue.length());
+            ASSERT(0 == BSLS_ASSERT_CONVEYOR_REF(rawQueue).length());
             ASSERT(0 == myWorkQueue.length());
         }
 
@@ -2821,7 +2822,9 @@ int main(int argc, char *argv[])
             }
 
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 bslmt::LockGuard<bslmt::Mutex> lock(&x.mutex());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 x.queue().pushBack(VA);
                 bslmt::ThreadUtil::microSleep(T);
                 ASSERT(2 == testObj.stage());
@@ -2855,8 +2858,11 @@ int main(int argc, char *argv[])
 
             ASSERT(3 == testObj.stage());
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 bslmt::LockGuard<bslmt::Mutex> lock(&x.mutex());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(VC == x.queue().back());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 x.queue().popFront();
                 bslmt::ThreadUtil::microSleep(T);
                 ASSERT(3 == testObj.stage());
@@ -3597,13 +3603,18 @@ int main(int argc, char *argv[])
 
                 x.pushBack(V[0]);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(1 == myLength(&x));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(V[0] == x.queue().back());
 
                 x.pushBack(V[1]);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(2 == myLength(&x));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(V[0] == x.queue().front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(V[1] == x.queue().back());
             }
 
@@ -3613,8 +3624,11 @@ int main(int argc, char *argv[])
 
                 ASSERT(V[1] == x.popBack());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(1 == myLength(&x));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(V[0] == x.queue().front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(V[0] == x.queue().back());
 
                 ASSERT(V[0] == x.popBack());
@@ -3628,13 +3642,18 @@ int main(int argc, char *argv[])
 
                 x.pushFront(V[2]);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(1 == myLength(&x));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(V[2] == x.queue().back());
 
                 x.pushFront(V[3]);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(2 == myLength(&x));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(V[3] == x.queue().front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(V[2] == x.queue().back());
             }
 
@@ -3644,8 +3663,11 @@ int main(int argc, char *argv[])
 
                 ASSERT(V[3] == x.popFront());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(1 == myLength(&x));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(V[2] == x.queue().front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x);
                 ASSERT(V[2] == x.queue().back());
 
                 ASSERT(V[2] == x.popFront());
@@ -3662,7 +3684,9 @@ int main(int argc, char *argv[])
             bsl::deque<Element> d(&ta);     const bsl::deque<Element>& D = d;
 
             ASSERT(0 == D.size());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&x);
             ASSERT(0 == X.length());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&x);
             ASSERT(x.queue().length() == X.length());
 
             int expectedLength = 0;
@@ -3937,6 +3961,7 @@ int main(int argc, char *argv[])
 
             Obj x1(Q1, &ta);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&x1);
             ASSERT(x1.queue() == q1);
             ASSERT(VA == x1.popFront());
             ASSERT(VB == x1.popFront());
@@ -3962,8 +3987,11 @@ int main(int argc, char *argv[])
             {   // atomic push of three values
                 bslmt::LockGuard<bslmt::Mutex> lock(&x1.mutex());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x1);
                 x1.queue().pushBack(VA);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x1);
                 x1.queue().pushBack(VB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&x1);
                 x1.queue().pushBack(VC);
             }
 

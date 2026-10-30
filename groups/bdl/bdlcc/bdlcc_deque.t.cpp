@@ -390,6 +390,7 @@ enum VecType { e_BEGIN,
 template <class VECTOR>
 typename VECTOR::value_type *vData(VECTOR *v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(v);
     return v->empty() ? 0 : &(*v)[0];
 }
 
@@ -848,9 +849,11 @@ bsl::ostream& operator<<(bsl::ostream& stream, const Obj& x)
     Obj::ConstProctor          cp(&x);
     const bsl::deque<Element>& d = *cp;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d);
     stream << "[";
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d);
     for (unsigned ii = 0; ii < d.size(); ++ii) {
-        stream << ' ' << d[ii];
+        stream << ' ' << BSLS_ASSERT_CONVEYOR_REF(d[ii]);
     }
     stream << " ]";
 
@@ -863,6 +866,7 @@ bsl::ostream& operator<<(bsl::ostream& stream, const AObj& x)
     AObj::ConstProctor          cp(&x);
     const bsl::deque<AElement>& d = *cp;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d);
     stream << "[";
     for (unsigned ii = 0; ii < d.size(); ++ii) {
         stream << ' ' << d[ii];
@@ -879,8 +883,10 @@ bsl::ostream& operator<<(bsl::ostream& stream, const MObj& x)
     const bsl::deque<MElement>& d = *cp;
 
     stream << "[";
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d);
     for (unsigned ii = 0; ii < d.size(); ++ii) {
-        stream << ' ' << d[ii];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d);
+        stream << ' ' << BSLS_ASSERT_CONVEYOR_REF(d[ii]);
     }
     stream << " ]";
 
@@ -894,8 +900,10 @@ bsl::ostream& operator<<(bsl::ostream& stream, const MCObj& x)
     const bsl::deque<MCElement>& d = *cp;
 
     stream << "[";
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d);
     for (unsigned ii = 0; ii < d.size(); ++ii) {
-        stream << ' ' << d[ii];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d);
+        stream << ' ' << BSLS_ASSERT_CONVEYOR_REF(d[ii]);
     }
     stream << " ]";
 
@@ -905,9 +913,10 @@ bsl::ostream& operator<<(bsl::ostream& stream, const MCObj& x)
 /// Output the specified `d` to the specified `stream`.
 bsl::ostream& operator<<(bsl::ostream& stream, const bsl::deque<Element>& d)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d);
     stream << "[";
     for (unsigned ii = 0; ii < d.size(); ++ii) {
-        stream << ' ' << d[ii];
+        stream << ' ' << BSLS_ASSERT_CONVEYOR_REF(d[ii]);
     }
     stream << " ]";
 
@@ -917,9 +926,10 @@ bsl::ostream& operator<<(bsl::ostream& stream, const bsl::deque<Element>& d)
 /// Output the specified `d` to the specified `stream`.
 bsl::ostream& operator<<(bsl::ostream& stream, const bsl::deque<AElement>& d)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d);
     stream << "[";
     for (unsigned ii = 0; ii < d.size(); ++ii) {
-        stream << ' ' << d[ii];
+        stream << ' ' << BSLS_ASSERT_CONVEYOR_REF(d[ii]);
     }
     stream << " ]";
 
@@ -929,9 +939,10 @@ bsl::ostream& operator<<(bsl::ostream& stream, const bsl::deque<AElement>& d)
 /// Output the specified `d` to the specified `stream`.
 bsl::ostream& operator<<(bsl::ostream& stream, const bsl::deque<MElement>& d)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d);
     stream << "[";
     for (unsigned ii = 0; ii < d.size(); ++ii) {
-        stream << ' ' << d[ii];
+        stream << ' ' << BSLS_ASSERT_CONVEYOR_REF(d[ii]);
     }
     stream << " ]";
 
@@ -941,9 +952,10 @@ bsl::ostream& operator<<(bsl::ostream& stream, const bsl::deque<MElement>& d)
 /// Output the specified `d` to the specified `stream`.
 bsl::ostream& operator<<(bsl::ostream& stream, const bsl::deque<MCElement>& d)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d);
     stream << "[";
     for (unsigned ii = 0; ii < d.size(); ++ii) {
-        stream << ' ' << d[ii];
+        stream << ' ' << BSLS_ASSERT_CONVEYOR_REF(d[ii]);
     }
     stream << " ]";
 
@@ -1120,8 +1132,10 @@ template <class TYPE>
 const TYPE& myBack(const bdlcc::Deque<TYPE>& d)
 {
     typename bdlcc::Deque<TYPE>::ConstProctor proctor(&d);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
     ASSERT(!proctor->empty());
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
     return proctor->back();
 }
 
@@ -1131,8 +1145,10 @@ template <class TYPE>
 const TYPE& myFront(const bdlcc::Deque<TYPE>& d)
 {
     typename bdlcc::Deque<TYPE>::ConstProctor proctor(&d);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
     ASSERT(!proctor->empty());
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
     return proctor->front();
 }
 
@@ -1146,6 +1162,7 @@ size_t myLength(const bdlcc::Deque<TYPE>& d)
 
     typename bdlcc::Deque<TYPE>::ConstProctor proctor(&d);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
     ASSERT(ret == proctor->size());
 
     return ret;
@@ -1232,6 +1249,7 @@ class RandChar {
 /// number seed.
 void populateRandCharVec(bsl::vector<char> *buffer, int numChars, int seed)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLS_ASSERT(buffer->empty());
     BSLS_ASSERT(numChars <= 62);
 
@@ -1371,6 +1389,8 @@ class ObjChecker {
             const bsl::deque<ELEMENT>& tbm = *tbmProc;
             const bsl::deque<ELEMENT>& tbc = *tbcProc;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tbc);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tbm);
             ASSERTV(d_line, tbm, tbc, "AObjChecker" && tbm == tbc);
         }
     }
@@ -1409,16 +1429,24 @@ struct VecChecker {
     /// object, compare the two containers tracked by this object.
     ~VecChecker()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (d_toBeModified_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_toBeModified_p);
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_toBeCompared_p);
             if (*d_toBeModified_p != *d_toBeCompared_p) {
                 const bsl::vector<ELEMENT>& M = *d_toBeModified_p;
                 const bsl::vector<ELEMENT>& C = *d_toBeCompared_p;
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&M);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&C);
                 cout << "*d_toBeModified:";
                 IntPtr s = M.size();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&C);
                 for (int ii = 0; ii < s; ++ii) {
-                    cout << "\tM[" << ii << "]: " << M[ii];
+                    cout << "\tM[" << ii << "]: " << BSLS_ASSERT_CONVEYOR_REF(M[ii]);
                 }
+                BSLS_ASSERT_CONVEYOR_OBJECT(&C);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&M);
                 cout << "\n*d_toBeCompared:";
                 s = C.size();
                 for (int ii = 0; ii < s; ++ii) {
@@ -1435,6 +1463,7 @@ struct VecChecker {
     /// Cancel the checking this object will do at destruction.
     void release()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_toBeModified_p = 0;
     }
 };
@@ -2908,6 +2937,7 @@ class BufferedPopper {
     /// time.
     unsigned operator()()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bool firstTime = true;
         while (isEmpty()) {
             if (firstTime) {
@@ -2940,6 +2970,7 @@ class BufferedPopper {
     /// replenishing itself from `d_container`.
     bool isEmpty() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         const size_t bs = d_buffer.size();
         ASSERT(d_currentIndex <= bs);
 
@@ -2987,6 +3018,7 @@ class MultiThreadedRangeTryPushTest {
     /// 64K to the front.
     void operator()()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         u::Rand1To8 rand1To8(d_id);
         unsigned array[8];
 
@@ -3435,11 +3467,13 @@ struct FATHWMStressTest {
     /// and make sure that all branches were visited.
     void operator()() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         const unsigned len = static_cast<unsigned>(d_container_p->length());
         ASSERT(len < 40);
 
         if (0 < len) {
             ConstProctor p(d_container_p);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&p);
             ASSERTV(len, p->back(), len - 1 == p->back());
         }
 
@@ -3646,6 +3680,7 @@ struct PopperThread {
 
 void PopperThread::operator()()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int        seed = seedMain += 987654321;
     u::RandGen randGen(seed);
 
@@ -3673,22 +3708,34 @@ void PopperThread::operator()()
           } break;
           case (6): {
             Proctor proctor(&deque);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             if (proctor->empty()) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 --ii;
                 continue;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             item = proctor->front();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             proctor->pop_front();
           } break;
           case (7): {
             Proctor proctor(&deque);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             if (proctor->empty()) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 --ii;
                 continue;
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             item = proctor->back();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             proctor->pop_back();
           } break;
           default: {
@@ -3747,6 +3794,7 @@ struct PusherThread {
 
 void PusherThread::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     barrier->wait();
 
     int threadId = nextThreadId++;
@@ -3803,20 +3851,28 @@ void PopperThread::operator()() const
         if (0 == numTicksThisThread % 50) {
             bdlcc::Deque<Item>::Proctor proctor(container);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             if (!proctor->empty()) {
                 // Use the proctor to pop the element.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 if (backwards) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                     item = proctor->back();
                     proctor->pop_back();
                 }
                 else {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                     item = proctor->front();
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                     proctor->pop_front();
                 }
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 wasPopped = true;
             }
+        BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
         }
 
         if (!wasPopped) {
@@ -4848,6 +4904,7 @@ void ProctorTestFunctor::srcPusher() const
 
 void ProctorTestFunctor::transferrer() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that in these transfers, we deliberately overflow the dst deque
     // above the high water mark sometimes.
 
@@ -4867,12 +4924,15 @@ void ProctorTestFunctor::transferrer() const
 
     Obj::Proctor dstProctor;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
     for (bsl::size_t toTransfer = k_NUM_TO_TRANSFER;
                                   toTransfer > 0; toTransfer -= thisTransfer) {
         Obj::ConstProctor srcProctor(d_src_p);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
         bsl::size_t       srcSize = srcProctor->size();
 
         ASSERT(srcSize <= k_SRC_HIGH_WATER_MARK);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
         ASSERT(srcSize <= srcHwm);
         maxSrcSize = bsl::max(srcSize, maxSrcSize);
 
@@ -4882,42 +4942,69 @@ void ProctorTestFunctor::transferrer() const
         }
         else if (0 != thisTransfer) {
             dstProctor.load(d_dst_p);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
             bsl::size_t  dstSize = dstProctor->size();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
             maxDstSize = bsl::max(dstSize, maxDstSize);
 
             if (dstSize >= dstFull) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
                 ASSERT(dstSize == dstFull);
 
                 thisTransfer = 0;
             }
             else {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
                 thisTransfer = bsl::min(dstFull - dstSize,
                                         thisTransfer);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
                 // We can't delete the oldest `thisTransferred` elements from
                 // `srcProctor` because `srcProctor` is a `ConstProctor`.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
                 if (d_backWard) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
                     const_iterator end = srcProctor->end();
                     const_iterator beg = end - thisTransfer;
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
                     dstProctor->insert(dstProctor->begin(), beg, end);
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
                     lastTransferred = dstProctor->front();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
                 }
                 else {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
                     const_iterator beg = srcProctor->begin();
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
                     const_iterator end = beg + thisTransfer;
 
                     // Note `deque` has no `append` modifier.
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
                     dstProctor->insert(dstProctor->end(), beg, end);
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
                     lastTransferred = dstProctor->back();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
                 }
             }
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
             dstProctor.release();
         }
+        BSLS_ASSERT_CONVEYOR_OBJECT(&srcProctor);
         srcProctor.release();
 
         if (0 == thisTransfer) {
@@ -4926,24 +5013,36 @@ void ProctorTestFunctor::transferrer() const
             // pushers and poppers some time to run.
 
             bslmt::ThreadUtil::yield();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
             bslmt::ThreadUtil::microSleep(10 * 1000);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
         }
         else {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dstProctor);
             Obj::Proctor trimProctor(d_src_p);
 
             // Now we can delete the oldest `thisTransfer` elements from
+            BSLS_ASSERT_CONVEYOR_OBJECT(&trimProctor);
             // `*d_src_p` because they were just transferred out.  Note that
+            BSLS_ASSERT_CONVEYOR_OBJECT(&trimProctor);
             // some new elements might have been pushed into `*d_src_p` since
             // the `ConstProctor` was destroyed, but they will be at the
             // opposite end and not affected by this `erase`.
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&trimProctor);
             ASSERT(trimProctor->size() >= thisTransfer);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&trimProctor);
             iterator begin = d_backWard ? trimProctor->end() - thisTransfer
                                         : trimProctor->begin();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&trimProctor);
             iterator end   = d_backWard ? trimProctor->end()
                                         : begin + thisTransfer;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&trimProctor);
             trimProctor->erase(begin, end);
         }
     }
@@ -5904,13 +6003,17 @@ int main(int argc, char *argv[])
 
         {
             Obj::ConstProctor cp(&mX);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&cp);
             double x = 0.0;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&cp);
             for (CIt cit = cp->begin(); cp->end() != cit; ++cit, x += 1) {
                 ASSERT(*cit == x);
             }
+            BSLS_ASSERT_CONVEYOR_OBJECT(&cp);
             ASSERT(5 == x);
 
             for (int y = 0; y < x; ++y) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cp);
                 ASSERT((*cp)[y] == y);
             }
         }
@@ -7159,6 +7262,7 @@ int main(int argc, char *argv[])
 
                     bdlcc::Deque<Item>::Proctor proctor(&mX);
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                     ASSERTV(proctor->size(), 0 == proctor->size());
                     proctor->clear();
                 }
@@ -7623,90 +7727,205 @@ int main(int argc, char *argv[])
             {
                 Obj::ConstProctor pr(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 pdx = &*pr;
 
                 ASSERT(!pr.isNull());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3  == pr->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == pr->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == (*pr)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == (*pr)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == (*pr)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == pr->back());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->end()  - pr->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->rend() - pr->rbegin());
 
                 pr.release();
 
                 ASSERT(pr.isNull());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == mX.popBack());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 mX.pushBack(VC);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ConstProctor prB;    const Obj::ConstProctor& PRB = prB;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 prB.load(&X);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(&*prB == pdx);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(&*PRB == pdx);
                 ASSERT(!prB.isNull());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(!PRB.isNull());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(3  == prB->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(VA == prB->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(VA == (*prB)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(VB == (*prB)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(VC == (*prB)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(VC == prB->back());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(3 == prB->end()  - prB->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(3 == prB->rend() - prB->rbegin());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(3  == PRB->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(VA == PRB->front());
                 ASSERT(VA == (*PRB)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(VB == (*PRB)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(VC == (*PRB)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
                 ASSERT(VC == PRB->back());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
                 ASSERT(3 == PRB->end()  - PRB->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
                 ASSERT(3 == PRB->rend() - PRB->rbegin());
 
                 // Negative testing
 
                 bsls::AssertTestHandlerGuard hG;
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
                 ASSERT_SAFE_PASS(prB[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
                 ASSERT_SAFE_FAIL(prB[3]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
                 ASSERT_SAFE_FAIL(prB[1000 * 1000]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
                 ASSERT_SAFE_FAIL(prB[-1]);
 
                 // Release `X` before locking `Y` so the test never holds both
                 // mutexes in this order (avoids a TSAN lock-order report).
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
                 prB.release();
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRB);
                 const Obj::ConstProctor PRC(&Y);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 pdy = &*PRC;
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 ASSERTV(pdx, pdy, pdx != pdy);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 ASSERT(!PRC.isNull());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 ASSERT(3  == PRC->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 ASSERT(VD == PRC->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 ASSERT(VD == (*PRC)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 ASSERT(VE == (*PRC)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 ASSERT(VF == (*PRC)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 ASSERT(VF == PRC->back());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 ASSERT(3 == PRC->end()  - PRC->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
                 ASSERT(3 == PRC->rend() - PRC->rbegin());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 // Negative testing
 
-                ASSERT_SAFE_PASS(PRC[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                ASSERT_SAFE_PASS(BSLS_ASSERT_CONVEYOR_REF(PRC[2]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT_SAFE_FAIL(PRC[3]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT_SAFE_FAIL(PRC[1000 * 1000]);
-                ASSERT_SAFE_FAIL(PRC[-1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
+                ASSERT_SAFE_FAIL(BSLS_ASSERT_CONVEYOR_REF(PRC[-1]));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&PRC);
             }
 
             if (verbose) cout << "Single-Threaded Proctor Testing\n";
@@ -7714,124 +7933,337 @@ int main(int argc, char *argv[])
                 Obj::Proctor pr(&mX);    const Obj::Proctor& PR = pr;
 
                 ASSERT(!pr.isNull());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(&*pr == pdx);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3  == pr->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == pr->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == (*pr)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == (*pr)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == (*pr)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == pr->back());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->end()  - pr->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->rend() - pr->rbegin());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(3  == PR->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(VA == PR->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == (*PR)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == (*PR)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == (*PR)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(VC == PR->back());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(3 == PR->end()  - PR->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(3 == PR->rend() - PR->rbegin());
 
                 pr->pop_front();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == pr->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == pr->back());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(2  == pr->size());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(2 == pr->end()  - pr->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(2 == pr->rend() - pr->rbegin());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 PR->push_front(0.0);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 PR->pop_front();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(VB == PR->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(VC == PR->back());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(2  == PR->size());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(2 == PR->end()  - PR->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(2 == PR->rend() - PR->rbegin());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 pr->push_back(VA);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == pr->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == (*pr)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == (*pr)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == (*pr)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == pr->back());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3  == pr->size());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->end()  - pr->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->rend() - pr->rbegin());
 
                 PR->pop_back();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 PR->push_back(VA);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(VB == PR->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == (*PR)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == (*PR)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == (*PR)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(VA == PR->back());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(3  == PR->size());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(3 == PR->end()  - PR->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(3 == PR->rend() - PR->rbegin());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 pr.load(&mY);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(&*pr != pdx);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(&*pr == pdy);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(&*PR != pdx);
                 ASSERT(&*PR == pdy);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(!pr.isNull());
                 ASSERT(!PR.isNull());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 // Modify `mX` to show that it's now unlocked.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(VB == mX.popFront());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 mX.pushFront(VB);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3  == pr->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VD == pr->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VD == (*pr)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VE == (*pr)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VF == (*pr)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VF == pr->back());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->end()  - pr->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->rend() - pr->rbegin());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(3  == PR->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(VD == PR->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VD == (*PR)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VE == (*PR)[1]);
                 ASSERT(VF == (*PR)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(VF == PR->back());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(3 == PR->end()  - PR->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(3 == PR->rend() - PR->rbegin());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 // Negative testing
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 bsls::AssertTestHandlerGuard hG;
 
-                ASSERT_SAFE_PASS(pr[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                ASSERT_SAFE_PASS(BSLS_ASSERT_CONVEYOR_REF(pr[2]));
                 ASSERT_SAFE_FAIL(pr[3]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT_SAFE_FAIL(pr[1000 * 1000]);
-                ASSERT_SAFE_FAIL(pr[-1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                ASSERT_SAFE_FAIL(BSLS_ASSERT_CONVEYOR_REF(pr[-1]));
 
                 ASSERT_SAFE_PASS(PR[2]);
-                ASSERT_SAFE_FAIL(PR[3]);
-                ASSERT_SAFE_FAIL(PR[1000 * 1000]);
-                ASSERT_SAFE_FAIL(PR[-1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                ASSERT_SAFE_FAIL(BSLS_ASSERT_CONVEYOR_REF(PR[3]));
+                ASSERT_SAFE_FAIL(BSLS_ASSERT_CONVEYOR_REF(PR[1000 * 1000]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
+                ASSERT_SAFE_FAIL(BSLS_ASSERT_CONVEYOR_REF(PR[-1]));
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 Proctor prB;
                 prB.load(&mX);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(&*prB == pdx);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(!prB.isNull());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 pr.release();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 ASSERT(pr.isNull());
             }
 
@@ -8208,6 +8640,7 @@ int main(int argc, char *argv[])
 
             {
                 AObj::Proctor p(&x);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&p);
                 p->insert(p->end(), k_NUM_ELEMENTS, VA);
             }
 
@@ -8228,7 +8661,9 @@ int main(int argc, char *argv[])
                     for (int jj = 0; jj <= ii; ++jj) {
                         const AObj::Proctor p(&x);
                         const bsl::deque<AElement>& d = *p;
-                        ASSERTV(VA, jj, d.size(), d[jj], VA == d[jj]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&p);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&d);
+                        ASSERTV(VA, jj, d.size(), BSLS_ASSERT_CONVEYOR_REF(d[jj]), VA == BSLS_ASSERT_CONVEYOR_REF(d[jj]));
                     }
 
                     ASSERT(sw.accumulatedWallTime() - lastTime < 0.05);
@@ -8238,12 +8673,14 @@ int main(int argc, char *argv[])
                         bsl::deque<AElement>::iterator it;
                         {
                             AObj::Proctor p(&x);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&p);
                             it = p->end();
                         }
 
                         ASSERT(0 == x.timedPopFront(&v[ii], u::now()+T10));
                         {
                             AObj::Proctor p(&x);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&p);
                             ASSERT(p->end() == it);
                         }
                     }
@@ -8251,12 +8688,14 @@ int main(int argc, char *argv[])
                         bsl::deque<AElement>::iterator it;
                         {
                             AObj::Proctor p(&x);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&p);
                             it = p->begin();
                         }
 
                         ASSERT(0 == x.timedPopBack(&v[ii], u::now()+T10));
                         {
                             AObj::Proctor p(&x);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&p);
                             ASSERT(p->begin() == it);
                         }
                     }
@@ -8269,8 +8708,11 @@ int main(int argc, char *argv[])
                     ASSERTV(ii, x.length(), ii == (IntPtr) x.length());
                     for (int jj = 0; jj < ii; ++jj) {
                         const AObj::Proctor p(&x);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&p);
                         const bsl::deque<AElement>& d = *p;
-                        ASSERTV(VA, jj, d.size(), d[jj], VA == d[jj]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&d);
+                        ASSERTV(VA, jj, d.size(), BSLS_ASSERT_CONVEYOR_REF(d[jj]), VA == BSLS_ASSERT_CONVEYOR_REF(d[jj]));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&p);
                     }
 
                     for (int jj = 0; jj < k_NUM_ELEMENTS; ++jj) {
@@ -9272,55 +9714,128 @@ int main(int argc, char *argv[])
 
             {
                 Obj::ConstProctor cpr(&X1);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(*cpr == Q1);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(3 == cpr->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VA == (*cpr)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VB == (*cpr)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VC == (*cpr)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VA == cpr[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VB == cpr[1]);
-                ASSERT(VC == cpr[2]);
+                ASSERT(VC == BSLS_ASSERT_CONVEYOR_REF(cpr[2]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VA == cpr->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VC == cpr->back());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VA == *cpr->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VC == *(cpr->end() - 1));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VC == *cpr->rbegin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
                 ASSERT(VA == *(cpr->rend() - 1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&cpr);
             }
 
             {
                 Obj::Proctor pr(&x1);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(*pr == Q1);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == (*pr)[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == (*pr)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == (*pr)[2]);
-                ASSERT(VA == pr[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                ASSERT(VA == BSLS_ASSERT_CONVEYOR_REF(pr[0]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == pr[1]);
-                ASSERT(VC == pr[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                ASSERT(VC == BSLS_ASSERT_CONVEYOR_REF(pr[2]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == pr->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == pr->back());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == *pr->begin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == *(pr->end() - 1));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == *pr->rbegin());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == *(pr->rend() - 1));
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 using namespace bsl;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 swap((*pr)[0], (*pr)[2]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == pr->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == (*pr)[1]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == pr->back());
 
-                pr[1] = VA;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_REF(pr[1]) = VA;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VA == (*pr)[1]);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 pr->front() = VB;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VB == (*pr)[0]);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 pr->back() = VC;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(VC == pr->back());
 
                 pr->front() = VA;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 swap(pr->front(), pr->back());
             }
 
@@ -9335,13 +9850,23 @@ int main(int argc, char *argv[])
             {   // atomic push of three values
                 Obj::Proctor pr(&x1);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(pr->empty());
 
                 pr->push_back(VA);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 pr->push_back(VB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 pr->push_back(VC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(! pr->empty());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
             }
 
             ASSERT(3 == X1.length());
@@ -9415,8 +9940,11 @@ int main(int argc, char *argv[])
             {
                 Obj::ConstProctor proctor(&X1);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 ASSERT(VA == proctor->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 ASSERT(VG == proctor->back());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             }
 
             x1.tryPopBack(1);
@@ -9426,8 +9954,11 @@ int main(int argc, char *argv[])
             {
                 Obj::ConstProctor proctor(&X1);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 ASSERT(VA == proctor->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 ASSERT(VF == proctor->back());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             }
 
             v.clear();
@@ -9441,8 +9972,12 @@ int main(int argc, char *argv[])
             {
                 Obj::ConstProctor proctor(&X1);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 ASSERT(VC == proctor->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 ASSERT(VF == proctor->back());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             }
 
             x1.tryPopFront(2);
@@ -9452,8 +9987,13 @@ int main(int argc, char *argv[])
             {
                 Obj::ConstProctor proctor(&X1);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 ASSERT(VE == proctor->front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
                 ASSERT(VF == proctor->back());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
             }
 
             x1.removeAll();

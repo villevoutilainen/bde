@@ -236,7 +236,8 @@ void gg(Obj          *result,
         unsigned int  popCombinedIndex)
 {
     BSLS_ASSERT(pushCombinedIndex >= popCombinedIndex);
-    BSLS_ASSERT(pushCombinedIndex - popCombinedIndex <= result->capacity());
+    BSLS_ASSERT_NONCONVEYOR(
+                   pushCombinedIndex - popCombinedIndex <= result->capacity());
 
     for (unsigned int i = 0; i < popCombinedIndex; ++i) {
         unsigned int generation, index;
@@ -247,7 +248,7 @@ void gg(Obj          *result,
 
         rc = result->reservePopIndex(&generation, &index);
         BSLS_ASSERT(0     == rc);
-        BSLS_ASSERT(index == i % result->capacity());
+        BSLS_ASSERT_NONCONVEYOR(index == i % result->capacity());
         result->commitPopIndex(generation, index);
     }
 
@@ -257,7 +258,7 @@ void gg(Obj          *result,
         int rc = result->reservePushIndex(&generation, &index);
         (void)rc;   // suppress warning
         BSLS_ASSERT(0     == rc);
-        BSLS_ASSERT(index == i % result->capacity());
+        BSLS_ASSERT_NONCONVEYOR(index == i % result->capacity());
         result->commitPushIndex(generation, index);
     }
 }
@@ -363,6 +364,7 @@ void gg(Obj          *result,
 
     int IntegerQueue::tryPopFront(int *result)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         unsigned int generation, index;
         if (0 == d_indexManager.reservePopIndex(&generation, &index)) {
             *result = d_values[index];
@@ -576,7 +578,8 @@ void dirtyGG(Obj          *result,
              unsigned int  popCombinedIndex)
 {
     BSLS_ASSERT(pushCombinedIndex >= popCombinedIndex);
-    BSLS_ASSERT(pushCombinedIndex - popCombinedIndex <= result->capacity());
+    BSLS_ASSERT_NONCONVEYOR(
+                   pushCombinedIndex - popCombinedIndex <= result->capacity());
 
     unsigned int startGeneration = static_cast<int>(popCombinedIndex
                                                   / result->capacity());

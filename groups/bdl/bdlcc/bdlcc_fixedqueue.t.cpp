@@ -2941,7 +2941,7 @@ int main(int argc, char *argv[])
             double elapsed;
             for (int i = 0; (elapsed = timer.elapsedTime() * 1000) <
                      k_EMPTY_VERIFY_MS; ++i) {
-                BSLS_ASSERT(queue.isEmpty());
+                BSLS_ASSERT_NONCONVEYOR(queue.isEmpty());
                 ASSERT(queue.isEmpty());
                 if (!queue.isEmpty()) {
                     cout << "TEST FAILURE: disabled queue became non-empty"

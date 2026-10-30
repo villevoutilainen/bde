@@ -775,6 +775,7 @@ int MultipriorityQueue<TYPE>::tryPopFrontImpl(TYPE *item,
                                               int  *itemPriority,
                                               bool  blockFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { e_SUCCESS = 0, e_FAILURE = -1 };
 
     Node *condemned;
@@ -815,7 +816,7 @@ int MultipriorityQueue<TYPE>::tryPopFrontImpl(TYPE *item,
         if (0 == head) {
             // The last item with this priority was just popped.
 
-            BSLS_ASSERT(d_tails[priority] == condemned);
+            BSLS_ASSERT_NONCONVEYOR(d_tails[priority] == condemned);
             d_notEmptyFlags &= ~(1 << priority);
         }
 
@@ -871,12 +872,12 @@ MultipriorityQueue<TYPE>::~MultipriorityQueue()
     typename NodePtrVector::iterator endIt;
 
     for (it = d_heads.begin(), endIt = d_heads.end(); endIt != it; ++it) {
-        BSLS_ASSERT(!*it);
+        BSLS_ASSERT_NONCONVEYOR(!*it);
     }
 
     // Tails do not get set to null by 'removeAll', so are indeterminate.
 
-    BSLS_ASSERT(isEmpty());
+    BSLS_ASSERT_NONCONVEYOR(isEmpty());
     BSLS_ASSERT(0 == d_notEmptyFlags);
 }
 
@@ -891,6 +892,7 @@ void MultipriorityQueue<TYPE>::popFront(TYPE *item, int *itemPriority)
 template <class TYPE>
 int MultipriorityQueue<TYPE>::pushBack(const TYPE& item, int itemPriority)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { e_SUCCESS = 0, e_FAILURE = -1 };
 
     BSLS_ASSERT((unsigned)itemPriority < d_heads.size());
@@ -942,6 +944,7 @@ template <class TYPE>
 int MultipriorityQueue<TYPE>::pushBack(bslmf::MovableRef<TYPE> item,
                                        int                     itemPriority)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { e_SUCCESS = 0, e_FAILURE = -1 };
 
     BSLS_ASSERT((unsigned)itemPriority < d_heads.size());
@@ -959,6 +962,7 @@ int MultipriorityQueue<TYPE>::pushBack(bslmf::MovableRef<TYPE> item,
                                                                  &d_pool);
 
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
         // Do the enable check before the move, since if it is a move and not a
@@ -995,6 +999,7 @@ void MultipriorityQueue<TYPE>::pushBackMultipleRaw(const TYPE& item,
                                                    int         itemPriority,
                                                    int         numItems)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT((unsigned)itemPriority < d_heads.size());
 
     const int mask = 1 << itemPriority;
@@ -1033,6 +1038,7 @@ void MultipriorityQueue<TYPE>::pushFrontMultipleRaw(const TYPE& item,
                                                     int         itemPriority,
                                                     int         numItems)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT((unsigned)itemPriority < d_heads.size());
 
     const int mask = 1 << itemPriority;
@@ -1078,6 +1084,7 @@ void MultipriorityQueue<TYPE>::removeAll()
     Node *condemnedList = 0;
 
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
         while (d_notEmptyFlags) {
@@ -1085,6 +1092,7 @@ void MultipriorityQueue<TYPE>::removeAll()
                                   static_cast<bsl::uint32_t>(d_notEmptyFlags));
 
             Node *& head = d_heads[priority];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&head);
             BSLS_ASSERT(head);
 
             d_tails[priority]->nextPtr() = condemnedList;
@@ -1133,6 +1141,7 @@ template <class TYPE>
 inline
 int MultipriorityQueue<TYPE>::numPriorities() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_heads.size());
 }
 

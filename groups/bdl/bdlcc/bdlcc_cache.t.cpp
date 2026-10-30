@@ -352,6 +352,8 @@ struct MyVisitor {
     /// the specified `key` into `d_oldKeys`.
     bool operator() (int key, const MyValue& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (veryVerbose) {
             bsl::cout << "Visiting " << key
                       << ", age: "
@@ -534,6 +536,8 @@ void InplaceUtil<VALUE>::SpCreateInplaceImp(bsl::shared_ptr<VALUE> *ptr,
                                             bslma::Allocator       *allocator,
                                             bsl::true_type)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&v);
+    BSLS_ASSERT_CONVEYOR_OBJECT(ptr);
     ptr->createInplace(allocator, v, allocator);
 }
 
@@ -543,6 +547,8 @@ void InplaceUtil<VALUE>::SpCreateInplaceImp(bsl::shared_ptr<VALUE> *ptr,
                                             bslma::Allocator       *allocator,
                                             bsl::false_type)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&v);
+    BSLS_ASSERT_CONVEYOR_OBJECT(ptr);
     ptr->createInplace(allocator, v);
 }
 
@@ -771,6 +777,7 @@ int CachePerformance::initialize(VecIntType&                args,
 CachePerformance::VecTimeType CachePerformance::runTests(VecIntType&      args,
                                                 CachePerformance::RunFunc func)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_seWTime = d_seUTime = d_seSTime = 0;
     d_avgWTime = d_avgUTime = d_avgSTime = 0;
 
@@ -818,6 +825,7 @@ CachePerformance::VecTimeType CachePerformance::runTests(VecIntType&      args,
 CachePerformance::VecTimeType CachePerformance::runTest(VecIntType&       args,
                                                 CachePerformance::RunFunc func)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     if (d_numThreads == 1) {
         // For a single thread, run calculation on the caller
         TimeType startWTime = bsls::TimeUtil::getTimer();
@@ -854,6 +862,7 @@ CachePerformance::VecTimeType CachePerformance::runTest(VecIntType&       args,
     for (int i = 0; i < d_numThreads; ++i) {
         bslmt::ThreadUtil::join(handles[i], &results[i]);
         VecTimeType *pRes = reinterpret_cast<VecTimeType*>(results[i]);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&pRes);
         for (size_t j = 0; j < pRes->size(); ++j) times.push_back((*pRes)[j]);
         delete pRes;
     }
@@ -863,6 +872,7 @@ CachePerformance::VecTimeType CachePerformance::runTest(VecIntType&       args,
 
 void CachePerformance::printResult()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // print the output from the calculation
     bsl::cout << "Title=" << d_title << "\n";
     bsl::cout << bsl::fixed << bsl::setprecision(1);
@@ -961,6 +971,7 @@ const char* CachePerformance::title() const
 int CachePerformance::testInsert(CachePerformance *cacheperf_p,
                                  VecIntType&       args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     // Insert rows one at a time into the specified `cacheperf_p` using the
     // specified `args` vector.  Only value in `args` is the current thread
     // index, 0 to `numThreads - 1`.
@@ -970,7 +981,7 @@ int CachePerformance::testInsert(CachePerformance *cacheperf_p,
 
     // Current thread number is the last (and only) argument
 
-    int  threadIdx = args[0];
+    int  threadIdx = BSLS_ASSERT_CONVEYOR_REF(args[0]);
     int  offset = size * threadIdx;
     char buf[12];
 
@@ -987,14 +998,16 @@ int CachePerformance::testInsert(CachePerformance *cacheperf_p,
 int CachePerformance::testInsertBulk(CachePerformance *cacheperf_p,
                                      VecIntType&       args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
+    BSLS_ASSERT_CONVEYOR_OBJECT(cacheperf_p);
     // Insert rows in bulk into the specified `cacheperf_p` using the
     // specified `args` vector.  `args[0]` is the number of batches to use.
     // `args[1]` (last parameter) is the current thread index,
     // 0 to `numThreads - 1`.
 
     int  numThreads = cacheperf_p->numThreads();
-    int  numBatches = args[0];
-    int  threadIdx = args[1];
+    int  numBatches = BSLS_ASSERT_CONVEYOR_REF(args[0]);
+    int  threadIdx = BSLS_ASSERT_CONVEYOR_REF(args[1]);
     int  size = cacheperf_p->numCalcs() / numThreads / numBatches;
     int  offset = size * numBatches * threadIdx;
     char buf[12];
@@ -1016,14 +1029,16 @@ int CachePerformance::testInsertBulk(CachePerformance *cacheperf_p,
 
 int CachePerformance::initRead(CachePerformance *cacheperf_p, VecIntType& args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
+    BSLS_ASSERT_CONVEYOR_OBJECT(cacheperf_p);
     // Preload the specified cache in `cacheperf_p` for subsequent tests using
     // the specified `args` vector.  `args[0]` is the number of values to load.
     // `arg[1]` is the sparsity of the data, that is, the distance between
     // consecutive values.  I.e: sparsity of 1 will preload 0, 1, 2, ...
     // Sparsity of 2 will preload 0, 2, 4, ..., etc.
 
-    int  size = args[0];
-    int  sparsity = args[1];
+    int  size = BSLS_ASSERT_CONVEYOR_REF(args[0]);
+    int  sparsity = BSLS_ASSERT_CONVEYOR_REF(args[1]);
     int  key = 0;
     char buf[12];
 
@@ -1042,6 +1057,7 @@ int CachePerformance::initRead(CachePerformance *cacheperf_p, VecIntType& args)
 
 int CachePerformance::testRead(CachePerformance *cacheperf_p, VecIntType& args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     // Run tryGetValue multiple times against the specified `cacheperf_p`,
     // using the specified `args` vector.  `0 to arg[0] - 1` is the range to
     // read from.  `args[1]` is the thread index, and is used as the seed for
@@ -1050,8 +1066,8 @@ int CachePerformance::testRead(CachePerformance *cacheperf_p, VecIntType& args)
     int numThreads = cacheperf_p->numThreads();
     int numCalcs = cacheperf_p->numCalcs();
     int numCalls = numCalcs / numThreads;
-    int range = args[0];
-    int threadIdx = args[1];
+    int range = BSLS_ASSERT_CONVEYOR_REF(args[0]);
+    int threadIdx = BSLS_ASSERT_CONVEYOR_REF(args[1]);
     int countErr = 0;
     srand(threadIdx);
     bsl::shared_ptr<bsl::string> valuePtr;
@@ -1071,6 +1087,7 @@ int CachePerformance::testRead(CachePerformance *cacheperf_p, VecIntType& args)
 int CachePerformance::testReadWrite(CachePerformance *cacheperf_p,
                                     VecIntType&       args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     // Run either insert of tryGetValue multiple times.  `args[0]` is the
     // number of values to load.  `arg[1]` is the sparsity: 1 - 0, 1, 2, ...;
     // 2 - 0, 2, 4, ..., etc.  `0 to arg[2] - 1` is the range to read from.
@@ -1079,8 +1096,8 @@ int CachePerformance::testReadWrite(CachePerformance *cacheperf_p,
     int countErr = 0;
     int numWThreads = cacheperf_p->numWThreads();
     int numCalcs = cacheperf_p->numCalcs();
-    int range = args[0];
-    int threadIdx = args[1];
+    int range = BSLS_ASSERT_CONVEYOR_REF(args[0]);
+    int threadIdx = BSLS_ASSERT_CONVEYOR_REF(args[1]);
 
     bool isWThread = threadIdx < numWThreads ? true : false;
     char buf[16];
@@ -1293,6 +1310,7 @@ struct TestVisitor {
 
     bool operator() (int key, const bsl::string& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         // Print out key and value
         if (veryVerbose) {
             bsl::cout << "Visiting " << key
@@ -2011,6 +2029,8 @@ class TestDriver {
 
         void operator() (const bsl::shared_ptr<VALUETYPE>& value)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             if (veryVerbose) {
                 bsl::cout << "Post-eviction callback: ["
                           << TstFacility::getIdentifier(*value)
@@ -2020,6 +2040,7 @@ class TestDriver {
             bsl::size_t idx;
             bool isExpected;
             callOpImp(&idx, &isExpected, value);
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_values_p);
             const PairType& pair = (*d_values_p)[idx];
 
             ASSERTV(TstFacility::getIdentifier(*value),
@@ -2045,6 +2066,8 @@ class TestDriver {
                        bool                             *isExpected,
                        const bsl::shared_ptr<VALUETYPE>& value)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
             if (d_idx_p) {
                 *idx = d_idx_p[*d_pos_p];
             }
@@ -2052,6 +2075,7 @@ class TestDriver {
                 *idx = *d_pos_p + d_start;
             }
             ++(*d_pos_p);
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_values_p);
             const PairType& pair = (*d_values_p)[*idx];
             *isExpected = areEqual(*value, pair.second);
         }
@@ -2101,6 +2125,7 @@ class TestDriver {
 
         bool operator() (const KEYTYPE& key, const VALUETYPE& value)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             if (veryVerbose) {
                 bsl::cout << "Visitor: ["
                           << TstFacility::getIdentifier(key) << ", "
@@ -2115,6 +2140,7 @@ class TestDriver {
             bool ret = callOpImp(&idx, &isKeyExpected, &isValueExpected,
                                  key, value);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_values_p);
             const PairType& pair = (*d_values_p)[idx];
             ASSERTV(TstFacility::getIdentifier(key),
                     TstFacility::getIdentifier(pair.first),
@@ -2140,6 +2166,7 @@ class TestDriver {
                        const KEYTYPE&    key,
                        const VALUETYPE&  value)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             bool ret;
             if (d_args_p) {
                 *idx = d_args_p[d_pos].d_idx;
@@ -2152,6 +2179,7 @@ class TestDriver {
 
             ++d_pos;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_values_p);
             const PairType& pair = (*d_values_p)[*idx];
             *isKeyExpected = areEqual(key, pair.first);
             *isValueExpected = areEqual(value, pair.second);

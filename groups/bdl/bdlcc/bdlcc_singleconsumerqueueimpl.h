@@ -696,6 +696,7 @@ typename SingleConsumerQueueImpl<TYPE, ATOMIC_OP, MUTEX, CONDITION>::Node *
                      SingleConsumerQueueImpl<TYPE, ATOMIC_OP, MUTEX, CONDITION>
                                                              ::pushBackHelper()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (1 == (ATOMIC_OP::getUintAcquire(&d_pushBackDisabled) & 1)) {
         return 0;                                                     // RETURN
     }
@@ -1268,6 +1269,7 @@ template <class TYPE, class ATOMIC_OP, class MUTEX, class CONDITION>
 bslma::Allocator *SingleConsumerQueueImpl<TYPE, ATOMIC_OP, MUTEX, CONDITION>::
                                                               allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_allocator.allocator();
 }
 

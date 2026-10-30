@@ -632,8 +632,10 @@ ObjectCatalog_AutoCleanup<TYPE>::ObjectCatalog_AutoCleanup(
 template <class TYPE>
 ObjectCatalog_AutoCleanup<TYPE>::~ObjectCatalog_AutoCleanup()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_catalog_p && d_node_p) {
         if (d_deallocateFlag) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_catalog_p);
             // Return node to the pool.
 
             d_catalog_p->d_nodePool.deallocate(d_node_p);
@@ -688,6 +690,7 @@ template <class TYPE>
 inline
 void ObjectCatalog<TYPE>::freeNode(typename ObjectCatalog<TYPE>::Node *node)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
     BSLS_ASSERT(node->d_handle & k_BUSY_INDICATOR);
 
     node->d_handle += k_GENERATION_INC;
@@ -702,6 +705,8 @@ template <class TYPE>
 template <class VECTOR>
 void ObjectCatalog<TYPE>::removeAllImp(VECTOR *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     static const bool isVector =
                             bsl::is_same<bsl::vector<TYPE>, VECTOR>::value
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR
@@ -742,6 +747,7 @@ inline
 typename ObjectCatalog<TYPE>::Node *
 ObjectCatalog<TYPE>::findNode(int handle) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int index = handle & k_INDEX_MASK;
     // if (d_nodes.size() < index || !(handle & k_BUSY_INDICATOR)) return 0;
 
@@ -778,6 +784,7 @@ ObjectCatalog<TYPE>::~ObjectCatalog()
 template <class TYPE>
 int ObjectCatalog<TYPE>::add(const TYPE& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int handle;
     bslmt::WriteLockGuard<bslmt::RWMutex> guard(&d_lock);
     ObjectCatalog_AutoCleanup<TYPE> proctor(this);
@@ -826,6 +833,7 @@ int ObjectCatalog<TYPE>::add(const TYPE& object)
 template <class TYPE>
 int ObjectCatalog<TYPE>::add(bslmf::MovableRef<TYPE> object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     TYPE& local = object;
 
     int handle;
@@ -981,6 +989,7 @@ template <class TYPE>
 inline
 bslma::Allocator *ObjectCatalog<TYPE>::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_nodePool.allocator();
 }
 
@@ -1045,10 +1054,11 @@ const TYPE& ObjectCatalog<TYPE>::value(int handle) const
 template <class TYPE>
 void ObjectCatalog<TYPE>::verifyState() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_lock);
 
-    BSLS_ASSERT(             0 <= d_length);
-    BSLS_ASSERT(d_nodes.size() >= static_cast<unsigned>(d_length));
+    BSLS_ASSERT_NONCONVEYOR(             0 <= d_length);
+    BSLS_ASSERT_NONCONVEYOR(d_nodes.size() >= static_cast<unsigned>(d_length));
 
     unsigned numBusy = 0, numFree = 0;
     for (unsigned ii = 0; ii < d_nodes.size(); ++ii) {
@@ -1057,11 +1067,12 @@ void ObjectCatalog<TYPE>::verifyState() const
         handle & k_BUSY_INDICATOR ? ++numBusy
                                   : ++numFree;
     }
-    BSLS_ASSERT(          numBusy == static_cast<unsigned>(d_length));
+    BSLS_ASSERT_NONCONVEYOR(
+                                   numBusy == static_cast<unsigned>(d_length));
     BSLS_ASSERT(numFree + numBusy == d_nodes.size());
 
     for (const Node *p = d_nextFreeNode_p; p; p = p->d_payload.d_next_p) {
-        BSLS_ASSERT(!(p->d_handle & k_BUSY_INDICATOR));
+        BSLS_ASSERT_NONCONVEYOR(!(p->d_handle & k_BUSY_INDICATOR));
         --numFree;
     }
     BSLS_ASSERT(0 == numFree);
@@ -1109,7 +1120,9 @@ ObjectCatalogIter<TYPE>::~ObjectCatalogIter()
 template <class TYPE>
 void ObjectCatalogIter<TYPE>::operator++()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ++d_index;
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_catalog_p);
     while ((unsigned)d_index < d_catalog_p->d_nodes.size() &&
           !(d_catalog_p->d_nodes[d_index]->d_handle &
               ObjectCatalog<TYPE>::k_BUSY_INDICATOR)) {
@@ -1121,6 +1134,8 @@ template <class TYPE>
 inline
 int ObjectCatalogIter<TYPE>::handle() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_catalog_p);
     BSLS_ASSERT(static_cast<unsigned>(d_index) < d_catalog_p->d_nodes.size());
 
     return d_catalog_p->d_nodes[d_index]->d_handle;
@@ -1130,6 +1145,8 @@ template <class TYPE>
 inline
 const TYPE& ObjectCatalogIter<TYPE>::value() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_catalog_p);
     BSLS_ASSERT(static_cast<unsigned>(d_index) < d_catalog_p->d_nodes.size());
 
     return *ObjectCatalog<TYPE>::getNodeValue(d_catalog_p->d_nodes[d_index]);
@@ -1142,6 +1159,8 @@ template <class TYPE>
 inline
 bdlcc::ObjectCatalogIter<TYPE>::operator const void *() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_catalog_p);
     return static_cast<unsigned>(d_index) < d_catalog_p->d_nodes.size()
          ? this
          : 0;
