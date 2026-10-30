@@ -1204,6 +1204,7 @@ STREAM& InStreamFunctions::bdexStreamInImp(STREAM&              stream,
     // A compilation error indicating the next line of code implies the class
     // of 'VALUE_TYPE' does not support the 'bdexStreamIn' method.
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&variable);
     return variable.bdexStreamIn(stream, version);
 }
 

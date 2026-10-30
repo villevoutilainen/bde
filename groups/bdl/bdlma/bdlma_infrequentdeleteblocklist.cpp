@@ -49,6 +49,7 @@ namespace bdlma {
 // CREATORS
 InfrequentDeleteBlockList::~InfrequentDeleteBlockList()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     release();
 }
 
@@ -61,14 +62,16 @@ void *InfrequentDeleteBlockList::allocate(bsls::Types::size_type size)
         Block *block =
                       reinterpret_cast<Block *>(d_allocator_p->allocate(size));
 
-        BSLS_ASSERT(0 == bsls::AlignmentUtil::calculateAlignmentOffset(
+        BSLS_ASSERT_NONCONVEYOR(
+                            0 == bsls::AlignmentUtil::calculateAlignmentOffset(
                                      reinterpret_cast<void *>(block),
                                      bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT));
 
         block->d_next_p = d_head_p;
         d_head_p        = block;
 
-        BSLS_ASSERT(0 == bsls::AlignmentUtil::calculateAlignmentOffset(
+        BSLS_ASSERT_NONCONVEYOR(
+                            0 == bsls::AlignmentUtil::calculateAlignmentOffset(
                                     reinterpret_cast<void *>(&block->d_memory),
                                     bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT));
 

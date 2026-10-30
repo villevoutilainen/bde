@@ -267,6 +267,7 @@ RawDeleterProctor<TYPE, ALLOCATOR>::~RawDeleterProctor()
     BSLS_ASSERT_SAFE(d_allocator_p);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(0 != d_object_p)) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_allocator_p);
         DeleterHelper::deleteObjectRaw(d_object_p, d_allocator_p);
     }
 }

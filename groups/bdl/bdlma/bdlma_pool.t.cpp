@@ -281,20 +281,22 @@ int growNumBlocks(int numBlocks, int maxNumBlocks)
         // MANIPULATORS
 
         /// Append the specified `value` to this array.
-        void append(const TYPE& value);
+        void append(const TYPE& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Remove all elements from this array.
-        void removeAll();
+        void removeAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         // ACCESSORS
 
         /// Return the number of elements in this array.
-        bsl::size_t length() const;
+        bsl::size_t length() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Return a reference providing non-modifiable access to the value
         /// at the specified `index` in this array.  The behavior is
         /// undefined unless `0 <= index < length()`.
-        const TYPE& operator[](int index) const;
+        const TYPE& operator[](int index) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     };
 // ```
 // Next, we provide the implementation of the `my_PooledArray` methods that are
@@ -365,6 +367,7 @@ int growNumBlocks(int numBlocks, int maxNumBlocks)
     void my_PooledArray<TYPE>::append(const TYPE& value)
     {
         TYPE *tmp = new (d_pool) TYPE(value);
+        BSLS_ASSERT_CONVEYOR_OBJECT(tmp);
         d_array_p.push_back(tmp);
     }
 // ```
@@ -375,6 +378,8 @@ int growNumBlocks(int numBlocks, int maxNumBlocks)
 
 template <class TYPE>
 ostream& operator<<(ostream& stream, const my_PooledArray<TYPE>& array)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(array)
 {
     stream << "[ ";
     for (int i = 0; i < static_cast<int>(array.length()); ++i) {
@@ -413,11 +418,13 @@ class my_Type {
 
 my_Type *newMyType(bdlma::Pool *pool, bslma::Allocator *basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(pool);
     return new (*pool) my_Type(5, basicAllocator);
 }
 
 void deleteMyType(bdlma::Pool *pool, my_Type *p)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(pool);
     p->~my_Type();
     pool->deallocate(p);
 }
@@ -1098,8 +1105,10 @@ int main(int argc, char *argv[])
 
         my_ClassCode=0;
         my_Class1 *c1 = new (mX) my_Class1;
+        BSLS_ASSERT_CONVEYOR_OBJECT(c1);
         ASSERT(c1);  ASSERT(1 == my_ClassCode);
         my_Class2 *c2 = new (mX) my_Class2;
+        BSLS_ASSERT_CONVEYOR_OBJECT(c2);
         ASSERT(c2);  ASSERT(3 == my_ClassCode);
 
         if (verbose) cout << "\nNegative Testing." << endl;

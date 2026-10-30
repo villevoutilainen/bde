@@ -191,6 +191,7 @@ BSLS_IDENT("$Id: $")
 #include <bslma_allocator.h>
 
 #include <bsls_alignment.h>
+#include <bsls_assert.h>
 #include <bsls_blockgrowth.h>
 #include <bsls_keyword.h>
 #include <bsls_performancehint.h>
@@ -315,14 +316,16 @@ class BufferedSequentialAllocator : public ManagedAllocator {
     /// returned.  If the allocation request exceeds the remaining free
     /// memory space in the external buffer supplied at construction, use
     /// memory obtained from the allocator supplied at construction.
-    void *allocate(size_type size) BSLS_KEYWORD_OVERRIDE;
+    void *allocate(size_type size) BSLS_KEYWORD_OVERRIDE
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// This method has no effect on the memory block at the specified
     /// `address` as all memory allocated by this allocator is managed.  The
     /// behavior is undefined unless `address` is 0, or was allocated by
     /// this allocator and has not already been deallocated.  The effect of
     /// using `address` after this call is undefined.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Release all memory allocated through this allocator and return to
     /// the underlying allocator *all* memory except the external buffer
@@ -334,7 +337,7 @@ class BufferedSequentialAllocator : public ManagedAllocator {
     /// The effect of subsequently - to this invokation of `release` - using
     /// a pointer obtained from this object prior to this call to `release`
     /// is undefined.
-    void release() BSLS_KEYWORD_OVERRIDE;
+    void release() BSLS_KEYWORD_OVERRIDE BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Release all memory allocated through this allocator and return to
     /// the underlying allocator *only* memory that was allocated outside of
@@ -343,12 +346,12 @@ class BufferedSequentialAllocator : public ManagedAllocator {
     /// allocations.  The effect of subsequently - to this invokation of
     /// `rewind` - using a pointer obtained from this object prior to this
     /// call to `rewind` is undefined.
-    virtual void rewind();
+    virtual void rewind() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the allocator passed at construction.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================
@@ -367,6 +370,7 @@ BufferedSequentialAllocator::BufferedSequentialAllocator(
                                         bslma::Allocator       *basicAllocator)
 : d_pool(buffer, size, basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -377,6 +381,7 @@ BufferedSequentialAllocator::BufferedSequentialAllocator(
                                    bslma::Allocator            *basicAllocator)
 : d_pool(buffer, size, growthStrategy, basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -387,6 +392,7 @@ BufferedSequentialAllocator::BufferedSequentialAllocator(
                                   bslma::Allocator          *basicAllocator)
 : d_pool(buffer, size, alignmentStrategy, basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -398,6 +404,7 @@ BufferedSequentialAllocator::BufferedSequentialAllocator(
                                 bslma::Allocator            *basicAllocator)
 : d_pool(buffer, size, growthStrategy, alignmentStrategy, basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -408,6 +415,7 @@ BufferedSequentialAllocator::BufferedSequentialAllocator(
                                         bslma::Allocator       *basicAllocator)
 : d_pool(buffer, size, maxBufferSize, basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -419,6 +427,7 @@ BufferedSequentialAllocator::BufferedSequentialAllocator(
                                    bslma::Allocator            *basicAllocator)
 : d_pool(buffer, size, maxBufferSize, growthStrategy, basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -430,6 +439,7 @@ BufferedSequentialAllocator::BufferedSequentialAllocator(
                                   bslma::Allocator          *basicAllocator)
 : d_pool(buffer, size, maxBufferSize, alignmentStrategy, basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -447,6 +457,7 @@ BufferedSequentialAllocator::BufferedSequentialAllocator(
          alignmentStrategy,
          basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS

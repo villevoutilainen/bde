@@ -55,6 +55,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bdlscm_version.h>
 
+#include <bsls_assert.h>
+
 namespace BloombergLP {
 namespace bdlma {
 
@@ -77,7 +79,8 @@ class Deleter {
     /// Destroy the specified `instance` based on its static type and return
     /// its memory footprint to the appropriate memory manager.  Note that a
     /// particular implementation is allowed to destroy this deleter itself.
-    virtual void deleteObject(TYPE *instance) = 0;
+    virtual void deleteObject(TYPE *instance)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES_THIS= 0;
 };
 
 // ============================================================================

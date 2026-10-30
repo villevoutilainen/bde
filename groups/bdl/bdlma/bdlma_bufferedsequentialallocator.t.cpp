@@ -169,6 +169,7 @@ static bsls::AlignedBuffer<k_BUFFER_SIZE> bufferStorage;
 // ```
     double calculate(const bsl::vector<double>& data)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&data);
 // ```
 // Since the amount of memory needed is known in advance, we can optimize the
 // memory allocation by using a `bdlma::BufferedSequentialAllocator` to supply
@@ -209,6 +210,7 @@ static bsls::AlignedBuffer<k_BUFFER_SIZE> bufferStorage;
 //-----------------------------------------------------------------------------
 
 void receivePriceQuotes(bsl::map<bsl::string, double> *updateMap)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(updateMap)
 {
     enum { k_NUM_SECURITIES = 100 };
 

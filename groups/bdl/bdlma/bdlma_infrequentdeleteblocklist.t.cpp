@@ -214,6 +214,7 @@ bsls::Types::size_type roundUp(bsls::Types::size_type x,
     inline
     void my_StrPool::release()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_blockList.release();
         d_block_p = 0;
     }
@@ -234,6 +235,7 @@ bsls::Types::size_type roundUp(bsls::Types::size_type x,
     // PRIVATE MANIPULATORS
     void *my_StrPool::allocateBlock(bsls::Types::size_type numBytes)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ASSERT(0 < numBytes);
 
         if (k_THRESHOLD < numBytes) {
@@ -782,7 +784,9 @@ int main(int argc, char *argv[])
             LOOP_ASSERT(CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
             Obj&                   mX = *objPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             bslma::TestAllocator&  oa = *objAllocatorPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
             bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
             // Verify no allocation from the object allocator.

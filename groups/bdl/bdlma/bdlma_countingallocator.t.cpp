@@ -175,8 +175,11 @@ struct ThreadInfo {
 extern "C" void *threadFunction1(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     Obj& mX = *info->d_obj_p;  const Obj& X = mX;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
     int n = 2;
 
@@ -203,8 +206,11 @@ extern "C" void *threadFunction1(void *arg)
 extern "C" void *threadFunction2(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     Obj& mX = *info->d_obj_p;  const Obj& X = mX;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
     int n = 3;
 
@@ -233,8 +239,11 @@ extern "C" void *threadFunction2(void *arg)
 extern "C" void *threadFunction3(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     Obj& mX = *info->d_obj_p;  const Obj& X = mX;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
     int n = 5;
 
@@ -378,6 +387,7 @@ extern "C" void *threadFunction3(void *arg)
 // ```
     void DoubleStack::pop()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT(0 < d_length);
 
         d_allocator_p->deallocate(d_stack_p[d_length - 1]);
@@ -878,7 +888,10 @@ if (veryVerbose)
             LOOP_ASSERT(CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
             Obj&                   mX = *objPtr;  const Obj& X = mX;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             bslma::TestAllocator&  oa = *objAllocatorPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
             bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
             // Verify byte counts are initialized to 0.
@@ -1347,7 +1360,10 @@ if (veryVerbose)
             LOOP_ASSERT(CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
             Obj&                   mX = *objPtr;  const Obj& X = mX;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             bslma::TestAllocator&  oa = *objAllocatorPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
             bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
             // Verify byte counts are initialized to 0.

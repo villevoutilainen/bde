@@ -104,25 +104,26 @@ class MemoryBlockDescriptor {
     /// Set the address and size of the memory block described by this object
     /// to the specified `address` and `size`.  The behavior is undefined if
     /// `address' is 0 but `size` is not also 0.
-    void setAddressAndSize(void *address, size_type size);
+    void setAddressAndSize(void *address, size_type size)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return `true` if this memory block descriptor describes a null
     /// memory block and `false` otherwise.  A null memory block has an
     /// address and size of 0.
-    bool isNull() const;
+    bool isNull() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the address of the modifiable memory block described by this
     /// object, or 0 if this is a null descriptor.
-    void *address() const;
+    void *address() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the size of the memory block described by this object.
-    size_type size() const;
+    size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Format the attributes of this memory block descriptor to `stdout` in
     /// some reasonable (single-line) format.
-    void print() const;
+    void print() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // FREE OPERATORS
@@ -131,13 +132,15 @@ class MemoryBlockDescriptor {
 /// have the same value and `false` otherwise.  Two descriptors have the same
 /// value if and only if they have the same address and size.
 bool operator==(const MemoryBlockDescriptor& lhs,
-                const MemoryBlockDescriptor& rhs);
+                const MemoryBlockDescriptor& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` memory block descriptors do
 /// not have the same value and `false` otherwise.  Two descriptors differ in
 /// value if they differ in either their address or size.
 bool operator!=(const MemoryBlockDescriptor& lhs,
-                const MemoryBlockDescriptor& rhs);
+                const MemoryBlockDescriptor& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // ============================================================================
 //                             INLINE DEFINITIONS
@@ -153,6 +156,7 @@ MemoryBlockDescriptor::MemoryBlockDescriptor()
 : d_address_p(0)
 , d_size(0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -161,6 +165,7 @@ MemoryBlockDescriptor::MemoryBlockDescriptor(void      *address,
 : d_address_p(address)
 , d_size(size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(address || 0 == size);
 }
 
@@ -170,6 +175,8 @@ MemoryBlockDescriptor::MemoryBlockDescriptor(
 : d_address_p(original.d_address_p)
 , d_size(original.d_size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 // MANIPULATORS

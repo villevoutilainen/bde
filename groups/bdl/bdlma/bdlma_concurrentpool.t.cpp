@@ -220,20 +220,22 @@ struct MostDerived : LeftChild, MiddleChild, RightChild {
         // MANIPULATORS
 
         /// Append the specified `value` to this array.
-        void append(const T &value);
+        void append(const T &value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Remove all elements from this array.
-        void removeAll();
+        void removeAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         // ACCESSORS
 
         /// Return the number of elements in this array.
-        int length() const;
+        int length() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
         /// Return a reference to the non-modifiable value at the specified
         /// `index` in this array.  The behavior is undefined unless
         /// `0 <= index < length()`.
-        const T& operator[](int index) const;
+        const T& operator[](int index) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     };
 // ```
     // CREATORS
@@ -262,6 +264,7 @@ struct MostDerived : LeftChild, MiddleChild, RightChild {
     void my_PooledArray<T>::append(const T& value)
     {
         T *tmp = new (d_pool) T(value);
+        BSLS_ASSERT_CONVEYOR_OBJECT(tmp);
         d_array_p.push_back(tmp);
     }
 // ```
@@ -393,6 +396,7 @@ bslmt::Barrier barrier(k_NUM_THREADS);
 extern "C"
 void *workerThread(void *arg) {
     Obj& mX = *static_cast<Obj *>(arg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
 
     ASSERT(k_OBJECT_SIZE == mX.blockSize());
 
@@ -1174,12 +1178,15 @@ int main(int argc, char *argv[])
             Obj mX(bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT, &sa);
 
             int *a = new (mX) int;
+            BSLS_ASSERT_CONVEYOR_OBJECT(a);
             int *b = new (mX) int;
+            BSLS_ASSERT_CONVEYOR_OBJECT(b);
 
             mX.deleteObject(a);
             ASSERT(a == new(mX) int);
 
             int *c = new (mX) int;
+            BSLS_ASSERT_CONVEYOR_OBJECT(c);
 
             mX.deleteObject(a);
             ASSERT(a == new(mX) int);

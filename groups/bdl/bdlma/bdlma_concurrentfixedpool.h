@@ -238,11 +238,11 @@ class ConcurrentFixedPool {
     /// construction.  Return the address of that block or 0 if the pool is
     /// exhausted (i.e., `poolSize()` memory blocks have already been
     /// allocated from this pool).
-    void *allocate();
+    void *allocate() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Deallocate the memory block at the specified `address` back to this
     /// pool for reuse.
-    void deallocate(void *address);
+    void deallocate(void *address) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Destroy the specified `object` based on its dynamic type and then
     /// use this allocator to deallocate its memory footprint.  Do nothing
@@ -252,7 +252,7 @@ class ConcurrentFixedPool {
     /// `dynamic_cast<void *>(object)` is applied if `TYPE` is polymorphic,
     /// and `static_cast<void *>(object)` is applied otherwise.
     template<class TYPE>
-    void deleteObject(const TYPE *object);
+    void deleteObject(const TYPE *object) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Destroy the specified `object` based on its static type and then use
     /// this allocator to deallocate its memory footprint.  Do nothing if
@@ -260,7 +260,8 @@ class ConcurrentFixedPool {
     /// base-class pointer to a derived type, was not allocated using this
     /// allocator, or has already been deallocated.
     template <class TYPE>
-    void deleteObjectRaw(const TYPE *object);
+    void deleteObjectRaw(const TYPE *object)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Release all memory currently allocated through this object.  Note
     /// that this method should only be invoked when it is known that no
@@ -272,7 +273,7 @@ class ConcurrentFixedPool {
     /// object destructors for any allocated objects, since it has no
     /// knowledge of their type.  If object destruction is required, use
     /// `ConcurrentFixedPool::deleteObject()`.
-    void release();
+    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reserve memory from this pool to satisfy memory requests for at
     /// least the specified `numObjects` before the pool replenishes.  The
@@ -280,7 +281,7 @@ class ConcurrentFixedPool {
     /// and the number of objects that could not be reserved otherwise.
     /// Note that this method fails if the number of memory blocks already
     /// allocated plus `numObjects` exceeds `poolSize()`.
-    int reserveCapacity(int numObjects);
+    int reserveCapacity(int numObjects) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Configure this pool with the specified non-negative `backoffLevel`
     /// that controls the amount of spinning that occurs when calls to this
@@ -289,38 +290,39 @@ class ConcurrentFixedPool {
     /// amounts of spinning.  The behavior is undefined unless
     /// `0 <= backoffLevel`.  Note that both contention detection and
     /// spinning strategy are implementation defined.
-    void setBackoffLevel(int backoffLevel);
+    void setBackoffLevel(int backoffLevel) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the non-negative `backoffLevel` that controls the amount of
     /// spinning that occurs when calls to this pool encounter contention.
-    int backoffLevel() const;
+    int backoffLevel() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an index in the range from 0 to the maximum size of this pool
     /// that uniquely identifies the memory block at the specified
     /// `address`.  The behavior is undefined unless `address` corresponds
     /// to a memory block allocated from this pool.
-    int indexFromAddress(void *address) const;
+    int indexFromAddress(void *address) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the size of the memory blocks allocated from this object.
     /// Note that all blocks have the same size.
-    int objectSize() const;
+    int objectSize() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the address of the memory block identified by the specified
     /// `index`.  The behavior is undefined unless the index has been
     /// obtained through `indexFromAddress`.
-    void *addressFromIndex(int index) const;
+    void *addressFromIndex(int index) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the maximum size of this pool.
-    int poolSize() const;
+    int poolSize() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // Aspects
 
     /// Return the allocator used by this object to allocate memory.  Note
     /// that this allocator can not be used to deallocate memory
     /// allocated through this pool.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 }  // close package namespace
@@ -352,7 +354,8 @@ class ConcurrentFixedPool {
 /// ```
 inline
 void *operator new(bsl::size_t                              size,
-                   BloombergLP::bdlma::ConcurrentFixedPool& pool);
+                   BloombergLP::bdlma::ConcurrentFixedPool& pool)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(pool);
 
 /// Use the specified `pool` to deallocate the memory at the specified
 /// `address`.  The behavior is undefined unless `address` was allocated
@@ -362,7 +365,8 @@ void *operator new(bsl::size_t                              size,
 /// `bdlma::ConcurrentFixedPool::deleteObject()` instead.
 inline
 void operator delete(void                                     *address,
-                     BloombergLP::bdlma::ConcurrentFixedPool&  pool);
+                     BloombergLP::bdlma::ConcurrentFixedPool&  pool)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(pool);
 
 namespace BloombergLP {
 namespace bdlma {
@@ -448,7 +452,7 @@ void *operator new(bsl::size_t                              size,
                    BloombergLP::bdlma::ConcurrentFixedPool& pool)
 {
     using namespace BloombergLP;
-    BSLS_ASSERT((int) size <= pool.objectSize()
+    BSLS_ASSERT_NONCONVEYOR((int) size <= pool.objectSize()
         && bsls::AlignmentUtil::calculateAlignmentFromSize((int)size)
         <= bsls::AlignmentUtil::calculateAlignmentFromSize(pool.objectSize()));
 

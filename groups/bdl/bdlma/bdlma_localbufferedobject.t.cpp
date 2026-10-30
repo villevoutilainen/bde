@@ -294,6 +294,7 @@ NameGenerator::NameGenerator(size_t numRawNames, bslma::Allocator *alloc)
 // ACCESSORS
 void NameGenerator::assessNames() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::TestAllocator ossTa;
     bsl::ostringstream oss(&ossTa);
 
@@ -353,6 +354,7 @@ namespace u {
 
 void setMATTVector(bsl::vector<MATT> *result, unsigned multiple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     for (unsigned uu = 0; uu < result->size(); ++uu) {
         (*result)[uu].setData(multiple * uu);
     }
@@ -490,6 +492,7 @@ class B {
 
     B& operator=(const A& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         for (int ii = 0; ii < e_NUM_MEMBERS; ++ii) {
             (*this)[ii].setData(ii * rhs.d_ii);
         }
@@ -501,6 +504,7 @@ class B {
 
     B& operator=(bslmf::MovableRef<A> rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         A& local = rhs;
 
         for (int ii = 0; ii < e_NUM_MEMBERS; ++ii) {
@@ -549,6 +553,7 @@ class B {
     void useMemory(bsl::size_t size =
                         bdlma::LocalBufferedObject<bsl::string>::k_BUFFER_SIZE)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_vec.resize(d_vec.size() + size);
     }
 
@@ -574,7 +579,10 @@ class B {
 
     bool operator==(const B& rhs) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         const B& lhs = *this;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
 
         int ii = 0;
         for (; ii < e_NUM_MEMBERS; ++ii) {

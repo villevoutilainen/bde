@@ -59,7 +59,7 @@ void Multipool::initialize(bsls::BlockGrowth::Strategy growthStrategy,
                                  maxBlocksPerChunk,
                                  d_allocator_p);
 
-        BSLS_ASSERT(d_maxBlockSize <=
+        BSLS_ASSERT_NONCONVEYOR(d_maxBlockSize <=
                        bsl::numeric_limits<bsls::Types::size_type>::max() / 2);
 
         d_maxBlockSize *= 2;
@@ -95,7 +95,7 @@ void Multipool::initialize(
                                  maxBlocksPerChunk,
                                  d_allocator_p);
 
-        BSLS_ASSERT(d_maxBlockSize <=
+        BSLS_ASSERT_NONCONVEYOR(d_maxBlockSize <=
                        bsl::numeric_limits<bsls::Types::size_type>::max() / 2);
 
         d_maxBlockSize *= 2;
@@ -129,7 +129,7 @@ void Multipool::initialize(bsls::BlockGrowth::Strategy  growthStrategy,
                                  maxBlocksPerChunkArray[i],
                                  d_allocator_p);
 
-        BSLS_ASSERT(d_maxBlockSize <=
+        BSLS_ASSERT_NONCONVEYOR(d_maxBlockSize <=
                        bsl::numeric_limits<bsls::Types::size_type>::max() / 2);
 
         d_maxBlockSize *= 2;
@@ -165,7 +165,7 @@ void Multipool::initialize(
                                  maxBlocksPerChunkArray[i],
                                  d_allocator_p);
 
-        BSLS_ASSERT(d_maxBlockSize <=
+        BSLS_ASSERT_NONCONVEYOR(d_maxBlockSize <=
                        bsl::numeric_limits<bsls::Types::size_type>::max() / 2);
 
         d_maxBlockSize *= 2;
@@ -180,6 +180,7 @@ void Multipool::initialize(
 // PRIVATE ACCESSORS
 int Multipool::findPool(bsls::Types::size_type size) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(size <= d_maxBlockSize);
 
     return 31 - bdlb::BitUtil::numLeadingUnsetBits(static_cast<bsl::uint32_t>(
@@ -192,6 +193,7 @@ Multipool::Multipool(bslma::Allocator *basicAllocator)
 , d_blockList(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     initialize(bsls::BlockGrowth::BSLS_GEOMETRIC, k_DEFAULT_MAX_CHUNK_SIZE);
 }
 
@@ -201,6 +203,7 @@ Multipool::Multipool(int               numPools,
 , d_blockList(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= numPools);
 
     initialize(bsls::BlockGrowth::BSLS_GEOMETRIC, k_DEFAULT_MAX_CHUNK_SIZE);
@@ -212,6 +215,7 @@ Multipool::Multipool(bsls::BlockGrowth::Strategy  growthStrategy,
 , d_blockList(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     initialize(growthStrategy, k_DEFAULT_MAX_CHUNK_SIZE);
 }
 
@@ -222,6 +226,7 @@ Multipool::Multipool(int                          numPools,
 , d_blockList(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= numPools);
 
     initialize(growthStrategy, k_DEFAULT_MAX_CHUNK_SIZE);
@@ -234,6 +239,7 @@ Multipool::Multipool(int                                numPools,
 , d_blockList(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= numPools);
     BSLS_ASSERT(growthStrategyArray);
 
@@ -248,6 +254,7 @@ Multipool::Multipool(int                          numPools,
 , d_blockList(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= numPools);
     BSLS_ASSERT(1 <= maxBlocksPerChunk);
 
@@ -262,6 +269,7 @@ Multipool::Multipool(int                                numPools,
 , d_blockList(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= numPools);
     BSLS_ASSERT(growthStrategyArray);
     BSLS_ASSERT(1 <= maxBlocksPerChunk);
@@ -277,6 +285,7 @@ Multipool::Multipool(int                          numPools,
 , d_blockList(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= numPools);
     BSLS_ASSERT(maxBlocksPerChunkArray);
 
@@ -291,6 +300,7 @@ Multipool::Multipool(int                                numPools,
 , d_blockList(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= numPools);
     BSLS_ASSERT(growthStrategyArray);
     BSLS_ASSERT(maxBlocksPerChunkArray);
@@ -300,6 +310,7 @@ Multipool::Multipool(int                                numPools,
 
 Multipool::~Multipool()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_pools_p);
     BSLS_ASSERT(1 <= d_numPools);
     BSLS_ASSERT(1 <= d_maxBlockSize);
@@ -307,7 +318,10 @@ Multipool::~Multipool()
 
     d_blockList.release();
     for (int i = 0; i < d_numPools; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[i]);
         d_pools_p[i].release();
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[i]);
         d_pools_p[i].~Pool();
     }
     d_allocator_p->deallocate(d_pools_p);
@@ -316,10 +330,12 @@ Multipool::~Multipool()
 // MANIPULATORS
 void *Multipool::allocate(bsls::Types::size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(size)) {
         if (size <= d_maxBlockSize) {
             const int pool = findPool(size);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[pool]);
             Header *p = static_cast<Header *>(d_pools_p[pool].allocate());
 
             p->d_header.d_poolIdx = pool;
@@ -342,6 +358,7 @@ void *Multipool::allocate(bsls::Types::size_type size)
 
 void Multipool::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(address);
 
     Header *h = static_cast<Header *>(address) - 1;
@@ -352,6 +369,7 @@ void Multipool::deallocate(void *address)
         d_blockList.deallocate(h);
     }
     else {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[pool]);
         d_pools_p[pool].deallocate(h);
     }
 }
@@ -359,6 +377,8 @@ void Multipool::deallocate(void *address)
 void Multipool::release()
 {
     for (int i = 0; i < d_numPools; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[i]);
         d_pools_p[i].release();
     }
     d_blockList.release();
@@ -366,11 +386,13 @@ void Multipool::release()
 
 void Multipool::reserveCapacity(bsls::Types::size_type size, int numBlocks)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(size <= d_maxBlockSize);
     BSLS_ASSERT(0    <= numBlocks);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(size)) {
         const int pool = findPool(size);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[pool]);
         d_pools_p[pool].reserveCapacity(numBlocks);
     }
 }

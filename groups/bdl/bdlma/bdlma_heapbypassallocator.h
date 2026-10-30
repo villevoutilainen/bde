@@ -95,6 +95,7 @@ BSLS_IDENT("$Id: $")
 #include <bslma_allocator.h>
 #include <bslmt_mutex.h>
 #include <bsls_alignmentutil.h>
+#include <bsls_assert.h>
 #include <bsls_atomic.h>
 #include <bsls_keyword.h>
 #include <bsls_performancehint.h>
@@ -192,10 +193,12 @@ class HeapBypassAllocator : public bslma::Allocator {
     /// of bytes, then it will throw a `std::bad_alloc` exception in an
     /// exception-enabled build, or else will abort the program in a non-
     /// exception build.  The behavior is undefined unless `0 <= size`.
-    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE;
+    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// This method has no effect for this heap bypass allocator.
-    void deallocate(void *) BSLS_KEYWORD_OVERRIDE;
+    void deallocate(void *) BSLS_KEYWORD_OVERRIDE
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 //=============================================================================

@@ -183,10 +183,12 @@ bslmt::Barrier g_barrier(k_NUM_THREADS);
 extern "C" void *workerThread(void *arg) {
 
     WorkerArgs *args = (WorkerArgs *) arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(args);
     ASSERT(0 != args);
     ASSERT(0 != args->d_sizes);
 
     Obj       *allocator  = args->d_allocator;
+    BSLS_ASSERT_CONVEYOR_OBJECT(allocator);
     const int *allocSizes = args->d_sizes;
     const int  numAllocs  = args->d_numSizes;
 
@@ -256,6 +258,7 @@ extern "C" void *workerThread(void *arg) {
         /// return the index of the new element.
         int pushBack(const TYPE& value)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
             d_elements.push_back(value);
             return static_cast<int>(d_elements.size()) - 1;
@@ -285,6 +288,7 @@ extern "C" void *workerThread(void *arg) {
         /// Return the number of elements in this thread-enabled vector.
         int length() const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
             return static_cast<int>(d_elements.size());
         }

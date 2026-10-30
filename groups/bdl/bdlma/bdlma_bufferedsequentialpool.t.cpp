@@ -310,6 +310,7 @@ static int blockSize(int numBytes)
     inline
     void my_BufferedIntDoubleArray::removeAll()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_pool.release();  // *very* efficient if `d_pool` has not exhausted
                            // the buffer supplied at construction
 
@@ -361,6 +362,7 @@ static int blockSize(int numBytes)
     // MANIPULATORS
     void my_BufferedIntDoubleArray::appendDouble(double value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (d_length >= d_capacity) {
             increaseCapacity();
         }
@@ -376,6 +378,7 @@ static int blockSize(int numBytes)
 
     void my_BufferedIntDoubleArray::appendInt(int value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (d_length >= d_capacity) {
             increaseCapacity();
         }
@@ -461,6 +464,7 @@ static int blockSize(int numBytes)
     inline
     void *my_FastAllocator::allocate(size_type size)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_pool.allocate(size);
     }
 
@@ -728,6 +732,7 @@ int main(int argc, char *argv[])
         Obj mX(buffer, u::k_BUFFER_SIZE);
 
         double *d = new(mX) double(3.0);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d);
 
         ASSERT(buffer    <= reinterpret_cast<char *>(d));
         ASSERT(reinterpret_cast<char *>(d) <  buffer + u::k_BUFFER_SIZE);
@@ -845,6 +850,7 @@ int main(int argc, char *argv[])
 
             void *addr = mX.allocate(sizeof(u::my_Class));
             u::my_Class *obj = new(addr) u::my_Class();
+            BSLS_ASSERT_CONVEYOR_OBJECT(obj);
 
             u::globalDestructorInvoked = false;
             mX.deleteObject(obj);
@@ -858,6 +864,7 @@ int main(int argc, char *argv[])
 
             void *addr = mX.allocate(sizeof(u::my_Class));
             u::my_Class *obj = new(addr) u::my_Class();
+            BSLS_ASSERT_CONVEYOR_OBJECT(obj);
 
             u::globalDestructorInvoked = false;
             mX.deleteObjectRaw(obj);

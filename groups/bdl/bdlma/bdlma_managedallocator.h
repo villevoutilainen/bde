@@ -335,6 +335,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bslma_allocator.h>
 
+#include <bsls_assert.h>
+
 namespace BloombergLP {
 namespace bdlma {
 
@@ -353,7 +355,7 @@ class ManagedAllocator : public bslma::Allocator {
     /// Release all memory currently allocated through this allocator.  The
     /// effect of using a pointer after this call that was obtained from
     /// this allocator before this call is undefined.
-    virtual void release() = 0;
+    virtual void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS = 0;
 };
 
 }  // close package namespace

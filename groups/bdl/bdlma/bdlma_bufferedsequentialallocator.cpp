@@ -14,6 +14,7 @@ namespace bdlma {
 // CREATORS
 BufferedSequentialAllocator::~BufferedSequentialAllocator()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_pool.release();
 }
 

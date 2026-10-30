@@ -75,6 +75,7 @@ uint64_t SequentialPool::initAlwaysUnavailable(
 // PRIVATE MANIPULATORS
 void *SequentialPool::allocateNonFastPath(bsls::Types::size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(size)) {
         // Note that empty blocks are maximally aligned, which allows simple
         // size comparisons.
@@ -186,6 +187,7 @@ SequentialPool::SequentialPool(bslma::Allocator *basicAllocator)
 , d_constantGrowthSize(0)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 SequentialPool::SequentialPool(bsls::BlockGrowth::Strategy  growthStrategy,
@@ -202,6 +204,7 @@ SequentialPool::SequentialPool(bsls::BlockGrowth::Strategy  growthStrategy,
                        : k_INITIAL_SIZE)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 SequentialPool::SequentialPool(bsls::Alignment::Strategy  alignmentStrategy,
@@ -216,6 +219,7 @@ SequentialPool::SequentialPool(bsls::Alignment::Strategy  alignmentStrategy,
 , d_constantGrowthSize(0)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 SequentialPool::SequentialPool(bsls::BlockGrowth::Strategy  growthStrategy,
@@ -233,6 +237,7 @@ SequentialPool::SequentialPool(bsls::BlockGrowth::Strategy  growthStrategy,
                        : k_INITIAL_SIZE)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 SequentialPool::SequentialPool(int initialSize)
@@ -246,6 +251,7 @@ SequentialPool::SequentialPool(int initialSize)
 , d_constantGrowthSize(0)
 , d_allocator_p(bslma::Default::allocator(0))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 < initialSize);
 
     reserveCapacity(initialSize);
@@ -263,6 +269,7 @@ SequentialPool::SequentialPool(bsls::Types::size_type  initialSize,
 , d_constantGrowthSize(0)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 < initialSize);
 
     reserveCapacity(initialSize);
@@ -283,6 +290,7 @@ SequentialPool::SequentialPool(bsls::Types::size_type       initialSize,
                        : initialSize)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 < initialSize);
 
     reserveCapacity(initialSize);
@@ -301,6 +309,7 @@ SequentialPool::SequentialPool(bsls::Types::size_type     initialSize,
 , d_constantGrowthSize(0)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 < initialSize);
 
     reserveCapacity(initialSize);
@@ -322,6 +331,7 @@ SequentialPool::SequentialPool(bsls::Types::size_type       initialSize,
                        : initialSize)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 < initialSize);
 
     reserveCapacity(initialSize);
@@ -340,6 +350,7 @@ SequentialPool::SequentialPool(bsls::Types::size_type  initialSize,
 , d_constantGrowthSize(0)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0           <  initialSize);
     BSLS_ASSERT(initialSize <= maxBufferSize);
 
@@ -362,6 +373,7 @@ SequentialPool::SequentialPool(bsls::Types::size_type       initialSize,
                        : initialSize)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0           <  initialSize);
     BSLS_ASSERT(initialSize <= maxBufferSize);
 
@@ -382,6 +394,7 @@ SequentialPool::SequentialPool(bsls::Types::size_type     initialSize,
 , d_constantGrowthSize(0)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0           <  initialSize);
     BSLS_ASSERT(initialSize <= maxBufferSize);
 
@@ -405,6 +418,7 @@ SequentialPool::SequentialPool(bsls::Types::size_type       initialSize,
                        : initialSize)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0           <  initialSize);
     BSLS_ASSERT(initialSize <= maxBufferSize);
 
@@ -430,6 +444,7 @@ SequentialPool::SequentialPool(
                        : initialSize)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0           <  initialSize);
     BSLS_ASSERT(initialSize <= maxBufferSize);
 

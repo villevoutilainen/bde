@@ -448,6 +448,7 @@ void stretchRemoveAll(Obj *object, int numElements, int objSize)
 
     void my_TestDataStructure::pop()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
             // Pop from the back of the list.
 
             d_list1.pop_front();

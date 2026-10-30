@@ -212,6 +212,7 @@ static void scribble(char *address, int size)
 /// behavior is undefined unless `0 <= numElements` and `0 <= objSize`.
 void stretchRemoveAll(Obj *object, int numElements, int objSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     ASSERT(object);
     ASSERT(0 <= numElements);
     ASSERT(0 <= objSize);
@@ -247,10 +248,12 @@ bslmt::Barrier g_barrier(k_NUM_THREADS);
 extern "C" void *workerThread(void *arg) {
 
     WorkerArgs *args = (WorkerArgs *) arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(args);
     ASSERT(0 != args);
     ASSERT(0 != args->d_sizes);
 
     Obj       *allocator  = args->d_allocator;
+    BSLS_ASSERT_CONVEYOR_OBJECT(allocator);
     const int *allocSizes = args->d_sizes;
     const int  numAllocs  = args->d_numSizes;
 
@@ -509,6 +512,7 @@ extern "C" void *workerThread(void *arg) {
     inline
     void my_MessageFactory::disposeAllMessages()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_multipool.release();
     }
 // ```
@@ -520,6 +524,7 @@ extern "C" void *workerThread(void *arg) {
     inline
     void my_MessageFactory::disposeMessage(my_Message *message)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_multipool.deleteObject(message);
     }
 // ```
@@ -560,6 +565,7 @@ extern "C" void *workerThread(void *arg) {
     // MANIPULATORS
     my_Message *my_MessageFactory::createMessage(const char *data)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         enum { k_SMALL = 8, k_MEDIUM = 16, k_LARGE = 32 };
 
         const int length = static_cast<int>(bsl::strlen(data));
@@ -655,12 +661,14 @@ extern "C" void *workerThread(void *arg) {
     inline
     void *my_MultipoolAllocator::allocate(bsls::Types::size_type size)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_multiPool.allocate(size);
     }
 
     inline
     void my_MultipoolAllocator::deallocate(void *address)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_multiPool.deallocate(address);
     }
 // ```
@@ -1084,7 +1092,12 @@ int main(int argc, char *argv[])
                                 LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                              recordPoolNum == calcPoolNum);
 
-                                pool[calcPoolNum]->allocate();
+                                {
+                                    bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                                    elem->allocate();
+                                }
                             }
 
                             LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1109,7 +1122,12 @@ int main(int argc, char *argv[])
                             LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                              recordPoolNum == calcPoolNum);
 
-                            pool[calcPoolNum]->allocate();
+                            {
+                                bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                                BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                                elem->allocate();
+                            }
                         }
 
                         LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1120,7 +1138,11 @@ int main(int argc, char *argv[])
 
                 // Release all pooled memory.
                 for (int j = 0; j < NUM_POOLS; ++j) {
-                    pool[j]->release();
+                    {
+                        bdlma::ConcurrentPool *const elem = pool[j];
+                        BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                        elem->release();
+                    }
                 }
             }
         }
@@ -1187,7 +1209,12 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                      recordPoolNum == calcPoolNum);
 
-                        pool[calcPoolNum]->allocate();
+                        {
+                            bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                            elem->allocate();
+                        }
                     }
 
                     LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1211,7 +1238,12 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                          recordPoolNum == calcPoolNum);
 
-                        pool[calcPoolNum]->allocate();
+                        {
+                            bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                            elem->allocate();
+                        }
                     }
 
                     LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1222,7 +1254,11 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < k_DEFAULT_NUM_POOLS; ++j) {
-                pool[j]->release();
+                {
+                    bdlma::ConcurrentPool *const elem = pool[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                    elem->release();
+                }
             }
         }
 
@@ -1288,7 +1324,12 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                      recordPoolNum == calcPoolNum);
 
-                        pool[calcPoolNum]->allocate();
+                        {
+                            bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                            elem->allocate();
+                        }
                     }
 
                     LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1312,7 +1353,12 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                          recordPoolNum == calcPoolNum);
 
-                        pool[calcPoolNum]->allocate();
+                        {
+                            bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                            elem->allocate();
+                        }
                     }
 
                     LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1323,7 +1369,11 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                pool[j]->release();
+                {
+                    bdlma::ConcurrentPool *const elem = pool[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                    elem->release();
+                }
             }
         }
 
@@ -1389,7 +1439,12 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                          recordPoolNum == calcPoolNum);
 
-                        pool[calcPoolNum]->allocate();
+                        {
+                            bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                            elem->allocate();
+                        }
                     }
 
                     LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1400,7 +1455,11 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < k_DEFAULT_NUM_POOLS; ++j) {
-                pool[j]->release();
+                {
+                    bdlma::ConcurrentPool *const elem = pool[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                    elem->release();
+                }
             }
         }
 
@@ -1466,7 +1525,12 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                          recordPoolNum == calcPoolNum);
 
-                        pool[calcPoolNum]->allocate();
+                        {
+                            bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                            elem->allocate();
+                        }
                     }
 
                     LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1477,7 +1541,11 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                pool[j]->release();
+                {
+                    bdlma::ConcurrentPool *const elem = pool[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                    elem->release();
+                }
             }
         }
 
@@ -1543,7 +1611,12 @@ int main(int argc, char *argv[])
                             LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                          recordPoolNum == calcPoolNum);
 
-                            pool[calcPoolNum]->allocate();
+                            {
+                                bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                                BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                                elem->allocate();
+                            }
                         }
 
                         LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1568,7 +1641,12 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                          recordPoolNum == calcPoolNum);
 
-                        pool[calcPoolNum]->allocate();
+                        {
+                            bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                            elem->allocate();
+                        }
                     }
 
                     LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1579,7 +1657,11 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                pool[j]->release();
+                {
+                    bdlma::ConcurrentPool *const elem = pool[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                    elem->release();
+                }
             }
         }
 
@@ -1657,7 +1739,12 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                          recordPoolNum == calcPoolNum);
 
-                        pool[calcPoolNum]->allocate();
+                        {
+                            bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                            elem->allocate();
+                        }
                     }
 
                     LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1668,7 +1755,11 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                pool[j]->release();
+                {
+                    bdlma::ConcurrentPool *const elem = pool[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                    elem->release();
+                }
             }
         }
 
@@ -1734,7 +1825,12 @@ int main(int argc, char *argv[])
                             LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                          recordPoolNum == calcPoolNum);
 
-                            pool[calcPoolNum]->allocate();
+                            {
+                                bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                                BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                                elem->allocate();
+                            }
                         }
 
                         LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1759,7 +1855,12 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                          recordPoolNum == calcPoolNum);
 
-                        pool[calcPoolNum]->allocate();
+                        {
+                            bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                            elem->allocate();
+                        }
                     }
 
                     LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1770,7 +1871,11 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                pool[j]->release();
+                {
+                    bdlma::ConcurrentPool *const elem = pool[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                    elem->release();
+                }
             }
         }
 
@@ -1838,7 +1943,12 @@ int main(int argc, char *argv[])
                         LOOP2_ASSERT(recordPoolNum, calcPoolNum,
                                          recordPoolNum == calcPoolNum);
 
-                        pool[calcPoolNum]->allocate();
+                        {
+                            bdlma::ConcurrentPool *const elem =
+                                                             pool[calcPoolNum];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                            elem->allocate();
+                        }
                     }
 
                     LOOP2_ASSERT(poolAllocations, multipoolAllocations,
@@ -1849,7 +1959,11 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                pool[j]->release();
+                {
+                    bdlma::ConcurrentPool *const elem = pool[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
+                    elem->release();
+                }
             }
         }
       } break;
@@ -2458,6 +2572,7 @@ int main(int argc, char *argv[])
             char memory[4096];
             bdlma::BufferedSequentialAllocator a(memory, sizeof memory);
             Obj *doNotDelete = new(a.allocate(sizeof(Obj))) Obj(1, &a);
+            BSLS_ASSERT_CONVEYOR_OBJECT(doNotDelete);
             char *p = (char *) doNotDelete->allocate(2048);  // "overflow" pool
             ASSERT(p);
             // No destructor is called; will produce memory leak in purify if

@@ -226,6 +226,7 @@ RawDeleterGuard<TYPE, ALLOCATOR>::~RawDeleterGuard()
     BSLS_ASSERT_SAFE(d_object_p);
     BSLS_ASSERT_SAFE(d_allocator_p);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_allocator_p);
     DeleterHelper::deleteObjectRaw(d_object_p, d_allocator_p);
 }
 

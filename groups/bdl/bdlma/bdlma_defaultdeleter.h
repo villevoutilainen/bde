@@ -77,6 +77,8 @@ BSLS_IDENT("$Id: $")
 
 #ifndef BDE_DONT_ALLOW_TRANSITIVE_INCLUDES
 #include <bslalg_typetraits.h>
+
+#include <bsls_assert.h>
 #endif // BDE_DONT_ALLOW_TRANSITIVE_INCLUDES
 
 namespace BloombergLP {
@@ -121,7 +123,8 @@ class DefaultDeleter : public Deleter<TYPE> {
     /// `instance` was supplied by the same allocator as is used by this
     /// default deleter.  Note that this method does not destroy the deleter
     /// itself.
-    virtual void deleteObject(TYPE *instance);
+    virtual void deleteObject(TYPE *instance)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================

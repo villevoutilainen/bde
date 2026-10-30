@@ -184,6 +184,7 @@ BSLS_IDENT("$Id: $")
 #include <bslma_default.h>
 
 #include <bsls_alignmentutil.h>
+#include <bsls_assert.h>
 #include <bsls_types.h>
 
 namespace BloombergLP {
@@ -242,28 +243,29 @@ class InfrequentDeleteBlockList {
     /// `size` (in bytes).  If `size` is 0, no memory is allocated and 0 is
     /// returned.  The returned memory is guaranteed to be maximally
     /// aligned.
-    void *allocate(bsls::Types::size_type size);
+    void *allocate(bsls::Types::size_type size)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// This method has no effect on the memory block at the specified
     /// `address` as all memory allocated by this object is managed.  The
     /// behavior is undefined unless `address` was allocated by this object,
     /// and has not already been released.
-    void deallocate(void *address);
+    void deallocate(void *address) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Deallocate all memory blocks managed by this object, returning this
     /// object to its default-constructed state.
-    void release();
+    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Deallocate all except the most-recently obtained block of the memory
     /// blocks managed by this object.  If no blocks are managed, this
     /// method has no effect.
-    void releaseAllButLastBlock();
+    void releaseAllButLastBlock() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
                                   // Aspects
 
     /// Return the allocator used by this object to supply memory.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================
@@ -281,6 +283,7 @@ InfrequentDeleteBlockList::InfrequentDeleteBlockList(
 : d_head_p(0)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS

@@ -144,6 +144,7 @@ typedef bdlma::LocalSequentialAllocator<k_SIZE> Obj;
 
     void updateRecords_1(const bsl::map<DatabaseKey, DatabaseValue>& values)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&values);
         for (bsl::map<DatabaseKey, DatabaseValue>::const_iterator
                  it = values.begin(), end = values.end();
              it != end;
@@ -166,6 +167,7 @@ typedef bdlma::LocalSequentialAllocator<k_SIZE> Obj;
 // ```
     void updateRecords_2(const bsl::map<DatabaseKey, DatabaseValue>& values)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&values);
         bslma::TestAllocator ta;
 
         for (bsl::map<DatabaseKey, DatabaseValue>::const_iterator
@@ -200,6 +202,7 @@ typedef bdlma::LocalSequentialAllocator<k_SIZE> Obj;
 // ```
     void updateRecords_3(const bsl::map<DatabaseKey, DatabaseValue>& values)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&values);
         bdlma::LocalSequentialAllocator<129> lsa;
 
         for (bsl::map<DatabaseKey, DatabaseValue>::const_iterator
@@ -231,6 +234,7 @@ typedef bdlma::LocalSequentialAllocator<k_SIZE> Obj;
 
 void populateDummyData(bsl::map<DatabaseKey, DatabaseValue> *values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(values);
     BSLS_ASSERT(values);
 
     typedef bsl::map<DatabaseKey, DatabaseValue>::value_type ValueType;

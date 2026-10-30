@@ -550,7 +550,8 @@ class SequentialPool {
     /// memory space in the current internal buffer, use the allocator
     /// supplied at construction to allocate a new internal buffer, then
     /// allocate memory from the new buffer.
-    void *allocate(bsls::Types::size_type size);
+    void *allocate(bsls::Types::size_type size)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the address of a contiguous block of memory of at least the
     /// specified `*size` (in bytes), and load the actual amount of memory
@@ -559,19 +560,21 @@ class SequentialPool {
     /// the current internal buffer, use the allocator supplied at
     /// construction to allocate a new internal buffer, then allocate memory
     /// from the new buffer.
-    void *allocateAndExpand(bsls::Types::size_type *size);
+    void *allocateAndExpand(bsls::Types::size_type *size)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Destroy the specified `object`.  Note that memory associated with
     /// `object` is not deallocated because there is no `deallocate` method
     /// in `SequentialPool`.
     template <class TYPE>
-    void deleteObjectRaw(const TYPE *object);
+    void deleteObjectRaw(const TYPE *object)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Destroy the specified `object`.  Note that this method has the same
     /// effect as the `deleteObjectRaw` method (since no deallocation is
     /// involved), and exists for consistency across pools.
     template <class TYPE>
-    void deleteObject(const TYPE *object);
+    void deleteObject(const TYPE *object) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Release all memory allocated through this pool and return to the
     /// underlying allocator *all* memory.  The pool is reset to its
@@ -580,7 +583,7 @@ class SequentialPool {
     /// following construction.  The effect of subsequently - to this
     /// invocation of `release` - using a pointer obtained from this object
     /// prior to this call to `release` is undefined.
-    void release();
+    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Release all memory allocated through this pool and return to the
     /// underlying allocator *only* memory that was allocated outside of the
@@ -589,7 +592,7 @@ class SequentialPool {
     /// The effect of subsequently - to this invocation of `rewind` - using
     /// a pointer obtained from this object prior to this call to `rewind`
     /// is undefined.
-    void rewind();
+    void rewind() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reserve sufficient memory to satisfy allocation requests for at
     /// least the specified `numBytes` without replenishment (i.e., without
@@ -598,7 +601,8 @@ class SequentialPool {
     /// `allocate` requests - due to alignment effects - it is possible that
     /// not all `numBytes` of memory will be used for allocation before
     /// triggering dynamic allocation.
-    void reserveCapacity(bsls::Types::size_type numBytes);
+    void reserveCapacity(bsls::Types::size_type numBytes)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reduce the amount of memory allocated at the specified `address` of
     /// the specified `originalSize` (in bytes) to the specified `newSize`.
@@ -613,14 +617,15 @@ class SequentialPool {
     /// `address`.
     bsls::Types::size_type truncate(void                   *address,
                                     bsls::Types::size_type  originalSize,
-                                    bsls::Types::size_type  newSize);
+                                    bsls::Types::size_type  newSize)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
     /// Return the allocator used by this object to allocate memory.  Note
     /// that this allocator can not be used to deallocate memory allocated
     /// through this pool.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 }  // close package namespace
@@ -677,14 +682,16 @@ class SequentialPool {
 ///     t->~my_Type();
 /// }
 /// ```
-void *operator new(bsl::size_t size, BloombergLP::bdlma::SequentialPool& pool);
+void *operator new(bsl::size_t size, BloombergLP::bdlma::SequentialPool& pool)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(pool);
 
 /// Use the specified `pool` to deallocate the memory at the specified
 /// `address`.  The behavior is undefined unless `address` was allocated
 /// using `pool` and has not already been deallocated.  This operator is
 /// supplied solely to allow the compiler to arrange for it to be called in
 /// case of an exception.
-void operator delete(void *address, BloombergLP::bdlma::SequentialPool& pool);
+void operator delete(void *address, BloombergLP::bdlma::SequentialPool& pool)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(pool);
 
 // ============================================================================
 //                             INLINE DEFINITIONS
@@ -701,6 +708,7 @@ namespace bdlma {
 inline
 SequentialPool::~SequentialPool()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     release();
 }
 

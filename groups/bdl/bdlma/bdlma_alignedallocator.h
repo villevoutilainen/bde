@@ -231,6 +231,7 @@ BSLS_IDENT("$Id$")
 #include <bslma_allocator.h>
 
 #include <bsls_annotation.h>
+#include <bsls_assert.h>
 #include <bsls_platform.h>
 #include <bsls_types.h>
 
@@ -263,7 +264,8 @@ class AlignedAllocator : public bslma::Allocator {
     /// `alignment` is both a multiple of `sizeof(void *)` and an integral
     /// non-negative power of two.
     virtual void *allocateAligned(bsls::Types::size_type size,
-                                  bsls::Types::size_type alignment) = 0;
+                                  bsls::Types::size_type alignment)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES_THIS= 0;
 };
 
 }  // close package namespace

@@ -391,6 +391,7 @@ class my_SecurityAttributes;
     void processIndices(bdlma::ManagedAllocator *managedAllocator,
                         const IndexCollection&   indices)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&indices);
         for (IndexCollection::const_iterator citer = indices.begin();
                                              citer != indices.end(); ++citer) {
 
@@ -503,6 +504,7 @@ void loadIndex(SecurityCollection      *securities,
                bdlma::ManagedAllocator *managedAllocator,
                const IndexAttributes&   index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(securities);
     int numSecurities = index.second;
 
     securities->reserve(numSecurities);

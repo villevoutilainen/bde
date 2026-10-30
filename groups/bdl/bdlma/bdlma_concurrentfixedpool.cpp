@@ -57,6 +57,7 @@ namespace bdlma {
 // PRIVATE MANIPULATORS
 void *ConcurrentFixedPool::allocateNew()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Node *node;
     int   numNodes;
 
@@ -95,20 +96,22 @@ ConcurrentFixedPool::ConcurrentFixedPool(int               objectSize,
 , d_objectSize(objectSize)
 , d_backoffLevel(k_DEFAULT_BACKOFF_LEVEL)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 < objectSize);
     BSLS_ASSERT(0 < poolSize);
     BSLS_ASSERT(0x1FFFFFF >= poolSize);
 
     BSLS_ASSERT(d_dataOffset >= (int)sizeof(Node));
-    BSLS_ASSERT(d_dataOffset >=
+    BSLS_ASSERT_NONCONVEYOR(d_dataOffset >=
                   bsls::AlignmentUtil::calculateAlignmentFromSize(objectSize));
-    BSLS_ASSERT(d_nodeSize >= objectSize + d_dataOffset);
-    BSLS_ASSERT(d_dataOffset <=
+    BSLS_ASSERT_NONCONVEYOR(d_nodeSize >= objectSize + d_dataOffset);
+    BSLS_ASSERT_NONCONVEYOR(d_dataOffset <=
                   bsls::AlignmentUtil::calculateAlignmentFromSize(d_nodeSize));
 }
 
 ConcurrentFixedPool::~ConcurrentFixedPool()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS

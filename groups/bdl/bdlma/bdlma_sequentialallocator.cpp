@@ -14,6 +14,7 @@ namespace bdlma {
 // CREATORS
 SequentialAllocator::~SequentialAllocator()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 }  // close package namespace

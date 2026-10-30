@@ -465,7 +465,10 @@ int main(int argc, char *argv[])
             my_Class1 *pC1 = (my_Class1 *) a.allocate(sizeof(my_Class1));
             new(pC1) my_Class1;
 
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null 'allocator' at compile time.
             ASSERT_SAFE_FAIL(Obj::deleteObject(pC1, null));
+#endif
             ASSERT_SAFE_PASS(Obj::deleteObject(pC1, &a));
         }
       } break;
@@ -600,7 +603,10 @@ int main(int argc, char *argv[])
             my_Class1 *pC1 = (my_Class1 *) a.allocate(sizeof(my_Class1));
             new(pC1) my_Class1;
 
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null 'allocator' at compile time.
             ASSERT_SAFE_FAIL(Obj::deleteObjectRaw(pC1, null));
+#endif
             ASSERT_SAFE_PASS(Obj::deleteObjectRaw(pC1, &a));
         }
 

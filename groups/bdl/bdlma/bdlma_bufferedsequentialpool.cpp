@@ -21,6 +21,7 @@ namespace bdlma {
 void BufferedSequentialPool::createSequentialPool(
                                   bsls::Types::size_type currentAllocationSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Initial block size of the 'SequentialPool':
 
     const bsls::Types::size_type initialSize = d_bufferManager.bufferSize();
@@ -56,6 +57,7 @@ BufferedSequentialPool::BufferedSequentialPool(
 , d_sequentialPoolIsCreated(false)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 < size);
 }
@@ -71,6 +73,7 @@ BufferedSequentialPool::BufferedSequentialPool(
 , d_sequentialPoolIsCreated(false)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 < size);
 }
@@ -86,6 +89,7 @@ BufferedSequentialPool::BufferedSequentialPool(
 , d_sequentialPoolIsCreated(false)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 < size);
 }
@@ -102,6 +106,7 @@ BufferedSequentialPool::BufferedSequentialPool(
 , d_sequentialPoolIsCreated(false)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 < size);
 }
@@ -117,6 +122,7 @@ BufferedSequentialPool::BufferedSequentialPool(
 , d_sequentialPoolIsCreated(false)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0    <  size);
     BSLS_ASSERT(size <= maxBufferSize);
@@ -134,6 +140,7 @@ BufferedSequentialPool::BufferedSequentialPool(
 , d_sequentialPoolIsCreated(false)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0    <  size);
     BSLS_ASSERT(size <= maxBufferSize);
@@ -151,6 +158,7 @@ BufferedSequentialPool::BufferedSequentialPool(
 , d_sequentialPoolIsCreated(false)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0    <  size);
     BSLS_ASSERT(size <= maxBufferSize);
@@ -169,6 +177,7 @@ BufferedSequentialPool::BufferedSequentialPool(
 , d_sequentialPoolIsCreated(false)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0    <  size);
     BSLS_ASSERT(size <= maxBufferSize);

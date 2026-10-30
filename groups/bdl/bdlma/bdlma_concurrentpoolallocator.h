@@ -563,6 +563,7 @@ BSLS_IDENT("$Id: $")
 #include <bslma_allocator.h>
 
 #include <bsls_alignmentutil.h>
+#include <bsls_assert.h>
 #include <bsls_atomic.h>
 #include <bsls_blockgrowth.h>
 #include <bsls_keyword.h>
@@ -714,31 +715,33 @@ class ConcurrentPoolAllocator : public bslma::Allocator {
     /// request will be satisfied directly by the external allocator
     /// supplied at construction (or the default allocator, if no allocator
     /// was supplied).
-    void *allocate(size_type size) BSLS_KEYWORD_OVERRIDE;
+    void *allocate(size_type size) BSLS_KEYWORD_OVERRIDE
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the memory at the specified `address` back to this allocator.
     /// If `address` is 0, this method has no effect.  The behavior is
     /// undefined unless `address` was allocated using this allocator and
     /// has not already been deallocated.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Relinquish all memory currently allocated through this pool
     /// allocator.
-    void release();
+    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reserve memory from this pool allocator to satisfy memory requests
     /// for at least the specified `numObjects` before the pool replenishes.
     /// The behavior is undefined unless `0 <= numObjects`.  Note that this
     /// operation has no effect unless block size was supplied at
     /// construction, or `allocate` was invoked.
-    void reserveCapacity(int numObjects);
+    void reserveCapacity(int numObjects) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the size (in bytes) of the memory blocks allocated from this
     /// allocator.  Note that all blocks dispensed by this allocator have
     /// the same size.
-    size_type blockSize() const;
+    size_type blockSize() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================

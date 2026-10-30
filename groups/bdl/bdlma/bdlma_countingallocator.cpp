@@ -37,9 +37,10 @@ CountingAllocator::CountingAllocator(Allocator *basicAllocator)
 , d_numBytesTotal(0)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
-    BSLS_ASSERT(0 == name());
-    BSLS_ASSERT(0 == numBytesInUse());
-    BSLS_ASSERT(0 == numBytesTotal());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(0 == name());
+    BSLS_ASSERT_NONCONVEYOR(0 == numBytesInUse());
+    BSLS_ASSERT_NONCONVEYOR(0 == numBytesTotal());
     BSLS_ASSERT(d_allocator_p);
 }
 
@@ -50,17 +51,19 @@ CountingAllocator::CountingAllocator(const char *name,
 , d_numBytesTotal(0)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
-    BSLS_ASSERT(0 != this->name());
-    BSLS_ASSERT(0 == numBytesInUse());
-    BSLS_ASSERT(0 == numBytesTotal());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(0 != this->name());
+    BSLS_ASSERT_NONCONVEYOR(0 == numBytesInUse());
+    BSLS_ASSERT_NONCONVEYOR(0 == numBytesTotal());
     BSLS_ASSERT(d_allocator_p);
 }
 
 CountingAllocator::~CountingAllocator()
 {
-    BSLS_ASSERT(0               <= numBytesInUse());
-    BSLS_ASSERT(0               <= numBytesTotal());
-    BSLS_ASSERT(numBytesInUse() <= numBytesTotal());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(0               <= numBytesInUse());
+    BSLS_ASSERT_NONCONVEYOR(0               <= numBytesTotal());
+    BSLS_ASSERT_NONCONVEYOR(numBytesInUse() <= numBytesTotal());
     BSLS_ASSERT(d_allocator_p);
 }
 

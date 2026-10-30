@@ -44,6 +44,7 @@ static bsls::Types::size_type alignedAllocationSize(
 // CREATORS
 BlockList::~BlockList()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     release();
 }
 
@@ -58,7 +59,7 @@ void *BlockList::allocate(bsls::Types::size_type size)
 
     Block *block = (Block *)d_allocator_p->allocate(size);
 
-    BSLS_ASSERT(0 == bsls::AlignmentUtil::calculateAlignmentOffset(
+    BSLS_ASSERT_NONCONVEYOR(0 == bsls::AlignmentUtil::calculateAlignmentOffset(
                                      (void *)block,
                                      bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT));
 
@@ -69,7 +70,7 @@ void *BlockList::allocate(bsls::Types::size_type size)
     }
     d_head_p = block;
 
-    BSLS_ASSERT(0 == bsls::AlignmentUtil::calculateAlignmentOffset(
+    BSLS_ASSERT_NONCONVEYOR(0 == bsls::AlignmentUtil::calculateAlignmentOffset(
                                      (void *)&block->d_memory,
                                      bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT));
 

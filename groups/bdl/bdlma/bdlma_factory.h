@@ -62,6 +62,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bdlma_deleter.h>
 
+#include <bsls_assert.h>
+
 namespace BloombergLP {
 namespace bdlma {
 
@@ -85,7 +87,7 @@ class Factory : public Deleter<TYPE> {
     /// Return the address of the newly-created object on success, and 0
     /// otherwise.  The instance must be destroyed using the `deleteObject`
     /// method of this object factory.
-    virtual TYPE *createObject() = 0;
+    virtual TYPE *createObject() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS = 0;
 
     // MANIPULATORS
 
@@ -93,7 +95,8 @@ class Factory : public Deleter<TYPE> {
     /// its memory footprint to the appropriate memory manager.  The
     /// behavior is undefined unless `instance` was obtained from a call to
     /// `createObject` on this object factory and has not yet been deleted.
-    virtual void deleteObject(TYPE *instance) = 0;
+    virtual void deleteObject(TYPE *instance)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES_THIS= 0;
 };
 
 // ============================================================================

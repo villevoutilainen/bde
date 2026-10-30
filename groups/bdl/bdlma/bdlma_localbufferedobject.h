@@ -165,6 +165,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_nestedtraitdeclaration.h>
 #include <bslmf_util.h>    // 'forward(V)' for C++03
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 #include <bsls_keyword.h>
 #include <bsls_objectbuffer.h>
@@ -313,11 +314,13 @@ class LocalBufferedObject {
 
     /// Return a pointer providing modifiable access to the underlying
     /// `t_TYPE` object.
-    value_type *operator->();
+    value_type *operator->() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.
-    value_type& operator*();
+    value_type& operator*() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Destroy the `value_type` object unless `t_DISABLE_DESTRUCTION` is
@@ -325,7 +328,8 @@ class LocalBufferedObject {
     /// `value_type` object using the specified `args` and using the
     /// sequential allocator based on the local stack buffer.
     template <class... ARGS>
-    void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args);
+    void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
@@ -334,7 +338,8 @@ class LocalBufferedObject {
     /// `value_type` object using the specified `il` and using the
     /// sequential allocator based on the local stack buffer.
     template <class INIT_LIST_TYPE>
-    void emplace(std::initializer_list<INIT_LIST_TYPE> il);
+    void emplace(std::initializer_list<INIT_LIST_TYPE> il)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #endif  // BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS
 
@@ -342,11 +347,13 @@ class LocalBufferedObject {
 
     /// Return a pointer providing const access to the underlying `t_TYPE`
     /// object.
-    const value_type *operator->() const;
+    const value_type *operator->() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference providing const access to the underlying `t_TYPE`
     /// object.
-    const value_type& operator*() const;
+    const value_type& operator*() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the alloctor passed at construction, used to provide heap
     /// memory after the local stack buffer is exhausted.  Note that this
@@ -532,6 +539,7 @@ bsl::allocator<>
 LocalBufferedObject<t_TYPE, t_BUFFER_SIZE, t_DISABLE_DESTRUCTION>::
                                                           get_allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return allocator_type(d_arenaAllocator.allocator());
 }
 

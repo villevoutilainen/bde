@@ -87,6 +87,7 @@ bsls::Types::size_type roundUp(bsls::Types::size_type x,
 // PRIVATE MANIPULATORS
 void *ConcurrentPool::allocateWithoutReuseCache()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     void *address;
 
     do {
@@ -278,6 +279,7 @@ void ConcurrentPool::initialize()
 
 void ConcurrentPool::initializeParameters()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(0 == (k_NUM_FREE_LISTS & (k_NUM_FREE_LISTS - 1)));
 
     d_internalBlockSize = roundUp(d_blockSize,
@@ -348,6 +350,7 @@ ConcurrentPool::ConcurrentPool(bsls::Types::size_type  blockSize,
 , d_blockList(basicAllocator)
 , d_mutex()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= blockSize);
 
     initializeParameters();
@@ -356,6 +359,7 @@ ConcurrentPool::ConcurrentPool(bsls::Types::size_type  blockSize,
 
 ConcurrentPool::~ConcurrentPool()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS
@@ -455,6 +459,7 @@ ConcurrentPool::ConcurrentPool(
 , d_blockList(basicAllocator)
 , d_mutex()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= blockSize);
 
     initializeParameters();
@@ -470,6 +475,7 @@ ConcurrentPool::ConcurrentPool(
 , d_blockList(basicAllocator)
 , d_mutex()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= blockSize);
 
     initializeParameters();

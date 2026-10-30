@@ -231,6 +231,7 @@ class TrackingAllocator : public bslma::Allocator {
     /// and has not already been deallocated.
     void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (d_data[address] < k_LARGE) {
             bslma::Default::defaultAllocator()->deallocate(address);
         }
@@ -245,6 +246,7 @@ class TrackingAllocator : public bslma::Allocator {
     /// Return the number of addressed being tracked.
     bsls::Types::size_type size() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_data.size();
     }
 };
@@ -351,6 +353,7 @@ static int blockSize(int numBytes)
     inline
     void my_IntDoubleArray::removeAll()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_pool.release();
         d_length = 0;
     }
@@ -395,6 +398,7 @@ static int blockSize(int numBytes)
     // MANIPULATORS
     void my_IntDoubleArray::appendInt(int value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (d_length >= d_capacity) {
             increaseSize();
         }
@@ -410,6 +414,7 @@ static int blockSize(int numBytes)
 
     void my_IntDoubleArray::appendDouble(double value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (d_length >= d_capacity) {
             increaseSize();
         }
@@ -490,6 +495,7 @@ static int blockSize(int numBytes)
     inline
     void *my_SequentialAllocator::allocate(size_type size)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_pool.allocate(size);
     }
 
@@ -894,6 +900,7 @@ int main(int argc, char *argv[])
         Obj mX(&objectAllocator);
 
         double *d = new(mX) double(3.0);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d);
         (void)d;
 
         ASSERT(0 != objectAllocator.numBytesInUse());
@@ -1424,6 +1431,7 @@ int main(int argc, char *argv[])
 
             void *addr = mX.allocate(sizeof(my_Class));
             my_Class *obj = new(addr) my_Class();
+            BSLS_ASSERT_CONVEYOR_OBJECT(obj);
 
             globalDestructorInvoked = false;
             mX.deleteObject(obj);
@@ -1437,6 +1445,7 @@ int main(int argc, char *argv[])
 
             void *addr = mX.allocate(sizeof(my_Class));
             my_Class *obj = new(addr) my_Class();
+            BSLS_ASSERT_CONVEYOR_OBJECT(obj);
 
             globalDestructorInvoked = false;
             mX.deleteObjectRaw(obj);

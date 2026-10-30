@@ -233,6 +233,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmt_mutex.h>
 
+#include <bsls_assert.h>
 #include <bsls_keyword.h>
 #include <bsls_types.h>
 
@@ -283,13 +284,15 @@ class ConcurrentAllocatorAdapter : public bslma::Allocator {
     /// non-exception build.  Note that the alignment of the address
     /// returned conforms to the platform requirement for any object of the
     /// `numBytes`.
-    void *allocate(bsls::Types::size_type numBytes) BSLS_KEYWORD_OVERRIDE;
+    void *allocate(bsls::Types::size_type numBytes) BSLS_KEYWORD_OVERRIDE
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the memory at the specified `address` back to this allocator.
     /// If `address` is 0, this function has no effect.  The behavior is
     /// undefined unless `address` was allocated using this allocator and
     /// has not since been deallocated.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================
@@ -308,6 +311,7 @@ ConcurrentAllocatorAdapter::ConcurrentAllocatorAdapter(
 : d_mutex_p(mutex)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 }  // close package namespace

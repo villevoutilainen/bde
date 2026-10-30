@@ -44,6 +44,7 @@ AligningAllocator::AligningAllocator(bsls::Types::size_type  alignment,
 : d_mask(alignment - 1)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 < alignment);
     BSLS_ASSERT(0 == (alignment & (alignment - 1)));    // power of 2
 }
@@ -102,7 +103,8 @@ void *AligningAllocator::allocate(bsls::Types::size_type size)
     }
 
     // assert 'ret' is aligned
-    BSLS_ASSERT(0 == (reinterpret_cast<bsls::Types::size_type>(ret) & d_mask));
+    BSLS_ASSERT_NONCONVEYOR(
+                0 == (reinterpret_cast<bsls::Types::size_type>(ret) & d_mask));
 
     return ret;
 }

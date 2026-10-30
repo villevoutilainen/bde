@@ -177,6 +177,7 @@ BSLS_IDENT("$Id: $")
 #include <bslma_default.h>
 
 #include <bsls_alignmentutil.h>
+#include <bsls_assert.h>
 #include <bsls_types.h>
 
 namespace BloombergLP {
@@ -242,22 +243,23 @@ class BlockList {
     /// `size` (in bytes).  If `size` is 0, no memory is allocated and 0 is
     /// returned.  The returned memory is guaranteed to be maximally
     /// aligned.
-    void *allocate(bsls::Types::size_type size);
+    void *allocate(bsls::Types::size_type size)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the memory at the specified `address` back to the associated
     /// allocator.  If `address` is 0, this function has no effect.  The
     /// behavior is undefined unless `address` was allocated by this object,
     /// and has not already been deallocated.
-    void deallocate(void *address);
+    void deallocate(void *address) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Deallocate all memory blocks currently managed by this object,
     /// returning it to its default-constructed state.
-    void release();
+    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
     /// Return the allocator used by this object to allocate memory.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================
@@ -274,6 +276,7 @@ BlockList::BlockList(bslma::Allocator *basicAllocator)
 : d_head_p(0)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // Aspects

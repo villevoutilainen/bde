@@ -176,6 +176,7 @@ BSLS_IDENT("$Id: $")
 #include <bdlscm_version.h>
 
 #include <bsls_alignment.h>
+#include <bsls_assert.h>
 #include <bsls_types.h>
 
 namespace BloombergLP {
@@ -204,7 +205,8 @@ struct BufferImpUtil {
                                     char                      *buffer,
                                     bsls::Types::size_type     bufferSize,
                                     bsls::Types::size_type     size,
-                                    bsls::Alignment::Strategy  strategy);
+                                    bsls::Alignment::Strategy  strategy)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(cursor);
 
     /// Allocate a maximally-aligned memory block of the specified `size`
     /// (in bytes) from the specified `buffer` having the specified
@@ -219,7 +221,8 @@ struct BufferImpUtil {
                                             bsls::Types::IntPtr    *cursor,
                                             char                   *buffer,
                                             bsls::Types::size_type  bufferSize,
-                                            bsls::Types::size_type  size);
+                                            bsls::Types::size_type  size)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(cursor);
 
     /// Allocate a naturally-aligned memory block of the specified `size`
     /// (in bytes) from the specified `buffer` having the specified
@@ -234,7 +237,8 @@ struct BufferImpUtil {
                                             bsls::Types::IntPtr    *cursor,
                                             char                   *buffer,
                                             bsls::Types::size_type  bufferSize,
-                                            bsls::Types::size_type  size);
+                                            bsls::Types::size_type  size)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(cursor);
 
     /// Allocate a 1-byte-aligned memory block of the specified `size` (in
     /// bytes) from the specified `buffer` having the specified `bufferSize`
@@ -249,7 +253,8 @@ struct BufferImpUtil {
                                             bsls::Types::IntPtr    *cursor,
                                             char                   *buffer,
                                             bsls::Types::size_type  bufferSize,
-                                            bsls::Types::size_type  size);
+                                            bsls::Types::size_type  size)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(cursor);
 
     /// Allocate a memory block of the specified `size` (in bytes) from the
     /// specified `buffer` at the specified `cursor` position, using the
@@ -261,7 +266,8 @@ struct BufferImpUtil {
     static void *allocateFromBufferRaw(bsls::Types::IntPtr       *cursor,
                                        char                      *buffer,
                                        bsls::Types::size_type     size,
-                                       bsls::Alignment::Strategy  strategy);
+                                       bsls::Alignment::Strategy  strategy)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(cursor);
 
     /// Allocate a maximally-aligned memory block of the specified `size`
     /// (in bytes) from the specified `buffer` at the specified `cursor`
@@ -273,7 +279,8 @@ struct BufferImpUtil {
     static void *allocateMaximallyAlignedFromBufferRaw(
                                                 bsls::Types::IntPtr    *cursor,
                                                 char                   *buffer,
-                                                bsls::Types::size_type  size);
+                                                bsls::Types::size_type  size)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(cursor);
 
     /// Allocate a naturally-aligned memory block of the specified `size`
     /// (in bytes) from the specified `buffer` at the specified `cursor`
@@ -285,7 +292,8 @@ struct BufferImpUtil {
     static void *allocateNaturallyAlignedFromBufferRaw(
                                                 bsls::Types::IntPtr    *cursor,
                                                 char                   *buffer,
-                                                bsls::Types::size_type  size);
+                                                bsls::Types::size_type  size)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(cursor);
 
     /// Allocate a 1-byte-aligned memory block of the specified `size` (in
     /// bytes) from the specified `buffer` at the specified `cursor`
@@ -297,7 +305,8 @@ struct BufferImpUtil {
     static void *allocateOneByteAlignedFromBufferRaw(
                                                 bsls::Types::IntPtr    *cursor,
                                                 char                   *buffer,
-                                                bsls::Types::size_type  size);
+                                                bsls::Types::size_type  size)
+        BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(cursor);
 };
 
 }  // close package namespace

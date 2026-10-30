@@ -55,6 +55,7 @@ bsls::Types::size_type roundUp(bsls::Types::size_type x,
 // PRIVATE MANIPULATORS
 void Pool::replenish()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_begin_p = static_cast<char *>(d_blockList.allocate(d_chunkSize
                                                        * d_internalBlockSize));
     d_end_p = d_begin_p + d_chunkSize * d_internalBlockSize;
@@ -84,6 +85,7 @@ Pool::Pool(bsls::Types::size_type blockSize, bslma::Allocator *basicAllocator)
 , d_begin_p(0)
 , d_end_p(0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= blockSize);
 
     d_internalBlockSize = roundUp(blockSize,
@@ -104,6 +106,7 @@ Pool::Pool(bsls::Types::size_type       blockSize,
 , d_begin_p(0)
 , d_end_p(0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= blockSize);
 
     d_internalBlockSize = roundUp(blockSize,
@@ -125,6 +128,7 @@ Pool::Pool(bsls::Types::size_type       blockSize,
 , d_begin_p(0)
 , d_end_p(0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= blockSize);
     BSLS_ASSERT(1 <= maxBlocksPerChunk);
 
@@ -134,6 +138,7 @@ Pool::Pool(bsls::Types::size_type       blockSize,
 
 Pool::~Pool()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(sizeof(Link) <= d_internalBlockSize);
     BSLS_ASSERT(0 < d_chunkSize);
 }

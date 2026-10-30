@@ -163,6 +163,7 @@ class TrackingAllocator : public bslma::Allocator {
     /// and has not already been deallocated.
     void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (d_data[address] < k_LARGE) {
             bslma::Default::defaultAllocator()->deallocate(address);
         }
@@ -177,6 +178,7 @@ class TrackingAllocator : public bslma::Allocator {
     /// Return the number of addresses being tracked.
     bsls::Types::size_type size() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_data.size();
     }
 
@@ -213,7 +215,7 @@ int calculateMaxAlignedSize(int totalSize)
 
     const int objectAlignmentMin = bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT - 1;
     const int ret = (totalSize + objectAlignmentMin) & ~(objectAlignmentMin);
-    BSLS_ASSERT(bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT ==
+    BSLS_ASSERT_NONCONVEYOR(bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT ==
                          bsls::AlignmentUtil::calculateAlignmentFromSize(ret));
     return ret;
 }
@@ -235,6 +237,7 @@ struct Test3Context {
 extern "C" void *my3_up(void *arg)
 {
     Test3Context *context = static_cast<Test3Context *>(arg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(context);
 
     static int exitStatus = -1;
 
@@ -262,6 +265,7 @@ extern "C" void *my3_down(void *arg)
     static int exitStatus = -1;
 
     Test3Context *context = static_cast<Test3Context *>(arg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(context);
 
     assert(context);
     assert(context->d_allocators_p);
@@ -286,6 +290,7 @@ extern "C" void *my3_down(void *arg)
 /// `object` to (at least) the specified `numElements`.  The behavior is
 /// undefined unless `0 <= numElements` and `0 <= objSize`.
 void stretch(Obj *object, int numElements)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
 {
     ASSERT(object);
     ASSERT(0 <= numElements);
@@ -301,6 +306,7 @@ void stretch(Obj *object, int numElements)
 /// `0 <= numElements` and `0 <= objSize`.
 void stretchRemoveAll(Obj *object, int numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     ASSERT(object);
     ASSERT(0 <= numElements);
 
@@ -472,6 +478,7 @@ void stretchRemoveAll(Obj *object, int numElements)
     extern "C" void *my1_producer(void *arg)
     {
         my1_WorkQueue *queue = (my1_WorkQueue *)arg;
+        BSLS_ASSERT_CONVEYOR_OBJECT(queue);
 
         for (int i = 0; i < 50; ++i) {
 
@@ -510,6 +517,7 @@ void stretchRemoveAll(Obj *object, int numElements)
     extern "C" void *my1_consumer(void *arg)
     {
         my1_WorkQueue *queue = (my1_WorkQueue *)arg;
+        BSLS_ASSERT_CONVEYOR_OBJECT(queue);
 
         for (int i = 0; ; ++i) {
 
@@ -700,6 +708,7 @@ void stretchRemoveAll(Obj *object, int numElements)
     extern "C" void *my2_producer(void *arg)
     {
         my2_WorkQueue *queue = (my2_WorkQueue *)arg;
+        BSLS_ASSERT_CONVEYOR_OBJECT(queue);
 
         for (int i = 0; i < 50; ++i) {
 
@@ -738,6 +747,7 @@ void stretchRemoveAll(Obj *object, int numElements)
     extern "C" void *my2_consumer(void *arg)
     {
         my2_WorkQueue *queue = (my2_WorkQueue *)arg;
+        BSLS_ASSERT_CONVEYOR_OBJECT(queue);
 
         for (int i = 0; ; ++i) {
 
@@ -1643,6 +1653,7 @@ int main(int argc, char *argv[])
 
                     for (int i = 0; i < NUM_ALLOCATORS; ++i) {
                         const bslma::TestAllocator& TA = tas[i];
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&TA);
 
                         ASSERTV(i, TA.numAllocations(),
                                 1 == TA.numAllocations());

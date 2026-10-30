@@ -352,9 +352,12 @@ struct ThreadInfo {
 extern "C" void *threadFunction1(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     Obj& mX = *info->d_objX_p;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
     Obj& mY = *info->d_objY_p;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mY);
 
     int n = 2;
 
@@ -381,9 +384,12 @@ extern "C" void *threadFunction1(void *arg)
 extern "C" void *threadFunction2(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     Obj& mX = *info->d_objX_p;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
     Obj& mY = *info->d_objY_p;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mY);
 
     int n = 3;
 
@@ -414,9 +420,12 @@ extern "C" void *threadFunction2(void *arg)
 extern "C" void *threadFunction3(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     Obj& mX = *info->d_objX_p;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
     Obj& mY = *info->d_objY_p;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mY);
 
     int n = 5;
 
@@ -1443,6 +1452,7 @@ int main(int argc, char *argv[])
             LOOP_ASSERT(CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
             Obj& mX = *objPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
 
             // Verify no allocation from the default allocator.
 

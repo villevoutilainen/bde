@@ -480,6 +480,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslma_allocator.h>
 
+#include <bsls_assert.h>
 #include <bsls_keyword.h>
 #include <bsls_types.h>
 
@@ -550,14 +551,16 @@ class GuardingAllocator : public bslma::Allocator {
     /// memory is allocated and 0 is returned.  Note that a multiple of the
     /// platform's memory page size is allocated for *every* call to this
     /// method.
-    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE;
+    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the memory block at the specified `address` back to this
     /// allocator.  If `address` is 0, this method has no effect.
     /// Otherwise, the guard page associated with `address` is unprotected
     /// and also deallocated.  The behavior is undefined unless `address`
     /// was returned by `allocate` and has not already been deallocated.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================
@@ -573,6 +576,7 @@ inline
 GuardingAllocator::GuardingAllocator(GuardPageLocation guardLocation)
 : d_guardPageLocation(guardLocation)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 }  // close package namespace

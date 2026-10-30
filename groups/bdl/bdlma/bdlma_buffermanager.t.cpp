@@ -275,6 +275,8 @@ class my_Class {
     : d_size(size)
     , d_buffer(buffer)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_buffer);
         // `d_buffer` must have sufficient memory to satisfy the allocation
         // request (as specified by the constructor's contract).
 
@@ -287,6 +289,7 @@ class my_Class {
     // MANIPULATORS
     int my_IntegerCountingHashTable::insert(int value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         // Naive hash function using only mod.
 
         const int hashValue = value % d_size;
@@ -307,6 +310,7 @@ class my_Class {
         // satisfy the allocation request (as specified by the constructor's
         // contract).
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_buffer);
         *tmp = new(d_buffer->allocate(sizeof(my_Node))) my_Node(value, *tmp);
 
         return 1;
@@ -913,6 +917,7 @@ int main(int argc, char *argv[])
 
             void *addr = mX.allocate(sizeof(my_Class));
             my_Class *obj = new(addr) my_Class();
+            BSLS_ASSERT_CONVEYOR_OBJECT(obj);
 
             globalDestructorInvoked = false;
             mX.deleteObject(obj);
@@ -926,6 +931,7 @@ int main(int argc, char *argv[])
 
             void *addr = mX.allocate(sizeof(my_Class));
             my_Class *obj = new(addr) my_Class();
+            BSLS_ASSERT_CONVEYOR_OBJECT(obj);
 
             globalDestructorInvoked = false;
             mX.deleteObjectRaw(obj);

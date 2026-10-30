@@ -477,6 +477,7 @@ class AutoRawDeleter {
 template <class TYPE, class ALLOCATOR>
 void AutoRawDeleter<TYPE, ALLOCATOR>::rawDelete()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_allocator_p);
     if (d_length > 0) {
         for (; d_length > 0; --d_length, ++d_origin_p) {
             DeleterHelper::deleteObjectRaw(*d_origin_p,

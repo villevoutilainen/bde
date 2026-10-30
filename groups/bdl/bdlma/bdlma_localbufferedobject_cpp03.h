@@ -471,11 +471,13 @@ class LocalBufferedObject {
 
     /// Return a pointer providing modifiable access to the underlying
     /// `t_TYPE` object.
-    value_type *operator->();
+    value_type *operator->() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.
-    value_type& operator*();
+    value_type& operator*() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 #if BSLS_COMPILERFEATURES_SIMULATE_VARIADIC_TEMPLATES
 // {{{ BEGIN GENERATED CODE
@@ -487,19 +489,21 @@ class LocalBufferedObject {
 #define BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT
 #endif
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 0
-    void emplace();
+    void emplace() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 0
 
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 1
     template <class ARGS_01>
-    void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01);
+    void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 1
 
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 2
     template <class ARGS_01,
               class ARGS_02>
     void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
-                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02);
+                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 2
 
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 3
@@ -508,7 +512,8 @@ class LocalBufferedObject {
               class ARGS_03>
     void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
-                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03);
+                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 3
 
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 4
@@ -519,7 +524,8 @@ class LocalBufferedObject {
     void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
-                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04);
+                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 4
 
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 5
@@ -532,7 +538,8 @@ class LocalBufferedObject {
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
-                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05);
+                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 5
 
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 6
@@ -547,7 +554,8 @@ class LocalBufferedObject {
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
-                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06);
+                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 6
 
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 7
@@ -564,7 +572,8 @@ class LocalBufferedObject {
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
-                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07);
+                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 7
 
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 8
@@ -583,7 +592,8 @@ class LocalBufferedObject {
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
-                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08);
+                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 8
 
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 9
@@ -604,7 +614,8 @@ class LocalBufferedObject {
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
-                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09);
+                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 9
 
 #if BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 10
@@ -627,14 +638,16 @@ class LocalBufferedObject {
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                  BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
-                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10);
+                 BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif  // BDLMA_LOCALBUFFEREDOBJECT_VARIADIC_LIMIT_C >= 10
 
 #else
 // The generated code below is a workaround for the absence of perfect
 // forwarding in some compilers.
     template <class... ARGS>
-    void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args);
+    void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 // }}} END GENERATED CODE
 #endif
 
@@ -644,7 +657,8 @@ class LocalBufferedObject {
     /// `value_type` object using the specified `il` and using the
     /// sequential allocator based on the local stack buffer.
     template <class INIT_LIST_TYPE>
-    void emplace(std::initializer_list<INIT_LIST_TYPE> il);
+    void emplace(std::initializer_list<INIT_LIST_TYPE> il)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #endif  // BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS
 
@@ -652,11 +666,13 @@ class LocalBufferedObject {
 
     /// Return a pointer providing const access to the underlying `t_TYPE`
     /// object.
-    const value_type *operator->() const;
+    const value_type *operator->() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference providing const access to the underlying `t_TYPE`
     /// object.
-    const value_type& operator*() const;
+    const value_type& operator*() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the alloctor passed at construction, used to provide heap
     /// memory after the local stack buffer is exhausted.  Note that this

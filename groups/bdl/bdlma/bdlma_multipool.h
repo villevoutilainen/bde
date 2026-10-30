@@ -476,6 +476,7 @@ BSLS_IDENT("$Id: $")
 #include <bslma_deleterhelper.h>
 
 #include <bsls_alignmentutil.h>
+#include <bsls_assert.h>
 #include <bsls_blockgrowth.h>
 #include <bsls_types.h>
 
@@ -678,13 +679,14 @@ class Multipool {
     /// directly by the underlying allocator, and will not be pooled, but
     /// will be deallocated when the `release` method is called, or when
     /// this object is destroyed.
-    void *allocate(bsls::Types::size_type size);
+    void *allocate(bsls::Types::size_type size)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Relinquish the memory block at the specified `address` back to this
     /// multipool object for reuse.  The behavior is undefined unless
     /// `address` is non-zero, was allocated by this multipool object, and
     /// has not already been deallocated.
-    void deallocate(void *address);
+    void deallocate(void *address) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Destroy the specified `object` based on its dynamic type and then
     /// use this multipool object to deallocate its memory footprint.  This
@@ -694,7 +696,7 @@ class Multipool {
     /// Note that `dynamic_cast<void *>(object)` is applied if `TYPE` is
     /// polymorphic, and `static_cast<void *>(object)` is applied otherwise.
     template <class TYPE>
-    void deleteObject(const TYPE *object);
+    void deleteObject(const TYPE *object) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Destroy the specified `object` and then use this multipool to
     /// deallocate its memory footprint.  This method has no effect if
@@ -704,22 +706,24 @@ class Multipool {
     /// allocated using this multipool, and has not already been
     /// deallocated.
     template <class TYPE>
-    void deleteObjectRaw(const TYPE *object);
+    void deleteObjectRaw(const TYPE *object)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Relinquish all memory currently allocated via this multipool object.
-    void release();
+    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reserve memory from this multipool to satisfy memory requests for at
     /// least the specified `numBlocks` having the specified `size` (in
     /// bytes) before the pool replenishes.  If `size` is 0, this method has
     /// no effect.  The behavior is undefined unless
     /// `size <= maxPooledBlockSize()` and `0 <= numBlocks`.
-    void reserveCapacity(bsls::Types::size_type size, int numBlocks);
+    void reserveCapacity(bsls::Types::size_type size, int numBlocks)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the number of pools managed by this multipool object.
-    int numPools() const;
+    int numPools() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the maximum size of memory blocks that are pooled by this
     /// multipool object.  Note that the maximum value is defined as:
@@ -728,14 +732,15 @@ class Multipool {
     /// ```
     /// where `numPools` is either specified at construction, or an
     /// implementation-defined value.
-    bsls::Types::size_type maxPooledBlockSize() const;
+    bsls::Types::size_type maxPooledBlockSize() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
     /// Return the allocator used by this object to allocate memory.  Note
     /// that this allocator can not be used to deallocate memory
     /// allocated through this pool.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================

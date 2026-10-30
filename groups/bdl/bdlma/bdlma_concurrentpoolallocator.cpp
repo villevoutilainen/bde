@@ -30,7 +30,7 @@ BloombergLP::bsls::Types::size_type calculateMaxAlignedSize(
                                    bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT - 1;
     const bsls::Types::size_type ret =
                       (totalSize + objectAlignmentMin) & ~(objectAlignmentMin);
-    BSLS_ASSERT(bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT ==
+    BSLS_ASSERT_NONCONVEYOR(bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT ==
                          bsls::AlignmentUtil::calculateAlignmentFromSize(ret));
     return ret;
 }
@@ -51,6 +51,7 @@ ConcurrentPoolAllocator::ConcurrentPoolAllocator(
 , d_maxBlocksPerChunk(k_MAX_CHUNK_SIZE)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 ConcurrentPoolAllocator::ConcurrentPoolAllocator(
@@ -62,6 +63,7 @@ ConcurrentPoolAllocator::ConcurrentPoolAllocator(
 , d_maxBlocksPerChunk(k_MAX_CHUNK_SIZE)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 ConcurrentPoolAllocator::ConcurrentPoolAllocator(
@@ -73,6 +75,7 @@ ConcurrentPoolAllocator::ConcurrentPoolAllocator(
 , d_maxBlocksPerChunk(k_MAX_CHUNK_SIZE)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (blockSize) {
         new (d_pool.buffer()) ConcurrentPool(
                            calculateMaxAlignedSize(blockSize + sizeof(Header)),
@@ -92,6 +95,7 @@ ConcurrentPoolAllocator::ConcurrentPoolAllocator(
 , d_maxBlocksPerChunk(k_MAX_CHUNK_SIZE)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (blockSize) {
         new (d_pool.buffer()) ConcurrentPool(
                            calculateMaxAlignedSize(blockSize + sizeof(Header)),
@@ -111,6 +115,7 @@ ConcurrentPoolAllocator::ConcurrentPoolAllocator(
 , d_maxBlocksPerChunk(maxBlocksPerChunk)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 ConcurrentPoolAllocator::ConcurrentPoolAllocator(
@@ -124,6 +129,7 @@ ConcurrentPoolAllocator::ConcurrentPoolAllocator(
 , d_maxBlocksPerChunk(maxBlocksPerChunk)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (blockSize) {
         new (d_pool.buffer()) ConcurrentPool(
                            calculateMaxAlignedSize(blockSize + sizeof(Header)),
@@ -136,6 +142,7 @@ ConcurrentPoolAllocator::ConcurrentPoolAllocator(
 
 ConcurrentPoolAllocator::~ConcurrentPoolAllocator()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (k_INITIALIZED == d_initialized) {
         d_pool.object().~ConcurrentPool();
     }

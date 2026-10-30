@@ -16,6 +16,7 @@ namespace bdlma {
 // CREATORS
 ConcurrentMultipoolAllocator::~ConcurrentMultipoolAllocator()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS

@@ -181,6 +181,7 @@ static bsls::AlignedBuffer<k_BUFFER_SIZE> bufferStorage;
 // ```
     void *my_SequentialPool::allocate(bsls::Types::size_type size)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ASSERT(0 < size);
 
         void *address = bdlma::BufferImpUtil::allocateFromBuffer(

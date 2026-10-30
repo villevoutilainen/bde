@@ -323,7 +323,8 @@ class BufferManager {
     /// specified at construction.  If `size` is 0 or the allocation request
     /// exceeds the remaining free memory space in the external buffer, no
     /// memory is allocated and 0 is returned.
-    void *allocate(bsls::Types::size_type size);
+    void *allocate(bsls::Types::size_type size)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the address of a contiguous block of memory of the specified
     /// `size` (in bytes) according to the alignment strategy specified at
@@ -331,19 +332,21 @@ class BufferManager {
     /// request does not exceed the remaining free memory space in the
     /// external buffer, `0 < size`, and this object is currently managing a
     /// buffer.
-    void *allocateRaw(bsls::Types::size_type size);
+    void *allocateRaw(bsls::Types::size_type size)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Destroy the specified `object`.  Note that memory associated with
     /// `object` is not deallocated because there is no `deallocate` method
     /// in `BufferManager`.
     template <class TYPE>
-    void deleteObjectRaw(const TYPE *object);
+    void deleteObjectRaw(const TYPE *object)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Destroy the specified `object`.  Note that this method has the same
     /// effect as the `deleteObjectRaw` method (since no deallocation is
     /// involved), and exists for consistency with a pool interface.
     template <class TYPE>
-    void deleteObject(const TYPE *object);
+    void deleteObject(const TYPE *object) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Increase the amount of memory allocated at the specified `address`
     /// from the original `size` (in bytes) to also include the maximum
@@ -356,7 +359,8 @@ class BufferManager {
     /// allocated by this buffer manager, the size of the memory at
     /// `address` is `size`, and `release` was not called after allocating
     /// the memory at `address`.
-    bsls::Types::size_type expand(void *address, bsls::Types::size_type size);
+    bsls::Types::size_type expand(void *address, bsls::Types::size_type size)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Replace the buffer currently managed by this object with the
     /// specified `newBuffer` of the specified `newBufferSize` (in bytes);
@@ -367,20 +371,21 @@ class BufferManager {
     /// allocate memory from the beginning of the new external buffer.  The
     /// behavior is undefined unless `0 < newBufferSize` and `newBuffer` has
     /// at least `newBufferSize` bytes.
-    char *replaceBuffer(char *newBuffer, bsls::Types::size_type newBufferSize);
+    char *replaceBuffer(char *newBuffer, bsls::Types::size_type newBufferSize)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Release all memory currently allocated through this buffer manager.
     /// After this call, the external buffer managed by this object is
     /// retained.  Subsequent allocations will allocate memory from the
     /// beginning of the external buffer (if any).
-    void release();
+    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reset this buffer manager to its default constructed state, except
     /// retain the alignment strategy in effect at the time of construction.
     /// The currently managed buffer (if any) is removed from the management
     /// of this object with no effect on the outstanding allocated memory
     /// blocks.
-    void reset();
+    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reduce the amount of memory allocated at the specified `address` of
     /// the specified `originalSize` (in bytes) to the specified `newSize`
@@ -395,22 +400,25 @@ class BufferManager {
     /// memory at `address`.
     bsls::Types::size_type truncate(void                   *address,
                                     bsls::Types::size_type  originalSize,
-                                    bsls::Types::size_type  newSize);
+                                    bsls::Types::size_type  newSize)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the alignment strategy passed to this object at
     /// construction.
-    bsls::Alignment::Strategy alignmentStrategy() const;
+    bsls::Alignment::Strategy alignmentStrategy() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an address providing modifiable access to the buffer
     /// currently managed by this object, or 0 if this object currently
     /// manages no buffer.
-    char *buffer() const;
+    char *buffer() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the size (in bytes) of the buffer currently managed by this
     /// object, or 0 if this object currently manages no buffer.
-    bsls::Types::size_type bufferSize() const;
+    bsls::Types::size_type bufferSize() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the minimum non-negative integer that, when added to the
     /// numerical value of the specified `address`, yields the alignment as
@@ -420,14 +428,16 @@ class BufferManager {
     /// method is identical to the result for `0 == size` and maximal
     /// alignment.
     int calculateAlignmentOffsetFromSize(const void             *address,
-                                         bsls::Types::size_type  size) const;
+                                         bsls::Types::size_type  size) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if there is sufficient memory space in the buffer to
     /// allocate a contiguous memory block of the specified `size` (in
     /// bytes) after taking the alignment strategy into consideration, and
     /// `false` otherwise.  The behavior is undefined unless `0 < size`, and
     /// this object is currently managing a buffer.
-    bool hasSufficientCapacity(bsls::Types::size_type size) const;
+    bool hasSufficientCapacity(bsls::Types::size_type size) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================
@@ -451,6 +461,7 @@ BufferManager::BufferManager(bsls::Alignment::Strategy strategy)
                     ? bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT
                     : 1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -467,6 +478,7 @@ BufferManager::BufferManager(char                      *buffer,
                     ? bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT
                     : 1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 < bufferSize);
 }
@@ -474,6 +486,7 @@ BufferManager::BufferManager(char                      *buffer,
 inline
 BufferManager::~BufferManager()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= d_cursor);
     BSLS_ASSERT(static_cast<bsls::Types::size_type>(d_cursor) <= d_bufferSize);
     BSLS_ASSERT(   (0 != d_buffer_p && 0 <  d_bufferSize)

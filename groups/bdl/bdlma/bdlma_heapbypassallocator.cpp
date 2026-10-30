@@ -152,12 +152,14 @@ HeapBypassAllocator::HeapBypassAllocator()
 : d_current(&d_initialChunk)
 , d_chunkSize(k_DEFAULT_CHUNK_SIZE)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     init();
 }
 
 HeapBypassAllocator::HeapBypassAllocator(size_type replenishHint)
 : d_current(&d_initialChunk)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Round up to next power of 2
     d_chunkSize = k_MIN_CHUNK_SIZE;
     while (d_chunkSize < replenishHint && d_chunkSize < k_MAX_CHUNK_SIZE) {
@@ -168,6 +170,7 @@ HeapBypassAllocator::HeapBypassAllocator(size_type replenishHint)
 
 HeapBypassAllocator::~HeapBypassAllocator()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Chunk *chunk = d_current.loadRelaxed();
     while (chunk != &d_initialChunk) {
         Chunk *next = chunk->d_nextChunk_p;

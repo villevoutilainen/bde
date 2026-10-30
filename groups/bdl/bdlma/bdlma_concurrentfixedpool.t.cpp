@@ -190,6 +190,7 @@ struct MostDerived : LeftChild, MiddleChild, RightChild {
 
     void my_JobQueue::enqueueJob(const Job& job)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         Job *jobPtr = new (d_pool) Job(bsl::allocator_arg_t(),
                                        bsl::allocator<Job>(d_allocator_p),
                                        job);
@@ -200,6 +201,7 @@ struct MostDerived : LeftChild, MiddleChild, RightChild {
 
     int my_JobQueue::tryExecuteJob()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_lock.lock();
         if (d_queue.empty()) {
             d_lock.unlock();
@@ -297,6 +299,7 @@ bslmt::Barrier barrier(k_NUM_THREADS);
 extern "C"
 void *workerThread(void *arg) {
     Obj *mX = (Obj *) arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(mX);
     ASSERT(k_OBJECT_SIZE == mX->objectSize());
 
     barrier.wait();
@@ -356,6 +359,7 @@ void bench(Control *control)
     int threadId = static_cast<int>(bslmt::ThreadUtil::selfIdAsInt());
 
     bdlma::ConcurrentFixedPool *pool = control->d_fixedpool;
+    BSLS_ASSERT_CONVEYOR_OBJECT(pool);
     int numObjects = control->d_numObjects;
     int load = control->d_load;
 
@@ -433,6 +437,7 @@ struct Control {
 void bench(Control *control)
 {
     bdlma::ConcurrentFixedPool *pool = control->d_fixedpool;
+    BSLS_ASSERT_CONVEYOR_OBJECT(pool);
     const int poolSize = pool->poolSize();
     const int iterations = control->d_iterations;
     bsls::AtomicInt& allocationCount(control->d_allocationCount);

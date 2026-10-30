@@ -144,6 +144,7 @@ int main(int argc, char *argv[]) {
 // ```
     bslma::NewDeleteAllocator basicAllocator;
     my_Obj *object = new(basicAllocator) my_Obj;
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
 // ```
 // Next, create a concrete deleter for `object` using the same allocator as was
 // used to allocate its footprint:

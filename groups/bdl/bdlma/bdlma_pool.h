@@ -386,13 +386,13 @@ class Pool {
 
     /// Return the address of a contiguous block of maximally-aligned memory
     /// having the fixed block size specified at construction.
-    void *allocate();
+    void *allocate() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Relinquish the memory block at the specified `address` back to this
     /// pool object for reuse.  The behavior is undefined unless `address` is
     /// non-zero, was allocated by this pool, and has not already been
     /// deallocated.
-    void deallocate(void *address);
+    void deallocate(void *address) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Destroy the specified `object` based on its dynamic type and then
     /// use this pool to deallocate its memory footprint.  This method has
@@ -402,7 +402,7 @@ class Pool {
     /// `dynamic_cast<void *>(object)` is applied if `TYPE` is polymorphic,
     /// and `static_cast<void *>(object)` is applied otherwise.
     template <class TYPE>
-    void deleteObject(const TYPE *object);
+    void deleteObject(const TYPE *object) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Destroy the specified `object` and then use this pool to deallocate its
     /// memory footprint.  This method has no effect if `object` is 0.  The
@@ -411,29 +411,31 @@ class Pool {
     /// originally dispensed by this pool), was allocated using this pool, and
     /// has not already been deallocated.
     template <class TYPE>
-    void deleteObjectRaw(const TYPE *object);
+    void deleteObjectRaw(const TYPE *object)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Relinquish all memory currently allocated via this pool object.
-    void release();
+    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reserve memory from this pool to satisfy memory requests for at least
     /// the specified `numBlocks` before the pool replenishes.  The behavior is
     /// undefined unless `0 <= numBlocks`.
-    void reserveCapacity(int numBlocks);
+    void reserveCapacity(int numBlocks) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the size (in bytes) of the memory blocks allocated from this
     /// pool object.  Note that all blocks dispensed by this pool have the same
     /// size.
-    bsls::Types::size_type blockSize() const;
+    bsls::Types::size_type blockSize() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
     /// Return the allocator used by this object to allocate memory.  Note that
     /// this allocator can not be used to deallocate memory allocated through
     /// this pool.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 }  // close package namespace
@@ -494,14 +496,16 @@ class Pool {
 /// t->~my_Type();
 /// pool->deallocate(t);
 /// ```
-void *operator new(bsl::size_t size, BloombergLP::bdlma::Pool& pool);
+void *operator new(bsl::size_t size, BloombergLP::bdlma::Pool& pool)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(pool);
 
 /// Use the specified `pool` to deallocate the memory at the specified
 /// `address`.  The behavior is undefined unless `address` is non-zero, was
 /// allocated using `pool`, and has not already been deallocated.  Note that
 /// this operator is supplied solely to allow the compiler to arrange for it
 /// to be called in the case of an exception.
-void operator delete(void *address, BloombergLP::bdlma::Pool& pool);
+void operator delete(void *address, BloombergLP::bdlma::Pool& pool)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(pool);
 
 // ============================================================================
 //                             INLINE DEFINITIONS

@@ -466,6 +466,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_istriviallycopyable.h>
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
 #include <bsls_keyword.h>
 #include <bsls_nullptr.h>
 #include <bsls_platform.h>
@@ -720,6 +721,7 @@ template <class TYPE>
 inline
 void Allocator::deleteObject(const TYPE *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     DeleterHelper::deleteObject(object, this);
 }
 
@@ -734,6 +736,7 @@ template <class TYPE>
 inline
 void Allocator::deleteObjectRaw(const TYPE *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     DeleterHelper::deleteObjectRaw(object, this);
 }
 

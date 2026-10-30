@@ -62,7 +62,7 @@ void ConcurrentMultipool::initialize(
                              maxBlocksPerChunk,
                              &d_allocAdapter);
 
-        BSLS_ASSERT(d_maxBlockSize <=
+        BSLS_ASSERT_NONCONVEYOR(d_maxBlockSize <=
                        bsl::numeric_limits<bsls::Types::size_type>::max() / 2);
 
         d_maxBlockSize *= 2;
@@ -95,7 +95,7 @@ void ConcurrentMultipool::initialize(
                              maxBlocksPerChunk,
                              &d_allocAdapter);
 
-        BSLS_ASSERT(d_maxBlockSize <=
+        BSLS_ASSERT_NONCONVEYOR(d_maxBlockSize <=
                        bsl::numeric_limits<bsls::Types::size_type>::max() / 2);
 
         d_maxBlockSize *= 2;
@@ -128,7 +128,7 @@ void ConcurrentMultipool::initialize(
                              maxBlocksPerChunkArray[i],
                              &d_allocAdapter);
 
-        BSLS_ASSERT(d_maxBlockSize <=
+        BSLS_ASSERT_NONCONVEYOR(d_maxBlockSize <=
                        bsl::numeric_limits<bsls::Types::size_type>::max() / 2);
 
         d_maxBlockSize *= 2;
@@ -161,7 +161,7 @@ void ConcurrentMultipool::initialize(
                              maxBlocksPerChunkArray[i],
                              &d_allocAdapter);
 
-        BSLS_ASSERT(d_maxBlockSize <=
+        BSLS_ASSERT_NONCONVEYOR(d_maxBlockSize <=
                        bsl::numeric_limits<bsls::Types::size_type>::max() / 2);
 
         d_maxBlockSize *= 2;
@@ -283,9 +283,13 @@ ConcurrentMultipool(int                                numPools,
 
 ConcurrentMultipool::~ConcurrentMultipool()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_blockList.release();
     for (int i = 0; i < d_numPools; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[i]);
         d_pools_p[i].release();
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[i]);
         d_pools_p[i].~ConcurrentPool();
     }
     d_allocAdapter.deallocate(d_pools_p);
@@ -294,10 +298,12 @@ ConcurrentMultipool::~ConcurrentMultipool()
 // MANIPULATORS
 void *ConcurrentMultipool::allocate(bsls::Types::size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(size)) {
         if (size <= d_maxBlockSize) {
             const int pool = findPool(size);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[pool]);
             Header *p = static_cast<Header *>(d_pools_p[pool].allocate());
 
             p->d_header.d_poolIdx = pool;
@@ -322,6 +328,7 @@ void *ConcurrentMultipool::allocate(bsls::Types::size_type size)
 
 void ConcurrentMultipool::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Header *h = static_cast<Header *>(address) - 1;
 
     const int pool = h->d_header.d_poolIdx;
@@ -331,6 +338,7 @@ void ConcurrentMultipool::deallocate(void *address)
         d_blockList.deallocate(h);
     }
     else {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[pool]);
         d_pools_p[pool].deallocate(h);
     }
 }
@@ -338,6 +346,8 @@ void ConcurrentMultipool::deallocate(void *address)
 void ConcurrentMultipool::release()
 {
     for (int i = 0; i < d_numPools; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[i]);
         d_pools_p[i].release();
     }
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
@@ -347,6 +357,7 @@ void ConcurrentMultipool::release()
 void ConcurrentMultipool::reserveCapacity(bsls::Types::size_type size,
                                           int                    numBlocks)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= numBlocks);
 
 #ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
@@ -371,6 +382,7 @@ void ConcurrentMultipool::reserveCapacity(bsls::Types::size_type size,
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(size)) {
         const int pool = findPool(size);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[pool]);
         d_pools_p[pool].reserveCapacity(numBlocks);
     }
 }

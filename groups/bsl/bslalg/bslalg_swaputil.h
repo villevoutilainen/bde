@@ -144,6 +144,8 @@ void SwapUtil::swap(T *a, T *b)
 
     using std::swap;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(b);
     swap(*a, *b);
 }
 

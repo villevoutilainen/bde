@@ -196,6 +196,7 @@ namespace bdlma {
 // CREATORS
 GuardingAllocator::~GuardingAllocator()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS
