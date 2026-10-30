@@ -93,7 +93,8 @@ class Formatter {
     /// iterator pointing after the end of parsed input.
     template <class t_PARSE_CONTEXT>
     BSLS_KEYWORD_CONSTEXPR_CPP20 typename t_PARSE_CONTEXT::iterator parse(
-                                                     t_PARSE_CONTEXT& context);
+                                                     t_PARSE_CONTEXT& context)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
@@ -102,7 +103,8 @@ class Formatter {
     template <class t_FORMAT_CONTEXT, class t_VALUE>
     typename t_FORMAT_CONTEXT::iterator format(
                                         const t_VALUE&    value,
-                                        t_FORMAT_CONTEXT& formatContext) const;
+                                        t_FORMAT_CONTEXT& formatContext) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
                                   // ---------
@@ -115,6 +117,7 @@ BSLS_KEYWORD_CONSTEXPR_CPP20
 void Formatter<tt_SPECIFIER_FORMATTER, t_CHAR>::
                                                parseModifiers(StringView *spec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (!spec->empty() && t_CHAR('%') != spec->front()) {
         if (!d_specifierFormatter.parseNextModifier(spec)) {
             BSLS_THROW(bsl::format_error("Illegal modifier"));
@@ -223,14 +226,14 @@ Formatter<tt_SPECIFIER_FORMATTER, t_CHAR>::format(
         outIt = d_specifierFormatter.formatDefault(outIt, value);
     }
     else {
-        BSLS_ASSERT(t_CHAR('%') == spec.front());
+        BSLS_ASSERT_NONCONVEYOR(t_CHAR('%') == spec.front());
 
         while (!spec.empty()) {
             const t_CHAR c = spec.front();
             spec.remove_prefix(1);
 
             if (c == t_CHAR('%')) {
-                BSLS_ASSERT(!spec.empty());
+                BSLS_ASSERT_NONCONVEYOR(!spec.empty());
 
                 if (!d_specifierFormatter.formatNextSpecifier(
                                                        &spec, &outIt, value) &&

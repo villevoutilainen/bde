@@ -155,6 +155,7 @@ void aSsErT(bool condition, const char *message, int line)
     int MyTimetableLoader::load(bdlt::Timetable *result,
                                 const char      * /* timetableName */)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(result);
 // ```
 // Next, we look up the timetable identified by `timetableName` and load the
 // corresponding text into a `bsl::string` object, `json` (as stated earlier,
@@ -289,11 +290,13 @@ void aSsErT(bool condition, const char *message, int line)
                                                            transitions.begin();
 
             while (it != transitions.end()) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(it);
                 const bdlt::Date& date = it->first.date();
 
                 if (date < firstDate || date > lastDate || -1 > it->second) {
                     return 5;                                         // RETURN
                 }
+                BSLS_ASSERT_CONVEYOR_OBJECT(it);
 
                 result->addTransition(
                                it->first,

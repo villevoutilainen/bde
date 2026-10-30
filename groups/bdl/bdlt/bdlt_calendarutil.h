@@ -171,7 +171,10 @@ struct CalendarUtil {
     static int addBusinessDaysIfValid(bdlt::Date            *result,
                                       const bdlt::Date&      original,
                                       const bdlt::Calendar&  calendar,
-                                      int                    numBusinessDays);
+                                      int                    numBusinessDays)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(original)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(calendar);
 
     /// Load, into the specified `result`, the date corresponding to the
     /// specified `n`th business day of the specified `month` and the
@@ -195,7 +198,9 @@ struct CalendarUtil {
                                                const bdlt::Calendar&  calendar,
                                                int                    year,
                                                int                    month,
-                                               int                    n);
+                                               int                    n)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(calendar);
 
     /// Load, into the specified `result`, the date of the chronologically
     /// earliest business day that is on or after the specified `original`
@@ -205,7 +210,10 @@ struct CalendarUtil {
     /// business day cannot be found within the valid range of `calendar`.
     static int shiftFollowingIfValid(bdlt::Date            *result,
                                      const bdlt::Date&      original,
-                                     const bdlt::Calendar&  calendar);
+                                     const bdlt::Calendar&  calendar)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(original)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(calendar);
 
     /// Load, into the specified `result`, the date of the business day that
     /// is derived from the specified `original` date based on the specified
@@ -216,7 +224,10 @@ struct CalendarUtil {
     static int shiftIfValid(bdlt::Date            *result,
                             const bdlt::Date&      original,
                             const bdlt::Calendar&  calendar,
-                            ShiftConvention        convention);
+                            ShiftConvention        convention)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(original)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(calendar);
 
     /// Load, into the specified `result`, the date of the business day that
     /// is derived from the specified `original` date based on the specified
@@ -237,7 +248,10 @@ struct CalendarUtil {
                             ShiftConvention        convention,
                             bdlt::DayOfWeek::Enum  specialDay,
                             bool                   extendSpecialDay,
-                            ShiftConvention        specialConvention);
+                            ShiftConvention        specialConvention)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(original)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(calendar);
 
     /// Load, into the specified `result`, the date of the chronologically
     /// earliest business day that is on or after the specified `original`
@@ -250,7 +264,10 @@ struct CalendarUtil {
     /// range of `calendar`.
     static int shiftModifiedFollowingIfValid(bdlt::Date            *result,
                                              const bdlt::Date&      original,
-                                             const bdlt::Calendar&  calendar);
+                                             const bdlt::Calendar&  calendar)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(original)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(calendar);
 
     /// Load, into the specified `result`, the date of the chronologically
     /// latest business day that is on or before the specified `original`
@@ -263,7 +280,10 @@ struct CalendarUtil {
     /// range of `calendar`.
     static int shiftModifiedPrecedingIfValid(bdlt::Date            *result,
                                              const bdlt::Date&      original,
-                                             const bdlt::Calendar&  calendar);
+                                             const bdlt::Calendar&  calendar)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(original)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(calendar);
 
     /// Load, into the specified `result`, the date of the chronologically
     /// latest business day that is on or before the specified `original`
@@ -273,7 +293,10 @@ struct CalendarUtil {
     /// business day cannot be found within the valid range of `calendar`.
     static int shiftPrecedingIfValid(bdlt::Date            *result,
                                      const bdlt::Date&      original,
-                                     const bdlt::Calendar&  calendar);
+                                     const bdlt::Calendar&  calendar)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(original)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(calendar);
 
     /// Load, into the specified `result`, the date that is the specified
     /// `numBusinessDays` chronologically before the specified `original`
@@ -293,7 +316,10 @@ struct CalendarUtil {
                                        bdlt::Date            *result,
                                        const bdlt::Date&      original,
                                        const bdlt::Calendar&  calendar,
-                                       int                    numBusinessDays);
+                                       int                    numBusinessDays)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(original)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(calendar);
 };
 
 // ============================================================================

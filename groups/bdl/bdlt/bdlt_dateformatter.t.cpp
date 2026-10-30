@@ -190,6 +190,7 @@ int main(int argc, char *argv[])
 
         for (int td = 0; td < DEFAULT_NUM_DATA; ++td) {
             const DefaultDataRow& dData = DEFAULT_DATA[td];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dData);
             const int             DLINE = dData.d_line;    (void) DLINE;
             const int             YEAR  = dData.d_year;
             const int             MONTH = dData.d_month;

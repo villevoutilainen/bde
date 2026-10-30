@@ -281,10 +281,11 @@ namespace {
 /// otherwise, return 0.
 int numWeekendDaysInFirstTransition(const Obj& calendar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
 
     if (1 <= calendar.numWeekendDaysTransitions() &&
-        bdlt::Date(1,1,1) == calendar.beginWeekendDaysTransitions()->first) {
-        return calendar.beginWeekendDaysTransitions()->second.length();
+        bdlt::Date(1,1,1) == BSLS_ASSERT_CONVEYOR_REF(*calendar.beginWeekendDaysTransitions()).first) {
+        return BSLS_ASSERT_CONVEYOR_REF(*calendar.beginWeekendDaysTransitions()).second.length();
                                                                       // RETURN
     }
     return 0;
@@ -300,6 +301,7 @@ bool sameWeekendDaysTransition(const Obj::WeekendDaysTransition&  transition,
                                const bdlt::Date&                  date,
                                const char                        *weekendDays)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&transition);
 
     bdlt::DayOfWeekSet wdSet;
 
@@ -515,6 +517,7 @@ int parseAbsoluteDate(const char **endPos,
                       bdlt::Date  *result,
                       const char  *input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(endPos);
     ASSERT(result);
     ASSERT(input);
@@ -631,6 +634,7 @@ int loadWeekendDay(const char           **endPosAddr,
                    bdlt::PackedCalendar  *result,
                    char                   dayOfWeek)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(result);
 
     bdlt::DayOfWeek::Enum dow;
@@ -667,6 +671,8 @@ int loadWeekendDaysTransition(const char           **endPosAddr,
                               bdlt::PackedCalendar  *result,
                               const bdlt::Date&      transitionDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&transitionDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(result);
 
     bdlt::DayOfWeekSet weekendDays;
@@ -715,6 +721,8 @@ int loadHolidayCode(const char           **endPosAddr,
                     const bdlt::Date&      holiday,
                     char                   holidayCode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&holiday);
     ASSERT(result);
     ASSERT(0 != result->length());
 
@@ -751,6 +759,7 @@ int ggg(bdlt::PackedCalendar *object,
         const char           *spec,
         bool                  verboseFlag = true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     ASSERT(object);
     ASSERT(spec);
 
@@ -889,6 +898,8 @@ int ggg(bdlt::PackedCalendar *object,
 /// according to the specified `spec` according to the custom language
 /// described above.
 bdlt::PackedCalendar& gg(bdlt::PackedCalendar *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(object);
     ASSERT(spec);
@@ -1016,6 +1027,7 @@ static void reviewCount(const bsls::ReviewViolation&)
     /// otherwise `input` will be invalid.
     void load(bsl::istream& input, bdlt::PackedCalendar *calendar)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(calendar);
         bdlt::Date holiday;
         int        numCodes;
 
@@ -1068,6 +1080,8 @@ static void reviewCount(const bsls::ReviewViolation&)
                                   const bdlt::Date&               date,
                                   const bsl::vector<bsl::string>& holidayNames)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&date);
         for (bdlt::PackedCalendar::HolidayCodeConstIterator
                                          it = calendar.beginHolidayCodes(date);
                                          it != calendar.endHolidayCodes(date);
@@ -1092,6 +1106,7 @@ static void reviewCount(const bsls::ReviewViolation&)
                               const bdlt::PackedCalendar&     calendar,
                               const bsl::vector<bsl::string>& holidayNames)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
         for (bdlt::PackedCalendar::HolidayConstIterator
                           it = calendar.beginHolidays();
                                         it != calendar.endHolidays(); ++it) {
@@ -1824,18 +1839,18 @@ int main(int argc, char *argv[])
                     ASSERTV(ti,
                             X,
                             index,
-                            X.weekendDaysTransition(index) == *A);
+                            X.weekendDaysTransition(index) == BSLS_ASSERT_CONVEYOR_REF(*A));
 
                     ASSERTV(ti,
                             X,
                             index,
-                            X.weekendDaysTransition(index).first == A->first);
+                            X.weekendDaysTransition(index).first == BSLS_ASSERT_CONVEYOR_REF(*A).first);
 
                     ASSERTV(ti,
                             X,
                             index,
                             X.weekendDaysTransition(index).second
-                                                                 == A->second);
+                                                                 == BSLS_ASSERT_CONVEYOR_REF(*A).second);
 
                     ++index;
                     ++mA;
@@ -1867,18 +1882,18 @@ int main(int argc, char *argv[])
                     ASSERTV(ti,
                             X,
                             index,
-                            X.weekendDaysTransition(index) == *B);
+                            X.weekendDaysTransition(index) == BSLS_ASSERT_CONVEYOR_REF(*B));
 
                     ASSERTV(ti,
                             X,
                             index,
-                            X.weekendDaysTransition(index).first == B->first);
+                            X.weekendDaysTransition(index).first == BSLS_ASSERT_CONVEYOR_REF(*B).first);
 
                     ASSERTV(ti,
                             X,
                             index,
                             X.weekendDaysTransition(index).second
-                                                                 == B->second);
+                                                                 == BSLS_ASSERT_CONVEYOR_REF(*B).second);
 
                     mC--;
                     ASSERT(C == B);
@@ -6466,10 +6481,14 @@ int main(int argc, char *argv[])
                                  sizeof(Obj) == fa.numBytesInUse());
 
                     Obj& mX = *objPtr;  const Obj& X = mX;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&objPtr);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(X) }
 
                     bslma::TestAllocator&  oa = *objAllocatorPtr;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
                     bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
                     // Ensure the first row of the table contains the
@@ -8005,28 +8024,32 @@ int main(int argc, char *argv[])
             BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(sa) {
                 Obj mX(&sa);  const Obj& X = mX;
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 bdlt::DayOfWeekSet expected;
                 ASSERT(0 == X.numWeekendDaysTransitions());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 mX.addWeekendDay(bdlt::DayOfWeek::e_SAT);
                 expected.add(bdlt::DayOfWeek::e_SAT);
                 ASSERT(1 == X.numWeekendDaysTransitions());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(bdlt::Date(1,1,1) ==
-                                       X.beginWeekendDaysTransitions()->first);
-                ASSERT(expected == X.beginWeekendDaysTransitions()->second);
+                                       BSLS_ASSERT_CONVEYOR_REF(*X.beginWeekendDaysTransitions()).first);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                ASSERT(expected == BSLS_ASSERT_CONVEYOR_REF(*X.beginWeekendDaysTransitions()).second);
 
                 mX.addWeekendDay(bdlt::DayOfWeek::e_MON);
                 expected.add(bdlt::DayOfWeek::e_MON);
                 ASSERT(1 == X.numWeekendDaysTransitions());
                 ASSERT(bdlt::Date(1,1,1) ==
-                                       X.beginWeekendDaysTransitions()->first);
-                ASSERT(expected == X.beginWeekendDaysTransitions()->second);
+                                       BSLS_ASSERT_CONVEYOR_REF(*X.beginWeekendDaysTransitions()).first);
+                ASSERT(expected == BSLS_ASSERT_CONVEYOR_REF(*X.beginWeekendDaysTransitions()).second);
 
                 mX.addWeekendDay(bdlt::DayOfWeek::e_SAT);
                 ASSERT(1 == X.numWeekendDaysTransitions());
                 ASSERT(bdlt::Date(1,1,1) ==
-                                       X.beginWeekendDaysTransitions()->first);
-                ASSERT(expected == X.beginWeekendDaysTransitions()->second);
+                                       BSLS_ASSERT_CONVEYOR_REF(*X.beginWeekendDaysTransitions()).first);
+                ASSERT(expected == BSLS_ASSERT_CONVEYOR_REF(*X.beginWeekendDaysTransitions()).second);
             } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
 
             ASSERT(allocations == defaultAllocator.numAllocations());
@@ -8810,7 +8833,7 @@ int main(int argc, char *argv[])
         ASSERT( 0 == cal.numHolidays());
         ASSERT( 0 == cal.numWeekendDaysInRange());
         ASSERT( 1 == cal.numWeekendDaysTransitions());
-        ASSERT(bdlt::Date(1,1,1) == cal.beginWeekendDaysTransitions()->first);
+        ASSERT(bdlt::Date(1,1,1) == BSLS_ASSERT_CONVEYOR_REF(*cal.beginWeekendDaysTransitions()).first);
 
         ASSERT( 0 == cal.isWeekendDay(bdlt::DayOfWeek::e_SUN));
         ASSERT( 0 == cal.isWeekendDay(bdlt::DayOfWeek::e_WED));

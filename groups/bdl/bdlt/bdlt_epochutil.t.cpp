@@ -132,7 +132,8 @@ class EarlyEpochCopier
 
     /// Return a reference providing non-modifiable access to the `Datetime`
     /// object stored in the `epochBuffer`.
-    static const bdlt::Datetime& copiedValue();
+    static const bdlt::Datetime& copiedValue()
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 EarlyEpochCopier::EarlyEpochCopier()
@@ -716,8 +717,11 @@ int main(int argc, char *argv[])
                 {
                     bsls::AssertTestHandlerGuard hG;
 
+#ifndef BSLS_ASSERT_CONVEYOR
+                    // A conveyor build rejects a null pointer argument at compile time.
                     ASSERT_SAFE_FAIL(Util::convertToDatetimeInterval(0,
                                                                      INPUT));
+#endif
                 }
             } // end for ti
         }
@@ -963,15 +967,21 @@ int main(int argc, char *argv[])
                 cout << "Negative test: convertToDatetimeInterval(null, x)"
                      << endl;
             }
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_SAFE_FAIL(
                          Util::convertToDatetimeInterval(0, bdlt::Datetime()));
+#endif
 
             if (verbose) {
                 cout << "Negative test: convertFromDatetimeInterval(null, x)"
                      << endl;
             }
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_SAFE_FAIL(
                Util::convertFromDatetimeInterval(0, bdlt::DatetimeInterval()));
+#endif
         }
       } break;
       case 4: {
@@ -1358,7 +1368,10 @@ int main(int argc, char *argv[])
                 {
                     bsls::AssertTestHandlerGuard hG;
 
+#ifndef BSLS_ASSERT_CONVEYOR
+                    // A conveyor build rejects a null pointer argument at compile time.
                     ASSERT_SAFE_FAIL(Util::convertToTimeInterval(0, INPUT));
+#endif
                 }
             } // end for ti
         }
@@ -1642,14 +1655,20 @@ int main(int argc, char *argv[])
                 cout << "Negative test: convertToTimeInterval(null, x)"
                      << endl;
             }
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_SAFE_FAIL(Util::convertToTimeInterval(0, bdlt::Datetime()));
+#endif
 
             if (verbose) {
                 cout << "Negative test: convertFromTimeInterval(null, x)"
                      << endl;
             }
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_SAFE_FAIL(
                        Util::convertFromTimeInterval(0, bsls::TimeInterval()));
+#endif
         }
       } break;
       case 3: {
@@ -2228,12 +2247,18 @@ int main(int argc, char *argv[])
             if (verbose) {
                 cout << "Negative test: convertToTimeT(null, x)" << endl;
             }
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_SAFE_FAIL(Util::convertToTimeT(0, bdlt::Datetime()));
+#endif
 
             if (verbose) {
                 cout << "Negative test: convertFromTimeT(null, x)" << endl;
             }
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_SAFE_FAIL(Util::convertFromTimeT(0, bsl::time_t()));
+#endif
         }
       } break;
       case 2: {
@@ -2867,13 +2892,19 @@ int main(int argc, char *argv[])
             if (verbose) {
                 cout << "Negative test: convertToTimeT64(null, x)" << endl;
             }
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_SAFE_FAIL(Util::convertToTimeT64(0, bdlt::Datetime()));
+#endif
 
             if (verbose) {
                 cout << "Negative test: convertFromTimeT64(null, x)" << endl;
             }
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_SAFE_FAIL(
                             Util::convertFromTimeT64(0, bsls::Types::Int64()));
+#endif
         }
       } break;
       case 1: {

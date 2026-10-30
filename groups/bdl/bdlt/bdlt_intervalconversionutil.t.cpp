@@ -221,6 +221,7 @@ template <class INTEGER_TYPE>
 void ConfigParser<INTEGER_TYPE>::parse(vector<INTEGER_TYPE> *result,
                                        const string&         config)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     // Turn the comma-separated values into a string with one value per line.
 
     string input(config, result->get_allocator());

@@ -38,8 +38,8 @@ Date DateUtil::addYearsEomEndOfFebruary(const Date& original, int numYears)
     // using gcc-4.8.2, with optimization level -O2, on a machine with an
     // Intel(R) Xeon(R) CPU X5670 @ 2.93GHz processor.
 
-    BSLS_ASSERT(2 == original.month());
-    BSLS_ASSERT(28 == original.day() || 29 == original.day());
+    BSLS_ASSERT_NONCONVEYOR(2 == original.month());
+    BSLS_ASSERT_NONCONVEYOR(28 == original.day() || 29 == original.day());
 
     const int newYear = original.year() + numYears;
     const int eom     = SerialDateImpUtil::isLeapYear(original.year())

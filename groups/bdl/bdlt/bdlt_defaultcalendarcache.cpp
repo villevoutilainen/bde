@@ -74,9 +74,10 @@ int initializePrivate(CalendarLoader            *loader,
                       const bsls::TimeInterval&  timeout,
                       bslma::Allocator          *allocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeout);
     BSLS_ASSERT(loader);
     BSLS_ASSERT(allocator);
-    BSLS_ASSERT(bsls::TimeInterval() <= timeout);
+    BSLS_ASSERT_NONCONVEYOR(bsls::TimeInterval() <= timeout);
     BSLS_ASSERT(                        timeout <= bsls::TimeInterval(INT_MAX,
                                                                       0));
 

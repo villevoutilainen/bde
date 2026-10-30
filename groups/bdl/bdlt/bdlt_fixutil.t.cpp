@@ -545,6 +545,7 @@ Config& gg(Config *object,
            int     fractionalSecondPrecision,
            bool    useZAbbreviationForUtcFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     if (fractionalSecondPrecision > 6) {
         fractionalSecondPrecision = 6;
     }
@@ -564,6 +565,8 @@ void updateExpectedPerConfig(bsl::string   *expected,
                              const Config&  configuration,
                              int            maxPrecision)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(expected);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     ASSERT(expected);
 
     const bsl::string::size_type index = expected->find('.');
@@ -2163,15 +2166,19 @@ if (veryVerbose) {
             if (veryVerbose) cout << "\t'Invalid result'" << endl;
             {
                 bdlt::Datetime   *bad   = 0;  (void)bad;
+                BSLS_ASSERT_CONVEYOR_OBJECT(bad);
                 bdlt::DatetimeTz *badTz = 0;  (void)badTz;
 
                 ASSERT_PASS(Util::parse(  &result, INPUT, LENGTH));
+                BSLS_ASSERT_CONVEYOR_OBJECT(badTz);
                 ASSERT_FAIL(Util::parse(      bad, INPUT, LENGTH));
 
                 ASSERT_PASS(Util::parse(&resultTz, INPUT, LENGTH));
+                BSLS_ASSERT_CONVEYOR_OBJECT(bad);
                 ASSERT_FAIL(Util::parse(    badTz, INPUT, LENGTH));
 
                 ASSERT_PASS(Util::parse(  &result, stringRef));
+                BSLS_ASSERT_CONVEYOR_OBJECT(badTz);
                 ASSERT_FAIL(Util::parse(      bad, stringRef));
 
                 ASSERT_PASS(Util::parse(&resultTz, stringRef));
@@ -2741,15 +2748,19 @@ if (veryVerbose) {
             if (veryVerbose) cout << "\t'Invalid result'" << endl;
             {
                 bdlt::Time   *bad   = 0;  (void)bad;
+                BSLS_ASSERT_CONVEYOR_OBJECT(bad);
                 bdlt::TimeTz *badTz = 0;  (void)badTz;
 
                 ASSERT_PASS(Util::parse(  &result, INPUT, LENGTH));
+                BSLS_ASSERT_CONVEYOR_OBJECT(badTz);
                 ASSERT_FAIL(Util::parse(      bad, INPUT, LENGTH));
 
                 ASSERT_PASS(Util::parse(&resultTz, INPUT, LENGTH));
+                BSLS_ASSERT_CONVEYOR_OBJECT(bad);
                 ASSERT_FAIL(Util::parse(    badTz, INPUT, LENGTH));
 
                 ASSERT_PASS(Util::parse(  &result, stringRef));
+                BSLS_ASSERT_CONVEYOR_OBJECT(badTz);
                 ASSERT_FAIL(Util::parse(      bad, stringRef));
 
                 ASSERT_PASS(Util::parse(&resultTz, stringRef));
@@ -3129,15 +3140,19 @@ if (veryVerbose) {
             if (veryVerbose) cout << "\t'Invalid result'" << endl;
             {
                 bdlt::Date   *bad   = 0;  (void)bad;
+                BSLS_ASSERT_CONVEYOR_OBJECT(bad);
                 bdlt::DateTz *badTz = 0;  (void)badTz;
 
                 ASSERT_PASS(Util::parse(  &result, INPUT, LENGTH));
+                BSLS_ASSERT_CONVEYOR_OBJECT(badTz);
                 ASSERT_FAIL(Util::parse(      bad, INPUT, LENGTH));
 
                 ASSERT_PASS(Util::parse(&resultTz, INPUT, LENGTH));
+                BSLS_ASSERT_CONVEYOR_OBJECT(bad);
                 ASSERT_FAIL(Util::parse(    badTz, INPUT, LENGTH));
 
                 ASSERT_PASS(Util::parse(  &result, stringRef));
+                BSLS_ASSERT_CONVEYOR_OBJECT(badTz);
                 ASSERT_FAIL(Util::parse(      bad, stringRef));
 
                 ASSERT_PASS(Util::parse(&resultTz, stringRef));
@@ -3595,9 +3610,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_PASS(Util::generate(&mS, X));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X));
                 ASSERT_FAIL(Util::generate( ps, X));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -3606,9 +3624,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X, C));
                 ASSERT_PASS(Util::generate(&mS, X, C));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X, C));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate(  pb, X, C));
                 ASSERT_FAIL(Util::generate(  ps, X, C));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -4022,9 +4043,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_PASS(Util::generate(&mS, X));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X));
                 ASSERT_FAIL(Util::generate( ps, X));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -4033,9 +4057,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X, C));
                 ASSERT_PASS(Util::generate(&mS, X, C));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X, C));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X, C));
                 ASSERT_FAIL(Util::generate( ps, X, C));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -4439,9 +4466,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_PASS(Util::generate(&mS, X));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X));
                 ASSERT_FAIL(Util::generate( ps, X));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -4450,9 +4480,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X, C));
                 ASSERT_PASS(Util::generate(&mS, X, C));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X, C));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X, C));
                 ASSERT_FAIL(Util::generate( ps, X, C));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -4868,9 +4901,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_PASS(Util::generate(&mS, X));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X));
                 ASSERT_FAIL(Util::generate( ps, X));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -4879,9 +4915,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X, C));
                 ASSERT_PASS(Util::generate(&mS, X, C));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X, C));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X, C));
                 ASSERT_FAIL(Util::generate( ps, X, C));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -5260,9 +5299,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_PASS(Util::generate(&mS, X));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X));
                 ASSERT_FAIL(Util::generate( ps, X));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -5271,9 +5313,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X, C));
                 ASSERT_PASS(Util::generate(&mS, X, C));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X, C));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X, C));
                 ASSERT_FAIL(Util::generate( ps, X, C));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -5650,9 +5695,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_PASS(Util::generate(&mS, X));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X));
                 ASSERT_FAIL(Util::generate( ps, X));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
@@ -5661,9 +5709,12 @@ if (veryVerbose) {
 
                 ASSERT_PASS(Util::generate(&mB, X, C));
                 ASSERT_PASS(Util::generate(&mS, X, C));
+BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
                 ASSERT_PASS(Util::generate(&mP, X, C));
 #endif
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
                 ASSERT_FAIL(Util::generate( pb, X, C));
                 ASSERT_FAIL(Util::generate( ps, X, C));
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING

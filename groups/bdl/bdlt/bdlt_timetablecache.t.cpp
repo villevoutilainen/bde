@@ -230,6 +230,7 @@ TestLoader::~TestLoader()
 
 int TestLoader::load(bdlt::Timetable *result, const char *timetableName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(result);
     BSLS_ASSERT(timetableName);
 
@@ -336,9 +337,14 @@ struct ThreadInfo {
 extern "C" void *threadFunction1(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     Obj& mX = *info->d_cache_p;             const Obj& X = mX;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
     Obj& mY = *info->d_cacheWithTimeout_p;  const Obj& Y = mY;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mY);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
     for (int i = 0; i < info->d_numIterations; ++i) {
         {
@@ -444,9 +450,14 @@ extern "C" void *threadFunction1(void *arg)
 extern "C" void *threadFunction2(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     Obj& mX = *info->d_cache_p;             const Obj& X = mX;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
     Obj& mY = *info->d_cacheWithTimeout_p;  const Obj& Y = mY;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mY);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
     for (int i = 0; i < info->d_numIterations; ++i) {
         {
@@ -552,9 +563,14 @@ extern "C" void *threadFunction2(void *arg)
 extern "C" void *threadFunction3(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     Obj& mX = *info->d_cache_p;             const Obj& X = mX;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
     Obj& mY = *info->d_cacheWithTimeout_p;  const Obj& Y = mY;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mY);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
     for (int i = 0; i < info->d_numIterations; ++i) {
         {
@@ -697,6 +713,7 @@ MyTimetableLoader::~MyTimetableLoader()
 
 int MyTimetableLoader::load(bdlt::Timetable *result, const char *timetableName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(result);
     BSLS_ASSERT(timetableName);
 
@@ -1878,8 +1895,11 @@ int main(int argc, char *argv[])
             }
 
             Obj&                   mX = *objPtr;  const Obj& X = mX;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
             bslma::TestAllocator&  oa = *objAllocatorPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
             bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
             // Verify no allocation from the object/non-object allocators.
@@ -1971,7 +1991,9 @@ int main(int argc, char *argv[])
             }
 
             Obj&                   mX = *objPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             bslma::TestAllocator&  oa = *objAllocatorPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
             bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
             // Verify no allocation from the object/non-object allocators.

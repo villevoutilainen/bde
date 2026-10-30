@@ -124,6 +124,7 @@ namespace u {
 void appendIso8601Date(bsl::string       *result,
                        const bdlt::Date&  date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     *result += bsl::format("{:04}-{:02}-{:02}",
                                         date.year(), date.month(), date.day());
 }
@@ -131,6 +132,7 @@ void appendIso8601Date(bsl::string       *result,
 void appendIso8601Offset(bsl::string *result,
                          int          offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(offset <=  1440);
     ASSERT(offset >= -1440);
 
@@ -144,6 +146,7 @@ void appendIso8601Offset(bsl::string *result,
 void setIso8601DateTz(bsl::string         *result,
                       const bdlt::DateTz&  dateTz)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&dateTz);
     result->clear();
     appendIso8601Date(  result, dateTz.localDate());
     appendIso8601Offset(result, dateTz.offset());
@@ -241,6 +244,7 @@ int main(int argc, char *argv[])
 
         for (int td = 0; td < k_NUM_DDATA; ++td) {
             const DData& dData  = DDATA[td];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&dData);
             const int    DLINE  = dData.d_line;    (void) DLINE;
             const int    YEAR   = dData.d_year;
             const int    MONTH  = dData.d_month;

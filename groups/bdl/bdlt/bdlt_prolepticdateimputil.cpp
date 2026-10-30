@@ -273,14 +273,14 @@ ProlepticDateImpUtil::isValidYearMonthDayNoCache(int year, int month, int day)
 
 int ProlepticDateImpUtil::ydToSerial(int year, int dayOfYear)
 {
-    BSLS_ASSERT(isValidYearDay(year, dayOfYear));
+    BSLS_ASSERT_NONCONVEYOR(isValidYearDay(year, dayOfYear));
 
     return numDaysInPreviousYears(year) + dayOfYear;
 }
 
 int ProlepticDateImpUtil::ymdToSerial(int year, int month, int day)
 {
-    BSLS_ASSERT(isValidYearMonthDay(year, month, day));
+    BSLS_ASSERT_NONCONVEYOR(isValidYearMonthDay(year, month, day));
 
     if (s_firstCachedYear <= year && year <= s_lastCachedYear) {
         // Prevent out-of-bounds read in case of an out-of-contract call (see
@@ -296,7 +296,7 @@ int ProlepticDateImpUtil::ymdToSerial(int year, int month, int day)
 
 int ProlepticDateImpUtil::ymdToSerialNoCache(int year, int month, int day)
 {
-    BSLS_ASSERT(isValidYearMonthDay(year, month, day));
+    BSLS_ASSERT_NONCONVEYOR(isValidYearMonthDay(year, month, day));
 
     // Prevent out-of-bounds read in case of an out-of-contract call (see
     // {DRQS 178292903}).
@@ -317,7 +317,7 @@ void ProlepticDateImpUtil::serialToYd(int *year, int *dayOfYear, int serialDay)
 {
     BSLS_ASSERT(year);
     BSLS_ASSERT(dayOfYear);
-    BSLS_ASSERT(isValidSerial(serialDay));
+    BSLS_ASSERT_NONCONVEYOR(isValidSerial(serialDay));
 
     // 'sm1': serial day minus 1
 
@@ -353,7 +353,7 @@ void ProlepticDateImpUtil::serialToYd(int *year, int *dayOfYear, int serialDay)
 
 int ProlepticDateImpUtil::ymdToDayOfYear(int year, int month, int day)
 {
-    BSLS_ASSERT(isValidYearMonthDay(year, month, day));
+    BSLS_ASSERT_NONCONVEYOR(isValidYearMonthDay(year, month, day));
 
     const int *daysThroughMonth = getArrayDaysThroughMonth(year);
 
@@ -437,7 +437,7 @@ void ProlepticDateImpUtil::ydToMd(int *month,
 {
     BSLS_ASSERT(month);
     BSLS_ASSERT(day);
-    BSLS_ASSERT(isValidYearDay(year, dayOfYear));
+    BSLS_ASSERT_NONCONVEYOR(isValidYearDay(year, dayOfYear));
 
     const bool isLeapFlag = isLeapYear(year);
 

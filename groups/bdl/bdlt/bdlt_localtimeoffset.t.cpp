@@ -305,6 +305,7 @@ extern "C" void *threadFunction(void *argument)
     bsls::TimeInterval MyLocalTimeOffsetUtilNewYork2013::localTimeOffset(
                                              const bdlt::Datetime& utcDatetime)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&utcDatetime);
         ASSERT(2013 == utcDatetime.date().year());
 
         ++s_useCount;
@@ -713,6 +714,7 @@ int main(int argc, char *argv[])
             bsls::AtomicOperations::setInt(&threadStart, 0);
             for (int i = 0; i < MAX_THREADS && i < threads; ++i) {
                 ThreadInfo& ti = DATA[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&ti);
                 ti.set = i & 1 ? f1 : f2;
                 ti.other = i & 1 ? f2 : f1;
                 ti.count = iterations;

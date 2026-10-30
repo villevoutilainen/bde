@@ -118,12 +118,14 @@ struct IntervalConversionUtil {
     /// nanosecond resolution, `bdlt::DatetimeInterval` has only microsecond
     /// resolution.
     static DatetimeInterval convertToDatetimeInterval(
-                                          const bsls::TimeInterval&  interval);
+                                          const bsls::TimeInterval&  interval)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(interval);
 
     /// Return as a `bsls::TimeInterval` the value of the specified
     /// `interval`.
     static bsls::TimeInterval convertToTimeInterval(
-                                            const DatetimeInterval&  interval);
+                                            const DatetimeInterval&  interval)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(interval);
 };
 
 // ============================================================================

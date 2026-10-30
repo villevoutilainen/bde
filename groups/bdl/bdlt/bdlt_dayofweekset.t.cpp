@@ -352,6 +352,7 @@ static int sortElementsAndRemoveDuplicates(Element       *dest,
 /// syntax error detection.
 int ggg(bdlt::DayOfWeekSet *object, const char *spec, int verboseFlag = 1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     object->removeAll();
 
     enum { SUCCESS = -1 };
@@ -379,6 +380,8 @@ int ggg(bdlt::DayOfWeekSet *object, const char *spec, int verboseFlag = 1)
 /// Return, by reference, the specified `*object` with its value adjusted
 /// according to the specified `spec`.
 bdlt::DayOfWeekSet& gg(bdlt::DayOfWeekSet *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(ggg(object, spec) < 0);
     return *object;
@@ -2393,12 +2396,16 @@ int main(int argc, char *argv[])
                 if (veryVerbose) { cout << "\t"; P(W); }
 
                 Obj *mX = static_cast<Obj *>(ta.allocate(sizeof(Obj)));
+                BSLS_ASSERT_CONVEYOR_OBJECT(mX);
                 new (mX) Obj; const Obj& X = *mX;
                 gg(mX, SPEC);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 ASSERTV(ti, X == W);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 Obj mY(X);  const Obj &Y = mY;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(ti, Y == X);
                 ASSERTV(ti, X == W);  ASSERTV(ti, Y == W);
 

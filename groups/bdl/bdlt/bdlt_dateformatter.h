@@ -48,6 +48,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bsla_fallthrough.h>
 
+#include <bsls_assert.h>
 #include <bsls_keyword.h>
 
 #include <bsl_string_view.h>
@@ -128,33 +129,39 @@ class DateFormatter {
     // MANIPULATORS
 
     /// Update this object as-if parsing `Date` in default mode.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseDefault();
+    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseDefault()
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Update this object as-if parsing `Date` in Iso8601 mode.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseIso8601();
+    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseIso8601()
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Examine the first character of the specified `*specInOut` and if it is
     /// recognized as a modifier by this object, update this object's state to
     /// reflect it and pop it off the front of `*specInOut` and return `true`,
     /// and if not, return `false` with no modification to `*specInOut`.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextModifier(StringView *specInOut);
+    BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextModifier(StringView *specInOut)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If the first character of the specified `*specInOut` is recognized by
     /// this specifier formatter, parse it, remove it from `*specInOut`, and
     /// return `true`, otherwise return `false` with no modification to
     /// `*specInOut`.  The behavior is undefined if `*specInOut` is empty.
     BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextSpecifier(
-                                    bsl::basic_string_view<t_CHAR> *specInOut);
+                                    bsl::basic_string_view<t_CHAR> *specInOut)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Read post-processed fields from the specified `spec` that are relevant
     /// to this specifier formatter.
-    void postprocess(const bslfmt::FormatSpecificationParser<t_CHAR>& spec);
+    void postprocess(const bslfmt::FormatSpecificationParser<t_CHAR>& spec)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the `bslfmt::FormatSpecificationParser::Sections` flags that
     /// apply to this value type.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 int extraSections() const;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 int extraSections() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If the first character of the specified `*specInOut` is recognized by
     /// this specifier formatter, use it to format the specified `value` to
@@ -163,24 +170,28 @@ class DateFormatter {
     template <class t_ITERATOR>
     bool formatNextSpecifier(bsl::basic_string_view<t_CHAR> *specInOut,
                              t_ITERATOR                     *outIt,
-                             const DateFormatter_Cache&      value) const;
+                             const DateFormatter_Cache&      value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Format the specified `value` to the specified `out` using the default
     /// format and return `out`.
     template <class t_ITERATOR>
     t_ITERATOR formatDefault(t_ITERATOR                 out,
-                             const DateFormatter_Cache& value) const;
+                             const DateFormatter_Cache& value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Format the specified `value` to the specified `out` using the Iso8601
     /// format and return `out`.
     template <class t_ITERATOR>
     t_ITERATOR formatIso8601(t_ITERATOR                 out,
-                             const DateFormatter_Cache& value) const;
+                             const DateFormatter_Cache& value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the anticipated width of output given all the `parse*` calls
     /// that have been happened thus far and the specified `value`.
     BSLS_KEYWORD_CONSTEXPR_CPP20
-    int totalWidth(const DateFormatter_Cache& value) const;
+    int totalWidth(const DateFormatter_Cache& value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
                       // =========================
@@ -206,19 +217,19 @@ class DateFormatter_Cache {
     // ACCESSORS
 
     /// Return the cached `year` field.
-    int year() const;
+    int year() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the cached `month` field.
-    int month() const;
+    int month() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the cached `day` field.
-    int day() const;
+    int day() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Call the `dayOfWeek` accessor of the cached date and return the value.
-    int dayOfWeek() const;
+    int dayOfWeek() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Call the `dayOfYear` accessor of the cached date and return the value.
-    int dayOfYear() const;
+    int dayOfYear() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================
@@ -238,6 +249,7 @@ t_ITERATOR DateFormatter<t_CHAR>::formatDayOfMonth(
                             t_ITERATOR                                   out,
                             const DateFormatter_Cache& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return Util::writeZeroPaddedDigits(out, value.day(), k_DAY_OF_MONTH_WIDTH);
 }
 
@@ -248,6 +260,7 @@ t_ITERATOR DateFormatter<t_CHAR>::formatDayOfWeek(
                             t_ITERATOR                                   out,
                             const DateFormatter_Cache& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bsl::string_view dayOfWeekName = DayOfWeek::toAscii(
                               static_cast<DayOfWeek::Enum>(value.dayOfWeek()));
 
@@ -264,6 +277,7 @@ t_ITERATOR DateFormatter<t_CHAR>::formatMonthIndex(
                             t_ITERATOR                                   out,
                             const DateFormatter_Cache& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return Util::writeZeroPaddedDigits(out,
                                        value.month(),
                                        k_MONTH_INDEX_WIDTH);
@@ -276,6 +290,7 @@ t_ITERATOR DateFormatter<t_CHAR>::formatMonthOfYear(
                             t_ITERATOR                                   out,
                             const DateFormatter_Cache& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bsl::string_view monthName = MonthOfYear::toAscii(
                                 static_cast<MonthOfYear::Enum>(value.month()));
 
@@ -291,6 +306,7 @@ inline
 t_ITERATOR DateFormatter<t_CHAR>::formatYear(t_ITERATOR                 out,
                                              const DateFormatter_Cache& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return Util::writeZeroPaddedDigits(out, value.year(), k_YEAR_WIDTH);
 }
 
@@ -329,7 +345,7 @@ BSLS_KEYWORD_CONSTEXPR_CPP20
 bool DateFormatter<t_CHAR>::parseNextSpecifier(
                                      bsl::basic_string_view<t_CHAR> *specInOut)
 {
-    BSLS_ASSERT(!specInOut->empty());
+    BSLS_ASSERT_NONCONVEYOR(!specInOut->empty());
 
     switch (static_cast<char>(specInOut->front())) {
       case 'C': {
@@ -399,6 +415,7 @@ bool DateFormatter<t_CHAR>::formatNextSpecifier(
                                   t_ITERATOR                     *outIt,
                                   const DateFormatter_Cache&      value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BSLS_ASSERT_SAFE(!specInOut->empty());
 
     switch (static_cast<char>(specInOut->front())) {
@@ -525,6 +542,8 @@ inline
 DateFormatter_Cache::DateFormatter_Cache(const Date& value)
 : d_value(value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     value.getYearMonthDay(&d_year, &d_month, &d_day);
 }
 
@@ -583,6 +602,7 @@ class formatter<BloombergLP::bdlt::Date, t_CHAR> {
     BSLS_KEYWORD_CONSTEXPR_CPP20 typename t_PARSE_CONTEXT::iterator parse(
                                                       t_PARSE_CONTEXT& context)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_formatter.parse(context);
     }
 
@@ -596,6 +616,7 @@ class formatter<BloombergLP::bdlt::Date, t_CHAR> {
                                          const Date&       value,
                                          t_FORMAT_CONTEXT& formatContext) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_formatter.format(FormatCache(value), formatContext);
     }
 };

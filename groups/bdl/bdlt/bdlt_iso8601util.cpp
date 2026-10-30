@@ -120,6 +120,8 @@ int Impl::generate(STRING                          *string,
                    const bsls::TimeInterval&        object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -140,6 +142,8 @@ int Impl::generate(STRING                          *string,
                    const Date&                      object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -160,6 +164,8 @@ int Impl::generate(STRING                          *string,
                    const Time&                      object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -181,6 +187,8 @@ int Impl::generate(STRING                          *string,
                    const Datetime&                  object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -202,6 +210,8 @@ int Impl::generate(STRING                          *string,
                    const DateTz&                    object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -223,6 +233,8 @@ int Impl::generate(STRING                          *string,
                    const TimeTz&                    object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -244,6 +256,8 @@ int Impl::generate(STRING                          *string,
                    const DatetimeTz&                object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -265,6 +279,8 @@ int Impl::generate(STRING                          *string,
                    const Util::DateOrDateTz&        object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -286,6 +302,8 @@ int Impl::generate(STRING                          *string,
                    const Util::TimeOrTimeTz&        object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -307,6 +325,8 @@ int Impl::generate(STRING                            *string,
                    const Util::DatetimeOrDatetimeTz&  object,
                    const GenerateConfiguration&       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -332,6 +352,7 @@ int addSecondsIfValid(bsls::Types::Int64 *result,
                       bsls::Types::Int64  factor)
 {
     BSLS_ASSERT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(0 <= *result);
     BSLS_ASSERT(0 <= value);
     BSLS_ASSERT(0 < factor);
@@ -367,7 +388,7 @@ int asciiPrefixToInt64(const char         **nextPos,
     BSLS_ASSERT(result);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin < end);
+    BSLS_ASSERT_NONCONVEYOR(begin < end);
 
     if (!isdigit(*begin)) {
         return -1;                                                    // RETURN
@@ -404,7 +425,7 @@ int asciiToInt(const char **nextPos,
     BSLS_ASSERT(result);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin < end);
+    BSLS_ASSERT_NONCONVEYOR(begin < end);
 
     const char         *tmpNext = 0;
     bsls::Types::Int64  tmp     = 0;
@@ -445,7 +466,7 @@ int parseDateRaw(const char        **nextPos,
     BSLS_ASSERT(day);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     const bool basic = configuration.basic();
 
@@ -502,7 +523,7 @@ int parseFractionalSecond(const char         **nextPos,
     BSLS_ASSERT(nanosecond);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
     BSLS_ASSERT(0     <= roundNanoseconds);
     BSLS_ASSERT(         roundNanoseconds < 1000000000);
 
@@ -582,7 +603,7 @@ int parseTimeRaw(const char         **nextPos,
     BSLS_ASSERT(hasLeapSecond);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
     BSLS_ASSERT(0     <= roundMicroseconds);
     BSLS_ASSERT(         roundMicroseconds < 1000000);
 
@@ -671,7 +692,7 @@ int parseZoneDesignator(const char **nextPos,
     BSLS_ASSERT(minuteOffset);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     const char *p = begin;
 
@@ -745,6 +766,7 @@ int parseDate(Date               *date,
               ssize_t             length,
               ParseConfiguration  configuration = ParseConfiguration())
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(date);
     // Sample ISO 8601 date: "2005-01-31+04:00"
     //
     // The zone designator is optional.
@@ -812,6 +834,7 @@ int parseTime(Time               *time,
               ssize_t             length,
               ParseConfiguration  configuration = ParseConfiguration())
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(time);
     // Sample ISO 8601 time: "08:59:59.999999-04:00"
     //
     // The fractional second and zone designator are independently optional.
@@ -1312,7 +1335,7 @@ int parseDatetime(DatetimeTz         *datetimeTz,
 
     if (DatetimeInterval() != resultAdjustment) {
 
-        BSLS_ASSERT(resultAdjustment > DatetimeInterval());
+        BSLS_ASSERT_NONCONVEYOR(resultAdjustment > DatetimeInterval());
         // We assert the above to prevent future developers from accidentally
         // introducing negative adjustments, which are not handled by the
         // following logic.
@@ -1343,6 +1366,7 @@ int parseImp(Datetime           *result,
              ssize_t             length,
              ParseConfiguration  configuration = ParseConfiguration())
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     // Sample ISO 8601 datetime if the specified 'basic' is 'false':
     // "2005-01-31T08:59:59.999999-04:00"
     //
@@ -1548,6 +1572,7 @@ int generateZoneDesignator(char                            *buffer,
                            int                              tzOffset,
                            const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(-(24 * 60) < tzOffset);
     BSLS_ASSERT(             tzOffset < 24 * 60);

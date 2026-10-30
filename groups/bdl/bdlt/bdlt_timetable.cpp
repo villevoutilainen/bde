@@ -47,6 +47,8 @@ class Timetable_ResetProctor {
     /// the managed timetable's `reset` method.
     ~Timetable_ResetProctor()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_timetable_p);
         if (d_timetable_p) {
             d_timetable_p->reset();
         }
@@ -94,7 +96,7 @@ bsl::ostream& TimetableTransition::print(bsl::ostream& stream,
 // MANIPULATORS
 bool Timetable_Day::addTransition(const Time& time, int code)
 {
-    BSLS_ASSERT(24 > time.hour());
+    BSLS_ASSERT_NONCONVEYOR(24 > time.hour());
 
     BSLS_ASSERT(0 <= code || Timetable::k_UNSET_TRANSITION_CODE == code);
 
@@ -104,6 +106,7 @@ bool Timetable_Day::addTransition(const Time& time, int code)
                bdlb::AlgorithmWorkaroundUtil::lowerBound(d_transitions.begin(),
                                                          d_transitions.end(),
                                                          time);
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter);
     if (iter == d_transitions.end()) {
         d_transitions.emplace_back(time, code);
     }
@@ -125,6 +128,7 @@ bool Timetable_Day::removeTransition(const Time& time)
                                                          d_transitions.end(),
                                                          time);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter);
     if (iter == d_transitions.end() || iter->d_time != time) {
         return false;                                                 // RETURN
     }
@@ -139,7 +143,7 @@ bool Timetable_Day::removeTransition(const Time& time)
 // ACCESSORS
 int Timetable_Day::transitionCodeInEffect(const Time& time) const
 {
-    BSLS_ASSERT(24 > time.hour());
+    BSLS_ASSERT_NONCONVEYOR(24 > time.hour());
 
     bsl::vector<Timetable_CompactableTransition>::const_iterator iter =
                bdlb::AlgorithmWorkaroundUtil::upperBound(d_transitions.begin(),
@@ -168,6 +172,7 @@ Timetable::Timetable(bslma::Allocator *basicAllocator)
 , d_initialTransitionCode(k_UNSET_TRANSITION_CODE)
 , d_timetable(basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 Timetable::Timetable(const Date&       firstDate,
@@ -177,7 +182,10 @@ Timetable::Timetable(const Date&       firstDate,
 : d_initialTransitionCode(initialTransitionCode)
 , d_timetable(basicAllocator)
 {
-    BSLS_ASSERT(firstDate <= lastDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&firstDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lastDate);
+    BSLS_ASSERT_NONCONVEYOR(firstDate <= lastDate);
 
     BSLS_ASSERT(                         0 <= initialTransitionCode
                 || k_UNSET_TRANSITION_CODE == initialTransitionCode);
@@ -192,13 +200,15 @@ Timetable::Timetable(const Timetable&  original,
 , d_initialTransitionCode(original.d_initialTransitionCode)
 , d_timetable(original.d_timetable, basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 // MANIPULATORS
 void Timetable::addTransition(const Date& date, const Time& time, int code)
 {
-    BSLS_ASSERT(24 >  time.hour());
-    BSLS_ASSERT(isInRange(date));
+    BSLS_ASSERT_NONCONVEYOR(24 >  time.hour());
+    BSLS_ASSERT_NONCONVEYOR(isInRange(date));
 
     BSLS_ASSERT(0 <= code || k_UNSET_TRANSITION_CODE == code);
 
@@ -229,10 +239,10 @@ void Timetable::addTransitions(const DayOfWeek::Enum& dayOfWeek,
                                const Date&            firstDate,
                                const Date&            lastDate)
 {
-    BSLS_ASSERT(24 > time.hour());
-    BSLS_ASSERT(firstDate <= lastDate);
-    BSLS_ASSERT(isInRange(firstDate));
-    BSLS_ASSERT(isInRange(lastDate));
+    BSLS_ASSERT_NONCONVEYOR(24 > time.hour());
+    BSLS_ASSERT_NONCONVEYOR(firstDate <= lastDate);
+    BSLS_ASSERT_NONCONVEYOR(isInRange(firstDate));
+    BSLS_ASSERT_NONCONVEYOR(isInRange(lastDate));
 
     BSLS_ASSERT(0 <= code || k_UNSET_TRANSITION_CODE == code);
 
@@ -250,8 +260,8 @@ void Timetable::addTransitions(const DayOfWeek::Enum& dayOfWeek,
 
 void Timetable::removeTransition(const Date& date, const Time& time)
 {
-    BSLS_ASSERT(24 > time.hour());
-    BSLS_ASSERT(isInRange(date));
+    BSLS_ASSERT_NONCONVEYOR(24 > time.hour());
+    BSLS_ASSERT_NONCONVEYOR(isInRange(date));
 
     Timetable_ResetProctor proctor(this);
 
@@ -278,7 +288,7 @@ void Timetable::removeTransition(const Date& date, const Time& time)
 
 void Timetable::removeTransitions(const Date& date)
 {
-    BSLS_ASSERT(isInRange(date));
+    BSLS_ASSERT_NONCONVEYOR(isInRange(date));
 
     Timetable_ResetProctor proctor(this);
 
@@ -308,10 +318,10 @@ void Timetable::removeTransitions(const DayOfWeek::Enum& dayOfWeek,
                                   const Date&            firstDate,
                                   const Date&            lastDate)
 {
-    BSLS_ASSERT(24 > time.hour());
-    BSLS_ASSERT(firstDate <= lastDate);
-    BSLS_ASSERT(isInRange(firstDate));
-    BSLS_ASSERT(isInRange(lastDate));
+    BSLS_ASSERT_NONCONVEYOR(24 > time.hour());
+    BSLS_ASSERT_NONCONVEYOR(firstDate <= lastDate);
+    BSLS_ASSERT_NONCONVEYOR(isInRange(firstDate));
+    BSLS_ASSERT_NONCONVEYOR(isInRange(lastDate));
 
     Date correctedFirstDate = DateUtil::nextDayOfWeekInclusive(dayOfWeek,
                                                                firstDate);
@@ -358,7 +368,7 @@ void Timetable::setInitialTransitionCode(int code)
 
 void Timetable::setValidRange(const Date& firstDate, const Date& lastDate)
 {
-    BSLS_ASSERT(firstDate <= lastDate);
+    BSLS_ASSERT_NONCONVEYOR(firstDate <= lastDate);
 
     Timetable_ResetProctor proctor(this);
 
@@ -481,7 +491,9 @@ bsl::ostream& Timetable::print(bsl::ostream& stream,
 // MANIPULATORS
 Timetable_ConstIterator& Timetable_ConstIterator::operator++()
 {
-    BSLS_ASSERT(d_dayIndex < d_timetable_p->d_timetable.length());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_timetable_p);
+    BSLS_ASSERT_NONCONVEYOR(d_dayIndex < d_timetable_p->d_timetable.length());
 
     ++d_transitionIndex;
     while (d_dayIndex < d_timetable_p->d_timetable.length()
@@ -496,6 +508,8 @@ Timetable_ConstIterator& Timetable_ConstIterator::operator++()
 
 Timetable_ConstIterator& Timetable_ConstIterator::operator--()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_timetable_p);
     BSLS_ASSERT(0 < d_dayIndex || 0 < d_transitionIndex);
 
     if (d_transitionIndex) {
@@ -509,7 +523,8 @@ Timetable_ConstIterator& Timetable_ConstIterator::operator--()
             --d_dayIndex;
         }
 
-        BSLS_ASSERT(0 < d_timetable_p->d_timetable[d_dayIndex].size());
+        BSLS_ASSERT_NONCONVEYOR(
+                            0 < d_timetable_p->d_timetable[d_dayIndex].size());
 
         d_transitionIndex = d_timetable_p->d_timetable[d_dayIndex].size() - 1;
     }

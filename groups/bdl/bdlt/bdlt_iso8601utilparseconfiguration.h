@@ -155,21 +155,23 @@ class Iso8601UtilParseConfiguration {
 
     /// Set the `basic` field of this object to the specified `value` and
     /// return a copy of this object.
-    Iso8601UtilParseConfiguration setBasic(bool value = true);
+    Iso8601UtilParseConfiguration setBasic(bool value = true)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the `relaxed` field of this object to the specified `value` and
     /// return a copy of this object.
-    Iso8601UtilParseConfiguration setRelaxed(bool value = true);
+    Iso8601UtilParseConfiguration setRelaxed(bool value = true)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return `true` if the `basic` field of this object is set and `false`
     /// otherwise.
-    bool basic() const;
+    bool basic() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the `relaxed` field of this object is set and
     /// `false` otherwise.
-    bool relaxed() const;
+    bool relaxed() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
@@ -188,7 +190,9 @@ class Iso8601UtilParseConfiguration {
     /// notice.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const;
+                        int           spacesPerLevel = 4) const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // FREE OPERATORS
@@ -214,7 +218,9 @@ bool operator!=(Iso8601UtilParseConfiguration lhs,
 /// without notice.  Also note that this method has the same behavior as
 /// `object.print(stream, 0, -1)`, but with the attribute names elided.
 bsl::ostream& operator<<(bsl::ostream&                        stream,
-                         const Iso8601UtilParseConfiguration& object);
+                         const Iso8601UtilParseConfiguration& object)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
 // ============================================================================
 //                             INLINE DEFINITIONS
@@ -230,6 +236,7 @@ Iso8601UtilParseConfiguration::Iso8601UtilParseConfiguration()
 : d_basic(false)
 , d_relaxed(false)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline

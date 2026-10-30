@@ -306,6 +306,7 @@ int parseUint(const char **endPos, int *result, const char *input)
 /// succeeds, and a non-zero value otherwise.
 int parseDate(const char **endPos, bdlt::Date *result, const char *input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(endPos);
     ASSERT(result);
     ASSERT(input);
@@ -377,6 +378,7 @@ int parseTransition(const char     **endPos,
                     bdlt::Datetime  *datetime,
                     const char      *input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(datetime);
     ASSERT(endPos);
     ASSERT(code);
     ASSERT(datetime);
@@ -434,6 +436,7 @@ int parseTransition(const char     **endPos,
 /// `gg` as well as allowing for verification of syntax error detection.
 int ggg(Obj *object, const char *spec, bool verboseFlag = true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     ASSERT(object);
     ASSERT(spec);
 
@@ -567,6 +570,8 @@ int ggg(Obj *object, const char *spec, bool verboseFlag = true)
 /// according to the specified `spec` according to the custom language
 /// described above.
 Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(object);
     ASSERT(spec);
@@ -907,15 +912,18 @@ int main(int argc, char *argv[])
 
                 int previousTransitionCode = X.initialTransitionCode();
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                 for (int i = 0; i < LEN; ++i) {
                     // Verify `operator*` and `operator->`.
 
                     bdlt::Datetime BEFORE = iter->datetime();
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                     BEFORE.addTime(0, 0, 0, 0, -1);
 
                     LOOP_ASSERT(i, *iter == *iter.operator->());
                     LOOP_ASSERT(i, iter->code() == X.transitionCodeInEffect(
                                                             iter->datetime()));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                     LOOP_ASSERT(i, previousTransitionCode
                                           == X.transitionCodeInEffect(BEFORE));
 
@@ -2563,14 +2571,18 @@ int main(int argc, char *argv[])
                                  sizeof(Obj) == fa.numBytesInUse());
 
                     Obj& mX = *objPtr;  const Obj& X = mX;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(X) }
 
                     bslma::TestAllocator&  oa = *objAllocatorPtr;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
                     bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
                     // Ensure the first row of the table contains the
                     // default-constructed value.
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&objPtr);
 
                     static bool firstFlag = true;
                     if (firstFlag) {
@@ -3071,6 +3083,7 @@ int main(int argc, char *argv[])
                 if (veryVeryVerbose) { T_ T_ Q(EXPECTED) cout << EXP; }
 
                 const Obj& X = *VALUE;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 bslma::TestAllocator oa("object", veryVeryVeryVerbose);
 

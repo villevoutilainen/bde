@@ -246,18 +246,37 @@ class Date {
     int d_serialDate;  // absolute serial date (1 == 1/1/1, 2 == 1/1/2, ...)
 
     // FRIENDS
-    friend bool operator==(const Date&, const Date&);
-    friend bool operator!=(const Date&, const Date&);
-    friend bool operator< (const Date&, const Date&);
-    friend bool operator<=(const Date&, const Date&);
-    friend bool operator>=(const Date&, const Date&);
-    friend bool operator> (const Date&, const Date&);
-    friend Date operator+(const Date&, int);
-    friend Date operator+(int, const Date&);
-    friend Date operator-(const Date&, int);
-    friend int  operator-(const Date&, const Date&);
+    friend bool operator==(const Date& lhs, const Date& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator!=(const Date& lhs, const Date& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator<(const Date& lhs, const Date& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator<=(const Date& lhs, const Date& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator>=(const Date& lhs, const Date& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator>(const Date& lhs, const Date& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend Date operator+(const Date& date, int numDays)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(date);
+    friend Date operator+(int numDays, const Date& date)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(date);
+    friend Date operator-(const Date& date, int numDays)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(date);
+    friend int  operator-(const Date& lhs, const Date& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     template <class HASHALG>
-    friend void hashAppend(HASHALG& hashAlg, const Date&);
+    friend void hashAppend(HASHALG& hashAlg, const Date& object)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
   private:
     // PRIVATE CLASS METHODS
@@ -374,7 +393,7 @@ class Date {
     /// undefined unless the resulting value falls within the range of dates
     /// supported by this class (see `isValidYearMonthDay`).  Note that
     /// `numDays` may be negative.
-    Date& operator+=(int numDays);
+    Date& operator+=(int numDays) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Assign to this object the value that is earlier by the specified
     /// (signed) `numDays` from its current value, and return a reference
@@ -382,49 +401,55 @@ class Date {
     /// undefined unless the resulting value falls within the range of dates
     /// supported by this class (see `isValidYearMonthDay`).  Note that
     /// `numDays` may be negative.
-    Date& operator-=(int numDays);
+    Date& operator-=(int numDays) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set this object to have the value that is one day later than its
     /// current value, and return a reference providing modifiable access to
     /// this object.  The behavior is undefined if the year/month/day
     /// representation of the current value is `9999/12/31`.
-    Date& operator++();
+    Date& operator++() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Set this object to have the value that is one day earlier than its
     /// current value, and return a reference providing modifiable access to
     /// this object.  The behavior is undefined if the year/month/day
     /// representation of the current value is `0001/01/01`.
-    Date& operator--();
+    Date& operator--() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Set this object to have the value that is later by the specified
     /// (signed) `numDays` from its current value, if the resulting value
     /// falls within the range of dates supported by this class (see
     /// `isValidYearMonthDay`).  Return 0 on success, and a non-zero value
     /// (with no effect) otherwise.  Note that `numDays` may be negative.
-    int addDaysIfValid(int numDays);
+    int addDaysIfValid(int numDays) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set this object to have the value represented by the specified
     /// `year` and `dayOfYear`.  The behavior is undefined unless `year` and
     /// `dayOfYear` represent a valid `Date` value (see `isValidYearDay`).
-    void setYearDay(int year, int dayOfYear);
+    void setYearDay(int year, int dayOfYear)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set this object to have the value represented by the specified
     /// `year` and `dayOfYear` if they comprise a valid `Date` value (see
     /// `isValidYearDay`).  Return 0 on success, and a non-zero value (with
     /// no effect) otherwise.
-    int setYearDayIfValid(int year, int dayOfYear);
+    int setYearDayIfValid(int year, int dayOfYear)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set this object to have the value represented by the specified
     /// `year`, `month`, and `day`.  The behavior is undefined unless
     /// `year`, `month`, and `day` represent a valid `Date` value (see
     /// `isValidYearMonthDay`).
-    void setYearMonthDay(int year, int month, int day);
+    void setYearMonthDay(int year, int month, int day)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set this object to have the value represented by the specified
     /// `year`, `month`, and `day` if they comprise a valid `Date` value
     /// (see `isValidYearMonthDay`).  Return 0 on success, and a non-zero
     /// value (with no effect) otherwise.
-    int setYearMonthDayIfValid(int year, int month, int day);
+    int setYearMonthDayIfValid(int year, int month, int day)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
@@ -439,37 +464,40 @@ class Date {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version);
+    STREAM& bdexStreamIn(STREAM& stream, int version)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the day of the month in the range `[1 .. 31]` of this date.
-    int day() const;
+    int day() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the day of the week in the range
     /// `[DayOfWeek::e_SUN .. DayOfWeek::e_SAT]` of this date.
-    DayOfWeek::Enum dayOfWeek() const;
+    DayOfWeek::Enum dayOfWeek() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the day of the year in the range `[1 .. 366]` of this date.
-    int dayOfYear() const;
+    int dayOfYear() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Load, into the specified `year` and `dayOfYear`, the respective
     /// `year` and `dayOfYear` attribute values of this date.
-    void getYearDay(int *year, int *dayOfYear) const;
+    void getYearDay(int *year, int *dayOfYear) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Load, into the specified `year`, `month`, and `day`, the respective
     /// `year`, `month`, and `day` attribute values of this date.
-    void getYearMonthDay(int *year, int *month, int *day) const;
+    void getYearMonthDay(int *year, int *month, int *day) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the month of the year in the range `[1 .. 12]` of this date.
-    int month() const;
+    int month() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the month of the year in the range
     /// `[MonthOfYear::e_JAN .. MonthOfYear::e_DEC]` of this date.
-    MonthOfYear::Enum monthOfYear() const;
+    MonthOfYear::Enum monthOfYear() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the year in the range `[1 .. 9999]` of this date.
-    int year() const;
+    int year() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
@@ -482,7 +510,9 @@ class Date {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Write the value of this object to the specified output `stream` in a
     /// human-readable format, and return a reference to `stream`.
@@ -499,7 +529,9 @@ class Date {
     /// notice.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const;
+                        int           spacesPerLevel = 4) const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
 
@@ -550,7 +582,9 @@ class Date {
     /// ```
     ///
     /// @DEPRECATED: Use `print` instead.
-    bsl::ostream& streamOut(bsl::ostream& stream) const;
+    bsl::ostream& streamOut(bsl::ostream& stream) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Set this object to have the value represented by the specified
     /// `year` and `dayOfYear` if they comprise a valid `Date` value (see
@@ -558,7 +592,8 @@ class Date {
     /// no effect) otherwise.
     ///
     /// @DEPRECATED: Use `setYearDayIfValid` instead.
-    int validateAndSetYearDay(int year, int dayOfYear);
+    int validateAndSetYearDay(int year, int dayOfYear)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set this object to have the value represented by the specified
     /// `year`, `month`, and `day` if they comprise a valid `Date` value
@@ -566,7 +601,8 @@ class Date {
     /// value (with no effect) otherwise.
     ///
     /// @DEPRECATED: Use `setYearMonthDayIfValid` instead.
-    int validateAndSetYearMonthDay(int year, int month, int day);
+    int validateAndSetYearMonthDay(int year, int month, int day)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
 };
@@ -593,7 +629,8 @@ bool operator!=(const Date& lhs, const Date& rhs);
 /// ```
 /// print(stream, 0, -1);
 /// ```
-bsl::ostream& operator<<(bsl::ostream& stream, const Date& date);
+bsl::ostream& operator<<(bsl::ostream& stream, const Date& date)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream) BSLS_ASSERT_CONVEYOR_REQUIRES(date);
 
 /// Return `true` if the specified `lhs` date is earlier than the specified
 /// `rhs` date, and `false` otherwise.
@@ -614,13 +651,13 @@ bool operator>=(const Date& lhs, const Date& rhs);
 /// Set the specified `date` object to have the value that is one day later
 /// than its current value, and return the value of `date` on entry.  The
 /// behavior is undefined if the value of `date` on entry is `9999/12/31`.
-Date operator++(Date& date, int);
+Date operator++(Date& date, int) BSLS_ASSERT_CONVEYOR_REQUIRES(date);
 
 /// Set the specified `date` object to have the value that is one day
 /// earlier than its current value, and return the value of `date` on entry.
 /// The behavior is undefined if the value of `date` on entry is
 /// `0001/01/01`.
-Date operator--(Date& date, int);
+Date operator--(Date& date, int) BSLS_ASSERT_CONVEYOR_REQUIRES(date);
 
 /// Return the date value that is later by the specified (signed) `numDays`
 /// from the specified `date`.  The behavior is undefined unless the
@@ -694,6 +731,7 @@ inline
 Date::Date(int serialDate)
 : d_serialDate(serialDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_REVIEW(Date::isValidSerial(d_serialDate));
 }
 
@@ -723,12 +761,14 @@ inline
 Date::Date()
 : d_serialDate(1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
 Date::Date(int year, int dayOfYear)
 : d_serialDate(SerialDateImpUtil::ydToSerial(year, dayOfYear))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(isValidYearDay(year, dayOfYear));
 }
 
@@ -736,6 +776,7 @@ inline
 Date::Date(int year, int month, int day)
 : d_serialDate(SerialDateImpUtil::ymdToSerial(year, month, day))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(isValidYearMonthDay(year, month, day));
 }
 
@@ -743,11 +784,14 @@ inline
 Date::Date(const Date& original)
 : d_serialDate(original.d_serialDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 inline
 Date::~Date()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_REVIEW(Date::isValidSerial(d_serialDate));
 }
 
@@ -755,6 +799,8 @@ Date::~Date()
 inline
 Date& Date::operator=(const Date& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     d_serialDate = rhs.d_serialDate;
     return *this;
 }
@@ -940,7 +986,7 @@ STREAM& Date::bdexStreamOut(STREAM& stream, int version) const
             // Prevent a corrupt date value from escaping the process (whereby
             // it may contaminate a database, for example).
 
-            BSLS_ASSERT_OPT(Date::isValidSerial(d_serialDate));
+            BSLS_ASSERT_OPT_NONCONVEYOR(Date::isValidSerial(d_serialDate));
 #endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 #ifdef BDE_USE_PROLEPTIC_DATES

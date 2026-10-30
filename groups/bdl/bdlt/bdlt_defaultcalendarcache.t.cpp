@@ -190,8 +190,12 @@ struct ThreadInfo {
 extern "C" void *threadFunctionA(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     for (int i = 0; i < info->d_numIterations; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(info);
+        BSLS_ASSERT_CONVEYOR_OBJECT(info->d_loader_p);
+        BSLS_ASSERT_CONVEYOR_OBJECT(info->d_allocator_p);
         Util::initialize(info->d_loader_p, info->d_allocator_p);
         Util::destroy();
     }
@@ -202,9 +206,13 @@ extern "C" void *threadFunctionA(void *arg)
 extern "C" void *threadFunctionB(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     for (int i = 0; i < info->d_numIterations; ++i) {
         Util::destroy();
+        BSLS_ASSERT_CONVEYOR_OBJECT(info);
+        BSLS_ASSERT_CONVEYOR_OBJECT(info->d_loader_p);
+        BSLS_ASSERT_CONVEYOR_OBJECT(info->d_allocator_p);
         Util::initialize(info->d_loader_p, Interval(30), info->d_allocator_p);
     }
 
@@ -214,10 +222,17 @@ extern "C" void *threadFunctionB(void *arg)
 extern "C" void *threadFunctionC(void *arg)
 {
     ThreadInfo *info = (ThreadInfo *)arg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(info);
 
     for (int i = 0; i < info->d_numIterations; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(info);
+        BSLS_ASSERT_CONVEYOR_OBJECT(info->d_loader_p);
+        BSLS_ASSERT_CONVEYOR_OBJECT(info->d_allocator_p);
         Util::initialize(info->d_loader_p, info->d_allocator_p);
         Util::destroy();
+        BSLS_ASSERT_CONVEYOR_OBJECT(info);
+        BSLS_ASSERT_CONVEYOR_OBJECT(info->d_loader_p);
+        BSLS_ASSERT_CONVEYOR_OBJECT(info->d_allocator_p);
         Util::initialize(info->d_loader_p, Interval(30), info->d_allocator_p);
     }
 
@@ -270,6 +285,7 @@ MyCalendarLoader::~MyCalendarLoader()
 int MyCalendarLoader::load(bdlt::PackedCalendar *result,
                            const char           *calendarName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(result);
     BSLS_ASSERT(calendarName);
 
@@ -384,6 +400,7 @@ int main(int argc, char *argv[])
 // Then, we retrieve the calendar identified by "US" from the default cache,
 // and verify that 2011/07/04 is recognized as a holiday in the "US" calendar,
 // whereas 2011/07/14 is not:
+BSLS_ASSERT_CONVEYOR_OBJECT(cachePtr);
 // ```
     bsl::shared_ptr<const bdlt::Calendar> us = cachePtr->getCalendar("US");
     ASSERT( us->isHoliday(bdlt::Date(2011, 7,  4)));
@@ -392,6 +409,7 @@ int main(int argc, char *argv[])
 // Next, we fetch the calendar identified by "FR", this time verifying that
 // 2011/07/14 is recognized as a holiday in the "FR" calendar, but 2011/07/04
 // is not:
+BSLS_ASSERT_CONVEYOR_OBJECT(cachePtr);
 // ```
     bsl::shared_ptr<const bdlt::Calendar> fr = cachePtr->getCalendar("FR");
     ASSERT(!fr->isHoliday(bdlt::Date(2011, 7,  4)));
@@ -467,6 +485,7 @@ int main(int argc, char *argv[])
                     P_(ti)
                     cout << "Cache  initialized after join." << endl;
                 }
+                BSLS_ASSERT_CONVEYOR_OBJECT(cachePtr);
 
                 Entry e = cachePtr->getCalendar("US");
 
@@ -581,6 +600,7 @@ int main(int argc, char *argv[])
             {
                       Cache *cachePtr      = Util::instance();
                 const Cache *constCachePtr = cachePtr;
+                BSLS_ASSERT_CONVEYOR_OBJECT(cachePtr);
 
                 Entry e = cachePtr->getCalendar("US");
 
@@ -591,6 +611,7 @@ int main(int argc, char *argv[])
                                      ASSERT(0 == da.numBlocksInUse());
                                      ASSERT(0 == ga.numBlocksTotal());
                                      ASSERT(0 != sa.numBlocksInUse());
+                BSLS_ASSERT_CONVEYOR_OBJECT(constCachePtr);
 
                 e = constCachePtr->lookupCalendar("US");
 
@@ -625,6 +646,7 @@ int main(int argc, char *argv[])
             {
                       Cache *cachePtr      = Util::instance();
                 const Cache *constCachePtr = cachePtr;
+                BSLS_ASSERT_CONVEYOR_OBJECT(cachePtr);
 
                 Entry e = cachePtr->getCalendar("US");
 
@@ -635,6 +657,7 @@ int main(int argc, char *argv[])
                                      ASSERT(0 == da.numBlocksInUse());
                                      ASSERT(0 == ga.numBlocksTotal());
                                      ASSERT(0 != sa.numBlocksInUse());
+                BSLS_ASSERT_CONVEYOR_OBJECT(constCachePtr);
 
                 e = constCachePtr->lookupCalendar("US");
 
@@ -666,12 +689,15 @@ int main(int argc, char *argv[])
                 const Cache *constCachePtr = cachePtr;
 
                 Entry e;
+                BSLS_ASSERT_CONVEYOR_OBJECT(cachePtr);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(constCachePtr);
                 e = cachePtr->getCalendar("US");           ASSERT( e.get());
                 e = constCachePtr->lookupCalendar("US");   ASSERT( e.get());
 
                 // Verify that a timeout doesn't occur.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(constCachePtr);
                 sleepSeconds(2);
                 e = constCachePtr->lookupCalendar("US");   ASSERT( e.get());
             }
@@ -688,13 +714,16 @@ int main(int argc, char *argv[])
                 const Cache *constCachePtr = cachePtr;
 
                 Entry e;
+                BSLS_ASSERT_CONVEYOR_OBJECT(cachePtr);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(constCachePtr);
                 e = cachePtr->getCalendar("US");           ASSERT( e.get());
                 e = constCachePtr->lookupCalendar("US");   ASSERT( e.get());
 
                 // Verify that a timeout occurs after 2 seconds (by sleeping a
                 // sufficiently long time).
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(constCachePtr);
                 sleepSeconds(3);
                 e = constCachePtr->lookupCalendar("US");   ASSERT(!e.get());
             }
@@ -714,10 +743,16 @@ int main(int argc, char *argv[])
                                   ASSERT( Util::instance());
                 Util::destroy();  ASSERT(!Util::instance());
 
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null pointer argument at compile time.
                 ASSERT_FAIL(Util::initialize(  0, &sa));
+#endif
                                   ASSERT(!Util::instance());
 
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null pointer argument at compile time.
                 ASSERT_FAIL(Util::initialize(&mL,   0));
+#endif
                                   ASSERT(!Util::instance());
             }
 
@@ -726,10 +761,16 @@ int main(int argc, char *argv[])
                                   ASSERT( Util::instance());
                 Util::destroy();  ASSERT(!Util::instance());
 
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null pointer argument at compile time.
                 ASSERT_FAIL(Util::initialize(  0, Interval(1), &sa));
+#endif
                                   ASSERT(!Util::instance());
 
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null pointer argument at compile time.
                 ASSERT_FAIL(Util::initialize(&mL, Interval(1),   0));
+#endif
                                   ASSERT(!Util::instance());
             }
 
@@ -803,6 +844,7 @@ int main(int argc, char *argv[])
 
         {
             Cache *cachePtr = Util::instance();
+            BSLS_ASSERT_CONVEYOR_OBJECT(cachePtr);
 
             Entry e = cachePtr->getCalendar("US");
 

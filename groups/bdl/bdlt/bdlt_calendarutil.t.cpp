@@ -146,6 +146,7 @@ const int NV = -5; // value that is loaded to the `result` before prior to call
 /// symbol '|' representing month boundaries.
 bdlt::Calendar parseCalendar(const char *input, const bdlt::Date& startDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&startDate);
     BSLS_ASSERT(input);
 
     int inputLen = static_cast<int>(strlen(input));
@@ -168,7 +169,7 @@ bdlt::Calendar parseCalendar(const char *input, const bdlt::Date& startDate)
     }
 
     for (; i < inputLen; ++i) {
-        BSLS_ASSERT(   input[i] == 'n'
+        BSLS_ASSERT_NONCONVEYOR(   input[i] == 'n'
                          || input[i] == 'B'
                          || input[i] == '.'
                          || input[i] == '|');
@@ -523,19 +524,25 @@ int main(int argc, char *argv[])
                                                      date,
                                                      cdr,
                                                      0));
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_FAIL(Util::addBusinessDaysIfValid(0,
                                                      date,
                                                      cdr,
                                                      0));
+#endif
 
             ASSERT_PASS(Util::subtractBusinessDaysIfValid(&result,
                                                           date,
                                                           cdr,
                                                           0));
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_FAIL(Util::subtractBusinessDaysIfValid(0,
                                                           date,
                                                           cdr,
                                                           0));
+#endif
         }
 
         ASSERT(0 == defaultAllocator.numBytesInUse());
@@ -789,8 +796,11 @@ int main(int argc, char *argv[])
             cdr.setValidRange(bdlt::Date(2000, 1, 1), bdlt::Date(2000, 1, 31));
 
             // invalid result
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_FAIL(Util::nthBusinessDayOfMonthOrMaxIfValid(
                                                          0, cdr, 2000,  1, 1));
+#endif
 
             // invalid year
             ASSERT_FAIL(Util::nthBusinessDayOfMonthOrMaxIfValid(
@@ -1076,10 +1086,13 @@ int main(int argc, char *argv[])
                                            date,
                                            cdr,
                                            Util::e_FOLLOWING));
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_FAIL(Util::shiftIfValid(0,
                                            date,
                                            cdr,
                                            Util::e_FOLLOWING));
+#endif
 
             ASSERT_PASS(Util::shiftIfValid(&result,
                                            date,
@@ -1088,6 +1101,8 @@ int main(int argc, char *argv[])
                                            bdlt::DayOfWeek::e_FRI,
                                            true,
                                            Util::e_PRECEDING));
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_FAIL(Util::shiftIfValid(0,
                                            date,
                                            cdr,
@@ -1095,6 +1110,7 @@ int main(int argc, char *argv[])
                                            bdlt::DayOfWeek::e_FRI,
                                            true,
                                            Util::e_PRECEDING));
+#endif
         }
       } break;
       case 6: {
@@ -2273,7 +2289,10 @@ int main(int argc, char *argv[])
             bdlt::Date     result;
 
             ASSERT_SAFE_PASS(Util::shiftPrecedingIfValid(&result, date, cdr));
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_SAFE_FAIL(Util::shiftPrecedingIfValid(      0, date, cdr));
+#endif
         }
 
         ASSERT(0 == defaultAllocator.numBytesInUse());
@@ -3454,7 +3473,10 @@ int main(int argc, char *argv[])
             bdlt::Date     result;
 
             ASSERT_SAFE_PASS(Util::shiftFollowingIfValid(&result, date, cdr));
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_SAFE_FAIL(Util::shiftFollowingIfValid(      0, date, cdr));
+#endif
         }
 
         ASSERT(0 == defaultAllocator.numBytesInUse());
@@ -4642,9 +4664,12 @@ int main(int argc, char *argv[])
             ASSERT_PASS(Util::shiftModifiedFollowingIfValid(&result,
                                                             date,
                                                             cdr));
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_FAIL(Util::shiftModifiedFollowingIfValid(0,
                                                             date,
                                                             cdr));
+#endif
         }
 
         ASSERT(0 == defaultAllocator.numBytesInUse());
@@ -5832,9 +5857,12 @@ int main(int argc, char *argv[])
             ASSERT_PASS(Util::shiftModifiedPrecedingIfValid(&result,
                                                             date,
                                                             cdr));
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null pointer argument at compile time.
             ASSERT_FAIL(Util::shiftModifiedPrecedingIfValid(0,
                                                             date,
                                                             cdr));
+#endif
         }
 
         ASSERT(0 == defaultAllocator.numBytesInUse());

@@ -196,10 +196,14 @@ class Iso8601UtilConfiguration {
     int             d_configurationMask;     // bitmask defining configuration
 
     // FRIENDS
-    friend bool operator==(const Iso8601UtilConfiguration&,
-                           const Iso8601UtilConfiguration&);
-    friend bool operator!=(const Iso8601UtilConfiguration&,
-                           const Iso8601UtilConfiguration&);
+    friend bool operator==(const Iso8601UtilConfiguration& lhs,
+                           const Iso8601UtilConfiguration& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator!=(const Iso8601UtilConfiguration& lhs,
+                           const Iso8601UtilConfiguration& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
   private:
     // PRIVATE CREATORS
@@ -252,37 +256,41 @@ class Iso8601UtilConfiguration {
     /// Set the `fractionalSecondPrecision` attribute of this object to the
     /// specified `value`.  The behavior is undefined unless `0 <= value` and
     /// `6 >= value`.
-    void setFractionalSecondPrecision(int value);
+    void setFractionalSecondPrecision(int value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the `omitColonInZoneDesignator` attribute of this object to the
     /// specified `value`.
-    void setOmitColonInZoneDesignator(bool value);
+    void setOmitColonInZoneDesignator(bool value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the `useCommaForDecimalSign` attribute of this object to the
     /// specified `value`.
-    void setUseCommaForDecimalSign(bool value);
+    void setUseCommaForDecimalSign(bool value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the `useZAbbreviationForUtc` attribute of this object to the
     /// specified `value`.
-    void setUseZAbbreviationForUtc(bool value);
+    void setUseZAbbreviationForUtc(bool value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the value of the `fractionalSecondPrecision` attribute of this
     /// object.
-    int fractionalSecondPrecision() const;
+    int fractionalSecondPrecision() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the value of the `omitColonInZoneDesignator` attribute of this
     /// object.
-    bool omitColonInZoneDesignator() const;
+    bool omitColonInZoneDesignator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the value of the `useCommaForDecimalSign` attribute of this
     /// object.
-    bool useCommaForDecimalSign() const;
+    bool useCommaForDecimalSign() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the value of the `useZAbbreviationForUtc` attribute of this
     /// object.
-    bool useZAbbreviationForUtc() const;
+    bool useZAbbreviationForUtc() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
@@ -300,7 +308,9 @@ class Iso8601UtilConfiguration {
     /// and can change without notice.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const;
+                        int           spacesPerLevel = 4) const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // FREE OPERATORS
@@ -329,7 +339,9 @@ bool operator!=(const Iso8601UtilConfiguration& lhs,
 /// Also note that this method has the same behavior as
 /// `object.print(stream, 0, -1)`, but with the attribute names elided.
 bsl::ostream& operator<<(bsl::ostream&                   stream,
-                         const Iso8601UtilConfiguration& object);
+                         const Iso8601UtilConfiguration& object)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
 // ============================================================================
 //                             INLINE DEFINITIONS
@@ -344,6 +356,7 @@ inline
 Iso8601UtilConfiguration::Iso8601UtilConfiguration(int configurationMask)
 : d_configurationMask(configurationMask)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 == (configurationMask
                            & ~(k_FRACTIONAL_SECOND_PRECISION_MASK
                              | k_OMIT_COLON_IN_ZONE_DESIGNATOR_BIT
@@ -372,6 +385,7 @@ inline
 Iso8601UtilConfiguration::Iso8601UtilConfiguration()
 : d_configurationMask(3)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -379,11 +393,14 @@ Iso8601UtilConfiguration::Iso8601UtilConfiguration(
                                       const Iso8601UtilConfiguration& original)
 : d_configurationMask(original.d_configurationMask)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 inline
 Iso8601UtilConfiguration::~Iso8601UtilConfiguration()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 == (d_configurationMask
                            & ~(k_FRACTIONAL_SECOND_PRECISION_MASK
                              | k_OMIT_COLON_IN_ZONE_DESIGNATOR_BIT
@@ -396,6 +413,8 @@ inline
 Iso8601UtilConfiguration& Iso8601UtilConfiguration::operator=(
                                            const Iso8601UtilConfiguration& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     d_configurationMask = rhs.d_configurationMask;
 
     return *this;

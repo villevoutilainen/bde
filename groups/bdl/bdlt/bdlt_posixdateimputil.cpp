@@ -256,7 +256,7 @@ bool PosixDateImpUtil::isValidYearDay(int year, int dayOfYear)
 
 int PosixDateImpUtil::ydToSerial(int year, int dayOfYear)
 {
-    BSLS_ASSERT(isValidYearDay(year, dayOfYear));
+    BSLS_ASSERT_NONCONVEYOR(isValidYearDay(year, dayOfYear));
 
     return numDaysInPreviousYears(year) + dayOfYear;
 }
@@ -264,7 +264,7 @@ int PosixDateImpUtil::ydToSerial(int year, int dayOfYear)
 int PosixDateImpUtil::ymdToSerial(int year, int month, int day)
 {
     BSLS_PRECONDITIONS_BEGIN();
-    BSLS_ASSERT(isValidYearMonthDay(year, month, day));
+    BSLS_ASSERT_NONCONVEYOR(isValidYearMonthDay(year, month, day));
     BSLS_PRECONDITIONS_END();
 
     if (s_firstCachedYear <= year && year <= s_lastCachedYear) {
@@ -281,7 +281,7 @@ int PosixDateImpUtil::ymdToSerial(int year, int month, int day)
 
 int PosixDateImpUtil::ymdToSerialNoCache(int year, int month, int day)
 {
-    BSLS_ASSERT(isValidYearMonthDay(year, month, day));
+    BSLS_ASSERT_NONCONVEYOR(isValidYearMonthDay(year, month, day));
 
     // Prevent out-of-bounds read in case of an out-of-contract call (see
     // {DRQS 178292903}).
@@ -330,7 +330,7 @@ void PosixDateImpUtil::serialToYd(int *year, int *dayOfYear, int serialDay)
 {
     BSLS_ASSERT(year);
     BSLS_ASSERT(dayOfYear);
-    BSLS_ASSERT(isValidSerial(serialDay));
+    BSLS_ASSERT_NONCONVEYOR(isValidSerial(serialDay));
 
     if (serialDay >= k_JAN_01_1753) {
         int y = k_YEAR_1601;                    // base year
@@ -395,7 +395,7 @@ void PosixDateImpUtil::serialToYd(int *year, int *dayOfYear, int serialDay)
 
 int PosixDateImpUtil::ymdToDayOfYear(int year, int month, int day)
 {
-    BSLS_ASSERT(isValidYearMonthDay(year, month, day));
+    BSLS_ASSERT_NONCONVEYOR(isValidYearMonthDay(year, month, day));
 
     const int *daysThroughMonth = getArrayDaysThroughMonth(year);
 
@@ -483,7 +483,7 @@ void PosixDateImpUtil::ydToMd(int *month, int *day, int year, int dayOfYear)
 {
     BSLS_ASSERT(month);
     BSLS_ASSERT(day);
-    BSLS_ASSERT(isValidYearDay(year, dayOfYear));
+    BSLS_ASSERT_NONCONVEYOR(isValidYearDay(year, dayOfYear));
 
     const int *daysThroughMonth = getArrayDaysThroughMonth(year);
 

@@ -94,6 +94,7 @@ const size_t npos = bsl::string::npos;
 
 void trimPrecision(bsl::string *s)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(s);
     ASSERTV(*s, 2 <= s->length());
     ASSERTV(*s, npos != s->find('.'));
 
@@ -109,6 +110,7 @@ void trimPrecision(bsl::string *s)
 void appendIso8601Date(bsl::string       *result,
                        const bdlt::Date&  date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     *result += bsl::format(
                    "{:04}-{:02}-{:02}", date.year(), date.month(), date.day());
 }
@@ -116,6 +118,7 @@ void appendIso8601Date(bsl::string       *result,
 void appendIso8601Time(bsl::string       *result,
                        const bdlt::Time&  time)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     *result += bsl::format("{:02}:{:02}:{:02}.{:03}",
                            time.hour(),
                            time.minute(),
@@ -126,6 +129,7 @@ void appendIso8601Time(bsl::string       *result,
 void appendIso8601Offset(bsl::string *result,
                          int          offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(offset <=  1440);
     ASSERT(offset >= -1440);
 
@@ -139,6 +143,8 @@ void appendIso8601Offset(bsl::string *result,
 void setIso8601DatetimeTz(bsl::string             *result,
                           const bdlt::DatetimeTz&  datetimeTz)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&datetimeTz);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     result->clear();
     bdlt::Datetime datetime = datetimeTz.localDatetime();
     appendIso8601Date(  result, datetime.date());

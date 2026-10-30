@@ -861,6 +861,7 @@ Config& gg(Config *object,
            bool    useCommaForDecimalSignFlag,
            bool    useZAbbreviationForUtcFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     if (fractionalSecondPrecision > 6) {
         fractionalSecondPrecision = 6;
     }
@@ -882,6 +883,8 @@ void updateExpectedPerConfig(bsl::string   *expected,
                              const Config&  configuration,
                              int            maxPrecision)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(expected);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     ASSERT(expected);
 
     const bsl::string::size_type index = expected->find('.');
@@ -987,6 +990,7 @@ void checkFormatIso8601(const bdlt::Iso8601UtilConfiguration&  config,
                         int                                    line,
                         const t_VALUE_TYPE&                    value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&config);
     // This function works for all bdlt value types.  This assert is intended
     // as a comment as much as it is code.
 
@@ -1074,12 +1078,13 @@ bsl::string replaceTWithSpace(const char *buffer, ptrdiff_t length)
 namespace {
 namespace u {
 
-const Util::ParseConfiguration& BASIC = Util::ParseConfiguration().setBasic();
-const Util::ParseConfiguration& RELAXED_BASIC =
+const Util::ParseConfiguration BASIC = Util::ParseConfiguration().setBasic();
+const Util::ParseConfiguration RELAXED_BASIC =
                             Util::ParseConfiguration().setBasic().setRelaxed();
 
 void removeCharFromString(bsl::string *str, char chr, int limit = INT_MAX)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(str);
     for (int ii = 0; ii < limit; ++ii) {
         bsl::size_t offset = str->find(chr);
         if (bsl::string::npos == offset) {
@@ -5935,6 +5940,7 @@ int main(int argc, char *argv[])
             if (veryVerbose) cout << "\t'Invalid result'" << endl;
             {
                 Util::TimeOrTimeTz *NULL_PTR = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(NULL_PTR);
 
                 ASSERT_PASS(Util::parse(      &mX, INPUT, LENGTH));
                 ASSERT_FAIL(Util::parse( NULL_PTR, INPUT, LENGTH));
@@ -7346,6 +7352,7 @@ int main(int argc, char *argv[])
             if (veryVerbose) cout << "\t'Invalid result'" << endl;
             {
                 Util::TimeOrTimeTz *NULL_PTR = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(NULL_PTR);
 
                 ASSERT_PASS(Util::parse(     &mX, INPUT, LENGTH));
                 ASSERT_FAIL(Util::parse(NULL_PTR, INPUT, LENGTH));
@@ -7358,6 +7365,7 @@ int main(int argc, char *argv[])
             {
                 Util::TimeOrTimeTz *NULL_PTR = 0;
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(NULL_PTR);
                 ASSERT_PASS(Util::parse(     &mX, INPUTB, LENGTHB, u::BASIC));
                 ASSERT_FAIL(Util::parse(NULL_PTR, INPUTB, LENGTHB, u::BASIC));
 
@@ -8531,6 +8539,7 @@ int main(int argc, char *argv[])
             if (veryVerbose) cout << "\t'Invalid result'" << endl;
             {
                 Util::DateOrDateTz *nullPtr = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(nullPtr);
 
                 ASSERT_PASS(Util::parse(&mX,     INPUT, LENGTH));
                 ASSERT_FAIL(Util::parse(nullPtr, INPUT, LENGTH));
@@ -8542,6 +8551,7 @@ int main(int argc, char *argv[])
             if (veryVerbose) cout << "\t'Invalid result' -- basic" << endl;
             {
                 Util::DateOrDateTz *nullPtr = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(nullPtr);
 
                 ASSERT_PASS(Util::parse(&mX,     INPUTB, LENGTHB, u::BASIC));
                 ASSERT_FAIL(Util::parse(nullPtr, INPUTB, LENGTHB, u::BASIC));
@@ -9121,6 +9131,7 @@ int main(int argc, char *argv[])
 
                 bsl::string mSB("qwerty");
                 bsl::string *pb = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 
                 ASSERT_PASS(Util::generate(&mSB, X));
                 ASSERT_FAIL(Util::generate(  pb, X));
@@ -9130,6 +9141,7 @@ int main(int argc, char *argv[])
 
                 std::string mSS("qwerty");
                 std::string *ps = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
 
                 ASSERT_PASS(Util::generate(&mSS, X));
                 ASSERT_FAIL(Util::generate(  ps, X));
@@ -9140,6 +9152,7 @@ int main(int argc, char *argv[])
 # ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
                 std::pmr::string mSP("qwerty");
                 std::pmr::string *pp = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
 
                 ASSERT_PASS(Util::generate(&mSP, X));
                 ASSERT_FAIL(Util::generate(  pp, X));
@@ -9627,6 +9640,7 @@ int main(int argc, char *argv[])
 
                 bsl::string  mB("qwerty");
                 bsl::string *pb = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_FAIL(Util::generate( pb, X));
@@ -9636,6 +9650,7 @@ int main(int argc, char *argv[])
 
                 std::string  mS("qwerty");
                 std::string *ps = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
 
                 ASSERT_PASS(Util::generate(&mS, X));
                 ASSERT_FAIL(Util::generate( ps, X));
@@ -9646,6 +9661,7 @@ int main(int argc, char *argv[])
 # ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
                 std::pmr::string  mP("qwerty");
                 std::pmr::string *pp = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
 
                 ASSERT_PASS(Util::generate(&mP, X));
                 ASSERT_FAIL(Util::generate( pp, X));
@@ -10128,6 +10144,7 @@ int main(int argc, char *argv[])
 
                 bsl::string  mB("qwerty");
                 bsl::string *pb = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_FAIL(Util::generate( pb, X));
@@ -10137,6 +10154,7 @@ int main(int argc, char *argv[])
 
                 std::string  mS("qwerty");
                 std::string *ps = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
 
                 ASSERT_PASS(Util::generate(&mS, X));
                 ASSERT_FAIL(Util::generate( ps, X));
@@ -10147,6 +10165,7 @@ int main(int argc, char *argv[])
 # ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
                 std::pmr::string  mP("qwerty");
                 std::pmr::string *pp = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
 
                 ASSERT_PASS(Util::generate(&mP, X));
                 ASSERT_FAIL(Util::generate( pp, X));
@@ -12715,29 +12734,54 @@ int main(int argc, char *argv[])
                 bdlt::DatetimeTz *badTz = 0;
 
                 ASSERT_PASS(Util::parse(  &result, INPUT, LENGTH));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(      bad, INPUT, LENGTH));
+#endif
 
                 ASSERT_PASS(Util::parse(&resultTz, INPUT, LENGTH));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(    badTz, INPUT, LENGTH));
+#endif
 
                 ASSERT_PASS(Util::parse(  &result, stringRef));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(      bad, stringRef));
+#endif
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(bad);
                 ASSERT_PASS(Util::parse(&resultTz, stringRef));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(    badTz, stringRef));
+#endif
 
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
                 ASSERT_PASS(Util::parseRelaxed(  &result, INPUT, LENGTH));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parseRelaxed(      bad, INPUT, LENGTH));
+#endif
 
                 ASSERT_PASS(Util::parseRelaxed(&resultTz, INPUT, LENGTH));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parseRelaxed(    badTz, INPUT, LENGTH));
+#endif
 
                 ASSERT_PASS(Util::parseRelaxed(  &result, stringRef));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parseRelaxed(      bad, stringRef));
+#endif
 
                 ASSERT_PASS(Util::parseRelaxed(&resultTz, stringRef));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parseRelaxed(    badTz, stringRef));
+#endif
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED
             }
 
@@ -13640,16 +13684,28 @@ int main(int argc, char *argv[])
                 bdlt::TimeTz *badTz = 0;
 
                 ASSERT_PASS(Util::parse(  &result, INPUT, LENGTH));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(      bad, INPUT, LENGTH));
+#endif
 
                 ASSERT_PASS(Util::parse(&resultTz, INPUT, LENGTH));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(    badTz, INPUT, LENGTH));
+#endif
 
                 ASSERT_PASS(Util::parse(  &result, stringRef));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(      bad, stringRef));
+#endif
 
                 ASSERT_PASS(Util::parse(&resultTz, stringRef));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(    badTz, stringRef));
+#endif
             }
 
             if (veryVerbose) cout << "\t'Invalid input'" << endl;
@@ -14489,16 +14545,28 @@ int main(int argc, char *argv[])
                 bdlt::DateTz *badTz = 0;
 
                 ASSERT_PASS(Util::parse(  &result, INPUT, LENGTH));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(      bad, INPUT, LENGTH));
+#endif
 
                 ASSERT_PASS(Util::parse(&resultTz, INPUT, LENGTH));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(    badTz, INPUT, LENGTH));
+#endif
 
                 ASSERT_PASS(Util::parse(  &result, stringRef));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(      bad, stringRef));
+#endif
 
                 ASSERT_PASS(Util::parse(&resultTz, stringRef));
+#ifndef BSLS_ASSERT_CONVEYOR
+                // A conveyor build rejects a null 'result' at compile time.
                 ASSERT_FAIL(Util::parse(    badTz, stringRef));
+#endif
             }
 
             if (veryVerbose) cout << "\t'Invalid input'" << endl;
@@ -15101,6 +15169,7 @@ int main(int argc, char *argv[])
 
                 bsl::string  mSB("qwerty");
                 bsl::string *pb = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 
                 ASSERT_PASS(Util::generate(&mSB, X));
                 ASSERT_FAIL(Util::generate(  pb, X));
@@ -15110,6 +15179,7 @@ int main(int argc, char *argv[])
 
                 std::string mSS("qwerty");
                 std::string *ps = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
 
                 ASSERT_PASS(Util::generate(&mSS, X));
                 ASSERT_FAIL(Util::generate(  ps, X));
@@ -15120,6 +15190,7 @@ int main(int argc, char *argv[])
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
                 std::pmr::string mSP("qwerty");
                 std::pmr::string *pp = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
 
                 ASSERT_PASS(Util::generate(&mSP, X));
                 ASSERT_FAIL(Util::generate(  pp, X));
@@ -15673,6 +15744,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate(buffer,     -1, X, C));
 
                 bsl::string mB("qwerty"), *pb = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_FAIL(Util::generate( pb, X));
@@ -15681,6 +15753,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate( pb, X, C));
 
                 std::string mS("qwerty"), *ps = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
 
                 ASSERT_PASS(Util::generate(&mS, X));
                 ASSERT_FAIL(Util::generate( ps, X));
@@ -15690,6 +15763,7 @@ int main(int argc, char *argv[])
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
                 std::pmr::string mP("qwerty"), *pp = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
 
                 ASSERT_PASS(Util::generate(&mP, X));
                 ASSERT_FAIL(Util::generate( pp, X));
@@ -16237,6 +16311,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate(buffer,     -1, X, C));
 
                 bsl::string mB("qwerty"), *pb = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_FAIL(Util::generate( pb, X));
@@ -16245,6 +16320,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate( pb, X, C));
 
                 std::string mS("qwerty"), *ps = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
 
                 ASSERT_PASS(Util::generate(&mS, X));
                 ASSERT_FAIL(Util::generate( ps, X));
@@ -16254,6 +16330,7 @@ int main(int argc, char *argv[])
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
                 std::pmr::string mP("qwerty"), *pp = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
 
                 ASSERT_PASS(Util::generate(&mP, X));
                 ASSERT_FAIL(Util::generate( pp, X));
@@ -16712,6 +16789,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate(buffer,     -1, X, C));
 
                 bsl::string mB("qwerty"), *pb = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_FAIL(Util::generate( pb, X));
@@ -16720,6 +16798,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate( pb, X, C));
 
                 std::string mS("qwerty"), *ps = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
 
                 ASSERT_PASS(Util::generate(&mS, X));
                 ASSERT_FAIL(Util::generate( ps, X));
@@ -16729,6 +16808,7 @@ int main(int argc, char *argv[])
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
                 std::pmr::string mP("qwerty"), *pp = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
 
                 ASSERT_PASS(Util::generate(&mP, X));
                 ASSERT_FAIL(Util::generate( pp, X));
@@ -17149,6 +17229,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate(buffer,     -1, X, C));
 
                 bsl::string mB("qwerty"), *pb = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_FAIL(Util::generate( pb, X));
@@ -17157,6 +17238,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate( pb, X, C));
 
                 std::string mS("qwerty"), *ps = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
 
                 ASSERT_PASS(Util::generate(&mS, X));
                 ASSERT_FAIL(Util::generate( ps, X));
@@ -17166,6 +17248,7 @@ int main(int argc, char *argv[])
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
                 std::pmr::string mP("qwerty"), *pp = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
 
                 ASSERT_PASS(Util::generate(&mP, X));
                 ASSERT_FAIL(Util::generate( pp, X));
@@ -17583,6 +17666,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate(buffer,     -1, X, C));
 
                 bsl::string mB("qwerty"), *pb = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_FAIL(Util::generate( pb, X));
@@ -17591,6 +17675,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate( pb, X, C));
 
                 bsl::string mS("qwerty"), *ps = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
 
                 ASSERT_PASS(Util::generate(&mS, X));
                 ASSERT_FAIL(Util::generate( ps, X));
@@ -17600,6 +17685,7 @@ int main(int argc, char *argv[])
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
                 std::pmr::string mP("qwerty"), *pp = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
 
                 ASSERT_PASS(Util::generate(&mP, X));
                 ASSERT_FAIL(Util::generate( pp, X));
@@ -17992,6 +18078,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate(buffer,     -1, X, C));
 
                 bsl::string mB("qwerty"), *pb = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pb);
 
                 ASSERT_PASS(Util::generate(&mB, X));
                 ASSERT_FAIL(Util::generate( pb, X));
@@ -18000,6 +18087,7 @@ int main(int argc, char *argv[])
                 ASSERT_FAIL(Util::generate( pb, X, C));
 
                 std::string mS("qwerty"), *ps = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(ps);
 
                 ASSERT_PASS(Util::generate(&mS, X));
                 ASSERT_FAIL(Util::generate( ps, X));
@@ -18009,6 +18097,7 @@ int main(int argc, char *argv[])
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
                 std::pmr::string mP("qwerty"), *pp = 0;
+                BSLS_ASSERT_CONVEYOR_OBJECT(pp);
 
                 ASSERT_PASS(Util::generate(&mP, X));
                 ASSERT_FAIL(Util::generate( pp, X));

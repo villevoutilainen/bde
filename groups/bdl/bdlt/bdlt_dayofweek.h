@@ -57,6 +57,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bdlscm_version.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_ostream.h>
 
 namespace BloombergLP {
@@ -135,7 +137,9 @@ struct DayOfWeek {
     template <class STREAM>
     static STREAM& bdexStreamIn(STREAM&          stream,
                                 DayOfWeek::Enum& variable,
-                                int              version);
+                                int              version)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(variable);
 
     /// Write the value of the specified `value`, using the specified
     /// `version` format, to the specified output `stream`, and return a
@@ -148,7 +152,8 @@ struct DayOfWeek {
     template <class STREAM>
     static STREAM& bdexStreamOut(STREAM&         stream,
                                  DayOfWeek::Enum value,
-                                 int             version);
+                                 int             version)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
     /// Return the maximum valid BDEX format version, as indicated by the
     /// specified `versionSelector`, to be passed to the `bdexStreamOut`
@@ -177,7 +182,8 @@ struct DayOfWeek {
     static bsl::ostream& print(bsl::ostream&          stream,
                                DayOfWeek::Enum        value,
                                int                    level          = 0,
-                               int                    spacesPerLevel = 4);
+                               int                    spacesPerLevel = 4)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
     /// Return the abbreviated character-string representation of the
     /// enumerator corresponding to the specified `dayOfWeek`.  This
@@ -217,7 +223,8 @@ struct DayOfWeek {
 /// ```
 /// bdlt::DayOfWeek::print(stream, value, 0, -1);
 /// ```
-bsl::ostream& operator<<(bsl::ostream& stream, DayOfWeek::Enum value);
+bsl::ostream& operator<<(bsl::ostream& stream, DayOfWeek::Enum value)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
 // FREE FUNCTIONS
 
@@ -343,6 +350,7 @@ STREAM& bdlt::bdexStreamIn(STREAM&                stream,
                            bdlt::DayOfWeek::Enum& variable,
                            int                    version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&variable);
     return bdlt::DayOfWeek::bdexStreamIn(stream, variable, version);
 }
 
@@ -373,6 +381,7 @@ STREAM& streamIn(STREAM&                stream,
                  bdlt::DayOfWeek::Enum& variable,
                  int                    version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&variable);
     return bdlt::DayOfWeek::bdexStreamIn(stream, variable, version);
 }
 

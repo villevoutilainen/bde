@@ -205,6 +205,7 @@ bsls::AtomicInt64 Time::s_invalidRepresentationCount(0);
 // PRIVATE ACCESSORS
 bsls::Types::Int64 Time::invalidMicrosecondsFromMidnight() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(k_REP_MASK > d_value);
     BSLS_ASSERT_SAFE(0 && "detected invalid 'bdlt::Time'; see TEAM 579660115");
     BSLS_REVIEW_INVOKE("detected invalid 'bdlt::Time'; see TEAM 579660115");
@@ -315,8 +316,8 @@ int Time::addInterval(const DatetimeInterval& interval)
 
     setMicrosecondsFromMidnight(totalMicroseconds);
 
-    BSLS_ASSERT(bsl::numeric_limits<int>::min() <= wholeDays);
-    BSLS_ASSERT(bsl::numeric_limits<int>::max() >= wholeDays);
+    BSLS_ASSERT_NONCONVEYOR(bsl::numeric_limits<int>::min() <= wholeDays);
+    BSLS_ASSERT_NONCONVEYOR(bsl::numeric_limits<int>::max() >= wholeDays);
 
     return static_cast<int>(wholeDays);
 }
@@ -466,7 +467,8 @@ void Time::setTime(int hour,
                    int millisecond,
                    int microsecond)
 {
-    BSLS_ASSERT(isValid(hour, minute, second, millisecond, microsecond));
+    BSLS_ASSERT_NONCONVEYOR(
+                      isValid(hour, minute, second, millisecond, microsecond));
 
     setMicrosecondsFromMidnight(  TimeUnitRatio::k_US_PER_H  * hour
                                 + TimeUnitRatio::k_US_PER_M  * minute

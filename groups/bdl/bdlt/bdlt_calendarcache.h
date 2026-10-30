@@ -257,6 +257,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmt_mutex.h>
 
+#include <bsls_assert.h>
 #include <bsls_timeinterval.h>
 
 #include <bsl_map.h>
@@ -332,11 +333,12 @@ class CalendarCache_Entry {
 
     /// Return a shared pointer providing non-modifiable access to the
     /// calendar referred to by this cache entry object.
-    bsl::shared_ptr<const Calendar> get() const;
+    bsl::shared_ptr<const Calendar> get() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the time at which the calendar referred to by this cache
     /// entry object was loaded.
-    Datetime loadTime() const;
+    Datetime loadTime() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
                            // ===================
@@ -439,7 +441,8 @@ class CalendarCache {
     /// optionally supplied at construction).  If the loader fails, whether
     /// in loading a calendar for the first time or in reloading a calendar
     /// that has expired, return an empty shared pointer.
-    bsl::shared_ptr<const Calendar> getCalendar(const char *calendarName);
+    bsl::shared_ptr<const Calendar> getCalendar(const char *calendarName)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Invalidate the calendar having the specified `calendarName` in this
     /// calendar cache, and remove it from the cache.  If a calendar having
@@ -449,7 +452,8 @@ class CalendarCache {
     /// to all outstanding references to it, obtained via earlier calls to
     /// the `getCalendar` and `lookupCalendar` methods, until all of those
     /// references have been destroyed.
-    int invalidate(const char *calendarName);
+    int invalidate(const char *calendarName)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Invalidate all calendars in this calendar cache, and remove them
     /// from the cache.  Return the number of calendars that were
@@ -457,7 +461,7 @@ class CalendarCache {
     /// cache remains valid to all outstanding references to it, obtained
     /// via earlier calls to the `getCalendar` and `lookupCalendar` methods,
     /// until all of those references have been destroyed.
-    int invalidateAll();
+    int invalidateAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
@@ -467,14 +471,16 @@ class CalendarCache {
     /// if the calendar has expired (i.e., per a timeout optionally supplied
     /// at construction), return an empty shared pointer.
     bsl::shared_ptr<const Calendar>
-    lookupCalendar(const char *calendarName) const;
+    lookupCalendar(const char *calendarName) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the datetime, in Coordinated Universal Time (UTC), at which
     /// the calendar having the specified `calendarName` was loaded into
     /// this calendar cache.  If the calendar having `calendarName` is not
     /// found in the cache, or if the calendar has expired (i.e., per a
     /// timeout optionally supplied at construction), return `Datetime()`.
-    Datetime lookupLoadTime(const char *calendarName) const;
+    Datetime lookupLoadTime(const char *calendarName) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================

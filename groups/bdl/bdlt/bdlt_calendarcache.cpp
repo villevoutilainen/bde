@@ -29,6 +29,7 @@ CalendarCache_Entry::CalendarCache_Entry()
 : d_ptr()
 , d_loadTime()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 CalendarCache_Entry::CalendarCache_Entry(Calendar         *calendar,
@@ -37,6 +38,8 @@ CalendarCache_Entry::CalendarCache_Entry(Calendar         *calendar,
 : d_ptr(calendar, allocator)
 , d_loadTime(loadTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&loadTime);
     BSLS_ASSERT(calendar);
     BSLS_ASSERT(allocator);
 }
@@ -45,16 +48,21 @@ CalendarCache_Entry::CalendarCache_Entry(const CalendarCache_Entry& original)
 : d_ptr(original.d_ptr)
 , d_loadTime(original.d_loadTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 CalendarCache_Entry::~CalendarCache_Entry()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS
 CalendarCache_Entry& CalendarCache_Entry::operator=(
                                                 const CalendarCache_Entry& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     d_ptr      = rhs.d_ptr;
     d_loadTime = rhs.d_loadTime;
 
@@ -86,6 +94,7 @@ CalendarCache::CalendarCache(CalendarLoader   *loader,
 , d_lock()
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(loader);
 }
 
@@ -99,13 +108,16 @@ CalendarCache::CalendarCache(CalendarLoader            *loader,
 , d_lock()
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeout);
     BSLS_ASSERT(loader);
-    BSLS_ASSERT(bsls::TimeInterval() <= timeout);
+    BSLS_ASSERT_NONCONVEYOR(bsls::TimeInterval() <= timeout);
     BSLS_ASSERT(timeout <= bsls::TimeInterval(INT_MAX, 0));
 }
 
 CalendarCache::~CalendarCache()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS

@@ -73,6 +73,8 @@ BSLS_IDENT("$Id: $")
 #include <bslim_fuzzdataview.h>
 #include <bslim_fuzzutil.h>
 
+#include <bsls_assert.h>
+
 namespace BloombergLP {
 namespace bdlt {
 
@@ -99,7 +101,8 @@ struct FuzzUtil {
     /// Return a `Date` based on the next bytes from the specified
     /// `fuzzDataView`, and update `fuzzDataView` to reflect the bytes
     /// consumed.
-    static bdlt::Date consumeDate(bslim::FuzzDataView *fuzzDataView);
+    static bdlt::Date consumeDate(bslim::FuzzDataView *fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView);
 
     /// Return a `Date` between the specified `begin` and `end` dates based
     /// on the next bytes from the specified `fuzzDataView`, and update
@@ -107,12 +110,16 @@ struct FuzzUtil {
     /// undefined unless `begin <= end`.
     static bdlt::Date consumeDateInRange(bslim::FuzzDataView *fuzzDataView,
                                          const bdlt::Date&    begin,
-                                         const bdlt::Date&    end);
+                                         const bdlt::Date&    end)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(begin)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(end);
 
     /// Return a `DateTz` based on the next bytes from the specified
     /// `fuzzDataView`, and update `fuzzDataView` to reflect the bytes
     /// consumed.
-    static DateTz consumeDateTz(bslim::FuzzDataView *fuzzDataView);
+    static DateTz consumeDateTz(bslim::FuzzDataView *fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView);
 
     /// Return a `DateTz` whose `localDate()` is between the specified `begin`
     /// and `end` dates based on the next bytes from the specified
@@ -120,12 +127,16 @@ struct FuzzUtil {
     /// consumed.  The behavior is undefined unless `begin <= end`.
     static DateTz consumeDateTzInRange(bslim::FuzzDataView *fuzzDataView,
                                        const bdlt::Date&    begin,
-                                       const bdlt::Date&    end);
+                                       const bdlt::Date&    end)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(begin)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(end);
 
     /// Return a `Datetime` based on the next bytes from the specified
     /// `fuzzDataView`, and update `fuzzDataView` to reflect the bytes
     /// consumed.
-    static Datetime consumeDatetime(bslim::FuzzDataView *fuzzDataView);
+    static Datetime consumeDatetime(bslim::FuzzDataView *fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView);
 
     /// Return a `Datetime` whose `date()` is between the specified `begin` and
     /// `end` dates based on the next bytes from the specified `fuzzDataView`,
@@ -133,12 +144,16 @@ struct FuzzUtil {
     /// is undefined unless `begin <= end`.
     static Datetime consumeDatetimeInRange(bslim::FuzzDataView *fuzzDataView,
                                            const bdlt::Date&    begin,
-                                           const bdlt::Date&    end);
+                                           const bdlt::Date&    end)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(begin)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(end);
 
     /// Return a `DatetimeTz` based on the next bytes from the specified
     /// `fuzzDataView`, and update `fuzzDataView` to reflect the bytes
     /// consumed.
-    static DatetimeTz consumeDatetimeTz(bslim::FuzzDataView *fuzzDataView);
+    static DatetimeTz consumeDatetimeTz(bslim::FuzzDataView *fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView);
 
     /// Return a `DatetimeTz` whose `dateTz().localDate()` is between the
     /// specified `begin` and `end` dates based on the next bytes from the
@@ -147,20 +162,26 @@ struct FuzzUtil {
     static DatetimeTz consumeDatetimeTzInRange(
                                              bslim::FuzzDataView *fuzzDataView,
                                              const bdlt::Date&    begin,
-                                             const bdlt::Date&    end);
+                                             const bdlt::Date&    end)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(begin)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(end);
 
     /// Return a `Time` based on the next bytes from the specified
     /// `fuzzDataView`, and update `fuzzDataView` to reflect the bytes
     /// consumed.
-    static Time consumeTime(bslim::FuzzDataView *fuzzDataView);
+    static Time consumeTime(bslim::FuzzDataView *fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView);
 
     /// Return a `TimeTz` based on the next bytes from the specified
     /// `fuzzDataView`, and update `fuzzDataView` to reflect the bytes
     /// consumed.
-    static TimeTz consumeTimeTz(bslim::FuzzDataView *fuzzDataView);
+    static TimeTz consumeTimeTz(bslim::FuzzDataView *fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView);
 
     /// Return a timezone offset in minutes.
-    static int consumeTz(bslim::FuzzDataView *fuzzDataView);
+    static int consumeTz(bslim::FuzzDataView *fuzzDataView)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(fuzzDataView);
 };
 
 // ============================================================================

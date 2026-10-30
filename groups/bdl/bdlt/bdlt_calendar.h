@@ -527,10 +527,16 @@ class Calendar {
                                // 'd_packedCalendar.firstDate() + length() - 1'
 
     // FRIENDS
-    friend bool operator==(const Calendar&, const Calendar&);
-    friend bool operator!=(const Calendar&, const Calendar&);
+    friend bool operator==(const Calendar& lhs, const Calendar& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator!=(const Calendar& lhs, const Calendar& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     template <class HASHALG>
-    friend void hashAppend(HASHALG& hashAlg, const Calendar&);
+    friend void hashAppend(HASHALG& hashAlg, const Calendar& object)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
   private:
     // PRIVATE MANIPULATORS
@@ -633,14 +639,14 @@ class Calendar {
 
     /// Extend the valid range (if necessary) of this calendar to include
     /// the specified `date` value.
-    void addDay(const Date& date);
+    void addDay(const Date& date) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Mark the specified `date` as a holiday (i.e., a non-business day)
     /// in this calendar.  Extend the valid range of this calendar if
     /// necessary.  If `date` is already marked as a holiday, this method
     /// has no effect.  See {Iterator Invalidation} for information
     /// regarding which iterators are affected by the use of this method.
-    void addHoliday(const Date& date);
+    void addHoliday(const Date& date) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Mark the specified `date` as a holiday (i.e., a non-business day) in
     /// this calendar and add the specified `holidayCode` (if not already
@@ -651,7 +657,8 @@ class Calendar {
     /// which iterators are affected by the use of this method.  Note that
     /// this method may be called repeatedly with the same value for `date`
     /// to build up a set of holiday codes for that date.
-    void addHolidayCode(const Date& date, int holidayCode);
+    void addHolidayCode(const Date& date, int holidayCode)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Mark the specified `date` as a holiday (i.e., a non-business day)
     /// in this calendar and add the specified `holidayCode` (if not
@@ -665,7 +672,8 @@ class Calendar {
     /// at the expense of verifying `isInRange(date)` for each invocation,
     /// be called repeatedly with the same value for `date` to build up a
     /// set of holiday codes for that date.
-    int addHolidayCodeIfInRange(const Date& date, int holidayCode);
+    int addHolidayCodeIfInRange(const Date& date, int holidayCode)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Mark the specified `date` as a holiday (i.e., a non-business day) in
     /// this calendar if `date` is within the valid range.  Return 0 if
@@ -673,7 +681,8 @@ class Calendar {
     /// no effect if `date` is already marked as a holiday or is not in the
     /// valid range.  See {Iterator Invalidation} for information regarding
     /// which iterators are affected by the use of this method.
-    int addHolidayIfInRange(const Date& date);
+    int addHolidayIfInRange(const Date& date)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Add the specified `weekendDay` to the set of weekend days associated
     /// with the weekend-days transition at January 1, 0001 maintained by
@@ -682,7 +691,8 @@ class Calendar {
     /// which iterators are affected by the use of this method.  The
     /// behavior is undefined unless no weekend-days transitions were added
     /// to this calendar via the `addWeekendDaysTransition` method.
-    void addWeekendDay(DayOfWeek::Enum weekendDay);
+    void addWeekendDay(DayOfWeek::Enum weekendDay)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Add the specified `weekendDays` to the set of weekend days
     /// associated with the weekend-days transition at January 1, 0001
@@ -691,7 +701,8 @@ class Calendar {
     /// regarding which iterators are affected by the use of this method.
     /// The behavior is undefined unless no weekend-days transitions were
     /// added to this calendar via the `addWeekendDaysTransition` method.
-    void addWeekendDays(const DayOfWeekSet& weekendDays);
+    void addWeekendDays(const DayOfWeekSet& weekendDays)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Add to this calendar a weekend-days transition on the specified
     /// `startDate` having the specified `weekendDays` set.  If a
@@ -701,7 +712,8 @@ class Calendar {
     /// are affected by the use of this method.  Note that this method does
     /// not extend the valid range of the calendar.
     void addWeekendDaysTransition(const Date&         startDate,
-                                  const DayOfWeekSet& weekendDays);
+                                  const DayOfWeekSet& weekendDays)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Merge the specified `other` calendar into this calendar such that
     /// the valid range of this calendar becomes the *intersection* of the
@@ -714,8 +726,10 @@ class Calendar {
     /// the corresponding original holiday codes.  See
     /// {Iterator Invalidation} for information regarding which iterators
     /// are affected by the use of this method.
-    void intersectBusinessDays(const Calendar&       other);
-    void intersectBusinessDays(const PackedCalendar& other);
+    void intersectBusinessDays(const Calendar&       other)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void intersectBusinessDays(const PackedCalendar& other)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Merge the specified `other` calendar into this calendar such that
     /// the valid range of this calendar becomes the *intersection* of the
@@ -729,14 +743,16 @@ class Calendar {
     /// in this calendar will be the union of the corresponding original
     /// holiday codes.  See {Iterator Invalidation} for information
     /// regarding which iterators are affected by the use of this method.
-    void intersectNonBusinessDays(const Calendar&       other);
-    void intersectNonBusinessDays(const PackedCalendar& other);
+    void intersectNonBusinessDays(const Calendar&       other)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void intersectNonBusinessDays(const PackedCalendar& other)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all information from this calendar, leaving it with its
     /// default constructed "empty" value.  See {Iterator Invalidation} for
     /// information regarding which iterators are affected by the use of
     /// this method.
-    void removeAll();
+    void removeAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this calendar the holiday having the specified `date` if
     /// such a holiday exists.  This operation has no effect if `date` is
@@ -745,7 +761,7 @@ class Calendar {
     /// this method.  Note that this method is defined for all `date`
     /// values, not just those that fall within the valid range, and may be
     /// invoked even on an empty calendar (i.e., having `0 == length()`).
-    void removeHoliday(const Date& date);
+    void removeHoliday(const Date& date) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this calendar the specified `holidayCode` for the
     /// holiday having the specified `date` if such a holiday having
@@ -756,18 +772,21 @@ class Calendar {
     /// this method.  Note that this method is defined for all `date`
     /// values, not just those that fall within the valid range, and may be
     /// invoked even on an empty calendar (i.e., having `0 == length()`).
-    void removeHolidayCode(const Date& date, int holidayCode);
+    void removeHolidayCode(const Date& date, int holidayCode)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reserve enough space to store at least the specified `numHolidays`
     /// within this calendar.  This method has no effect if
     /// `numHolidays <= numHolidays()`.
-    void reserveHolidayCapacity(int numHolidays);
+    void reserveHolidayCapacity(int numHolidays)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reserve enough space to store at least the specified
     /// `numHolidayCodes` within this calendar assuming no additional
     /// holidays are added to this calendar.  This method has no effect if
     /// `numHolidayCodes <= numHolidayCodesTotal()`.
-    void reserveHolidayCodeCapacity(int numHolidayCodes);
+    void reserveHolidayCodeCapacity(int numHolidayCodes)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the range of this calendar using the specified `firstDate` and
     /// `lastDate` as, respectively, the first date and the last date of the
@@ -775,7 +794,8 @@ class Calendar {
     /// codes are removed.  See {Iterator Invalidation} for information
     /// regarding which iterators are affected by the use of this method.
     /// The behavior is undefined unless `firstDate <= lastDate`.
-    void setValidRange(const Date& firstDate, const Date& lastDate);
+    void setValidRange(const Date& firstDate, const Date& lastDate)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Merge the specified `other` calendar into this calendar such that
     /// the valid range of this calendar becomes the *union* of the two
@@ -790,8 +810,10 @@ class Calendar {
     /// calendar will be the union of the corresponding original holiday
     /// codes.  See {Iterator Invalidation} for information regarding which
     /// iterators are affected by the use of this method.
-    void unionBusinessDays(const Calendar&       other);
-    void unionBusinessDays(const PackedCalendar& other);
+    void unionBusinessDays(const Calendar&       other)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void unionBusinessDays(const PackedCalendar& other)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Merge the specified `other` calendar into this calendar such that
     /// the valid range of this calendar becomes the *union* of the two
@@ -806,8 +828,10 @@ class Calendar {
     /// corresponding original holiday codes.  See {Iterator Invalidation}
     /// for information regarding which iterators are affected by the use of
     /// this method.
-    void unionNonBusinessDays(const Calendar&       other);
-    void unionNonBusinessDays(const PackedCalendar& other);
+    void unionNonBusinessDays(const Calendar&       other)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void unionNonBusinessDays(const PackedCalendar& other)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
@@ -820,7 +844,8 @@ class Calendar {
     /// `bslx` package-level documentation for more information on BDEX
     /// streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version);
+    STREAM& bdexStreamIn(STREAM& stream, int version)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Efficiently exchange the value of this object with the value of the
     /// specified `other` object.  This method provides the no-throw
@@ -834,7 +859,8 @@ class Calendar {
     /// business day in this calendar.  If this calendar has no valid
     /// business days, the returned iterator has the same value as that
     /// returned by `endBusinessDays()`.
-    BusinessDayConstIterator beginBusinessDays() const;
+    BusinessDayConstIterator beginBusinessDays() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// business day that occurs on or after the specified `date` in this
@@ -842,7 +868,8 @@ class Calendar {
     /// iterator has the same value as that returned by
     /// `endBusinessDays(date)`.  The behavior is undefined unless `date` is
     /// within the valid range of this calendar.
-    BusinessDayConstIterator beginBusinessDays(const Date& date) const;
+    BusinessDayConstIterator beginBusinessDays(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// holiday code for the specified `date` in this calendar.  If there is
@@ -850,7 +877,8 @@ class Calendar {
     /// the same value as that returned by `endHolidayCodes(date)`.  The
     /// behavior is undefined unless `date` is marked as a holiday in this
     /// calendar.
-    HolidayCodeConstIterator beginHolidayCodes(const Date& date) const;
+    HolidayCodeConstIterator beginHolidayCodes(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// holiday code for the holiday referenced by the specified `iter`.  If
@@ -859,13 +887,15 @@ class Calendar {
     /// `endHolidayCodes(iter)`.  The behavior is undefined unless `iter`
     /// refers to a valid holiday of this calendar.
     HolidayCodeConstIterator beginHolidayCodes(
-                                       const HolidayConstIterator& iter) const;
+                                       const HolidayConstIterator& iter) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// holiday in this calendar.  If this calendar has no holidays, the
     /// returned iterator has the same value as that returned by
     /// `endHolidays()`.
-    HolidayConstIterator beginHolidays() const;
+    HolidayConstIterator beginHolidays() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// holiday that occurs on or after the specified `date` in this
@@ -873,18 +903,21 @@ class Calendar {
     /// iterator has the same value as that returned by `endHolidays(date)`.
     /// The behavior is undefined unless `date` is within the valid range
     /// of this calendar.
-    HolidayConstIterator beginHolidays(const Date& date) const;
+    HolidayConstIterator beginHolidays(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// weekend-days transition in the chronological sequence of
     /// weekend-days transitions maintained by this calendar.  If this
     /// calendar has no weekend-days transitions, the returned iterator has
     /// the same value as that returned by `endWeekendDaysTransitions()`.
-    WeekendDaysTransitionConstIterator beginWeekendDaysTransitions() const;
+    WeekendDaysTransitionConstIterator beginWeekendDaysTransitions() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end business day in this calendar.
-    BusinessDayConstIterator endBusinessDays() const;
+    BusinessDayConstIterator endBusinessDays() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// business day that occurs after the specified `date` in this
@@ -892,43 +925,50 @@ class Calendar {
     /// iterator has the same value as that returned by
     /// `endBusinessDays()`.  The behavior is undefined unless `date` is
     /// within the valid range of this calendar.
-    BusinessDayConstIterator endBusinessDays(const Date& date) const;
+    BusinessDayConstIterator endBusinessDays(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end holiday code associated with the specified `date`.  The
     /// behavior is undefined unless `date` is marked as a holiday in this
     /// calendar.
-    HolidayCodeConstIterator endHolidayCodes(const Date& date) const;
+    HolidayCodeConstIterator endHolidayCodes(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end holiday code associated with the date referenced by
     /// the specified `iter`.  The behavior is undefined unless `iter`
     /// references a valid holiday in this calendar.
     HolidayCodeConstIterator
-                       endHolidayCodes(const HolidayConstIterator& iter) const;
+                       endHolidayCodes(const HolidayConstIterator& iter) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end holiday in the chronological sequence of holidays
     /// maintained by this calendar.
-    HolidayConstIterator endHolidays() const;
+    HolidayConstIterator endHolidays() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// holiday that occurs after the specified `date` in this calendar.
     /// If this calendar has no such holiday, the returned iterator has the
     /// same value as that returned by `endHolidays()`.  The behavior is
     /// undefined unless `date` is within the valid range of this calendar.
-    HolidayConstIterator endHolidays(const Date& date) const;
+    HolidayConstIterator endHolidays(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end weekend-days transition in the chronological sequence
     /// of weekend-days transitions maintained by this calendar.
-    WeekendDaysTransitionConstIterator endWeekendDaysTransitions() const;
+    WeekendDaysTransitionConstIterator endWeekendDaysTransitions() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing non-modifiable access to the earliest
     /// date in the valid range of this calendar.  The behavior is
     /// undefined unless this calendar is non-empty -- i.e., unless
     /// `1 <= length()`.
-    const Date& firstDate() const;
+    const Date& firstDate() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Load, into the specified `nextBusinessDay`, the date of the first
     /// business day in this calendar following the specified `date`.
@@ -936,7 +976,8 @@ class Calendar {
     /// non-zero value (with no effect on `nextBusinessDay`) otherwise.  The
     /// behavior is undefined unless `date + 1` is both a valid `bdlt::Date`
     /// and within the valid range of this calendar.
-    int getNextBusinessDay(Date *nextBusinessDay, const Date& date) const;
+    int getNextBusinessDay(Date *nextBusinessDay, const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Load, into the specified `nextBusinessDay`, the date of the
     /// specified `nth` business day in this calendar following the
@@ -947,7 +988,8 @@ class Calendar {
     /// of this calendar, and `0 < nth`.
     int getNextBusinessDay(Date        *nextBusinessDay,
                            const Date&  date,
-                           int          nth) const;
+                           int          nth) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the holiday at the specified `index` in this calendar.  For
     /// all `index` values from 0 to `numHolidays() - 1` (inclusive), a
@@ -957,7 +999,7 @@ class Calendar {
     /// `intersectNonBusinessDays`, `removeAll`, `removeHoliday`,
     /// `setValidRange`, `unionBusinessDays`, or `unionNonBusinessDays`.
     /// The behavior is undefined unless `0 <= index < numHolidays()`.
-    Date holiday(int index) const;
+    Date holiday(int index) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return, for the holiday at the specified `date` in this calendar,
     /// the holiday code at the specified `index`.  For all `index` values
@@ -974,24 +1016,26 @@ class Calendar {
     /// facilitates testing and generally should not be used by clients; in
     /// particular, using this method to iterate over the holiday codes for
     /// `date` is less efficient than using a `HolidayCodeConstIterator`.
-    int holidayCode(const Date& date, int index) const;
+    int holidayCode(const Date& date, int index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the specified `date` is a business day (i.e., not
     /// a holiday or weekend day) in this calendar, and `false` otherwise.
     /// The behavior is undefined unless `date` is within the valid range of
     /// this calendar.
-    bool isBusinessDay(const Date& date) const;
+    bool isBusinessDay(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the specified `date` is a holiday in this calendar,
     /// and `false` otherwise.  The behavior is undefined unless `date` is
     /// within the valid range of this calendar.
-    bool isHoliday(const Date& date) const;
+    bool isHoliday(const Date& date) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the specified `date` is within the valid range of
     /// this calendar (i.e., `firstDate() <= date <= lastDate()`), and
     /// `false` otherwise.  Note that the valid range for a `Calendar` is
     /// empty if its length is 0.
-    bool isInRange(const Date& date) const;
+    bool isInRange(const Date& date) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the specified `date` is not a business day (i.e.,
     /// is either a holiday or weekend day) in this calendar, and `false`
@@ -1001,86 +1045,95 @@ class Calendar {
     /// !isBusinessDay(date)
     /// ```
     /// returns the same result.
-    bool isNonBusinessDay(const Date& date) const;
+    bool isNonBusinessDay(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the specified `date` falls on a day of the week
     /// that is considered a weekend day in this calendar, and `false`
     /// otherwise.  Note that this method is defined for all `date` values,
     /// not just those that fall within the valid range, and may be invoked
     /// even on an empty calendar (i.e., having `0 == length()`).
-    bool isWeekendDay(const Date& date) const;
+    bool isWeekendDay(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the specified `dayOfWeek` is a weekend day in this
     /// calendar, and `false` otherwise.  The behavior is undefined unless
     /// no weekend-days transitions were added to this calendar via the
     /// `addWeekendDaysTransition` method.
-    bool isWeekendDay(DayOfWeek::Enum dayOfWeek) const;
+    bool isWeekendDay(DayOfWeek::Enum dayOfWeek) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing non-modifiable access to the latest
     /// date in the valid range of this calendar.  The behavior is
     /// undefined unless this calendar is non-empty -- i.e., unless
     /// `1 <= length()`.
-    const Date& lastDate() const;
+    const Date& lastDate() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the number of days in the valid range of this calendar,
     /// which is defined to be 0 if this calendar is empty, and
     /// `lastDate() - firstDate() + 1` otherwise.
-    int length() const;
+    int length() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of days in the valid range of this calendar that
     /// are considered business days -- i.e., are neither holidays nor
     /// weekend days.  Note that
     /// `numBusinessDays() == length() - numNonBusinessDays()`.
-    int numBusinessDays() const;
+    int numBusinessDays() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of days in the specified range
     /// `[beginDate .. endDate]` of this calendar that are considered
     /// business days -- i.e., are neither holidays nor weekend days.  The
     /// behavior is undefined unless `beginDate` and `endDate` are within
     /// the valid range of this calendar, and `beginDate <= endDate`.
-    int numBusinessDays(const Date& beginDate, const Date& endDate) const;
+    int numBusinessDays(const Date& beginDate, const Date& endDate) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of (unique) holiday codes associated with the
     /// specified `date` in this calendar if `date` is a holiday in this
     /// calendar, and 0 otherwise.  The behavior is undefined unless `date`
     /// is within the valid range of this calendar.
-    int numHolidayCodes(const Date& date) const;
+    int numHolidayCodes(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the total number of holiday codes for all holidays in this
     /// calendar.  Note that this function is used primarily in conjunction
     /// with `reserveHolidayCodeCapacity`.
-    int numHolidayCodesTotal() const;
+    int numHolidayCodesTotal() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of days in the valid range of this calendar that
     /// are individually marked as holidays, irrespective of whether or not
     /// the date is also considered a weekend day.
-    int numHolidays() const;
+    int numHolidays() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of days in the valid range of this calendar that
     /// are *not* considered business days -- i.e., are either holidays,
     /// weekend days, or both.  Note that
     /// `numNonBusinessDays() == length() - numBusinessDays()`.
-    int numNonBusinessDays() const;
+    int numNonBusinessDays() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of days in the valid range of this calendar that
     /// are considered weekend days, irrespective of any designated
     /// holidays.
-    int numWeekendDaysInRange() const;
+    int numWeekendDaysInRange() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of weekend-days transitions maintained by this
     /// calendar.
-    int numWeekendDaysTransitions() const;
+    int numWeekendDaysTransitions() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference providing non-modifiable access to the underlying
     /// `PackedCalendar`, which represents the same (mathematical) value as
     /// this calendar.
-    const PackedCalendar& packedCalendar() const;
+    const PackedCalendar& packedCalendar() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return an iterator providing non-modifiable access to the last
     /// business day in this calendar.  If this calendar has no valid
     /// business days, the returned iterator has the same value as that
     /// returned by `rendBusinessDays()`.
-    BusinessDayConstReverseIterator rbeginBusinessDays() const;
+    BusinessDayConstReverseIterator rbeginBusinessDays() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// business day that occurs on or before the specified `date` in this
@@ -1088,7 +1141,8 @@ class Calendar {
     /// iterator has the same value as that returned by
     /// `rendBusinessDays(date)`.  The behavior is undefined unless `date`
     /// is within the valid range of this calendar.
-    BusinessDayConstReverseIterator rbeginBusinessDays(const Date& date) const;
+    BusinessDayConstReverseIterator rbeginBusinessDays(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the last
     /// holiday code associated with the specified `date` in this calendar.
@@ -1096,7 +1150,8 @@ class Calendar {
     /// iterator has the same value as that returned by
     /// `rendHolidayCodes(date)`.  The behavior is undefined unless `date`
     /// is marked as a holiday in this calendar.
-    HolidayCodeConstReverseIterator rbeginHolidayCodes(const Date& date) const;
+    HolidayCodeConstReverseIterator rbeginHolidayCodes(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the last
     /// holiday code associated with the holiday referenced by the specified
@@ -1105,13 +1160,15 @@ class Calendar {
     /// that returned by `rendHolidayCodes(iter)`.  The behavior is
     /// undefined unless `iter` refers to a valid holiday of this calendar.
     HolidayCodeConstReverseIterator
-                    rbeginHolidayCodes(const HolidayConstIterator& iter) const;
+                    rbeginHolidayCodes(const HolidayConstIterator& iter) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the last
     /// holiday in this calendar.  If this calendar has no holidays, the
     /// returned iterator has the same value as that returned by
     /// `rendHolidays()`.
-    HolidayConstReverseIterator rbeginHolidays() const;
+    HolidayConstReverseIterator rbeginHolidays() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// holiday that occurs on or before the specified `date` in this
@@ -1119,7 +1176,8 @@ class Calendar {
     /// iterator has the same value as that returned by
     /// `rendHolidays(date)`.  The behavior is undefined unless `date` is
     /// within the valid range of this calendar.
-    HolidayConstReverseIterator rbeginHolidays(const Date& date) const;
+    HolidayConstReverseIterator rbeginHolidays(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the last
     /// weekend-days transition in the chronological sequence of
@@ -1127,11 +1185,13 @@ class Calendar {
     /// calendar has no weekend-days transitions, the returned iterator has
     /// the same value as that returned by `rendWeekendDaysTransitions()`.
     WeekendDaysTransitionConstReverseIterator
-                                          rbeginWeekendDaysTransitions() const;
+                                          rbeginWeekendDaysTransitions() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the element
     /// one before the first business day in this calendar.
-    BusinessDayConstReverseIterator rendBusinessDays() const;
+    BusinessDayConstReverseIterator rendBusinessDays() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// business day that occurs before the specified `date` in this
@@ -1139,37 +1199,43 @@ class Calendar {
     /// iterator has the same value as that returned by
     /// `rendBusinessDays()`.  The behavior is undefined unless `date` is
     /// within the valid range of this calendar.
-    BusinessDayConstReverseIterator rendBusinessDays(const Date& date) const;
+    BusinessDayConstReverseIterator rendBusinessDays(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the element
     /// one before the first holiday code associated with the specified
     /// `date`.  The behavior is undefined unless `date` is marked as a
     /// holiday in this calendar.
-    HolidayCodeConstReverseIterator rendHolidayCodes(const Date& date) const;
+    HolidayCodeConstReverseIterator rendHolidayCodes(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the element
     /// one before the first holiday code associated with the holiday
     /// referenced by the specified `iter`.  The behavior is undefined
     /// unless `iter` references a valid holiday in this calendar.
     HolidayCodeConstReverseIterator
-                      rendHolidayCodes(const HolidayConstIterator& iter) const;
+                      rendHolidayCodes(const HolidayConstIterator& iter) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the element
     /// one before the first holiday in this calendar.
-    HolidayConstReverseIterator rendHolidays() const;
+    HolidayConstReverseIterator rendHolidays() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the first
     /// holiday that occurs before the specified `date` in this calendar.
     /// If this calendar has no such holiday, the returned iterator has the
     /// same value as that returned by `rendHolidays()`.  The behavior is
     /// undefined unless `date` is within the valid range of this calendar.
-    HolidayConstReverseIterator rendHolidays(const Date& date) const;
+    HolidayConstReverseIterator rendHolidays(const Date& date) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing non-modifiable access to the element
     /// one before the first weekend-days transition in the chronological
     /// sequence of weekend-days transitions maintained by this calendar.
     WeekendDaysTransitionConstReverseIterator
-                                            rendWeekendDaysTransitions() const;
+                                            rendWeekendDaysTransitions() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the weekend-days transition at the specified `index` in this
     /// calendar.  For all `index` values from 0 to
@@ -1181,12 +1247,13 @@ class Calendar {
     /// `intersectNonBusinessDays`, `removeAll`, `unionBusinessDays`, or
     /// `unionNonBusinessDays`.  The behavior is undefined unless
     /// `0 <= index < numWeekendDaysTransitions()`.
-    WeekendDaysTransition weekendDaysTransition(int index) const;
+    WeekendDaysTransition weekendDaysTransition(int index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
     /// Return the allocator used by this object to supply memory.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Write this value to the specified output `stream` using the
     /// specified `version` format and return a reference to the modifiable
@@ -1195,7 +1262,9 @@ class Calendar {
     /// package-level documentation for more information on BDEX streaming
     /// of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Format this object to the specified output `stream` at the (absolute
     /// value of) the optionally specified indentation `level` and return a
@@ -1209,7 +1278,9 @@ class Calendar {
     /// effect.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const;
+                        int           spacesPerLevel = 4) const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
 
@@ -1231,7 +1302,8 @@ class Calendar {
     /// is undefined if every day of the week is a weekend day, or if the
     /// resulting date would otherwise exceed the value
     /// `Date(9999, 12, 31)`.
-    Date getNextBusinessDay(const Date& initialDate) const;
+    Date getNextBusinessDay(const Date& initialDate) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the date of the specified `nth` business day following the
     /// specified `initialDate`.  For dates outside of the range of this
@@ -1240,7 +1312,8 @@ class Calendar {
     /// range and `1 <= nth` (or if every day of the week is a weekend day,
     /// or if the resulting date would otherwise exceed the value
     /// `Date(9999, 12, 31)`).
-    Date getNextBusinessDay(const Date& initialDate, int nth) const;
+    Date getNextBusinessDay(const Date& initialDate, int nth) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED -- BDE3.0
 
@@ -1265,7 +1338,9 @@ bool operator!=(const Calendar& lhs, const Calendar& rhs);
 
 /// Write the value of the specified `calendar` to the specified output
 /// `stream`, and return a reference to the modifiable `stream`.
-bsl::ostream& operator<<(bsl::ostream& stream, const Calendar& calendar);
+bsl::ostream& operator<<(bsl::ostream& stream, const Calendar& calendar)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(calendar);
 
 // FREE FUNCTIONS
 
@@ -1278,7 +1353,8 @@ void hashAppend(HASHALG& hashAlg, const Calendar& object);
 /// Exchange the values of the specified `a` and `b` objects.  This function
 /// provides the no-throw exception-safety guarantee if the two objects were
 /// created with the same allocator and the basic guarantee otherwise.
-void swap(Calendar& a, Calendar& b);
+void swap(Calendar& a, Calendar& b)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
                     // ===================================
                     // class Calendar_BusinessDayConstIter
@@ -1303,10 +1379,14 @@ class Calendar_BusinessDayConstIter {
 
     // FRIENDS
     friend class Calendar;
-    friend bool operator==(const Calendar_BusinessDayConstIter&,
-                           const Calendar_BusinessDayConstIter&);
-    friend bool operator!=(const Calendar_BusinessDayConstIter&,
-                           const Calendar_BusinessDayConstIter&);
+    friend bool operator==(const Calendar_BusinessDayConstIter& lhs,
+                           const Calendar_BusinessDayConstIter& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator!=(const Calendar_BusinessDayConstIter& lhs,
+                           const Calendar_BusinessDayConstIter& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
   private:
     // PRIVATE CREATORS
@@ -1324,7 +1404,9 @@ class Calendar_BusinessDayConstIter {
     Calendar_BusinessDayConstIter(const bdlc::BitArray& nonBusinessDays,
                                   const Date&           firstDateOfCalendar,
                                   const Date&           startDate,
-                                  bool                  endIterFlag);
+                                  bool                  endIterFlag)
+                      BSLS_ASSERT_CONVEYOR_TRUST_PRE(firstDateOfCalendar)
+                      BSLS_ASSERT_CONVEYOR_TRUST_PRE(startDate);
 
   public:
     // PUBLIC TYPES
@@ -1358,24 +1440,30 @@ class Calendar_BusinessDayConstIter {
     /// associated calendar, and return a reference providing modifiable
     /// access to this object.  The behavior is undefined unless, on entry,
     /// this iterator references a valid business day.
-    Calendar_BusinessDayConstIter& operator++();
+    Calendar_BusinessDayConstIter& operator++()
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Regress this iterator to refer to the previous business day in the
     /// associated calendar, and return a reference providing modifiable
     /// access to this object.  The behavior is undefined unless, on entry,
     /// this iterator references a valid business day that is not the first
     /// business day for the associated calendar.
-    Calendar_BusinessDayConstIter& operator--();
+    Calendar_BusinessDayConstIter& operator--()
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
     /// Return a `PackedCalendar_DateRef` object that contains the date
     /// value of the business day referenced by this iterator.
-    PackedCalendar_DateRef operator*() const;
+    PackedCalendar_DateRef operator*() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a date proxy for the business day referenced by this
     /// iterator.
-    PackedCalendar_DateProxy operator->() const;
+    PackedCalendar_DateProxy operator->() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // FREE OPERATORS
@@ -1398,7 +1486,8 @@ bool operator!=(const Calendar_BusinessDayConstIter& lhs,
 /// The behavior is undefined unless, on entry, `iterator` references a
 /// valid business day.
 Calendar_BusinessDayConstIter operator++(
-                                 Calendar_BusinessDayConstIter& iterator, int);
+                                 Calendar_BusinessDayConstIter& iterator, int)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(iterator);
 
 /// Regress the specified `iterator` to refer to the previous business day
 /// in the associated calendar, and return the previous value of `iterator`.
@@ -1406,7 +1495,8 @@ Calendar_BusinessDayConstIter operator++(
 /// valid business day that is not the first business day for the associated
 /// calendar.
 Calendar_BusinessDayConstIter operator--(
-                                 Calendar_BusinessDayConstIter& iterator, int);
+                                 Calendar_BusinessDayConstIter& iterator, int)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(iterator);
 
 // ============================================================================
 //                          INLINE DEFINITIONS
@@ -1430,6 +1520,8 @@ int Calendar::maxSupportedBdexVersion(int versionSelector)
 inline
 Calendar& Calendar::operator=(const Calendar& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Calendar(rhs, d_packedCalendar.allocator()).swap(*this);
     return *this;
 }
@@ -1437,6 +1529,8 @@ Calendar& Calendar::operator=(const Calendar& rhs)
 inline
 Calendar& Calendar::operator=(const PackedCalendar& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Calendar(rhs, d_packedCalendar.allocator()).swap(*this);
     return *this;
 }
@@ -1505,6 +1599,7 @@ void Calendar::removeAll()
 inline
 void Calendar::removeHoliday(const Date& date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_packedCalendar.removeHoliday(date);
 
     if (true == isInRange(date) && false == isWeekendDay(date)) {
@@ -1534,7 +1629,7 @@ inline
 void Calendar::setValidRange(const Date& firstDate, const Date& lastDate)
 {
     BSLS_PRECONDITIONS_BEGIN();
-    BSLS_ASSERT(firstDate <= lastDate);
+    BSLS_ASSERT_NONCONVEYOR(firstDate <= lastDate);
     BSLS_PRECONDITIONS_END();
 
     if (firstDate <= lastDate) {
@@ -1582,9 +1677,11 @@ STREAM& Calendar::bdexStreamIn(STREAM& stream, int version)
 inline
 void Calendar::swap(Calendar& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     // 'swap' is undefined for objects with non-equal allocators.
     BSLS_PRECONDITIONS_BEGIN();
-    BSLS_ASSERT(d_packedCalendar.allocator() ==
+    BSLS_ASSERT_NONCONVEYOR(d_packedCalendar.allocator() ==
                                            other.d_packedCalendar.allocator());
     BSLS_PRECONDITIONS_END();
     bslalg::SwapUtil::swap(&d_packedCalendar,  &other.d_packedCalendar);
@@ -1723,6 +1820,7 @@ const Date& Calendar::firstDate() const
 inline
 int Calendar::getNextBusinessDay(Date *nextBusinessDay, const Date& date) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_PRECONDITIONS_BEGIN();
     BSLS_ASSERT_SAFE(nextBusinessDay);
     BSLS_ASSERT_SAFE(Date(9999, 12, 31) > date);
@@ -1775,6 +1873,7 @@ bool Calendar::isInRange(const Date& date) const
 inline
 bool Calendar::isNonBusinessDay(const Date& date) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_PRECONDITIONS_BEGIN();
     BSLS_ASSERT_SAFE(isInRange(date));
     BSLS_PRECONDITIONS_END();
@@ -1815,6 +1914,7 @@ int Calendar::numBusinessDays() const
 inline
 int Calendar::numBusinessDays(const Date& beginDate, const Date& endDate) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_PRECONDITIONS_BEGIN();
     BSLS_ASSERT_SAFE(isInRange(beginDate));
     BSLS_ASSERT_SAFE(isInRange(endDate));
@@ -2053,11 +2153,14 @@ Calendar_BusinessDayConstIter::Calendar_BusinessDayConstIter(
 , d_firstDate(original.d_firstDate)
 , d_currentOffset(original.d_currentOffset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 inline
 Calendar_BusinessDayConstIter::~Calendar_BusinessDayConstIter()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS
@@ -2065,6 +2168,8 @@ inline
 Calendar_BusinessDayConstIter& Calendar_BusinessDayConstIter::operator=(
                                       const Calendar_BusinessDayConstIter& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     d_nonBusinessDays_p = rhs.d_nonBusinessDays_p;
     d_firstDate         = rhs.d_firstDate;
     d_currentOffset     = rhs.d_currentOffset;
@@ -2074,6 +2179,8 @@ Calendar_BusinessDayConstIter& Calendar_BusinessDayConstIter::operator=(
 inline
 Calendar_BusinessDayConstIter& Calendar_BusinessDayConstIter::operator++()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_nonBusinessDays_p);
     BSLS_ASSERT_SAFE(d_currentOffset >= 0);
 
     d_currentOffset = static_cast<int>(
@@ -2084,6 +2191,8 @@ Calendar_BusinessDayConstIter& Calendar_BusinessDayConstIter::operator++()
 inline
 Calendar_BusinessDayConstIter& Calendar_BusinessDayConstIter::operator--()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_nonBusinessDays_p);
     if (-1 == d_currentOffset) {
         d_currentOffset = static_cast<int>(d_nonBusinessDays_p->
                             find0AtMaxIndex(0, d_nonBusinessDays_p->length()));

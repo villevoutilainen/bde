@@ -2163,7 +2163,10 @@ if (veryVerbose)
             bdlt::Date result(1999, 2, 3);
 
             ASSERT_SAFE_PASS(Util::convertFromYYYYMMDD(&result, 20001030));
+#ifndef BSLS_ASSERT_CONVEYOR
+            // A conveyor build rejects a null 'result' at compile time.
             ASSERT_SAFE_FAIL(Util::convertFromYYYYMMDD(      0, 20001030));
+#endif
         }
       } break;
       case 2: {

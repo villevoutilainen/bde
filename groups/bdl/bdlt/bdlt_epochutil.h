@@ -176,7 +176,8 @@ struct EpochUtil {
     /// time: midnight on January 1, 1970.  Note that this value exists
     /// before any code is executed and will continue to exist, unchanged,
     /// until the program exits.
-    static const Datetime& epoch();
+    static const Datetime& epoch()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                            // `time_t`-Based Methods
 
@@ -194,7 +195,8 @@ struct EpochUtil {
     /// `0 == convertToTimeT(&time, *result)` (i.e., `time` is representable
     /// as a 32-bit `int`).  Note that `result` will use Coordinated
     /// Universal Time (UTC) as a reference.
-    static void convertFromTimeT(Datetime *result, bsl::time_t time);
+    static void convertFromTimeT(Datetime *result, bsl::time_t time)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
     /// Return the relative time computed as the difference between the
     /// specified absolute `datetime` and the epoch.  The behavior is
@@ -206,7 +208,8 @@ struct EpochUtil {
     /// error detection is desired, the overloaded version that loads the
     /// converted `datetime` into a supplied destination object should be
     /// used.
-    static bsl::time_t convertToTimeT(const Datetime& datetime);
+    static bsl::time_t convertToTimeT(const Datetime& datetime)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(datetime);
 
     /// Load into the specified `result` the relative time computed as the
     /// difference between the specified absolute `datetime` and the epoch.
@@ -217,7 +220,9 @@ struct EpochUtil {
     /// 32-bit `int`).  Note that `datetime` is assumed to use Coordinated
     /// Universal Time (UTC) as a reference.
     static int convertToTimeT(bsl::time_t     *result,
-                              const Datetime&  datetime);
+                              const Datetime&  datetime)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(datetime);
 
                            // `TimeT64`-Based Methods
 
@@ -236,19 +241,23 @@ struct EpochUtil {
     /// effect on `result`) if `time` cannot be represented in the
     /// destination format.  Note that `result` will use Coordinated
     /// Universal Time (UTC) as a reference.
-    static int convertFromTimeT64(Datetime *result, TimeT64 time);
+    static int convertFromTimeT64(Datetime *result, TimeT64 time)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
     /// Return the relative time computed as the difference between the
     /// specified absolute `datetime` and the epoch.  Note that `datetime`
     /// is assumed to use Coordinated Universal Time (UTC) as a reference.
-    static TimeT64 convertToTimeT64(const Datetime& datetime);
+    static TimeT64 convertToTimeT64(const Datetime& datetime)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(datetime);
 
     /// Load into the specified `result` the relative time computed as the
     /// difference between the specified absolute `datetime` and the epoch.
     /// Note that `datetime` is assumed to use Coordinated Universal Time
     /// (UTC) as a reference.
     static void convertToTimeT64(TimeT64         *result,
-                                 const Datetime&  datetime);
+                                 const Datetime&  datetime)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(datetime);
 
                        // `bsls::TimeInterval`-Based Methods
 
@@ -259,7 +268,8 @@ struct EpochUtil {
     /// potentially lossy as the resolution of `bsls::TimeInterval` is
     /// greater than that of `Datetime`.
     static Datetime convertFromTimeInterval(
-                                       const bsls::TimeInterval& timeInterval);
+                                       const bsls::TimeInterval& timeInterval)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(timeInterval);
 
     /// Load into the specified `result` the absolute datetime converted to
     /// a `Datetime`, computed as the sum of the specified relative
@@ -269,11 +279,14 @@ struct EpochUtil {
     /// `bsls::TimeInterval` is greater than that of `Datetime`.
     static void convertFromTimeInterval(
                                       Datetime                  *result,
-                                      const bsls::TimeInterval&  timeInterval);
+                                      const bsls::TimeInterval&  timeInterval)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(timeInterval);
 
     /// Return, as a `bsls::TimeInterval`, the relative time computed as the
     /// difference between the specified absolute `datetime` and the epoch.
-    static bsls::TimeInterval convertToTimeInterval(const Datetime& datetime);
+    static bsls::TimeInterval convertToTimeInterval(const Datetime& datetime)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(datetime);
 
                    // `DatetimeInterval`-Based Methods
 
@@ -282,7 +295,8 @@ struct EpochUtil {
     /// behavior is undefined unless the conversion result can be
     /// represented as a `Datetime`.
     static Datetime convertFromDatetimeInterval(
-                                     const DatetimeInterval& datetimeInterval);
+                                     const DatetimeInterval& datetimeInterval)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(datetimeInterval);
 
     /// Load into the specified `result` the absolute datetime converted to
     /// a `Datetime`, computed as the sum of the specified relative
@@ -290,12 +304,15 @@ struct EpochUtil {
     /// the conversion result can be represented as a `Datetime`.
     static void convertFromDatetimeInterval(
                                     Datetime                *result,
-                                    const DatetimeInterval&  datetimeInterval);
+                                    const DatetimeInterval&  datetimeInterval)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(datetimeInterval);
 
     /// Return, as a `DatetimeInterval`, the relative time computed as the
     /// difference between the specified absolute `datetime` and the epoch.
     static DatetimeInterval convertToDatetimeInterval(
-                                                     const Datetime& datetime);
+                                                     const Datetime& datetime)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(datetime);
 
     // DEPRECATED CLASS METHODS
 
@@ -307,7 +324,9 @@ struct EpochUtil {
     ///
     /// @DEPRECATED: Use `convertToTimeInterval(datetime)` instead.
     static int convertToTimeInterval(bsls::TimeInterval *result,
-                                     const Datetime&     datetime);
+                                     const Datetime&     datetime)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(datetime);
 
     /// If `datetime - epoch() >= DatetimeInterval()`, load into the
     /// specified `result` the relative time converted to a
@@ -317,7 +336,9 @@ struct EpochUtil {
     ///
     /// @DEPRECATED: Use `convertToDatetimeInterval(datetime)` instead.
     static int convertToDatetimeInterval(DatetimeInterval *result,
-                                         const Datetime&   datetime);
+                                         const Datetime&   datetime)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(datetime);
 };
 
 // ============================================================================

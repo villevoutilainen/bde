@@ -519,108 +519,186 @@ struct FixUtil {
     /// this component (counting a null terminator, if any).
     static int generate(char                        *buffer,
                         int                          bufferLength,
-                        const Date&                  object);
+                        const Date&                  object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(char                        *buffer,
                         int                          bufferLength,
                         const Date&                  object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                        *buffer,
                         int                          bufferLength,
-                        const Time&                  object);
+                        const Time&                  object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(char                        *buffer,
                         int                          bufferLength,
                         const Time&                  object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                        *buffer,
                         int                          bufferLength,
-                        const Datetime&              object);
+                        const Datetime&              object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(char                        *buffer,
                         int                          bufferLength,
                         const Datetime&              object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                        *buffer,
                         int                          bufferLength,
-                        const DateTz&                object);
+                        const DateTz&                object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(char                        *buffer,
                         int                          bufferLength,
                         const DateTz&                object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                        *buffer,
                         int                          bufferLength,
-                        const TimeTz&                object);
+                        const TimeTz&                object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(char                        *buffer,
                         int                          bufferLength,
                         const TimeTz&                object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                        *buffer,
                         int                          bufferLength,
-                        const DatetimeTz&            object);
+                        const DatetimeTz&            object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(char                        *buffer,
                         int                          bufferLength,
                         const DatetimeTz&            object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
 
     static int generate(bsl::string                 *string,
-                        const Date&                  object);
+                        const Date&                  object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(bsl::string                 *string,
                         const Date&                  object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(bsl::string                 *string,
-                        const Time&                  object);
+                        const Time&                  object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(bsl::string                 *string,
                         const Time&                  object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(bsl::string                 *string,
-                        const Datetime&              object);
+                        const Datetime&              object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(bsl::string                 *string,
                         const Datetime&              object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(bsl::string                 *string,
-                        const DateTz&                object);
+                        const DateTz&                object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(bsl::string                 *string,
                         const DateTz&                object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(bsl::string                 *string,
-                        const TimeTz&                object);
+                        const TimeTz&                object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(bsl::string                 *string,
                         const TimeTz&                object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(bsl::string                 *string,
-                        const DatetimeTz&            object);
+                        const DatetimeTz&            object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(bsl::string                 *string,
                         const DatetimeTz&            object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
 
     static int generate(std::string                 *string,
-                        const Date&                  object);
+                        const Date&                  object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::string                 *string,
                         const Date&                  object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(std::string                 *string,
-                        const Time&                  object);
+                        const Time&                  object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::string                 *string,
                         const Time&                  object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(std::string                 *string,
-                        const Datetime&              object);
+                        const Datetime&              object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::string                 *string,
                         const Datetime&              object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(std::string                 *string,
-                        const DateTz&                object);
+                        const DateTz&                object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::string                 *string,
                         const DateTz&                object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(std::string                 *string,
-                        const TimeTz&                object);
+                        const TimeTz&                object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::string                 *string,
                         const TimeTz&                object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(std::string                 *string,
-                        const DatetimeTz&            object);
+                        const DatetimeTz&            object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::string                 *string,
                         const DatetimeTz&            object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
     /// Load the FIX representation of the specified `object` into the
@@ -631,35 +709,65 @@ struct FixUtil {
     /// number of characters in the formatted string.  The previous contents
     /// of `string` (if any) are discarded.
     static int generate(std::pmr::string            *string,
-                        const Date&                  object);
+                        const Date&                  object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::pmr::string            *string,
                         const Date&                  object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(std::pmr::string            *string,
-                        const Time&                  object);
+                        const Time&                  object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::pmr::string            *string,
                         const Time&                  object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(std::pmr::string            *string,
-                        const Datetime&              object);
+                        const Datetime&              object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::pmr::string            *string,
                         const Datetime&              object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(std::pmr::string            *string,
-                        const DateTz&                object);
+                        const DateTz&                object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::pmr::string            *string,
                         const DateTz&                object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(std::pmr::string            *string,
-                        const TimeTz&                object);
+                        const TimeTz&                object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::pmr::string            *string,
                         const TimeTz&                object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(std::pmr::string            *string,
-                        const DatetimeTz&            object);
+                        const DatetimeTz&            object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generate(std::pmr::string            *string,
                         const DatetimeTz&            object,
-                        const FixUtilConfiguration&  configuration);
+                        const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
 #endif
 
     /// Write the FIX representation of the specified `object` to the
@@ -669,35 +777,65 @@ struct FixUtil {
     /// `FixUtilConfiguration::defaultConfiguration()` is used.  Return a
     /// reference to `stream`.  Note that `stream` is not null terminated.
     static bsl::ostream& generate(bsl::ostream&               stream,
-                                  const Date&                 object);
+                                  const Date&                 object)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static bsl::ostream& generate(bsl::ostream&               stream,
                                   const Date&                 object,
-                                  const FixUtilConfiguration& configuration);
+                                  const FixUtilConfiguration& configuration)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static bsl::ostream& generate(bsl::ostream&               stream,
-                                  const Time&                 object);
+                                  const Time&                 object)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static bsl::ostream& generate(bsl::ostream&               stream,
                                   const Time&                 object,
-                                  const FixUtilConfiguration& configuration);
+                                  const FixUtilConfiguration& configuration)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static bsl::ostream& generate(bsl::ostream&               stream,
-                                  const Datetime&             object);
+                                  const Datetime&             object)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static bsl::ostream& generate(bsl::ostream&               stream,
                                   const Datetime&             object,
-                                  const FixUtilConfiguration& configuration);
+                                  const FixUtilConfiguration& configuration)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static bsl::ostream& generate(bsl::ostream&               stream,
-                                  const DateTz&               object);
+                                  const DateTz&               object)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static bsl::ostream& generate(bsl::ostream&               stream,
                                   const DateTz&               object,
-                                  const FixUtilConfiguration& configuration);
+                                  const FixUtilConfiguration& configuration)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static bsl::ostream& generate(bsl::ostream&               stream,
-                                  const TimeTz&               object);
+                                  const TimeTz&               object)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static bsl::ostream& generate(bsl::ostream&               stream,
                                   const TimeTz&               object,
-                                  const FixUtilConfiguration& configuration);
+                                  const FixUtilConfiguration& configuration)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static bsl::ostream& generate(bsl::ostream&               stream,
-                                  const DatetimeTz&           object);
+                                  const DatetimeTz&           object)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static bsl::ostream& generate(bsl::ostream&               stream,
                                   const DatetimeTz&           object,
-                                  const FixUtilConfiguration& configuration);
+                                  const FixUtilConfiguration& configuration)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
 
     /// Write the FIX representation of the specified `object` to the
     /// specified `buffer`.  Optionally specify a `configuration` to affect
@@ -710,35 +848,53 @@ struct FixUtil {
     /// is large enough to hold any string generated by this component
     /// (counting a null terminator, if any).
     static int generateRaw(char                        *buffer,
-                           const Date&                  object);
+                           const Date&                  object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generateRaw(char                        *buffer,
                            const Date&                  object,
-                           const FixUtilConfiguration&  configuration);
+                           const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generateRaw(char                        *buffer,
-                           const Time&                  object);
+                           const Time&                  object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generateRaw(char                        *buffer,
                            const Time&                  object,
-                           const FixUtilConfiguration&  configuration);
+                           const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generateRaw(char                        *buffer,
-                           const Datetime&              object);
+                           const Datetime&              object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generateRaw(char                        *buffer,
                            const Datetime&              object,
-                           const FixUtilConfiguration&  configuration);
+                           const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generateRaw(char                        *buffer,
-                           const DateTz&                object);
+                           const DateTz&                object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generateRaw(char                        *buffer,
                            const DateTz&                object,
-                           const FixUtilConfiguration&  configuration);
+                           const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generateRaw(char                        *buffer,
-                           const TimeTz&                object);
+                           const TimeTz&                object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generateRaw(char                        *buffer,
                            const TimeTz&                object,
-                           const FixUtilConfiguration&  configuration);
+                           const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generateRaw(char                        *buffer,
-                           const DatetimeTz&            object);
+                           const DatetimeTz&            object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
     static int generateRaw(char                        *buffer,
                            const DatetimeTz&            object,
-                           const FixUtilConfiguration&  configuration);
+                           const FixUtilConfiguration&  configuration)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
 
     /// Parse the specified initial `length` characters of the specified FIX
     /// `string` as a `Date` value, and load the value into the specified
@@ -752,7 +908,8 @@ struct FixUtil {
     /// entire `length` characters do not.  If the optional timezone offset
     /// is present in `string`, it is parsed but ignored.  The behavior is
     /// undefined unless `0 <= length`.
-    static int parse(Date *result, const char *string, int length);
+    static int parse(Date *result, const char *string, int length)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
     /// Parse the specified initial `length` characters of the specified FIX
     /// `string` as a `Time` value, and load the value into the specified
@@ -773,7 +930,8 @@ struct FixUtil {
     /// the `second` attribute is taken to be 59, then an additional second
     /// is added to `result` at the end.  The behavior is undefined unless
     /// `0 <= length`.
-    static int parse(Time *result, const char *string, int length);
+    static int parse(Time *result, const char *string, int length)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
     /// Parse the specified initial `length` characters of the specified FIX
     /// `string` as a `Datetime` value, and load the value into the
@@ -794,7 +952,8 @@ struct FixUtil {
     /// attribute is taken to be 59, then an additional second is added to
     /// `result` at the end.  The behavior is undefined unless
     /// `0 <= length`.
-    static int parse(Datetime *result, const char *string, int length);
+    static int parse(Datetime *result, const char *string, int length)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
     /// Parse the specified initial `length` characters of the specified FIX
     /// `string` as a `DateTz` value, and load the value into the specified
@@ -808,7 +967,8 @@ struct FixUtil {
     /// entire `length` characters do not.  If the optional timezone offset
     /// is not present in `string`, UTC is assumed.  The behavior is
     /// undefined unless `0 <= length`.
-    static int parse(DateTz *result, const char *string, int length);
+    static int parse(DateTz *result, const char *string, int length)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
     /// Parse the specified initial `length` characters of the specified FIX
     /// `string` as a `TimeTz` value, and load the value into the specified
@@ -827,7 +987,8 @@ struct FixUtil {
     /// see {Leap Seconds}), the `second` attribute is taken to be 59, then
     /// an additional second is added to `result` at the end.  The behavior
     /// is undefined unless `0 <= length`.
-    static int parse(TimeTz *result, const char *string, int length);
+    static int parse(TimeTz *result, const char *string, int length)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
     /// Parse the specified initial `length` characters of the specified FIX
     /// `string` as a `DatetimeTz` value, and load the value into the
@@ -846,7 +1007,8 @@ struct FixUtil {
     /// see {Leap Seconds}), the `second` attribute is taken to be 59, then
     /// an additional second is added to `result` at the end.  The behavior
     /// is undefined unless `0 <= length`.
-    static int parse(DatetimeTz *result, const char *string, int length);
+    static int parse(DatetimeTz *result, const char *string, int length)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
 
     /// Parse the specified FIX `string` as a `Date` value, and load the
     /// value into the specified `result`.  Return 0 on success, and a
@@ -860,7 +1022,9 @@ struct FixUtil {
     /// entire `string.length()` characters do not.  If the optional
     /// timezone offset is present in `string`, it is parsed but ignored.
     /// The behavior is undefined unless `string.data()` is non-null.
-    static int parse(Date *result, const bsl::string_view& string);
+    static int parse(Date *result, const bsl::string_view& string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified FIX `string` as a `Time` value, and load the
     /// value into the specified `result`.  Return 0 on success, and a
@@ -881,7 +1045,9 @@ struct FixUtil {
     /// see {Leap Seconds}), the `second` attribute is taken to be 59, then
     /// an additional second is added to `result` at the end.  The behavior
     /// is undefined unless `string.data()` is non-null.
-    static int parse(Time *result, const bsl::string_view& string);
+    static int parse(Time *result, const bsl::string_view& string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified FIX `string` as a `Datetime` value, and load the
     /// value into the specified `result`.  Return 0 on success, and a
@@ -902,7 +1068,9 @@ struct FixUtil {
     /// see {Leap Seconds}), the `second` attribute is taken to be 59, then
     /// an additional second is added to `result` at the end.  The behavior
     /// is undefined unless `string.data()` is non-null.
-    static int parse(Datetime *result, const bsl::string_view& string);
+    static int parse(Datetime *result, const bsl::string_view& string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified FIX `string` as a `DateTz` value, and load the
     /// value into the specified `result`.  Return 0 on success, and a
@@ -916,7 +1084,9 @@ struct FixUtil {
     /// entire `string.length()` characters do not.  If the optional
     /// timezone offset is not present in `string`, UTC is assumed.  The
     /// behavior is undefined unless `string.data()` is non-null.
-    static int parse(DateTz *result, const bsl::string_view& string);
+    static int parse(DateTz *result, const bsl::string_view& string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified FIX `string` as a `TimeTz` value, and load the
     /// value into the specified `result`.  Return 0 on success, and a
@@ -936,7 +1106,9 @@ struct FixUtil {
     /// attribute is taken to be 59, then an additional second is added to
     /// `result` at the end.  The behavior is undefined unless
     /// `string.data()` is non-null.
-    static int parse(TimeTz *result, const bsl::string_view& string);
+    static int parse(TimeTz *result, const bsl::string_view& string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified FIX `string` as a `DatetimeTz` value, and load
     /// the value into the specified `result`.  Return 0 on success, and a
@@ -956,7 +1128,9 @@ struct FixUtil {
     /// attribute is taken to be 59, then an additional second is added to
     /// `result` at the end.  The behavior is undefined unless
     /// `string.data()` is non-null.
-    static int parse(DatetimeTz *result, const bsl::string_view& string);
+    static int parse(DatetimeTz *result, const bsl::string_view& string)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 };
 
 // ============================================================================
@@ -1382,7 +1556,7 @@ int FixUtil::generateRaw(char *buffer, const DatetimeTz& object)
 inline
 int FixUtil::parse(Date *result, const bsl::string_view& string)
 {
-    BSLS_ASSERT(string.data());
+    BSLS_ASSERT_NONCONVEYOR(string.data());
 
     return parse(result, string.data(), static_cast<int>(string.length()));
 }
@@ -1390,7 +1564,7 @@ int FixUtil::parse(Date *result, const bsl::string_view& string)
 inline
 int FixUtil::parse(Time *result, const bsl::string_view& string)
 {
-    BSLS_ASSERT(string.data());
+    BSLS_ASSERT_NONCONVEYOR(string.data());
 
     return parse(result, string.data(), static_cast<int>(string.length()));
 }
@@ -1398,7 +1572,7 @@ int FixUtil::parse(Time *result, const bsl::string_view& string)
 inline
 int FixUtil::parse(Datetime *result, const bsl::string_view& string)
 {
-    BSLS_ASSERT(string.data());
+    BSLS_ASSERT_NONCONVEYOR(string.data());
 
     return parse(result, string.data(), static_cast<int>(string.length()));
 }
@@ -1406,7 +1580,7 @@ int FixUtil::parse(Datetime *result, const bsl::string_view& string)
 inline
 int FixUtil::parse(DateTz *result, const bsl::string_view& string)
 {
-    BSLS_ASSERT(string.data());
+    BSLS_ASSERT_NONCONVEYOR(string.data());
 
     return parse(result, string.data(), static_cast<int>(string.length()));
 }
@@ -1414,7 +1588,7 @@ int FixUtil::parse(DateTz *result, const bsl::string_view& string)
 inline
 int FixUtil::parse(TimeTz *result, const bsl::string_view& string)
 {
-    BSLS_ASSERT(string.data());
+    BSLS_ASSERT_NONCONVEYOR(string.data());
 
     return parse(result, string.data(), static_cast<int>(string.length()));
 }
@@ -1422,7 +1596,7 @@ int FixUtil::parse(TimeTz *result, const bsl::string_view& string)
 inline
 int FixUtil::parse(DatetimeTz *result, const bsl::string_view& string)
 {
-    BSLS_ASSERT(string.data());
+    BSLS_ASSERT_NONCONVEYOR(string.data());
 
     return parse(result, string.data(), static_cast<int>(string.length()));
 }

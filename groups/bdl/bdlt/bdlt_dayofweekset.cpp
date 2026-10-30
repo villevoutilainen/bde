@@ -44,6 +44,7 @@ DayOfWeekSet_Iter::DayOfWeekSet_Iter(int data, int index)
 : d_data( static_cast<unsigned char>(data))
 , d_index(static_cast<signed   char>(index))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 == (data & 1));
     BSLS_ASSERT(index >= 0 && index <= 8);
 

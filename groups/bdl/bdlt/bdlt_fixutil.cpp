@@ -96,6 +96,8 @@ int Impl::generate(STRING                      *string,
                    const Date&                  object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -116,6 +118,8 @@ int Impl::generate(STRING                      *string,
                    const Time&                  object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -137,6 +141,8 @@ int Impl::generate(STRING                      *string,
                    const Datetime&              object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -158,6 +164,8 @@ int Impl::generate(STRING                      *string,
                    const DateTz&                object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -179,6 +187,8 @@ int Impl::generate(STRING                      *string,
                    const TimeTz&                object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -200,6 +210,8 @@ int Impl::generate(STRING                      *string,
                    const DatetimeTz&            object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
 
     BSLMF_ASSERT(IsString<STRING>::value);
@@ -233,7 +245,7 @@ int asciiToInt(const char **nextPos,
     BSLS_ASSERT(result);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin < end);
+    BSLS_ASSERT_NONCONVEYOR(begin < end);
 
     int tmp = 0;
 
@@ -267,11 +279,12 @@ int parseDate(const char **nextPos,
               const char  *begin,
               const char  *end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(date);
     BSLS_ASSERT(nextPos);
     BSLS_ASSERT(date);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     const char *p = begin;
 
@@ -324,7 +337,7 @@ int parseFractionalSecond(const char **nextPos,
     BSLS_ASSERT(microsecond);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     const char *p = begin;
 
@@ -385,7 +398,7 @@ int parseTimezoneOffset(const char **nextPos,
     BSLS_ASSERT(minuteOffset);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     const char *p = begin;
 
@@ -464,13 +477,14 @@ int parseTime(const char **nextPos,
               const char  *begin,
               const char  *end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(time);
     BSLS_ASSERT(nextPos);
     BSLS_ASSERT(time);
     BSLS_ASSERT(tzOffset);
     BSLS_ASSERT(isNextDay);
     BSLS_ASSERT(begin);
     BSLS_ASSERT(end);
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     const char *p = begin;
 
@@ -620,6 +634,7 @@ int generateTimezoneOffset(char                        *buffer,
                            int                          tzOffset,
                            const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(-(24 * 60) < tzOffset);
     BSLS_ASSERT(             tzOffset < 24 * 60);

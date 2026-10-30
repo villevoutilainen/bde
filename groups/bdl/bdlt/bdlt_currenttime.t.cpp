@@ -155,6 +155,8 @@ bool within1Sec(bdlt::Datetime a, bdlt::Datetime b)
 template <class INTERVAL_L, class INTERVAL_R>
 static int inOrder(const INTERVAL_L& lhs, const INTERVAL_R& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     bsls::Types::Int64 tml = lhs.totalMilliseconds();
     bsls::Types::Int64 tmr = rhs.totalMilliseconds();
     return tml < tmr ? 1 : tml == tmr ? 0 : -1;
@@ -1019,6 +1021,7 @@ int main(int argc, char *argv[])
             bsls::AtomicOperations::setInt(&go, 0);
             for (int i = 0; i < MAX_THREADS && i < threads; ++i) {
                 ThreadInfo& ti = DATA[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&ti);
                 ti.set = i & 1 ? f1 : f2;
                 ti.other = i & 1 ? f2 : f1;
                 ti.count = iterations;

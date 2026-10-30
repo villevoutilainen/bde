@@ -236,6 +236,7 @@ int CalendarUtil::shiftModifiedFollowingIfValid(
                                                const bdlt::Date&      original,
                                                const bdlt::Calendar&  calendar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
     BSLS_ASSERT(result);
 
     enum {
@@ -292,6 +293,7 @@ int CalendarUtil::shiftModifiedPrecedingIfValid(
                                                const bdlt::Date&      original,
                                                const bdlt::Calendar&  calendar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
     BSLS_ASSERT(result);
 
     enum {

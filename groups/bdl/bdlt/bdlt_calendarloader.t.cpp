@@ -150,6 +150,7 @@ void aSsErT(bool condition, const char *message, int line)
     int MyCalendarLoader::load(bdlt::PackedCalendar *result,
                                const char           * /* calendarName */)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(result);
 // ```
 // Next, we look up the calendar identified by `calendarName` and load the
 // corresponding text into a `bsl::string` object, `json` (as stated earlier,
@@ -276,6 +277,7 @@ void aSsErT(bool condition, const char *message, int line)
 
             while (it != holidays.end()) {
                 const bdlt::Date& holiday = *it;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&holiday);
 
                 if (holiday < firstDate || holiday > lastDate) {
                     return 5;                                         // RETURN

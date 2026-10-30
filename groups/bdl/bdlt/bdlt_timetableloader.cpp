@@ -18,6 +18,7 @@ namespace bdlt {
 // CREATORS
 TimetableLoader::~TimetableLoader()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 }  // close package namespace

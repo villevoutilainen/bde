@@ -268,7 +268,10 @@ class DayOfWeekSet_Iter
                                 // '[0 .. 8]'
 
     // FRIENDS
-    friend bool operator==(const DayOfWeekSet_Iter&, const DayOfWeekSet_Iter&);
+    friend bool operator==(const DayOfWeekSet_Iter& lhs,
+                           const DayOfWeekSet_Iter& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
   public:
     // CREATORS
@@ -300,25 +303,27 @@ class DayOfWeekSet_Iter
     /// reference providing modifiable access to this iterator.  If there is
     /// no next valid data element, this iterator will be set equal to
     /// `end()`.
-    DayOfWeekSet_Iter& operator++();
+    DayOfWeekSet_Iter& operator++() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Advance this iterator to the next valid data element, and return by
     /// value the value of this iterator before it was incremented.  If
     /// there is no next valid data element, this iterator will be set equal
     /// to `end()`.
-    DayOfWeekSet_Iter operator++(int);
+    DayOfWeekSet_Iter operator++(int) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Regress this iterator to the previous valid data element, and return
     /// a reference providing modifiable access to this iterator.  If there
     /// is no preceding data element, the value of `reverse_iterator(*this)`
     /// will be `rend()`.
-    DayOfWeekSet_Iter& operator--();
+    DayOfWeekSet_Iter& operator--() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Regress this iterator to the previous valid data element, and return
     /// by value the value of this iterator before it was decremented.  If
     /// there is no preceding data element, the value of
     /// `reverse_iterator(*this)` will be `rend()`.
-    DayOfWeekSet_Iter operator--(int);
+    DayOfWeekSet_Iter operator--(int) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
@@ -326,7 +331,9 @@ class DayOfWeekSet_Iter
     /// week value referenced by this iterator.  The behavior is undefined
     /// unless the iterator refers to a valid day of the week, specifically,
     /// the behavior is undefined if `*this == end()`.
-    const DayOfWeek::Enum& operator*() const;
+    const DayOfWeek::Enum& operator*() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -342,7 +349,8 @@ bool operator==(const DayOfWeekSet_Iter& lhs, const DayOfWeekSet_Iter& rhs);
 /// value if they do not refer to data at the same index position.  The
 /// behavior is undefined unless `lhs` and `rhs` both reference into the
 /// same set of data.
-bool operator!=(const DayOfWeekSet_Iter& lhs, const DayOfWeekSet_Iter& rhs);
+bool operator!=(const DayOfWeekSet_Iter& lhs, const DayOfWeekSet_Iter& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
                           // ==================
                           // class DayOfWeekSet
@@ -358,11 +366,17 @@ class DayOfWeekSet {
                            // bit 0 is unused
 
     // FRIENDS
-    friend bool operator==(const DayOfWeekSet&, const DayOfWeekSet&);
-    friend bool operator!=(const DayOfWeekSet&, const DayOfWeekSet&);
+    friend bool operator==(const DayOfWeekSet& lhs, const DayOfWeekSet& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator!=(const DayOfWeekSet& lhs, const DayOfWeekSet& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     friend DayOfWeekSet operator~(const DayOfWeekSet&);
     template <class HASHALG>
-    friend void hashAppend(HASHALG& hashAlg, const DayOfWeekSet&);
+    friend void hashAppend(HASHALG& hashAlg, const DayOfWeekSet& object)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
+                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
 
   public:
     // TYPES
@@ -416,35 +430,39 @@ class DayOfWeekSet {
     /// set (i.e., a set containing elements that are in either this set or
     /// the `rhs` set, or in both sets), and return a reference providing
     /// modifiable access to this set.
-    DayOfWeekSet& operator|=(const DayOfWeekSet& rhs);
+    DayOfWeekSet& operator|=(const DayOfWeekSet& rhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Assign to this set the intersection of this set with the specified
     /// `rhs` set (i.e., a set containing elements that are in both this
     /// set and the `rhs` set), and return a reference providing modifiable
     /// access to this set.
-    DayOfWeekSet& operator&=(const DayOfWeekSet& rhs);
+    DayOfWeekSet& operator&=(const DayOfWeekSet& rhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Assign to this set the exclusive-or of this set with the specified
     /// `rhs` set (i.e., a set containing elements that are either in this
     /// set, but not `rhs`, or in `rhs`, but not in this set), and return a
     /// reference providing modifiable access to this set.
-    DayOfWeekSet& operator^=(const DayOfWeekSet& rhs);
+    DayOfWeekSet& operator^=(const DayOfWeekSet& rhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Assign to this set the subtraction of the specified `rhs` set from
     /// this set (i.e., a set containing elements that are in this set, but
     /// not in the `rhs` set), and return a reference providing modifiable
     /// access to this set.
-    DayOfWeekSet& operator-=(const DayOfWeekSet& rhs);
+    DayOfWeekSet& operator-=(const DayOfWeekSet& rhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Add the specified `value` to this set.
-    void add(DayOfWeek::Enum value);
+    void add(DayOfWeek::Enum value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove the specified `value` from this set.  Return `true` if
     /// `value` was a member of this set, and `false` otherwise.
-    bool remove(DayOfWeek::Enum value);
+    bool remove(DayOfWeek::Enum value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all members of this set.
-    void removeAll();
+    void removeAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
@@ -459,39 +477,42 @@ class DayOfWeekSet {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version);
+    STREAM& bdexStreamIn(STREAM& stream, int version)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return `true` if this set contains all elements of the specified
     /// `set`, and `false` otherwise.
-    bool areMembers(const DayOfWeekSet& set) const;
+    bool areMembers(const DayOfWeekSet& set) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator referencing the first valid element in this set.
-    iterator begin() const;
+    iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator indicating one position past the last possible
     /// element in this set.
-    iterator end() const;
+    iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if there are no elements in this set, and `false`
     /// otherwise.
-    bool isEmpty() const;
+    bool isEmpty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the specified `value` is an element of this set,
     /// and `false` otherwise.
-    bool isMember(DayOfWeek::Enum value) const;
+    bool isMember(DayOfWeek::Enum value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this set.
-    int length() const;
+    int length() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator referencing the last valid element in this
     /// set.
-    reverse_iterator rbegin() const;
+    reverse_iterator rbegin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reverse iterator indicating one position before the first
     /// possible element in this set.
-    reverse_iterator rend() const;
+    reverse_iterator rend() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                   // Aspects
 
@@ -504,7 +525,9 @@ class DayOfWeekSet {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Format this object to the specified output `stream` at the (absolute
     /// value of) the optionally specified indentation `level`, and return a
@@ -517,7 +540,9 @@ class DayOfWeekSet {
     /// not valid on entry, this operation has no effect.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const;
+                        int           spacesPerLevel = 4) const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
 
@@ -555,7 +580,8 @@ DayOfWeekSet operator^(const DayOfWeekSet& lhs, const DayOfWeekSet& rhs);
 /// Return a set containing the subtraction of the specified `rhs` set from
 /// the specified `lhs` set (i.e., a set containing elements that are in
 /// `lhs`, but not in `rhs`).
-DayOfWeekSet operator-(const DayOfWeekSet& lhs, const DayOfWeekSet& rhs);
+DayOfWeekSet operator-(const DayOfWeekSet& lhs, const DayOfWeekSet& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` sets have the same value,
 /// and `false` otherwise.  Two sets have the same value if they have the
@@ -571,7 +597,8 @@ bool operator!=(const DayOfWeekSet& lhs, const DayOfWeekSet& rhs);
 
 /// Write the specified `rhs` set to the specified output `stream` in some
 /// reasonable (single-line) format, and return a reference to `stream`.
-bsl::ostream& operator<<(bsl::ostream& stream, const DayOfWeekSet& rhs);
+bsl::ostream& operator<<(bsl::ostream& stream, const DayOfWeekSet& rhs)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // FREE FUNCTIONS
 
@@ -595,6 +622,7 @@ DayOfWeekSet_Iter::DayOfWeekSet_Iter()
 : d_data(0)
 , d_index(8)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -602,11 +630,14 @@ DayOfWeekSet_Iter::DayOfWeekSet_Iter(const DayOfWeekSet_Iter& original)
 : d_data(original.d_data)
 , d_index(original.d_index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 inline
 DayOfWeekSet_Iter::~DayOfWeekSet_Iter()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 == (d_data & 1));  // lsb is unused and always 0
     BSLS_ASSERT(d_index >= 0);
     BSLS_ASSERT(d_index <= 8);
@@ -617,6 +648,8 @@ inline
 DayOfWeekSet_Iter&
 DayOfWeekSet_Iter::operator=(const DayOfWeekSet_Iter& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     d_data  = rhs.d_data;
     d_index = rhs.d_index;
     return *this;
@@ -691,17 +724,21 @@ inline
 DayOfWeekSet::DayOfWeekSet()
 : d_days(0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
 DayOfWeekSet::DayOfWeekSet(const DayOfWeekSet& original)
 : d_days(original.d_days)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 inline
 DayOfWeekSet::~DayOfWeekSet()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(!(d_days & 1));
 }
 
@@ -709,6 +746,8 @@ DayOfWeekSet::~DayOfWeekSet()
 inline
 DayOfWeekSet& DayOfWeekSet::operator=(const DayOfWeekSet& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     d_days = rhs.d_days;
     return *this;
 }
@@ -894,6 +933,7 @@ inline
 bdlt::DayOfWeekSet bdlt::operator|(const DayOfWeekSet& lhs,
                                    const DayOfWeekSet& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return DayOfWeekSet(lhs) |= rhs;
 }
 
@@ -901,6 +941,7 @@ inline
 bdlt::DayOfWeekSet bdlt::operator&(const DayOfWeekSet& lhs,
                                    const DayOfWeekSet& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return DayOfWeekSet(lhs) &= rhs;
 }
 
@@ -908,6 +949,7 @@ inline
 bdlt::DayOfWeekSet bdlt::operator^(const DayOfWeekSet& lhs,
                                    const DayOfWeekSet& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return DayOfWeekSet(lhs) ^= rhs;
 }
 

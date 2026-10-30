@@ -23,6 +23,7 @@ BSLMF_ASSERT(-1 == static_cast<int>(bdlc::BitArray::k_INVALID_INDEX));
 // PRIVATE MANIPULATORS
 void Calendar::synchronizeCache()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const int length = d_packedCalendar.length();
     d_nonBusinessDays.setLength(length);
     if (length) {
@@ -31,6 +32,7 @@ void Calendar::synchronizeCache()
                                               d_packedCalendar.beginHolidays();
              it != d_packedCalendar.endHolidays();
              ++it) {
+                 BSLS_ASSERT_CONVEYOR_OBJECT(this);
             d_nonBusinessDays.assign1(*it - d_packedCalendar.firstDate());
         }
 
@@ -44,6 +46,7 @@ void Calendar::synchronizeCache()
             PackedCalendar::WeekendDaysTransitionConstIterator
                                                   currentTransIt = nextTransIt;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(currentTransIt);
             if (currentTransIt->first > d_packedCalendar.lastDate()) {
                 break;
             }
@@ -51,16 +54,19 @@ void Calendar::synchronizeCache()
             ++nextTransIt;
 
             Date lastDate;
+            BSLS_ASSERT_CONVEYOR_OBJECT(nextTransIt);
             if (nextTransIt == d_packedCalendar.endWeekendDaysTransitions() ||
                 nextTransIt->first > d_packedCalendar.lastDate()) {
                 lastDate = d_packedCalendar.lastDate();
             }
             else {
+                BSLS_ASSERT_CONVEYOR_OBJECT(nextTransIt);
                 lastDate = nextTransIt->first - 1;
                 if (lastDate < d_packedCalendar.firstDate()) {
                     continue;
                 }
             }
+            BSLS_ASSERT_CONVEYOR_OBJECT(currentTransIt);
             Date firstDate =
                            currentTransIt->first < d_packedCalendar.firstDate()
                            ? d_packedCalendar.firstDate()
@@ -71,10 +77,12 @@ void Calendar::synchronizeCache()
 
             int firstDayOfWeek = static_cast<int>(firstDate.dayOfWeek());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&currentTransIt);
             for (DayOfWeekSet::const_iterator wdIt =
                                                 currentTransIt->second.begin();
                  wdIt != currentTransIt->second.end();
                  ++wdIt) {
+                     BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
                 int weekendDay = static_cast<int>(*wdIt);
                 int weekendDateIndex =
@@ -92,6 +100,7 @@ void Calendar::synchronizeCache()
 // PRIVATE ACCESSORS
 bool Calendar::isCacheSynchronized() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_packedCalendar.length() !=
                                 static_cast<int>(d_nonBusinessDays.length())) {
         return false;                                                 // RETURN
@@ -124,6 +133,7 @@ Calendar::Calendar(bslma::Allocator *basicAllocator)
 : d_packedCalendar(basicAllocator)
 , d_nonBusinessDays(basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 Calendar::Calendar(const Date&       firstDate,
@@ -132,6 +142,9 @@ Calendar::Calendar(const Date&       firstDate,
 : d_packedCalendar(firstDate, lastDate, basicAllocator)
 , d_nonBusinessDays(basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&firstDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lastDate);
     d_nonBusinessDays.setLength(d_packedCalendar.length(), 0);
 }
 
@@ -140,6 +153,8 @@ Calendar::Calendar(const PackedCalendar&  packedCalendar,
 : d_packedCalendar(packedCalendar, basicAllocator)
 , d_nonBusinessDays(basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&packedCalendar);
     synchronizeCache();
 }
 
@@ -147,10 +162,13 @@ Calendar::Calendar(const Calendar& original, bslma::Allocator *basicAllocator)
 : d_packedCalendar(original.d_packedCalendar, basicAllocator)
 , d_nonBusinessDays(original.d_nonBusinessDays, basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 Calendar::~Calendar()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_PRECONDITIONS_BEGIN();
     BSLS_ASSERT_SAFE(isCacheSynchronized());
     BSLS_PRECONDITIONS_END();
@@ -159,6 +177,7 @@ Calendar::~Calendar()
 // MANIPULATORS
 void Calendar::addDay(const Date& date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == length()) {
         setValidRange(date, date);
     }
@@ -172,6 +191,7 @@ void Calendar::addDay(const Date& date)
 
 void Calendar::addHoliday(const Date& date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == length()) {
         d_nonBusinessDays.reserveCapacity(1);
         reserveHolidayCapacity(1);
@@ -201,6 +221,7 @@ void Calendar::addHoliday(const Date& date)
 
 void Calendar::addHolidayCode(const Date& date, int holidayCode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == length()) {
         d_nonBusinessDays.reserveCapacity(1);
         reserveHolidayCapacity(1);
@@ -234,6 +255,7 @@ void Calendar::addHolidayCode(const Date& date, int holidayCode)
 
 void Calendar::addWeekendDay(DayOfWeek::Enum weekendDay)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_packedCalendar.addWeekendDay(weekendDay);
 
     if (length()) {
@@ -265,6 +287,8 @@ void Calendar::addWeekendDays(const DayOfWeekSet& weekendDays)
 
 void Calendar::unionBusinessDays(const PackedCalendar& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int newLength;
     if (length() && other.length()) {
         newLength = length();
@@ -286,6 +310,8 @@ void Calendar::unionBusinessDays(const PackedCalendar& other)
 
 void Calendar::unionNonBusinessDays(const PackedCalendar& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int newLength;
     if (length() && other.length()) {
         newLength = length();
@@ -310,9 +336,10 @@ int Calendar::getNextBusinessDay(Date        *nextBusinessDay,
                                  const Date&  date,
                                  int          nth) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(nextBusinessDay);
-    BSLS_ASSERT(Date(9999, 12, 31) > date);
-    BSLS_ASSERT(isInRange(date + 1));
+    BSLS_ASSERT_NONCONVEYOR(Date(9999, 12, 31) > date);
+    BSLS_ASSERT_NONCONVEYOR(isInRange(date + 1));
     BSLS_ASSERT(0 < nth);
 
     enum { e_SUCCESS = 0, e_FAILURE = 1 };
@@ -515,6 +542,11 @@ Calendar_BusinessDayConstIter::Calendar_BusinessDayConstIter(
 , d_firstDate(firstDateOfCalendar)
 , d_currentOffset(startDate - firstDateOfCalendar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&nonBusinessDays);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&firstDateOfCalendar);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&startDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_nonBusinessDays_p);
     if (d_firstDate > startDate) {
         d_currentOffset = -1;
         return;                                                       // RETURN

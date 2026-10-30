@@ -67,6 +67,8 @@ BSLS_IDENT("$Id: $")
 #include <bdlt_formatter.h>
 #include <bdlt_timezoneformatter.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_iosfwd.h>
 #include <bsl_string_view.h>
 
@@ -101,37 +103,44 @@ class DatetimeTzFormatter {
     // MANIPULATORS
 
     /// Parse a date time tz that will be formatted in default mode.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseDefault();
+    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseDefault()
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Parse a date time tz that will be formatted in Iso8601 mode.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseIso8601();
+    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseIso8601()
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Examine the first character of the specified `*specInOut` and if it is
     /// recognized as a modifier by this object, update this object's state to
     /// reflect it and pop it off the front of `*specInOut` and return `true`,
     /// and if not, return `false` with no modification to `*specInOut`.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextModifier(StringView *specInOut);
+    BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextModifier(StringView *specInOut)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If the first character of the specified `*specInOut` is recognized by
     /// this specifier formatter, parse it, remove it from `*specInOut`, and
     /// return `true`, otherwise return `false` with no modification to
     /// `*specInOut`.  The behavior is undefined if `*specInOut` is empty.
     BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextSpecifier(
-                                                        StringView *specInOut);
+                                                        StringView *specInOut)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Read post-processed fields from the specified `spec` that are relevant
     /// to this specifier formatter.
-    void postprocess(const bslfmt::FormatSpecificationParser<t_CHAR>& spec);
+    void postprocess(const bslfmt::FormatSpecificationParser<t_CHAR>& spec)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the `bslfmt::FormatSpecificationParser::Sections` flags that
     /// apply to this value type.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 int extraSections() const;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 int extraSections() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the anticipated width of output given all the `parse*` calls
     /// that have been happened thus far and the specified `value`.
-    int totalWidth(const FormatCache& value) const;
+    int totalWidth(const FormatCache& value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If the first character of the specified `*specInOut` is recognized by
     /// this specifier formatter, use it to format the specified `value` to
@@ -140,17 +149,20 @@ class DatetimeTzFormatter {
     template <class t_ITERATOR>
     bool formatNextSpecifier(StringView         *specInOut,
                              t_ITERATOR         *outIt,
-                             const FormatCache&  value) const;
+                             const FormatCache&  value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Format the specified `value` to the specified `out` using the default
     /// format and return `out`.
     template <class t_ITERATOR>
-    t_ITERATOR formatDefault(t_ITERATOR out, const FormatCache& value) const;
+    t_ITERATOR formatDefault(t_ITERATOR out, const FormatCache& value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Format the specified `value` to the specified `out` using the Iso8601
     /// format and return `out`.
     template <class t_ITERATOR>
-    t_ITERATOR formatIso8601(t_ITERATOR out, const FormatCache& value) const;
+    t_ITERATOR formatIso8601(t_ITERATOR out, const FormatCache& value) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
                       // ===============================
@@ -175,10 +187,12 @@ class DatetimeTzFormatter_Cache {
     // ACCESSORS
 
     /// Return the `Datetime` format cache.
-    const DatetimeFormatter_Cache& datetime() const;
+    const DatetimeFormatter_Cache& datetime() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the offset.
-    int offset() const;
+    int offset() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================
@@ -203,7 +217,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool DatetimeTzFormatter<t_CHAR>::parseNextSpecifier(StringView *specInOut)
 {
-    BSLS_ASSERT(!specInOut->empty());
+    BSLS_ASSERT_NONCONVEYOR(!specInOut->empty());
 
     if (t_CHAR('i') == specInOut->front()) {
         parseIso8601();
@@ -262,6 +276,7 @@ template <class t_CHAR>
 inline
 int DatetimeTzFormatter<t_CHAR>::totalWidth(const FormatCache& value)const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return d_fixedWidth + d_datetimeFormatter.totalWidth(value.datetime()) +
                                 d_timeZoneFormatter.totalWidth(value.offset());
 }
@@ -274,7 +289,8 @@ bool DatetimeTzFormatter<t_CHAR>::formatNextSpecifier(
                                                t_ITERATOR         *outIt,
                                                const FormatCache&  value) const
 {
-    BSLS_ASSERT(!specInOut->empty());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_NONCONVEYOR(!specInOut->empty());
 
     if (t_CHAR('i') == specInOut->front()) {
         *outIt = formatIso8601(*outIt, value);
@@ -296,6 +312,7 @@ inline
 t_ITERATOR DatetimeTzFormatter<t_CHAR>::formatDefault(
                                 t_ITERATOR out, const FormatCache& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     out = d_datetimeFormatter.formatDefault(out, value.datetime());
     out = d_timeZoneFormatter.formatDefault(out, value.offset());
     return out;
@@ -307,6 +324,7 @@ inline
 t_ITERATOR DatetimeTzFormatter<t_CHAR>::formatIso8601(
                                 t_ITERATOR out, const FormatCache& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     out = d_datetimeFormatter.formatIso8601(out, value.datetime());
     out = d_timeZoneFormatter.formatIso8601(out, value.offset());
     return out;
@@ -363,6 +381,7 @@ class formatter<BloombergLP::bdlt::DatetimeTz, t_CHAR> {
     BSLS_KEYWORD_CONSTEXPR_CPP20 typename t_PARSE_CONTEXT::iterator parse(
                                                       t_PARSE_CONTEXT& context)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_formatter.parse(context);
     }
 
@@ -376,6 +395,8 @@ class formatter<BloombergLP::bdlt::DatetimeTz, t_CHAR> {
                                         const DatetimeTz&  value,
                                         t_FORMAT_CONTEXT&  formatContext) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         const FormatCache formatCache(value.localDatetime(), value.offset());
         return d_formatter.format(formatCache, formatContext);
     }

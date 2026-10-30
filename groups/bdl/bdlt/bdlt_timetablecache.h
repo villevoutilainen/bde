@@ -243,6 +243,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmt_mutex.h>
 
+#include <bsls_assert.h>
 #include <bsls_timeinterval.h>
 
 #include <bsl_map.h>
@@ -313,11 +314,12 @@ class TimetableCache_Entry {
 
     /// Return a shared pointer providing non-modifiable access to the
     /// timetable referred to by this cache entry object.
-    bsl::shared_ptr<const Timetable> get() const;
+    bsl::shared_ptr<const Timetable> get() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the time at which the timetable referred to by this cache
     /// entry object was loaded.
-    Datetime loadTime() const;
+    Datetime loadTime() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
                            // ====================
@@ -425,7 +427,8 @@ class TimetableCache {
     /// optionally supplied at construction).  If the loader fails, whether
     /// in loading a timetable for the first time or in reloading a
     /// timetable that has expired, return an empty shared pointer.
-    bsl::shared_ptr<const Timetable> getTimetable(const char *timetableName);
+    bsl::shared_ptr<const Timetable> getTimetable(const char *timetableName)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Invalidate the timetable having the specified `timetableName` in
     /// this timetable cache, and remove it from the cache.  If a timetable
@@ -435,7 +438,8 @@ class TimetableCache {
     /// valid to all outstanding references to it, obtained via earlier
     /// calls to the `getTimetable` and `lookupTimetable` methods, until all
     /// of those references have been destroyed.
-    int invalidate(const char *timetableName);
+    int invalidate(const char *timetableName)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Invalidate all timetables in this timetable cache, and remove them
     /// from the cache.  Return the number of timetables that were
@@ -443,7 +447,7 @@ class TimetableCache {
     /// cache remains valid to all outstanding references to it, obtained
     /// via earlier calls to the `getTimetable` and `lookupTimetable`
     /// methods, until all of those references have been destroyed.
-    int invalidateAll();
+    int invalidateAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
@@ -454,14 +458,16 @@ class TimetableCache {
     /// optionally supplied at construction), return an empty shared
     /// pointer.
     bsl::shared_ptr<const Timetable>
-    lookupTimetable(const char *timetableName) const;
+    lookupTimetable(const char *timetableName) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the datetime, in Coordinated Universal Time (UTC), at which
     /// the timetable having the specified `timetableName` was loaded into
     /// this timetable cache.  If the timetable having `timetableName` is
     /// not found in the cache, or if the timetable has expired (i.e., per a
     /// timeout optionally supplied at construction), return `Datetime()`.
-    Datetime lookupLoadTime(const char *timetableName) const;
+    Datetime lookupLoadTime(const char *timetableName) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // ============================================================================

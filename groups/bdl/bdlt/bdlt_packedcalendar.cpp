@@ -52,6 +52,10 @@ void addDayImp(Date                      *firstDate,
                bdlc::PackedIntArray<int> *holidayOffsets,
                const bdlt::Date&          date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
+    BSLS_ASSERT_CONVEYOR_OBJECT(firstDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(holidayOffsets);
+    BSLS_ASSERT_CONVEYOR_OBJECT(endDate);
     BSLS_ASSERT(firstDate);
     BSLS_ASSERT(endDate);
     BSLS_ASSERT(holidayOffsets);
@@ -80,6 +84,9 @@ void appendHoliday(
                 PackedCalendar::HolidayCodeConstIterator  lhsHC,
                 PackedCalendar::HolidayCodeConstIterator  lhsHCE)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(resHolidayOffsets);
+    BSLS_ASSERT_CONVEYOR_OBJECT(resHolidayCodesIndex);
+    BSLS_ASSERT_CONVEYOR_OBJECT(resHolidayCodes);
     resHolidayOffsets->push_back(holidayOffset);
     resHolidayCodesIndex->push_back(
                                   static_cast<int>(resHolidayCodes->length()));
@@ -104,6 +111,9 @@ void appendHoliday(
                 PackedCalendar::HolidayCodeConstIterator  rhsHC,
                 PackedCalendar::HolidayCodeConstIterator  rhsHCE)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(resHolidayOffsets);
+    BSLS_ASSERT_CONVEYOR_OBJECT(resHolidayCodesIndex);
+    BSLS_ASSERT_CONVEYOR_OBJECT(resHolidayCodes);
     resHolidayOffsets->push_back(holidayOffset);
     resHolidayCodesIndex->push_back(
                                   static_cast<int>(resHolidayCodes->length()));
@@ -171,6 +181,9 @@ int numWeekendDaysInRangeImp(const Date&         firstDate,
                              const Date&         lastDate,
                              const DayOfWeekSet& weekendDays)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&firstDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lastDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&weekendDays);
     const int len = firstDate <= lastDate ? lastDate - firstDate + 1 : 0;
 
     // 'numWeekendDays' is the lower bound of the value we are interested in.
@@ -198,6 +211,9 @@ void intersectWeekendDaysTransitions(WTransitions        *result,
                                      const WTransitions&  lhs,
                                      const WTransitions&  rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     if (lhs.empty() || rhs.empty()) {
         return;                                                       // RETURN
     }
@@ -210,6 +226,10 @@ void intersectWeekendDaysTransitions(WTransitions        *result,
 
     while (lhsWT != lhs.end() || rhsWT != rhs.end()) {
         WTransitions::value_type val;
+        BSLS_ASSERT_CONVEYOR_OBJECT(lhsWT);
+        BSLS_ASSERT_CONVEYOR_OBJECT(rhsWT);
+        BSLS_ASSERT_CONVEYOR_OBJECT(lhsWT);
+        BSLS_ASSERT_CONVEYOR_OBJECT(rhsWT);
         if (lhsWT != lhs.end()
          && (rhsWT == rhs.end() || lhsWT->first < rhsWT->first)) {
             val.first = lhsWT->first;
@@ -244,6 +264,9 @@ void unionWeekendDaysTransitions(WTransitions        *result,
                                  const WTransitions&  lhs,
                                  const WTransitions&  rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     if (lhs.empty()) {
         *result = rhs;
         return;                                                       // RETURN
@@ -261,12 +284,17 @@ void unionWeekendDaysTransitions(WTransitions        *result,
 
     while (lh != lhs.end() && r != rhs.end()) {
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(lh);
+        BSLS_ASSERT_CONVEYOR_OBJECT(r);
+        BSLS_ASSERT_CONVEYOR_OBJECT(lh);
+        BSLS_ASSERT_CONVEYOR_OBJECT(r);
         if (lh->first < r->first) {
             if (rprev == rhs.end()) {
                 result->push_back(*lh);
             }
             else {
                 WTransitions::value_type val = *lh;
+                BSLS_ASSERT_CONVEYOR_OBJECT(rprev);
                 val.second |= rprev->second;
                 result->push_back(val);
             }
@@ -279,6 +307,7 @@ void unionWeekendDaysTransitions(WTransitions        *result,
             }
             else {
                 WTransitions::value_type val = *r;
+                BSLS_ASSERT_CONVEYOR_OBJECT(lprev);
                 val.second |= lprev->second;
                 result->push_back(val);
             }
@@ -287,6 +316,7 @@ void unionWeekendDaysTransitions(WTransitions        *result,
         }
         else {
             WTransitions::value_type val = *lh;
+            BSLS_ASSERT_CONVEYOR_OBJECT(r);
             val.second |= r->second;
             result->push_back(val);
             lprev = lh;
@@ -298,6 +328,7 @@ void unionWeekendDaysTransitions(WTransitions        *result,
 
     while (lh != lhs.end()) {
         WTransitions::value_type val = *lh;
+        BSLS_ASSERT_CONVEYOR_OBJECT(rprev);
         val.second |= rprev->second;
         result->push_back(val);
         ++lh;
@@ -305,6 +336,7 @@ void unionWeekendDaysTransitions(WTransitions        *result,
 
     while (r != rhs.end()) {
         WTransitions::value_type val = *r;
+        BSLS_ASSERT_CONVEYOR_OBJECT(lprev);
         val.second |= lprev->second;
         result->push_back(val);
         ++r;
@@ -325,7 +357,9 @@ void PackedCalendar::intersectHolidays(
                                const bdlt::Date           firstDate,
                                const bdlt::Date           lastDate)
 {
-    BSLS_ASSERT(firstDate <= lastDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_NONCONVEYOR(firstDate <= lastDate);
 
     OffsetsConstIterator iter;
 
@@ -420,7 +454,9 @@ void PackedCalendar::unionHolidays(
                                const bdlt::Date           firstDate,
                                const bdlt::Date           lastDate)
 {
-    BSLS_ASSERT(firstDate <= lastDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_NONCONVEYOR(firstDate <= lastDate);
 
     OffsetsConstIterator iter;
 
@@ -501,7 +537,8 @@ void PackedCalendar::unionHolidays(
 // PRIVATE MANIPULATORS
 int PackedCalendar::addHolidayImp(int offset)
 {
-    BSLS_ASSERT(0 <= offset && d_lastDate - d_firstDate >= offset);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(0 <= offset && d_lastDate - d_firstDate >= offset);
 
     // Insertion must be in linear time if the holidays are added in-order.
 
@@ -528,7 +565,7 @@ int PackedCalendar::addHolidayImp(int offset)
                                                       d_holidayOffsets.end(),
                                                       offset);
 
-    BSLS_ASSERT(it != d_holidayOffsets.end());
+    BSLS_ASSERT_NONCONVEYOR(it != d_holidayOffsets.end());
 
     if (offset != *it) {
         const bsl::ptrdiff_t shift = it - d_holidayOffsets.begin();
@@ -560,6 +597,7 @@ PackedCalendar::PackedCalendar(bslma::Allocator *basicAllocator)
 , d_holidayCodes(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 PackedCalendar::PackedCalendar(const Date&       firstDate,
@@ -573,8 +611,11 @@ PackedCalendar::PackedCalendar(const Date&       firstDate,
 , d_holidayCodes(basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&firstDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lastDate);
     BSLS_PRECONDITIONS_BEGIN();
-    BSLS_ASSERT(firstDate <= lastDate);
+    BSLS_ASSERT_NONCONVEYOR(firstDate <= lastDate);
     BSLS_PRECONDITIONS_END();
     if (firstDate > lastDate) {
         d_firstDate = Date(9999, 12, 31);
@@ -592,20 +633,27 @@ PackedCalendar::PackedCalendar(const PackedCalendar&  original,
 , d_holidayCodes(original.d_holidayCodes, basicAllocator)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 PackedCalendar::~PackedCalendar()
 {
-    BSLS_ASSERT(d_holidayOffsets.length() == d_holidayCodesIndex.length());
-    BSLS_ASSERT(d_holidayOffsets.isEmpty()
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(
+                    d_holidayOffsets.length() == d_holidayCodesIndex.length());
+    BSLS_ASSERT_NONCONVEYOR(d_holidayOffsets.isEmpty()
              || d_holidayCodesIndex.back() <=
                                     static_cast<int>(d_holidayCodes.length()));
-    BSLS_ASSERT(!d_holidayOffsets.isEmpty() || d_holidayCodes.isEmpty());
+    BSLS_ASSERT_NONCONVEYOR(
+                      !d_holidayOffsets.isEmpty() || d_holidayCodes.isEmpty());
 }
 
 // MANIPULATORS
 PackedCalendar& PackedCalendar::operator=(const PackedCalendar& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     PackedCalendar(rhs, d_allocator_p).swap(*this);
     return *this;
 }
@@ -620,7 +668,8 @@ void PackedCalendar::addHoliday(const Date& date)
     addDayImp(&d_firstDate, &d_lastDate, &d_holidayOffsets, date);
     addHolidayImp(date - d_firstDate);
 
-    BSLS_ASSERT(d_holidayOffsets.length() == d_holidayCodesIndex.length());
+    BSLS_ASSERT_NONCONVEYOR(
+                    d_holidayOffsets.length() == d_holidayCodesIndex.length());
 }
 
 void PackedCalendar::addHolidayCode(const Date& date, int holidayCode)
@@ -647,8 +696,9 @@ void PackedCalendar::addHolidayCode(const Date& date, int holidayCode)
         }
     }
 
-    BSLS_ASSERT(d_holidayOffsets.length() == d_holidayCodesIndex.length());
-    BSLS_ASSERT(d_holidayOffsets.isEmpty()
+    BSLS_ASSERT_NONCONVEYOR(
+                    d_holidayOffsets.length() == d_holidayCodesIndex.length());
+    BSLS_ASSERT_NONCONVEYOR(d_holidayOffsets.isEmpty()
              || d_holidayCodesIndex.back() <=
                                     static_cast<int>(d_holidayCodes.length()));
 }
@@ -656,7 +706,7 @@ void PackedCalendar::addHolidayCode(const Date& date, int holidayCode)
 void PackedCalendar::addWeekendDay(DayOfWeek::Enum weekendDay)
 {
     BSLS_PRECONDITIONS_BEGIN();
-    BSLS_ASSERT(d_weekendDaysTransitions.empty()
+    BSLS_ASSERT_NONCONVEYOR(d_weekendDaysTransitions.empty()
                 || (1           == d_weekendDaysTransitions.size() &&
                     Date(1,1,1) == d_weekendDaysTransitions[0].first));
     BSLS_PRECONDITIONS_END();
@@ -674,7 +724,7 @@ void PackedCalendar::addWeekendDay(DayOfWeek::Enum weekendDay)
 
 void PackedCalendar::addWeekendDays(const DayOfWeekSet& weekendDays)
 {
-    BSLS_ASSERT(d_weekendDaysTransitions.empty()
+    BSLS_ASSERT_NONCONVEYOR(d_weekendDaysTransitions.empty()
                 || (1           == d_weekendDaysTransitions.size() &&
                     Date(1,1,1) == d_weekendDaysTransitions[0].first));
 
@@ -698,6 +748,7 @@ void PackedCalendar::addWeekendDaysTransition(const Date&         startDate,
                                               newTransition,
                                               WeekendDaysTransitionLess());
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(it);
     if (it != d_weekendDaysTransitions.end() && it->first == startDate) {
         it->second = weekendDays;
     }
@@ -828,8 +879,9 @@ void PackedCalendar::removeHoliday(const Date& date)
         d_holidayCodesIndex.remove(cit, cit + 1);
         d_holidayOffsets.remove(oit, oit + 1);
     }
-    BSLS_ASSERT(d_holidayOffsets.length() == d_holidayCodesIndex.length());
-    BSLS_ASSERT(d_holidayOffsets.isEmpty()
+    BSLS_ASSERT_NONCONVEYOR(
+                    d_holidayOffsets.length() == d_holidayCodesIndex.length());
+    BSLS_ASSERT_NONCONVEYOR(d_holidayOffsets.isEmpty()
              || d_holidayCodesIndex.back() <=
                                     static_cast<int>(d_holidayCodes.length()));
 }
@@ -860,8 +912,9 @@ void PackedCalendar::removeHolidayCode(const Date& date, int holidayCode)
         }
     }
 
-    BSLS_ASSERT(d_holidayOffsets.length() == d_holidayCodesIndex.length());
-    BSLS_ASSERT(d_holidayOffsets.isEmpty()
+    BSLS_ASSERT_NONCONVEYOR(
+                    d_holidayOffsets.length() == d_holidayCodesIndex.length());
+    BSLS_ASSERT_NONCONVEYOR(d_holidayOffsets.isEmpty()
              || d_holidayCodesIndex.back() <=
                                     static_cast<int>(d_holidayCodes.length()));
 }
@@ -869,7 +922,7 @@ void PackedCalendar::removeHolidayCode(const Date& date, int holidayCode)
 void PackedCalendar::setValidRange(const Date& firstDate, const Date& lastDate)
 {
     BSLS_PRECONDITIONS_BEGIN();
-    BSLS_ASSERT(firstDate <= lastDate);
+    BSLS_ASSERT_NONCONVEYOR(firstDate <= lastDate);
     BSLS_PRECONDITIONS_END();
 
     if (firstDate > lastDate
@@ -898,7 +951,7 @@ void PackedCalendar::setValidRange(const Date& firstDate, const Date& lastDate)
                                                    lastDate - d_firstDate + 1);
 
     if (it != e) {
-        BSLS_ASSERT(lastDate <= d_lastDate);
+        BSLS_ASSERT_NONCONVEYOR(lastDate <= d_lastDate);
 
         CodesIndexConstIterator
                             holidayCodesIndexIter(d_holidayCodesIndex.begin());
@@ -960,9 +1013,11 @@ void PackedCalendar::setValidRange(const Date& firstDate, const Date& lastDate)
 
     d_firstDate = firstDate;
 
-    BSLS_ASSERT((int)d_holidayOffsets.length() <= (lastDate - firstDate + 1));
-    BSLS_ASSERT(d_holidayOffsets.length() == d_holidayCodesIndex.length());
-    BSLS_ASSERT(d_holidayOffsets.isEmpty()
+    BSLS_ASSERT_NONCONVEYOR(
+                 (int)d_holidayOffsets.length() <= (lastDate - firstDate + 1));
+    BSLS_ASSERT_NONCONVEYOR(
+                    d_holidayOffsets.length() == d_holidayCodesIndex.length());
+    BSLS_ASSERT_NONCONVEYOR(d_holidayOffsets.isEmpty()
              || d_holidayCodesIndex.back() <=
                                     static_cast<int>(d_holidayCodes.length()));
 }
@@ -1054,6 +1109,8 @@ PackedCalendar::unionNonBusinessDays(const PackedCalendar& other)
 
 void PackedCalendar::swap(PackedCalendar& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     // 'swap' is undefined for objects with non-equal allocators.
 
     BSLS_ASSERT(d_allocator_p == other.d_allocator_p);
@@ -1071,7 +1128,7 @@ void PackedCalendar::swap(PackedCalendar& other)
 PackedCalendar::HolidayCodeConstIterator
                       PackedCalendar::beginHolidayCodes(const Date& date) const
 {
-    BSLS_ASSERT(isHoliday(date));
+    BSLS_ASSERT_NONCONVEYOR(isHoliday(date));
 
     const int                  offset      = date - d_firstDate;
     const OffsetsConstIterator offsetBegin = d_holidayOffsets.begin();
@@ -1095,7 +1152,7 @@ PackedCalendar::HolidayCodeConstIterator
 PackedCalendar::HolidayCodeConstIterator
                         PackedCalendar::endHolidayCodes(const Date& date) const
 {
-    BSLS_ASSERT(isHoliday(date));
+    BSLS_ASSERT_NONCONVEYOR(isHoliday(date));
 
     const int                  offset      = date - d_firstDate;
     const OffsetsConstIterator offsetBegin = d_holidayOffsets.begin();
@@ -1123,8 +1180,8 @@ int PackedCalendar::getNextBusinessDay(Date        *nextBusinessDay,
                                        int          nth) const
 {
     BSLS_ASSERT(nextBusinessDay);
-    BSLS_ASSERT(Date(9999, 12, 31) > date);
-    BSLS_ASSERT(isInRange(date + 1));
+    BSLS_ASSERT_NONCONVEYOR(Date(9999, 12, 31) > date);
+    BSLS_ASSERT_NONCONVEYOR(isInRange(date + 1));
     BSLS_ASSERT(0 < nth);
 
     enum { e_SUCCESS = 0, e_FAILURE = 1 };
@@ -1163,15 +1220,16 @@ bool PackedCalendar::isWeekendDay(const Date& date) const
 
     --it;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&it);
     return it->second.isMember(date.dayOfWeek());
 }
 
 int PackedCalendar::numBusinessDays(const Date& beginDate,
                                     const Date& endDate) const
 {
-    BSLS_ASSERT(isInRange(beginDate));
-    BSLS_ASSERT(isInRange(endDate));
-    BSLS_ASSERT(beginDate <= endDate);
+    BSLS_ASSERT_NONCONVEYOR(isInRange(beginDate));
+    BSLS_ASSERT_NONCONVEYOR(isInRange(endDate));
+    BSLS_ASSERT_NONCONVEYOR(beginDate <= endDate);
 
     int                      num     = 0;
     BusinessDayConstIterator iter    = beginBusinessDays(beginDate);
@@ -1185,7 +1243,7 @@ int PackedCalendar::numBusinessDays(const Date& beginDate,
 
 int PackedCalendar::numHolidayCodes(const Date& date) const
 {
-    BSLS_ASSERT(isInRange(date));
+    BSLS_ASSERT_NONCONVEYOR(isInRange(date));
 
     const OffsetsConstIterator it = bdlc::PackedIntArrayUtil::lowerBound(
                                                      d_holidayOffsets.begin(),
@@ -1248,8 +1306,10 @@ int PackedCalendar::numWeekendDaysInRange() const
         Date                lastDate;
 
         ++iter;
+        BSLS_ASSERT_CONVEYOR_OBJECT(iter);
         if (iter != d_weekendDaysTransitions.end()
          && iter->first <= d_lastDate) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(iter);
             lastDate = iter->first - 1;
         }
         else {
@@ -1305,7 +1365,9 @@ bsl::ostream& PackedCalendar::print(bsl::ostream& stream,
     WeekendDaysTransitionConstIterator iter = beginWeekendDaysTransitions();
     while (iter != endWeekendDaysTransitions())
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(iter);
         stream << iter->first << " : ";
+        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
         iter->second.print(stream, -1, -1);
         if (++iter != endWeekendDaysTransitions()) {
             stream << ", ";
@@ -1407,6 +1469,8 @@ PackedCalendar_BusinessDayConstIterator::
 : d_calendar_p(&calendar)
 , d_endFlag(false)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&startDate);
     if (0 == calendar.length()) {
         d_endFlag = true;
         d_currentOffset = 0;
@@ -1450,6 +1514,8 @@ PackedCalendar_BusinessDayConstIterator::
 // PRIVATE MANIPULATORS
 void PackedCalendar_BusinessDayConstIterator::nextBusinessDay()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_calendar_p);
     BSLS_ASSERT(false == d_endFlag);
 
     const int lastOffset =
@@ -1481,7 +1547,9 @@ void PackedCalendar_BusinessDayConstIterator::nextBusinessDay()
 
 void PackedCalendar_BusinessDayConstIterator::previousBusinessDay()
 {
-    BSLS_ASSERT(*this != d_calendar_p->beginBusinessDays());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_calendar_p);
+    BSLS_ASSERT_NONCONVEYOR(*this != d_calendar_p->beginBusinessDays());
 
     if (false == d_endFlag) {
         --d_currentOffset;
@@ -1530,6 +1598,8 @@ PackedCalendar_BusinessDayConstIterator&
 PackedCalendar_BusinessDayConstIterator::operator=(
                             const PackedCalendar_BusinessDayConstIterator& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     d_offsetIter    = rhs.d_offsetIter;
     d_calendar_p    = rhs.d_calendar_p;
     d_currentOffset = rhs.d_currentOffset;

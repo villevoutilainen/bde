@@ -93,6 +93,7 @@ const size_t npos = string::npos;
 
 void trimPrecision(bsl::string *s)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(s);
     ASSERTV(*s, 2 <= s->length());
     ASSERTV(*s, npos != s->find_first_of(".,"));
 
@@ -109,6 +110,7 @@ void trimPrecision(bsl::string *s)
 void appendIso8601Time(bsl::string       *result,
                        const bdlt::Time&  time)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     *result += bsl::format("{:02}:{:02}:{:02}.{:03}",
                 time.hour(), time.minute(), time.second(), time.millisecond());
 }
@@ -116,6 +118,7 @@ void appendIso8601Time(bsl::string       *result,
 void appendIso8601Offset(bsl::string *result,
                          int          offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(offset <=  1440);
     ASSERT(offset >= -1440);
 
@@ -129,6 +132,7 @@ void appendIso8601Offset(bsl::string *result,
 void setIso8601TimeTz(bsl::string         *result,
                       const bdlt::TimeTz&  timeTz)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeTz);
     result->clear();
     appendIso8601Time(  result, timeTz.localTime());
     appendIso8601Offset(result, timeTz.offset());

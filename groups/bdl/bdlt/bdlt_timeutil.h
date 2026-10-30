@@ -193,7 +193,8 @@ struct TimeUtil {
     /// ```
     /// value.hour() * 100 + value.minute()
     /// ```
-    static int convertToHHMM(const Time& value);
+    static int convertToHHMM(const Time& value)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Return the non-negative integer representing the same time as the
     /// specified `value` that, when expressed in decimal notation, contains
@@ -204,7 +205,8 @@ struct TimeUtil {
     /// ```
     /// value.hour() * 10000 + value.minute() * 100 + value.second()
     /// ```
-    static int convertToHHMMSS(const Time& value);
+    static int convertToHHMMSS(const Time& value)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Return the non-negative integer representing the same time as the
     /// specified `value` that, when expressed in decimal notation, contains
@@ -217,7 +219,8 @@ struct TimeUtil {
     ///                         + value.second() * 1000
     ///                         + value.millisecond()
     /// ```
-    static int convertToHHMMSSmmm(const Time& value);
+    static int convertToHHMMSSmmm(const Time& value)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
 
     /// Return an `optional` having a `Time` with the specified `hour`,
     /// `minute`, `second`, and the optionally specified `millisecond` and

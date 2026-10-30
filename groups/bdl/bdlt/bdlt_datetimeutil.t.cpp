@@ -156,6 +156,7 @@ template <class INTEGER_TYPE>
 void ConfigParser<INTEGER_TYPE>::parse(vector<INTEGER_TYPE> *result,
                                        const string&         config)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     // Turn the comma-separated values into a string with one value per line.
 
     string input(config, result->get_allocator());
@@ -310,6 +311,7 @@ ostream& operator<<(ostream& stream, const tm& time)
                                            const MyAccessTracker&  tracker,
                                            const bsl::string&      username)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(result);
         BSLS_ASSERT(result);
 
         bsl::tm legacyAccessTime;
@@ -330,6 +332,7 @@ ostream& operator<<(ostream& stream, const tm& time)
                                              const bsl::string&     username,
                                              const bdlt::Datetime&  accessTime)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&accessTime);
         BSLS_ASSERT(tracker);
 
         bsl::tm legacyAccessTime;
@@ -385,6 +388,7 @@ MyAccessTracker::MyAccessTracker(bslma::Allocator *basicAllocator)
 void MyAccessTracker::updateLastAccess(const bsl::string&  username,
                                        const bsl::tm&      accessTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::pair<TStringTmMap::iterator, bool> result
             = m_accesses.insert(bsl::make_pair(username, accessTime));
 
@@ -397,6 +401,7 @@ void MyAccessTracker::updateLastAccess(const bsl::string&  username,
 int MyAccessTracker::getLastAccess(bsl::tm            *result,
                                    const bsl::string&  username) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(0 != result);
 
     TStringTmMap::const_iterator find_result = m_accesses.find(username);
@@ -1103,7 +1108,9 @@ int main(int argc, char *argv[])
 
         // *** Bad status implies no change to result ***
 
-        LOOP4_ASSERT(LINE, L2, vi, result, *INITIAL_VALUES[vi] == result);
+        const bdlt::Datetime *INITIAL_P = INITIAL_VALUES[vi];
+        BSLS_ASSERT_CONVEYOR_OBJECT(INITIAL_P);
+        LOOP4_ASSERT(LINE, L2, vi, result, *INITIAL_P == result);
         continue;
     }
 

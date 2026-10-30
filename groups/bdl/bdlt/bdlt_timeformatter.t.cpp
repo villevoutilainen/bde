@@ -99,6 +99,7 @@ namespace u {
 
 void trimPrecision(bsl::string *s)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(s);
     ASSERTV(*s, 2 <= s->length());
     ASSERTV(*s, npos != s->find('.'));
 
@@ -114,6 +115,7 @@ void trimPrecision(bsl::string *s)
 void setIso8601Time(bsl::string       *result,
                     const bdlt::Time&  time)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     bsl::format_to(result, "{:02}:{:02}:{:02}.{:03}",
                 time.hour(), time.minute(), time.second(), time.millisecond());
 }
@@ -188,6 +190,7 @@ int main(int argc, char *argv[])
 
         for (int ti = 0; ti < k_NUM_TDATA; ++ti) {
             const TData& tData  = TDATA[ti];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tData);
             const int    TLINE  = tData.d_tline;    (void) TLINE;
             const int    HOUR   = tData.d_hour;
             const int    MINUTE = tData.d_minute;

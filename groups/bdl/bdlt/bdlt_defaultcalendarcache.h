@@ -114,6 +114,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bdlscm_version.h>
 
+#include <bsls_assert.h>
 #include <bsls_timeinterval.h>
 
 #include <bslma_allocator.h>
@@ -159,7 +160,9 @@ struct DefaultCalendarCache {
     /// The behavior is undefined unless `loader` and `allocator` remain
     /// valid until a subsequent call to `destroy`.
     static int initialize(CalendarLoader   *loader,
-                          bslma::Allocator *allocator);
+                          bslma::Allocator *allocator)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(loader)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(allocator);
 
     /// Initialize the default `CalendarCache` object managed by this class
     /// to use the specified `loader` to obtain calendars, to have the
@@ -174,7 +177,10 @@ struct DefaultCalendarCache {
     /// `CalendarCache::getCalendar` on the cache returned by `instance`.
     static int initialize(CalendarLoader            *loader,
                           const bsls::TimeInterval&  timeout,
-                          bslma::Allocator          *allocator);
+                          bslma::Allocator          *allocator)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(loader)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(timeout)
+    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(allocator);
 
     /// Return an address providing modifiable access to the default
     /// `CalendarCache` object managed by this class, if the default cache

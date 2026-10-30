@@ -29,6 +29,7 @@ TimetableCache_Entry::TimetableCache_Entry()
 : d_ptr()
 , d_loadTime()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 TimetableCache_Entry::TimetableCache_Entry(Timetable        *timetable,
@@ -37,6 +38,8 @@ TimetableCache_Entry::TimetableCache_Entry(Timetable        *timetable,
 : d_ptr(timetable, allocator)
 , d_loadTime(loadTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&loadTime);
     BSLS_ASSERT(timetable);
     BSLS_ASSERT(allocator);
 }
@@ -46,16 +49,21 @@ TimetableCache_Entry::TimetableCache_Entry(
 : d_ptr(original.d_ptr)
 , d_loadTime(original.d_loadTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 }
 
 TimetableCache_Entry::~TimetableCache_Entry()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS
 TimetableCache_Entry& TimetableCache_Entry::operator=(
                                                const TimetableCache_Entry& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     d_ptr      = rhs.d_ptr;
     d_loadTime = rhs.d_loadTime;
 
@@ -87,6 +95,7 @@ TimetableCache::TimetableCache(TimetableLoader  *loader,
 , d_lock()
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(loader);
 }
 
@@ -100,13 +109,16 @@ TimetableCache::TimetableCache(TimetableLoader           *loader,
 , d_lock()
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeout);
     BSLS_ASSERT(loader);
-    BSLS_ASSERT(bsls::TimeInterval() <= timeout);
+    BSLS_ASSERT_NONCONVEYOR(bsls::TimeInterval() <= timeout);
     BSLS_ASSERT(timeout <= bsls::TimeInterval(INT_MAX, 0));
 }
 
 TimetableCache::~TimetableCache()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // MANIPULATORS

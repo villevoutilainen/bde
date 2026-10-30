@@ -19,6 +19,7 @@ namespace bdlt {
 // CREATORS
 CalendarLoader::~CalendarLoader()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 }  // close package namespace

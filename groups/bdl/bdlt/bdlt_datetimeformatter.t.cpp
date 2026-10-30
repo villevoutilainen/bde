@@ -118,6 +118,7 @@ const size_t npos = bsl::string::npos;
 
 void trimPrecision(bsl::string *s)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(s);
     ASSERTV(*s, 2 <= s->length());
     ASSERTV(*s, npos != s->find('.'));
 
@@ -133,6 +134,7 @@ void trimPrecision(bsl::string *s)
 void appendIso8601Date(bsl::string       *result,
                        const bdlt::Date&  date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     *result += bsl::format("{:04}-{:02}-{:02}",
                            date.year(),
                            date.month(),
