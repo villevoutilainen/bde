@@ -339,6 +339,7 @@ struct Accessor1 {
     template <class t_INFO>
     int operator()(const bsl::string& value, const t_INFO& info) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         ASSERT(info.id() == 1);
         ASSERT(value == FIELD1_VALUE);
         return 0;

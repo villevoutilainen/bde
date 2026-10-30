@@ -247,12 +247,16 @@ class ChoiceA {
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
     /// undefined unless "Selection1" is the selection of this object.
-    int& selection1();
+    int& selection1()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection2" selection of this
     /// object if "Selection2" is the current selection.  The behavior is
     /// undefined unless "Selection2" is the selection of this object.
-    bsl::string& selection2();
+    bsl::string& selection2()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -294,12 +298,16 @@ class ChoiceA {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const int& selection1() const;
+    const int& selection1() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const bsl::string& selection2() const;
+    const bsl::string& selection2() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -336,6 +344,7 @@ int ChoiceA::maxSupportedBdexVersion()
 inline
 void ChoiceA::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1: {
         // no destruction required
@@ -452,7 +461,8 @@ ChoiceA::operator=(const ChoiceA& rhs)
             makeSelection2(rhs.d_selection2.object());
           } break;
           default:
-            BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
+            BSLS_ASSERT_NONCONVEYOR(
+                                  SELECTION_ID_UNDEFINED == rhs.d_selectionId);
             reset();
         }
     }
@@ -536,6 +546,7 @@ template <class MANIPULATOR>
 inline
 int ChoiceA::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { FAILURE = -1, SUCCESS = 0 };
 
     switch (d_selectionId) {
@@ -557,6 +568,7 @@ int ChoiceA::manipulateSelection(MANIPULATOR& manipulator)
 inline
 int& ChoiceA::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -564,6 +576,7 @@ int& ChoiceA::selection1()
 inline
 bsl::string& ChoiceA::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -603,6 +616,7 @@ template <class ACCESSOR>
 inline
 int ChoiceA::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { FAILURE = -1, SUCCESS = 0 };
 
     switch (d_selectionId) {
@@ -623,6 +637,7 @@ int ChoiceA::accessSelection(ACCESSOR& accessor) const
 inline
 const int& ChoiceA::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -630,6 +645,7 @@ const int& ChoiceA::selection1() const
 inline
 const bsl::string& ChoiceA::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -643,6 +659,8 @@ BDLAT_DECL_CHOICE_WITH_ALLOCATOR_TRAITS(test::ChoiceA)
 inline
 bool test::operator==(const test::ChoiceA& lhs, const test::ChoiceA& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
           case test::ChoiceA::SELECTION_ID_SELECTION1:
@@ -652,7 +670,7 @@ bool test::operator==(const test::ChoiceA& lhs, const test::ChoiceA& rhs)
             return lhs.selection2() == rhs.selection2();
                                                                     // RETURN
           default:
-            BSLS_ASSERT(test::ChoiceA::SELECTION_ID_UNDEFINED
+            BSLS_ASSERT_NONCONVEYOR(test::ChoiceA::SELECTION_ID_UNDEFINED
                             == rhs.selectionId());
             return true;                                              // RETURN
         }
@@ -997,12 +1015,16 @@ class ChoiceB {
     /// Return a reference to the modifiable "Selection2" selection of this
     /// object if "Selection2" is the current selection.  The behavior is
     /// undefined unless "Selection2" is the selection of this object.
-    bsl::string& selection2();
+    bsl::string& selection2()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
     /// undefined unless "Selection1" is the selection of this object.
-    int& selection1();
+    int& selection1()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1044,12 +1066,16 @@ class ChoiceB {
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const bsl::string& selection2() const;
+    const bsl::string& selection2() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const int& selection1() const;
+    const int& selection1() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -1087,6 +1113,7 @@ int ChoiceB::maxSupportedBdexVersion()
 inline
 void ChoiceB::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION2: {
         typedef bsl::string Type;
@@ -1203,7 +1230,8 @@ ChoiceB::operator=(const ChoiceB& rhs)
             makeSelection1(rhs.d_selection1.object());
           } break;
           default:
-            BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
+            BSLS_ASSERT_NONCONVEYOR(
+                                  SELECTION_ID_UNDEFINED == rhs.d_selectionId);
             reset();
         }
     }
@@ -1287,6 +1315,7 @@ template <class MANIPULATOR>
 inline
 int ChoiceB::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { FAILURE = -1, SUCCESS = 0 };
 
     switch (d_selectionId) {
@@ -1308,6 +1337,7 @@ int ChoiceB::manipulateSelection(MANIPULATOR& manipulator)
 inline
 bsl::string& ChoiceB::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -1354,6 +1384,7 @@ template <class ACCESSOR>
 inline
 int ChoiceB::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { FAILURE = -1, SUCCESS = 0 };
 
     switch (d_selectionId) {
@@ -1374,6 +1405,7 @@ int ChoiceB::accessSelection(ACCESSOR& accessor) const
 inline
 const bsl::string& ChoiceB::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -1401,7 +1433,7 @@ bool test::operator==(const test::ChoiceB& lhs, const test::ChoiceB& rhs)
           case test::ChoiceB::SELECTION_ID_SELECTION1:
             return lhs.selection1() == rhs.selection1();              // RETURN
           default:
-            BSLS_ASSERT(test::ChoiceB::SELECTION_ID_UNDEFINED
+            BSLS_ASSERT_NONCONVEYOR(test::ChoiceB::SELECTION_ID_UNDEFINED
                             == rhs.selectionId());
             return true;                                              // RETURN
         }
@@ -1705,7 +1737,9 @@ class CustomizedA {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `bsl::string`.
-    const bsl::string& toString() const;
+    const bsl::string& toString() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1795,6 +1829,7 @@ void CustomizedA::reset()
 inline
 int CustomizedA::fromString(const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     enum { SUCCESS = 0, FAILURE = -1 };
 
     if (5 < value.size()) {
@@ -1825,6 +1860,7 @@ bsl::ostream& CustomizedA::print(bsl::ostream& stream,
                                  int           level,
                                  int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 
@@ -1846,6 +1882,8 @@ inline
 bool test::operator==(const test::CustomizedA& lhs,
                       const test::CustomizedA& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_value == rhs.d_value;
 }
 
@@ -1853,6 +1891,8 @@ inline
 bool test::operator!=(const test::CustomizedA& lhs,
                       const test::CustomizedA& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_value != rhs.d_value;
 }
 
@@ -2024,7 +2064,9 @@ class CustomizedB {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `bsl::string`.
-    const bsl::string& toString() const;
+    const bsl::string& toString() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -2114,6 +2156,7 @@ void CustomizedB::reset()
 inline
 int CustomizedB::fromString(const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     enum { SUCCESS = 0, FAILURE = -1 };
 
     if (10 < value.size()) {
@@ -2144,6 +2187,7 @@ bsl::ostream& CustomizedB::print(bsl::ostream& stream,
                                  int           level,
                                  int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 
@@ -2165,6 +2209,8 @@ inline
 bool test::operator==(const test::CustomizedB& lhs,
                       const test::CustomizedB& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_value == rhs.d_value;
 }
 
@@ -2172,6 +2218,8 @@ inline
 bool test::operator!=(const test::CustomizedB& lhs,
                       const test::CustomizedB& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_value != rhs.d_value;
 }
 
@@ -3013,11 +3061,15 @@ class SequenceA {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    int& attribute1();
+    int& attribute1()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bsl::string& attribute2();
+    bsl::string& attribute2()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -3075,11 +3127,15 @@ class SequenceA {
 
     /// Return a reference to the non-modifiable "Attribute1" attribute of
     /// this object.
-    const int& attribute1() const;
+    const int& attribute1() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute2" attribute of
     /// this object.
-    const bsl::string& attribute2() const;
+    const bsl::string& attribute2() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -3465,6 +3521,7 @@ bsl::ostream& SequenceA::print(bsl::ostream& stream,
                                int           level,
                                int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }
@@ -3662,11 +3719,15 @@ class SequenceB {
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bsl::string& attribute2();
+    bsl::string& attribute2()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    int& attribute1();
+    int& attribute1()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -3724,11 +3785,15 @@ class SequenceB {
 
     /// Return a reference to the non-modifiable "Attribute2" attribute of
     /// this object.
-    const bsl::string& attribute2() const;
+    const bsl::string& attribute2() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute1" attribute of
     /// this object.
-    const int& attribute1() const;
+    const int& attribute1() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -4114,6 +4179,7 @@ bsl::ostream& SequenceB::print(bsl::ostream& stream,
                                int           level,
                                int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }
@@ -4325,18 +4391,26 @@ class Employee {
 
     /// Return a reference to the modifiable "Name" attribute of this
     /// object.
-    bsl::string& name();
+    bsl::string& name()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Dept" attribute of this
     /// object.
-    bsl::string& dept();
+    bsl::string& dept()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Age" attribute of this object.
-    int& age();
+    int& age()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Salary" attribute of this
     /// object.
-    float& salary();
+    float& salary()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -4394,19 +4468,27 @@ class Employee {
 
     /// Return a reference to the non-modifiable "Name" attribute of this
     /// object.
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Dept" attribute of this
     /// object.
-    const bsl::string& dept() const;
+    const bsl::string& dept() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Age" attribute of this
     /// object.
-    const int& age() const;
+    const int& age() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Salary" attribute of this
     /// object.
-    const float& salary() const;
+    const float& salary() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -4741,6 +4823,8 @@ BDLAT_DECL_SEQUENCE_WITH_ALLOCATOR_TRAITS(test::Employee)
 inline
 bool test::operator==(const test::Employee& lhs, const test::Employee& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.name() == rhs.name()
          && lhs.dept() == rhs.dept()
          && lhs.age() == rhs.age()
@@ -4895,6 +4979,7 @@ bsl::ostream& Employee::print(bsl::ostream& stream,
                               int           level,
                               int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }
@@ -5119,14 +5204,20 @@ class Trainee {
 
     /// Return a reference to the modifiable "Name" attribute of this
     /// object.
-    bsl::string& name();
+    bsl::string& name()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Dept" attribute of this
     /// object.
-    bsl::string& dept();
+    bsl::string& dept()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Age" attribute of this object.
-    int& age();
+    int& age()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -5184,15 +5275,21 @@ class Trainee {
 
     /// Return a reference to the non-modifiable "Name" attribute of this
     /// object.
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Dept" attribute of this
     /// object.
-    const bsl::string& dept() const;
+    const bsl::string& dept() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Age" attribute of this
     /// object.
-    const int& age() const;
+    const int& age() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -5619,6 +5716,7 @@ bsl::ostream& Trainee::print(bsl::ostream& stream,
                              int           level,
                              int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }
@@ -5862,31 +5960,45 @@ class MixedSequence {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    ChoiceA& attribute1();
+    ChoiceA& attribute1()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    CustomizedA& attribute2();
+    CustomizedA& attribute2()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute3" attribute of this
     /// object.
-    bdlb::NullableValue<int>& attribute3();
+    bdlb::NullableValue<int>& attribute3()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute4" attribute of this
     /// object.
-    EnumerationA::Value& attribute4();
+    EnumerationA::Value& attribute4()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute5" attribute of this
     /// object.
-    int& attribute5();
+    int& attribute5()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute6" attribute of this
     /// object.
-    bsl::string& attribute6();
+    bsl::string& attribute6()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute7" attribute of this
     /// object.
-    SequenceA& attribute7();
+    SequenceA& attribute7()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -5944,31 +6056,45 @@ class MixedSequence {
 
     /// Return a reference to the non-modifiable "Attribute1" attribute of
     /// this object.
-    const ChoiceA& attribute1() const;
+    const ChoiceA& attribute1() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute2" attribute of
     /// this object.
-    const CustomizedA& attribute2() const;
+    const CustomizedA& attribute2() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute3" attribute of
     /// this object.
-    const bdlb::NullableValue<int>& attribute3() const;
+    const bdlb::NullableValue<int>& attribute3() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute4" attribute of
     /// this object.
-    const EnumerationA::Value& attribute4() const;
+    const EnumerationA::Value& attribute4() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute5" attribute of
     /// this object.
-    const int& attribute5() const;
+    const int& attribute5() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute6" attribute of
     /// this object.
-    const bsl::string& attribute6() const;
+    const bsl::string& attribute6() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute7" attribute of
     /// this object.
-    const SequenceA& attribute7() const;
+    const SequenceA& attribute7() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -6443,6 +6569,10 @@ inline
 bool test::operator==(const test::MixedSequence& lhs,
                       const test::MixedSequence& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.attribute1() == rhs.attribute1()
          && lhs.attribute2() == rhs.attribute2()
          && lhs.attribute3() == rhs.attribute3()
@@ -6456,6 +6586,8 @@ inline
 bool test::operator!=(const test::MixedSequence& lhs,
                       const test::MixedSequence& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.attribute1() != rhs.attribute1()
          || lhs.attribute2() != rhs.attribute2()
          || lhs.attribute3() != rhs.attribute3()
@@ -6644,6 +6776,7 @@ bsl::ostream& MixedSequence::print(bsl::ostream& stream,
                                    int           level,
                                    int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }

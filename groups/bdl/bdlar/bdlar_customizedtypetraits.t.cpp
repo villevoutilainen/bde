@@ -150,6 +150,9 @@ struct Accessor {
 
     int operator()(const bsl::string& s) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&baseValue);
         return s == baseValue;
     }
     template <class t_TYPE>

@@ -208,6 +208,9 @@ struct Accessor {
 
     int operator()(const bsl::string& s) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         ASSERT(s == value);
         return 0;
     }
