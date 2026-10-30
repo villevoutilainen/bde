@@ -364,7 +364,7 @@ MyNumericUtil::parseInt(int              *value,
                         bsl::string_view  text)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT("-99" == text);  (void)text;
+    BSLS_ASSERT_NONCONVEYOR("-99" == text);  (void)text;
 
     *value = -99;
     return bsl::make_pair(MyParseStatus::e_OK, 3u);

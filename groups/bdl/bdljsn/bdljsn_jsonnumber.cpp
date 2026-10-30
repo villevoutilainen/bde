@@ -23,6 +23,7 @@ bsl::ostream& JsonNumber::print(bsl::ostream& stream,
                                 int           level,
                                 int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start(true);  // 'true' -> suppress '['
     stream << d_value;

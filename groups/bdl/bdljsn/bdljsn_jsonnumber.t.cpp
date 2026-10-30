@@ -702,8 +702,9 @@ void testCase11I(int        argc,
 /// `bdljsn::NumberUtil::isValidNumber(input)` is `true`.
 static void times10(bsl::string *result, const bsl::string& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     BSLS_ASSERT(result);
-    BSLS_ASSERT(bdljsn::NumberUtil::isValidNumber(input));
+    BSLS_ASSERT_NONCONVEYOR(bdljsn::NumberUtil::isValidNumber(input));
 
     bsl::size_t posDot = input.find('.');
     bsl::size_t posExp = input.find('e');

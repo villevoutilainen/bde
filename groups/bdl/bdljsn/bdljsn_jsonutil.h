@@ -643,6 +643,7 @@ int JsonUtil::write(std::pmr::string    *output,
                     const Json&          json,
                     const WriteOptions&  options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(output);
 #if defined (BSLS_LIBRARYFEATURES_HAS_CPP20_BASELINE_LIBRARY)
     typedef std::basic_ostringstream<char,
                                      std::char_traits<char>,

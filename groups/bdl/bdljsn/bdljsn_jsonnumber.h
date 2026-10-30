@@ -539,7 +539,9 @@ class JsonNumber {
     bool isIntegral() const;
 
     /// Return the textual representation of this `JsonNumber`.
-    const bsl::string& value() const;
+    const bsl::string& value() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 // BDE_VERIFY pragma: push
 // BDE_VERIFY pragma: -FABC01 // not in alphabetic order
@@ -705,7 +707,7 @@ JsonNumber::JsonNumber(const char            *text,
                        const allocator_type&  allocator)
 : d_value(text, allocator)
 {
-    BSLS_ASSERT(NumberUtil::isValidNumber(text));
+    BSLS_ASSERT_NONCONVEYOR(NumberUtil::isValidNumber(text));
 }
 
 inline
@@ -713,7 +715,7 @@ JsonNumber::JsonNumber(const bsl::string_view& text,
                        const allocator_type&   allocator)
 : d_value(text, allocator)
 {
-    BSLS_ASSERT(NumberUtil::isValidNumber(text));
+    BSLS_ASSERT_NONCONVEYOR(NumberUtil::isValidNumber(text));
 }
 
 inline
@@ -764,8 +766,8 @@ inline
 JsonNumber::JsonNumber(float value, const allocator_type& allocator)
 : d_value(allocator)
 {
-    BSLS_ASSERT(!bdlb::Float::isNan     (value));
-    BSLS_ASSERT(!bdlb::Float::isInfinite(value));
+    BSLS_ASSERT_NONCONVEYOR(!bdlb::Float::isNan     (value));
+    BSLS_ASSERT_NONCONVEYOR(!bdlb::Float::isInfinite(value));
 
     NumberUtil::stringify(&d_value, value);
 }
@@ -774,8 +776,8 @@ inline
 JsonNumber::JsonNumber(double value, const allocator_type& allocator)
 : d_value(allocator)
 {
-    BSLS_ASSERT(!bdlb::Float::isNan     (value));
-    BSLS_ASSERT(!bdlb::Float::isInfinite(value));
+    BSLS_ASSERT_NONCONVEYOR(!bdlb::Float::isNan     (value));
+    BSLS_ASSERT_NONCONVEYOR(!bdlb::Float::isInfinite(value));
 
     NumberUtil::stringify(&d_value, value);
 }
@@ -785,8 +787,8 @@ JsonNumber::JsonNumber(bdldfp::Decimal64     value,
                        const allocator_type& allocator)
 : d_value(allocator)
 {
-    BSLS_ASSERT(!bdldfp::DecimalUtil::isNan(value));
-    BSLS_ASSERT(!bdldfp::DecimalUtil::isInf(value));
+    BSLS_ASSERT_NONCONVEYOR(!bdldfp::DecimalUtil::isNan(value));
+    BSLS_ASSERT_NONCONVEYOR(!bdldfp::DecimalUtil::isInf(value));
 
     NumberUtil::stringify(&d_value, value);
 }
@@ -795,7 +797,7 @@ inline
 JsonNumber::JsonNumber(bslmf::MovableRef<bsl::string> text)
 : d_value(bslmf::MovableRefUtil::move(text))
 {
-    BSLS_ASSERT(NumberUtil::isValidNumber(d_value));
+    BSLS_ASSERT_NONCONVEYOR(NumberUtil::isValidNumber(d_value));
 }
 
 inline
@@ -803,7 +805,7 @@ JsonNumber::JsonNumber(bslmf::MovableRef<bsl::string> text,
                        const allocator_type&          allocator)
 : d_value(bslmf::MovableRefUtil::move(text), allocator)
 {
-    BSLS_ASSERT(NumberUtil::isValidNumber(d_value));
+    BSLS_ASSERT_NONCONVEYOR(NumberUtil::isValidNumber(d_value));
 }
 
 inline
@@ -891,8 +893,8 @@ JsonNumber& JsonNumber::operator=(unsigned long long rhs)
 inline
 JsonNumber& JsonNumber::operator=(float rhs)
 {
-    BSLS_ASSERT(!bdlb::Float::isNan     (rhs));
-    BSLS_ASSERT(!bdlb::Float::isInfinite(rhs));
+    BSLS_ASSERT_NONCONVEYOR(!bdlb::Float::isNan     (rhs));
+    BSLS_ASSERT_NONCONVEYOR(!bdlb::Float::isInfinite(rhs));
 
     NumberUtil::stringify(&d_value, rhs);
     return *this;
@@ -901,8 +903,8 @@ JsonNumber& JsonNumber::operator=(float rhs)
 inline
 JsonNumber& JsonNumber::operator=(double rhs)
 {
-    BSLS_ASSERT(!bdlb::Float::isNan     (rhs));
-    BSLS_ASSERT(!bdlb::Float::isInfinite(rhs));
+    BSLS_ASSERT_NONCONVEYOR(!bdlb::Float::isNan     (rhs));
+    BSLS_ASSERT_NONCONVEYOR(!bdlb::Float::isInfinite(rhs));
 
     NumberUtil::stringify(&d_value, rhs);
     return *this;
@@ -911,8 +913,8 @@ JsonNumber& JsonNumber::operator=(double rhs)
 inline
 JsonNumber& JsonNumber::operator=(bdldfp::Decimal64 rhs)
 {
-    BSLS_ASSERT(!bdldfp::DecimalUtil::isNan(rhs));
-    BSLS_ASSERT(!bdldfp::DecimalUtil::isInf(rhs));
+    BSLS_ASSERT_NONCONVEYOR(!bdldfp::DecimalUtil::isNan(rhs));
+    BSLS_ASSERT_NONCONVEYOR(!bdldfp::DecimalUtil::isInf(rhs));
 
     NumberUtil::stringify(&d_value, rhs);
     return *this;
@@ -921,7 +923,7 @@ JsonNumber& JsonNumber::operator=(bdldfp::Decimal64 rhs)
 inline
 void JsonNumber::swap(JsonNumber& other)
 {
-    BSLS_ASSERT(d_value.get_allocator() == other.get_allocator());
+    BSLS_ASSERT_NONCONVEYOR(d_value.get_allocator() == other.get_allocator());
 
     bslalg::SwapUtil::swap(&d_value, &other.d_value);
 }
@@ -1087,6 +1089,8 @@ inline
 bool bdljsn::operator==(const bdljsn::JsonNumber& lhs,
                         const bdljsn::JsonNumber& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.value() == rhs.value();
 }
 
@@ -1094,6 +1098,8 @@ inline
 bool bdljsn::operator!=(const bdljsn::JsonNumber& lhs,
                         const bdljsn::JsonNumber& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.value() != rhs.value();
 }
 
@@ -1103,6 +1109,7 @@ inline
 void bdljsn::hashAppend(HASHALG&                  hashAlgorithm,
                         const bdljsn::JsonNumber& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlgorithm);
     hashAppend(hashAlgorithm, object.value());
 }
 

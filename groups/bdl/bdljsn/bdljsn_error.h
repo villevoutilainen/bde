@@ -201,7 +201,9 @@ class Error {
     const Location& location() const;
 
     /// Return the `message` attribute of this object.
-    const bsl::string&  message() const;
+    const bsl::string&  message() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 
@@ -371,7 +373,7 @@ Error& Error::setMessage(const bsl::string_view& value)
 inline
 void Error::swap(Error& other)
 {
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
 
     bslalg::SwapUtil::swap(&d_location, &other.d_location);
     bslalg::SwapUtil::swap(&d_message,  &other.d_message);
@@ -404,12 +406,16 @@ bslma::Allocator *Error::allocator() const
 inline
 bool bdljsn::operator==(const bdljsn::Error& lhs, const bdljsn::Error& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.location() == rhs.location() && lhs.message() == rhs.message();
 }
 
 inline
 bool bdljsn::operator!=(const bdljsn::Error& lhs, const bdljsn::Error& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.location() != rhs.location() || lhs.message() != rhs.message();
 }
 
@@ -418,6 +424,7 @@ template <class HASHALG>
 inline
 void bdljsn::hashAppend(HASHALG& hashAlgorithm, const Error& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlgorithm);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlgorithm, object.location());
     hashAppend(hashAlgorithm, object.message());

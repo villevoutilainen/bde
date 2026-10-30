@@ -367,7 +367,8 @@ int convertValue(t_INTEGER_TYPE *result, const bsl::string_view& value)
 void extractSignificand(bsl::string             *significand,
                         const bsl::string_view&  value)
 {
-    BSLS_ASSERT(Obj::isValidNumber(value));
+    BSLS_ASSERT_CONVEYOR_OBJECT(significand);
+    BSLS_ASSERT_NONCONVEYOR(Obj::isValidNumber(value));
     typedef bsl::string_view::size_type size_type;
     const size_type npos = bsl::string_view::npos;
 
@@ -421,7 +422,8 @@ void generateEquivalenceSet(bsl::vector<bsl::string> *result,
                             Int64                     maxExponent,
                             const bsl::string_view&   value)
 {
-    BSLS_ASSERT(Obj::isValidNumber(value));
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_NONCONVEYOR(Obj::isValidNumber(value));
 
     bool                        isNeg, isExpNegative;
     Int64                       exponentBias;
@@ -531,6 +533,7 @@ void generateEquivalenceSet(bsl::vector<bsl::string> *result,
 /// Remove any trailing `0` characters from the specified `value`.
 void removeTrailingZeros(bsl::string *value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     bsl::string::size_type end = value->find_last_not_of('0');
     if (end == bsl::string::npos) {
         *value = "0";
@@ -595,7 +598,7 @@ int verifyDecimal64Exactness(const char *value)
 int asDecimal64ExactOracle(bdldfp::Decimal64       *result,
                            const bsl::string_view&  value)
 {
-    BSLS_ASSERT(Obj::isValidNumber(value));
+    BSLS_ASSERT_NONCONVEYOR(Obj::isValidNumber(value));
 
     bool                        isNeg, isExpNegative;
     Int64                       exponentBias;
@@ -677,8 +680,8 @@ int asDecimal64ExactOracle(bdldfp::Decimal64       *result,
     else {
         digits     = significant.substr(0, significantDotOffset);
         moreDigits = significant.substr(significantDotOffset + 1);
-        BSLS_ASSERT(0 != digits.size());
-        BSLS_ASSERT(0 != moreDigits.size());
+        BSLS_ASSERT_NONCONVEYOR(0 != digits.size());
+        BSLS_ASSERT_NONCONVEYOR(0 != moreDigits.size());
     }
 
     rc = ImpUtil::appendDigits(&significand, 0, digits);
@@ -923,7 +926,7 @@ struct AsIntegralTest {
 
 static bool needsAdHocTestJSonSuiteFileData(const bsl::string_view& fname)
 {
-    BSLS_ASSERT_OPT(!fname.empty());
+    BSLS_ASSERT_OPT_NONCONVEYOR(!fname.empty());
 
     if (bdlb::StringViewUtil::areEqualCaseless(
                                               fname,
@@ -935,7 +938,7 @@ static bool needsAdHocTestJSonSuiteFileData(const bsl::string_view& fname)
 
 static bool isValidJSonSuiteFileData(const bsl::string_view& fname)
 {
-    BSLS_ASSERT_OPT(!fname.empty());
+    BSLS_ASSERT_OPT_NONCONVEYOR(!fname.empty());
 
     if (bdlb::StringViewUtil::areEqualCaseless(fname,
                                                "y_number_after_space")) {
@@ -951,7 +954,7 @@ static bool isValidJSonSuiteFileData(const bsl::string_view& fname)
 }
 
 static bool isOutOfRangeJSonSuiteFileData(const bsl::string_view& fname) {
-    BSLS_ASSERT_OPT(!fname.empty());
+    BSLS_ASSERT_OPT_NONCONVEYOR(!fname.empty());
 
     return containsCaseless(fname, "_huge_")
        ||     (containsCaseless(fname, "_real_")
@@ -2149,6 +2152,7 @@ int main(int argc, char *argv[])
                 const bsl::string& input = *it;
                 if (veryVeryVerbose) {
                     bsl::cout << "   ";
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
                     P_(LINE); P_(INPUT); P(input.size());
                 }
                 ASSERTV(LINE, EXP, EXP == Obj::isIntegralNumber(input));
@@ -2299,6 +2303,7 @@ int main(int argc, char *argv[])
                     const bsl::string& lhsBig = *it;
                     if (veryVeryVeryVerbose) {
                         bsl::cout << "   ";
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&lhsBig);
                         P_(LHS); P_(lhsBig); P(lhsBig.size());
                     }
                     ASSERTV(LHS, RHS, EXP == Obj::areEqual(lhsBig, RHS));
@@ -2577,6 +2582,7 @@ int main(int argc, char *argv[])
                 const bsl::string& input = *it;
                 if (veryVeryVerbose) {
                     bsl::cout << "   ";
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
                     P_(LINE); P_(INPUT); P(input.size());
                 }
 
@@ -2828,6 +2834,7 @@ int main(int argc, char *argv[])
                 const bsl::string& input = *it;
                 if (veryVeryVerbose) {
                     bsl::cout << "   ";
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
                     P_(LINE); P_(INPUT); P(input.size());
                 }
                 volatile double result = Obj::asDouble(input);
@@ -3066,6 +3073,7 @@ int main(int argc, char *argv[])
             for (; it != equivalentData.end(); ++it) {
                 const bsl::string& input = *it;
                 if (veryVeryVerbose) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
                     bsl::cout << "   ";
                     P_(LINE);
                     P_(INPUT);

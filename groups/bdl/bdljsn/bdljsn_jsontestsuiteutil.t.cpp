@@ -486,7 +486,10 @@ int main(int argc, char *argv[])
 
             for (auto const& dirEntry : dirItr) {
 
-                bsl::string entryName(dirEntry.path().filename().c_str());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&dirEntry);
+                bsl::string entryName(
+                       BSLS_ASSERT_CONVEYOR_REF(dirEntry.path()).filename()
+                                                                   .c_str());
 
                 if (veryVerbose) {
                     static bool isFirst = true;

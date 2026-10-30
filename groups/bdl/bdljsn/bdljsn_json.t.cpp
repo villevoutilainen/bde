@@ -1022,6 +1022,8 @@ class ReorderExpectedJsonObjectString {
 
     bsl::string operator()(const bsl::string& input) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&input);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bsl::string            format[5];
         Container              data;
         bsl::string::size_type pos  = 0;
@@ -1063,7 +1065,8 @@ class ReorderExpectedJsonObjectString {
 
         bsl::stringstream ss;
         for (int index = 0; index < 4; ++index) {
-            ss << format[index] << data[d_orderOfKeys[index]];
+            ss << format[index]
+               << data[BSLS_ASSERT_CONVEYOR_REF(d_orderOfKeys[index])];
         }
         ss << format[4];
         return ss.str();
@@ -3656,6 +3659,7 @@ class JsonValueConstructorHelper<JsonNull>
     /// Returns the value of specified type from the specified `json`,
     /// suitable for comparison to the value used in construction.
     static const JsonNull& extractFromJson(const Json& json, int , char )
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return json.theNull();
     }
@@ -3752,6 +3756,7 @@ class JsonValueConstructorHelper<JsonArray>
     /// Returns the value of specified type from the specified `json`,
     /// suitable for comparison to the value used in construction.
     static const JsonArray& extractFromJson(const Json& json, int , char )
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return json.theArray();
     }
@@ -3764,6 +3769,7 @@ class JsonValueConstructorHelper<JsonArray>
 
     /// Returns a `const` reference to a value of the specified type
     static const JsonArray& getValue()
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         static bslma::TestAllocator xa("scratch", false);
         static Json                 json(&xa);
@@ -3977,6 +3983,7 @@ class JsonValueConstructorHelper<JsonNumber>
     /// Returns the value of specified type from the specified `json`,
     /// suitable for comparison to the value used in construction.
     static const JsonNumber& extractFromJson(const Json& json, int , char)
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return json.theNumber();
     }
@@ -3996,6 +4003,7 @@ class JsonValueConstructorHelper<JsonNumber>
 
     /// Returns a `const` reference to a value of the specified type
     static const JsonNumber& getValue()
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         static bslma::TestAllocator xa("scratch", false);
         static const JsonNumber number(getString(), &xa);
@@ -4010,6 +4018,7 @@ class JsonValueConstructorHelper<JsonObject>
     /// Returns the value of specified type from the specified `json`,
     /// suitable for comparison to the value used in construction.
     static const JsonObject& extractFromJson(const Json& json, int , char)
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return json.theObject();
     }
@@ -4022,6 +4031,7 @@ class JsonValueConstructorHelper<JsonObject>
 
     /// Returns a `const` reference to a value of the specified type
     static const JsonObject& getValue()
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         static bslma::TestAllocator xa("scratch", false);
         static JsonObject           object(&xa);
@@ -4091,6 +4101,7 @@ class JsonValueConstructorHelper<bsl::string>
     /// Returns the value of specified type from the specified `json`,
     /// suitable for comparison to the value used in construction.
     static const bsl::string& extractFromJson(const Json& json, int , char)
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return json.theString();
     }
@@ -4103,6 +4114,7 @@ class JsonValueConstructorHelper<bsl::string>
 
     /// Returns a `const` reference to a value of the specified type
     static const bsl::string& getValue()
+        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         const static bsl::string string = "bsl::string";
         return string;
@@ -4219,6 +4231,7 @@ void testJsonPushBack(char cfg, int numBlocksPush, bool verbose)
     ASSERTV(obj.size(), 1 == obj.size());
 
     Obj *objPtr = &obj[0];
+    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
 
     ASSERTV(ALLOC_CONFIG,
             CONFIG,
@@ -4231,6 +4244,7 @@ void testJsonPushBack(char cfg, int numBlocksPush, bool verbose)
             objPtr->type(),
             Helper::getType() == objPtr->type());
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
     ASSERTV(ALLOC_CONFIG,
             CONFIG,
             Helper::extractFromJson(*objPtr,
@@ -4391,6 +4405,7 @@ void testJsonPushBackMoveRef(char cfg, bool verbose)
     ASSERTV(obj.size(), 1 == obj.size());
 
     Obj *objPtr = &obj[0];
+    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
 
     ASSERTV(ALLOC_CONFIG,
             tam.numBlocksInUseChange(),
@@ -4406,6 +4421,7 @@ void testJsonPushBackMoveRef(char cfg, bool verbose)
             Helper::getType(),
             objPtr->type(),
             Helper::getType() == objPtr->type());
+    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
     ASSERTV(ALLOC_CONFIG,
             CONFIG,
             Helper::extractFromJson(*objPtr,
@@ -4558,6 +4574,7 @@ void testArrayPushBack(char cfg, int numBlocksPush, bool verbose)
     ASSERTV(array.size(), 1 == array.size());
 
     Obj *objPtr = &array[0];
+    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
 
     ASSERTV(ALLOC_CONFIG,
             CONFIG,
@@ -4570,6 +4587,7 @@ void testArrayPushBack(char cfg, int numBlocksPush, bool verbose)
             objPtr->type(),
             Helper::getType() == objPtr->type());
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
     ASSERTV(ALLOC_CONFIG,
             CONFIG,
             Helper::extractFromJson(*objPtr,
@@ -4621,6 +4639,7 @@ void testArrayPushBackMoveRef(char cfg, bool verbose)
     ASSERTV(array.size(), 1 == array.size());
 
     Obj *objPtr = &array[0];
+    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
 
     ASSERTV(ALLOC_CONFIG,
             tam.numBlocksInUseChange(),
@@ -4636,6 +4655,7 @@ void testArrayPushBackMoveRef(char cfg, bool verbose)
             Helper::getType(),
             objPtr->type(),
             Helper::getType() == objPtr->type());
+    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
     ASSERTV(ALLOC_CONFIG,
             CONFIG,
             Helper::extractFromJson(*objPtr,
@@ -4982,12 +5002,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(JsonObject *object) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(object);
 
     const int value = -(bdljsn::JsonType::e_OBJECT + 1);
 
     if (d_isVerbose) { P_(object) Q(OBJECT: Returns); }
-    if (d_output_p)  { d_output_p->push_back(value);  }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -4996,12 +5020,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(JsonArray *array) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(array);
 
     const int value = -(bdljsn::JsonType::e_ARRAY + 1);
 
     if (d_isVerbose) { P_(array) Q(ARRAY: Returns);   }
-    if (d_output_p)  { d_output_p->push_back(value);  }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -5010,12 +5038,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(bsl::string *string) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(string);
 
     const int value = -(bdljsn::JsonType::e_STRING + 1);
 
     if (d_isVerbose) { P_(string) Q(STRING: Returns); }
-    if (d_output_p)  { d_output_p->push_back(value);  }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -5024,12 +5056,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(JsonNumber *number) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(number);
 
     const int value = -(bdljsn::JsonType::e_NUMBER + 1);
 
     if (d_isVerbose) { P_(number) Q(NUMBER: Returns); }
-    if (d_output_p)  { d_output_p->push_back(value);  }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 
@@ -5039,12 +5075,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(bool *boolean) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(boolean);
 
     const int value = -(bdljsn::JsonType::e_BOOLEAN + 1);
 
     if (d_isVerbose) { P_(boolean) Q(BOOLEAN: Returns); }
-    if (d_output_p)  { d_output_p->push_back(value);    }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -5053,12 +5093,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(JsonNull *null) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(null);
 
     const int value = -(bdljsn::JsonType::e_NULL + 1);
 
     if (d_isVerbose) { P_(null) Q(NULL: Returns);    }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -5067,12 +5111,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(const JsonObject& object) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) object;
 
     const int value = bdljsn::JsonType::e_OBJECT + 1;
 
     if (d_isVerbose) { Q(OBJECT: Returns);           }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -5081,12 +5129,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(const JsonArray& array) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) array;
 
     const int value = bdljsn::JsonType::e_ARRAY + 1;
 
     if (d_isVerbose) { Q(ARRAY: Returns);            }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -5096,12 +5148,16 @@ RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(const bsl::string& string)
                                                                           const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) string;
 
     const int value = bdljsn::JsonType::e_STRING + 1;
 
     if (d_isVerbose) { Q(STRING: Returns);           }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -5110,12 +5166,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(const JsonNumber& number) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) number;
 
     const int value = bdljsn::JsonType::e_NUMBER + 1;
 
     if (d_isVerbose) { Q(NUMBER: Returns);           }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -5124,12 +5184,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(const bool& boolean) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) boolean;
 
     const int value = bdljsn::JsonType::e_BOOLEAN + 1;
 
     if (d_isVerbose) { Q(BOOLEAN: Returns);          }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -5138,12 +5202,16 @@ template <class RETURN_TYPE>
 RETURN_TYPE
 TestJsonVisitorReturns<RETURN_TYPE>::operator()(const JsonNull& null) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) null;
 
     const int value = bdljsn::JsonType::e_NULL + 1;
 
     if (d_isVerbose) { Q(NULL: Returns);             }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return RETURN_TYPE();
 }
@@ -5158,12 +5226,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                       JsonObject *object) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(object);
 
     const int value = -(bdljsn::JsonType::e_OBJECT + 1);
 
     if (d_isVerbose) { P_(object) Q(OBJECT: Returns); }
-    if (d_output_p)  { d_output_p->push_back(value);  }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5173,12 +5245,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                         JsonArray *array) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(array);
 
     const int value = -(bdljsn::JsonType::e_ARRAY + 1);
 
     if (d_isVerbose) { P_(array) Q(ARRAY: Returns);   }
-    if (d_output_p)  { d_output_p->push_back(value);  }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5188,12 +5264,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                      bsl::string *string) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(string);
 
     const int value = -(bdljsn::JsonType::e_STRING + 1);
 
     if (d_isVerbose) { P_(string) Q(STRING: Returns); }
-    if (d_output_p)  { d_output_p->push_back(value);  }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5203,12 +5283,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                       JsonNumber *number) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(number);
 
     const int value = -(bdljsn::JsonType::e_NUMBER + 1);
 
     if (d_isVerbose) { P_(number) Q(NUMBER: Returns); }
-    if (d_output_p)  { d_output_p->push_back(value);  }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 
@@ -5219,12 +5303,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                            bool *boolean) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(boolean);
 
     const int value = -(bdljsn::JsonType::e_BOOLEAN + 1);
 
     if (d_isVerbose) { P_(boolean) Q(BOOLEAN: Returns); }
-    if (d_output_p)  { d_output_p->push_back(value);    }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5234,12 +5322,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                           JsonNull *null) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(null);
 
     const int value = -(bdljsn::JsonType::e_NULL + 1);
 
     if (d_isVerbose) { P_(null) Q(NULL: Returns);    }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5249,12 +5341,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                 const JsonObject& object) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) object;
 
     const int value = bdljsn::JsonType::e_OBJECT + 1;
 
     if (d_isVerbose) { Q(OBJECT: Returns);           }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5264,12 +5360,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                   const JsonArray& array) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) array;
 
     const int value = bdljsn::JsonType::e_ARRAY + 1;
 
     if (d_isVerbose) { Q(ARRAY: Returns);            }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5279,12 +5379,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                const bsl::string& string) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) string;
 
     const int value = bdljsn::JsonType::e_STRING + 1;
 
     if (d_isVerbose) { Q(STRING: Returns);           }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5294,12 +5398,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                 const JsonNumber& number) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) number;
 
     const int value = bdljsn::JsonType::e_NUMBER + 1;
 
     if (d_isVerbose) { Q(NUMBER: Returns);           }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5309,12 +5417,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                      const bool& boolean) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) boolean;
 
     const int value = bdljsn::JsonType::e_BOOLEAN + 1;
 
     if (d_isVerbose) { Q(BOOLEAN: Returns);          }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5324,12 +5436,16 @@ bsltf::NonDefaultConstructibleTestType
 TestJsonVisitorReturns<bsltf::NonDefaultConstructibleTestType>::operator()(
                                                     const JsonNull& null) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) null;
 
     const int value = bdljsn::JsonType::e_NULL + 1;
 
     if (d_isVerbose) { Q(NULL: Returns);             }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return bsltf::NonDefaultConstructibleTestType(0);
 }
@@ -5388,12 +5504,16 @@ TestJsonVisitorManipAvec::TestJsonVisitorManipAvec(bsl::vector<int> *output,
 int
 TestJsonVisitorManipAvec::operator()(JsonObject *object) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(object);
 
     const int value = -(bdljsn::JsonType::e_OBJECT + 1);
 
     if (d_isVerbose) { P_(object) Q(OBJECT: ManipAvec); }
-    if (d_output_p)  { d_output_p->push_back(value);    }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5401,12 +5521,16 @@ TestJsonVisitorManipAvec::operator()(JsonObject *object) const
 int
 TestJsonVisitorManipAvec::operator()(JsonArray *array) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(array);
 
     const int value = -(bdljsn::JsonType::e_ARRAY + 1);
 
     if (d_isVerbose) { P_(array) Q(ARRAY: ManipAvec); }
-    if (d_output_p)  { d_output_p->push_back(value);  }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5414,12 +5538,16 @@ TestJsonVisitorManipAvec::operator()(JsonArray *array) const
 int
 TestJsonVisitorManipAvec::operator()(bsl::string *string) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(string);
 
     const int value = -(bdljsn::JsonType::e_STRING + 1);
 
     if (d_isVerbose) { P_(string) Q(STRING: ManipAvec); }
-    if (d_output_p)  { d_output_p->push_back(value);    }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5427,12 +5555,16 @@ TestJsonVisitorManipAvec::operator()(bsl::string *string) const
 int
 TestJsonVisitorManipAvec::operator()(JsonNumber *number) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(number);
 
     const int value = -(bdljsn::JsonType::e_NUMBER + 1);
 
     if (d_isVerbose) { P_(number) Q(NUMER: ManipAvec); }
-    if (d_output_p)  { d_output_p->push_back(value);   }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5440,12 +5572,16 @@ TestJsonVisitorManipAvec::operator()(JsonNumber *number) const
 int
 TestJsonVisitorManipAvec::operator()(bool *boolean) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(boolean);
 
     const int value = -(bdljsn::JsonType::e_BOOLEAN + 1);
 
     if (d_isVerbose) { P_(boolean) Q(BOOLEAN: ManipAvec); }
-    if (d_output_p)  { d_output_p->push_back(value);      }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5453,12 +5589,16 @@ TestJsonVisitorManipAvec::operator()(bool *boolean) const
 int
 TestJsonVisitorManipAvec::operator()(JsonNull *null) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(null);
 
     const int value = -(bdljsn::JsonType::e_NULL + 1);
 
     if (d_isVerbose) { P_(null) Q(NULL: ManipAvec);  }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5517,12 +5657,16 @@ TestJsonVisitorAccesAvec::TestJsonVisitorAccesAvec(bsl::vector<int> *output,
 int
 TestJsonVisitorAccesAvec::operator()(const JsonObject& object) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) object;
 
     const int value = bdljsn::JsonType::e_OBJECT + 1;
 
     if (d_isVerbose) { Q(OBJECT: AcessAvec);         }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5530,12 +5674,16 @@ TestJsonVisitorAccesAvec::operator()(const JsonObject& object) const
 int
 TestJsonVisitorAccesAvec::operator()(const JsonArray& array) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) array;
 
     const int value = bdljsn::JsonType::e_ARRAY + 1;
 
     if (d_isVerbose) { Q(ARRAY: AcessAvec);          }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5543,12 +5691,16 @@ TestJsonVisitorAccesAvec::operator()(const JsonArray& array) const
 int
 TestJsonVisitorAccesAvec::operator()(const bsl::string& string) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) string;
 
     const int value = bdljsn::JsonType::e_STRING + 1;
 
     if (d_isVerbose) { Q(STRING: AcessAvec);         }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5556,12 +5708,16 @@ TestJsonVisitorAccesAvec::operator()(const bsl::string& string) const
 int
 TestJsonVisitorAccesAvec::operator()(const JsonNumber& number) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) number;
 
     const int value = bdljsn::JsonType::e_NUMBER + 1;
 
     if (d_isVerbose) { Q(NUMBER: AcessAvec);         }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5569,12 +5725,16 @@ TestJsonVisitorAccesAvec::operator()(const JsonNumber& number) const
 int
 TestJsonVisitorAccesAvec::operator()(const bool& boolean) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) boolean;
 
     const int value = bdljsn::JsonType::e_BOOLEAN + 1;
 
     if (d_isVerbose) { Q(BOOLEAN: AcessAvec);        }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5582,12 +5742,16 @@ TestJsonVisitorAccesAvec::operator()(const bool& boolean) const
 int
 TestJsonVisitorAccesAvec::operator()(const JsonNull& null) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) null;
 
     const int value = bdljsn::JsonType::e_NULL + 1;
 
     if (d_isVerbose) { Q(NULL: AcessAvec);           }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5646,12 +5810,16 @@ TestJsonVisitorManipSans::TestJsonVisitorManipSans(bsl::vector<int> *output,
 int
 TestJsonVisitorManipSans::operator()(JsonObject *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(object);
 
     const int value = -(bdljsn::JsonType::e_OBJECT + 1);
 
     if (d_isVerbose) { P_(object) Q(OBJECT: ManipSans); }
-    if (d_output_p)  { d_output_p->push_back(value);    }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5659,12 +5827,16 @@ TestJsonVisitorManipSans::operator()(JsonObject *object)
 int
 TestJsonVisitorManipSans::operator()(JsonArray *array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(array);
 
     const int value = -(bdljsn::JsonType::e_ARRAY + 1);
 
     if (d_isVerbose) { P_(array) Q(ARRAY: ManipSans); }
-    if (d_output_p)  { d_output_p->push_back(value);  }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5672,12 +5844,16 @@ TestJsonVisitorManipSans::operator()(JsonArray *array)
 int
 TestJsonVisitorManipSans::operator()(bsl::string *string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(string);
 
     const int value = -(bdljsn::JsonType::e_STRING + 1);
 
     if (d_isVerbose) { P_(string) Q(STRING: ManipSans); }
-    if (d_output_p)  { d_output_p->push_back(value);    }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5685,12 +5861,16 @@ TestJsonVisitorManipSans::operator()(bsl::string *string)
 int
 TestJsonVisitorManipSans::operator()(JsonNumber *number)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(number);
 
     const int value = -(bdljsn::JsonType::e_NUMBER + 1);
 
     if (d_isVerbose) { P_(number) Q(NUMER: ManipSans); }
-    if (d_output_p)  { d_output_p->push_back(value);   }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5698,12 +5878,16 @@ TestJsonVisitorManipSans::operator()(JsonNumber *number)
 int
 TestJsonVisitorManipSans::operator()(bool *boolean)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(boolean);
 
     const int value = -(bdljsn::JsonType::e_BOOLEAN + 1);
 
     if (d_isVerbose) { P_(boolean) Q(BOOLEAN: ManipSans); }
-    if (d_output_p)  { d_output_p->push_back(value);      }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5711,12 +5895,16 @@ TestJsonVisitorManipSans::operator()(bool *boolean)
 int
 TestJsonVisitorManipSans::operator()(JsonNull *null)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(null);
 
     const int value = -(bdljsn::JsonType::e_NULL + 1);
 
     if (d_isVerbose) { P_(null) Q(NULL: ManipSans);  }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5775,12 +5963,16 @@ TestJsonVisitorAccesSans::TestJsonVisitorAccesSans(bsl::vector<int> *output,
 int
 TestJsonVisitorAccesSans::operator()(const JsonObject& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) object;
 
     const int value = bdljsn::JsonType::e_OBJECT + 1;
 
     if (d_isVerbose) { Q(OBJECT: AccesSans);         }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5788,12 +5980,16 @@ TestJsonVisitorAccesSans::operator()(const JsonObject& object)
 int
 TestJsonVisitorAccesSans::operator()(const JsonArray& array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) array;
 
     const int value = bdljsn::JsonType::e_ARRAY + 1;
 
     if (d_isVerbose) { Q(ARRAY: AccesSans);          }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5801,12 +5997,16 @@ TestJsonVisitorAccesSans::operator()(const JsonArray& array)
 int
 TestJsonVisitorAccesSans::operator()(const bsl::string& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) string;
 
     const int value = bdljsn::JsonType::e_STRING + 1;
 
     if (d_isVerbose) { Q(STRING: AccesSans);         }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5814,12 +6014,16 @@ TestJsonVisitorAccesSans::operator()(const bsl::string& string)
 int
 TestJsonVisitorAccesSans::operator()(const JsonNumber& number)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) number;
 
     const int value = bdljsn::JsonType::e_NUMBER + 1;
 
     if (d_isVerbose) { Q(NUMBER: AccesSans);         }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5827,12 +6031,16 @@ TestJsonVisitorAccesSans::operator()(const JsonNumber& number)
 int
 TestJsonVisitorAccesSans::operator()(const bool& boolean)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) boolean;
 
     const int value = bdljsn::JsonType::e_BOOLEAN + 1;
 
     if (d_isVerbose) { Q(BOOLEAN: AccesSans);        }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -5840,12 +6048,16 @@ TestJsonVisitorAccesSans::operator()(const bool& boolean)
 int
 TestJsonVisitorAccesSans::operator()(const JsonNull& null)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     (void) null;
 
     const int value = bdljsn::JsonType::e_NULL + 1;
 
     if (d_isVerbose) { Q(NULL: AccesSans);           }
-    if (d_output_p)  { d_output_p->push_back(value); }
+    if (d_output_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_output_p);
+        d_output_p->push_back(value);
+    }
 
     return value;
 }
@@ -6037,6 +6249,7 @@ void TestJsonVisitorSetGet::operator()(JsonArray *array) const
 
 void TestJsonVisitorSetGet::operator()(bsl::string *string) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
     ASSERTV(*string, bsl::string() == *string);
     *string = JsonValueConstructorHelper<bsl::string>::getValue();
@@ -6077,6 +6290,7 @@ void TestJsonVisitorSetGet::operator()(const JsonArray& array) const
 
 void TestJsonVisitorSetGet::operator()(const bsl::string& string) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     ASSERTV(string,   JsonValueConstructorHelper<bsl::string>::getValue(),
             string == JsonValueConstructorHelper<bsl::string>::getValue());
 }
@@ -7518,6 +7732,7 @@ int main(int argc, char *argv[])
 #else
         if (veryVerbose) {
             cout << "SKIP: No support for generalized initializers." << endl;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&ji1);
         }
 #endif
       } break;
@@ -7566,10 +7781,12 @@ int main(int argc, char *argv[])
 
         Json_Initializer ji0;
         ASSERT(ji0.get_storage().is<JsonNull>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&ji0);
         ASSERT(JsonNull() == ji0.get_storage().the<JsonNull>());
 
         Json_Initializer ji1(jNull);
         ASSERT(ji1.get_storage().is<JsonNull>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&ji1);
         ASSERT(JsonNull() == ji1.get_storage().the<JsonNull>());
 
         Json_Initializer ji2[] = { 2, 2L, 2LL };
@@ -7586,10 +7803,12 @@ int main(int argc, char *argv[])
 
         Json_Initializer ji4(4.25f);
         ASSERT(ji4.get_storage().is<double>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&ji4);
         ASSERT(4.25 == ji4.get_storage().the<double>());
 
         Json_Initializer ji5(4.25);
         ASSERT(ji5.get_storage().is<double>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&ji5);
         ASSERT(4.25 == ji5.get_storage().the<double>());
 
         Json_Initializer ji6[] = { "ABC", abcString, bsl::string_view("ABC") };
@@ -7602,18 +7821,22 @@ int main(int argc, char *argv[])
         ASSERT(ji7.get_storage().is<bsl::span<const Json_Initializer>>());
         Json_Initializer ji8(jObj);
         ASSERT(ji8.get_storage().is<const JsonObject *>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&ji8);
         ASSERT(&jObj == ji8.get_storage().the<const JsonObject *>());
 
         Json_Initializer ji9(jArr);
         ASSERT(ji9.get_storage().is<const JsonArray *>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&ji9);
         ASSERT(&jArr == ji9.get_storage().the<const JsonArray *>());
 
         Json_Initializer jiA(jNum);
         ASSERT(jiA.get_storage().is<const JsonNumber *>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&jiA);
         ASSERT(&jNum == jiA.get_storage().the<const JsonNumber *>());
 
         Json_Initializer jiB(json);
         ASSERT(jiB.get_storage().is<const Json *>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&jiB);
         ASSERT(&json == jiB.get_storage().the<const Json *>());
 #else
         if (veryVerbose) {
@@ -12217,6 +12440,7 @@ int main(int argc, char *argv[])
                             CONFIG,
                             2*sizeof(Obj) == fa.numBytesInUse());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = mX;
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(mF) P(X) }
@@ -12566,6 +12790,7 @@ int main(int argc, char *argv[])
                             CONFIG,
                             sizeof(Obj) == fa.numBytesInUse());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = mX;
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(X) }
@@ -13225,6 +13450,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13273,6 +13499,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13307,6 +13534,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13365,6 +13593,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13399,6 +13628,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13433,6 +13663,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13467,6 +13698,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13501,6 +13733,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13535,6 +13768,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13569,6 +13803,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13603,6 +13838,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13613,6 +13849,7 @@ int main(int argc, char *argv[])
                                                      ALLOC_CONFIG,
                                                      CONFIG)
                             == Helper::getValue());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13661,6 +13898,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13671,6 +13909,7 @@ int main(int argc, char *argv[])
                                                      ALLOC_CONFIG,
                                                      CONFIG)
                             == Helper::getValue());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13702,6 +13941,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13750,6 +13990,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13781,6 +14022,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13812,6 +14054,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13843,6 +14086,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13890,6 +14134,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13924,6 +14169,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13958,6 +14204,7 @@ int main(int argc, char *argv[])
                             Helper::getType(),
                             objPtr->type(),
                             Helper::getType() == objPtr->type());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     ASSERTV(ALLOC_CONFIG,
                             CONFIG,
                             Helper::extractFromJson(*objPtr,
@@ -13983,6 +14230,7 @@ int main(int argc, char *argv[])
                         fa.numBytesTotal(),
                         sizeof(Obj) == fa.numBytesTotal());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                 Obj& mX = *objPtr;  const Obj& X = mX;
 
                 bslma::TestAllocator&  oa = *objAllocatorPtr;
@@ -14147,6 +14395,7 @@ int main(int argc, char *argv[])
               } break;
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj&                   mX = *objPtr;  const Obj& X = mX;
             bslma::TestAllocator&  oa = *objAllocatorPtr;
             bslma::TestAllocator& noa = (&da == &oa) ? sa : da;
@@ -16261,6 +16510,7 @@ int main(int argc, char *argv[])
                     }
                     ASSERTV(LINE, CONFIG, 2*sizeof(Obj) == fa.numBytesInUse());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = mX;
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(mF) P(X) }
@@ -16580,6 +16830,7 @@ int main(int argc, char *argv[])
                     }
                     ASSERTV(LINE, CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = mX;
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(X) }
@@ -17527,6 +17778,7 @@ int main(int argc, char *argv[])
                     ASSERTV(LINE, CONFIG,
                             sizeof(Obj) == fa.numBytesInUse());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = mX;
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(X) }
@@ -17825,6 +18077,7 @@ int main(int argc, char *argv[])
               } break;
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj&                   mX = *objPtr;  const Obj& X = mX;
             bslma::TestAllocator&  oa = *objAllocatorPtr;
             bslma::TestAllocator& noa = (&da == &oa) ? sa : da;
@@ -19675,6 +19928,7 @@ int main(int argc, char *argv[])
                     }
                     ASSERTV(LINE, CONFIG, 2*sizeof(Obj) == fa.numBytesInUse());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = mX;
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(mF) P(X) }
@@ -19993,6 +20247,7 @@ int main(int argc, char *argv[])
                     }
                     ASSERTV(LINE, CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = mX;
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(X) }
@@ -20999,6 +21254,7 @@ int main(int argc, char *argv[])
                     ASSERTV(LINE, CONFIG,
                             sizeof(Obj) == fa.numBytesInUse());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = mX;
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(X) }
@@ -21293,6 +21549,7 @@ int main(int argc, char *argv[])
               } break;
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj&                   mX = *objPtr;  const Obj& X = mX;
             bslma::TestAllocator&  oa = *objAllocatorPtr;
             bslma::TestAllocator& noa = (&da == &oa) ? sa : da;

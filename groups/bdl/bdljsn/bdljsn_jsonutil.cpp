@@ -161,7 +161,7 @@ int readScalar(Json *result, Error *error, Tokenizer *tokenizer)
     tokenizer->value(&value);
 
     if ("null" == value) {
-        BSLS_ASSERT(result->type() == JsonType::e_NULL);
+        BSLS_ASSERT_NONCONVEYOR(result->type() == JsonType::e_NULL);
         return 0;                                                     // RETURN
     }
 
@@ -317,6 +317,7 @@ class JsonObjectUnsortedMemberIterator {
         // Advance to the next member in the object.  Return 'true' if the new
         // position is valid.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ++d_it;
         return d_it != d_end;
     }
@@ -337,6 +338,7 @@ class JsonObjectUnsortedMemberIterator {
     const bsl::pair<const bsl::string, Json>& member() const
         // Return the current member.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return *d_it;
     }
 };
@@ -349,6 +351,8 @@ struct ObjectMemberLess {
         // Return true if the key of the specified 'lhs' is lexicographically
         // less than the key of the specified 'rhs'.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs->first < rhs->first;
     }
 };
@@ -397,6 +401,7 @@ class JsonObjectSortedMemberIterator {
         // Advance to the next member in the object.  Return 'true' if the new
         // position is valid.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ++d_it;
         return d_it == d_sortedMembers.end();
     }
@@ -405,18 +410,22 @@ class JsonObjectSortedMemberIterator {
     bool isFirst() const
         // Return 'true' if this object is in its initial state.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_it == d_sortedMembers.begin();
     }
 
     bool isValid() const
         // Return 'true' if the current position of this iterator is valid.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_it != d_sortedMembers.end();
     }
 
     const bsl::pair<const bsl::string, Json>& member() const
         // Return the current member.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_it);
         return **d_it;
     }
 };
@@ -754,6 +763,7 @@ bsl::ostream& JsonUtil::printError(bsl::ostream&   stream,
                                    bsl::streambuf *input,
                                    const Error&    error)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&error);
     BSLS_ASSERT(input);
 
     typedef bdlde::Utf8Util::Uint64 Uint64;

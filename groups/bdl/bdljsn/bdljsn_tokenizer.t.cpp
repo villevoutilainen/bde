@@ -336,6 +336,7 @@ void confirmStreamBufReset(bsl::streambuf     *sb,
                            bool                checkUtf8,
                            bool                checkNumAvailAfterReset = true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&EXPECTED);
     Obj mX;  const Obj& X = mX;
     ASSERTV(LINE, X.tokenType(), Obj::e_BEGIN == X.tokenType());
 

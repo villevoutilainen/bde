@@ -642,6 +642,7 @@ class Tokenizer {
 inline
 Tokenizer::ContextType Tokenizer::popContext()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ContextType ret = e_NO_CONTEXT;
 
     if (!d_contextStack.empty()) {
@@ -655,6 +656,7 @@ Tokenizer::ContextType Tokenizer::popContext()
 inline
 void Tokenizer::pushContext(ContextType context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_contextStack.push_back(static_cast<char>(context));
 }
 
@@ -662,6 +664,7 @@ void Tokenizer::pushContext(ContextType context)
 inline
 Tokenizer::ContextType Tokenizer::context() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_contextStack.empty()
                ? e_NO_CONTEXT
                : static_cast<ContextType>(d_contextStack.back());
@@ -708,6 +711,7 @@ Tokenizer::~Tokenizer()
 inline
 void Tokenizer::reset(bsl::streambuf *streambuf)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_streambuf_p  = streambuf;
     d_stringBuffer.clear();
     d_cursor       = 0;
@@ -726,6 +730,7 @@ void Tokenizer::reset(bsl::streambuf *streambuf)
 inline
 Tokenizer& Tokenizer::setAllowConsecutiveSeparators(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_RELAXED == d_conformanceMode);
 
     d_allowConsecutiveSeparators = value;
@@ -735,6 +740,7 @@ Tokenizer& Tokenizer::setAllowConsecutiveSeparators(bool value)
 inline
 Tokenizer& Tokenizer::setAllowHeterogenousArrays(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_RELAXED == d_conformanceMode);
 
     d_allowHeterogenousArrays = value;
@@ -744,6 +750,7 @@ Tokenizer& Tokenizer::setAllowHeterogenousArrays(bool value)
 inline
 Tokenizer& Tokenizer::setAllowFormFeedAsWhitespace(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_RELAXED == d_conformanceMode);
 
     d_allowFormFeedAsWhitespace = value;
@@ -753,6 +760,7 @@ Tokenizer& Tokenizer::setAllowFormFeedAsWhitespace(bool value)
 inline
 Tokenizer& Tokenizer::setAllowNonUtf8StringLiterals(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_RELAXED == d_conformanceMode);
 
     d_allowNonUtf8StringLiterals = value;
@@ -762,6 +770,7 @@ Tokenizer& Tokenizer::setAllowNonUtf8StringLiterals(bool value)
 inline
 Tokenizer& Tokenizer::setAllowStandAloneValues(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_RELAXED == d_conformanceMode);
 
     d_allowStandAloneValues = value;
@@ -771,6 +780,7 @@ Tokenizer& Tokenizer::setAllowStandAloneValues(bool value)
 inline
 Tokenizer& Tokenizer::setAllowTrailingTopLevelComma(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_RELAXED == d_conformanceMode);
 
     d_allowTrailingTopLevelComma = value;
@@ -780,6 +790,7 @@ Tokenizer& Tokenizer::setAllowTrailingTopLevelComma(bool value)
 inline
 Tokenizer& Tokenizer::setAllowUnescapedControlCharacters(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_RELAXED == d_conformanceMode);
 
     d_allowUnescapedControlCharacters = value;
@@ -862,6 +873,7 @@ Tokenizer::ConformanceMode Tokenizer::conformanceMode() const
 inline
 bsls::Types::Uint64 Tokenizer::currentPosition() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_readOffset - d_stringBuffer.size() + d_cursor;
 }
 

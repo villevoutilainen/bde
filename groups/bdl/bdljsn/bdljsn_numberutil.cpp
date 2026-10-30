@@ -204,7 +204,7 @@ static bsl::string_view::const_iterator findFirstNonDigit(
 int NumberUtil::asUint64(bsls::Types::Uint64     *result,
                          const bsl::string_view&  value)
 {
-    BSLS_ASSERT(isValidNumber(value));
+    BSLS_ASSERT_NONCONVEYOR(isValidNumber(value));
 
     typedef NumberUtil_ImpUtil ImpUtil;
 
@@ -231,7 +231,7 @@ int NumberUtil::asUint64(bsls::Types::Uint64     *result,
     // `isNeg`).
 
     if ('0' == significantDigits[0]) {
-        BSLS_ASSERT(1 == significantDigits.size());
+        BSLS_ASSERT_NONCONVEYOR(1 == significantDigits.size());
         *result = 0;
         return 0;                                                     // RETURN
     }
@@ -321,8 +321,8 @@ int NumberUtil::asUint64(bsls::Types::Uint64     *result,
         digits     = adjustedSignificant.substr(0, significantDigitsDotOffset);
         moreDigits = adjustedSignificant.substr(significantDigitsDotOffset +
                                                 1);
-        BSLS_ASSERT(0 != digits.size());
-        BSLS_ASSERT(0 != moreDigits.size());
+        BSLS_ASSERT_NONCONVEYOR(0 != digits.size());
+        BSLS_ASSERT_NONCONVEYOR(0 != moreDigits.size());
     }
 
     Uint64 tmp;
@@ -377,7 +377,7 @@ int NumberUtil::asUint64(bsls::Types::Uint64     *result,
 
 bdldfp::Decimal64 NumberUtil::asDecimal64(const bsl::string_view& value)
 {
-    BSLS_ASSERT(NumberUtil::isValidNumber(value));
+    BSLS_ASSERT_NONCONVEYOR(NumberUtil::isValidNumber(value));
 
     // `parseDecimal64` expects a 0 terminated string, so we load a string
     // backed by stack buffer sufficient to store any normal Decimal64 value.
@@ -408,7 +408,7 @@ int NumberUtil::asDecimal64Exact(bdldfp::Decimal64       *result,
                                  const bsl::string_view&  value)
 {
     BSLS_ASSERT(result);
-    BSLS_ASSERT(isValidNumber(value));
+    BSLS_ASSERT_NONCONVEYOR(isValidNumber(value));
 
     // `parseDecimal64` expects a 0 terminated string, so we load a string
     // backed by stack buffer sufficient to store any normal Decimal64 value.
@@ -431,8 +431,8 @@ int NumberUtil::asDecimal64Exact(bdldfp::Decimal64       *result,
 bool NumberUtil::areEqual(const bsl::string_view& lhs,
                           const bsl::string_view& rhs)
 {
-    BSLS_ASSERT(isValidNumber(lhs));
-    BSLS_ASSERT(isValidNumber(rhs));
+    BSLS_ASSERT_NONCONVEYOR(isValidNumber(lhs));
+    BSLS_ASSERT_NONCONVEYOR(isValidNumber(rhs));
 
     typedef NumberUtil_ImpUtil ImpUtil;
 
@@ -619,7 +619,7 @@ bool NumberUtil::isValidNumber(const bsl::string_view& value)
 
 bool NumberUtil::isIntegralNumber(const bsl::string_view& value)
 {
-    BSLS_ASSERT(isValidNumber(value));
+    BSLS_ASSERT_NONCONVEYOR(isValidNumber(value));
 
     typedef NumberUtil_ImpUtil ImpUtil;
 
@@ -789,7 +789,7 @@ void NumberUtil_ImpUtil::decompose(
         *isNegative = false;
     }
 
-    BSLS_ASSERT(!input.empty());
+    BSLS_ASSERT_NONCONVEYOR(!input.empty());
 
     bsl::string_view::const_iterator intEnd =
                               u::findFirstNonDigit(input.begin(), input.end());

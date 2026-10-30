@@ -435,7 +435,7 @@ struct NumberUtil_ImpUtil {
 inline
 double NumberUtil::asDouble(const bsl::string_view& value)
 {
-    BSLS_ASSERT(NumberUtil::isValidNumber(value));
+    BSLS_ASSERT_NONCONVEYOR(NumberUtil::isValidNumber(value));
 
     double result;
 
@@ -560,7 +560,7 @@ int NumberUtil_ImpUtil::asIntegerDispatchImp(
     BSLMF_ASSERT(bsl::is_integral<t_INTEGER_TYPE>::value);
     BSLMF_ASSERT(bsl::numeric_limits<t_INTEGER_TYPE>::is_signed);
 
-    BSLS_ASSERT(NumberUtil::isValidNumber(value));
+    BSLS_ASSERT_NONCONVEYOR(NumberUtil::isValidNumber(value));
 
     bsl::string_view positiveValue = value;
 
@@ -605,7 +605,7 @@ int NumberUtil_ImpUtil::asIntegerDispatchImp(t_INTEGER_TYPE           *result,
     BSLMF_ASSERT(bsl::is_integral<t_INTEGER_TYPE>::value);
     BSLMF_ASSERT(!bsl::numeric_limits<t_INTEGER_TYPE>::is_signed);
 
-    BSLS_ASSERT(NumberUtil::isValidNumber(value));
+    BSLS_ASSERT_NONCONVEYOR(NumberUtil::isValidNumber(value));
 
     typedef bsls::Types::Uint64 Uint64;
 

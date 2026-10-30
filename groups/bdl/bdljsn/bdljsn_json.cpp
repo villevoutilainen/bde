@@ -106,6 +106,7 @@ bsl::ostream& JsonArray::print(bsl::ostream& stream,
                                int           level,
                                int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level > 0) {
         bdlb::Print::indent(stream, level, spacesPerLevel);
     }
@@ -139,6 +140,7 @@ bsl::ostream& JsonObject::print(bsl::ostream& stream,
                                 int           level,
                                 int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level > 0) {
         bdlb::Print::indent(stream, level, spacesPerLevel);
     }

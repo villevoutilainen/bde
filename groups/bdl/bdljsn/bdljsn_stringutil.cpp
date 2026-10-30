@@ -40,6 +40,7 @@ int readUnquotedStringImp(STRING                  *value,
                           const bsl::string_view&  string,
                           int                      flags)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
 
     value->clear();

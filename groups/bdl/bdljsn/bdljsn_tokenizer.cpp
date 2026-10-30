@@ -78,6 +78,7 @@ namespace bdljsn {
 // PRIVATE MANIPULATORS
 int Tokenizer::expandBufferForLargeValue()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bsl::string::size_type currLength = d_stringBuffer.length();
     d_stringBuffer.resize(currLength + k_MAX_STRING_SIZE);
 
@@ -117,6 +118,7 @@ int Tokenizer::expandBufferForLargeValue()
 
 int Tokenizer::extractStringValue()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool firstTime    = true;
     char previousChar = 0;
 
@@ -182,6 +184,7 @@ int Tokenizer::extractStringValue()
 
 int Tokenizer::moveValueCharsToStartAndReloadBuffer()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_stringBuffer.erase(d_stringBuffer.begin(),
                          d_stringBuffer.begin() + d_valueBegin);
     d_stringBuffer.resize(k_MAX_STRING_SIZE);
@@ -266,6 +269,7 @@ int Tokenizer::reloadStringBuffer()
 
 int Tokenizer::skipNonWhitespaceOrTillToken()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool firstTime = true;
 
     while (true) {
@@ -311,6 +315,7 @@ int Tokenizer::skipNonWhitespaceOrTillToken()
 
 int Tokenizer::skipWhitespace()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const char *k_WHITESPACE = d_allowFormFeedAsWhitespace
                              ? g_WHITESPACE_DEFAULT
                              : g_WHITESPACE_STRICT;
@@ -333,6 +338,7 @@ int Tokenizer::skipWhitespace()
 // MANIPULATORS
 int Tokenizer::advanceToNextToken()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_streambuf_p);
 
     if (e_ERROR == d_tokenType) {
@@ -699,6 +705,7 @@ int Tokenizer::advanceToNextToken()
 
 int Tokenizer::resetStreamBufGetPointer()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_streambuf_p);
 
     if (d_cursor >= d_stringBuffer.size()) {

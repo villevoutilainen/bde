@@ -2162,7 +2162,9 @@ class Json {
     /// Return a reference providing non-modifiable access to the value of type
     /// `JsonString` held by this object.  The behavior is undefined unless
     /// `isString()` returns true.
-    const bsl::string& theString() const;
+    const bsl::string& theString() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the type of this `Json` value.
     JsonType::Enum type() const BSLS_KEYWORD_NOEXCEPT;
@@ -2522,7 +2524,9 @@ class Json_Initializer {
 
     /// Return a reference providing non-modifiable access to the internal
     /// variant.
-    const Storage& get_storage() const;
+    const Storage& get_storage() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                            // ----------------------
@@ -2875,7 +2879,9 @@ class JsonObject_MemberInitializer {
 
     /// Return a reference providing non-modifiable access to the value that
     /// the object was created with.
-    const Json_Initializer& value() const;
+    const Json_Initializer& value() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 // BDE_VERIFY pragma: pop
 };
@@ -3240,6 +3246,7 @@ JsonArray& JsonArray::operator=(std::initializer_list<Json_Initializer>
 inline
 Json& JsonArray::operator[](bsl::size_t index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(index < d_elements.size());
     return d_elements[index];
 }
@@ -3248,6 +3255,7 @@ template <class t_INPUT_ITERATOR>
 inline
 JsonArray& JsonArray::assign(t_INPUT_ITERATOR first, t_INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.assign(first, last);
     return *this;
 }
@@ -3256,6 +3264,7 @@ JsonArray& JsonArray::assign(t_INPUT_ITERATOR first, t_INPUT_ITERATOR last)
 inline
 JsonArray& JsonArray::assign(std::initializer_list<Json_Initializer> elements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.assign(elements.begin(), elements.end());
     return *this;
 }
@@ -3264,30 +3273,35 @@ JsonArray& JsonArray::assign(std::initializer_list<Json_Initializer> elements)
 inline
 Json& JsonArray::back()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.back();
 }
 
 inline
 JsonArray::Iterator JsonArray::begin()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.begin();
 }
 
 inline
 void JsonArray::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.clear();
 }
 
 inline
 JsonArray::Iterator JsonArray::end()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.end();
 }
 
 inline
 JsonArray::Iterator JsonArray::erase(bsl::size_t index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.erase(d_elements.begin() + index);
 }
 
@@ -3306,6 +3320,7 @@ JsonArray::Iterator JsonArray::erase(ConstIterator first, ConstIterator last)
 inline
 Json& JsonArray::front()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.front();
 }
 
@@ -3316,7 +3331,9 @@ typename bsl::enable_if<bsl::is_integral<t_INDEX>::value
                         JsonArray::Iterator>::type
 JsonArray::insert(t_INDEX index, const Json& json)
 {
-    BSLS_ASSERT(isNonNegative(index));
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&json);
+    BSLS_ASSERT_NONCONVEYOR(isNonNegative(index));
 
     return d_elements.insert(d_elements.begin() + index, json);
 }
@@ -3328,7 +3345,8 @@ typename bsl::enable_if<bsl::is_integral<t_INDEX>::value
                         JsonArray::Iterator>::type
 JsonArray::insert(t_INDEX index, bslmf::MovableRef<Json> json)
 {
-    BSLS_ASSERT(isNonNegative(index));
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(isNonNegative(index));
 
     return d_elements.insert(d_elements.begin() + index,
                              bslmf::MovableRefUtil::move(json));
@@ -3343,7 +3361,8 @@ JsonArray::insert(t_INDEX          index,
                   t_INPUT_ITERATOR first,
                   t_INPUT_ITERATOR last)
 {
-    BSLS_ASSERT(isNonNegative(index));
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(isNonNegative(index));
 
     return d_elements.insert(d_elements.begin() + index, first, last);
 }
@@ -3351,6 +3370,8 @@ JsonArray::insert(t_INDEX          index,
 inline
 JsonArray::Iterator JsonArray::insert(ConstIterator position, const Json& json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&json);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.insert(position, json);
 }
 
@@ -3358,6 +3379,7 @@ inline
 JsonArray::Iterator JsonArray::insert(ConstIterator           position,
                                       bslmf::MovableRef<Json> json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.insert(position, bslmf::MovableRefUtil::move(json));
 }
 
@@ -3367,6 +3389,7 @@ JsonArray::Iterator JsonArray::insert(ConstIterator    position,
                                       t_INPUT_ITERATOR first,
                                       t_INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.insert(position, first, last);
 }
 
@@ -3379,6 +3402,8 @@ void JsonArray::popBack()
 inline
 JsonArray& JsonArray::pushBack(const Json& json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&json);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.push_back(json);
     return *this;
 }
@@ -3386,6 +3411,7 @@ JsonArray& JsonArray::pushBack(const Json& json)
 inline
 JsonArray& JsonArray::pushBack(bslmf::MovableRef<Json> json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.push_back(bslmf::MovableRefUtil::move(json));
     return *this;
 }
@@ -3393,6 +3419,8 @@ JsonArray& JsonArray::pushBack(bslmf::MovableRef<Json> json)
 inline
 JsonArray& JsonArray::pushBack(const JsonArray& array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&array);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(array);
     return *this;
 }
@@ -3400,6 +3428,8 @@ JsonArray& JsonArray::pushBack(const JsonArray& array)
 inline
 JsonArray& JsonArray::pushBack(const JsonObject& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(object);
     return *this;
 }
@@ -3407,6 +3437,8 @@ JsonArray& JsonArray::pushBack(const JsonObject& object)
 inline
 JsonArray& JsonArray::pushBack(const JsonNumber& number)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&number);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(number);
     return *this;
 }
@@ -3414,6 +3446,7 @@ JsonArray& JsonArray::pushBack(const JsonNumber& number)
 inline
 JsonArray& JsonArray::pushBack(bslmf::MovableRef<JsonArray> array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(bslmf::MovableRefUtil::move(array));
     return *this;
 }
@@ -3421,6 +3454,7 @@ JsonArray& JsonArray::pushBack(bslmf::MovableRef<JsonArray> array)
 inline
 JsonArray& JsonArray::pushBack(bslmf::MovableRef<JsonObject> object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(bslmf::MovableRefUtil::move(object));
     return *this;
 }
@@ -3428,6 +3462,7 @@ JsonArray& JsonArray::pushBack(bslmf::MovableRef<JsonObject> object)
 inline
 JsonArray& JsonArray::pushBack(bslmf::MovableRef<JsonNumber> number)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(bslmf::MovableRefUtil::move(number));
     return *this;
 }
@@ -3435,6 +3470,8 @@ JsonArray& JsonArray::pushBack(bslmf::MovableRef<JsonNumber> number)
 inline
 JsonArray& JsonArray::pushBack(const JsonNull& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3442,6 +3479,7 @@ JsonArray& JsonArray::pushBack(const JsonNull& value)
 inline
 JsonArray& JsonArray::pushBack(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3449,6 +3487,7 @@ JsonArray& JsonArray::pushBack(bool value)
 inline
 JsonArray& JsonArray::pushBack(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3456,6 +3495,7 @@ JsonArray& JsonArray::pushBack(int value)
 inline
 JsonArray& JsonArray::pushBack(unsigned int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3463,6 +3503,7 @@ JsonArray& JsonArray::pushBack(unsigned int value)
 inline
 JsonArray& JsonArray::pushBack(long value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3470,6 +3511,7 @@ JsonArray& JsonArray::pushBack(long value)
 inline
 JsonArray& JsonArray::pushBack(unsigned long value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3477,6 +3519,7 @@ JsonArray& JsonArray::pushBack(unsigned long value)
 inline
 JsonArray& JsonArray::pushBack(long long value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3484,6 +3527,7 @@ JsonArray& JsonArray::pushBack(long long value)
 inline
 JsonArray& JsonArray::pushBack(unsigned long long value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3491,6 +3535,7 @@ JsonArray& JsonArray::pushBack(unsigned long long value)
 inline
 JsonArray& JsonArray::pushBack(float value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3498,6 +3543,7 @@ JsonArray& JsonArray::pushBack(float value)
 inline
 JsonArray& JsonArray::pushBack(double value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3505,6 +3551,7 @@ JsonArray& JsonArray::pushBack(double value)
 inline
 JsonArray& JsonArray::pushBack(bdldfp::Decimal64 value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(value);
     return *this;
 }
@@ -3512,6 +3559,8 @@ JsonArray& JsonArray::pushBack(bdldfp::Decimal64 value)
 inline
 JsonArray& JsonArray::pushBack(const char *string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(string);
 
     d_elements.emplace_back(string);
@@ -3521,6 +3570,8 @@ JsonArray& JsonArray::pushBack(const char *string)
 inline
 JsonArray& JsonArray::pushBack(const bsl::string_view& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.emplace_back(string);
     return *this;
 }
@@ -3532,8 +3583,9 @@ typename bsl::enable_if<bsl::is_same<t_STRING_TYPE,
                         JsonArray&>::type
 JsonArray::pushBack(BSLMF_MOVABLEREF_DEDUCE(t_STRING_TYPE) string)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(
-                                       bslmf::MovableRefUtil::access(string)));
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(
+                                   static_cast<const bsl::string&>(string)));
 
     d_elements.emplace_back(bslmf::MovableRefUtil::move(string));
     return *this;
@@ -3542,19 +3594,22 @@ JsonArray::pushBack(BSLMF_MOVABLEREF_DEDUCE(t_STRING_TYPE) string)
 inline
 void JsonArray::resize(bsl::size_t count)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.resize(count);
 }
 
 inline
 void JsonArray::resize(bsl::size_t count, const Json& json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&json);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elements.resize(count, json);
 }
 
 inline
 void JsonArray::swap(JsonArray& other)
 {
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
     d_elements.swap(other.d_elements);
 }
 
@@ -3562,6 +3617,7 @@ void JsonArray::swap(JsonArray& other)
 inline
 const Json& JsonArray::operator[](bsl::size_t index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(index < d_elements.size());
     return d_elements[index];
 }
@@ -3569,48 +3625,56 @@ const Json& JsonArray::operator[](bsl::size_t index) const
 inline
 bslma::Allocator *JsonArray::allocator() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.get_allocator().mechanism();
 }
 
 inline
 const Json& JsonArray::back() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.back();
 }
 
 inline
 JsonArray::ConstIterator JsonArray::begin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.begin();
 }
 
 inline
 JsonArray::ConstIterator JsonArray::cbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.begin();
 }
 
 inline
 JsonArray::ConstIterator JsonArray::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.end();
 }
 
 inline
 bool JsonArray::empty() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.empty();
 }
 
 inline
 JsonArray::ConstIterator JsonArray::end() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.end();
 }
 
 inline
 const Json& JsonArray::front() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.front();
 }
 
@@ -3623,6 +3687,7 @@ bsl::size_t JsonArray::maxSize() const BSLS_KEYWORD_NOEXCEPT
 inline
 bsl::size_t JsonArray::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elements.size();
 }
 
@@ -3684,7 +3749,7 @@ JsonObject::JsonObject(t_INPUT_ITERATOR  first,
     for (Container::const_iterator itr  = d_members.begin(),
                                    end  = d_members.end();
                                    end != itr; ++itr) {
-        BSLS_ASSERT(bdlde::Utf8Util::isValid(itr->first));
+        BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(itr->first));
     }
 #endif
 }
@@ -3701,7 +3766,8 @@ JsonObject::JsonObject(
 
     for (const JsonObject_MemberInitializer& memberInitializer :
                                              memberInitializers) {
-        BSLS_ASSERT(bdlde::Utf8Util::isValid(memberInitializer.key()));
+        BSLS_ASSERT_NONCONVEYOR(
+                            bdlde::Utf8Util::isValid(memberInitializer.key()));
 
         d_members.emplace(memberInitializer.key(),
                           memberInitializer.value());
@@ -3720,6 +3786,7 @@ JsonObject& JsonObject::operator=(const JsonObject& rhs)
 inline
 JsonObject& JsonObject::operator=(bslmf::MovableRef<JsonObject> rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Implementation Note: We test allocators here per {DRQS 143521386<GO>}.
 
     Container& rhsMembers = bslmf::MovableRefUtil::access(rhs).d_members;
@@ -3737,12 +3804,14 @@ inline
 JsonObject& JsonObject::operator=(
         std::initializer_list<JsonObject_MemberInitializer> memberInitializers)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Container newContainer(d_members.get_allocator());
     newContainer.reserve(memberInitializers.size());
 
     for (const JsonObject_MemberInitializer& memberInitializer :
                                              memberInitializers) {
-        BSLS_ASSERT(bdlde::Utf8Util::isValid(memberInitializer.key()));
+        BSLS_ASSERT_NONCONVEYOR(
+                            bdlde::Utf8Util::isValid(memberInitializer.key()));
 
         newContainer.emplace(memberInitializer.key(),
                              memberInitializer.value());
@@ -3755,7 +3824,9 @@ JsonObject& JsonObject::operator=(
 inline
 Json& JsonObject::operator[](const bsl::string_view& key)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(key));
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(key));
 
     return d_members[key];
 }
@@ -3763,24 +3834,29 @@ Json& JsonObject::operator[](const bsl::string_view& key)
 inline
 JsonObject::Iterator JsonObject::begin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.begin();
 }
 
 inline
 void JsonObject::clear() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_members.clear();
 }
 
 inline
 JsonObject::Iterator JsonObject::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.end();
 }
 
 inline
 bsl::size_t JsonObject::erase(const bsl::string_view& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Iterator it = d_members.find(key);
     if (it == d_members.end()) {
         return 0;                                                     // RETURN
@@ -3792,24 +3868,30 @@ bsl::size_t JsonObject::erase(const bsl::string_view& key)
 inline
 JsonObject::Iterator JsonObject::erase(Iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.erase(position);
 }
 
 inline
 JsonObject::Iterator JsonObject::erase(ConstIterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.erase(position);
 }
 
 inline
 JsonObject::Iterator JsonObject::find(const bsl::string_view& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.find(key);
 }
 
 inline
 bsl::pair<JsonObject::Iterator, bool> JsonObject::insert(const Member& member)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&member);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.insert(member);
 }
 
@@ -3817,9 +3899,10 @@ inline
 bsl::pair<JsonObject::Iterator, bool> JsonObject::insert(
                                               bslmf::MovableRef<Member> member)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #ifdef BSLS_ASSERT_IS_ACTIVE
     const bsl::string& key = bslmf::MovableRefUtil::access(member).first;
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(key));
+    BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(key));
 #endif
     return d_members.insert(bslmf::MovableRefUtil::move(member));
 }
@@ -3831,11 +3914,12 @@ typename bsl::enable_if<
     JsonObject&>::type
 JsonObject::insert(t_INPUT_ITERATOR first, t_INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #ifdef BSLS_ASSERT_IS_ACTIVE
     for (Container::const_iterator itr  = d_members.begin(),
                                    end  = d_members.end();
                                    end != itr; ++itr) {
-        BSLS_ASSERT(bdlde::Utf8Util::isValid(itr->first));
+        BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(itr->first));
     }
 #endif
     d_members.insert(first, last);
@@ -3848,9 +3932,11 @@ JsonObject& JsonObject::insert(std::initializer_list<
                                                  JsonObject_MemberInitializer>
                                                             memberInitializers)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (const JsonObject_MemberInitializer& memberInitializer :
                                              memberInitializers) {
-        BSLS_ASSERT(bdlde::Utf8Util::isValid(memberInitializer.key()));
+        BSLS_ASSERT_NONCONVEYOR(
+                            bdlde::Utf8Util::isValid(memberInitializer.key()));
 
         d_members.emplace(memberInitializer.key(), memberInitializer.value());
     }
@@ -3863,7 +3949,9 @@ bsl::pair<JsonObject::Iterator, bool> JsonObject::insert(
                               const bsl::string_view&                    key,
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_VALUE) value)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(key));
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(key));
 
     return d_members.emplace(key,
                              BSLS_COMPILERFEATURES_FORWARD(t_VALUE, value));
@@ -3872,7 +3960,8 @@ bsl::pair<JsonObject::Iterator, bool> JsonObject::insert(
 inline
 void JsonObject::swap(JsonObject& other)
 {
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
     d_members.swap(other.d_members);
 }
 
@@ -3880,8 +3969,10 @@ void JsonObject::swap(JsonObject& other)
 inline
 const Json& JsonObject::operator[](const bsl::string_view& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     ConstIterator it = d_members.find(key);
-    BSLS_ASSERT(it != d_members.end());
+    BSLS_ASSERT_NONCONVEYOR(it != d_members.end());
     return it->second;
 }
 
@@ -3894,48 +3985,58 @@ bslma::Allocator *JsonObject::allocator() const BSLS_KEYWORD_NOEXCEPT
 inline
 JsonObject::ConstIterator JsonObject::begin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.begin();
 }
 
 inline
 JsonObject::ConstIterator JsonObject::cbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.cbegin();
 }
 
 inline
 JsonObject::ConstIterator JsonObject::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.cend();
 }
 
 inline
 bool JsonObject::contains(const bsl::string_view& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.find(key) != d_members.end();
 }
 
 inline
 bool JsonObject::empty() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.empty();
 }
 
 inline
 JsonObject::ConstIterator JsonObject::end() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.end();
 }
 
 inline
 JsonObject::ConstIterator JsonObject::find(const bsl::string_view& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.find(key);
 }
 
 inline
 bsl::size_t JsonObject::size() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_members.size();
 }
                                  // ----------
@@ -4080,6 +4181,7 @@ inline
 Json::Json(float value, bslma::Allocator *basicAllocator)
 : d_value(JsonNumber(value), basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -4098,7 +4200,7 @@ inline
 Json::Json(const char *string, bslma::Allocator *basicAllocator)
 : d_value(basicAllocator)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(string));
+    BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(string));
     d_value.createInPlace<bsl::string>(string);
 }
 
@@ -4106,7 +4208,9 @@ inline
 Json::Json(const bsl::string_view& string, bslma::Allocator *basicAllocator)
 : d_value(basicAllocator)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(string));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(string));
     d_value.createInPlace<bsl::string>(string);
 }
 
@@ -4118,8 +4222,8 @@ Json::Json(BSLMF_MOVABLEREF_DEDUCE(t_STRING_TYPE)  string,
                bsl::is_same<t_STRING_TYPE, bsl::string>::value>::type *)
 : d_value(bslmf::MovableRefUtil::move(string), basicAllocator)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(
-                   bslmf::MovableRefUtil::access(d_value.the<bsl::string>())));
+    BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(
+                                           d_value.the<bsl::string>()));
 }
 
 // MANIPULATORS
@@ -4133,6 +4237,7 @@ Json& Json::operator=(const Json& rhs)
 inline
 Json& Json::operator=(bslmf::MovableRef<Json> rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Json& rhsRef = bslmf::MovableRefUtil::access(rhs);
     d_value      = bslmf::MovableRefUtil::move(rhsRef.d_value);
     return *this;
@@ -4141,6 +4246,8 @@ Json& Json::operator=(bslmf::MovableRef<Json> rhs)
 inline
 Json& Json::operator=(float rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNumber>(rhs);
     return *this;
 }
@@ -4148,6 +4255,7 @@ Json& Json::operator=(float rhs)
 inline
 Json& Json::operator=(double rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNumber>(rhs);
     return *this;
 }
@@ -4155,6 +4263,7 @@ Json& Json::operator=(double rhs)
 inline
 Json& Json::operator=(bdldfp::Decimal64 rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNumber>(rhs);
     return *this;
 }
@@ -4162,6 +4271,7 @@ Json& Json::operator=(bdldfp::Decimal64 rhs)
 inline
 Json& Json::operator=(int rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNumber>(rhs);
     return *this;
 }
@@ -4169,6 +4279,7 @@ Json& Json::operator=(int rhs)
 inline
 Json& Json::operator=(unsigned int rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNumber>(rhs);
     return *this;
 }
@@ -4176,6 +4287,7 @@ Json& Json::operator=(unsigned int rhs)
 inline
 Json& Json::operator=(long rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNumber>(rhs);
     return *this;
 }
@@ -4183,6 +4295,7 @@ Json& Json::operator=(long rhs)
 inline
 Json& Json::operator=(unsigned long rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNumber>(rhs);
     return *this;
 }
@@ -4190,6 +4303,7 @@ Json& Json::operator=(unsigned long rhs)
 inline
 Json& Json::operator=(long long rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNumber>(rhs);
     return *this;
 }
@@ -4197,6 +4311,8 @@ Json& Json::operator=(long long rhs)
 inline
 Json& Json::operator=(unsigned long long rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNumber>(rhs);
     return *this;
 }
@@ -4204,6 +4320,8 @@ Json& Json::operator=(unsigned long long rhs)
 inline
 Json& Json::operator=(const JsonNumber& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNumber>(rhs);
     return *this;
 }
@@ -4218,6 +4336,7 @@ Json& Json::operator=(bslmf::MovableRef<JsonNumber> rhs)
 inline
 Json& Json::operator=(const char *rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     makeString(rhs);
     return *this;
 }
@@ -4225,6 +4344,7 @@ Json& Json::operator=(const char *rhs)
 inline
 Json& Json::operator=(const bsl::string_view& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     makeString(rhs);
     return *this;
 }
@@ -4255,6 +4375,7 @@ Json& Json::operator=(const JsonObject& rhs)
 inline
 Json& Json::operator=(bslmf::MovableRef<JsonObject> rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     makeObject(bslmf::MovableRefUtil::move(rhs));
     return *this;
 }
@@ -4262,6 +4383,7 @@ Json& Json::operator=(bslmf::MovableRef<JsonObject> rhs)
 inline
 Json& Json::operator=(const JsonArray& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     makeArray(rhs);
     return *this;
 }
@@ -4269,6 +4391,7 @@ Json& Json::operator=(const JsonArray& rhs)
 inline
 Json& Json::operator=(bslmf::MovableRef<JsonArray> rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     makeArray(bslmf::MovableRefUtil::move(rhs));
     return *this;
 }
@@ -4276,6 +4399,7 @@ Json& Json::operator=(bslmf::MovableRef<JsonArray> rhs)
 inline
 Json& Json::operator=(const JsonNull& )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     makeNull();
     return *this;
 }
@@ -4283,6 +4407,7 @@ Json& Json::operator=(const JsonNull& )
 inline
 Json& Json::operator=(bslmf::MovableRef<JsonNull>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     makeNull();
     return *this;
 }
@@ -4290,12 +4415,14 @@ Json& Json::operator=(bslmf::MovableRef<JsonNull>)
 inline
 JsonArray& Json::makeArray()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.createInPlace<JsonArray>();
 }
 
 inline
 JsonArray& Json::makeArray(const JsonArray& array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value = array;
     return d_value.the<JsonArray>();
 }
@@ -4303,6 +4430,7 @@ JsonArray& Json::makeArray(const JsonArray& array)
 inline
 JsonArray& Json::makeArray(bslmf::MovableRef<JsonArray> array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value = bslmf::MovableRefUtil::move(array);
     return d_value.the<JsonArray>();
 }
@@ -4310,12 +4438,14 @@ JsonArray& Json::makeArray(bslmf::MovableRef<JsonArray> array)
 inline
 bool& Json::makeBoolean()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.createInPlace<bool>();
 }
 
 inline
 bool& Json::makeBoolean(bool boolean)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value = boolean;
     return d_value.the<bool>();
 }
@@ -4323,18 +4453,21 @@ bool& Json::makeBoolean(bool boolean)
 inline
 void Json::makeNull()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<JsonNull>();
 }
 
 inline
 JsonNumber& Json::makeNumber()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.createInPlace<JsonNumber>();
 }
 
 inline
 JsonNumber& Json::makeNumber(const JsonNumber& number)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value = number;
     return d_value.the<JsonNumber>();
 }
@@ -4342,6 +4475,7 @@ JsonNumber& Json::makeNumber(const JsonNumber& number)
 inline
 JsonNumber& Json::makeNumber(bslmf::MovableRef<JsonNumber> number)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value = bslmf::MovableRefUtil::move(number);
     return d_value.the<JsonNumber>();
 }
@@ -4349,12 +4483,14 @@ JsonNumber& Json::makeNumber(bslmf::MovableRef<JsonNumber> number)
 inline
 JsonObject& Json::makeObject()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.createInPlace<JsonObject>();
 }
 
 inline
 JsonObject& Json::makeObject(const JsonObject& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value = object;
     return d_value.the<JsonObject>();
 }
@@ -4362,6 +4498,7 @@ JsonObject& Json::makeObject(const JsonObject& object)
 inline
 JsonObject& Json::makeObject(bslmf::MovableRef<JsonObject> object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value = bslmf::MovableRefUtil::move(object);
     return d_value.the<JsonObject>();
 }
@@ -4369,14 +4506,18 @@ JsonObject& Json::makeObject(bslmf::MovableRef<JsonObject> object)
 inline
 void Json::makeString(const char *string)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(string));
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(string));
     d_value.createInPlace<bsl::string>(string);
 }
 
 inline
 void Json::makeString(const bsl::string_view& string)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(string.data(), string.size()));
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
+    BSLS_ASSERT_NONCONVEYOR(
+                       bdlde::Utf8Util::isValid(string.data(), string.size()));
     d_value.createInPlace<bsl::string>(string);
 }
 
@@ -4385,8 +4526,8 @@ inline
 typename bsl::enable_if<bsl::is_same<t_STRING_TYPE, bsl::string>::value>::type
 Json::makeString(BSLMF_MOVABLEREF_DEDUCE(t_STRING_TYPE) string)
 {
-    BSLS_ASSERT(bdlde::Utf8Util::isValid(
-                                       bslmf::MovableRefUtil::access(string)));
+    BSLS_ASSERT_NONCONVEYOR(bdlde::Utf8Util::isValid(
+                                   static_cast<const bsl::string&>(string)));
     d_value = bslmf::MovableRefUtil::move(string);
 }
 
@@ -4396,7 +4537,7 @@ inline
 bsl::pair<JsonObject::Iterator, bool> Json::insert(
                                               const JsonObject::Member& member)
 {
-    BSLS_ASSERT(isObject() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isObject() || isNull());
     if (isNull()) {
         makeObject();
     }
@@ -4408,7 +4549,7 @@ bsl::pair<JsonObject::Iterator, bool> Json::insert(
                                     bslmf::MovableRef<JsonObject::Member>
                                                                        member)
 {
-    BSLS_ASSERT(isObject() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isObject() || isNull());
     if (isNull()) {
         makeObject();
     }
@@ -4422,7 +4563,7 @@ typename bsl::enable_if<!bsl::is_convertible<t_INPUT_ITERATOR,
                         Json&>::type
 Json::insert(t_INPUT_ITERATOR first, t_INPUT_ITERATOR last)
 {
-    BSLS_ASSERT(isObject() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isObject() || isNull());
     if (isNull()) {
         makeObject();
     }
@@ -4435,7 +4576,7 @@ inline
 Json& Json::insert(std::initializer_list<JsonObject_MemberInitializer>
                                                          memberInitializers)
 {
-    BSLS_ASSERT(isObject() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isObject() || isNull());
     if (isNull()) {
         makeObject();
     }
@@ -4453,7 +4594,7 @@ typename bsl::enable_if<!bsl::is_integral   <t_STRING_VIEW>::value
 Json::insert(const t_STRING_VIEW&                       key,
              BSLS_COMPILERFEATURES_FORWARD_REF(t_VALUE) value)
 {
-    BSLS_ASSERT(isObject() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isObject() || isNull());
     if (isNull()) {
         makeObject();
     }
@@ -4470,7 +4611,7 @@ typename bsl::enable_if<bsl::is_integral<t_INDEX>::value
                         JsonArray::Iterator>::type
 Json::insert(t_INDEX index, const Json& json)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
 
     if (isNull()) {
         makeArray();
@@ -4485,7 +4626,7 @@ typename bsl::enable_if<bsl::is_integral<t_INDEX>::value
                         JsonArray::Iterator>::type
 Json::insert(t_INDEX index, bslmf::MovableRef<Json> json)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
 
     if (isNull()) {
         makeArray();
@@ -4502,7 +4643,7 @@ Json::insert(t_INDEX          index,
              t_INPUT_ITERATOR first,
              t_INPUT_ITERATOR last)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
 
     if (isNull()) {
         makeArray();
@@ -4514,7 +4655,7 @@ inline
 JsonArray::Iterator Json::insert(JsonArray::ConstIterator position,
                                  const Json&              json)
 {
-    BSLS_ASSERT(isArray());
+    BSLS_ASSERT_NONCONVEYOR(isArray());
     return theArray().insert(position, json);
 }
 
@@ -4522,7 +4663,7 @@ inline
 JsonArray::Iterator Json::insert(JsonArray::ConstIterator position,
                                  bslmf::MovableRef<Json>  json)
 {
-    BSLS_ASSERT(isArray());
+    BSLS_ASSERT_NONCONVEYOR(isArray());
     return theArray().insert(position, bslmf::MovableRefUtil::move(json));
 }
 
@@ -4532,7 +4673,7 @@ JsonArray::Iterator Json::insert(JsonArray::ConstIterator position,
                                  t_INPUT_ITERATOR         first,
                                  t_INPUT_ITERATOR         last)
 {
-    BSLS_ASSERT(isArray());
+    BSLS_ASSERT_NONCONVEYOR(isArray());
     return theArray().insert(position, first, last);
 }
 
@@ -4541,7 +4682,7 @@ JsonArray::Iterator Json::insert(JsonArray::ConstIterator position,
 inline
 Json& Json::pushBack(const Json& json)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4552,7 +4693,7 @@ Json& Json::pushBack(const Json& json)
 inline
 Json& Json::pushBack(const JsonArray& array)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4563,7 +4704,7 @@ Json& Json::pushBack(const JsonArray& array)
 inline
 Json& Json::pushBack(const JsonObject& object)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4574,7 +4715,7 @@ Json& Json::pushBack(const JsonObject& object)
 inline
 Json& Json::pushBack(const JsonNumber& number)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4585,7 +4726,7 @@ Json& Json::pushBack(const JsonNumber& number)
 inline
 Json& Json::pushBack(bslmf::MovableRef<Json> json)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4596,7 +4737,7 @@ Json& Json::pushBack(bslmf::MovableRef<Json> json)
 inline
 Json& Json::pushBack(bslmf::MovableRef<JsonArray> array)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4607,7 +4748,7 @@ Json& Json::pushBack(bslmf::MovableRef<JsonArray> array)
 inline
 Json& Json::pushBack(bslmf::MovableRef<JsonObject> object)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4618,7 +4759,7 @@ Json& Json::pushBack(bslmf::MovableRef<JsonObject> object)
 inline
 Json& Json::pushBack(bslmf::MovableRef<JsonNumber> number)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4629,7 +4770,7 @@ Json& Json::pushBack(bslmf::MovableRef<JsonNumber> number)
 inline
 Json& Json::pushBack(const JsonNull& value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4640,7 +4781,7 @@ Json& Json::pushBack(const JsonNull& value)
 inline
 Json& Json::pushBack(bool value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4651,7 +4792,7 @@ Json& Json::pushBack(bool value)
 inline
 Json& Json::pushBack(int value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4662,7 +4803,7 @@ Json& Json::pushBack(int value)
 inline
 Json& Json::pushBack(unsigned int value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4673,7 +4814,7 @@ Json& Json::pushBack(unsigned int value)
 inline
 Json& Json::pushBack(long value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4684,7 +4825,7 @@ Json& Json::pushBack(long value)
 inline
 Json& Json::pushBack(unsigned long value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4695,7 +4836,7 @@ Json& Json::pushBack(unsigned long value)
 inline
 Json& Json::pushBack(long long value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4706,7 +4847,7 @@ Json& Json::pushBack(long long value)
 inline
 Json& Json::pushBack(unsigned long long value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4717,7 +4858,7 @@ Json& Json::pushBack(unsigned long long value)
 inline
 Json& Json::pushBack(float value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4728,7 +4869,7 @@ Json& Json::pushBack(float value)
 inline
 Json& Json::pushBack(double value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4739,7 +4880,7 @@ Json& Json::pushBack(double value)
 inline
 Json& Json::pushBack(bdldfp::Decimal64 value)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4751,7 +4892,7 @@ inline
 Json& Json::pushBack(const char *string)
 {
     BSLS_ASSERT(string);
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4762,7 +4903,7 @@ Json& Json::pushBack(const char *string)
 inline
 Json& Json::pushBack(const bsl::string_view& string)
 {
-    BSLS_ASSERT(isArray() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isNull());
     if (isNull()) {
         makeArray();
     }
@@ -4788,6 +4929,7 @@ Json::pushBack(BSLMF_MOVABLEREF_DEDUCE(t_STRING_TYPE) string)
 template <class RETURN_TYPE, class VISITOR>
 RETURN_TYPE Json::visit(BSLS_COMPILERFEATURES_FORWARD_REF(VISITOR) visitor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef Json_VisitUtil Util;
 
     switch (type()) {
@@ -4830,6 +4972,7 @@ RETURN_TYPE Json::visit(BSLS_COMPILERFEATURES_FORWARD_REF(VISITOR) visitor)
 template <class VISITOR>
 decltype(auto) Json::visit(BSLS_COMPILERFEATURES_FORWARD_REF(VISITOR) visitor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     using Util = Json_VisitUtil;
 
     switch (type()) {
@@ -4868,7 +5011,7 @@ decltype(auto) Json::visit(BSLS_COMPILERFEATURES_FORWARD_REF(VISITOR) visitor)
 inline
 void Json::swap(Json& other)
 {
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
     d_value.swap(other.d_value);
 }
 
@@ -4912,30 +5055,35 @@ bool Json::isString() const
 inline
 JsonArray& Json::theArray()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<JsonArray>();
 }
 
 inline
 bool& Json::theBoolean()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<bool>();
 }
 
 inline
 JsonNull& Json::theNull()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<JsonNull>();
 }
 
 inline
 JsonNumber& Json::theNumber()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<JsonNumber>();
 }
 
 inline
 JsonObject& Json::theObject()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<JsonObject>();
 }
 
@@ -4974,7 +5122,7 @@ Json::operator JsonObject &()
 inline
 Json& Json::operator[](const bsl::string_view& key)
 {
-    BSLS_ASSERT(isObject() || isNull());
+    BSLS_ASSERT_NONCONVEYOR(isObject() || isNull());
     if (isNull()) {
         makeObject();
     }
@@ -4984,7 +5132,7 @@ Json& Json::operator[](const bsl::string_view& key)
 inline
 Json& Json::operator[](bsl::size_t index)
 {
-    BSLS_ASSERT(d_value.is<JsonArray>());
+    BSLS_ASSERT_NONCONVEYOR(d_value.is<JsonArray>());
     return theArray()[index];
 }
 
@@ -4992,14 +5140,14 @@ Json& Json::operator[](bsl::size_t index)
 inline
 bsl::size_t Json::size() const
 {
-    BSLS_ASSERT(isArray() || isObject());
+    BSLS_ASSERT_NONCONVEYOR(isArray() || isObject());
     return isArray() ? theArray().size() : theObject().size();
 }
 
 inline
 bool Json::contains(const bsl::string_view& key) const
 {
-    BSLS_ASSERT(isObject());
+    BSLS_ASSERT_NONCONVEYOR(isObject());
     return theObject().contains(key);
 }
 
@@ -5008,98 +5156,101 @@ bool Json::contains(const bsl::string_view& key) const
 inline
 bdldfp::Decimal64 Json::asDecimal64() const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asDecimal64();
 }
 
 inline
 int Json::asDecimal64Exact(bdldfp::Decimal64 *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asDecimal64Exact(result);
 }
 
 inline
 double Json::asDouble() const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asDouble();
 }
 
 inline
 float Json::asFloat() const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asFloat();
 }
 
 inline
 int Json::asShort(short *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asShort(result);
 }
 
 inline
 int Json::asInt(int *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asInt(result);
 }
 
 inline
 int Json::asLong(long *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asLong(result);
 }
 
 inline
 int Json::asLonglong(long long *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asLonglong(result);
 }
 
 inline
 int Json::asInt64(bsls::Types::Int64 *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asInt64(result);
 }
 
 inline
 int Json::asUshort(unsigned short *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asUshort(result);
 }
 
 inline
 int Json::asUint(unsigned int *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asUint(result);
 }
 
 inline
 int Json::asUlong(unsigned long  *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asUlong(result);
 }
 
 inline
 int Json::asUlonglong(unsigned long long  *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asUlonglong(result);
 }
 
 inline
 int Json::asUint64(bsls::Types::Uint64 *result) const
 {
-    BSLS_ASSERT(isNumber());
+    BSLS_ASSERT_NONCONVEYOR(isNumber());
     return theNumber().asUint64(result);
 }
 
@@ -5108,36 +5259,42 @@ int Json::asUint64(bsls::Types::Uint64 *result) const
 inline
 const JsonArray& Json::theArray() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<JsonArray>();
 }
 
 inline
 const bool& Json::theBoolean() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<bool>();
 }
 
 inline
 const JsonNull& Json::theNull() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<JsonNull>();
 }
 
 inline
 const JsonNumber& Json::theNumber() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<JsonNumber>();
 }
 
 inline
 const JsonObject& Json::theObject() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<JsonObject>();
 }
 
 inline
 const bsl::string& Json::theString() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.the<bsl::string>();
 }
 
@@ -5149,14 +5306,14 @@ JsonType::Enum Json::type() const BSLS_KEYWORD_NOEXCEPT
 inline
 const Json& Json::operator[](const bsl::string_view& key) const
 {
-    BSLS_ASSERT(d_value.is<JsonObject>());
+    BSLS_ASSERT_NONCONVEYOR(d_value.is<JsonObject>());
     return theObject()[key];
 }
 
 inline
 const Json& Json::operator[](bsl::size_t index) const
 {
-    BSLS_ASSERT(d_value.is<JsonArray>());
+    BSLS_ASSERT_NONCONVEYOR(d_value.is<JsonArray>());
     return theArray()[index];
 }
 
@@ -5202,6 +5359,7 @@ template <class RETURN_TYPE, class VISITOR>
 RETURN_TYPE Json::visit(BSLS_COMPILERFEATURES_FORWARD_REF(VISITOR) visitor)
                                                                           const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef Json_VisitUtil Util;
 
     switch (type()) {
@@ -5240,6 +5398,7 @@ template <class VISITOR>
 decltype(auto) Json::visit(BSLS_COMPILERFEATURES_FORWARD_REF(VISITOR) visitor)
                                                                           const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     using Util = Json_VisitUtil;
 
     switch (type()) {
@@ -5290,6 +5449,8 @@ inline
 bool bdljsn::operator==(const bdljsn::JsonArray& lhs,
                         const bdljsn::JsonArray& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_elements == rhs.d_elements;
 }
 
@@ -5297,6 +5458,8 @@ inline
 bool bdljsn::operator!=(const bdljsn::JsonArray& lhs,
                         const bdljsn::JsonArray& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_elements != rhs.d_elements;
 }
 
@@ -5317,6 +5480,8 @@ inline
 bool bdljsn::operator==(const bdljsn::JsonObject& lhs,
                         const bdljsn::JsonObject& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_members == rhs.d_members;
 }
 
@@ -5324,6 +5489,8 @@ inline
 bool bdljsn::operator!=(const bdljsn::JsonObject& lhs,
                         const bdljsn::JsonObject& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_members != rhs.d_members;
 }
 
@@ -5443,12 +5610,14 @@ bool bdljsn::operator==(double lhs, const Json& rhs)
 inline
 bool bdljsn::operator==(bdldfp::Decimal64 lhs, const Json& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.isNumber() && rhs.theNumber() == JsonNumber(lhs);
 }
 
 inline
 bool bdljsn::operator==(const char *lhs, const Json& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT(lhs);
     return rhs.isString() && rhs.theString() == lhs;
 }
@@ -5540,12 +5709,14 @@ bool bdljsn::operator==(const Json& lhs, double rhs)
 inline
 bool bdljsn::operator==(const Json& lhs, bdldfp::Decimal64 rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs.isNumber() && lhs.theNumber() == JsonNumber(rhs);
 }
 
 inline
 bool bdljsn::operator==(const Json& lhs, const char *rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT(rhs);
     return lhs.isString() && lhs.theString() == rhs;
 }
@@ -5637,12 +5808,14 @@ bool bdljsn::operator!=(double lhs, const Json& rhs)
 inline
 bool bdljsn::operator!=(bdldfp::Decimal64 lhs, const Json& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !rhs.isNumber() || rhs.theNumber() != JsonNumber(lhs);
 }
 
 inline
 bool bdljsn::operator!=(const char *lhs, const Json& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT(lhs);
     return !rhs.isString() || rhs.theString() != lhs;
 }
@@ -5734,12 +5907,14 @@ bool bdljsn::operator!=(const Json& lhs, double rhs)
 inline
 bool bdljsn::operator!=(const Json& lhs, bdldfp::Decimal64 rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return !lhs.isNumber() || lhs.theNumber() != JsonNumber(rhs);
 }
 
 inline
 bool bdljsn::operator!=(const Json& lhs, const char *rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT(rhs);
     return !lhs.isString() || lhs.theString() != rhs;
 }
