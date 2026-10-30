@@ -181,8 +181,8 @@ template <class ENTRY>
 class FlatHashTable_IteratorImp;
 
 template <class ENTRY>
-bool operator==(const class FlatHashTable_IteratorImp<ENTRY>&,
-                const class FlatHashTable_IteratorImp<ENTRY>&);
+bool operator==(const FlatHashTable_IteratorImp<ENTRY>& a,
+                const FlatHashTable_IteratorImp<ENTRY>& b);
 
                      // ===============================
                      // class FlatHashTable_IteratorImp
@@ -416,7 +416,8 @@ class FlatHashTable
                 ENTRY *entry = entryStart + offset;
 
                 if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(
-                                      d_equal(ENTRY_UTIL::key(*entry), key))) {
+                    d_equal(ENTRY_UTIL::key(*entry),
+                            BSLS_ASSERT_CONVEYOR_REF(key)))) {
                     return index + offset;                            // RETURN
                 }
                 candidates = bdlb::BitUtil::withBitCleared(candidates, offset);
@@ -532,12 +533,13 @@ class FlatHashTable
     /// Return an iterator referring to the (possibly newly inserted) object
     /// in this table with the `key`.
     template <class KEY_TYPE>
-    ENTRY& operator[](BSLS_COMPILERFEATURES_FORWARD_REF(KEY_TYPE) key);
+    ENTRY& operator[](BSLS_COMPILERFEATURES_FORWARD_REF(KEY_TYPE) key)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all entries from this table.  Note that this table will be
     /// empty after calling this method, but allocated memory may be
     /// retained for future use.  See the `capacity` method.
-    void clear();
+    void clear() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a pair of iterators providing modifiable access to the
     /// sequence of objects in this flat hash table having the specified
@@ -547,7 +549,8 @@ class FlatHashTable
     /// two returned iterators will have the same value, `end()`.  Note that
     /// since each key in a flat hash table is unique, the returned range
     /// contains at most one element.
-    bsl::pair<iterator, iterator> equal_range(const KEY& key);
+    bsl::pair<iterator, iterator> equal_range(const KEY& key)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a pair of iterators providing non-modifiable access to the
     /// sequence of objects in this table having a key equivalent to the
@@ -562,7 +565,7 @@ class FlatHashTable
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::pair<iterator, iterator> >::type
-    equal_range(const LOOKUP_KEY& key)
+    equal_range(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -582,14 +585,15 @@ class FlatHashTable
     /// hash table, return an iterator to that entry and `false`.  This
     /// method requires that the `ENTRY` be `copy-constructible`.
     template< class... ARGS>
-    bsl::pair<iterator, bool> emplace(ARGS&&... args);
+    bsl::pair<iterator, bool> emplace(ARGS&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Remove from this table the object having the specified `key`, if it
     /// exists, and return 1; otherwise (there is no object with a key equal
     /// to `key` in this table) return 0 with no other effect.  This method
     /// invalidates all iterators, and references to the removed element.
-    bsl::size_t erase(const KEY& key);
+    bsl::size_t erase(const KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Remove from this table the object having the specified `key`, if it
@@ -601,7 +605,7 @@ class FlatHashTable
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::size_t>::type
-    erase(LOOKUP_KEY&& key)
+    erase(LOOKUP_KEY&& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -621,8 +625,8 @@ class FlatHashTable
     /// by this table.  This method invalidates all iterators, and
     /// references to the removed element.  The behavior is undefined unless
     /// `position` refers to an object in this table.
-    iterator erase(const_iterator position);
-    iterator erase(iterator position);
+    iterator erase(const_iterator position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator erase(iterator position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this table the objects starting at the specified `first`
     /// position up to, but not including, the specified `last` position,
@@ -631,12 +635,13 @@ class FlatHashTable
     /// `first` and `last` either refer to elements in this table or are the
     /// `end` iterator, and the `first` position is at or before the `last`
     /// position in the iteration sequence provided by this container.
-    iterator erase(const_iterator first, const_iterator last);
+    iterator erase(const_iterator first, const_iterator last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing modifiable access to the object in this
     /// flat hash table with a key equal to the specified `key`, if such an
     /// entry exists, and `end()` otherwise.
-    iterator find(const KEY& key);
+    iterator find(const KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator providing modifiable access to the object in this
     /// flat hash table with a key equivalent to the specified `key`, if such
@@ -646,7 +651,7 @@ class FlatHashTable
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , iterator>::type
-    find(const LOOKUP_KEY& key)
+    find(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -669,8 +674,10 @@ class FlatHashTable
     /// movable types that are not bitwise copyable will be copied (to avoid
     /// confusion with regard to calling the `entry` destructor after this
     /// call).
-    bsl::pair<iterator, bool> insert(const ENTRY &entry);
-    bsl::pair<iterator, bool> insert(bslmf::MovableRef<ENTRY> entry);
+    bsl::pair<iterator, bool> insert(const ENTRY &entry)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::pair<iterator, bool> insert(bslmf::MovableRef<ENTRY> entry)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Insert the specified `key` into this table if a key equivalent to `key`
@@ -688,7 +695,7 @@ class FlatHashTable
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::pair<iterator, bool> >::type
-    insertTransparent(LOOKUP_KEY&& key)
+    insertTransparent(LOOKUP_KEY&& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note that some compilers require functions declared with 'enable_if'
         // to be defined inline.
@@ -729,7 +736,8 @@ class FlatHashTable
     /// `first` and `last` refer to a sequence of valid values where `first`
     /// is at a position at or before `last`.
     template <class INPUT_ITERATOR>
-    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last);
+    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Change the capacity of this table to at least the specified
     /// `minimumCapacity`, and redistribute all the contained elements into
@@ -738,7 +746,8 @@ class FlatHashTable
     /// the zero-capacity state.  On return, `load_factor()` is less than or
     /// equal to `max_load_factor()` and all iterators, pointers, and
     /// references to elements of this `FlatHashTable` are invalidated.
-    void rehash(bsl::size_t minimumCapacity);
+    void rehash(bsl::size_t minimumCapacity)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Change the capacity of this table to at least a capacity that can
     /// accommodate the specified `numEntries` (accounting for the load
@@ -751,11 +760,11 @@ class FlatHashTable
     /// ```
     ///    rehash(bsl::ceil(numEntries / max_load_factor()))
     /// ```
-    void reserve(bsl::size_t numEntries);
+    void reserve(bsl::size_t numEntries) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all entries from this table and release all memory from this
     /// table, returning the table to the zero-capacity state.
-    void reset();
+    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// If a key equivalent to the specified `key` already exists in this
@@ -768,7 +777,8 @@ class FlatHashTable
     /// `key` and `args` respectively.  For C++03, `VALUE` must also be
     /// `copy-constructible`.
     template< class... ARGS>
-    bsl::pair<iterator, bool> try_emplace(const KEY& key, ARGS&&... args);
+    bsl::pair<iterator, bool> try_emplace(const KEY& key, ARGS&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this
     /// map, return a pair containing an iterator referring to the existing
@@ -782,7 +792,8 @@ class FlatHashTable
     template <class... ARGS>
     bsl::pair<iterator, bool> try_emplace(
                                      BloombergLP::bslmf::MovableRef<KEY> key,
-                                     ARGS&&...                           args);
+                                     ARGS&&...                           args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// If a key equivalent to the specified `key` already exists in this map
     /// return a pair containing an iterator referring to the existing
@@ -799,6 +810,7 @@ class FlatHashTable
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::pair<iterator, bool> >::type
     try_emplace(LOOKUP_KEY&& key, ARGS&&... args)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: `args` contains `piecewise_construct` and `key`
         bool        notFound;
@@ -827,11 +839,11 @@ class FlatHashTable
 
     /// Return an iterator representing the beginning of the sequence of
     /// entries held by this container.
-    iterator begin();
+    iterator begin() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator representing one past the end of the sequence of
     /// entries held by this container.
-    iterator end();
+    iterator end() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                            // Aspects
 
@@ -845,11 +857,11 @@ class FlatHashTable
 
     /// Return the number of elements this table could hold if the load
     /// factor were 1.
-    bsl::size_t capacity() const;
+    bsl::size_t capacity() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this table contains an entry having the specified
     /// `key`, and `false` otherwise.
-    bool contains(const KEY& key) const;
+    bool contains(const KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the address of the first element of the underlying array of
     /// control values in this table, or 0 if this table is in the
@@ -857,23 +869,23 @@ class FlatHashTable
     /// `FlatHashTable_GroupControl::k_EMPTY`,
     /// `FlatHashTable_GroupControl::k_ERASED`, or a seven bit hashlet value
     /// for the in-use position (the highest-order bit is unset).
-    const bsl::uint8_t *controls() const;
+    const bsl::uint8_t *controls() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of objects contained within this table having the
     /// specified `key`.  Note that since a table maintains unique keys, the
     /// returned value will be either 0 or 1.
-    bsl::size_t count(const KEY& key) const;
+    bsl::size_t count(const KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this table contains no entries, and `false`
     /// otherwise.
-    bool empty() const;
+    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the address of the first element of the underlying array of
     /// entries in this table, or 0 if this table is in the zero-capacity
     /// state.  The behavior is undefined unless the address is verified
     /// in-use through use of the `controls` array before dereferencing an
     /// entry in this array.
-    const ENTRY *entries() const;
+    const ENTRY *entries() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a pair of iterators providing non-modifiable access to the
     /// sequence of objects in this table having the specified `key`, where
@@ -884,7 +896,8 @@ class FlatHashTable
     /// table maintains unique keys, the range will contain at most one
     /// entry.
     bsl::pair<const_iterator, const_iterator> equal_range(
-                                                         const KEY& key) const;
+                                                         const KEY& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a pair of iterators providing non-modifiable access to the
     /// sequence of objects in this table having a key equivalent to the
@@ -899,7 +912,7 @@ class FlatHashTable
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::pair<const_iterator, const_iterator> >::type
-    equal_range(const LOOKUP_KEY& key) const
+    equal_range(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             // Note: implemented inline due to Sun CC compilation error.
 
@@ -914,7 +927,8 @@ class FlatHashTable
     /// Return an iterator representing the position of the entry in this
     /// flat hash table having the specified `key`, or `end()` if no such
     /// entry exists in this table.
-    const_iterator find(const KEY& key) const;
+    const_iterator find(const KEY& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator representing the position of the entry in this
     /// flat hash table that is equivalent to the specified `key`, or `end()`
@@ -924,7 +938,7 @@ class FlatHashTable
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , const_iterator>::type
-    find(const LOOKUP_KEY& key) const
+    find(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
         {
             // Note: implemented inline due to Sun CC compilation error.
 
@@ -940,16 +954,16 @@ class FlatHashTable
     /// Return (a copy of) the unary hash functor used by this flat hash
     /// table to generate a hash value (of type `bsl::size_t) for a `KEY'
     /// object.
-    HASH hash_function() const;
+    HASH hash_function() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return (a copy of) the binary key-equality functor used by this flat
     /// hash table that returns `true` if two `KEY` objects are equal, and
     /// `false` otherwise.
-    EQUAL key_eq() const;
+    EQUAL key_eq() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the current ratio between the number of elements in this
     /// table and its capacity.
-    float load_factor() const;
+    float load_factor() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the maximum load factor allowed for this table.  Note that if
     /// an insert operation would cause the load factor to exceed the
@@ -957,29 +971,29 @@ class FlatHashTable
     /// capacity and rehash the entries of the container (see `insert` and
     /// `rehash`).  Note that the value returned by `max_load_factor` is
     /// implementation dependent and cannot be changed by the user.
-    float max_load_factor() const;
+    float max_load_factor() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of entries in this table.
-    bsl::size_t size() const;
+    bsl::size_t size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                           // Iterators
 
-    const_iterator begin() const;
+    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator representing the beginning of the sequence of
     /// entries held by this container.
-    const_iterator cbegin() const;
+    const_iterator cbegin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
-    const_iterator cend() const;
+    const_iterator cend() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator representing one past the end of the sequence of
     /// entries held by this container.
-    const_iterator end() const;
+    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                            // Aspects
 
     /// Return the allocator used by this hash table to supply memory.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // FREE OPERATORS
@@ -992,7 +1006,8 @@ class FlatHashTable
 /// type `ENTRY` to be equality-comparable.
 template <class KEY, class ENTRY, class ENTRY_UTIL, class HASH, class EQUAL>
 bool operator==(const FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& lhs,
-                const FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& rhs);
+                const FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
 /// same value, and `false` otherwise.  Two `FlatHashTable` objects do not
@@ -1002,7 +1017,8 @@ bool operator==(const FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& lhs,
 /// parameter) type `ENTRY` to be equality-comparable.
 template <class KEY, class ENTRY, class ENTRY_UTIL, class HASH, class EQUAL>
 bool operator!=(const FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& lhs,
-                const FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& rhs);
+                const FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // FREE FUNCTIONS
 
@@ -1011,7 +1027,8 @@ bool operator!=(const FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& lhs,
 /// created with the same allocator and the basic guarantee otherwise.
 template <class KEY, class ENTRY, class ENTRY_UTIL, class HASH, class EQUAL>
 void swap(FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& a,
-          FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& b);
+          FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& b)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
                        // =============================
                        // struct FlatHashTable_ImplUtil
@@ -1340,6 +1357,8 @@ inline
 bool bdlc::operator==(const FlatHashTable_IteratorImp<ENTRY>& a,
                       const FlatHashTable_IteratorImp<ENTRY>& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
     return a.d_entries_p        == b.d_entries_p
         && a.d_controls_p       == b.d_controls_p
         && a.d_additionalLength == b.d_additionalLength;
@@ -1503,7 +1522,8 @@ bsl::size_t FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::findKey(
             ENTRY *entry = entryStart + offset;
 
             if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(
-                                      d_equal(ENTRY_UTIL::key(*entry), key))) {
+                    d_equal(ENTRY_UTIL::key(*entry),
+                            BSLS_ASSERT_CONVEYOR_REF(key)))) {
                 return index + offset;                                // RETURN
             }
             candidates = bdlb::BitUtil::withBitCleared(candidates, offset);
@@ -1598,8 +1618,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::FlatHashTable(
 , d_size(0)
 , d_capacity(0)
 , d_groupControlShift(0)
-, d_hasher(original.hash_function())
-, d_equal(original.key_eq())
+, d_hasher(BSLS_ASSERT_CONVEYOR_REF(original).hash_function())
+, d_equal(BSLS_ASSERT_CONVEYOR_REF(original).key_eq())
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
     if (0 != original.d_capacity) {
@@ -1717,7 +1737,7 @@ template <class KEY, class ENTRY, class ENTRY_UTIL, class HASH, class EQUAL>
 inline
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::~FlatHashTable()
 {
-    BSLS_ASSERT(
+    BSLS_ASSERT_NONCONVEYOR(
         (d_capacity == 0 && d_groupControlShift == 0) ||
         (d_groupControlShift ==
          static_cast<int>(sizeof(bsl::size_t) * 8 -

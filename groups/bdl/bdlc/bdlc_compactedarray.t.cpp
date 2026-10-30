@@ -384,15 +384,19 @@ int ggg(Obj *object, const char *spec, int verboseFlag = 1)
         else if (rv == -1) {
             bsl::string value;
             value += v;
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->append(value);
         }
         else if (rv == -2) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->append(bsl::string());
         }
         else if (rv == -3) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->removeAll();
         }
         else {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->pop_back();
         }
     }
@@ -403,6 +407,8 @@ int ggg(Obj *object, const char *spec, int verboseFlag = 1)
 /// Return, by reference, the specified `object` with its value adjusted
 /// according to the specified `spec`.
 Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(ggg(object, spec) < 0);
     return *object;
@@ -911,6 +917,15 @@ int main(int argc, char *argv[])
 
                         Iterator iter(X.begin());
                         iter += index;
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                         ASSERTV(ILINE, JLINE, *iter == X[index]);
 
                         Obj mY;
@@ -919,6 +934,15 @@ int main(int argc, char *argv[])
                         // Verify `append` does not invalidate the iterator.
 
                         mX.append(mY);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                         ASSERTV(ILINE, JLINE, *iter == X[index]);
 
                         // Verify reducing the size does not invalidate the
@@ -926,6 +950,15 @@ int main(int argc, char *argv[])
 
                         mX.pop_back();
                         while (mX.length() > index) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                             ASSERTV(ILINE, JLINE, *iter == X[index]);
                             mX.pop_back();
                         }
@@ -940,6 +973,15 @@ int main(int argc, char *argv[])
 
                         Iterator iter(X.begin());
                         iter += index;
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                         ASSERTV(ILINE, JLINE, *iter == X[index]);
 
                         Obj mY;  const Obj& Y = gg(&mY, JSPEC);
@@ -947,6 +989,15 @@ int main(int argc, char *argv[])
                         // Verify assignment does not invalidate the iterator.
 
                         mX = Y;
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                         ASSERTV(ILINE, JLINE, *iter == X[index]);
                     }
                 }
@@ -1030,44 +1081,134 @@ int main(int argc, char *argv[])
                     for (int j = 0; j < static_cast<int>(LEN); ++j) {
                         if (i + j < static_cast<int>(LEN)) {
                             Iterator iter2 = iter + j;
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
                             LOOP2_ASSERT(i, j, *iter2 == X[i + j]);
 
                             Iterator iter3 = j + iter;
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter3);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter3);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter3);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter3);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter3);
                             LOOP2_ASSERT(i, j, *iter3 == X[i + j]);
 
                             Iterator iter4 = iter;
                             iter4 += j;
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter4);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter4);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter4);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter4);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter4);
                             LOOP2_ASSERT(i, j, *iter4 == X[i + j]);
 
                             LOOP2_ASSERT(i, j, iter4 - iter ==  j);
                             LOOP2_ASSERT(i, j, iter - iter4 == -j);
 
                             Iterator iter5 = iter - (-j);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter5);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter5);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter5);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter5);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter5);
                             LOOP2_ASSERT(i, j, *iter5 == X[i + j]);
 
                             Iterator iter6 = iter;
                             iter6 -= (-j);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter6);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter6);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter6);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter6);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter6);
                             LOOP2_ASSERT(i, j, *iter6 == X[i + j]);
                         }
                         if (i - j >= 0) {
                             Iterator iter2 = iter - j;
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
                             LOOP2_ASSERT(i, j, *iter2 == X[i - j]);
 
                             Iterator iter3 = iter;
                             iter3 -= j;
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter3);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter3);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter3);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter3);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter3);
                             LOOP2_ASSERT(i, j, *iter3 == X[i - j]);
 
                             LOOP2_ASSERT(i, j, iter3 - iter == -j);
                             LOOP2_ASSERT(i, j, iter - iter3 ==  j);
 
                             Iterator iter4 = iter + (-j);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter4);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter4);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter4);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter4);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter4);
                             LOOP2_ASSERT(i, j, *iter4 == X[i - j]);
 
                             Iterator iter5 = (-j) + iter;
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter5);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter5);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter5);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter5);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter5);
                             LOOP2_ASSERT(i, j, *iter5 == X[i - j]);
 
                             Iterator iter6 = iter;
                             iter6 += (-j);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter6);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter6);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter6);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter6);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter6);
                             LOOP2_ASSERT(i, j, *iter6 == X[i - j]);
                         }
                     }
@@ -1204,9 +1345,45 @@ int main(int argc, char *argv[])
                 for (Iterator iter2 = X.begin(); iter2 != X.end(); ++iter2) {
                     if (veryVerbose) { P_(*iter1) P(*iter2) }
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
                     ASSERT((iter1 <  iter2) == (*iter1 <  *iter2));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
                     ASSERT((iter1 <= iter2) == (*iter1 <= *iter2));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
                     ASSERT((iter1 >  iter2) == (*iter1 >  *iter2));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter1);
                     ASSERT((iter1 >= iter2) == (*iter1 >= *iter2));
                 }
             }
@@ -1435,16 +1612,52 @@ int main(int argc, char *argv[])
                 for (int i = 0; i < static_cast<int>(LEN); ++i) {
                     // Verify `operator*` and `operator->`.
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                     LOOP_ASSERT(i, *iter == X[i]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                     LOOP_ASSERT(i, iter.operator->() == X[i]);
 
                     // Verify `operator[]` including with negative index.
 
                     for (int j = 0; j < static_cast<int>(LEN); ++j) {
                         if (i + j < static_cast<int>(LEN)) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                             LOOP2_ASSERT(i, j, iter[ j] == X[i + j]);
                         }
                         if (i - j >= 0) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
                             LOOP2_ASSERT(i, j, iter[-j] == X[i - j]);
                         }
                     }
@@ -1479,6 +1692,15 @@ int main(int argc, char *argv[])
                 mY = X;
                 iter = Y.begin();
                 ASSERT(iter == initialBegin);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&iter);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
                 ASSERT(Y.isEmpty() || *iter == Y[0]);
             }
         }
@@ -1588,7 +1810,9 @@ int main(int argc, char *argv[])
                 bsls::Types::Int64 allocations =
                                              defaultAllocator.numAllocations();
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(LINE, FRONT == X.front());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(LINE, BACK  == X.back());
 
                 LOOP_ASSERT(LINE,
@@ -4231,11 +4455,15 @@ int main(int argc, char *argv[])
                     LOOP2_ASSERT(LINE, CONFIG,
                                  sizeof(Obj) == fa.numBytesInUse());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = mX;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(X) }
 
                     bslma::TestAllocator&  oa = *objAllocatorPtr;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
                     bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
                     // Ensure the first row of the table contains the
@@ -4957,12 +5185,14 @@ int main(int argc, char *argv[])
                 for (bsl::size_t i = 0; i < X.length(); i++) {
                     if (veryVerbose) { P_(EXP[i]) P(X[i]) }
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP_ASSERT(LINE, bsl::string(EXP + i, 1) == X[i]);
                 }
 
                 for (bsl::size_t i = 0; i < X.uniqueLength(); i++) {
                     if (veryVerbose) { P_(UNIQUE[i]) P(X.uniqueElement(i)); }
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP_ASSERT(LINE, bsl::string(UNIQUE + i, 1)
                                                         == X.uniqueElement(i));
                 }
@@ -5075,12 +5305,14 @@ int main(int argc, char *argv[])
                 for (bsl::size_t i = 0; i < X.length(); i++) {
                     if (veryVerbose) { P_(EXP[i]) P(X[i]) }
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP_ASSERT(LINE, bsl::string(EXP + i, 1) == X[i]);
                 }
 
                 for (bsl::size_t i = 0; i < X.uniqueLength(); i++) {
                     if (veryVerbose) { P_(UNIQUE[i]) P(X.uniqueElement(i)); }
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP_ASSERT(LINE, bsl::string(UNIQUE + i, 1)
                                                         == X.uniqueElement(i));
                 }
@@ -5489,6 +5721,7 @@ int main(int argc, char *argv[])
             ASSERT(1 == X.length());
             ASSERT(1 == X.uniqueLength());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(X[0] == "a");
 
             ASSERT(true  == (X == X));
@@ -5510,7 +5743,9 @@ int main(int argc, char *argv[])
             ASSERT(2 == X.length());
             ASSERT(2 == X.uniqueLength());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(X[0] == "a");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(X[1] == "b");
 
             mX.append("c");
@@ -5520,8 +5755,11 @@ int main(int argc, char *argv[])
             ASSERT(3 == X.length());
             ASSERT(3 == X.uniqueLength());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(X[0] == "a");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(X[1] == "b");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(X[2] == "c");
 
             mX.append("a");
@@ -5531,9 +5769,13 @@ int main(int argc, char *argv[])
             ASSERT(4 == X.length());
             ASSERT(3 == X.uniqueLength());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(X[0] == "a");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(X[1] == "b");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(X[2] == "c");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(X[3] == "a");
         }
 
@@ -5552,6 +5794,7 @@ int main(int argc, char *argv[])
             ASSERT(1 == Y.length());
             ASSERT(1 == Y.uniqueLength());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
             ASSERT(Y[0] == "a");
 
             ASSERT(true  == (X == Y));

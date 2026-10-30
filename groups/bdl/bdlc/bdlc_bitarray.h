@@ -496,7 +496,9 @@ class BitArray {
     static const bsl::uint64_t s_minusOne = ~static_cast<bsl::uint64_t>(0);
 
     // FRIENDS
-    friend bool operator==(const BitArray&, const BitArray&);
+    friend bool operator==(const BitArray& lhs, const BitArray& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
   private:
     // PRIVATE CLASS METHODS
@@ -576,7 +578,8 @@ class BitArray {
     /// most-significant bits that are represented in one of the two but not
     /// the other will be set to 0.  Note that `a &= b;` will result in the
     /// same value of `a` as `a = a & b;`.
-    BitArray& operator&=(const BitArray& rhs);
+    BitArray& operator&=(const BitArray& rhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Bitwise MINUS the value of the specified `rhs` array from the value
     /// of this array (retaining the results), and return a non-`const`
@@ -589,7 +592,8 @@ class BitArray {
     /// of `a` as `a = a - b;` and if `a` and `b` are the same length,
     /// `a -= b;` will result in the same value of `a` as `a &= ~b;` or
     /// `a = a & ~b;`.
-    BitArray& operator-=(const BitArray& rhs);
+    BitArray& operator-=(const BitArray& rhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Bitwise OR the value of the specified `rhs` array with the value of
     /// this array (retaining the results), and return a non-`const`
@@ -598,7 +602,8 @@ class BitArray {
     /// otherwise, any unmatched most-significant bits in `rhs` are
     /// propagated to the result without modification.  Note that `a |= b;`
     /// will result in the same value of `a` as `a = a | b;`.
-    BitArray& operator|=(const BitArray& rhs);
+    BitArray& operator|=(const BitArray& rhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Bitwise XOR the value of the specified `rhs` array with the value of
     /// this array (retaining the results), and return a non-`const`
@@ -607,7 +612,8 @@ class BitArray {
     /// otherwise, any unmatched most-significant bits in `rhs` are
     /// propagated to the result without modification.  Note that `a ^= b;`
     /// will result in the same value of `a` as `a = a ^ b;`.
-    BitArray& operator^=(const BitArray& rhs);
+    BitArray& operator^=(const BitArray& rhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Shift the bits in this array LEFT by the specified `numBits`,
     /// filling lower-order bits with zeros (retaining the results), and
@@ -615,19 +621,22 @@ class BitArray {
     /// undefined unless `numBits <= length()`.  Note that the length of
     /// this array is unchanged and the highest-order `numBits` are
     /// discarded.
-    BitArray& operator<<=(bsl::size_t numBits);
+    BitArray& operator<<=(bsl::size_t numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Shift the bits in this array RIGHT by the specified `numBits`,
     /// filling higher-order bits with zeros and discarding low-order bits,
     /// and return a non-`const` reference to this object.  The behavior is
     /// undefined unless `numBits <= length()`.  Note that the length of
     /// this array is unchanged.
-    BitArray& operator>>=(bsl::size_t numBits);
+    BitArray& operator>>=(bsl::size_t numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// AND the bit at the specified `index` in this array with the
     /// specified `value` (retaining the result).  The behavior is undefined
     /// unless `index < length()`.
-    void andEqual(bsl::size_t index, bool value);
+    void andEqual(bsl::size_t index, bool value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Bitwise AND the specified `numBits` in this array, beginning at the
     /// specified `dstIndex`, with values from the specified `srcArray`,
@@ -637,28 +646,29 @@ class BitArray {
     void andEqual(bsl::size_t     dstIndex,
                   const BitArray& srcArray,
                   bsl::size_t     srcIndex,
-                  bsl::size_t     numBits);
+                  bsl::size_t     numBits) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append to this array the specified `value`.  Note that this method
     /// has the same behavior as:
     /// ```
     /// insert(length(), value);
     /// ```
-    void append(bool value);
+    void append(bool value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append to this array the specified `numBits` having the specified
     /// `value`.  Note that this method has the same behavior as:
     /// ```
     /// insert(length(), value, numBits);
     /// ```
-    void append(bool value, bsl::size_t numBits);
+    void append(bool value, bsl::size_t numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append to this array the values from the specified `srcArray`.  Note
     /// that this method has the same behavior as:
     /// ```
     /// insert(length(), srcArray);
     /// ```
-    void append(const BitArray& srcArray);
+    void append(const BitArray& srcArray) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append to this array the specified `numBits` from the specified
     /// `srcArray`, beginning at the specified `srcIndex`.  The behavior is
@@ -669,17 +679,19 @@ class BitArray {
     /// ```
     void append(const BitArray& srcArray,
                 bsl::size_t     srcIndex,
-                bsl::size_t     numBits);
+                bsl::size_t     numBits) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the value at the specified `index` in this array to the
     /// specified `value`.  The behavior is undefined unless
     /// `index < length()`.
-    void assign(bsl::size_t index, bool value);
+    void assign(bsl::size_t index, bool value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the value of the specified `numBits` bits starting at the
     /// specified `index` in this array to the specified `value`.  The
     /// behavior is undefined unless `index + numBits < length()`.
-    void assign(bsl::size_t index, bool value, bsl::size_t numBits);
+    void assign(bsl::size_t index, bool value, bsl::size_t numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Replace the specified `numBits` in this array, beginning at the
     /// specified `dstIndex`, with values from the specified `srcArray`
@@ -695,34 +707,36 @@ class BitArray {
     void assign(bsl::size_t     dstIndex,
                 const BitArray& srcArray,
                 bsl::size_t     srcIndex,
-                bsl::size_t     numBits);
+                bsl::size_t     numBits) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set to 0 the value of the bit at the specified `index` in this
     /// array.  The behavior is undefined unless `index < length()`.
-    void assign0(bsl::size_t index);
+    void assign0(bsl::size_t index) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set to 0 the specified `numBits` values in this array, beginning at
     /// the specified `index`.  The behavior is undefined unless
     /// `index + numBits <= length()`.
-    void assign0(bsl::size_t index, bsl::size_t numBits);
+    void assign0(bsl::size_t index, bsl::size_t numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set to 1 the value of the bit at the specified `index` in this
     /// array.  The behavior is undefined unless `index < length()`.
-    void assign1(bsl::size_t index);
+    void assign1(bsl::size_t index) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set to 1 the specified `numBits` values in this array, beginning at
     /// the specified `index`.  The behavior is undefined unless
     /// `index + numBits <= length()`.
-    void assign1(bsl::size_t index, bsl::size_t numBits);
+    void assign1(bsl::size_t index, bsl::size_t numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set all bits in this array to the specified `value`.
-    void assignAll(bool value);
+    void assignAll(bool value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set to 0 the value of every bit in this array.
-    void assignAll0();
+    void assignAll0() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set to 1 the value of every bit in this array.
-    void assignAll1();
+    void assignAll1() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Assign the low-order specified `numBits` from the specified
     /// `srcBits` to this object, starting at the specified `index`.  The
@@ -730,26 +744,29 @@ class BitArray {
     /// `index + numBits <= length()`.
     void assignBits(bsl::size_t   index,
                     bsl::uint64_t srcBits,
-                    bsl::size_t   numBits);
+                    bsl::size_t   numBits) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array at the specified `dstIndex` the specified
     /// `value`.  All values with indices at or above `dstIndex` in this
     /// array are shifted up by one bit position.  The behavior is undefined
     /// unless `dstIndex <= length()`.
-    void insert(bsl::size_t dstIndex, bool value);
+    void insert(bsl::size_t dstIndex, bool value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array at the specified `dstIndex` the specified
     /// `numBits` having the specified `value`.  All values with indices at
     /// or above `dstIndex` in this array are shifted up by `numBits` bit
     /// positions.  The behavior is undefined unless `dstIndex <= length()`.
-    void insert(bsl::size_t dstIndex, bool value, bsl::size_t numBits);
+    void insert(bsl::size_t dstIndex, bool value, bsl::size_t numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array, beginning at the specified `dstIndex`, the
     /// values from the specified `srcArray`.  All values with indices at or
     /// above `dstIndex` in this array are shifted up by `srcArray.length()`
     /// bit positions.  The behavior is undefined unless
     /// `dstIndex <= length()`.
-    void insert(bsl::size_t dstIndex, const BitArray& srcArray);
+    void insert(bsl::size_t dstIndex, const BitArray& srcArray)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array, beginning at the specified `dstIndex`, the
     /// specified `numBits` from the specified `srcArray` beginning at the
@@ -760,13 +777,14 @@ class BitArray {
     void insert(bsl::size_t     dstIndex,
                 const BitArray& srcArray,
                 bsl::size_t     srcIndex,
-                bsl::size_t     numBits);
+                bsl::size_t     numBits) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// MINUS (subtract) from the bit at the specified `index` in this array
     /// the specified `value` (retaining the result).  The behavior is
     /// undefined unless `index < length()`.  Note that the logical
     /// difference `A - B` is defined to be `A & !B`.
-    void minusEqual(bsl::size_t index, bool value);
+    void minusEqual(bsl::size_t index, bool value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Bitwise MINUS (subtract) from the specified `numBits` in this array,
     /// beginning at the specified `dstIndex`, values from the specified
@@ -778,12 +796,14 @@ class BitArray {
     void minusEqual(bsl::size_t     dstIndex,
                     const BitArray& srcArray,
                     bsl::size_t     srcIndex,
-                    bsl::size_t     numBits);
+                    bsl::size_t     numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// OR the bit at the specified `index` in this array with the specified
     /// `value` (retaining the result).  The behavior is undefined unless
     /// `index < length()`.
-    void orEqual(bsl::size_t index, bool value);
+    void orEqual(bsl::size_t index, bool value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Bitwise OR the specified `numBits` in this array, beginning at the
     /// specified `dstIndex`, with values from the specified `srcArray`
@@ -793,76 +813,82 @@ class BitArray {
     void orEqual(bsl::size_t     dstIndex,
                  const BitArray& srcArray,
                  bsl::size_t     srcIndex,
-                 bsl::size_t     numBits);
+                 bsl::size_t     numBits) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this array the bit at the specified `index`.  All values
     /// at indices above `index` in this array are shifted down by one bit
     /// position.  The length of this array is reduced by 1.  The behavior
     /// is undefined unless `index < length()`.
-    void remove(bsl::size_t index);
+    void remove(bsl::size_t index) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this array the specified `numBits`, beginning at the
     /// specified `index`.  All values at indices above `index` in this
     /// array are shifted down by `numBits` positions.  The length of this
     /// array is reduced by `numBits`.  The behavior is undefined unless
     /// `index + numBits <= length()`.
-    void remove(bsl::size_t index, bsl::size_t numBits);
+    void remove(bsl::size_t index, bsl::size_t numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all of the bits in this array, leaving the length 0, but
     /// having no effect on capacity.
-    void removeAll();
+    void removeAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reserve sufficient internal capacity to accommodate a length of at
     /// least the specified `numBits` without reallocation.  If an exception
     /// is thrown during this reallocation attempt (i.e., by the memory
     /// allocator indicated at construction) the value of this array is
     /// guaranteed to be unchanged.
-    void reserveCapacity(bsl::size_t numBits);
+    void reserveCapacity(bsl::size_t numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Shift the values in this array to the left by the specified
     /// `numBits` positions, with the high-order values "rotating" into the
     /// low-order bits.  The behavior is undefined unless
     /// `numBits <= length()`.  Note that the length of this array remains
     /// unchanged.
-    void rotateLeft(bsl::size_t numBits);
+    void rotateLeft(bsl::size_t numBits) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Shift the values in this array to the right by the specified
     /// `numBits` positions, with the low-order values "rotating" into the
     /// high-order bits.  The behavior is undefined unless
     /// `numBits <= length()`.  Note that the length of this array remains
     /// unchanged.
-    void rotateRight(bsl::size_t numBits);
+    void rotateRight(bsl::size_t numBits) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the number of bits in this array to the specified `newLength`.
     /// If `newLength < length()`, bits at index positions at or above
     /// `newLength` are removed; otherwise, any new bits (at or above the
     /// current length) are initialized to the optionally specified `value`,
     /// or to 0 if `value` is not specified.
-    void setLength(bsl::size_t newLength, bool value = false);
+    void setLength(bsl::size_t newLength, bool value = false)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Efficiently exchange the values of the bits at the specified
     /// `index1` and `index2` indices.  The behavior is undefined unless
     /// `index1 < length()` and `index2 < length()`.
-    void swapBits(bsl::size_t index1, bsl::size_t index2);
+    void swapBits(bsl::size_t index1, bsl::size_t index2)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Complement the value of the bit at the specified `index` in this
     /// array.  The behavior is undefined unless `index < length()`.
-    void toggle(bsl::size_t index);
+    void toggle(bsl::size_t index) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Complement the values of each of the specified `numBits` in this
     /// array, beginning at the specified `index`.  The behavior is
     /// undefined unless `index + numBits <= length()`.
-    void toggle(bsl::size_t index, bsl::size_t numBits);
+    void toggle(bsl::size_t index, bsl::size_t numBits)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Complement the value of every bit in this array.  Note that the
     /// behavior is analogous to applying the `~` operator to an object of
     /// fundamental type `unsigned int`.
-    void toggleAll();
+    void toggleAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// XOR the bit at the specified `index` in this array with the
     /// specified `value` (retaining the result).  The behavior is undefined
     /// unless `index < length()`.
-    void xorEqual(bsl::size_t index, bool value);
+    void xorEqual(bsl::size_t index, bool value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Bitwise XOR the specified `numBits` in this array, beginning at the
     /// specified `dstIndex`, with values from the specified `srcArray`
@@ -872,7 +898,7 @@ class BitArray {
     void xorEqual(bsl::size_t     dstIndex,
                   const BitArray& srcArray,
                   bsl::size_t     srcIndex,
-                  bsl::size_t     numBits);
+                  bsl::size_t     numBits) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                 // Aspects
 
@@ -887,7 +913,8 @@ class BitArray {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version);
+    STREAM& bdexStreamIn(STREAM& stream, int version)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Efficiently exchange the value of this object with the value of the
     /// specified `other` object.  This method provides the no-throw
@@ -899,14 +926,16 @@ class BitArray {
 
     /// Return the value of the bit at the specified `index` in this array.
     /// The behavior is undefined unless `index < length()`.
-    bool operator[](bsl::size_t index) const;
+    bool operator[](bsl::size_t index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the specified `numBits` beginning at the specified `index` in
     /// this array as the low-order bits of the returned value.  The
     /// behavior is undefined unless
     /// `numBits <= sizeof(uint64_t) * CHAR_BIT` and
     /// `index + numBits <= length()`.
-    bsl::uint64_t bits(bsl::size_t index, bsl::size_t numBits) const;
+    bsl::uint64_t bits(bsl::size_t index, bsl::size_t numBits) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the index of the most-significant 0 bit in this array in the
     /// range optionally specified by `begin` and `end`, and
@@ -915,7 +944,8 @@ class BitArray {
     /// is not specified and `effectiveEnd == end` otherwise.  The behavior
     /// is undefined unless `begin <= effectiveEnd <= length()`.
     bsl::size_t find0AtMaxIndex(bsl::size_t begin = 0,
-                                bsl::size_t end   = k_INVALID_INDEX) const;
+                                bsl::size_t end   = k_INVALID_INDEX) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the index of the least-significant 0 bit in this array in the
     /// range optionally specified by `begin` and `end`, and
@@ -924,7 +954,8 @@ class BitArray {
     /// is not specified and `effectiveEnd == end` otherwise.  The behavior
     /// is undefined unless `begin <= effectiveEnd <= length()`.
     bsl::size_t find0AtMinIndex(bsl::size_t begin = 0,
-                                bsl::size_t end   = k_INVALID_INDEX) const;
+                                bsl::size_t end   = k_INVALID_INDEX) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the index of the most-significant 1 bit in this array in the
     /// range optionally specified by `begin` and `end`, and
@@ -933,7 +964,8 @@ class BitArray {
     /// is not specified and `effectiveEnd == end` otherwise.  The behavior
     /// is undefined unless `begin <= effectiveEnd <= length()`.
     bsl::size_t find1AtMaxIndex(bsl::size_t begin = 0,
-                                bsl::size_t end   = k_INVALID_INDEX) const;
+                                bsl::size_t end   = k_INVALID_INDEX) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the index of the least-significant 1 bit in this array in the
     /// range optionally specified by `begin` and `end`, and
@@ -942,22 +974,23 @@ class BitArray {
     /// is not specified and `effectiveEnd == end` otherwise.  The behavior
     /// is undefined unless `begin <= effectiveEnd <= length()`.
     bsl::size_t find1AtMinIndex(bsl::size_t begin = 0,
-                                bsl::size_t end   = k_INVALID_INDEX) const;
+                                bsl::size_t end   = k_INVALID_INDEX) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the value of any bit in this array is 0, and
     /// `false` otherwise.
-    bool isAny0() const;
+    bool isAny0() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the value of any bit in this array is 1, and
     /// `false` otherwise.
-    bool isAny1() const;
+    bool isAny1() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if the length of this bit array is 0, and `false`
     /// otherwise.
-    bool isEmpty() const;
+    bool isEmpty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of bits in this array.
-    bsl::size_t length() const;
+    bsl::size_t length() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of bits in the range optionally specified by
     /// `begin` and `end` having a value of 0.  The range is
@@ -965,7 +998,8 @@ class BitArray {
     /// is not specified and `effectiveEnd == end` otherwise.  The behavior
     /// is undefined unless `begin <= effectiveEnd <= length()`.
     bsl::size_t num0(bsl::size_t begin = 0,
-                     bsl::size_t end   = k_INVALID_INDEX) const;
+                     bsl::size_t end   = k_INVALID_INDEX) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of bits in the range optionally specified by
     /// `begin` and `end` having a value of 1.  The range is
@@ -973,12 +1007,13 @@ class BitArray {
     /// is not specified and `effectiveEnd == end` otherwise.  The behavior
     /// is undefined unless `begin <= effectiveEnd <= length()`.
     bsl::size_t num1(bsl::size_t begin = 0,
-                     bsl::size_t end   = k_INVALID_INDEX) const;
+                     bsl::size_t end   = k_INVALID_INDEX) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                                 // Aspects
 
     /// Return the allocator used by this object to supply memory.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Write the value of this object, using the specified `version`
     /// format, to the specified output `stream`, and return a reference to
@@ -989,7 +1024,8 @@ class BitArray {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Format this object to the specified output `stream` at the
     /// optionally specified indentation `level` and return a non-`const`
@@ -1004,7 +1040,8 @@ class BitArray {
     /// only.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const;
+                        int           spacesPerLevel = 4) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
 
@@ -1025,24 +1062,27 @@ class BitArray {
 /// value, and `false` otherwise.  Two arrays have the same value if they
 /// have the same length, and corresponding bits at each bit position have
 /// the same value.
-bool operator==(const BitArray& lhs, const BitArray& rhs);
+bool operator==(const BitArray& lhs, const BitArray& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` arrays do not have the
 /// same value, and `false` otherwise.  Two arrays do not have the same
 /// value if they do not have the same length, or there is at least one
 /// valid index position at which corresponding bits do not have the same
 /// value.
-bool operator!=(const BitArray& lhs, const BitArray& rhs);
+bool operator!=(const BitArray& lhs, const BitArray& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return the bitwise complement ("toggle") of the specified `array`.
-BitArray operator~(const BitArray& array);
+BitArray operator~(const BitArray& array) BSLS_ASSERT_CONVEYOR_REQUIRES(array);
 
 /// Return the value that is the bitwise AND of the specified `lhs` and
 /// `rhs` arrays.  The length of the resulting bit array will be the maximum
 /// of that of `lhs` and `rhs`, with any unmatched high-order bits set to 0.
 /// Note that this behavior is consistent with zero-extending a copy of the
 /// shorter array.
-BitArray operator&(const BitArray& lhs, const BitArray& rhs);
+BitArray operator&(const BitArray& lhs, const BitArray& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return the value that is the bitwise MINUS of the specified `lhs` and
 /// `rhs` arrays.  The length of the resulting bit array will be the maximum
@@ -1050,46 +1090,53 @@ BitArray operator&(const BitArray& lhs, const BitArray& rhs);
 /// copied unchanged, and any unmatched high-order `rhs` bits set to 0.
 /// Note that this behavior is consistent with zero-extending a copy of the
 /// shorter array.
-BitArray operator-(const BitArray& lhs, const BitArray& rhs);
+BitArray operator-(const BitArray& lhs, const BitArray& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return the value that is the bitwise OR of the specified `lhs` and `rhs`
 /// arrays.  The length of the resulting bit array will be the maximum of
 /// that of `lhs` and `rhs`, with any unmatched high-order bits copied
 /// unchanged.  Note that this behavior is consistent with zero-extending a
 /// copy of the shorter array.
-BitArray operator|(const BitArray& lhs, const BitArray& rhs);
+BitArray operator|(const BitArray& lhs, const BitArray& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return the value that is the bitwise XOR of the specified `lhs` and
 /// `rhs` arrays.  The length of the resulting bit array will be the maximum
 /// of that of `lhs` and `rhs`, with any unmatched high-order bits copied
 /// unchanged.  Note that this behavior is consistent with zero-extending a
 /// copy of the shorter array.
-BitArray operator^(const BitArray& lhs, const BitArray& rhs);
+BitArray operator^(const BitArray& lhs, const BitArray& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return the value of the specified `array` left-shifted by the specified
 /// `numBits` positions, having filled the lower-index positions with zeros.
 /// The behavior is undefined unless `numBits <= array.length()`.  Note that
 /// the length of the result equals the length of the original array, and
 /// that the highest-order `numBits` are discarded in the result.
-BitArray operator<<(const BitArray& array, bsl::size_t numBits);
+BitArray operator<<(const BitArray& array, bsl::size_t numBits)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(array);
 
 /// Return the value of the specified `array` right-shifted by the specified
 /// `numBits` positions, having filled the higher-index positions with
 /// zeros.  The behavior is undefined unless `numBits <= array.length()`.
 /// Note that the length of the result equals the length of the original
 /// array, and that the lowest-order `numBits` are discarded in the result.
-BitArray operator>>(const BitArray& array, bsl::size_t numBits);
+BitArray operator>>(const BitArray& array, bsl::size_t numBits)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(array);
 
 /// Format the bits in the specified `rhs` bit array to the specified output
 /// `stream` in a single-line format, and return a reference to `stream`.
-bsl::ostream& operator<<(bsl::ostream& stream, const BitArray& rhs);
+bsl::ostream& operator<<(bsl::ostream& stream, const BitArray& rhs)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // FREE FUNCTIONS
 
 /// Exchange the values of the specified `a` and `b` objects.  This function
 /// provides the no-throw exception-safety guarantee if the two objects were
 /// created with the same allocator and the basic guarantee otherwise.
-void swap(BitArray& a, BitArray& b);
+void swap(BitArray& a, BitArray& b)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
 // ============================================================================
 //                              INLINE DEFINITIONS
@@ -1143,6 +1190,8 @@ int BitArray::maxSupportedBdexVersion(int)
 inline
 BitArray& BitArray::operator=(const BitArray& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     d_array.resize(rhs.d_array.size());
     bsl::memcpy(d_array.data(),
                 rhs.d_array.data(),
@@ -1677,9 +1726,11 @@ STREAM& BitArray::bdexStreamIn(STREAM& stream, int version)
 inline
 void BitArray::swap(BitArray& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     // 'swap' is undefined for objects with non-equal allocators.
 
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
 
     bslalg::SwapUtil::swap(&d_array,  &other.d_array);
     bslalg::SwapUtil::swap(&d_length, &other.d_length);
@@ -1871,6 +1922,7 @@ bdlc::BitArray bdlc::operator~(const BitArray& array)
 inline
 bdlc::BitArray bdlc::operator&(const BitArray& lhs, const BitArray& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BitArray tmp(lhs);
     tmp &= rhs;
     return tmp;
@@ -1879,6 +1931,7 @@ bdlc::BitArray bdlc::operator&(const BitArray& lhs, const BitArray& rhs)
 inline
 bdlc::BitArray bdlc::operator|(const BitArray& lhs, const BitArray& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BitArray tmp(lhs);
     tmp |= rhs;
     return tmp;
@@ -1887,6 +1940,7 @@ bdlc::BitArray bdlc::operator|(const BitArray& lhs, const BitArray& rhs)
 inline
 bdlc::BitArray bdlc::operator^(const BitArray& lhs, const BitArray& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BitArray tmp(lhs);
     tmp ^= rhs;
     return tmp;
@@ -1903,7 +1957,7 @@ bdlc::BitArray bdlc::operator-(const BitArray& lhs, const BitArray& rhs)
 inline
 bdlc::BitArray bdlc::operator<<(const BitArray& array, bsl::size_t numBits)
 {
-    BSLS_ASSERT(numBits <= array.length());
+    BSLS_ASSERT_NONCONVEYOR(numBits <= array.length());
 
     BitArray tmp(array);
     tmp <<= numBits;
@@ -1913,7 +1967,7 @@ bdlc::BitArray bdlc::operator<<(const BitArray& array, bsl::size_t numBits)
 inline
 bdlc::BitArray bdlc::operator>>(const BitArray& array, bsl::size_t numBits)
 {
-    BSLS_ASSERT(numBits <= array.length());
+    BSLS_ASSERT_NONCONVEYOR(numBits <= array.length());
 
     BitArray tmp(array);
     tmp >>= numBits;

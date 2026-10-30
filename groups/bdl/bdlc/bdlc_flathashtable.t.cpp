@@ -599,6 +599,8 @@ struct TestEntryUtil<bsl::pair<const int, int> >
 
     /// Return the key of the specified `entry`.
     static const int& key(const bsl::pair<const int, int>& entry)
+                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(entry)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return entry.first;
     }
@@ -648,6 +650,8 @@ struct TestPairEntryUtil
 
     /// Return the key of the specified `entry`.
     static const KEY& key(const ENTRY& entry)
+                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(entry)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return entry.first;
     }
@@ -836,7 +840,9 @@ void testTransparentComparator(t_CONTAINER&     container,
                                bool             isTransparent,
                                int              initKeyValue,
                                const ENTRYUTIL&)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&container);
     typedef typename t_CONTAINER::const_iterator     Iterator;
     typedef bsl::size_t                              Count;
 
@@ -900,7 +906,9 @@ template <class t_CONTAINER>
 void testTransparentComparatorMutableSet(const t_CONTAINER& container,
                                          bool               isTransparent,
                                          int                initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&container);
     const int            expectedConversionCount = isTransparent ? 0 : 1;
     const bsl::size_t    size = container.size();
     bslma::TestAllocator oa("object", veryVeryVeryVerbose);
@@ -942,7 +950,9 @@ template <class t_CONTAINER>
 void testTransparentComparatorMutableMap(const t_CONTAINER& container,
                                          bool               isTransparent,
                                          int                initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&container);
     typedef bsl::size_t                        Count;
 
     const int            expectedConversionCount = isTransparent ? 0 : 1;
@@ -1031,7 +1041,9 @@ void testTransparentComparatorMutableMap(const t_CONTAINER& container,
 template <class t_CONTAINER>
 void testTransparentComparatorMutableOnlySet(const t_CONTAINER& container,
                                              int                initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&container);
     typedef typename t_CONTAINER::iterator     Iterator;
     typedef bsl::size_t                        Count;
 
@@ -1137,6 +1149,7 @@ int getValue(int *value, char specChar, int verboseFlag)
 template <class OBJ>
 int ggg(OBJ *object, const char *spec, int verboseFlag = 1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     typedef typename OBJ::entry_type ENTRY;
 
     enum { e_SUCCESS = -1 };
@@ -1224,6 +1237,7 @@ int ggg(OBJ *object, const char *spec, int verboseFlag = 1)
     }
 
     const OBJ& X = *object;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
     for (int i = 0; spec[i]; ++i) {
         if ('e' == spec[i]) {
@@ -1250,6 +1264,8 @@ int ggg(OBJ *object, const char *spec, int verboseFlag = 1)
 /// according to the specified `spec`.
 template <class OBJ>
 OBJ& gg(OBJ *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(ggg(object, spec) < 0);
     return *object;
@@ -1405,6 +1421,7 @@ IsValidResult::Enum isValid(bsl::size_t                       *errorIndex,
                                                       HASH,
                                                       EQUAL>&  table)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&table);
     return isValid(errorIndex,
                    table.entries(),
                    table.controls(),
@@ -1488,6 +1505,7 @@ void testCase21OperationsWhenMoved(int id)
                                               bslmf::MovableRefUtil::move(mX));
 
                     LOOP3_ASSERT(id, ti, LINE,   Y != X ||   Y.empty());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(pZ);
                     LOOP3_ASSERT(id, ti, LINE, *pZ != X || pZ->empty());
                     LOOP3_ASSERT(id, ti, LINE, *pZ == Y);
                   } break;
@@ -1499,7 +1517,9 @@ void testCase21OperationsWhenMoved(int id)
                                               bslmf::MovableRefUtil::move(mX));
 
                     LOOP3_ASSERT(id, ti, LINE,   Y == X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&pZ);
                     LOOP3_ASSERT(id, ti, LINE, *pZ == X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&pZ);
                     LOOP3_ASSERT(id, ti, LINE, *pZ == Y);
                   } break;
                   case 'c': {
@@ -1509,6 +1529,7 @@ void testCase21OperationsWhenMoved(int id)
                     *pZ = bslmf::MovableRefUtil::move(mX);
 
                     LOOP3_ASSERT(id, ti, LINE,   Y != X ||   Y.empty());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(pZ);
                     LOOP3_ASSERT(id, ti, LINE, *pZ != X || pZ->empty());
                     LOOP3_ASSERT(id, ti, LINE, *pZ == Y);
                   } break;
@@ -1519,12 +1540,15 @@ void testCase21OperationsWhenMoved(int id)
                     *pZ = bslmf::MovableRefUtil::move(mX);
 
                     LOOP3_ASSERT(id, ti, LINE,   Y == X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&pZ);
                     LOOP3_ASSERT(id, ti, LINE, *pZ == X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&pZ);
                     LOOP3_ASSERT(id, ti, LINE, *pZ == Y);
                   } break;
                 }
 
                 // Get convenience aliases to `mZ`.
+                BSLS_ASSERT_CONVEYOR_OBJECT(pZ);
                 Obj& mZ = *pZ; const Obj& Z = mZ;
 
                 // Verify that the internal structure of `mZ` is valid.
@@ -2372,6 +2396,7 @@ void testCase14MoveConstructorWithAllocator(int id)
             Obj *pY = bufferY.address();
             bslma::ConstructionUtil::construct(pY, &sa, W);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(pY);
             Obj& mY = *pY;  const Obj& Y = mY;
 
             LOOP2_ASSERT(id, LINE, Y == W);
@@ -2417,9 +2442,14 @@ void testCase14MoveConstructorWithAllocator(int id)
                          IsValidResult::e_SUCCESS == isValid(&errorIndex, Y));
 
             bslma::TestAllocator&  oa = *objAllocatorPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
             bslma::TestAllocator& noa = *othAllocatorPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&noa);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj& mX = *objPtr;  const Obj& X = mX;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
             // Verify the validity and value of the object.
             LOOP2_ASSERT(id,
@@ -2442,14 +2472,17 @@ void testCase14MoveConstructorWithAllocator(int id)
 
             // Verify the validity and value of the object after modifying `Y`.
             if (W.empty()) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(pY);
                 LOOP2_ASSERT(id, LINE, pY->empty());
                 LOOP2_ASSERT(id, LINE, *pY == W);
             }
             else if (Y.allocator() == objPtr->allocator()) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(pY);
                 LOOP2_ASSERT(id, LINE, pY->empty());
                 LOOP2_ASSERT(id, LINE, *pY != W);
             }
             else if (Y.allocator() != objPtr->allocator()) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(pY);
                 LOOP2_ASSERT(id, LINE, !pY->empty());
                 LOOP2_ASSERT(id, LINE, *pY == W);
             }
@@ -3024,9 +3057,13 @@ void testCase7CopyConstructor(int id)
             }
             LOOP3_ASSERT(id, LINE, CONFIG, sizeof(Obj) == fa.numBytesInUse());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj& mX = *objPtr;  const Obj& X = mX;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
             bslma::TestAllocator&  oa = *objAllocatorPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
             bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
             // Ensure the first row of the table contains the
@@ -4206,6 +4243,7 @@ int main(int argc, char *argv[])
             const IntPairObj& X = mX;
 
             IntPairObj::entry_type& rv1 = mX[0];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rv1);
 
             ASSERT(0 == rv1.first);
             ASSERT(0 == rv1.second);
@@ -4220,6 +4258,7 @@ int main(int argc, char *argv[])
             ASSERT(&rv1 == &*X.find(0));
 
             IntPairObj::entry_type& rv2 = mX[1];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rv2);
 
             ASSERT(1 == rv2.first);
             ASSERT(0 == rv2.second);

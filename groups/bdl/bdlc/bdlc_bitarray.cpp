@@ -48,6 +48,7 @@ BitArray::BitArray(bslma::Allocator *basicAllocator)
 : d_array(basicAllocator)
 , d_length(0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_array.resize(1);
 }
 
@@ -56,6 +57,7 @@ BitArray::BitArray(size_t            initialLength,
 : d_array(arraySize(initialLength), 0, basicAllocator)
 , d_length(initialLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 BitArray::BitArray(size_t            initialLength,
@@ -64,6 +66,7 @@ BitArray::BitArray(size_t            initialLength,
 : d_array(arraySize(initialLength), value ? s_minusOne : 0, basicAllocator)
 , d_length(initialLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const int pos = initialLength % k_BITS_PER_UINT64;
     if (value && (pos || !initialLength)) {
         d_array.back() &= rawLt64(pos);
@@ -75,11 +78,14 @@ BitArray::BitArray(const BitArray&   original,
 : d_array(original.d_array, basicAllocator)
 , d_length(original.d_length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     BSLS_ASSERT(!d_array.empty());
 }
 
 BitArray::~BitArray()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const size_t estimated = arraySize(d_length);
     const size_t actual    = d_array.size();
 
@@ -188,7 +194,7 @@ void BitArray::setLength(size_t newLength, bool value)
     const size_t oldLength = d_length;
     const int    oldPos    = static_cast<unsigned>(oldLength) %
                                                              k_BITS_PER_UINT64;
-    BSLS_ASSERT((!oldPos && oldLength) ||
+    BSLS_ASSERT_NONCONVEYOR((!oldPos && oldLength) ||
                           !(d_array.back() & bdlb::BitMaskUtil::ge64(oldPos)));
 
     if (oldLength < newLength) {

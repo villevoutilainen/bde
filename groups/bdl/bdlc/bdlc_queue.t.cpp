@@ -223,7 +223,9 @@ void rotate(T *object, int numPositions)
     ASSERT(object);
     ASSERT(0 <= numPositions);
     for (int i = 0; i < numPositions; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(object);
         object->pushBack(V0);
+        BSLS_ASSERT_CONVEYOR_OBJECT(object);
         object->popFront();
     }
 }
@@ -235,6 +237,7 @@ template <class T>
 inline
 void stretch(T *object, int size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     ASSERT(object);
     ASSERT(0 <= size);
     for (int i = 0; i < size; ++i) {
@@ -250,6 +253,7 @@ template <class T>
 inline
 void stretchRemoveAll(T *object, int size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     ASSERT(object);
     ASSERT(0 <= size);
     stretch(object, size);
@@ -347,6 +351,7 @@ int ggg(T *object, const char *spec, int verboseFlag = 1)
                 j = j * 10 + spec[i] - '0';
             }
             if (j == -1) { ++i; goto error; }
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->reserveCapacity(j);
         }
         else if ('+' == spec[i]) {
@@ -358,7 +363,9 @@ int ggg(T *object, const char *spec, int verboseFlag = 1)
             }
             if (j == -1) { ++i; goto error; }
             for (int k = 0; k < j; ++k) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(object);
                 object->pushBack(VALUES[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(object);
                 object->popFront();
             }
         }
@@ -368,9 +375,11 @@ int ggg(T *object, const char *spec, int verboseFlag = 1)
     // body
     for (; spec[i]; ++i) {
         if ('A' <= spec[i] && spec[i] <= 'E') {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->pushBack(VALUES[spec[i] - 'A']);
         }
         else if ('~' == spec[i]) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->removeAll();
         }
         else {
@@ -392,6 +401,8 @@ error:
 template <class T>
 inline
 T& gg(T *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(ggg(object, spec) < 0);
     return *object;
@@ -438,6 +449,9 @@ inline EqualityTester::EqualityTester(const Obj *a, const Obj *b)
 
 inline EqualityTester::~EqualityTester()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(A);
+    BSLS_ASSERT_CONVEYOR_OBJECT(B);
         ASSERT(*A == *B);
 }
 
@@ -2172,9 +2186,11 @@ DEFINE_TEST_CASE(17) {
                 Obj *doNotDelete =
                     new(a.allocate(sizeof(Obj))) Obj(NE, &a);
                 Obj &mX = *doNotDelete;  const Obj &X = mX;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(ne, W == X);
                 if (veryVerbose) P_(X);
                 for (int i = 0; i < ne; ++i) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                     mX.append(V0);
                 }
                 if (veryVerbose) P(X);
@@ -5296,6 +5312,8 @@ DEFINE_TEST_CASE(11) {
                 Obj2 *doNotDelete =
                     new(a.allocate(sizeof(Obj2))) Obj2(length, &a);
                 Obj2& mX = *doNotDelete;  const Obj2& X = mX;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 if (veryVerbose) P(X);
                 LOOP_ASSERT(length, length == X.length());
                 for (int i = 0; i < length; ++i) {
@@ -5372,6 +5390,8 @@ DEFINE_TEST_CASE(11) {
                 Obj *doNotDelete =
                     new(a.allocate(sizeof(Obj))) Obj(length, VALUE, &a);
                 Obj& mX = *doNotDelete;  const Obj& X = mX;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 if (veryVerbose) P(X);
                 LOOP_ASSERT(length, length == X.length());
                 for (int i = 0; i < length; ++i) {
@@ -5444,6 +5464,8 @@ DEFINE_TEST_CASE(11) {
                     Obj *doNotDelete =
                         new(a.allocate(sizeof(Obj))) Obj(DA, ne, &a);
                     Obj& mX = *doNotDelete;  const Obj& X = mX;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     if (veryVerbose) P(X);
                     LOOP_ASSERT(ne, ne == X.length());
                     for (int i = 0; i < ne; ++i) {
@@ -6254,6 +6276,7 @@ DEFINE_TEST_CASE(7) {
                     for (int si = 0; si < RESERVE[ri] + 2; ++si) {
                         Obj *pX = new Obj(&testAllocator);
                         Obj& mX = *pX;
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                         mX.reserveCapacity(RESERVE[ri]);
                         rotate(&mX, si);
                         const Obj& X = mX;              gg(&mX, SPEC);
@@ -6289,6 +6312,7 @@ DEFINE_TEST_CASE(7) {
                                                                 sizeof memory);
                             Obj *Y = new(a.allocate(sizeof(Obj))) Obj(X, &a);
                             if (veryVerbose) { cout << "\t\t\t"; P(*Y); }
+                            BSLS_ASSERT_CONVEYOR_OBJECT(Y);
                             LOOP_ASSERT(SPEC, W == *Y);
                             LOOP_ASSERT(SPEC, W == X);
                         }

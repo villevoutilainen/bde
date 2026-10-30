@@ -741,7 +741,8 @@ class HashTable {
     /// defined by the parameterized `TRAITS` (see the component-level
     /// documentation for more details).  Note that this method will fail to
     /// compile unless the `VALUE` parameter is `bslmf::Nil`.
-    bool insert(Handle *handle, const KEY& key);
+    bool insert(Handle *handle, const KEY& key)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert an element with the specified `key` and the specified `value`
     /// into this object; load a handle to the new element into the
@@ -751,57 +752,62 @@ class HashTable {
     /// `TRAITS` (see the component-level documentation for more details).
     /// This method will fail to compile unless the `VALUE` parameter is not
     /// `bslmf::Nil`.
-    bool insert(Handle *handle, const KEY& key, const VALUE& value);
+    bool insert(Handle *handle, const KEY& key, const VALUE& value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove the element identified by the specified `handle` from this
     /// object.  The behavior is undefined unless `handle` is valid.  Note
     /// that `handle` will become invalid when this method returns.
-    void remove(const Handle& handle);
+    void remove(const Handle& handle) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the reference to the modifiable value of the element
     /// identified by the specified `handle`.  The behavior is undefined
     /// unless `handle` is valid.  Note that this method will fail to
     /// compile unless the `VALUE` parameter is not `bslmf::Nil`.
-    VALUE& value(const Handle& handle);
+    VALUE& value(const Handle& handle) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
     /// Return the maximum number of elements that can be stored in this
     /// object.  Note that this value is computed based on the capacity hint
     /// used upon construction.
-    bsls::Types::Int64 capacity() const;
+    bsls::Types::Int64 capacity() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the capacity hint that was used to determine the capacity of
     /// this object.
-    bsls::Types::Int64 capacityHint() const;
+    bsls::Types::Int64 capacityHint() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Find an element having the specified `key`; load a handle to the
     /// element into the specified `handle`.  Return true if successful, and
     /// false otherwise.
-    bool find(Handle *handle, const KEY& key) const;
+    bool find(Handle *handle, const KEY& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the reference to the non-modifiable key of the element
     /// identified by the specified `handle`.  The behavior is undefined
     /// unless `handle` is valid.
-    const KEY& key(const Handle& handle) const;
+    const KEY& key(const Handle& handle) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the maximum chain length encountered by this object.
-    bsls::Types::Int64 maxChain() const;
+    bsls::Types::Int64 maxChain() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of collisions encountered by this object.
-    bsls::Types::Int64 numCollisions() const;
+    bsls::Types::Int64 numCollisions() const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements stored in this object.
-    bsls::Types::Int64 size() const;
+    bsls::Types::Int64 size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the total chain length encountered by this object.
-    bsls::Types::Int64 totalChain() const;
+    bsls::Types::Int64 totalChain() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the reference to the non-modifiable value of the element
     /// identified by the specified `handle`.  The behavior is undefined
     /// unless `handle` is valid.  Note that this method will fail to
     /// compile unless the `VALUE` parameter is not `bslmf::Nil`.
-    const VALUE& value(const Handle& handle) const;
+    const VALUE& value(const Handle& handle) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
                        // =============================
@@ -985,6 +991,7 @@ void HashTable<KEY, VALUE, TRAITS, HASH1, HASH2>::loadElementAt(
                                                const Bucket&       element,
                                                bsls::Types::Int64  chainLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(handle);
 
     typedef typename bsl::vector<Bucket>::size_type size_type;
@@ -1004,6 +1011,7 @@ bool HashTable<KEY, VALUE, TRAITS, HASH1, HASH2>::insertElement(
                                                         Handle        *handle,
                                                         const Bucket&  element)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(handle);
 
     if (size() == capacity()) {
@@ -1041,6 +1049,7 @@ void HashTable<KEY, VALUE, TRAITS, HASH1, HASH2>::findImp(
                                               bsls::Types::Int64 *removedIndex,
                                               const KEY&          key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isKeyFound);
     BSLS_ASSERT(index);
     BSLS_ASSERT(chainLength);
@@ -1204,8 +1213,8 @@ VALUE& HashTable<KEY, VALUE, TRAITS, HASH1, HASH2>::value(const Handle& handle)
     typedef typename bsl::vector<Bucket>::size_type size_type;
     BSLMF_ASSERT((!bslmf::IsSame<bslmf::Nil, VALUE>::value));
 
-    BSLS_ASSERT(!TRAITS::isNull   (d_buckets[(size_type)handle]));
-    BSLS_ASSERT(!TRAITS::isRemoved(d_buckets[(size_type)handle]));
+    BSLS_ASSERT_NONCONVEYOR(!TRAITS::isNull   (d_buckets[(size_type)handle]));
+    BSLS_ASSERT_NONCONVEYOR(!TRAITS::isRemoved(d_buckets[(size_type)handle]));
 
     return d_buckets[(size_type)handle].second;
 }
@@ -1248,8 +1257,8 @@ const KEY& HashTable<KEY, VALUE, TRAITS, HASH1, HASH2>::key(
                                                     const Handle& handle) const
 {
     typedef typename bsl::vector<Bucket>::size_type size_type;
-    BSLS_ASSERT(!TRAITS::isNull   (d_buckets[(size_type)handle]));
-    BSLS_ASSERT(!TRAITS::isRemoved(d_buckets[(size_type)handle]));
+    BSLS_ASSERT_NONCONVEYOR(!TRAITS::isNull   (d_buckets[(size_type)handle]));
+    BSLS_ASSERT_NONCONVEYOR(!TRAITS::isRemoved(d_buckets[(size_type)handle]));
 
     return keyFromBucket(d_buckets[(size_type)handle]);
 }
@@ -1294,8 +1303,8 @@ const VALUE& HashTable<KEY, VALUE, TRAITS, HASH1, HASH2>::value(
     typedef typename bsl::vector<Bucket>::size_type size_type;
     BSLMF_ASSERT((!bslmf::IsSame<bslmf::Nil, VALUE>::value));
 
-    BSLS_ASSERT(!TRAITS::isNull   (d_buckets[(size_type)handle]));
-    BSLS_ASSERT(!TRAITS::isRemoved(d_buckets[(size_type)handle]));
+    BSLS_ASSERT_NONCONVEYOR(!TRAITS::isNull   (d_buckets[(size_type)handle]));
+    BSLS_ASSERT_NONCONVEYOR(!TRAITS::isRemoved(d_buckets[(size_type)handle]));
 
     return d_buckets[(size_type)handle].second;
 }
@@ -1331,6 +1340,8 @@ inline
 bool HashTableDefaultTraits::areEqual(const ConstCharPtr& key1,
                                       const ConstCharPtr& key2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key2);
     BSLS_ASSERT(key1);
     BSLS_ASSERT(key2);
 
@@ -1357,6 +1368,7 @@ bool HashTableDefaultTraits::isNull(const BUCKET& bucket)
 inline
 bool HashTableDefaultTraits::isNull(const bsl::string& bucket)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&bucket);
     return 0 == bucket.length();
 }
 
@@ -1535,6 +1547,7 @@ unsigned int HashTableDefaultHash1::operator()(const ConstCharPtr& key) const
 inline
 unsigned int HashTableDefaultHash1::operator()(const bsl::string& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const char *keyData   = key.data();
     int         keyLength = static_cast<int>(key.length());
 
@@ -1567,6 +1580,7 @@ unsigned int HashTableDefaultHash2::operator()(const ConstCharPtr& key) const
 inline
 unsigned int HashTableDefaultHash2::operator()(const bsl::string& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const char *keyData   = key.data();
     int         keyLength = static_cast<int>(key.length());
 

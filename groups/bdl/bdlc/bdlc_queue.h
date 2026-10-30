@@ -196,6 +196,8 @@ BSLS_IDENT("$Id: $")
 
 #ifndef BDE_DONT_ALLOW_TRANSITIVE_INCLUDES
 #include <bslalg_typetraits.h>
+
+#include <bsls_assert.h>
 #endif // BDE_DONT_ALLOW_TRANSITIVE_INCLUDES
 
 namespace BloombergLP {
@@ -452,7 +454,7 @@ class Queue {
     /// long as this queue is not destroyed or modified (e.g., via `insert`,
     /// `remove`, or `append`).  The behavior is undefined unless
     /// `0 <= index < length()`.
-    T& operator[](int index);
+    T& operator[](int index) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append to the end of this queue the value of the specified `item`.
     /// Note that this function is a synonym for `pushBack` and is logically
@@ -460,7 +462,7 @@ class Queue {
     /// ```
     /// insert(length(), item);
     /// ```
-    void append(const T& item);
+    void append(const T& item) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append to the end of this queue the sequence of values in the
     /// specified `srcQueue`.  Note that this function is logically
@@ -468,7 +470,7 @@ class Queue {
     /// ```
     /// insert(length(), srcQueue);
     /// ```
-    void append(const Queue& srcQueue);
+    void append(const Queue& srcQueue) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append to the end of this queue the specified `numElements` value in
     /// the specified `srcQueue` starting at the specified index position
@@ -479,7 +481,8 @@ class Queue {
     /// The behavior is undefined unless `0 <= srcIndex`,
     /// `0 <= numElements`, and
     /// `srcIndex + numElements <= srcQueue.length()`.
-    void append(const Queue& srcQueue, int srcIndex, int numElements);
+    void append(const Queue& srcQueue, int srcIndex, int numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable value at the back of this
     /// queue.  The reference will remain valid as long as the queue is not
@@ -489,7 +492,7 @@ class Queue {
     /// ```
     /// operator[](length() - 1)
     /// ```
-    T& back();
+    T& back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable value at the front of this
     /// queue.  The reference will remain valid as long as the queue is not
@@ -499,19 +502,21 @@ class Queue {
     /// ```
     /// operator[](0)
     /// ```
-    T& front();
+    T& front() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `item` into this queue at the specified
     /// `dstIndex`.  All current values with indices at or above `dstIndex`
     /// are shifted up by one index position.  The behavior is undefined
     /// unless `0 <= dstIndex <= length()`.
-    void insert(int dstIndex, const T& item);
+    void insert(int dstIndex, const T& item)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `srcQueue` into this queue at the specified
     /// `dstIndex`.  All current values with indices at or above `dstIndex`
     /// are shifted up by `srcQueue.length()` index positions.  The behavior
     /// is undefined unless `0 <= dstIndex <= length()`.
-    void insert(int dstIndex, const Queue& srcQueue);
+    void insert(int dstIndex, const Queue& srcQueue)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `numElements` values starting at the specified
     /// `srcIndex` position from the specified `srcQueue` into this queue at
@@ -523,7 +528,7 @@ class Queue {
     void insert(int          dstIndex,
                 const Queue& srcQueue,
                 int          srcIndex,
-                int          numElements);
+                int          numElements) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove the value from the back of this queue efficiently (in O[1]
     /// time).  The behavior is undefined if this queue is empty.  Note that
@@ -531,7 +536,7 @@ class Queue {
     /// ```
     /// remove(length() - 1)
     /// ```
-    void popBack();
+    void popBack() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove the value from the front of this queue efficiently (in O[1]
     /// time).  The behavior is undefined if this queue is empty.  Note that
@@ -539,7 +544,7 @@ class Queue {
     /// ```
     ///   remove(0)
     /// ```
-    void popFront();
+    void popFront() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append the specified `item` to the back of this queue efficiently
     /// (in O[1] time when memory reallocation is not required).  Note that
@@ -548,7 +553,7 @@ class Queue {
     /// ```
     ///   insert(length(), item);
     /// ```
-    void pushBack(const T& item);
+    void pushBack(const T& item) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `item` into the front of this queue efficiently
     /// (in O[1] time when memory reallocation is not required).  Note that
@@ -557,26 +562,27 @@ class Queue {
     /// ```
     ///   insert(0, item);
     /// ```
-    void pushFront(const T& item);
+    void pushFront(const T& item) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this queue the value at the specified `index`.  All
     /// values with initial indices above `index` are shifted down by one
     /// index position.  The behavior is undefined unless
     /// `0 <= index < length()`.
-    void remove(int index);
+    void remove(int index) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this queue, beginning at the specified `index`, the
     /// specified `numElements` values.  All values with initial indices at
     /// or above `index + numElements` are shifted down by `numElements`
     /// index positions.  The behavior is undefined unless `0 <= index`,
     /// `0 <= numElements`, and `index + numElements <= length()`.
-    void remove(int index, int numElements);
+    void remove(int index, int numElements) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all elements from this queue.  If the optionally specified
     /// `buffer` is not 0, append to `buffer` a copy of each element removed
     /// (in front-to-back order of the elements in the queue prior to the
     /// invocation of this method).
-    void removeAll(bsl::vector<T> *buffer = 0);
+    void removeAll(bsl::vector<T> *buffer = 0)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Replace the element at the specified `dstIndex` in this queue with
     /// the specified `item`.  The behavior is undefined unless
@@ -586,7 +592,8 @@ class Queue {
     ///   insert(dstIndex, item);
     ///   remove(dstIndex + 1);
     /// ```
-    void replace(int dstIndex, const T& item);
+    void replace(int dstIndex, const T& item)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Replace the specified `numElements` values beginning at the
     /// specified `dstIndex` in this queue with values from the specified
@@ -602,13 +609,13 @@ class Queue {
     void replace(int          dstIndex,
                  const Queue& srcQueue,
                  int          srcIndex,
-                 int          numElements);
+                 int          numElements) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reserve sufficient internal capacity to accommodate up to the
     /// specified `numElements` values without subsequent reallocation.
     /// Note that if `numElements <= length()`, this operation has no
     /// effect.
-    void reserveCapacity(int numElements);
+    void reserveCapacity(int numElements) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Reserve sufficient and minimal internal capacity to accommodate up
     /// to the specified `numElements` values without subsequent
@@ -616,7 +623,8 @@ class Queue {
     /// may invalidate bounds on runtime complexity otherwise guaranteed by
     /// this container.  Note that if `numElements <= length()`, this
     /// operation has no effect.
-    void reserveCapacityRaw(int numElements);
+    void reserveCapacityRaw(int numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the length of this queue to the specified `newLength`.  If
     /// `newLength` is less than the current length, elements at index
@@ -624,8 +632,9 @@ class Queue {
     /// elements (at or above the current length) are initialized to the
     /// specified `initialValue`, or to 0.0 if `initialValue` is not
     /// specified.  The behavior is undefined unless `0 <= newLength`.
-    void setLength(int newLength);
-    void setLength(int newLength, const T& initialValue);
+    void setLength(int newLength) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setLength(int newLength, const T& initialValue)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the length of this queue to the specified `newLength`.  If
     /// `newLength` is less than the current length, elements at index
@@ -633,7 +642,7 @@ class Queue {
     /// equal to the current length, this function has no effect.  Otherwise
     /// new elements at or above the current length are not initialized to
     /// any value.
-    void setLengthRaw(int newLength);
+    void setLengthRaw(int newLength) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Assign to this object the value read from the specified input
     /// `stream` using the specified `version` format, and return a
@@ -646,7 +655,8 @@ class Queue {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version);
+    STREAM& bdexStreamIn(STREAM& stream, int version)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Swap efficiently the values at the specified indices `index1` and
     /// `index2`.  The behavior is undefined unless `0 <= index1 < length()`
@@ -660,7 +670,7 @@ class Queue {
     /// long as this queue is not destroyed or modified (e.g., via `insert`,
     /// `remove`, or `append`).  The behavior is undefined unless
     /// `0 <= index < length()`.
-    const T& operator[](int index) const;
+    const T& operator[](int index) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable element at the back of this
     /// queue.  The reference will remain valid as long as this queue is not
@@ -670,7 +680,7 @@ class Queue {
     /// ```
     ///   operator[](length() - 1)
     /// ```
-    const T& back() const;
+    const T& back() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable element at the front of
     /// this queue.  The reference will remain valid as long as this queue
@@ -680,10 +690,10 @@ class Queue {
     /// ```
     ///   operator[](0)
     /// ```
-    const T& front() const;
+    const T& front() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this queue.
-    int length() const;
+    int length() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Format this object to the specified output `stream` at the
     /// optionally specified indentation `level` and return a reference to
@@ -698,12 +708,14 @@ class Queue {
     /// in multi-line mode only.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level,
-                        int           spacesPerLevel) const;
+                        int           spacesPerLevel) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Write the elements of this queue out to the specified `stream`.
     /// Note that for this method to compile, `operator<<` has to be defined
     /// for arguments `stream` and type `T`.
     bsl::ostream& streamOut(bsl::ostream& stream) const
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         stream << '[';
         for (int i = 0; i < length(); ++i) {
@@ -721,7 +733,8 @@ class Queue {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
     /// Return the most current BDEX streaming version number supported by
@@ -748,7 +761,8 @@ class Queue {
 /// position.
 template <class T>
 inline
-bool operator==(const Queue<T>& lhs, const Queue<T>& rhs);
+bool operator==(const Queue<T>& lhs, const Queue<T>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` queues do not have the
 /// same value, and `false` otherwise.  Two queues do not have the same
@@ -756,13 +770,16 @@ bool operator==(const Queue<T>& lhs, const Queue<T>& rhs);
 /// position.
 template <class T>
 inline
-bool operator!=(const Queue<T>& lhs, const Queue<T>& rhs);
+bool operator!=(const Queue<T>& lhs, const Queue<T>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Write the specified `queue` to the specified output `stream` and return
 /// a reference to the modifiable `stream`.
 template <class T>
 inline
-bsl::ostream& operator<<(bsl::ostream& stream, const Queue<T>& queue);
+bsl::ostream& operator<<(bsl::ostream& stream, const Queue<T>& queue)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(queue);
 
 // ============================================================================
 //                            INLINE DEFINITIONS
@@ -1234,6 +1251,7 @@ template <class T>
 Queue<T>::Queue(const Queue& original, bslma::Allocator *basicAllocator)
 : d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     d_size = calculateSufficientSize(original.length(), k_INITIAL_SIZE);
     d_array_p = (T *)d_allocator_p->allocate(d_size * sizeof *d_array_p);
     d_front = d_size - 1;
@@ -1263,6 +1281,7 @@ Queue<T>::~Queue()
 template <class T>
 Queue<T>& Queue<T>::operator=(const Queue& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         const int newSize =
                          calculateSufficientSize(rhs.length(), k_INITIAL_SIZE);
@@ -1311,6 +1330,7 @@ T& Queue<T>::operator[](int index)
 template <class T>
 void Queue<T>::append(const Queue& srcQueue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcQueue);
     const int numElements = srcQueue.length();
     const int newLength = length() + numElements;
     const int minSize = calculateSufficientSize(newLength, d_size);
@@ -1642,6 +1662,7 @@ template <class T>
 inline
 void Queue<T>::insert(int dstIndex, const Queue& srcQueue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcQueue);
     insert(dstIndex, srcQueue, 0, srcQueue.length());
 }
 
@@ -1764,6 +1785,7 @@ void Queue<T>::remove(int index, int numElements)
 template <class T>
 void Queue<T>::removeAll(bsl::vector<T> *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     d_front = (d_front + 1) % d_size;
 
     // TBD efficiency

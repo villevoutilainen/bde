@@ -560,12 +560,15 @@ int ggg(OBJ *object, const char *spec, int verboseFlag = 1)
             return i;                                                 // RETURN
         }
         else if (rv == -1) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->append(v);
         }
         else if (rv == -2) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->removeAll();
         }
         else {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->pop_back();
         }
     }
@@ -577,6 +580,8 @@ int ggg(OBJ *object, const char *spec, int verboseFlag = 1)
 /// according to the specified `spec`.
 template <class OBJ>
 OBJ& gg(OBJ *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(ggg(object, spec) < 0);
     return *object;
@@ -6421,11 +6426,15 @@ int main(int argc, char *argv[])
                     LOOP2_ASSERT(LINE, CONFIG,
                                  sizeof(Obj) == fa.numBytesInUse());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                     Obj& mX = *objPtr;  const Obj& X = mX;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(X) }
 
                     bslma::TestAllocator&  oa = *objAllocatorPtr;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
                     bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
                     // Ensure the first row of the table contains the
@@ -6597,10 +6606,13 @@ int main(int argc, char *argv[])
                                  sizeof(UnsignedObj) == fa.numBytesInUse());
 
                     UnsignedObj& mX = *objPtr;  const UnsignedObj& X = mX;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                     if (veryVerbose) { T_ T_ P_(CONFIG) P(X) }
 
                     bslma::TestAllocator&  oa = *objAllocatorPtr;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
                     bslma::TestAllocator& noa = 'c' != CONFIG ? sa : da;
 
                     // Ensure the first row of the table contains the
@@ -6608,6 +6620,7 @@ int main(int argc, char *argv[])
 
                     static bool firstFlag = true;
                     if (firstFlag) {
+                        BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
                         LOOP4_ASSERT(LINE, CONFIG, UnsignedObj(), *objPtr,
                                      UnsignedObj() == *objPtr)
                         firstFlag = false;

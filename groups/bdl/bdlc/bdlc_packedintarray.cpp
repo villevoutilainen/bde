@@ -84,6 +84,7 @@ template <class STORAGE>
 void PackedIntArrayImp<STORAGE>::expandImp(int         requiredBytesPerElement,
                                            bsl::size_t requiredCapacityInBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(requiredBytesPerElement > d_bytesPerElement);
 
     // Compute next capacity level.
@@ -118,8 +119,10 @@ template <class STORAGE>
 void PackedIntArrayImp<STORAGE>::replaceImp(bsl::size_t dstIndex,
                                             ElementType value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(dstIndex < d_length);
-    BSLS_ASSERT(STORAGE::requiredBytesPerElement(value) <= d_bytesPerElement);
+    BSLS_ASSERT_NONCONVEYOR(
+                 STORAGE::requiredBytesPerElement(value) <= d_bytesPerElement);
 
     switch (d_bytesPerElement) {
       case 1: {
@@ -159,12 +162,14 @@ void PackedIntArrayImp<STORAGE>::replaceImp(void        *dst,
                                             int          srcBytesPerElement,
                                             bsl::size_t  numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Assert 'dstIndex + numElements <= d_length' without risk of overflow.
     BSLS_ASSERT(numElements <= d_length);
     BSLS_ASSERT(dstIndex    <= d_length - numElements);
 
     BSLS_ASSERT(srcBytesPerElement != dstBytesPerElement);
-    BSLS_ASSERT(   (static_cast<char *>(dst) + dstIndex * dstBytesPerElement
+    BSLS_ASSERT_NONCONVEYOR(
+                      (static_cast<char *>(dst) + dstIndex * dstBytesPerElement
                                          <= static_cast<char *>(src)
                                                 + srcIndex * srcBytesPerElement
                     && static_cast<char *>(dst)
@@ -379,6 +384,7 @@ template <class STORAGE>
 int PackedIntArrayImp<STORAGE>::
       requiredBytesPerElement(bsl::size_t index, bsl::size_t numElements) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Assert 'index + numElements <= d_length' without risk of overflow.
     BSLS_ASSERT(numElements <= d_length);
     BSLS_ASSERT(index       <= d_length - numElements);
@@ -443,6 +449,8 @@ template <class STORAGE>
 bool PackedIntArrayImp<STORAGE>::isEqualImp(
                                  const PackedIntArrayImp<STORAGE>& other) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     BSLS_ASSERT(d_length == other.d_length);
     BSLS_ASSERT(d_bytesPerElement != other.d_bytesPerElement);
 
@@ -666,7 +674,7 @@ PackedIntArrayImp<STORAGE>::PackedIntArrayImp(bsl::size_t       numElements,
     d_bytesPerElement = STORAGE::requiredBytesPerElement(value);
 
     // Test for potential overflow.
-    BSLS_ASSERT(k_MAX_CAPACITY / d_bytesPerElement >= d_length);
+    BSLS_ASSERT_NONCONVEYOR(k_MAX_CAPACITY / d_bytesPerElement >= d_length);
 
     d_capacityInBytes = nextCapacityGE(d_length * d_bytesPerElement, 0);
 
@@ -774,6 +782,7 @@ PackedIntArrayImp<STORAGE>& PackedIntArrayImp<STORAGE>::
 template <class STORAGE>
 void PackedIntArrayImp<STORAGE>::append(ElementType value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that the limit on capacity precludes an overflow check here.
     bsl::size_t newLength = d_length + 1;
 
@@ -782,7 +791,8 @@ void PackedIntArrayImp<STORAGE>::append(ElementType value)
     int rbpe = STORAGE::requiredBytesPerElement(value);
     if (d_bytesPerElement >= rbpe) {
         // Test for potential overflow.
-        BSLS_ASSERT(k_MAX_CAPACITY / d_bytesPerElement >= newLength);
+        BSLS_ASSERT_NONCONVEYOR(
+                              k_MAX_CAPACITY / d_bytesPerElement >= newLength);
 
         bsl::size_t requiredCapacityInBytes = d_bytesPerElement * newLength;
         if (requiredCapacityInBytes > d_capacityInBytes) {
@@ -791,7 +801,7 @@ void PackedIntArrayImp<STORAGE>::append(ElementType value)
     }
     else {
         // Test for potential overflow.
-        BSLS_ASSERT(k_MAX_CAPACITY / rbpe >= newLength);
+        BSLS_ASSERT_NONCONVEYOR(k_MAX_CAPACITY / rbpe >= newLength);
 
         bsl::size_t requiredCapacityInBytes = rbpe * newLength;
 
@@ -824,10 +834,12 @@ void PackedIntArrayImp<STORAGE>::append(
                                  bsl::size_t                       srcIndex,
                                  bsl::size_t                       numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcArray);
     // Assert 'srcIndex + numElements <= srcArray.length()' without risk of
     // overflow.
-    BSLS_ASSERT(numElements <= srcArray.length());
-    BSLS_ASSERT(srcIndex    <= srcArray.length() - numElements);
+    BSLS_ASSERT_NONCONVEYOR(numElements <= srcArray.length());
+    BSLS_ASSERT_NONCONVEYOR(srcIndex    <= srcArray.length() - numElements);
 
     // Note that the limit on capacity precludes an overflow check here.
     bsl::size_t newLength = d_length + numElements;
@@ -836,7 +848,8 @@ void PackedIntArrayImp<STORAGE>::append(
 
     if (d_bytesPerElement >= srcArray.d_bytesPerElement) {
         // Test for potential overflow.
-        BSLS_ASSERT(k_MAX_CAPACITY / d_bytesPerElement >= newLength);
+        BSLS_ASSERT_NONCONVEYOR(
+                              k_MAX_CAPACITY / d_bytesPerElement >= newLength);
 
         bsl::size_t requiredCapacityInBytes = d_bytesPerElement * newLength;
 
@@ -848,7 +861,8 @@ void PackedIntArrayImp<STORAGE>::append(
         int rbpe = srcArray.requiredBytesPerElement(srcIndex, numElements);
         if (d_bytesPerElement >= rbpe) {
             // Test for potential overflow.
-            BSLS_ASSERT(k_MAX_CAPACITY / d_bytesPerElement >= newLength);
+            BSLS_ASSERT_NONCONVEYOR(
+                              k_MAX_CAPACITY / d_bytesPerElement >= newLength);
 
             bsl::size_t requiredCapacityInBytes =
                                                  d_bytesPerElement * newLength;
@@ -859,7 +873,7 @@ void PackedIntArrayImp<STORAGE>::append(
         }
         else {
             // Test for potential overflow.
-            BSLS_ASSERT(k_MAX_CAPACITY / rbpe >= newLength);
+            BSLS_ASSERT_NONCONVEYOR(k_MAX_CAPACITY / rbpe >= newLength);
 
             bsl::size_t requiredCapacityInBytes = rbpe * newLength;
 
@@ -907,6 +921,7 @@ template <class STORAGE>
 void PackedIntArrayImp<STORAGE>::insert(bsl::size_t dstIndex,
                                         ElementType value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(dstIndex <= d_length);
 
     // Note that the limit on capacity precludes an overflow check here.
@@ -916,7 +931,7 @@ void PackedIntArrayImp<STORAGE>::insert(bsl::size_t dstIndex,
     rbpe = (rbpe >= d_bytesPerElement ? rbpe : d_bytesPerElement);
 
     // Test for potential overflow.
-    BSLS_ASSERT(k_MAX_CAPACITY / rbpe >= newLength);
+    BSLS_ASSERT_NONCONVEYOR(k_MAX_CAPACITY / rbpe >= newLength);
 
     bsl::size_t requiredCapacityInBytes = rbpe * newLength;
 
@@ -1017,6 +1032,8 @@ void PackedIntArrayImp<STORAGE>::insert(
                                  bsl::size_t                       srcIndex,
                                  bsl::size_t                       numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcArray);
     BSLS_ASSERT(dstIndex <= d_length);
 
     // Assert 'srcIndex + numElements <= srcArray.d_length' without risk of
@@ -1041,7 +1058,7 @@ void PackedIntArrayImp<STORAGE>::insert(
     }
 
     // Test for potential overflow.
-    BSLS_ASSERT(k_MAX_CAPACITY / rbpe >= newLength);
+    BSLS_ASSERT_NONCONVEYOR(k_MAX_CAPACITY / rbpe >= newLength);
 
     bsl::size_t requiredCapacityInBytes = rbpe * newLength;
 
@@ -1216,6 +1233,7 @@ template <class STORAGE>
 void PackedIntArrayImp<STORAGE>::replace(bsl::size_t dstIndex,
                                          ElementType value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(dstIndex < d_length);
 
     // Prepare storage for the operation.
@@ -1223,7 +1241,7 @@ void PackedIntArrayImp<STORAGE>::replace(bsl::size_t dstIndex,
     int rbpe = STORAGE::requiredBytesPerElement(value);
     if (d_bytesPerElement < rbpe) {
         // Test for potential overflow.
-        BSLS_ASSERT(k_MAX_CAPACITY / rbpe >= d_length);
+        BSLS_ASSERT_NONCONVEYOR(k_MAX_CAPACITY / rbpe >= d_length);
 
         bsl::size_t requiredCapacityInBytes = rbpe * d_length;
 
@@ -1255,6 +1273,8 @@ void PackedIntArrayImp<STORAGE>::replace(
                                  bsl::size_t                       srcIndex,
                                  bsl::size_t                       numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcArray);
     // Assert 'dstIndex + numElements <= d_length' without risk of overflow.
     BSLS_ASSERT(numElements <= d_length);
     BSLS_ASSERT(dstIndex    <= d_length - numElements);
@@ -1288,7 +1308,7 @@ void PackedIntArrayImp<STORAGE>::replace(
             }
 
             // Test for potential overflow.
-            BSLS_ASSERT(k_MAX_CAPACITY / rbpe >= d_length);
+            BSLS_ASSERT_NONCONVEYOR(k_MAX_CAPACITY / rbpe >= d_length);
 
             bsl::size_t requiredCapacityInBytes = rbpe * d_length;
 
@@ -1415,6 +1435,7 @@ template <class STORAGE>
 void PackedIntArrayImp<STORAGE>::reserveCapacityImp(
                                            bsl::size_t requiredCapacityInBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Compute next capacity level.
 
     requiredCapacityInBytes = nextCapacityGE(requiredCapacityInBytes,
@@ -1487,6 +1508,8 @@ bsl::ostream& PackedIntArrayImp<STORAGE>::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }

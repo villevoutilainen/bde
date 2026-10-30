@@ -262,6 +262,7 @@ static int veryVeryVeryVerbose = 0;
 static
 void stretchRemoveAll(Obj *object, size_t size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     ASSERT(object);
 
     const size_t initSize = object->length();
@@ -278,6 +279,7 @@ void stretchRemoveAll(Obj *object, size_t size)
 static
 bsl::string binSpec(const Obj& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     size_t len = object.length();
 
     bsl::string ret;
@@ -345,7 +347,9 @@ void incSizeT(size_t *x, const size_t maxVal)
 /// efficient algorithm than that employed by `Obj::num1`.
 static
 size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
+                                          BSLS_ASSERT_CONVEYOR_REQUIRES(object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     ASSERT(begin <= end);
     ASSERT(         end <= object.length());
 
@@ -480,7 +484,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     template <class TYPE>
     NullableVector<TYPE>::~NullableVector()
     {
-        BSLS_ASSERT(d_values.size() == d_nullFlags.length());
+        BSLS_ASSERT_NONCONVEYOR(d_values.size() == d_nullFlags.length());
     }
 
     // MANIPULATORS
@@ -488,6 +492,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     void NullableVector<TYPE>::appendElement(const TYPE& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_values.push_back(value);
         d_nullFlags.append(false);
     }
@@ -496,6 +501,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     void NullableVector<TYPE>::appendNullElement()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_values.push_back(TYPE());
         d_nullFlags.append(true);
     }
@@ -504,6 +510,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     void NullableVector<TYPE>::makeNonNull(bsl::size_t index)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT_SAFE(index < length());
 
         d_nullFlags.assign(index, false);
@@ -513,6 +520,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     void NullableVector<TYPE>::makeNull(bsl::size_t index)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT_SAFE(index < length());
 
         d_values[index] = TYPE();
@@ -533,6 +541,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     void NullableVector<TYPE>::removeElement(bsl::size_t index)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT_SAFE(index < length());
 
         d_values.erase(d_values.begin() + index);
@@ -553,6 +562,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     bool NullableVector<TYPE>::isAnyElementNonNull() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_nullFlags.isAny0();
     }
 
@@ -560,6 +570,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     bool NullableVector<TYPE>::isAnyElementNull() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_nullFlags.isAny1();
     }
 
@@ -567,6 +578,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     bool NullableVector<TYPE>::isElementNull(bsl::size_t index) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT_SAFE(index < length());
 
         return d_nullFlags[index];
@@ -576,6 +588,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     bsl::size_t NullableVector<TYPE>::length() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_values.size();
     }
 
@@ -583,6 +596,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     bsl::size_t NullableVector<TYPE>::numNullElements() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_nullFlags.num1();
     }
 // ```
@@ -617,6 +631,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
 static
 int gggHex(bdlc::BitArray *bitArray, const char *spec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(bitArray);
     enum { SUCCESS = -1 };
 
     const int NUM_CHARS = static_cast<int>(strlen(spec));
@@ -776,12 +791,15 @@ int ggg(bdlc::BitArray *object, const char *spec, int verboseFlag = 1)
     enum { SUCCESS = -1 };
     for (int i = 0; spec[i]; ++i) {
         if ('0' == spec[i]) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->append(0);
         }
         else if ('1' == spec[i]) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->append(1);
         }
         else if ('~' == spec[i]) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(object);
             object->removeAll();
         }
         else {
@@ -801,6 +819,8 @@ int ggg(bdlc::BitArray *object, const char *spec, int verboseFlag = 1)
 /// according to the specified `spec`.
 static
 bdlc::BitArray& gg(bdlc::BitArray *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(ggg(object, spec) < 0);
     return *object;
@@ -828,6 +848,8 @@ int gggDispatch(bdlc::BitArray *object, const char *spec, bool verbose = false)
 /// according to the specified `spec`.
 static
 bdlc::BitArray& ggDispatch(bdlc::BitArray *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(gggDispatch(object, spec) < 0);
     return *object;
@@ -1025,11 +1047,14 @@ void testNum0Num1()
 
         for (int ii = 0; ii < 2; ++ii) {
             for (int begin = 0; begin <= LENGTH;incInt(&begin, LENGTH)) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 for (int end = begin; end <= LENGTH; ++end) {
                     const bool   oddLength = (end - begin) & 1;
                     const bool   oddSet    = oddLength && X[begin];
                     const size_t EXP1      = (end - begin) / 2 + oddSet;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     const size_t EXP0      = end - begin - EXP1;
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                     ASSERT(EXP1 == X.num1(begin, end));
                     ASSERT(EXP0 == X.num0(begin, end));
@@ -1113,22 +1138,37 @@ void testNum0Num1()
     {
         Obj mX;    const Obj& X = ggDispatch(&mX, "xwa");
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         bsls::AssertTestHandlerGuard guard;
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         size_t len = X.length();
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_PASS(X.num0(0, 0));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_PASS(X.num1(0, 0));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_PASS(X.num0(0, len));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_PASS(X.num1(0, len));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_PASS(X.num0(0, len / 2));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_PASS(X.num1(0, len / 2));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_PASS(X.num0(len / 2, len / 2));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_PASS(X.num1(len / 2, len / 2));
         ASSERT_PASS(X.num0(len, len));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_PASS(X.num1(len, len));
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_SAFE_FAIL(X.num0(len / 2, len / 2 - 1));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT_SAFE_FAIL(X.num1(len / 2, len / 2 - 1));
         ASSERT_SAFE_FAIL(X.num0(0, len + 1));
         ASSERT_SAFE_FAIL(X.num1(0, len + 1));
@@ -1170,9 +1210,11 @@ void testAssignBits()
 
             {
                 Obj mR(X, &testAllocator);    const Obj& R = mR;
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 const Int64 B = testAllocator.numBlocksTotal();
                 for (size_t di = 0; di <= X.length(); ++di) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     mR.assignBits(di, minusOne, 0);
 
                     ASSERT(R == X);
@@ -1184,6 +1226,7 @@ void testAssignBits()
                                              64, 65, 96, 112, 127, 128, 129 };
             enum { NUM_DEST_IDXS = sizeof DEST_IDXS / sizeof *DEST_IDXS };
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             for (int tk = 0; tk < NUM_DEST_IDXS; ++tk) {
                 const size_t di = DEST_IDXS[tk];
                 if (di >= X.length()) {
@@ -1199,6 +1242,7 @@ void testAssignBits()
                         P_(di);    P(bitsSpec);
                     }
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     const int maxWriteBits = static_cast<int>(
                                           bsl::min<size_t>(k_BITS_PER_UINT64,
                                                            X.length() - di));
@@ -1215,6 +1259,7 @@ void testAssignBits()
                                                 bitsSpec.substr(0, writeBits) +
                                                 xSpec.substr(di + writeBits);
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         const Obj& E = gDispatch(expSpec.c_str());
 
                         ASSERT(E.length() == X.length());
@@ -1227,6 +1272,7 @@ void testAssignBits()
         {
             Obj mX;    const Obj& X = ggDispatch(&mX, "xwwa");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             bsls::AssertTestHandlerGuard guard;
 
             size_t       len = X.length();
@@ -1296,31 +1342,40 @@ void testFind1AtMinIndex()
                     for (size_t end = begin; end <= curLen; ++end) {
                         size_t exp0 = k_INVALID_INDEX;
                         size_t exp1 = k_INVALID_INDEX;
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                         for (size_t ii = begin; ii < end; ++ii) {
                             if (! X[ii]) {
                                 exp0 = ii;
                                 break;
                             }
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         }
                         for (size_t ii = begin; ii < end; ++ii) {
                             if (X[ii]) {
                                 exp1 = ii;
                                 break;
                             }
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                         ASSERT(X.find0AtMinIndex(begin, end) == exp0);
                         ASSERT(X.find1AtMinIndex(begin, end) == exp1);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         if (curLen == end) {
                             ASSERT(X.find0AtMinIndex(begin) == exp0);
                             ASSERT(X.find1AtMinIndex(begin) == exp1);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                             if (0 == begin) {
                                 ASSERT(X.find0AtMinIndex() == exp0);
                                 ASSERT(X.find1AtMinIndex() == exp1);
                             }
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         }
 
                         ASSERT(XX == X);
@@ -1334,34 +1389,59 @@ void testFind1AtMinIndex()
         {
             Obj mX;    const Obj& X = ggDispatch(&mX, "xwa");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             bsls::AssertTestHandlerGuard guard;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             size_t len = X.length();
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find0AtMinIndex());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find0AtMinIndex(      0));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find0AtMinIndex(len / 2));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find0AtMinIndex(    len));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find0AtMinIndex(      0,       0));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find0AtMinIndex(      0,     len));
             ASSERT_SAFE_PASS(X.find0AtMinIndex(    len,     len));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find0AtMinIndex(len / 2, len / 2));
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_FAIL(X.find0AtMinIndex(len + 1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_FAIL(X.find0AtMinIndex(len / 2, len/2-1));
             ASSERT_SAFE_FAIL(X.find0AtMinIndex(    len, len - 1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_FAIL(X.find0AtMinIndex(      0, len + 1));
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find1AtMinIndex());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find1AtMinIndex(      0));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find1AtMinIndex(len / 2));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find1AtMinIndex(    len));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find1AtMinIndex(      0,       0));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find1AtMinIndex(      0,     len));
             ASSERT_SAFE_PASS(X.find1AtMinIndex(    len,     len));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_PASS(X.find1AtMinIndex(len / 2, len / 2));
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_FAIL(X.find1AtMinIndex(len + 1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_SAFE_FAIL(X.find1AtMinIndex(len / 2, len/2-1));
             ASSERT_SAFE_FAIL(X.find1AtMinIndex(    len, len - 1));
             ASSERT_SAFE_FAIL(X.find1AtMinIndex(      0, len + 1));
@@ -1674,31 +1754,40 @@ int main(int argc, char *argv[])
                     for (size_t end = begin; end <= curLen; ++end) {
                         size_t exp0 = k_INVALID_INDEX;
                         size_t exp1 = k_INVALID_INDEX;
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                         for (size_t ii = end; ii > begin; ) {
                             if (! X[--ii]) {
                                 exp0 = ii;
                                 break;
                             }
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         }
                         for (size_t ii = end; ii > begin; ) {
                             if (X[--ii]) {
                                 exp1 = ii;
                                 break;
                             }
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                         ASSERT(X.find0AtMaxIndex(begin, end) == exp0);
                         ASSERT(X.find1AtMaxIndex(begin, end) == exp1);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         if (curLen == end) {
                             ASSERT(X.find0AtMaxIndex(begin) == exp0);
                             ASSERT(X.find1AtMaxIndex(begin) == exp1);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                             if (0 == begin) {
                                 ASSERT(X.find0AtMaxIndex() == exp0);
                                 ASSERT(X.find1AtMaxIndex() == exp1);
                             }
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         }
 
                         ASSERT(XX == X);
@@ -2661,11 +2750,14 @@ int main(int argc, char *argv[])
                 if (flip) {
                     mX.toggleAll();
                 }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 if (veryVerbose) {
                     P_(SPEC);    P_(flip);    P(X.length());
                 }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 Obj mY(X, &testAllocator);    const Obj& Y = mY;
                 mY.reserveCapacity(X.length() + N);
                 LOOP_ASSERT(SPEC, X == Y);
@@ -2673,43 +2765,55 @@ int main(int argc, char *argv[])
                 const Int64 B = testAllocator.numBlocksInUse();
 
                 size_t i;
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 if (veryVerbose) { cout << "\t\t"; P_(N); P(Y); }
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = X[i];
                     ASSERT(b == Y[i]);
                     mY.xorEqual(i, false);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERT(b == Y[i]);
                 }
                 LOOP_ASSERT(SPEC, X == Y);
                 if (veryVerbose) { cout << "\t\t\t"; P(Y); }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mY = X;
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = X[i];
                     ASSERT(b == Y[i]);
                     mY.xorEqual(i, -1);
                     ASSERT(!b == Y[i]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     mY.xorEqual(i, -1);
                 }
                 LOOP_ASSERT(SPEC, X == Y);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mY = X;
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = X[i];
                     ASSERT(b == Y[i]);
                     mY.xorEqual(i, 1);
                     ASSERT(!b == Y[i]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     mY.xorEqual(i, -1);
                 }
                 LOOP_ASSERT(SPEC, X == Y);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mY = X;
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = X[i];
                     ASSERT(b == Y[i]);
                     mY.xorEqual(i, 2);
                     ASSERT(!b == Y[i]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     mY.xorEqual(i, -1);
                 }
                 LOOP_ASSERT(SPEC, X == Y);
@@ -2798,11 +2902,14 @@ int main(int argc, char *argv[])
                 if (flip) {
                     mX.toggleAll();
                 }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 if (veryVerbose) {
                     P_(SPEC);    P_(flip);    P(X.length());
                 }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 Obj mY(X, &testAllocator);    const Obj& Y = mY;
                 mY.reserveCapacity(X.length() + N);
                 LOOP_ASSERT(SPEC, X == Y);
@@ -2810,43 +2917,55 @@ int main(int argc, char *argv[])
                 const Int64 B = testAllocator.numBlocksInUse();
 
                 size_t i;
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 if (veryVerbose) { cout << "\t\t"; P_(N); P(Y); }
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = X[i];
                     ASSERT(b == Y[i]);
                     mY.orEqual(i, 0);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERT(b == Y[i]);
                 }
                 LOOP_ASSERT(SPEC, X == Y);
                 if (veryVerbose) { cout << "\t\t\t"; P(Y); }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mY = X;
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = X[i];
                     ASSERT(b == Y[i]);
                     mY.orEqual(i, -1);
                     ASSERT(true == Y[i]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     mY.assign(i, b);
                 }
                 LOOP_ASSERT(SPEC, X == Y);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mY = X;
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = X[i];
                     ASSERT(b == Y[i]);
                     mY.orEqual(i, 1);
                     ASSERT(true == Y[i]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     mY.assign(i, b);
                 }
                 LOOP_ASSERT(SPEC, X == Y);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mY = X;
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = X[i];
                     ASSERT(b == Y[i]);
                     mY.orEqual(i, 2);
                     ASSERT(true == Y[i]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     mY.assign(i, b);
                 }
                 LOOP_ASSERT(SPEC, X == Y);
@@ -2933,12 +3052,15 @@ int main(int argc, char *argv[])
                 if (flip) {
                     mX.toggleAll();
                 }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 if (veryVerbose) {
                     P_(X.length());    P_(flip);    P(SPEC);
                 }
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     Obj mY(X, &testAllocator);    const Obj& Y = mY;
                     mY.reserveCapacity(X.length() + N);
                     ASSERT(X == Y);
@@ -2946,39 +3068,47 @@ int main(int argc, char *argv[])
                     const Int64 B = testAllocator.numBlocksInUse();
 
                     size_t i;
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                     if (veryVerbose) { cout << "\t\t"; P(Y); }
                     for (i = 0; i < X.length(); ++i) {
                         const bool b = Y[i];
                         mY.minusEqual(i, 0);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         ASSERT(Y[i] == b);
                     }
                     LOOP_ASSERT(SPEC, X == Y);
                     if (veryVerbose) { cout << "\t\t\t"; P(Y); }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                     mY = X;
                     for (i = 0; i < X.length(); ++i) {
                         bool b = Y[i];
                         mY.minusEqual(i, -1);
                         ASSERT(0 == Y[i]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         mY.assign(i, b);
                     }
                     LOOP_ASSERT(SPEC, X == Y);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                     mY = X;
                     for (i = 0; i < X.length(); ++i) {
                         bool b = Y[i];
                         mY.minusEqual(i, 1);
                         ASSERT(0 == Y[i]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         mY.assign(i, b);
                     }
                     LOOP_ASSERT(SPEC, X == Y);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                     mY = X;
                     for (i = 0; i < X.length(); ++i) {
                         bool b = Y[i];
                         mY.minusEqual(i, 2);
                         ASSERT(0 == Y[i]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         mY.assign(i, b);
                     }
                     LOOP_ASSERT(SPEC, X == Y);
@@ -3065,11 +3195,14 @@ int main(int argc, char *argv[])
                 if (flip) {
                     mX.toggleAll();
                 }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 if (veryVerbose) {
                     P_(X.length());    P_(SPEC);    P(flip);
                 }
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 Obj mY(X, &testAllocator);    const Obj& Y = mY;
                 mY.reserveCapacity(X.length() + N);
                 LOOP_ASSERT(SPEC, X == Y);
@@ -3077,35 +3210,44 @@ int main(int argc, char *argv[])
                 const Int64 B = testAllocator.numBlocksTotal();
 
                 size_t i;
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 if (veryVerbose) { cout << "\t\t"; P(Y); }
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = Y[i];
                     mY.andEqual(i, -1);
                     ASSERT(Y[i] == b);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 }
                 if (veryVerbose) { cout << "\t\t\t"; P(Y); }
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(SPEC, X == Y);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = Y[i];
                     ASSERT(X[i] == b);
                     mY.andEqual(i, 1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERT(Y[i] == b);
                 }
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(SPEC, X == Y);
 
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = Y[i];
                     mY.andEqual(i, 2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERT(Y[i] == b);
                 }
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(SPEC, X == Y);
 
                 for (i = 0; i < X.length(); ++i) {
                     const bool b = Y[i];
                     mY.andEqual(i, 0);
                     ASSERT(0 == Y[i]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     mY.assign(i, b);
                 }
                 LOOP_ASSERT(SPEC, X == Y);
@@ -6913,6 +7055,7 @@ int main(int argc, char *argv[])
                 Obj   *doNotDelete = new(a.allocate(sizeof(Obj))) Obj(e, &a);
                 Obj   &mX          = *doNotDelete;  const Obj &X = mX;
                 if (veryVerbose) P(X);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(length, length == X.length());
                 for (size_t i = 0; i < length; ++i) {
                     LOOP2_ASSERT(length, i, DEFAULT_VALUE == X[i]);
@@ -6994,6 +7137,7 @@ int main(int argc, char *argv[])
                     new(a.allocate(sizeof(Obj))) Obj(length, VALUE, &a);
                 Obj &mX = *doNotDelete;  const Obj &X = mX;
                 if (veryVerbose) P(X);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(length, length == X.length());
                 for (size_t i = 0; i < length; ++i) {
                     LOOP2_ASSERT(length, i, VALUE == X[i]);
@@ -8133,6 +8277,7 @@ int main(int argc, char *argv[])
             // Ensure the first row of the table contains the
             // default-constructed value.
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&W);
             static bool firstFlag = true;
             if (firstFlag) {
                 LOOP3_ASSERT(LINE1, W, Obj(&scratch), W == Obj(&scratch));
@@ -8143,7 +8288,9 @@ int main(int argc, char *argv[])
             {
                 bslma::TestAllocatorMonitor oam(&oa);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&W);
                 mW.swap(mW);
+BSLS_ASSERT_CONVEYOR_OBJECT(&W);
 
                 LOOP3_ASSERT(LINE1, W, XX, W == XX);
                 LOOP_ASSERT(LINE1, &oa == W.allocator());
@@ -8154,7 +8301,9 @@ int main(int argc, char *argv[])
             {
                 bslma::TestAllocatorMonitor oam(&oa);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&W);
                 swap(mW, mW);
+BSLS_ASSERT_CONVEYOR_OBJECT(&W);
 
                 LOOP3_ASSERT(LINE1, W, XX, W == XX);
                 LOOP_ASSERT(LINE1, &oa == W.allocator());
@@ -8179,8 +8328,10 @@ int main(int argc, char *argv[])
                     bslma::TestAllocatorMonitor oam(&oa);
 
                     mX.swap(mY);
+BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
                     LOOP4_ASSERT(LINE1, LINE2, X, YY, X == YY);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
                     LOOP4_ASSERT(LINE1, LINE2, Y, XX, Y == XX);
                     LOOP2_ASSERT(LINE1, LINE2, &oa == X.allocator());
                     LOOP2_ASSERT(LINE1, LINE2, &oa == Y.allocator());
@@ -8192,8 +8343,10 @@ int main(int argc, char *argv[])
                     bslma::TestAllocatorMonitor oam(&oa);
 
                     swap(mX, mY);
+BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
                     LOOP4_ASSERT(LINE1, LINE2, X, XX, X == XX);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
                     LOOP4_ASSERT(LINE1, LINE2, Y, YY, Y == YY);
                     LOOP2_ASSERT(LINE1, LINE2, &oa == X.allocator());
                     LOOP2_ASSERT(LINE1, LINE2, &oa == Y.allocator());
@@ -8260,8 +8413,11 @@ int main(int argc, char *argv[])
                 // free function `swap`, different allocators
                 {
                     swap(mX, mY);
+BSLS_ASSERT_CONVEYOR_OBJECT(&XX);
+BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
                     ASSERTV(LINE1, LINE2, YY, X, YY == X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
                     ASSERTV(LINE1, LINE2, XX, Y, XX == Y);
                     ASSERTV(LINE1, LINE2, &oa  == X.allocator());
                     ASSERTV(LINE1, LINE2, &oa2 == Y.allocator());
@@ -8393,6 +8549,7 @@ int main(int argc, char *argv[])
                     {                                   // No allocator.
                         Obj mXX;    const Obj& XX = ggDispatch(&mXX, SPEC);
                         const Obj Y0(XX);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&XX);
                         if (veryVerbose) { cout << "\t\t\t"; P(Y0); }
                         LOOP2_ASSERT(SPEC, N, W == Y0);
                         LOOP2_ASSERT(SPEC, N, W == XX);
@@ -8402,6 +8559,7 @@ int main(int argc, char *argv[])
 
                     {                                   // Null allocator.
                         const Obj Y1(X, (bslma::Allocator *) 0);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         if (veryVerbose) { cout << "\t\t\t"; P(Y1); }
                         LOOP2_ASSERT(SPEC, N, W == Y1);
                         LOOP2_ASSERT(SPEC, N, W == X);
@@ -8411,6 +8569,7 @@ int main(int argc, char *argv[])
                     BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(testAllocator) {
                         ++count;
                         const Obj Y2(X, &testAllocator);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         if (veryVerbose) { cout << "\t\t\t"; P(Y2); }
                         LOOP2_ASSERT(SPEC, N, W == Y2);
                         LOOP2_ASSERT(SPEC, N, W == X);
@@ -8426,7 +8585,9 @@ int main(int argc, char *argv[])
                         bdlma::BufferedSequentialAllocator a(memory, memSize);
 
                         Obj *Y = new(a.allocate(sizeof(Obj))) Obj(X, &a);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         if (veryVerbose) { cout << "\t\t\t"; P(*Y); }
+                        BSLS_ASSERT_CONVEYOR_OBJECT(Y);
                         LOOP2_ASSERT(SPEC, N, W == *Y);
                         LOOP2_ASSERT(SPEC, N, W == X);
                     }
@@ -8800,6 +8961,7 @@ int main(int argc, char *argv[])
 
                 if (veryVerbose) { cout << "\t\tSpec = \"" << SPEC << "\", ";
                                    P_(IND); P(SPL); }
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 if (veryVerbose) cout << "EXPECTED FORMAT:" << endl<<FMT<<endl;
                 bsl::ostringstream oss, ossB;
                 X.print(oss, IND, SPL);
@@ -8809,8 +8971,10 @@ int main(int argc, char *argv[])
                 ASSERTV(outLen, oss.str().length(),
                                                  outLen == oss.str().length());
                 ASSERTV(oss.str(), FMT, oss.str() == FMT);
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 oss.str("");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 X.print(oss, 0, -1);
 
                 ossB << X;
@@ -8924,6 +9088,7 @@ int main(int argc, char *argv[])
                 const Obj& X = ggDispatch(&mX, SPEC);
                 const Obj& Y = ggDispatch(&mY, SPEC);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 const bsl::string& bs = binSpec(X);    // Binary Spec
 
                 LOOP_ASSERT(ti, LENGTH == X.length()); // same lengths
@@ -8940,10 +9105,14 @@ int main(int argc, char *argv[])
                     cout << "\t\tSpec = \"" << SPEC << "\"\n"
                          << "\t\t\t"; P(X);
                     cout << "\t\t\t"; P(Y);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 }
+BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
                 LOOP_ASSERT(LINE, LENGTH == X.length());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(LINE, LENGTH == Y.length());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
                 for (size_t ii = 0; ii < LENGTH; ++ii) {
                     ASSERT(('1' == bs.c_str()[ii]) == X[ii]);
                     ASSERT(('1' == bs.c_str()[ii]) == Y[ii]);
@@ -8961,10 +9130,13 @@ int main(int argc, char *argv[])
                         for (int shift = 0; shift < nb; ++shift) {
                             x |= static_cast<uint64_t>(
                                       '1' == bitsSpec.c_str()[shift]) << shift;
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         }
 
                         ASSERTV(LINE, idx, nb, X.bits(idx, nb) == x);
                     }
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
                 }
 
                 ASSERT(X == Y);
@@ -9068,13 +9240,18 @@ int main(int argc, char *argv[])
                 const Obj& X = ggDispatch(&mX, SPEC); // canonical organization
                 mY.removeAll();
                 const Obj& Y = ggDispatch(&mY, SPEC); // has extended capacity
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 if ('x' != *SPEC) {
                     ASSERT(SPEC_LEN == X.length()); // same lengths
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 }
+BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
                 ASSERT(&testAllocator == X.allocator());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(&testAllocator == Y.allocator());
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
                 ASSERT(NUM0 + NUM1 == X.length());
                 ASSERT(X.isEmpty() == (0 == X.length()));
@@ -9083,25 +9260,33 @@ int main(int argc, char *argv[])
                     cout << "\t\tSpec = \"" << SPEC << '"' << endl;
                     cout << "\t\t\t"; P(X);
                     cout << "\t\t\t"; P(Y);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 }
+BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
                 const size_t xNum0 = X.num0();
                 const size_t yNum0 = Y.num0();
                 ASSERT(xNum0 == yNum0);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(LINE, NUM0, xNum0, NUM0 == xNum0);
+BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
                 const size_t xNum1 = X.num1();
                 const size_t yNum1 = Y.num1();
                 ASSERT(xNum1 == yNum1);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(LINE, NUM1, xNum1, NUM1 == xNum1);
+BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
                 const bool xAny0 = X.isAny0();
                 const bool yAny0 = Y.isAny0();
                 ASSERT(xAny0 == yAny0);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(LINE, NUM0, xAny0, (NUM0 > 0) == xAny0);
+BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
 
                 const bool xAny1 = X.isAny1();
                 const bool yAny1 = Y.isAny1();
@@ -9311,7 +9496,9 @@ int main(int argc, char *argv[])
             LOOP_ASSERT(LINE, LENGTH == X.length());
             LOOP_ASSERT(LINE, LENGTH == Y.length());
             for (size_t i = 0; i < LENGTH; ++i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&U);
                 LOOP2_ASSERT(LINE, i, e[i] == X[i]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&V);
                 LOOP2_ASSERT(LINE, i, e[i] == Y[i]);
                 LOOP2_ASSERT(LINE, i, e[i] == U[i]);
                 LOOP2_ASSERT(LINE, i, e[i] == V[i]);

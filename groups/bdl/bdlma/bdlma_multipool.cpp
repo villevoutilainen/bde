@@ -318,7 +318,6 @@ Multipool::~Multipool()
 
     d_blockList.release();
     for (int i = 0; i < d_numPools; ++i) {
-        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[i]);
         d_pools_p[i].release();
         BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[i]);
@@ -376,8 +375,8 @@ void Multipool::deallocate(void *address)
 
 void Multipool::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (int i = 0; i < d_numPools; ++i) {
-        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT_CONVEYOR_OBJECT(&d_pools_p[i]);
         d_pools_p[i].release();
     }

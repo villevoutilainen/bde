@@ -381,11 +381,13 @@ class EqualAndState {
     /// Return, for the specified `lhs` and `rhs`, `lhs == rhs`.
     bool operator()(const TYPE& lhs, const TYPE& rhs) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs == rhs;
     }
 
     /// Return a non-modifiable reference to the state value.
-    const TYPE& state() const
+    const TYPE& state() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
         return d_state;
     }
@@ -550,6 +552,7 @@ void testCase14MoveConstructorWithAllocator(int id)
             Obj *pY = bufferY.address();
             bslma::ConstructionUtil::construct(pY, &sa, W);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(pY);
             Obj& mY = *pY;  const Obj& Y = mY;
 
             LOOP_ASSERT(id, Y == W);
@@ -593,9 +596,14 @@ void testCase14MoveConstructorWithAllocator(int id)
             }
 
             bslma::TestAllocator&  oa = *objAllocatorPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&oa);
             bslma::TestAllocator& noa = *othAllocatorPtr;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&noa);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(objPtr);
             Obj& mX = *objPtr;  const Obj& X = mX;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
             // Verify the value of the object.
             LOOP_ASSERT(id, X == W);
@@ -897,6 +905,7 @@ bsls::TimeInterval performanceFindPresent(SET *set)
     const int NUM_ITER  = 4096 * 128 / MAX;
 
     for (int i = 0; i < MAX; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(set);
         set->insert(i);
     }
 
@@ -906,6 +915,7 @@ bsls::TimeInterval performanceFindPresent(SET *set)
             bsls::TimeInterval start = bsls::SystemTime::nowMonotonicClock();
 
             for (int i = 0; i < MAX; ++i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(set);
                 s_antiOptimization += *set->find((i * 7) & (MAX - 1));
             }
 
@@ -929,6 +939,7 @@ bsls::TimeInterval performanceFindNotPresent(SET *set)
     const int NUM_ITER  = 4096 * 128 / MAX;
 
     for (int i = 0; i < MAX; ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(set);
         set->insert(i * 2);
     }
 
@@ -938,6 +949,7 @@ bsls::TimeInterval performanceFindNotPresent(SET *set)
             bsls::TimeInterval start = bsls::SystemTime::nowMonotonicClock();
 
             for (int i = 0; i < MAX; ++i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(set);
                 if (set->end() == set->find(((i * 7) & (MAX - 1)) * 2 + 1)) {
                     ++s_antiOptimization;
                 }
@@ -1087,7 +1099,9 @@ template <class t_CONTAINER>
 void testTransparentComparator(t_CONTAINER& container,
                                bool         isTransparent,
                                int          initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&container);
     typedef typename t_CONTAINER::const_iterator   Iterator;
     typedef typename t_CONTAINER::size_type        Count;
 
@@ -1187,7 +1201,9 @@ template <class t_CONTAINER>
 void testTransparentComparatorMutable(const t_CONTAINER& container,
                                       bool               isTransparent,
                                       int                initKeyValue)
+                                       BSLS_ASSERT_CONVEYOR_REQUIRES(container)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&container);
     typedef typename t_CONTAINER::iterator       Iterator;
     typedef typename t_CONTAINER::size_type      Count;
 
@@ -2115,6 +2131,7 @@ cout << endl
             ASSERT(false == X.contains(SB));
             ASSERT(false == X.contains(SC));
             ASSERT(    7 == X.hash_function()(SA));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(   SB == X.key_eq().state());
 
             mX = { SA, SB };
@@ -2124,6 +2141,7 @@ cout << endl
             ASSERT( true == X.contains(SB));
             ASSERT(false == X.contains(SC));
             ASSERT(    7 == X.hash_function()(SB));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(   SB == X.key_eq().state());
 
             mX = { SA, SB, SC };
@@ -2133,6 +2151,7 @@ cout << endl
             ASSERT(true == X.contains(SB));
             ASSERT(true == X.contains(SC));
             ASSERT(   7 == X.hash_function()(SC));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(  SB == X.key_eq().state());
         }
 #endif

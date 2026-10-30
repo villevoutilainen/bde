@@ -127,7 +127,7 @@ template <class TYPE>
 bool PackedIntArrayUtil::isSorted(PackedIntArrayConstIterator<TYPE> first,
                                   PackedIntArrayConstIterator<TYPE> last)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
 
     PackedIntArrayConstIterator<TYPE> at   = first;
     PackedIntArrayConstIterator<TYPE> prev = first;
@@ -148,7 +148,7 @@ PackedIntArrayConstIterator<TYPE> PackedIntArrayUtil::lowerBound(
                                        PackedIntArrayConstIterator<TYPE> last,
                                        TYPE                              value)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
     //BSLS_ASSERT_SAFE(isSorted(first, last));  // expensive check
 
     typedef typename PackedIntArrayConstIterator<TYPE>::difference_type
@@ -178,7 +178,7 @@ PackedIntArrayConstIterator<TYPE> PackedIntArrayUtil::upperBound(
                                        PackedIntArrayConstIterator<TYPE> last,
                                        TYPE                              value)
 {
-    BSLS_ASSERT(first <= last);
+    BSLS_ASSERT_NONCONVEYOR(first <= last);
     //BSLS_ASSERT_SAFE(isSorted(first, last));  // expensive check
 
     typedef typename PackedIntArrayConstIterator<TYPE>::difference_type

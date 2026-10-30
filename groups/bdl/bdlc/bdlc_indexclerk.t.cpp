@@ -283,6 +283,7 @@ typedef bdlc::IndexClerkIter Iter;
 /// the spec is the first to be returned on a `getIndex` operation.
 int ggg(Obj *object, const char *spec, int vF = 1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     int maxDecommIndex   = -1;
     int numDecommIndices =  0;
 
@@ -412,6 +413,8 @@ int ggg(Obj *object, const char *spec, int vF = 1)
 /// according to the specified `spec`.  The behavior is undefined unless
 /// `object` and `spec` are non-zero, and `spec` is a valid specification.
 Obj& gg(Obj *object, const char *spec)
+                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(object)
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     ASSERT(object);
     ASSERT(spec);
@@ -486,6 +489,8 @@ class Security {
                     bdlc::IndexClerk      *securityClerk,
                     const Security&        newSecurity)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(securityClerk);
+        BSLS_ASSERT_CONVEYOR_OBJECT(securityArray);
         BSLS_ASSERT(securityArray);
         BSLS_ASSERT(securityClerk);
 
@@ -510,11 +515,13 @@ class Security {
                         bdlc::IndexClerk      *securityClerk,
                         int                    securityId)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(securityClerk);
+        BSLS_ASSERT_CONVEYOR_OBJECT(securityArray);
         BSLS_ASSERT(securityArray);
         BSLS_ASSERT(securityClerk);
 
         BSLS_ASSERT(0                             <= securityId);
-        BSLS_ASSERT(securityClerk->nextNewIndex() >  securityId);
+        BSLS_ASSERT_NONCONVEYOR(securityClerk->nextNewIndex() >  securityId);
         BSLS_ASSERT((int) securityArray->size()   >  securityId);
 
         // Note that the `isInUse` function (below) runs in linear time.

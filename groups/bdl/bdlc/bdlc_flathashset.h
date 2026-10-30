@@ -458,14 +458,17 @@ class FlatHashSet;
 
 template <class KEY, class HASH, class EQUAL>
 bool operator==(const FlatHashSet<KEY, HASH, EQUAL> &a,
-                const FlatHashSet<KEY, HASH, EQUAL> &b);
+                const FlatHashSet<KEY, HASH, EQUAL> &b)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
 template <class KEY, class HASH, class EQUAL>
 bool operator!=(const FlatHashSet<KEY, HASH, EQUAL> &a,
-                const FlatHashSet<KEY, HASH, EQUAL> &b);
+                const FlatHashSet<KEY, HASH, EQUAL> &b)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
 template <class KEY, class HASH, class EQUAL>
-void swap(FlatHashSet<KEY, HASH, EQUAL>& a, FlatHashSet<KEY, HASH, EQUAL>& b);
+void swap(FlatHashSet<KEY, HASH, EQUAL>& a, FlatHashSet<KEY, HASH, EQUAL>& b)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
                        // ============================
                        // struct FlatHashSet_EntryUtil
@@ -501,7 +504,9 @@ struct FlatHashSet_EntryUtil
                         BSLS_COMPILERFEATURES_FORWARD_REF(KEY_TYPE)  key);
 
     /// Return the specified `entry`.
-    static const ENTRY& key(const ENTRY& entry);
+    static const ENTRY& key(const ENTRY& entry)
+                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(entry)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                             // =================
@@ -711,13 +716,14 @@ class FlatHashSet {
     /// providing modifiable access to this object.  This method requires
     /// that the (template parameter) type `KEY` be `copy-insertable` into
     /// this set (see {Requirements on `KEY`, `HASH`, and `EQUAL`}).
-    FlatHashSet& operator=(bsl::initializer_list<KEY> values);
+    FlatHashSet& operator=(bsl::initializer_list<KEY> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Remove all elements from this set.  Note that this set will be empty
     /// after calling this method, but allocated memory may be retained for
     /// future use.  See the `capacity` method.
-    void clear();
+    void clear() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Insert into this set a newly created `value_type` object,
@@ -732,7 +738,8 @@ class FlatHashSet {
     /// from `arguments`, and whose `second` member is `true` if a new value
     /// was inserted, and `false` if an equivalent key was already present.
     template <class... ARGS>
-    bsl::pair<iterator, bool> emplace(ARGS&&... args);
+    bsl::pair<iterator, bool> emplace(ARGS&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this set a newly created `value_type` object,
     /// constructed by forwarding `get_allocator()` (if required) and the
@@ -747,7 +754,8 @@ class FlatHashSet {
     /// specified `hint`.  Note that `hint` is ignored (other than possibly
     /// asserting its validity in some build modes).
     template <class... ARGS>
-    iterator emplace_hint(const_iterator hint, ARGS&&... args);
+    iterator emplace_hint(const_iterator hint, ARGS&&... args)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Remove from this set the element whose key is equal to the specified
@@ -755,7 +763,7 @@ class FlatHashSet {
     /// having `key` in this set), return 0 with no other effect.  This
     /// method invalidates all iterators and references to the removed
     /// element.
-    bsl::size_t erase(const KEY& key);
+    bsl::size_t erase(const KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Remove from this set the element whose key is equivalent to the
@@ -768,7 +776,7 @@ class FlatHashSet {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::size_t>::type
-    erase(LOOKUP_KEY&& key)
+    erase(LOOKUP_KEY&& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_impl.erase(key);
     }
@@ -781,7 +789,8 @@ class FlatHashSet {
     /// maintained by this set.  This method invalidates all iterators and
     /// references to the removed element.  The behavior is undefined unless
     /// `position` refers to an element in this set.
-    const_iterator erase(const_iterator position);
+    const_iterator erase(const_iterator position)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this set the elements starting at the specified `first`
     /// position up to, but not including, the specified `last` position,
@@ -790,7 +799,8 @@ class FlatHashSet {
     /// unless `first` and `last` are valid iterators on this set, and the
     /// `first` position is at or before the `last` position in the
     /// iteration sequence provided by this container.
-    const_iterator erase(const_iterator first, const_iterator last);
+    const_iterator erase(const_iterator first, const_iterator last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert the specified `value` into this set if the `value` does not
     /// already exist in this set; otherwise, this method has no effect.
@@ -800,6 +810,7 @@ class FlatHashSet {
     /// member is `true` if a new element was inserted, and `false` if an
     /// equivalent value was already present.
     bsl::pair<const_iterator, bool> insert(const KEY& value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note that some compilers require functions declared with 'enable_if'
         // to be defined inline.
@@ -815,6 +826,7 @@ class FlatHashSet {
     /// member is `true` if a new element was inserted, and `false` if an
     /// equivalent value was already present.
     bsl::pair<const_iterator, bool> insert(bslmf::MovableRef<KEY> value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note that some compilers require functions declared with 'enable_if'
         // to be defined inline.
@@ -834,7 +846,7 @@ class FlatHashSet {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , typename bsl::pair<iterator, bool> >::type
-    insert(LOOKUP_KEY&& key)
+    insert(LOOKUP_KEY&& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return d_impl.insertTransparent(
                                BSLS_COMPILERFEATURES_FORWARD(LOOKUP_KEY, key));
@@ -847,6 +859,7 @@ class FlatHashSet {
     /// element in this set whose value is equivalent to that of the
     /// element to be inserted.  The supplied `const_iterator` is ignored.
     const_iterator insert(const_iterator, const KEY& value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note that some compilers require functions declared with 'enable_if'
         // to be defined inline.
@@ -861,6 +874,7 @@ class FlatHashSet {
     /// element in this set whose value is equivalent to that of the
     /// element to be inserted.  The supplied `const_iterator` is ignored.
     const_iterator insert(const_iterator, bslmf::MovableRef<KEY> value)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note that some compilers require functions declared with 'enable_if'
         // to be defined inline.
@@ -882,7 +896,7 @@ class FlatHashSet {
          && bsl::is_convertible<LOOKUP_KEY&&, const_iterator>::value == false
          && bsl::is_convertible<const_iterator, LOOKUP_KEY&&>::value == false
           , iterator>::type
-    insert(const_iterator, LOOKUP_KEY&& key)
+    insert(const_iterator, LOOKUP_KEY&& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         return insert(BSLS_COMPILERFEATURES_FORWARD(LOOKUP_KEY, key)).first;
     }
@@ -896,7 +910,8 @@ class FlatHashSet {
     /// sequence is equivalent to an earlier member, the later member will
     /// not be inserted.
     template <class INPUT_ITERATOR>
-    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last);
+    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
     /// Insert into this set an element having the value of each object in
@@ -904,7 +919,8 @@ class FlatHashSet {
     /// not already contained in this set.  This method requires that the
     /// (template parameter) type `KEY` be copy-insertable (see
     /// {Requirements on `KEY`, `HASH`, and `EQUAL`}).
-    void insert(bsl::initializer_list<KEY> values);
+    void insert(bsl::initializer_list<KEY> values)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 #endif
 
     /// Change the capacity of this set to at least the specified
@@ -914,7 +930,8 @@ class FlatHashSet {
     /// default constructed state.  After this call, `load_factor()` will be
     /// less than or equal to `max_load_factor()` and all iterators,
     /// pointers, and references to elements of this set are invalidated.
-    void rehash(bsl::size_t minimumCapacity);
+    void rehash(bsl::size_t minimumCapacity)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Change the capacity of this set to at least a capacity that can
     /// accommodate the specified `numEntries` (accounting for the load
@@ -928,11 +945,11 @@ class FlatHashSet {
     /// ```
     ///    rehash(bsl::ceil(numEntries / max_load_factor()))
     /// ```
-    void reserve(bsl::size_t numEntries);
+    void reserve(bsl::size_t numEntries) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all elements from this set and release all memory from this
     /// set, returning the set to the default constructed state.
-    void reset();
+    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                              // Aspects
 
@@ -946,11 +963,11 @@ class FlatHashSet {
 
     /// Return the number of elements this set could hold if the load factor
     /// were 1.
-    bsl::size_t capacity() const;
+    bsl::size_t capacity() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this set contains an element having the specified
     /// `key`, and `false` otherwise.
-    bool contains(const KEY& key) const;
+    bool contains(const KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this set contains an element whose key is equivalent
     /// to the specified `key`.
@@ -959,7 +976,7 @@ class FlatHashSet {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         &&  BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
         , bool>::type
-    contains(const LOOKUP_KEY& key) const
+    contains(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -969,7 +986,7 @@ class FlatHashSet {
     /// Return the number of elements in this set having the specified
     /// `key`.  Note that since a flat hash set maintains unique keys, the
     /// returned value will be either 0 or 1.
-    bsl::size_t count(const KEY& key) const;
+    bsl::size_t count(const KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of `value_type` objects within this unordered set
     /// that are equivalent to the specified `key`.  The behavior is
@@ -981,7 +998,7 @@ class FlatHashSet {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::size_t >::type
-    count(const LOOKUP_KEY& key) const
+    count(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -990,7 +1007,7 @@ class FlatHashSet {
 
     /// Return `true` if this set contains no elements, and `false`
     /// otherwise.
-    bool empty() const;
+    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a pair of `const_iterator`s defining the sequence of elements
     /// in this set having the specified `key`, where the first iterator is
@@ -1000,7 +1017,8 @@ class FlatHashSet {
     /// iterators will have the same value.  Note that since a set maintains
     /// unique keys, the range will contain at most one element.
     bsl::pair<const_iterator, const_iterator> equal_range(
-                                                         const KEY& key) const;
+                                                         const KEY& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a pair of `const_iterator` providing non-modifiable access to
     /// the sequence of `value_type` objects in this unordered set that are
@@ -1016,7 +1034,7 @@ class FlatHashSet {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::pair<const_iterator, const_iterator> >::type
-    equal_range(const LOOKUP_KEY& key) const
+    equal_range(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1026,7 +1044,8 @@ class FlatHashSet {
     /// Return a `const_iterator` referring to the element in this set
     /// having the specified `key`, or `end()` if no such entry exists in
     /// this set.
-    const_iterator find(const KEY& key) const;
+    const_iterator find(const KEY& key) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a `const_iterator` referring to the element in this set
     /// having the specified `key`, or `end()` if no such entry exists in
@@ -1036,7 +1055,7 @@ class FlatHashSet {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
          , const_iterator>::type
-    find(const LOOKUP_KEY& key) const
+    find(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
         // Note: implemented inline due to Sun CC compilation error.
 
@@ -1046,16 +1065,16 @@ class FlatHashSet {
 
     /// Return (a copy of) the unary hash functor used by this set to
     /// generate a hash value (of type `bsl::size_t`) for a `KEY` object.
-    HASH hash_function() const;
+    HASH hash_function() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return (a copy of) the binary key-equality functor that returns
     /// `true` if the value of two `KEY` objects are equivalent, and `false`
     /// otherwise.
-    EQUAL key_eq() const;
+    EQUAL key_eq() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the current ratio between the number of elements in this
     /// container and its capacity.
-    float load_factor() const;
+    float load_factor() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the maximum load factor allowed for this set.  Note that if
     /// an insert operation would cause the load factor to exceed
@@ -1064,35 +1083,35 @@ class FlatHashSet {
     /// and Resizing}).  Also note that the value returned by
     /// `max_load_factor` is implementation defined and cannot be changed by
     /// the user.
-    float max_load_factor() const;
+    float max_load_factor() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements in this set.
-    bsl::size_t size() const;
+    bsl::size_t size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                           // Iterators
 
     /// Return a `const_iterator` to the first element in the sequence of
     /// elements maintained by this set, or the `end` iterator if this set
     /// is empty.
-    const_iterator begin() const;
+    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a `const_iterator` to the first element in the sequence of
     /// elements maintained by this set, or the `end` iterator if this set
     /// is empty.
-    const_iterator cbegin() const;
+    const_iterator cbegin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a `const_iterator` to the past-the-end element in the
     /// sequence of `KEY` elements maintained by this set.
-    const_iterator cend() const;
+    const_iterator cend() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a `const_iterator` to the past-the-end element in the
     /// sequence of `KEY` elements maintained by this set.
-    const_iterator end() const;
+    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
                            // Aspects
 
     /// Return the allocator used by this flat hash set to supply memory.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Format this object to the specified output `stream` at the (absolute
     /// value of) the optionally specified indentation `level`, and return a
@@ -1106,7 +1125,8 @@ class FlatHashSet {
     /// effect.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const;
+                        int           spacesPerLevel = 4) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // FREE OPERATORS
@@ -1118,7 +1138,8 @@ class FlatHashSet {
 /// not involved in the comparison.
 template <class KEY, class HASH, class EQUAL>
 bool operator==(const FlatHashSet<KEY, HASH, EQUAL> &lhs,
-                const FlatHashSet<KEY, HASH, EQUAL> &rhs);
+                const FlatHashSet<KEY, HASH, EQUAL> &rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
 /// same value, and `false` otherwise.  Two `FlatHashSet` objects do not
@@ -1127,7 +1148,8 @@ bool operator==(const FlatHashSet<KEY, HASH, EQUAL> &lhs,
 /// functors are not involved in the comparison.
 template <class KEY, class HASH, class EQUAL>
 bool operator!=(const FlatHashSet<KEY, HASH, EQUAL> &lhs,
-                const FlatHashSet<KEY, HASH, EQUAL> &rhs);
+                const FlatHashSet<KEY, HASH, EQUAL> &rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Write the value of the specified `set` to the specified output `stream`
 /// in a single-line format, and return a reference providing modifiable
@@ -1136,7 +1158,8 @@ bool operator!=(const FlatHashSet<KEY, HASH, EQUAL> &lhs,
 /// specified and can change without notice.
 template <class KEY, class HASH, class EQUAL>
 bsl::ostream& operator<<(bsl::ostream&                        stream,
-                         const FlatHashSet<KEY, HASH, EQUAL>& set);
+                         const FlatHashSet<KEY, HASH, EQUAL>& set)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream) BSLS_ASSERT_CONVEYOR_REQUIRES(set);
 
 // FREE FUNCTIONS
 
@@ -1145,7 +1168,8 @@ bsl::ostream& operator<<(bsl::ostream&                        stream,
 /// exception-safety guarantee if the two objects were created with the same
 /// allocator and the basic guarantee otherwise.
 template <class KEY, class HASH, class EQUAL>
-void swap(FlatHashSet<KEY, HASH, EQUAL>& a, FlatHashSet<KEY, HASH, EQUAL>& b);
+void swap(FlatHashSet<KEY, HASH, EQUAL>& a, FlatHashSet<KEY, HASH, EQUAL>& b)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
 // ============================================================================
 //                  TEMPLATE AND INLINE FUNCTION DEFINITIONS

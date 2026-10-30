@@ -35,6 +35,7 @@ bool
 IndexClerk::areInvariantsPreserved(const bsl::vector<int>& unusedStack,
                                    int                     nextNewIndex)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&unusedStack);
     int         indicesInvalid   = 0;
     int         indicesNotUnique = 0;
     bsl::size_t size             = unusedStack.size();

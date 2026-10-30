@@ -152,6 +152,7 @@ inline
 FlatHashTable_GroupControl::FlatHashTable_GroupControl(
                                                       const bsl::uint8_t *data)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #if defined(BSLS_PLATFORM_CPU_SSE2)
     d_value = _mm_loadu_si128(static_cast<const Storage *>(
                                              static_cast<const void *>(data)));

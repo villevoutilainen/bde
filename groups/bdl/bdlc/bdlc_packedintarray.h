@@ -189,38 +189,56 @@ template <class TYPE> class PackedIntArray;
 template <class TYPE> class PackedIntArrayConstIterator;
 
 template <class TYPE> PackedIntArrayConstIterator<TYPE>
-                           operator++(PackedIntArrayConstIterator<TYPE>&, int);
+                           operator++(PackedIntArrayConstIterator<TYPE>& iter,
+                                      int)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(iter);
 
 template <class TYPE> PackedIntArrayConstIterator<TYPE>
-                           operator--(PackedIntArrayConstIterator<TYPE>&, int);
+                           operator--(PackedIntArrayConstIterator<TYPE>& iter,
+                                      int)
+                                           BSLS_ASSERT_CONVEYOR_REQUIRES(iter);
 
 template <class TYPE>
-bool operator==(const PackedIntArrayConstIterator<TYPE>&,
-                const PackedIntArrayConstIterator<TYPE>&);
+bool operator==(const PackedIntArrayConstIterator<TYPE>& lhs,
+                const PackedIntArrayConstIterator<TYPE>& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 template <class TYPE>
-bool operator!=(const PackedIntArrayConstIterator<TYPE>&,
-                const PackedIntArrayConstIterator<TYPE>&);
+bool operator!=(const PackedIntArrayConstIterator<TYPE>& lhs,
+                const PackedIntArrayConstIterator<TYPE>& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 template <class TYPE>
-bsl::ptrdiff_t operator-(const PackedIntArrayConstIterator<TYPE>&,
-                         const PackedIntArrayConstIterator<TYPE>&);
+bsl::ptrdiff_t operator-(const PackedIntArrayConstIterator<TYPE>& lhs,
+                         const PackedIntArrayConstIterator<TYPE>& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 template <class TYPE>
-bool operator<(const PackedIntArrayConstIterator<TYPE>&,
-               const PackedIntArrayConstIterator<TYPE>&);
+bool operator<(const PackedIntArrayConstIterator<TYPE>& lhs,
+               const PackedIntArrayConstIterator<TYPE>& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 template <class TYPE>
-bool operator<=(const PackedIntArrayConstIterator<TYPE>&,
-                const PackedIntArrayConstIterator<TYPE>&);
+bool operator<=(const PackedIntArrayConstIterator<TYPE>& lhs,
+                const PackedIntArrayConstIterator<TYPE>& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 template <class TYPE>
-bool operator>(const PackedIntArrayConstIterator<TYPE>&,
-               const PackedIntArrayConstIterator<TYPE>&);
+bool operator>(const PackedIntArrayConstIterator<TYPE>& lhs,
+               const PackedIntArrayConstIterator<TYPE>& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 template <class TYPE>
-bool operator>=(const PackedIntArrayConstIterator<TYPE>&,
-                const PackedIntArrayConstIterator<TYPE>&);
+bool operator>=(const PackedIntArrayConstIterator<TYPE>& lhs,
+                const PackedIntArrayConstIterator<TYPE>& rhs)
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
                       // ===============================
                       // struct PackedIntArrayImp_Signed
@@ -485,13 +503,14 @@ class PackedIntArrayImp {
 
     /// Append an element having the specified `value` to the end of this
     /// array.
-    void append(ElementType value);
+    void append(ElementType value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append the sequence of values represented by the specified
     /// `srcArray` to the end of this array.  Note that if this array and
     /// `srcArray` are the same, the behavior is as if a copy of `srcArray`
     /// were passed.
-    void append(const PackedIntArrayImp& srcArray);
+    void append(const PackedIntArrayImp& srcArray)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append the sequence of values of the specified `numElements`
     /// starting at the specified `srcIndex` in the specified `srcArray` to
@@ -501,7 +520,8 @@ class PackedIntArrayImp {
     /// `srcArray` were passed.
     void append(const PackedIntArrayImp& srcArray,
                 bsl::size_t              srcIndex,
-                bsl::size_t              numElements);
+                bsl::size_t              numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Assign to this object the value read from the specified input
     /// `stream` using the specified `version` format, and return a
@@ -514,13 +534,15 @@ class PackedIntArrayImp {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version);
+    STREAM& bdexStreamIn(STREAM& stream, int version)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array, at the specified `dstIndex`, an element of
     /// specified `value`, shifting any elements originally at or above
     /// `dstIndex` up by one.  The behavior is undefined unless
     /// `dstIndex <= length()`.
-    void insert(bsl::size_t dstIndex, ElementType value);
+    void insert(bsl::size_t dstIndex, ElementType value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array, at the specified `dstIndex`, the sequence of
     /// values represented by the specified `srcArray`, shifting any
@@ -528,7 +550,8 @@ class PackedIntArrayImp {
     /// indices higher.  The behavior is undefined unless
     /// `dstIndex <= length()`.  Note that if this array and `srcArray` are
     /// the same, the behavior is as if a copy of `srcArray` were passed.
-    void insert(bsl::size_t dstIndex, const PackedIntArrayImp& srcArray);
+    void insert(bsl::size_t dstIndex, const PackedIntArrayImp& srcArray)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array, at the specified `dstIndex`, the specified
     /// `numElements` values in the specified `srcArray` starting at the
@@ -541,37 +564,40 @@ class PackedIntArrayImp {
     void insert(bsl::size_t              dstIndex,
                 const PackedIntArrayImp& srcArray,
                 bsl::size_t              srcIndex,
-                bsl::size_t              numElements);
+                bsl::size_t              numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove the last element from this array.  The behavior is undefined
     /// unless `0 < length()` .
-    void pop_back();
+    void pop_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append an element having the specified `value` to the end of this
     /// array.
-    void push_back(ElementType value);
+    void push_back(ElementType value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this array the element at the specified `dstIndex`.
     /// Each element having an index greater than `dstIndex` before the
     /// removal is shifted down by one index position.  The behavior is
     /// undefined unless `dstIndex < length()` .
-    void remove(bsl::size_t dstIndex);
+    void remove(bsl::size_t dstIndex) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this array, starting at the specified `dstIndex`, the
     /// specified `numElements`.  Shift the elements of this array that are
     /// at `dstIndex + numElements` or above to `numElements` indices lower.
     /// The behavior is undefined unless
     /// `dstIndex + numElements <= length()`.
-    void remove(bsl::size_t dstIndex, bsl::size_t numElements);
+    void remove(bsl::size_t dstIndex, bsl::size_t numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all the elements from this array and set the storage required
     /// per element to one byte.
-    void removeAll();
+    void removeAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Change the value of the element at the specified `dstIndex` in this
     /// array to the specified `value`.  The behavior is undefined unless
     /// `dstIndex < length()`.
-    void replace(bsl::size_t dstIndex, ElementType value);
+    void replace(bsl::size_t dstIndex, ElementType value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Change the values of the specified `numElements` elements in this
     /// array beginning at the specified `dstIndex` to those of the
@@ -584,18 +610,21 @@ class PackedIntArrayImp {
     void replace(bsl::size_t              dstIndex,
                  const PackedIntArrayImp& srcArray,
                  bsl::size_t              srcIndex,
-                 bsl::size_t              numElements);
+                 bsl::size_t              numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Make the capacity of this array at least the specified
     /// `requiredCapacityInBytes`.  This method has no effect if the
     /// current capacity meets or exceeds the required capacity.
-    void reserveCapacityImp(bsl::size_t requiredCapacityInBytes);
+    void reserveCapacityImp(bsl::size_t requiredCapacityInBytes)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Make the capacity of this array at least the specified
     /// `numElements` assuming the current `bytesPerElement()`.  This
     /// method has no effect if the current capacity meets or exceeds the
     /// required capacity.
-    void reserveCapacity(bsl::size_t numElements);
+    void reserveCapacity(bsl::size_t numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Make the capacity of this array at least the specified
     /// `numElements`.  The specified `maxValue` denotes the maximum element
@@ -604,7 +633,8 @@ class PackedIntArrayImp {
     /// guaranteed to not cause a reallocation.  This method has no effect
     /// if the current capacity meets or exceeds the required capacity.
     /// The behavior is undefined unless `0 <= maxValue`.
-    void reserveCapacity(bsl::size_t numElements, ElementType maxValue);
+    void reserveCapacity(bsl::size_t numElements, ElementType maxValue)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Make the capacity of this array at least the specified
     /// `numElements`.  The specified `minValue` and `maxValue` denote,
@@ -616,11 +646,12 @@ class PackedIntArrayImp {
     /// undefined unless `minValue <= maxValue`.
     void reserveCapacity(bsl::size_t numElements,
                          ElementType minValue,
-                         ElementType maxValue);
+                         ElementType maxValue)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the length of this array to the specified `numElements`.  If
     /// `numElements > length()`, the added elements are initialized to 0.
-    void resize(bsl::size_t numElements);
+    void resize(bsl::size_t numElements) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Efficiently exchange the value of this array with the value of the
     /// specified `other` array.  This method provides the no-throw
@@ -632,10 +663,11 @@ class PackedIntArrayImp {
 
     /// Return the value of the element at the specified `index`.  The
     /// behavior is undefined unless `index < length()`.
-    ElementType operator[](bsl::size_t index) const;
+    ElementType operator[](bsl::size_t index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the allocator used by this array to supply memory.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Write this value to the specified output `stream` using the
     /// specified `version` format, and return a reference to `stream`.  If
@@ -645,28 +677,30 @@ class PackedIntArrayImp {
     /// the `bslx` package-level documentation for more information on BDEX
     /// streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of bytes currently used to store each element in
     /// this array.
-    int bytesPerElement() const;
+    int bytesPerElement() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements this array can hold in terms of the
     /// current data type used to store its elements.
-    bsl::size_t capacity() const;
+    bsl::size_t capacity() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if there are no elements in this array, and `false`
     /// otherwise.
-    bool isEmpty() const;
+    bool isEmpty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this and the specified `other` array have the same
     /// value, and `false` otherwise.  Two `PackedIntArrayImp` arrays have
     /// the same value if they have the same length, and all corresponding
     /// elements (those at the same indices) have the same value.
-    bool isEqual(const PackedIntArrayImp& other) const;
+    bool isEqual(const PackedIntArrayImp& other) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return number of elements in this array.
-    bsl::size_t length() const;
+    bsl::size_t length() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Write the value of this array to the specified output `stream` in a
     /// human-readable format, and return a reference to `stream`.
@@ -681,7 +715,8 @@ class PackedIntArrayImp {
     /// specified, and can change without notice.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const;
+                        int           spacesPerLevel = 4) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
                         // ============================
@@ -837,7 +872,8 @@ class PackedIntArrayConstIterator {
     /// undefined unless, on entry,
     /// `PackedIntArrayConstInterator() != *this` and
     /// `*this - array.begin() < array.length()`.
-    PackedIntArrayConstIterator& operator++();
+    PackedIntArrayConstIterator& operator++()
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Decrement this iterator to refer to the previous element in the
     /// referenced array and return a reference to this iterator *after* the
@@ -845,7 +881,8 @@ class PackedIntArrayConstIterator {
     /// within a `PackedIntArray`, `array`, remains valid as long as
     /// `0 <= it - array.begin() <= array.length()`.  The behavior is
     /// undefined unless, on entry, `0 < *this - array.begin()`.
-    PackedIntArrayConstIterator& operator--();
+    PackedIntArrayConstIterator& operator--()
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Advance this iterator by the specified `offset` from the element
     /// referenced to this iterator.  The returned iterator, `it`,
@@ -854,7 +891,8 @@ class PackedIntArrayConstIterator {
     /// behavior is undefined unless
     /// `PackedIntArrayConstInterator() != *this` and
     /// `0 <= *this - array.begin() + offset <= array.length()`.
-    PackedIntArrayConstIterator& operator+=(bsl::ptrdiff_t offset);
+    PackedIntArrayConstIterator& operator+=(bsl::ptrdiff_t offset)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Decrement this iterator by the specified `offset` from the element
     /// referenced to this iterator.  The returned iterator, `it`,
@@ -863,7 +901,8 @@ class PackedIntArrayConstIterator {
     /// behavior is undefined unless
     /// `PackedIntArrayConstInterator() != *this` and
     /// `0 <= *this - array.begin() - offset <= array.length()`.
-    PackedIntArrayConstIterator& operator-=(bsl::ptrdiff_t offset);
+    PackedIntArrayConstIterator& operator-=(bsl::ptrdiff_t offset)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     // ACCESSORS
 
@@ -872,21 +911,22 @@ class PackedIntArrayConstIterator {
     /// a `PackedIntArray` `array`,
     /// `PackedIntArrayConstInterator() != *this` and
     /// `*this - array.begin() < array.length()`.
-    TYPE operator*() const;
+    TYPE operator*() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the element value referenced by this iterator.  The behavior
     /// is undefined unless for this iterator, referencing an element within
     /// a `PackedIntArray` `array`,
     /// `PackedIntArrayConstInterator() != *this` and
     /// `*this - array.begin() < array.length()`.
-    TYPE operator->() const;
+    TYPE operator->() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the element that is the specified `offset` from the element
     /// reference by this array.  The behavior is undefined unless for this
     /// iterator, referencing an element within a `PackedIntArray` `array`,
     /// `PackedIntArrayConstInterator() != *this` and
     /// `0 <= *this - array.begin() + offset < array.length()`.
-    TYPE operator[](bsl::ptrdiff_t offset) const;
+    TYPE operator[](bsl::ptrdiff_t offset) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator referencing the location at the specified
     /// `offset` from the element referenced by this iterator.  The returned
@@ -895,7 +935,8 @@ class PackedIntArrayConstIterator {
     /// `0 <= it - array.begin() <= array.length()`.  The behavior is
     /// undefined unless
     /// `0 <= *this - array.begin() + offset <= array.length()`.
-    PackedIntArrayConstIterator operator+(bsl::ptrdiff_t offset) const;
+    PackedIntArrayConstIterator operator+(bsl::ptrdiff_t offset) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator referencing the location at the specified
     /// `offset` from the element referenced by this iterator.  The returned
@@ -904,7 +945,8 @@ class PackedIntArrayConstIterator {
     /// `0 <= it - array.begin() <= array.length()`.  The behavior is
     /// undefined unless `PackedIntArrayConstInterator() != *this` and
     /// `0 <= *this - array.begin() - offset <= array.length()`.
-    PackedIntArrayConstIterator operator-(bsl::ptrdiff_t offset) const;
+    PackedIntArrayConstIterator operator-(bsl::ptrdiff_t offset) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // FREE FUNCTIONS
@@ -937,7 +979,8 @@ PackedIntArrayConstIterator<TYPE>
 /// the same index.
 template <class TYPE>
 bool operator==(const PackedIntArrayConstIterator<TYPE>& lhs,
-                const PackedIntArrayConstIterator<TYPE>& rhs);
+                const PackedIntArrayConstIterator<TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` iterators do not have the
 /// same value and `false` otherwise.  Two `PackedIntArrayConstIterator`
@@ -945,7 +988,8 @@ bool operator==(const PackedIntArrayConstIterator<TYPE>& lhs,
 /// array, or do not have the same index.
 template <class TYPE>
 bool operator!=(const PackedIntArrayConstIterator<TYPE>& lhs,
-                const PackedIntArrayConstIterator<TYPE>& rhs);
+                const PackedIntArrayConstIterator<TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return the number of elements between specified `lhs` and `rhs`.  The
 /// behavior is undefined unless `lhs` and `rhs` reference the same array.
@@ -959,7 +1003,8 @@ bsl::ptrdiff_t operator-(const PackedIntArrayConstIterator<TYPE>& lhs,
 /// `lhs` and `rhs` refer to the same array.
 template <class TYPE>
 bool operator<(const PackedIntArrayConstIterator<TYPE>& lhs,
-               const PackedIntArrayConstIterator<TYPE>& rhs);
+               const PackedIntArrayConstIterator<TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` has a value less than or equal to
 /// the specified `rhs, `false' otherwise.  An iterator has a value less
@@ -968,7 +1013,8 @@ bool operator<(const PackedIntArrayConstIterator<TYPE>& lhs,
 /// same array.
 template <class TYPE>
 bool operator<=(const PackedIntArrayConstIterator<TYPE>& lhs,
-                const PackedIntArrayConstIterator<TYPE>& rhs);
+                const PackedIntArrayConstIterator<TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` has a value greater than the
 /// specified `rhs`, `false` otherwise.  An iterator has a value greater
@@ -976,7 +1022,8 @@ bool operator<=(const PackedIntArrayConstIterator<TYPE>& lhs,
 /// undefined unless `lhs` and `rhs` refer to the same array.
 template <class TYPE>
 bool operator>(const PackedIntArrayConstIterator<TYPE>& lhs,
-               const PackedIntArrayConstIterator<TYPE>& rhs);
+               const PackedIntArrayConstIterator<TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` has a value greater or equal than
 /// the specified `rhs`, `false` otherwise.  An iterator has a value greater
@@ -984,7 +1031,8 @@ bool operator>(const PackedIntArrayConstIterator<TYPE>& lhs,
 /// behavior is undefined unless `lhs` and `rhs` refer to the same array.
 template <class TYPE>
 bool operator>=(const PackedIntArrayConstIterator<TYPE>& lhs,
-                const PackedIntArrayConstIterator<TYPE>& rhs);
+                const PackedIntArrayConstIterator<TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
                             // ====================
                             // class PackedIntArray
@@ -1059,13 +1107,14 @@ class PackedIntArray {
 
     /// Append an element having the specified `value` to the end of this
     /// array.
-    void append(TYPE value);
+    void append(TYPE value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append the sequence of values represented by the specified
     /// `srcArray` to the end of this array.  Note that if this array and
     /// `srcArray` are the same, the behavior is as if a copy of `srcArray`
     /// were passed.
-    void append(const PackedIntArray& srcArray);
+    void append(const PackedIntArray& srcArray)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append the sequence of values of the specified `numElements`
     /// starting at the specified `srcIndex` in the specified `srcArray` to
@@ -1075,7 +1124,8 @@ class PackedIntArray {
     /// `srcArray` were passed.
     void append(const PackedIntArray& srcArray,
                 bsl::size_t           srcIndex,
-                bsl::size_t           numElements);
+                bsl::size_t           numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Assign to this object the value read from the specified input
     /// `stream` using the specified `version` format, and return a
@@ -1088,18 +1138,21 @@ class PackedIntArray {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version);
+    STREAM& bdexStreamIn(STREAM& stream, int version)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array, at the specified `dstIndex`, an element
     /// having the specified `value`, shifting any elements originally at
     /// or above `dstIndex` up by one.  The behavior is undefined unless
     /// `dstIndex <= length()`.
-    void insert(bsl::size_t dstIndex, TYPE value);
+    void insert(bsl::size_t dstIndex, TYPE value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array, at the specified `dst`, an element having
     /// the specified `value`, shifting any elements originally at or above
     /// `dst` up by one.  Return an iterator to the newly inserted element.
-    const_iterator insert(const_iterator dst, TYPE value);
+    const_iterator insert(const_iterator dst, TYPE value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array, at the specified `dstIndex`, the sequence of
     /// values represented by the specified `srcArray`, shifting any
@@ -1107,7 +1160,8 @@ class PackedIntArray {
     /// indices higher.  The behavior is undefined unless
     /// `dstIndex <= length()`.  Note that if this array and `srcArray` are
     /// the same, the behavior is as if a copy of `srcArray` were passed.
-    void insert(bsl::size_t dstIndex, const PackedIntArray& srcArray);
+    void insert(bsl::size_t dstIndex, const PackedIntArray& srcArray)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Insert into this array, at the specified `dstIndex`, the specified
     /// `numElements` values in the specified `srcArray` starting at the
@@ -1120,28 +1174,30 @@ class PackedIntArray {
     void insert(bsl::size_t           dstIndex,
                 const PackedIntArray& srcArray,
                 bsl::size_t           srcIndex,
-                bsl::size_t           numElements);
+                bsl::size_t           numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove the last element from this array.  The behavior is undefined
     /// unless `0 < length()` .
-    void pop_back();
+    void pop_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Append an element having the specified `value` to the end of this
     /// array.
-    void push_back(TYPE value);
+    void push_back(TYPE value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this array the element at the specified `dstIndex`.
     /// Each element having an index greater than `dstIndex` before the
     /// removal is shifted down by one index position.  The behavior is
     /// undefined unless `dstIndex < length()` .
-    void remove(bsl::size_t dstIndex);
+    void remove(bsl::size_t dstIndex) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this array, starting at the specified `dstIndex`, the
     /// specified `numElements`, shifting the elements of this array that
     /// are at `dstIndex + numElements` or above to `numElements` indices
     /// lower.  The behavior is undefined unless
     /// `dstIndex + numElements <= length()`.
-    void remove(bsl::size_t dstIndex, bsl::size_t numElements);
+    void remove(bsl::size_t dstIndex, bsl::size_t numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this array the elements starting from the specified
     /// `dstFirst` up to, but not including, the specified `dstLast`,
@@ -1150,16 +1206,18 @@ class PackedIntArray {
     /// new position of the element that was referred to by `dstLast` or
     /// `end()` if `dstLast == end()`.  The behavior is undefined unless
     /// `dstFirst <= dstLast`.
-    const_iterator remove(const_iterator dstFirst, const_iterator dstLast);
+    const_iterator remove(const_iterator dstFirst, const_iterator dstLast)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove all the elements from this array and set the storage required
     /// per element to one byte.
-    void removeAll();
+    void removeAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Change the value of the element at the specified `dstIndex` in this
     /// array to the specified `value`.  The behavior is undefined unless
     /// `dstIndex < length()`.
-    void replace(bsl::size_t dstIndex, TYPE value);
+    void replace(bsl::size_t dstIndex, TYPE value)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Change the values of the specified `numElements` elements in this
     /// array beginning at the specified `dstIndex` to those of the
@@ -1172,12 +1230,14 @@ class PackedIntArray {
     void replace(bsl::size_t           dstIndex,
                  const PackedIntArray& srcArray,
                  bsl::size_t           srcIndex,
-                 bsl::size_t           numElements);
+                 bsl::size_t           numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Make the capacity of this array at least the specified
     /// `numElements`.  This method has no effect if the current capacity
     /// meets or exceeds the required capacity.
-    void reserveCapacity(bsl::size_t numElements);
+    void reserveCapacity(bsl::size_t numElements)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Make the capacity of this array at least the specified
     /// `numElements`.  The specified `maxValue` denotes the maximum element
@@ -1186,7 +1246,8 @@ class PackedIntArray {
     /// guaranteed to not cause a reallocation.  This method has no effect
     /// if the current capacity meets or exceeds the required capacity.
     /// The behavior is undefined unless `0 <= maxValue`.
-    void reserveCapacity(bsl::size_t numElements, TYPE maxValue);
+    void reserveCapacity(bsl::size_t numElements, TYPE maxValue)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Make the capacity of this array at least the specified
     /// `numElements`.  The specified `minValue` and `maxValue` denote,
@@ -1198,11 +1259,12 @@ class PackedIntArray {
     /// undefined unless `minValue <= maxValue`.
     void reserveCapacity(bsl::size_t numElements,
                          TYPE        minValue,
-                         TYPE        maxValue);
+                         TYPE        maxValue)
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Set the length of this array to the specified `numElements`.  If
     /// `numElements > length()`, the added elements are initialized to 0.
-    void resize(bsl::size_t numElements);
+    void resize(bsl::size_t numElements) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Efficiently exchange the value of this array with the value of the
     /// specified `other` array.  This method provides the no-throw
@@ -1214,10 +1276,11 @@ class PackedIntArray {
 
     /// Return the value of the element at the specified `index`.  The
     /// behavior is undefined unless `index < length()`.
-    TYPE operator[](bsl::size_t index) const;
+    TYPE operator[](bsl::size_t index) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the allocator used by this array to supply memory.
-    bslma::Allocator *allocator() const;
+    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the value of the element at the back of this array.  The
     /// behavior is undefined unless `0 < length()`.  Note that this
@@ -1225,7 +1288,7 @@ class PackedIntArray {
     /// ```
     ///   operator[](length() - 1)
     /// ```
-    TYPE back() const;
+    TYPE back() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Write this value to the specified output `stream` using the
     /// specified `version` format, and return a reference to `stream`.  If
@@ -1235,25 +1298,26 @@ class PackedIntArray {
     /// the `bslx` package-level documentation for more information on BDEX
     /// streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator referring to the first element in this array (or
     /// the past-the-end iterator if this array is empty).  This reference
     /// remains valid as long as this array exists.
-    const_iterator begin() const;
+    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of bytes currently used to store each element in
     /// this array.
-    int bytesPerElement() const;
+    int bytesPerElement() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of elements this array can hold in terms of the
     /// current data type used to store its elements.
-    bsl::size_t capacity() const;
+    bsl::size_t capacity() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return an iterator referring to one element beyond the last element
     /// in this array.  This reference remains valid as long as this array
     /// exists, and length does not decrease.
-    const_iterator end() const;
+    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the value of the element at the front of this array.  The
     /// behavior is undefined unless `0 < length()`.  Note that this
@@ -1261,20 +1325,21 @@ class PackedIntArray {
     /// ```
     ///   operator[](0)
     /// ```
-    TYPE front() const;
+    TYPE front() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if there are no elements in this array, and `false`
     /// otherwise.
-    bool isEmpty() const;
+    bool isEmpty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return `true` if this and the specified `other` array have the same
     /// value, and `false` otherwise.  Two `PackedIntArray` arrays have the
     /// same value if they have the same length, and all corresponding
     /// elements (those at the same indices) have the same value.
-    bool isEqual(const PackedIntArray& other) const;
+    bool isEqual(const PackedIntArray& other) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return number of elements in this array.
-    bsl::size_t length() const;
+    bsl::size_t length() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Write the value of this array to the specified output `stream` in a
     /// human-readable format, and return a reference to `stream`.
@@ -1289,7 +1354,8 @@ class PackedIntArray {
     /// specified, and can change without notice.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const;
+                        int           spacesPerLevel = 4) const
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 };
 
 // FREE OPERATORS
@@ -1301,7 +1367,9 @@ class PackedIntArray {
 /// fully specified and can change without notice.
 template <class TYPE>
 bsl::ostream& operator<<(bsl::ostream&               stream,
-                         const PackedIntArray<TYPE>& array);
+                         const PackedIntArray<TYPE>& array)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(array);
 
 /// Return `true` if the specified `lhs` and `rhs` arrays have the same
 /// value, and `false` otherwise.  Two `PackedIntArray` arrays have the same
@@ -1309,7 +1377,8 @@ bsl::ostream& operator<<(bsl::ostream&               stream,
 /// (those at the same indices) have the same value.
 template <class TYPE>
 bool operator==(const PackedIntArray<TYPE>& lhs,
-                const PackedIntArray<TYPE>& rhs);
+                const PackedIntArray<TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` arrays do not have the
 /// same value, and `false` otherwise.  Two `PackedIntArray` arrays do not
@@ -1318,7 +1387,8 @@ bool operator==(const PackedIntArray<TYPE>& lhs,
 /// value.
 template <class TYPE>
 bool operator!=(const PackedIntArray<TYPE>& lhs,
-                const PackedIntArray<TYPE>& rhs);
+                const PackedIntArray<TYPE>& rhs)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
 
 // FREE FUNCTIONS
 
@@ -1326,13 +1396,16 @@ bool operator!=(const PackedIntArray<TYPE>& lhs,
 /// provides the no-throw exception-safety guarantee if the two objects were
 /// created with the same allocator and the basic guarantee otherwise.
 template <class TYPE>
-void swap(PackedIntArray<TYPE>& a, PackedIntArray<TYPE>& b);
+void swap(PackedIntArray<TYPE>& a, PackedIntArray<TYPE>& b)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
 
 // HASH SPECIALIZATIONS
 
 /// Pass the specified `input` to the specified `hashAlg`
 template <class HASHALG, class TYPE>
-void hashAppend(HASHALG& hashAlg, const PackedIntArray<TYPE>& input);
+void hashAppend(HASHALG& hashAlg, const PackedIntArray<TYPE>& input)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
+    BSLS_ASSERT_CONVEYOR_REQUIRES(input);
 
 // ============================================================================
 //                            INLINE DEFINITIONS
@@ -1496,6 +1569,7 @@ template <class STORAGE>
 inline
 char *PackedIntArrayImp<STORAGE>::address() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<char *>(d_storage_p);
 }
 
@@ -1513,6 +1587,7 @@ inline
 void PackedIntArrayImp<STORAGE>::
                              append(const PackedIntArrayImp<STORAGE>& srcArray)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     append(srcArray, 0, srcArray.d_length);
 }
 
@@ -1521,6 +1596,8 @@ template <class STREAM>
 inline
 STREAM& PackedIntArrayImp<STORAGE>::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 1: {
@@ -1623,6 +1700,8 @@ void PackedIntArrayImp<STORAGE>::insert(
                                     bsl::size_t                       dstIndex,
                                     const PackedIntArrayImp<STORAGE>& srcArray)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcArray);
     BSLS_ASSERT(dstIndex <= d_length);
 
     insert(dstIndex, srcArray, 0, srcArray.length());
@@ -1632,6 +1711,7 @@ template <class STORAGE>
 inline
 void PackedIntArrayImp<STORAGE>::pop_back()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 < d_length);
 
     --d_length;
@@ -1641,6 +1721,7 @@ template <class STORAGE>
 inline
 void PackedIntArrayImp<STORAGE>::push_back(ElementType value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     append(value);
 }
 
@@ -1648,6 +1729,7 @@ template <class STORAGE>
 inline
 void PackedIntArrayImp<STORAGE>::remove(bsl::size_t dstIndex)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(dstIndex < d_length);
 
     remove(dstIndex, 1);
@@ -1658,6 +1740,7 @@ inline
 void PackedIntArrayImp<STORAGE>::remove(bsl::size_t dstIndex,
                                         bsl::size_t numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Assert 'dstIndex + numElements <= d_length' without risk of overflow.
     BSLS_ASSERT(numElements <= d_length);
     BSLS_ASSERT(dstIndex    <= d_length - numElements);
@@ -1675,6 +1758,7 @@ template <class STORAGE>
 inline
 void PackedIntArrayImp<STORAGE>::removeAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_length = 0;
     d_bytesPerElement = 1;
 }
@@ -1683,8 +1767,9 @@ template <class STORAGE>
 inline
 void PackedIntArrayImp<STORAGE>::reserveCapacity(bsl::size_t numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Test for potential overflow.
-    BSLS_ASSERT(k_MAX_CAPACITY / d_bytesPerElement >= numElements);
+    BSLS_ASSERT_NONCONVEYOR(k_MAX_CAPACITY / d_bytesPerElement >= numElements);
 
     size_t requiredCapacityInBytes = d_bytesPerElement * numElements;
     if (requiredCapacityInBytes > d_capacityInBytes) {
@@ -1697,6 +1782,7 @@ inline
 void PackedIntArrayImp<STORAGE>::reserveCapacity(bsl::size_t numElements,
                                                  ElementType maxValue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= maxValue);
 
     int requiredBytesPerElement = d_bytesPerElement;
@@ -1707,7 +1793,8 @@ void PackedIntArrayImp<STORAGE>::reserveCapacity(bsl::size_t numElements,
     }
 
     // Test for potential overflow.
-    BSLS_ASSERT(k_MAX_CAPACITY / requiredBytesPerElement >= numElements);
+    BSLS_ASSERT_NONCONVEYOR(
+                      k_MAX_CAPACITY / requiredBytesPerElement >= numElements);
 
     size_t requiredCapacityInBytes = requiredBytesPerElement * numElements;
 
@@ -1722,6 +1809,7 @@ void PackedIntArrayImp<PackedIntArrayImp_Unsigned>::
                                        reserveCapacity(bsl::size_t numElements,
                                                        ElementType maxValue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int requiredBytesPerElement = d_bytesPerElement;
 
     int rbpe = PackedIntArrayImp_Unsigned::requiredBytesPerElement(maxValue);
@@ -1730,7 +1818,8 @@ void PackedIntArrayImp<PackedIntArrayImp_Unsigned>::
     }
 
     // Test for potential overflow.
-    BSLS_ASSERT(k_MAX_CAPACITY / requiredBytesPerElement >= numElements);
+    BSLS_ASSERT_NONCONVEYOR(
+                      k_MAX_CAPACITY / requiredBytesPerElement >= numElements);
 
     size_t requiredCapacityInBytes = requiredBytesPerElement * numElements;
 
@@ -1745,6 +1834,7 @@ void PackedIntArrayImp<STORAGE>::reserveCapacity(bsl::size_t numElements,
                                                  ElementType minValue,
                                                  ElementType maxValue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(minValue <= maxValue);
 
     int requiredBytesPerElement = d_bytesPerElement;
@@ -1760,7 +1850,8 @@ void PackedIntArrayImp<STORAGE>::reserveCapacity(bsl::size_t numElements,
     }
 
     // Test for potential overflow.
-    BSLS_ASSERT(k_MAX_CAPACITY / requiredBytesPerElement >= numElements);
+    BSLS_ASSERT_NONCONVEYOR(
+                      k_MAX_CAPACITY / requiredBytesPerElement >= numElements);
 
     size_t requiredCapacityInBytes = requiredBytesPerElement * numElements;
 
@@ -1773,6 +1864,7 @@ template <class STORAGE>
 inline
 void PackedIntArrayImp<STORAGE>::resize(bsl::size_t numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (numElements > d_length) {
         reserveCapacity(numElements);
         bsl::memset(address() + d_length * d_bytesPerElement,
@@ -1786,6 +1878,8 @@ template <class STORAGE>
 inline
 void PackedIntArrayImp<STORAGE>::swap(PackedIntArrayImp<STORAGE>& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     BSLS_ASSERT(d_allocator_p == other.d_allocator_p);
 
     bslalg::SwapUtil::swap(&d_storage_p,        &other.d_storage_p);
@@ -1799,6 +1893,7 @@ template <class STORAGE>
 inline
 bslma::Allocator *PackedIntArrayImp<STORAGE>::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_allocator_p;
 }
 
@@ -1808,6 +1903,8 @@ inline
 STREAM& PackedIntArrayImp<STORAGE>::bdexStreamOut(STREAM& stream,
                                                   int     version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -1859,18 +1956,21 @@ STREAM& PackedIntArrayImp<STORAGE>::bdexStreamOut(STREAM& stream,
 template <class STORAGE>
 inline
 int PackedIntArrayImp<STORAGE>::bytesPerElement() const {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_bytesPerElement;
 }
 
 template <class STORAGE>
 inline
 bsl::size_t PackedIntArrayImp<STORAGE>::capacity() const {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_capacityInBytes / d_bytesPerElement;
 }
 
 template <class STORAGE>
 inline
 bool PackedIntArrayImp<STORAGE>::isEmpty() const {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_length;
 }
 
@@ -1879,6 +1979,8 @@ inline
 bool PackedIntArrayImp<STORAGE>::isEqual(
                                  const PackedIntArrayImp<STORAGE>& other) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     if (d_length == other.d_length) {
         if (0 == d_length) {
             return true;                                              // RETURN
@@ -1899,6 +2001,7 @@ template <class STORAGE>
 inline
 bsl::size_t PackedIntArrayImp<STORAGE>::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_length;
 }
 
@@ -1915,7 +2018,9 @@ PackedIntArrayConstIterator<TYPE>::PackedIntArrayConstIterator(
 : d_array_p(array)
 , d_index(index)
 {
-    BSLS_ASSERT(d_index <= d_array_p->length());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_array_p);
+    BSLS_ASSERT_NONCONVEYOR(d_index <= d_array_p->length());
 }
 
 // CREATORS
@@ -1980,7 +2085,8 @@ PackedIntArrayConstIterator<TYPE>&
 
     // Assert '0 <= d_index + offset <= d_array_p->length()' without risk of
     // overflow.
-    BSLS_ASSERT_SAFE(0 <= offset || d_index >= bsl::size_t(-offset));
+    BSLS_ASSERT_SAFE_NONCONVEYOR(
+                               0 <= offset || d_index >= bsl::size_t(-offset));
     BSLS_ASSERT_SAFE(   0 >= offset
                      || d_array_p->length() - d_index >= bsl::size_t(offset));
 
@@ -1998,7 +2104,7 @@ PackedIntArrayConstIterator<TYPE>&
     // Assert '0 <= d_index - offset <= d_array_p->length()' without risk of
     // overflow.
     BSLS_ASSERT_SAFE(   0 >= offset || d_index >= bsl::size_t(offset));
-    BSLS_ASSERT_SAFE(   0 <= offset
+    BSLS_ASSERT_SAFE_NONCONVEYOR(   0 <= offset
                      || d_array_p->length() - d_index >= bsl::size_t(-offset));
 
     d_index -= offset;
@@ -2010,6 +2116,8 @@ template <class TYPE>
 inline
 TYPE PackedIntArrayConstIterator<TYPE>::operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_array_p);
     BSLS_ASSERT_SAFE(d_array_p);
     BSLS_ASSERT_SAFE(d_index < d_array_p->length());
 
@@ -2020,6 +2128,7 @@ template <class TYPE>
 inline
 TYPE PackedIntArrayConstIterator<TYPE>::operator->() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_array_p);
     BSLS_ASSERT_SAFE(d_array_p);
     BSLS_ASSERT_SAFE(d_index < d_array_p->length());
 
@@ -2030,11 +2139,14 @@ template <class TYPE>
 inline
 TYPE PackedIntArrayConstIterator<TYPE>::operator[](bsl::ptrdiff_t offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_array_p);
     BSLS_ASSERT_SAFE(d_array_p);
 
     // Assert '0 <= d_index + offset < d_array_p->length()' without risk of
     // overflow.
-    BSLS_ASSERT_SAFE(0 <= offset || d_index >= bsl::size_t(-offset));
+    BSLS_ASSERT_SAFE_NONCONVEYOR(
+                               0 <= offset || d_index >= bsl::size_t(-offset));
     BSLS_ASSERT_SAFE(   0 >= offset
                      || d_array_p->length() - d_index > bsl::size_t(offset));
 
@@ -2050,7 +2162,8 @@ PackedIntArrayConstIterator<TYPE>
 
     // Assert '0 <= d_index + offset <= d_array_p->length()' without risk of
     // overflow.
-    BSLS_ASSERT_SAFE(0 <= offset || d_index >= bsl::size_t(-offset));
+    BSLS_ASSERT_SAFE_NONCONVEYOR(
+                               0 <= offset || d_index >= bsl::size_t(-offset));
     BSLS_ASSERT_SAFE(   0 >= offset
                      || d_array_p->length() - d_index >= bsl::size_t(offset));
 
@@ -2068,7 +2181,7 @@ PackedIntArrayConstIterator<TYPE>
     // Assert '0 <= d_index - offset <= d_array_p->length()' without risk of
     // overflow.
     BSLS_ASSERT_SAFE(   0 >= offset || d_index >= bsl::size_t(offset));
-    BSLS_ASSERT_SAFE(   0 <= offset
+    BSLS_ASSERT_SAFE_NONCONVEYOR(   0 <= offset
                      || d_array_p->length() - d_index >= bsl::size_t(-offset));
 
     return PackedIntArrayConstIterator<TYPE>(d_array_p, d_index - offset);
@@ -2128,7 +2241,7 @@ bsl::ptrdiff_t bdlc::operator-(const PackedIntArrayConstIterator<TYPE>& lhs,
 {
     BSLS_ASSERT(lhs.d_array_p == rhs.d_array_p);
 
-    BSLS_ASSERT(
+    BSLS_ASSERT_NONCONVEYOR(
           lhs.d_index >= rhs.d_index
         ? lhs.d_index - rhs.d_index <=
                         bsl::size_t(bsl::numeric_limits<bsl::ptrdiff_t>::max())
@@ -2256,10 +2369,11 @@ void PackedIntArray<TYPE>::append(const PackedIntArray<TYPE>& srcArray,
                                   bsl::size_t                 srcIndex,
                                   bsl::size_t                 numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcArray);
     // Assert 'srcIndex + numElements <= srcArray.length()' without risk of
     // overflow.
-    BSLS_ASSERT(numElements <= srcArray.length());
-    BSLS_ASSERT(srcIndex    <= srcArray.length() - numElements);
+    BSLS_ASSERT_NONCONVEYOR(numElements <= srcArray.length());
+    BSLS_ASSERT_NONCONVEYOR(srcIndex    <= srcArray.length() - numElements);
 
     d_imp.append(srcArray.d_imp, srcIndex, numElements);
 }
@@ -2295,7 +2409,7 @@ inline
 void PackedIntArray<TYPE>::insert(bsl::size_t                 dstIndex,
                                   const PackedIntArray<TYPE>& srcArray)
 {
-    BSLS_ASSERT(dstIndex <= length());
+    BSLS_ASSERT_NONCONVEYOR(dstIndex <= length());
 
     d_imp.insert(dstIndex, srcArray.d_imp);
 }
@@ -2307,12 +2421,13 @@ void PackedIntArray<TYPE>::insert(bsl::size_t                 dstIndex,
                                   bsl::size_t                 srcIndex,
                                   bsl::size_t                 numElements)
 {
-    BSLS_ASSERT(dstIndex <= length());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcArray);
+    BSLS_ASSERT_NONCONVEYOR(dstIndex <= length());
 
     // Assert 'srcIndex + numElements <= srcArray.length()' without risk of
     // overflow.
-    BSLS_ASSERT(numElements <= srcArray.length());
-    BSLS_ASSERT(srcIndex    <= srcArray.length() - numElements);
+    BSLS_ASSERT_NONCONVEYOR(numElements <= srcArray.length());
+    BSLS_ASSERT_NONCONVEYOR(srcIndex    <= srcArray.length() - numElements);
 
     d_imp.insert(dstIndex, srcArray.d_imp, srcIndex, numElements);
 }
@@ -2337,7 +2452,7 @@ template <class TYPE>
 inline
 void PackedIntArray<TYPE>::remove(bsl::size_t dstIndex)
 {
-    BSLS_ASSERT(dstIndex < length());
+    BSLS_ASSERT_NONCONVEYOR(dstIndex < length());
 
     d_imp.remove(dstIndex);
 }
@@ -2348,8 +2463,8 @@ void PackedIntArray<TYPE>::remove(bsl::size_t dstIndex,
                                   bsl::size_t numElements)
 {
     // Assert 'dstIndex + numElements <= length()' without risk of overflow.
-    BSLS_ASSERT(numElements <= length());
-    BSLS_ASSERT(dstIndex    <= length() - numElements);
+    BSLS_ASSERT_NONCONVEYOR(numElements <= length());
+    BSLS_ASSERT_NONCONVEYOR(dstIndex    <= length() - numElements);
 
     d_imp.remove(dstIndex, numElements);
 }
@@ -2359,7 +2474,7 @@ inline
 typename PackedIntArray<TYPE>::const_iterator
   PackedIntArray<TYPE>::remove(const_iterator dstFirst, const_iterator dstLast)
 {
-    BSLS_ASSERT(dstFirst <= dstLast);
+    BSLS_ASSERT_NONCONVEYOR(dstFirst <= dstLast);
 
     remove(dstFirst.d_index, dstLast.d_index - dstFirst.d_index);
     return dstFirst;
@@ -2388,14 +2503,15 @@ void PackedIntArray<TYPE>::replace(bsl::size_t                 dstIndex,
                                    bsl::size_t                 srcIndex,
                                    bsl::size_t                 numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcArray);
     // Assert 'dstIndex + numElements <= length()' without risk of overflow.
-    BSLS_ASSERT(numElements <= length());
-    BSLS_ASSERT(dstIndex    <= length() - numElements);
+    BSLS_ASSERT_NONCONVEYOR(numElements <= length());
+    BSLS_ASSERT_NONCONVEYOR(dstIndex    <= length() - numElements);
 
     // Assert 'srcIndex + numElements <= srcArray.length()' without risk of
     // overflow.
-    BSLS_ASSERT(numElements <= srcArray.length());
-    BSLS_ASSERT(srcIndex    <= srcArray.length() - numElements);
+    BSLS_ASSERT_NONCONVEYOR(numElements <= srcArray.length());
+    BSLS_ASSERT_NONCONVEYOR(srcIndex    <= srcArray.length() - numElements);
 
     d_imp.replace(dstIndex, srcArray.d_imp, srcIndex, numElements);
 }
@@ -2444,7 +2560,9 @@ template <class TYPE>
 inline
 void PackedIntArray<TYPE>::swap(PackedIntArray<TYPE>& other)
 {
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
 
     d_imp.swap(other.d_imp);
 }
