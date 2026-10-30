@@ -597,7 +597,8 @@ struct ValueType<your::YourNullableValue> {
            BSLMF_ASSERT(bdlat_NullableValueFunctions
                                ::IsNullableValue<NULLABLE_VALUE_TYPE>::value);
 
-           BSLS_ASSERT(!bdlat_NullableValueFunctions::isNull(object));
+           BSLS_ASSERT_NONCONVEYOR(
+                                !bdlat_NullableValueFunctions::isNull(object));
 
            typedef typename bdlat_NullableValueFunctions
                              ::ValueType<NULLABLE_VALUE_TYPE>::Type ValueType;
@@ -624,7 +625,8 @@ struct ValueType<your::YourNullableValue> {
                                ::IsNullableValue<NULLABLE_VALUE_TYPE>::value);
 
            BSLS_ASSERT(object);
-           BSLS_ASSERT(!bdlat_NullableValueFunctions::isNull(*object));
+           BSLS_ASSERT_NONCONVEYOR(
+                               !bdlat_NullableValueFunctions::isNull(*object));
 
            typedef typename bdlat_NullableValueFunctions
                              ::ValueType<NULLABLE_VALUE_TYPE>::Type ValueType;

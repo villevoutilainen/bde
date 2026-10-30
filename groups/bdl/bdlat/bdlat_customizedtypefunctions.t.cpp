@@ -202,7 +202,8 @@ namespace Obj = bdlat_CustomizedTypeFunctions;
                            int           spacesPerLevel = 4) const;
 
        /// Convert this value to `bsl::string`.
-       const bsl::string& toString() const;
+       const bsl::string& toString() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
    };
 
    // FREE OPERATORS
@@ -247,7 +248,9 @@ namespace Obj = bdlat_CustomizedTypeFunctions;
 
    /// Load into the specified `result` the value of the specified `object`.
    const bsl::string& bdlat_customizedTypeConvertToBaseType(
-                                                          const Cusip& object);
+                                                          const Cusip& object)
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(object)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 // ```
 // Next, we provide the definitions for each of these functions:
 // ```
@@ -358,6 +361,7 @@ namespace Obj = bdlat_CustomizedTypeFunctions;
        ss << "281C82UE\n1234567890\n";
 
        ASSERT(0          == readCusip(ss, &object));
+       BSLS_ASSERT_CONVEYOR_OBJECT(&object);
        ASSERT("281C82UE" == object.toString());
 
        ASSERT(0          != readCusip(ss, &object));
@@ -408,6 +412,7 @@ namespace Obj = bdlat_CustomizedTypeFunctions;
    inline
    void Cusip::reset()
    {
+       BSLS_ASSERT_CONVEYOR_OBJECT(this);
        // bdlat_ValueTypeFunctions::reset(&d_value);
        d_value.erase();
    }
@@ -415,6 +420,7 @@ namespace Obj = bdlat_CustomizedTypeFunctions;
    inline
    int Cusip::fromString(const bsl::string& value)
    {
+       BSLS_ASSERT_CONVEYOR_OBJECT(&value);
        enum { SUCCESS = 0, FAILURE = -1 };
 
        globalFlag = 1;
@@ -435,6 +441,7 @@ namespace Obj = bdlat_CustomizedTypeFunctions;
                               int           level,
                               int           spacesPerLevel) const
    {
+       BSLS_ASSERT_CONVEYOR_OBJECT(this);
        return bdlb::PrintMethods::print(stream,
                                        d_value,
                                        level,
@@ -454,12 +461,16 @@ namespace Obj = bdlat_CustomizedTypeFunctions;
    inline
    bool operator==(const Cusip& lhs, const Cusip& rhs)
    {
+       BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+       BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
        return lhs.d_value == rhs.d_value;
    }
 
    inline
    bool operator!=(const Cusip& lhs, const Cusip& rhs)
    {
+       BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+       BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
        return lhs.d_value != rhs.d_value;
    }
 
@@ -576,6 +587,7 @@ int main(int argc, char *argv[])
         globalFlag = 0;
         const bsl::string& temp =
                            bdlat_CustomizedTypeFunctions::convertToBaseType(V);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&temp);
         ASSERT(dummyValue == temp);
         ASSERT(2          == globalFlag);
 

@@ -691,6 +691,7 @@ int bdlat_ValueTypeFunctions_Imp::assign(LHS_TYPE                        *lhs,
                                          const bsl::string&               rhs,
                                          bdlat_TypeCategory::Simple       )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return bdlat_EnumFunctions::fromString(lhs, rhs.data(), (int)rhs.length());
 }
 
@@ -853,6 +854,7 @@ template <class TYPE, class ALLOC>
 inline
 void bdlat_ValueTypeFunctions_Imp::reset(bsl::vector<TYPE, ALLOC> *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     object->clear();
 }
 
@@ -861,6 +863,7 @@ inline
 void bdlat_ValueTypeFunctions_Imp::reset(
                          bsl::basic_string<CHAR_T, CHAR_TRAITS, ALLOC> *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     object->erase();
 }
 

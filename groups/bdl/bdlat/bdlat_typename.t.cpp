@@ -466,7 +466,8 @@ class MyChoice {
     /// the `bdex` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -482,12 +483,14 @@ class MyChoice {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const int& selection1() const;
+    const int& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const bsl::string& selection2() const;
+    const bsl::string& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -525,6 +528,7 @@ int MyChoice::maxSupportedBdexVersion()
 inline
 void MyChoice::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1: {
         // no destruction required
@@ -641,7 +645,8 @@ MyChoice::operator=(const MyChoice& rhs)
             makeSelection2(rhs.d_selection2.object());
           } break;
           default:
-            BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
+            BSLS_ASSERT_NONCONVEYOR(
+                                  SELECTION_ID_UNDEFINED == rhs.d_selectionId);
             reset();
         }
     }
@@ -723,6 +728,7 @@ template <class MANIPULATOR>
 inline
 int MyChoice::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { FAILURE = -1, SUCCESS = 0 };
 
     switch (d_selectionId) {
@@ -743,6 +749,7 @@ int MyChoice::manipulateSelection(MANIPULATOR& manipulator)
 inline
 int& MyChoice::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -750,6 +757,7 @@ int& MyChoice::selection1()
 inline
 bsl::string& MyChoice::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -787,6 +795,7 @@ template <class ACCESSOR>
 inline
 int MyChoice::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { FAILURE = -1, SUCCESS = 0 };
 
     switch (d_selectionId) {
@@ -807,6 +816,7 @@ int MyChoice::accessSelection(ACCESSOR& accessor) const
 inline
 const int& MyChoice::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -814,6 +824,7 @@ const int& MyChoice::selection1() const
 inline
 const bsl::string& MyChoice::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -827,6 +838,8 @@ BDLAT_DECL_CHOICE_WITH_ALLOCATOR_TRAITS(test::MyChoice)
 inline
 bool test::operator==(const test::MyChoice& lhs, const test::MyChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
           case test::MyChoice::SELECTION_ID_SELECTION1:
@@ -836,7 +849,7 @@ bool test::operator==(const test::MyChoice& lhs, const test::MyChoice& rhs)
             return lhs.selection2() == rhs.selection2();
                                                                     // RETURN
           default:
-            BSLS_ASSERT(test::MyChoice::SELECTION_ID_UNDEFINED
+            BSLS_ASSERT_NONCONVEYOR(test::MyChoice::SELECTION_ID_UNDEFINED
                                     == rhs.selectionId());
             return true;                                              // RETURN
         }
@@ -1102,12 +1115,14 @@ struct MyEnumeration {
     /// from `stream`.  (See the package-group-level documentation for more
     /// information on `bdex` streaming of container types.)
     template <class STREAM>
-    static STREAM& bdexStreamIn(STREAM& stream, Value& value, int version);
+    static STREAM& bdexStreamIn(STREAM& stream, Value& value, int version)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Write to the specified `stream` the string representation of the
     /// specified enumeration `value`.  Return a reference to the modifiable
     /// `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Write the specified `value` to the specified output `stream` and
     /// return a reference to the modifiable `stream`.  Optionally specify
@@ -1118,7 +1133,8 @@ struct MyEnumeration {
     /// package-group-level documentation for more information on `bdex`
     /// streaming of container types).
     template <class STREAM>
-    static STREAM& bdexStreamOut(STREAM& stream, Value value, int version);
+    static STREAM& bdexStreamOut(STREAM& stream, Value value, int version)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1253,6 +1269,7 @@ inline
 bsl::ostream& test::operator<<(bsl::ostream&              stream,
                                test::MyEnumeration::Value rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return test::MyEnumeration::print(stream, rhs);
 }
 
@@ -1518,7 +1535,8 @@ class MySequence {
     /// the `bdex` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor` with
@@ -1550,11 +1568,13 @@ class MySequence {
 
     /// Return a reference to the non-modifiable "Attribute1" attribute of
     /// this object.
-    const int& attribute1() const;
+    const int& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute2" attribute of
     /// this object.
-    const bsl::string& attribute2() const;
+    const bsl::string& attribute2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -1818,6 +1838,8 @@ BDLAT_DECL_SEQUENCE_WITH_ALLOCATOR_TRAITS(test::MySequence)
 inline
 bool test::operator==(const test::MySequence& lhs, const test::MySequence& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.attribute1() == rhs.attribute1()
          && lhs.attribute2() == rhs.attribute2();
 }
@@ -1825,6 +1847,8 @@ bool test::operator==(const test::MySequence& lhs, const test::MySequence& rhs)
 inline
 bool test::operator!=(const test::MySequence& lhs, const test::MySequence& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.attribute1() != rhs.attribute1()
          || lhs.attribute2() != rhs.attribute2();
 }
@@ -1938,6 +1962,7 @@ bsl::ostream& MySequence::print(bsl::ostream& stream,
                                 int           level,
                                 int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }
@@ -2097,7 +2122,8 @@ class MyCustomizedType {
     /// the `bdex` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the most current `bdex` streaming version number supported by
     /// this class.  See the `bdex` package-level documentation for more
@@ -2121,7 +2147,8 @@ class MyCustomizedType {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `bsl::string`.
-    const bsl::string& toString() const;
+    const bsl::string& toString() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -2211,6 +2238,7 @@ void MyCustomizedType::reset()
 inline
 int MyCustomizedType::fromString(const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     enum { SUCCESS = 0, FAILURE = -1 };
 
     if (5 < value.size()) {
@@ -2241,6 +2269,7 @@ bsl::ostream& MyCustomizedType::print(bsl::ostream& stream,
                                       int           level,
                                       int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 
@@ -2262,6 +2291,8 @@ inline
 bool test::operator==(const test::MyCustomizedType& lhs,
                       const test::MyCustomizedType& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_value == rhs.d_value;
 }
 
@@ -2269,6 +2300,8 @@ inline
 bool test::operator!=(const test::MyCustomizedType& lhs,
                       const test::MyCustomizedType& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_value != rhs.d_value;
 }
 

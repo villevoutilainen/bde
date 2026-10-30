@@ -514,6 +514,7 @@ void FuzzUtil::consumeSimple(bdlt::Date            *date,
                              bslim::FuzzDataView   *fuzzData,
                              const FuzzUtilOptions *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzData);
     *date = bdlt::FuzzUtil::consumeDate(fuzzData);
 }
 
@@ -522,6 +523,7 @@ void FuzzUtil::consumeSimple(bdlt::DateTz          *date,
                              bslim::FuzzDataView   *fuzzData,
                              const FuzzUtilOptions *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzData);
     *date = bdlt::FuzzUtil::consumeDateTz(fuzzData);
 }
 
@@ -530,6 +532,7 @@ void FuzzUtil::consumeSimple(bdlt::Datetime        *datetime,
                              bslim::FuzzDataView   *fuzzData,
                              const FuzzUtilOptions *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzData);
     *datetime = bdlt::FuzzUtil::consumeDatetime(fuzzData);
 }
 
@@ -538,6 +541,7 @@ void FuzzUtil::consumeSimple(bdlt::DatetimeTz      *datetime,
                              bslim::FuzzDataView   *fuzzData,
                              const FuzzUtilOptions *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzData);
     *datetime = bdlt::FuzzUtil::consumeDatetimeTz(fuzzData);
 }
 
@@ -546,6 +550,7 @@ void FuzzUtil::consumeSimple(bdlt::Time            *time,
                              bslim::FuzzDataView   *fuzzData,
                              const FuzzUtilOptions *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzData);
     *time = bdlt::FuzzUtil::consumeTime(fuzzData);
 }
 
@@ -554,6 +559,7 @@ void FuzzUtil::consumeSimple(bdlt::TimeTz          *time,
                              bslim::FuzzDataView   *fuzzData,
                              const FuzzUtilOptions *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzData);
     *time = bdlt::FuzzUtil::consumeTimeTz(fuzzData);
 }
 

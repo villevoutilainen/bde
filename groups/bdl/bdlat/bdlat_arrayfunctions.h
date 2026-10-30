@@ -927,6 +927,7 @@ int bdlat_ArrayFunctions::bdlat_arrayManipulateElement(
                                          MANIPULATOR&              manipulator,
                                          int                       index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(array);
     TYPE& element = (*array)[index];
     return manipulator(&element);
 }
@@ -937,6 +938,7 @@ int bdlat_ArrayFunctions::bdlat_arrayReserve(
                                          bsl::vector<TYPE, ALLOC> *array,
                                          int                       numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(array);
     array->reserve(numElements);
     return 0;
 }
@@ -946,6 +948,7 @@ inline
 void bdlat_ArrayFunctions::bdlat_arrayResize(bsl::vector<TYPE, ALLOC> *array,
                                              int                       newSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(array);
     array->resize(newSize);
 }
 
@@ -957,6 +960,7 @@ int bdlat_ArrayFunctions::bdlat_arrayAccessElement(
                                       ACCESSOR&                       accessor,
                                       int                             index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&array);
     return accessor(array[index]);
 }
 
@@ -965,6 +969,7 @@ inline
 bsl::size_t bdlat_ArrayFunctions::bdlat_arraySize(
                                          const bsl::vector<TYPE, ALLOC>& array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&array);
     return array.size();
 }
 

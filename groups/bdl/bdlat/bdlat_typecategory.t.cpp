@@ -481,6 +481,7 @@ struct MyAccessor {
                    const TYPE&   object,
                    CATEGORY      )
    {
+       BSLS_ASSERT_CONVEYOR_OBJECT(&object);
        bdlb::PrintMethods::print(stream, object, 0, -1);
    }
 
@@ -584,6 +585,7 @@ struct MyAccessor {
        template <class TYPE>
        int operator()(const TYPE& object, bdlat_TypeCategory::Array)
        {
+           BSLS_ASSERT_CONVEYOR_OBJECT(&object);
            *d_stream_p << "Array" << ": ";
            bdlb::PrintMethods::print(*d_stream_p, object, 0, -1);
            return 0;
@@ -616,6 +618,7 @@ struct MyAccessor {
        template <class TYPE>
        int operator()(const TYPE& object, bdlat_TypeCategory::NullableValue)
        {
+           BSLS_ASSERT_CONVEYOR_OBJECT(&object);
            *d_stream_p << "NullableValue" << ": ";
            bdlb::PrintMethods::print(*d_stream_p, object, 0, -1);
            return 0;
@@ -632,6 +635,7 @@ struct MyAccessor {
        template <class TYPE>
        int operator()(const TYPE& object, bdlat_TypeCategory::Simple)
        {
+           BSLS_ASSERT_CONVEYOR_OBJECT(&object);
            *d_stream_p << "Simple" << ": ";
            bdlb::PrintMethods::print(*d_stream_p, object, 0, -1);
            return 0;
@@ -713,7 +717,7 @@ struct MyAccessor {
        void makeVectorChar() { d_selector = 0; }
        void makeString()     { d_selector = 1; }
 
-       bsl::vector<char>& theVectorChar()
+       bsl::vector<char>& theVectorChar() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
                               { ASSERT(isVectorChar()); return d_vectorChar; }
        bsl::string& theString()
                               { ASSERT(isString());     return d_string;     }
@@ -722,7 +726,7 @@ struct MyAccessor {
        bool isVectorChar() const { return 0 == d_selector; }
        bool isString()     const { return 1 == d_selector; }
 
-       const bsl::vector<char>& theVectorChar() const
+       const bsl::vector<char>& theVectorChar() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
                               { ASSERT(isVectorChar()); return d_vectorChar; }
        const bsl::string& theString() const
                               { ASSERT(isString());     return d_string;     }
@@ -803,6 +807,7 @@ struct MyAccessor {
     int bdlat_typeCategoryAccessArray(const MyDynamicType& object,
                                       ACCESSOR&                 accessor)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&object);
         if (object.isVectorChar()) {
             return accessor(object.theVectorChar(),
                             bdlat_TypeCategory::Array());             // RETURN
@@ -860,13 +865,19 @@ struct MyAccessor {
 // ```
        object.makeVectorChar();
 
+       BSLS_ASSERT_CONVEYOR_OBJECT(&object);
        ASSERT(bdlat_TypeCategory::e_ARRAY_CATEGORY
            == bdlat_TypeCategoryFunctions::select(object));
 
+       BSLS_ASSERT_CONVEYOR_OBJECT(&object);
        object.theVectorChar().push_back('H');
+       BSLS_ASSERT_CONVEYOR_OBJECT(&object);
        object.theVectorChar().push_back('e');
+       BSLS_ASSERT_CONVEYOR_OBJECT(&object);
        object.theVectorChar().push_back('l');
+       BSLS_ASSERT_CONVEYOR_OBJECT(&object);
        object.theVectorChar().push_back('l');
+       BSLS_ASSERT_CONVEYOR_OBJECT(&object);
        object.theVectorChar().push_back('o');
 
        mine::PrintAccessor accessor(&oss);

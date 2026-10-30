@@ -297,10 +297,10 @@ int ArrayUtil::accessElementByCategory(const TYPE& array,
 #if !defined(BSLS_PLATFORM_CMP_SUN)
     BSLMF_ASSERT((bdlat_ArrayFunctions::IsArray<TYPE>::value));
 #endif
-    BSLS_ASSERT(bdlat_TypeCategoryFunctions::select(array) ==
+    BSLS_ASSERT_NONCONVEYOR(bdlat_TypeCategoryFunctions::select(array) ==
                 bdlat_TypeCategory::e_ARRAY_CATEGORY);
     BSLS_ASSERT(0 <= index);
-    BSLS_ASSERT(static_cast<bsl::size_t>(index) <
+    BSLS_ASSERT_NONCONVEYOR(static_cast<bsl::size_t>(index) <
                 bdlat_ArrayFunctions::size(array));
 
     const AccessByCategoryAdapter<ACCESSOR> adapter(&accessor);
@@ -317,10 +317,10 @@ int ArrayUtil::manipulateElementByCategory(TYPE         *array,
     BSLMF_ASSERT((bdlat_ArrayFunctions::IsArray<TYPE>::value));
 #endif
     BSLS_ASSERT(array);
-    BSLS_ASSERT(bdlat_TypeCategoryFunctions::select(*array) ==
+    BSLS_ASSERT_NONCONVEYOR(bdlat_TypeCategoryFunctions::select(*array) ==
                 bdlat_TypeCategory::e_ARRAY_CATEGORY);
     BSLS_ASSERT(0 <= index);
-    BSLS_ASSERT(static_cast<bsl::size_t>(index) <
+    BSLS_ASSERT_NONCONVEYOR(static_cast<bsl::size_t>(index) <
                 bdlat_ArrayFunctions::size(*array));
 
     const ManipulateByCategoryAdapter<MANIPULATOR> adapter(&manipulator);

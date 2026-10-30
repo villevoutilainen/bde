@@ -171,9 +171,11 @@ namespace usage {
         template <class TYPE>
         static int isValueAnArray(bool *isArray, const TYPE& object)
         {
-            BSLS_ASSERT(bdlat_TypeCategoryFunctions::select(object) ==
+            BSLS_ASSERT_NONCONVEYOR(
+                                 bdlat_TypeCategoryFunctions::select(object) ==
                         bdlat_TypeCategory::e_NULLABLE_VALUE_CATEGORY);
-            BSLS_ASSERT(!bdlat_NullableValueFunctions::isNull(object));
+            BSLS_ASSERT_NONCONVEYOR(
+                                !bdlat_NullableValueFunctions::isNull(object));
 
             MyArrayDetector detector;
             int rc = bdlat::NullableValueUtil::accessValueByCategory(object,
@@ -580,7 +582,8 @@ class GetValuePtr {
     VALUE_TYPE *operator()(
                           bdlb::NullableValue<VALUE_TYPE> *nullableValue) const
     {
-        BSLS_ASSERT(!nullableValue->isNull());
+        BSLS_ASSERT_CONVEYOR_OBJECT(nullableValue);
+        BSLS_ASSERT_NONCONVEYOR(!nullableValue->isNull());
         return &nullableValue->value();
     }
 
@@ -588,7 +591,8 @@ class GetValuePtr {
     const VALUE_TYPE *operator()(
                     const bdlb::NullableValue<VALUE_TYPE>& nullableValue) const
     {
-        BSLS_ASSERT(!nullableValue.isNull());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&nullableValue);
+        BSLS_ASSERT_NONCONVEYOR(!nullableValue.isNull());
         return &nullableValue.value();
     }
 };

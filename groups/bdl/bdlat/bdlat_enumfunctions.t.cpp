@@ -589,6 +589,7 @@ namespace test {
 int MyEnumWithFallback::fromString(Value              *result,
                                    const bsl::string&  string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return fromString(
         result, string.c_str(), static_cast<int>(string.length()));
 }

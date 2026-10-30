@@ -172,6 +172,8 @@ class MyCustomString {
     // HIDDEN FRIENDS
     friend bool operator==(const MyCustomString& o1, const MyCustomString& o2)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&o1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&o2);
         return o1.d_value == o2.d_value;
     }
   public:
@@ -191,6 +193,8 @@ class MyDynamicType {
     // HIDDEN FRIENDS
     friend bool operator==(const MyDynamicType& o1, const MyDynamicType& o2)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&o1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&o2);
         return o1.d_value == o2.d_value;
     }
 
@@ -326,6 +330,8 @@ int bdlat_choiceManipulateSelection(MyChoice       *object,
 
 bool operator==(const MyChoice& o1, const MyChoice& o2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&o1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&o2);
     if(o1.d_selectionId != o2.d_selectionId) {
         return false;                                                 // RETURN
     }

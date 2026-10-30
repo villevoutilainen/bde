@@ -178,10 +178,11 @@ namespace usage {
                                     const TYPE&  array,
                                     int          index)
         {
-            BSLS_ASSERT(bdlat_TypeCategoryFunctions::select(array) ==
+            BSLS_ASSERT_NONCONVEYOR(
+                                  bdlat_TypeCategoryFunctions::select(array) ==
                         bdlat_TypeCategory::e_ARRAY_CATEGORY);
             BSLS_ASSERT(0 <= index);
-            BSLS_ASSERT(static_cast<bsl::size_t>(index) <
+            BSLS_ASSERT_NONCONVEYOR(static_cast<bsl::size_t>(index) <
                         bdlat_ArrayFunctions::size(array));
 
             MyArrayDetector detector;
@@ -596,6 +597,7 @@ class GenerateVector {
     template <class ELEMENT_TYPE>
     bsl::vector<ELEMENT_TYPE> gen(const ELEMENT_TYPE& element) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&element);
         bsl::vector<ELEMENT_TYPE> result;
         result.push_back(element);
         return result;

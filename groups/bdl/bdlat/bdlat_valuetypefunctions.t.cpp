@@ -447,6 +447,7 @@ class Choice_Point {
    // MANIPULATORS
    void TheirValueType::setValue(const bsl::string& valueString)
    {
+       BSLS_ASSERT_CONVEYOR_OBJECT(&valueString);
         bsl::string::size_type pos = valueString.find(',');
         BSLS_ASSERT(bsl::string::npos != pos);
 

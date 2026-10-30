@@ -779,6 +779,7 @@ inline
 void bdlat_NullableValueFunctions::bdlat_nullableValueMakeValue(
                                              bdlb::NullableValue<TYPE> *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
     object->makeValue();
 }
 
@@ -788,7 +789,8 @@ int bdlat_NullableValueFunctions::bdlat_nullableValueManipulateValue(
                                         bdlb::NullableValue<TYPE> *object,
                                         MANIPULATOR&               manipulator)
 {
-    BSLS_ASSERT(!object->isNull());
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
+    BSLS_ASSERT_NONCONVEYOR(!object->isNull());
 
     return manipulator(&object->value());
 }
@@ -800,7 +802,8 @@ int bdlat_NullableValueFunctions::bdlat_nullableValueAccessValue(
                                      const bdlb::NullableValue<TYPE>& object,
                                      ACCESSOR&                        accessor)
 {
-    BSLS_ASSERT(!object.isNull());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_NONCONVEYOR(!object.isNull());
 
     return accessor(object.value());
 }
@@ -810,6 +813,7 @@ inline
 bool bdlat_NullableValueFunctions::bdlat_nullableValueIsNull(
                                        const bdlb::NullableValue<TYPE>& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return object.isNull();
 }
 

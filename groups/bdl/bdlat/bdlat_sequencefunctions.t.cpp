@@ -725,6 +725,7 @@ const bdlat_AttributeInfo *Point::lookupAttributeInfo(int id)
        template <class TYPE, class INFO>
        int operator()(const TYPE& object, const INFO& info)
        {
+           BSLS_ASSERT_CONVEYOR_OBJECT(&object);
            (*d_stream_p) << info.name() << ": " << object << bsl::endl;
            return 0;
        }
