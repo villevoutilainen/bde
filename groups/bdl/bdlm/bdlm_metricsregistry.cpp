@@ -357,7 +357,7 @@ MetricsRegistry_Impl::~MetricsRegistry_Impl()
              ++iter) {
             // See Implmentation Note
 
-            BSLS_ASSERT(iter->second.d_adaptedHandle.has_value());
+            BSLS_ASSERT_NONCONVEYOR(iter->second.d_adaptedHandle.has_value());
             d_metricsAdapter_p->removeCollectionCallback(
                                                 *iter->second.d_adaptedHandle);
         }
@@ -368,6 +368,7 @@ MetricsRegistry_Impl::~MetricsRegistry_Impl()
 // MANIPULATORS
 int MetricsRegistry_Impl::disableMetricsCollection()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     if (!d_collectionEnabled) {
         return 0;                                                     // RETURN
@@ -379,7 +380,7 @@ int MetricsRegistry_Impl::disableMetricsCollection()
              ++iter) {
             // See Implmentation Note.
 
-            BSLS_ASSERT(iter->second.d_adaptedHandle.has_value());
+            BSLS_ASSERT_NONCONVEYOR(iter->second.d_adaptedHandle.has_value());
 
             d_metricsAdapter_p->removeCollectionCallback(
                                                  *iter->second.d_adaptedHandle);
@@ -392,6 +393,7 @@ int MetricsRegistry_Impl::disableMetricsCollection()
 
 int MetricsRegistry_Impl::enableMetricsCollection()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     if (d_collectionEnabled) {
         return 0;                                                     // RETURN
@@ -403,7 +405,7 @@ int MetricsRegistry_Impl::enableMetricsCollection()
              ++iter) {
             // See Implmentation Note.
 
-            BSLS_ASSERT(!iter->second.d_adaptedHandle.has_value());
+            BSLS_ASSERT_NONCONVEYOR(!iter->second.d_adaptedHandle.has_value());
             iter->second.d_adaptedHandle =
                                 d_metricsAdapter_p->registerCollectionCallback(
                                     iter->second.d_descriptor,
@@ -418,6 +420,7 @@ MetricsRegistry_Impl::registerCollectionCallback(
                                       const bdlm::MetricDescriptor& descriptor,
                                       const Callback&               callback)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     bsl::pair<MetricDataMap::iterator, bool> res =
@@ -441,6 +444,8 @@ MetricsRegistry_Impl::registerCollectionCallback(
 int MetricsRegistry_Impl::removeCollectionCallback(
                                                   const CallbackHandle& handle)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     MetricDataMap::iterator iter = d_metricData.find(handle);
@@ -448,7 +453,7 @@ int MetricsRegistry_Impl::removeCollectionCallback(
         if (d_metricsAdapter_p && d_collectionEnabled) {
             // See Implmentation Note.
 
-            BSLS_ASSERT(iter->second.d_adaptedHandle.has_value());
+            BSLS_ASSERT_NONCONVEYOR(iter->second.d_adaptedHandle.has_value());
             d_metricsAdapter_p->removeCollectionCallback(
                                                 *iter->second.d_adaptedHandle);
         }
@@ -460,6 +465,7 @@ int MetricsRegistry_Impl::removeCollectionCallback(
 
 int MetricsRegistry_Impl::removeMetricsAdapter(MetricsAdapter *adapter)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(adapter);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
@@ -470,7 +476,8 @@ int MetricsRegistry_Impl::removeMetricsAdapter(MetricsAdapter *adapter)
                  ++iter) {
                 // See Implmentation Note.
 
-                BSLS_ASSERT(iter->second.d_adaptedHandle.has_value());
+                BSLS_ASSERT_NONCONVEYOR(
+                                     iter->second.d_adaptedHandle.has_value());
                 d_metricsAdapter_p->removeCollectionCallback(
                                                  *iter->second.d_adaptedHandle);
                 iter->second.d_adaptedHandle.reset();
@@ -486,6 +493,7 @@ int MetricsRegistry_Impl::removeMetricsAdapter(MetricsAdapter *adapter)
 
 int MetricsRegistry_Impl::setMetricsAdapter(MetricsAdapter *adapter)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(adapter);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
@@ -496,7 +504,8 @@ int MetricsRegistry_Impl::setMetricsAdapter(MetricsAdapter *adapter)
             if (d_metricsAdapter_p) {
                 // See Implmentation Note.
 
-                BSLS_ASSERT(iter->second.d_adaptedHandle.has_value());
+                BSLS_ASSERT_NONCONVEYOR(
+                                     iter->second.d_adaptedHandle.has_value());
                 d_metricsAdapter_p->removeCollectionCallback(
                                                  *iter->second.d_adaptedHandle);
             }
@@ -513,6 +522,7 @@ int MetricsRegistry_Impl::setMetricsAdapter(MetricsAdapter *adapter)
 
 int MetricsRegistry_Impl::numRegisteredCollectionCallbacks() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     return static_cast<int>(d_metricData.size());
 }
@@ -542,6 +552,8 @@ MetricsRegistry_ElementProctor::MetricsRegistry_ElementProctor(
 inline
 MetricsRegistry_ElementProctor::~MetricsRegistry_ElementProctor()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d_map);
     if (d_it != d_map.end()) {
         d_map.erase(d_it);
     }
@@ -551,6 +563,8 @@ MetricsRegistry_ElementProctor::~MetricsRegistry_ElementProctor()
 inline
 void MetricsRegistry_ElementProctor::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d_map);
     d_it = d_map.end();
 }
 
@@ -593,11 +607,13 @@ MetricsRegistry& MetricsRegistry::defaultInstance()
 // MANIPULATORS
 int MetricsRegistry::disableMetricsCollection()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl->disableMetricsCollection();
 }
 
 int MetricsRegistry::enableMetricsCollection()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl->enableMetricsCollection();
 }
 
@@ -606,6 +622,7 @@ int MetricsRegistry::registerCollectionCallback(
                                  const bdlm::MetricDescriptor&      descriptor,
                                  const Callback&                    callback)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(result);
     CallbackHandle key = d_impl->registerCollectionCallback(descriptor,
                                                             callback);
@@ -615,11 +632,13 @@ int MetricsRegistry::registerCollectionCallback(
 
 int MetricsRegistry::removeMetricsAdapter(MetricsAdapter *adapter)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl->removeMetricsAdapter(adapter);
 }
 
 int MetricsRegistry::setMetricsAdapter(MetricsAdapter *adapter)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl->setMetricsAdapter(adapter);
 }
 
@@ -627,6 +646,7 @@ int MetricsRegistry::setMetricsAdapter(MetricsAdapter *adapter)
 
 int MetricsRegistry::numRegisteredCollectionCallbacks() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl->numRegisteredCollectionCallbacks();
 }
 
@@ -634,6 +654,7 @@ int MetricsRegistry::numRegisteredCollectionCallbacks() const
 
 bslma::Allocator *MetricsRegistry::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl->allocator();
 }
 
@@ -680,6 +701,7 @@ MetricsRegistryRegistrationHandle::operator=(
 
 int MetricsRegistryRegistrationHandle::unregister()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int rv = 0;
 
     bsl::shared_ptr<MetricsRegistry_Impl> registry = d_registry.lock();

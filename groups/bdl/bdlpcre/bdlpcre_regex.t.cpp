@@ -589,7 +589,8 @@ void *WeakAlignAllocator::allocate(size_type numBytes)
                                                               align * 2),
             bsls::AlignmentUtil::calculateAlignmentOffset(upstream_ptr,
                                                               align * 2) == 0);
-    BSLS_ASSERT(bsls::AlignmentUtil::calculateAlignmentOffset(upstream_ptr,
+    BSLS_ASSERT_NONCONVEYOR(
+                    bsls::AlignmentUtil::calculateAlignmentOffset(upstream_ptr,
                                                               align * 2) == 0);
 
     // Since we know that our `upstream_pointer` is aligned on `2 * align`
@@ -801,6 +802,7 @@ int countNames(
     const bsl::vector<bsl::pair<bsl::string_view,int> >&  names,
     const char                                           *name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&names);
     int count = 0;
     for (unsigned i = 0; i < names.size(); ++i) {
         if (names[i].first == name) {
@@ -5093,6 +5095,7 @@ int main(int argc, char *argv[])
 
             int retCode = mX.prepare(&errorMsg, &errorOffset, PATTERN1, 0, 0);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(retCode,        0        == retCode);
             ASSERTV(X.isPrepared(), true     == X.isPrepared());
             ASSERTV(X.pattern(),    PATTERN1 == X.pattern());
@@ -5119,6 +5122,7 @@ int main(int argc, char *argv[])
                                      0,
                                      0);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(retCode,        0               != retCode);
             ASSERTV(X.isPrepared(), false           == X.isPrepared());
             ASSERTV(X.pattern(),    INVALID_PATTERN == X.pattern());
@@ -5137,6 +5141,7 @@ int main(int argc, char *argv[])
 
             int retCode = mX.prepare(&errorMsg, 0, INVALID_PATTERN, 0, 0);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(retCode,        0               != retCode);
             ASSERTV(X.isPrepared(), false           == X.isPrepared());
             ASSERTV(X.pattern(),    INVALID_PATTERN == X.pattern());
@@ -5151,6 +5156,7 @@ int main(int argc, char *argv[])
 
             int retCode = mX.prepare(0, &errorOffset, INVALID_PATTERN, 0, 0);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(retCode,        0               != retCode);
             ASSERTV(X.isPrepared(), false           == X.isPrepared());
             ASSERTV(X.pattern(),    INVALID_PATTERN == X.pattern());
@@ -5165,18 +5171,21 @@ int main(int argc, char *argv[])
 
             int retCode = mX.prepare(0, 0, PATTERN1, 0, 0);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(retCode,        0        == retCode);
             ASSERTV(X.isPrepared(), true     == X.isPrepared());
             ASSERTV(X.pattern(),    PATTERN1 == X.pattern());
 
             retCode = mX.prepare(0, 0, PATTERN2, 0, 0);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(retCode,        0        == retCode);
             ASSERTV(X.isPrepared(), true     == X.isPrepared());
             ASSERTV(X.pattern(),    PATTERN2 == X.pattern());
 
             retCode = mX.prepare(0, 0, INVALID_PATTERN, 0, 0);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(retCode,        0                != retCode);
             ASSERTV(X.isPrepared(), false            == X.isPrepared());
             ASSERTV(X.pattern(),    INVALID_PATTERN  == X.pattern());
@@ -5189,17 +5198,20 @@ int main(int argc, char *argv[])
             ASSERT(false == X.isPrepared());
 
             mX.clear();
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
             ASSERTV(X.isPrepared(), false == X.isPrepared());
             ASSERTV(X.pattern(),    ""    == X.pattern());
 
             int retCode = mX.prepare(0, 0, PATTERN1, 0, 0);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(retCode,        0        == retCode);
             ASSERTV(X.isPrepared(), true     == X.isPrepared());
             ASSERTV(X.pattern(),    PATTERN1 == X.pattern());
 
             mX.clear();
+BSLS_ASSERT_CONVEYOR_OBJECT(&X);
 
             ASSERTV(X.isPrepared(), false == X.isPrepared());
             ASSERTV(X.pattern(),    ""    == X.pattern());
@@ -5393,6 +5405,7 @@ int main(int argc, char *argv[])
         if (verbose) cout << "\nVerifying prepared state." << endl;
 
         ASSERT(true                  == X.isPrepared());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(Obj::k_FLAG_MULTILINE == X.flags());
         ASSERT(2                     == X.numSubpatterns());
         ASSERT(PATTERN               == X.pattern());

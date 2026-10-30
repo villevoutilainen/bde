@@ -367,6 +367,7 @@ template<>
 inline
 double Moment<MomentLevel::e_M4>::kurtosis() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(4 <= d_data.d_count && 0.0 != d_data.d_M2);
 
     const double n    = static_cast<double>(d_data.d_count);
@@ -391,6 +392,7 @@ template <MomentLevel::Enum ML>
 inline
 double Moment<ML>::mean() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= d_data.d_count);
 
     return d_data.d_sum / static_cast<double>(d_data.d_count);
@@ -411,6 +413,7 @@ template <MomentLevel::Enum ML>
 inline
 double Moment<ML>::skew() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(3 <= d_data.d_count && 0.0 != d_data.d_M2);
 
     const double n = static_cast<double>(d_data.d_count);
@@ -421,6 +424,7 @@ double Moment<ML>::skew() const
 template <MomentLevel::Enum ML>
 inline int Moment<ML>::skewIfValid(double *result) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (3 > d_data.d_count || 0.0 == d_data.d_M2) {
         return e_INADEQUATE_DATA;                                     // RETURN
     }
@@ -432,6 +436,7 @@ template <MomentLevel::Enum ML>
 inline
 double Moment<ML>::variance() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(2 <= d_data.d_count);
 
     return d_data.d_M2 / (d_data.d_count - 1);

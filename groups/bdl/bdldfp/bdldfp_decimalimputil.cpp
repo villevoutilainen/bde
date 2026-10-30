@@ -145,7 +145,7 @@ int print(char *b, char *e, T value)
         *--i = static_cast<char>('0' + divmod10(&value));
     } while (value != 0 && i > b);
 
-    BSLS_ASSERT(0 == value);
+    BSLS_ASSERT_NONCONVEYOR(0 == value);
 
     if (i > b) {
         bsl::copy(i, e, b);
@@ -482,7 +482,7 @@ int formatImpl(char                      *buffer,
                const DecimalFormatConfig& cfg)
 {
     BSLS_ASSERT(buffer || length < 0);
-    BSLS_ASSERT(cfg.precision() >= -1);
+    BSLS_ASSERT_NONCONVEYOR(cfg.precision() >= -1);
 
     typedef typename DecimalTraits<DECIMAL>::Significand SIGNIFICAND;
 

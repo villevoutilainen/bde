@@ -203,7 +203,8 @@ struct ProtocolClassTestImp : bsls::ProtocolTestImp<ProtocolClass> {
         // ACCESSORS
 
         /// Return the name of the registered metric.
-        const bsl::string& name() const;
+        const bsl::string& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         /// Return the value computed by the invocations of the registered
         /// callback.
@@ -306,6 +307,7 @@ struct ProtocolClassTestImp : bsls::ProtocolTestImp<ProtocolClass> {
                                 const bdlm::MetricDescriptor& metricDescriptor,
                                 const Callback&               callback)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&metricDescriptor);
         bsl::string name = metricDescriptor.metricNamespace() + '.'
                          + metricDescriptor.metricName() + '.'
                          + metricDescriptor.objectTypeName() + '.'
@@ -398,6 +400,7 @@ int main(int argc, char *argv[])
         bdlm::MetricDescriptor descriptor("a", "b", 1, "c", "d", "e");
 
         adapter.registerCollectionCallback(descriptor, my_metric);
+BSLS_ASSERT_CONVEYOR_OBJECT(&monitor);
 
         ASSERT(monitor.name() == "a.b.c.d.e");
 // ```

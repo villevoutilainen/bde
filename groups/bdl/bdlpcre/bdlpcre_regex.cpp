@@ -219,6 +219,8 @@ class VectorExtractor {
                     PCRE2_SIZE   *ovector,
                     unsigned int  ovectorCount) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_vector_p);
         d_vector_p->resize(ovectorCount);
 
         for (unsigned int i = 0, j = 0; i < ovectorCount; ++i, j += 2) {
@@ -341,6 +343,7 @@ int
 RegEx_MatchContext::allocateMatchContext(
                                 RegEx_MatchContextData *matchContextData) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(matchContextData);
     BSLS_ASSERT(d_pcre2Context_p);
     BSLS_ASSERT(d_pcre2PatternCode_p);
@@ -577,7 +580,7 @@ int RegEx::matchImp(const RESULT_EXTRACTOR&  extractor,
 {
     BSLS_ASSERT(subject || 0 == subjectLength);
     BSLS_ASSERT(subjectOffset <= subjectLength);
-    BSLS_ASSERT(isPrepared());
+    BSLS_ASSERT_NONCONVEYOR(isPrepared());
 
     RegEx_MatchContextData matchContextData;
 
@@ -695,7 +698,8 @@ template <class Vector>
 inline
 void RegEx::namedSubpatternsImp(Vector *result) const
 {
-    BSLS_ASSERT(isPrepared());
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_NONCONVEYOR(isPrepared());
 
     uint32_t nameCount;
     int rc = pcre2_pattern_info(d_patternCode_p,
@@ -757,8 +761,9 @@ int RegEx::replaceImp(STRING                  *result,
                       size_t                   options,
                       bool                     skipUTF8Validation) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(result);
-    BSLS_ASSERT(isPrepared());
+    BSLS_ASSERT_NONCONVEYOR(isPrepared());
 
     RegEx_MatchContextData matchContextData;
 
@@ -830,7 +835,7 @@ bool RegEx::isJitAvailable()
     // variable for forward-compatability with C++26 Contracts.
     unsigned int result = 0;
     (void) result;
-    BSLS_ASSERT((0 <= pcre2_config(PCRE2_CONFIG_JIT,
+    BSLS_ASSERT_NONCONVEYOR((0 <= pcre2_config(PCRE2_CONFIG_JIT,
                                    &const_cast<unsigned int&>(result))) &&
                 (k_IS_JIT_SUPPORTED == (0 != result))
         );
@@ -1278,7 +1283,7 @@ void RegEx::namedSubpatterns(
 
 int RegEx::numSubpatterns() const
 {
-    BSLS_ASSERT(isPrepared());
+    BSLS_ASSERT_NONCONVEYOR(isPrepared());
 
     int numSubpatterns;
     int returnValue = pcre2_pattern_info(d_patternCode_p,
@@ -1293,7 +1298,7 @@ int RegEx::numSubpatterns() const
 
 int RegEx::subpatternIndex(const char *name) const
 {
-    BSLS_ASSERT(isPrepared());
+    BSLS_ASSERT_NONCONVEYOR(isPrepared());
 
     const int index = pcre2_substring_number_from_name(
                                  d_patternCode_p,

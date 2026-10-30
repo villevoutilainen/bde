@@ -363,6 +363,7 @@ void MetricsRegistryRegistrationHandle::swap(
 inline
 bool MetricsRegistryRegistrationHandle::isRegistered() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return !d_registry.expired();
 }
 

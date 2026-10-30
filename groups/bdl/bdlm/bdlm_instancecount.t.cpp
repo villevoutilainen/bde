@@ -109,6 +109,7 @@ extern "C" void *worker(void *arg)
 
     wd.d_barrier_p->wait();
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&wd);
     for (unsigned i = 0; i < wd.d_results.size(); ++i) {
         wd.d_results[i] = bdlm::InstanceCount::nextInstanceNumber<short>();
     }

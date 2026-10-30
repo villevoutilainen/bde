@@ -633,9 +633,13 @@ int main(int argc, char* argv[])
                 // Also apply the object's `allocator` accessor, as well as
                 // that of `Z`.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(LINE, &oa == X.metricNamespace().get_allocator());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(LINE, &oa == X.metricName().get_allocator());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(LINE, &oa == X.objectTypeName().get_allocator());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(LINE, &oa == X.objectIdentifier().get_allocator());
 
                 ASSERTV(LINE, &scratch == Z.metricNamespace().get_allocator());
@@ -900,11 +904,16 @@ int main(int argc, char* argv[])
 
             Obj mX(mns, mn, otin, otn, ota, oi, &sa);  const Obj& X = mX;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mns  == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mn   == X.metricName());
             ASSERT(otin == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(otn  == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(ota  == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(oi   == X.objectIdentifier());
         }
         {
@@ -919,11 +928,16 @@ int main(int argc, char* argv[])
 
             Obj mX(mns, mn, otin, otn, ota, oi, &sa);  const Obj& X = mX;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mns  == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mn   == X.metricName());
             ASSERT(otin == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(otn  == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(ota  == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(oi   == X.objectIdentifier());
         }
       } break;
@@ -973,11 +987,16 @@ int main(int argc, char* argv[])
                                    X.objectTypeAbbreviation().get_allocator());
             ASSERT(&defaultAllocator == X.objectIdentifier().get_allocator());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mns  == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mn   == X.metricName());
             ASSERT(otin == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(otn  == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(ota  == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(oi   == X.objectIdentifier());
         }
         {
@@ -1002,11 +1021,16 @@ int main(int argc, char* argv[])
             ASSERT(&sa == X.objectTypeAbbreviation().get_allocator());
             ASSERT(&sa == X.objectIdentifier().get_allocator());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mns  == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mn   == X.metricName());
             ASSERT(otin == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(otn  == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(ota  == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(oi   == X.objectIdentifier());
         }
       } break;
@@ -1067,10 +1091,15 @@ int main(int argc, char* argv[])
 
             Obj mX;  const Obj& X = mX;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.metricName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectIdentifier());
 
             ASSERT(&defaultAllocator == X.metricNamespace().get_allocator());
@@ -1091,10 +1120,15 @@ int main(int argc, char* argv[])
             Obj mX(&sa);  const Obj& X = mX;
 
             ASSERT(    0 == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.metricName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectIdentifier());
 
             ASSERT(&sa == X.metricNamespace().get_allocator());
@@ -1112,69 +1146,104 @@ int main(int argc, char* argv[])
             Obj mX(&sa);  const Obj& X = mX;
 
             ASSERT(0     == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.metricName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectIdentifier());
 
             mX.setInstanceNumber(123);
 
             ASSERT(123   == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.metricName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectIdentifier());
 
             bsl::string mns = "namespace";
             mX.setMetricNamespace(mns);
 
             ASSERT(123   == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mns   == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.metricName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectIdentifier());
 
             bsl::string mn = "name";
             mX.setMetricName(mn);
 
             ASSERT(123   == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mns   == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mn    == X.metricName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectIdentifier());
 
             bsl::string otn = "object type name";
             mX.setObjectTypeName(otn);
 
             ASSERT(123   == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mns   == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mn    == X.metricName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(otn   == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectIdentifier());
 
             bsl::string ota = "object type abbr";
             mX.setObjectTypeAbbreviation(ota);
 
             ASSERT(123   == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mns   == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mn    == X.metricName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(otn   == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(ota   == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(empty == X.objectIdentifier());
 
             bsl::string oi = "object identifier";
             mX.setObjectIdentifier(oi);
 
             ASSERT(123   == X.instanceNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mns   == X.metricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(mn    == X.metricName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(otn   == X.objectTypeName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(ota   == X.objectTypeAbbreviation());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(oi    == X.objectIdentifier());
         }
       } break;
@@ -1203,10 +1272,15 @@ int main(int argc, char* argv[])
 
         Obj mX; const Obj& X = mX;
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(empty == X.metricNamespace());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(empty == X.metricName());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(empty == X.objectTypeName());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(empty == X.objectTypeAbbreviation());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(empty == X.objectIdentifier());
 
       } break;

@@ -85,6 +85,8 @@ BSLS_IDENT("$Id$")
 
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_string.h>
 
 namespace BloombergLP {
@@ -213,19 +215,24 @@ class MetricDescriptor {
     const InstanceCount::Value& instanceNumber() const;
 
     /// Return the `metricName` attribute.
-    const bsl::string& metricName() const;
+    const bsl::string& metricName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the `metricNamespace` attribute.
-    const bsl::string& metricNamespace() const;
+    const bsl::string& metricNamespace() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the `objectIdentifier` attribute.
-    const bsl::string& objectIdentifier() const;
+    const bsl::string& objectIdentifier() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the `objectTypeAbbreviation` attribute.
-    const bsl::string& objectTypeAbbreviation() const;
+    const bsl::string& objectTypeAbbreviation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the `objectTypeName` attribute.
-    const bsl::string& objectTypeName() const;
+    const bsl::string& objectTypeName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the allocator used by this object to supply memory.
     bslma::Allocator *allocator() const;
@@ -394,6 +401,8 @@ bslma::Allocator *MetricDescriptor::allocator() const
 inline
 bool operator==(const MetricDescriptor& lhs, const MetricDescriptor& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_metricNamespace        == rhs.d_metricNamespace        &&
            lhs.d_metricName             == rhs.d_metricName             &&
            lhs.d_instanceNumber         == rhs.d_instanceNumber         &&
@@ -405,6 +414,8 @@ bool operator==(const MetricDescriptor& lhs, const MetricDescriptor& rhs)
 inline
 bool operator!=(const MetricDescriptor& lhs, const MetricDescriptor& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_metricNamespace        != rhs.d_metricNamespace        ||
            lhs.d_metricName             != rhs.d_metricName             ||
            lhs.d_instanceNumber         != rhs.d_instanceNumber         ||

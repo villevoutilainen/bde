@@ -247,8 +247,8 @@ bool DecimalUtil::isUnordered(Decimal128 x, Decimal128 y)
 
 int DecimalUtil::quantum(Decimal32 value)
 {
-    BSLS_ASSERT(!isInf(value));
-    BSLS_ASSERT(!isNan(value));
+    BSLS_ASSERT_NONCONVEYOR(!isInf(value));
+    BSLS_ASSERT_NONCONVEYOR(!isNan(value));
     int          sign;
     unsigned int significand;
     int          exponent;
@@ -258,8 +258,8 @@ int DecimalUtil::quantum(Decimal32 value)
 
 int DecimalUtil::quantum(Decimal64 value)
 {
-    BSLS_ASSERT(!isInf(value));
-    BSLS_ASSERT(!isNan(value));
+    BSLS_ASSERT_NONCONVEYOR(!isInf(value));
+    BSLS_ASSERT_NONCONVEYOR(!isNan(value));
     int                 sign;
     bsls::Types::Uint64 significand;
     int                 exponent;
@@ -269,8 +269,8 @@ int DecimalUtil::quantum(Decimal64 value)
 
 int DecimalUtil::quantum(Decimal128 value)
 {
-    BSLS_ASSERT(!isInf(value));
-    BSLS_ASSERT(!isNan(value));
+    BSLS_ASSERT_NONCONVEYOR(!isInf(value));
+    BSLS_ASSERT_NONCONVEYOR(!isNan(value));
     int     sign;
     Uint128 significand;
     int     exponent;

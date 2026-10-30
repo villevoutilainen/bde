@@ -298,12 +298,14 @@ void getStringFromStream(bsl::wostringstream &o, bsl::wstring *out)
  // String compare for decimal floating point numbers needs 'e'/'E' conversion
 
 bsl::string& decLower(bsl::string& s)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(s) BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     for (size_t i = 0; i < s.length(); ++i) if ('E' == s[i]) s[i] = 'e';
     return s;
 }
 
 bsl::wstring& decLower(bsl::wstring& s)
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(s) BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
 {
     for (size_t i = 0; i < s.length(); ++i) if (L'E' == s[i]) s[i] = L'e';
     return s;

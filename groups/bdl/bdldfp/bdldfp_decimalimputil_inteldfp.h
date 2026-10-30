@@ -1550,7 +1550,7 @@ inline
 DecimalImpUtil_IntelDfp::ValueType32
 DecimalImpUtil_IntelDfp::parse32(const char *string, unsigned int *status)
 {
-    BSLS_ASSERT(0 == *status);
+    BSLS_ASSERT_NONCONVEYOR(0 == *status);
 
     DecimalImpUtil_IntelDfp::ValueType32 result;
     BSLMF_ASSERT((bsl::is_same<_IDEC_flags, unsigned int>::value));
@@ -1570,7 +1570,7 @@ inline
 DecimalImpUtil_IntelDfp::ValueType64
 DecimalImpUtil_IntelDfp::parse64(const char *string, unsigned int *status)
 {
-    BSLS_ASSERT(0 == *status);
+    BSLS_ASSERT_NONCONVEYOR(0 == *status);
 
     DecimalImpUtil_IntelDfp::ValueType64 result;
 
@@ -1590,7 +1590,7 @@ inline
 DecimalImpUtil_IntelDfp::ValueType128
 DecimalImpUtil_IntelDfp::parse128(const char *string, unsigned int *status)
 {
-    BSLS_ASSERT(0 == *status);
+    BSLS_ASSERT_NONCONVEYOR(0 == *status);
 
     DecimalImpUtil_IntelDfp::ValueType128 result;
     BSLMF_ASSERT((bsl::is_same<_IDEC_flags, unsigned int>::value));

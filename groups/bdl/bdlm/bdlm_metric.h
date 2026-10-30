@@ -126,7 +126,8 @@ bool Metric::isGauge() const
 inline
 const Metric::Gauge& Metric::theGauge() const
 {
-    BSLS_ASSERT(isGauge());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(isGauge());
 
     return d_value.the<Gauge>();
 }

@@ -200,6 +200,7 @@ unsigned int split(bsl::vector<bsl::string>& strs,
                    const bsl::string&        input,
                    char                      ch)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&strs);
     // Split the specified `input` by a separator character given by the
     // specified `ch`, storing each section of `input` in the order they
     // appear into the specified `strs`.
@@ -330,13 +331,15 @@ const int numExps = static_cast<int>(sizeof(exps) / sizeof(*exps));
 
 bsl::string& decLower(bsl::string& s)
 {
-    for (size_t i = 0; i < s.length(); ++i) if ('E' == s[i]) s[i] = 'e';
+    BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+    for (size_t i = 0; i < s.length(); ++i) if ('E' == BSLS_ASSERT_CONVEYOR_REF(s[i])) BSLS_ASSERT_CONVEYOR_REF(s[i]) = 'e';
     return s;
 }
 
 bsl::wstring& decLower(bsl::wstring& s)
 {
-    for (size_t i = 0; i < s.length(); ++i) if (L'E' == s[i]) s[i] = L'e';
+    BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+    for (size_t i = 0; i < s.length(); ++i) if (L'E' == BSLS_ASSERT_CONVEYOR_REF(s[i])) BSLS_ASSERT_CONVEYOR_REF(s[i]) = L'e';
     return s;
 }
 

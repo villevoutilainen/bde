@@ -373,7 +373,8 @@ void getStringFromStream(bsl::wostringstream &o, bsl::wstring *out)
 /// string, and return a reference providing modifiable access.
 bsl::string& decLower(bsl::string& s)
 {
-    for (size_t i = 0; i < s.length(); ++i) if ('E' == s[i]) s[i] = 'e';
+    BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+    for (size_t i = 0; i < s.length(); ++i) if ('E' == BSLS_ASSERT_CONVEYOR_REF(s[i])) BSLS_ASSERT_CONVEYOR_REF(s[i]) = 'e';
     return s;
 }
 
@@ -381,7 +382,8 @@ bsl::string& decLower(bsl::string& s)
 /// `s` wide-string, and return a reference providing modifiable access.
 bsl::wstring& decLower(bsl::wstring& s)
 {
-    for (size_t i = 0; i < s.length(); ++i) if (L'E' == s[i]) s[i] = L'e';
+    BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+    for (size_t i = 0; i < s.length(); ++i) if (L'E' == BSLS_ASSERT_CONVEYOR_REF(s[i])) BSLS_ASSERT_CONVEYOR_REF(s[i]) = L'e';
     return s;
 }
 

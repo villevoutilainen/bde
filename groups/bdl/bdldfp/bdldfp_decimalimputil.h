@@ -2898,7 +2898,7 @@ DecimalImpUtil::makeDecimalRaw32(int significand, int exponent)
 {
     BSLS_ASSERT(-101 <= exponent);
     BSLS_ASSERT(        exponent <= 90);
-    BSLS_ASSERT(bsl::max(significand, -significand) <= 9999999);
+    BSLS_ASSERT_NONCONVEYOR(bsl::max(significand, -significand) <= 9999999);
     return Imp::makeDecimalRaw32(significand, exponent);
 }
 
@@ -2920,7 +2920,8 @@ DecimalImpUtil::makeDecimalRaw64(long long significand, int exponent)
 {
     BSLS_ASSERT(-398 <= exponent);
     BSLS_ASSERT(        exponent <= 369);
-    BSLS_ASSERT(std::max(significand, -significand) <= 9999999999999999LL);
+    BSLS_ASSERT_NONCONVEYOR(
+                    std::max(significand, -significand) <= 9999999999999999LL);
 
     return Imp::makeDecimalRaw64(significand, exponent);
 }
@@ -3061,7 +3062,7 @@ inline
 DecimalImpUtil::ValueType32
 DecimalImpUtil::parse32(const char *input, unsigned int *status)
 {
-    BSLS_ASSERT(0 == *status);
+    BSLS_ASSERT_NONCONVEYOR(0 == *status);
     return Imp::parse32(input, status);
 }
 
@@ -3069,7 +3070,7 @@ inline
 DecimalImpUtil::ValueType64
 DecimalImpUtil::parse64(const char *input, unsigned int *status)
 {
-    BSLS_ASSERT(0 == *status);
+    BSLS_ASSERT_NONCONVEYOR(0 == *status);
     return Imp::parse64(input, status);
 }
 
@@ -3077,7 +3078,7 @@ inline
 DecimalImpUtil::ValueType128
 DecimalImpUtil::parse128(const char *input, unsigned int *status)
 {
-    BSLS_ASSERT(0 == *status);
+    BSLS_ASSERT_NONCONVEYOR(0 == *status);
     return Imp::parse128(input, status);
 }
 

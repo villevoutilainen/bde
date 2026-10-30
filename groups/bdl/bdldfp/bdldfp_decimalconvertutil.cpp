@@ -210,7 +210,7 @@ inline
 bool isInRange<Decimal32, double>(double value)
 {
     static double max_decimal = 9.999999e96;
-    BSLS_ASSERT(DecimalConvertUtil::decimalToDouble(
+    BSLS_ASSERT_NONCONVEYOR(DecimalConvertUtil::decimalToDouble(
                     bsl::numeric_limits<Decimal32>::max()) == max_decimal);
     return bsl::abs(value) <= max_decimal;
 }

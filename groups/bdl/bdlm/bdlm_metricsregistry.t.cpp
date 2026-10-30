@@ -261,12 +261,15 @@ bdlm::MetricsAdapter::CallbackHandle
                                 const bdlm::MetricDescriptor& metricDescriptor,
                                 const Callback&               callback)
 {
-    d_descriptors[d_next] = bsl::make_pair(metricDescriptor, callback);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_REF(d_descriptors[d_next]) = bsl::make_pair(metricDescriptor, callback);
     return d_next++;
 }
 
 int TestMetricsAdapter::removeCollectionCallback(const CallbackHandle& handle)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
     if (d_descriptors.find(handle) == d_descriptors.end()) {
         ASSERTV(handle,
                 0 == "Attempt to remove invalid collection callback handle");
@@ -279,6 +282,7 @@ int TestMetricsAdapter::removeCollectionCallback(const CallbackHandle& handle)
 // ACCESSORS
 int TestMetricsAdapter::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_descriptors.size());
 }
 
@@ -286,6 +290,7 @@ template <class t_CALLBACK>
 bool TestMetricsAdapter::contains(const bdlm::MetricDescriptor& descriptor)
                                                                           const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (Map::const_iterator it  = d_descriptors.begin();
                              it != d_descriptors.end();
                            ++it) {

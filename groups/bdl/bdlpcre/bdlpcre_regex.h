@@ -1371,7 +1371,8 @@ class RegEx {
     /// Return a reference to the non-modifiable pattern held by this
     /// regular-expression object.  The behavior is undefined unless
     /// `isPrepared() == true`.
-    const bsl::string& pattern() const;
+    const bsl::string& pattern() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Replace parts of the specified `subject` that are matched with the
     /// specified `replacement`.  Optionally specify a bit mask of `options`
