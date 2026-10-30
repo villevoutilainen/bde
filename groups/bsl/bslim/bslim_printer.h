@@ -1236,6 +1236,9 @@ void Printer_Helper::print(bsl::ostream&   stream,
                            const int       level,
                            const int       spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&begin);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&end);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     for (ITERATOR it = begin; end != it; ++it) {
@@ -1253,6 +1256,10 @@ void Printer_Helper::print(bsl::ostream&        stream,
                            const int            level,
                            const int            spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&begin);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&end);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&printFunctionObject);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     for (ITERATOR it = begin; end != it; ++it) {
@@ -1277,6 +1284,7 @@ void Printer_Helper::printRaw(bsl::ostream&                  stream,
                               int                            spacesPerLevel,
                               bslmf::SelectTraitCase<bsl::is_fundamental>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     stream << data;
     if (spacesPerLevel >= 0) {
         stream << '\n';
@@ -1291,6 +1299,7 @@ void Printer_Helper::printRaw(bsl::ostream&                  stream,
                               int                            spacesPerLevel,
                               bslmf::SelectTraitCase<bsl::is_enum>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     Printer_Helper::printRaw(stream,
                              data,
                              0,
@@ -1309,6 +1318,8 @@ void Printer_Helper::printRaw(
                              int                                spacesPerLevel,
                              bslmf::SelectTraitCase<bslmf::IsFunctionPointer>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     // GCC 3.4.6 does not allow a reinterpret-cast a function pointer directly
     // to 'void *', so first cast it to an integer data type.
 
@@ -1329,6 +1340,7 @@ void Printer_Helper::printRaw(bsl::ostream&              stream,
                               int                        spacesPerLevel,
                               bslmf::SelectTraitCase<bsl::is_pointer>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     Printer_Helper::printRaw(stream,
                              static_cast<const void *>(data),
                              level,
@@ -1353,6 +1365,7 @@ void Printer_Helper::printRaw(bsl::ostream&              stream,
                               int                        spacesPerLevel,
                               bslmf::SelectTraitCase<bsl::is_array>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     Printer_Helper::printRaw(stream,
                              data,
                              level,
@@ -1371,6 +1384,8 @@ void Printer_Helper::printRaw(
                              int                                spacesPerLevel,
                              bslmf::SelectTraitCase<bslalg::HasStlIterators>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     Printer_Helper::printRaw(stream,
                              data.c_str(),
                              level,
@@ -1405,6 +1420,8 @@ void Printer_Helper::printRaw(bsl::ostream&              stream,
                               int                        spacesPerLevel,
                               bslmf::SelectTraitCase<>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printValue(data.first);
@@ -1439,6 +1456,8 @@ void Printer_Helper::printRaw(bsl::ostream&                 stream,
                               int                           spacesPerLevel,
                               bslmf::SelectTraitCase<>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printTupleElements(printer, data, bsl::integral_constant<int, sizeof...(t_TYPES)>{});
@@ -1499,6 +1518,8 @@ void Printer_Helper::printRaw(bsl::ostream&              stream,
                               int                        spacesPerLevel,
                               bslmf::SelectTraitCase<>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     data.print(stream, level, spacesPerLevel);
 }
 
@@ -1513,6 +1534,8 @@ void Printer_Helper::print(bsl::ostream& stream,
                            int           level,
                            int           spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     typedef bslmf::SelectTrait<TYPE,
                                bsl::is_fundamental,
                                bsl::is_enum,

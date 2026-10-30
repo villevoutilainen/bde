@@ -4722,10 +4722,12 @@ inline
 void hashAppend(HASHALG& hashAlg, const vector<VALUE_TYPE, ALLOCATOR>& input)
                                            BSLS_ASSERT_CONVEYOR_REQUIRES(input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
     using ::BloombergLP::bslh::hashAppend;
     typedef typename vector<VALUE_TYPE, ALLOCATOR>::const_iterator ci_t;
     hashAppend(hashAlg, input.size());
     for (ci_t b = input.begin(), e = input.end(); b != e; ++b) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(b);
         hashAppend(hashAlg, *b);
     }
 }

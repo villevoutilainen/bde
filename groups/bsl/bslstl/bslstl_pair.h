@@ -3283,6 +3283,8 @@ swap(pair<T1, T2>& a, pair<T1, T2>& b) noexcept(noexcept(a.swap(b)))
 template <class HASHALG, class T1, class T2>
 void hashAppend(HASHALG& hashAlg, const pair<T1, T2>&  input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlg, input.first);
     hashAppend(hashAlg, input.second);

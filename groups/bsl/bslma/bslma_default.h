@@ -663,6 +663,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslscm_version.h>
 
+#include <bsls_assert.h>
 #include <bsls_atomicoperations.h>
 
 #include <bslma_allocator.h>
@@ -787,13 +788,15 @@ struct Default {
     /// allocator is that of the `NewDeleteAllocator` singleton.  Also note
     /// that subsequent calls to `setDefaultAllocatorRaw` method are *not*
     /// disabled by this method.
-    static Allocator *defaultAllocator();
+    static Allocator *defaultAllocator()
+                                     BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return the allocator returned by `defaultAllocator` and disable all
     /// subsequent calls to the `setDefaultAllocator` method if the
     /// optionally-specified `basicAllocator` is 0; return `basicAllocator`
     /// otherwise.
-    static Allocator *allocator(Allocator *basicAllocator = 0);
+    static Allocator *allocator(Allocator *basicAllocator = 0)
+                                     BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
                         // *** global allocator ***
 
@@ -802,7 +805,8 @@ struct Default {
     /// Note that prior to the first call to the `setGlobalAllocator`
     /// method, the address of the global allocator is that of the
     /// `NewDeleteAllocator` singleton.
-    static Allocator *globalAllocator(Allocator *basicAllocator = 0);
+    static Allocator *globalAllocator(Allocator *basicAllocator = 0)
+                                     BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Unconditionally set the address of the global allocator to the
     /// specified `basicAllocator`, or to the address of the
