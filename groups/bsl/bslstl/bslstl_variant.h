@@ -447,20 +447,24 @@ bool holds_alternative(
 template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 typename variant_alternative<t_INDEX, variant<t_HEAD, t_TAIL...> >::type& get(
                                               variant<t_HEAD, t_TAIL...>& obj)
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj)
+                                BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 const typename variant_alternative<t_INDEX, variant<t_HEAD, t_TAIL...> >::type&
 get(const variant<t_HEAD, t_TAIL...>& obj)
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj)
+                                BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 typename variant_alternative<t_INDEX, variant<t_HEAD, t_TAIL...> >::type&& get(
                                              variant<t_HEAD, t_TAIL...>&& obj)
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj)
+                                BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 const typename variant_alternative<t_INDEX,
                                    variant<t_HEAD, t_TAIL...> >::type&&
 get(const variant<t_HEAD, t_TAIL...>&& obj)
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj)
+                                BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 /// Return a reference to the alternative object with type (template
 /// parameter) `t_TYPE` in the specified `obj`.  If `t_TYPE` is not the type
@@ -469,16 +473,20 @@ get(const variant<t_HEAD, t_TAIL...>&& obj)
 /// variant's list of alternatives.
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
 t_TYPE& get(variant<t_HEAD, t_TAIL...>& obj)
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj)
+                                BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
 const t_TYPE& get(const variant<t_HEAD, t_TAIL...>& obj)
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj)
+                                BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
 t_TYPE&& get(variant<t_HEAD, t_TAIL...>&& obj)
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj)
+                                BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
 const t_TYPE&& get(const variant<t_HEAD, t_TAIL...>&& obj)
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj);
+                                BSLS_ASSERT_CONVEYOR_REQUIRES(obj)
+                                BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 typename add_pointer<
