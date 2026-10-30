@@ -2490,21 +2490,22 @@ int main(int argc, char *argv[])
 
                 int index = 0;
                 while (A != B) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(A);
                     ASSERTV(ti,
                             X,
                             index,
-                            X.weekendDaysTransition(index) == BSLS_ASSERT_CONVEYOR_REF(*A));
+                            X.weekendDaysTransition(index) == *A);
 
                     ASSERTV(ti,
                             X,
                             index,
-                            X.weekendDaysTransition(index).first == BSLS_ASSERT_CONVEYOR_REF(*A).first);
+                            X.weekendDaysTransition(index).first == A->first);
 
                     ASSERTV(ti,
                             X,
                             index,
                             X.weekendDaysTransition(index).second
-                                                                 == BSLS_ASSERT_CONVEYOR_REF(*A).second);
+                                                                 == A->second);
 
                     ++index;
                     ++mA;
@@ -2533,21 +2534,22 @@ int main(int argc, char *argv[])
                     --mB;
                     --index;
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(B);
                     ASSERTV(ti,
                             X,
                             index,
-                            X.weekendDaysTransition(index) == BSLS_ASSERT_CONVEYOR_REF(*B));
+                            X.weekendDaysTransition(index) == *B);
 
                     ASSERTV(ti,
                             X,
                             index,
-                            X.weekendDaysTransition(index).first == BSLS_ASSERT_CONVEYOR_REF(*B).first);
+                            X.weekendDaysTransition(index).first == B->first);
 
                     ASSERTV(ti,
                             X,
                             index,
                             X.weekendDaysTransition(index).second
-                                                                 == BSLS_ASSERT_CONVEYOR_REF(*B).second);
+                                                                 == B->second);
 
                     mC--;
                     ASSERT(C == B);

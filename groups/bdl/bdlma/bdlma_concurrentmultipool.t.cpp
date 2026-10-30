@@ -1138,11 +1138,8 @@ int main(int argc, char *argv[])
 
                 // Release all pooled memory.
                 for (int j = 0; j < NUM_POOLS; ++j) {
-                    {
-                        bdlma::ConcurrentPool *const elem = pool[j];
-                        BSLS_ASSERT_CONVEYOR_OBJECT(elem);
-                        elem->release();
-                    }
+                    BSLS_ASSERT_CONVEYOR_OBJECT(pool[j]);
+                    pool[j]->release();
                 }
             }
         }
@@ -1254,11 +1251,8 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < k_DEFAULT_NUM_POOLS; ++j) {
-                {
-                    bdlma::ConcurrentPool *const elem = pool[j];
-                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
-                    elem->release();
-                }
+                BSLS_ASSERT_CONVEYOR_OBJECT(pool[j]);
+                pool[j]->release();
             }
         }
 
@@ -1369,11 +1363,8 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                {
-                    bdlma::ConcurrentPool *const elem = pool[j];
-                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
-                    elem->release();
-                }
+                BSLS_ASSERT_CONVEYOR_OBJECT(pool[j]);
+                pool[j]->release();
             }
         }
 
@@ -1455,11 +1446,8 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < k_DEFAULT_NUM_POOLS; ++j) {
-                {
-                    bdlma::ConcurrentPool *const elem = pool[j];
-                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
-                    elem->release();
-                }
+                BSLS_ASSERT_CONVEYOR_OBJECT(pool[j]);
+                pool[j]->release();
             }
         }
 
@@ -1541,11 +1529,8 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                {
-                    bdlma::ConcurrentPool *const elem = pool[j];
-                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
-                    elem->release();
-                }
+                BSLS_ASSERT_CONVEYOR_OBJECT(pool[j]);
+                pool[j]->release();
             }
         }
 
@@ -1657,11 +1642,8 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                {
-                    bdlma::ConcurrentPool *const elem = pool[j];
-                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
-                    elem->release();
-                }
+                BSLS_ASSERT_CONVEYOR_OBJECT(pool[j]);
+                pool[j]->release();
             }
         }
 
@@ -1755,11 +1737,8 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                {
-                    bdlma::ConcurrentPool *const elem = pool[j];
-                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
-                    elem->release();
-                }
+                BSLS_ASSERT_CONVEYOR_OBJECT(pool[j]);
+                pool[j]->release();
             }
         }
 
@@ -1871,11 +1850,8 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                {
-                    bdlma::ConcurrentPool *const elem = pool[j];
-                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
-                    elem->release();
-                }
+                BSLS_ASSERT_CONVEYOR_OBJECT(pool[j]);
+                pool[j]->release();
             }
         }
 
@@ -1959,11 +1935,8 @@ int main(int argc, char *argv[])
 
             // Release all pooled memory.
             for (int j = 0; j < NUM_POOLS; ++j) {
-                {
-                    bdlma::ConcurrentPool *const elem = pool[j];
-                    BSLS_ASSERT_CONVEYOR_OBJECT(elem);
-                    elem->release();
-                }
+                BSLS_ASSERT_CONVEYOR_OBJECT(pool[j]);
+                pool[j]->release();
             }
         }
       } break;
