@@ -853,6 +853,7 @@ void Base64Encoder::setState(State newState)
 inline
 bool Base64Encoder::isResidualOutput(int numBytes) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= numBytes);
     BSLS_ASSERT(d_isPadded);
 
@@ -1038,6 +1039,7 @@ int Base64Encoder::endConvert(OUTPUT_ITERATOR  out,
                               int             *numOut,
                               int              maxNumOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(numOut);
 
     if (e_ERROR_STATE == state() || isDone()) {

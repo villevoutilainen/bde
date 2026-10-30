@@ -69,6 +69,7 @@ OverflowMemOutput::pubseekoff(off_type                offset,
                               bsl::ios_base::seekdir  way,
                               bsl::ios_base::openmode which)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!(which & bsl::ios_base::out)) {
         return pos_type(-1);                                          // RETURN
     }

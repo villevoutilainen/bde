@@ -221,6 +221,7 @@ struct ThrowingAlternative {
 template <class t_VARIANT>
 void makeValueless(t_VARIANT *variant)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(variant);
     try {
         variant->template emplace<1>(0);
     }
@@ -357,7 +358,10 @@ void run()
 // implicitly converted to it:
 // ```
     auto intSize    = [](int i)                { return i; };
-    auto stringSize = [](const bsl::string& s) { return s.length(); };
+    auto stringSize = [](const bsl::string& s) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+        return s.length();
+    };
 
     bsl::size_t size = bdlf::VisitUtil::visitWith<bsl::size_t>(value,
                                                                intSize,

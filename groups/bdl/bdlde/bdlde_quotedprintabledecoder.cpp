@@ -217,6 +217,7 @@ int QuotedPrintableDecoder::convert(char       *out,
                                     const char *end,
                                     int         maxNumOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(out);
     BSLS_ASSERT(numOut);
     BSLS_ASSERT(numIn);

@@ -243,6 +243,7 @@ struct EquivalenceClass {
     }
 
     string printRanges() const {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         string str("[");
         str += d_ranges[0].start;
         str += string(" - ");

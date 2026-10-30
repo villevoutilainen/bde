@@ -1962,6 +1962,7 @@ void appendRandCorrectCodePoint(bsl::string *dst,
 
     switch (r) {
       case 0: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(dst);
         dst->push_back('\0');
       } break;
       case 1: {
@@ -2289,6 +2290,7 @@ void brokenGlassTest(const u::Data&     data,
         }
     }
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&validStr);
     const OT UTF8_ERR_OFFSET = validStr.length() + ERR_OFFSET;
     const PT UTF8_ERR_PT(UTF8_ERR_OFFSET);
     char buf[1024];
@@ -2300,6 +2302,7 @@ void brokenGlassTest(const u::Data&     data,
 
         PT pre = 0;
         if (seekFirst) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&validStr);
             pre = validStr.length();
             ASSERT(fsb.pubseekpos(pre) == PT(pre));
         }
@@ -2311,6 +2314,7 @@ void brokenGlassTest(const u::Data&     data,
         buf[sz] = 0;
         ASSERTV(LINE, u::dumpStr(UTF8), UTF8_ERR_OFFSET, sz,
                                  u::dumpStr(buf), UTF8_ERR_OFFSET == pre + sz);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&validStr);
         ASSERTV(LINE, seekFirst, validStr.length(),
                                           sb.pubseekoff(0, bsl::ios_base::cur),
                                          UTF8_ERR_OFFSET, u::dumpStr(PREAMBLE),
@@ -2335,6 +2339,7 @@ void brokenGlassTest(const u::Data&     data,
 
         PT pre = 0;
         if (seekFirst) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&validStr);
             pre = validStr.length();
             ASSERT(fsb.pubseekpos(pre) == PT(pre));
         }
@@ -2354,6 +2359,7 @@ void brokenGlassTest(const u::Data&     data,
         buf[totSz] = 0;
         ASSERTV(LINE, u::dumpStr(UTF8), UTF8_ERR_OFFSET, totSz,
                               u::dumpStr(buf), UTF8_ERR_OFFSET == pre + totSz);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&validStr);
         ASSERTV(LINE, seekFirst, validStr.length(),
                                           sb.pubseekoff(0, bsl::ios_base::cur),
                                          UTF8_ERR_OFFSET, u::dumpStr(PREAMBLE),
@@ -2383,6 +2389,7 @@ void brokenGlassTest(const u::Data&     data,
 
         PT pre = 0;
         if (seekFirst) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&validStr);
             pre = validStr.length();
             ASSERT(fsb.pubseekpos(pre) == PT(pre));
         }

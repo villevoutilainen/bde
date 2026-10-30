@@ -332,6 +332,7 @@ void processUtf8(const char *strU8)
 // ```
 void loadUCS2Hello(bsl::vector<unsigned short> *result)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     int retVal =
               BloombergLP::bdlde::CharConvertUcs2::utf8ToUcs2(result,
                                                              "Hello");

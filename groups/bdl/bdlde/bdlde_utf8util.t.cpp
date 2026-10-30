@@ -2014,6 +2014,7 @@ void appendRandCorrectCodePoint(bsl::string *dst,
 
     switch (r) {
       case 0: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(dst);
         dst->push_back('\0');
       } break;
       case 1: {
@@ -2353,6 +2354,7 @@ int randValue(bool strict = false, bool never0 = false)
 static
 bool allValid(const bsl::string& str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     const bool a = Obj::isValid(str.c_str());
     ASSERT(Obj::isValid(str.data(), str.length()) == a);
 
@@ -2374,6 +2376,7 @@ bool allValid(const bsl::string& str)
 static
 IntPtr allNumCodePoints(const bsl::string& str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     IntPtr len = Obj::numCharacters(str.data(), str.length());
     ASSERT(Obj::numCharacters(str.c_str())                 == len);
     ASSERT(Obj::numCodePointsRaw(str.data(), str.length()) == len);
@@ -2390,6 +2393,7 @@ static
 IntPtr allNumCodePointsIfValid(const char         **invalidPointArg,
                                const bsl::string&   str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     *invalidPointArg = 0;
     const IntPtr ret = Obj::numCodePointsIfValid(invalidPointArg, str.c_str());
 
@@ -2423,6 +2427,7 @@ IntPtr allAdvanceIfValid(int                 *statusArg,
                          const char         **invalidPointArg,
                          const bsl::string&   str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     const IntPtr infinity = bsl::numeric_limits<IntPtr>::max();
 
     int         statusLocal = 100;
@@ -2744,6 +2749,7 @@ namespace USAGE_3 {
     int utf8StreambufToString(bsl::string    *output,
                               bsl::streambuf *sb)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(output);
         enum { k_READ_LENGTH = 32 };
 
         output->clear();
@@ -3119,6 +3125,7 @@ void makeTest(bsl::string  *exp,
               int           numCodePoints,
               bool          valid)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(in);
     BSLS_ASSERT_SAFE(valid ? (0 <= numCodePoints) : (0 < numCodePoints));
 
     // We will be calling this function many times in a row with each error

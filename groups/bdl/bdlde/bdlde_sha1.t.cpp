@@ -298,6 +298,7 @@ void assertPasswordIsExpected()
 template <bsl::size_t SIZE>
 void toHex(bsl::string *output, const unsigned char (&input)[SIZE])
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(output);
     const char *hexTable = "0123456789abcdef";
     output->clear();
     for (bsl::size_t index = 0; index != SIZE; ++index) {
@@ -437,9 +438,9 @@ void testKnownHashes()
     for (bsl::size_t index = 0; index != bsl::size(inputMessages); ++index)
     {
         if (veryVerbose) { T_ P(index) }
-        const char *message = inputMessages[index].c_str();
+        const char *message = BSLS_ASSERT_CONVEYOR_REF(inputMessages[index]).c_str();
         bdlde::Sha1 hasher;
-        hasher.update(message, inputMessages[index].size());
+        hasher.update(message, BSLS_ASSERT_CONVEYOR_REF(inputMessages[index]).size());
         hasher.loadDigest(digest);
 
         toHex(&hexDigest, digest);
@@ -481,6 +482,7 @@ void testPrinting()
     for (bsl::size_t index = 0; index != bsl::size(inputMessages); ++index)
     {
         const bsl::string& message = inputMessages[index];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&message);
         const bdlde::Sha1  digest(message.c_str(), message.size());
 
         if (veryVerbose) { T_ P(index) }

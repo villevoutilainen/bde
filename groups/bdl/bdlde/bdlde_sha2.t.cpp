@@ -310,6 +310,8 @@ bool validatePassword(const bsl::string&   password,
                       const bsl::string&   salt,
                       const unsigned char *expected)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&password);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&salt);
     bdlde::Sha512 hasher;
     hasher.update(password.c_str(), password.length());
     hasher.update(salt.c_str(), salt.length());
@@ -350,6 +352,7 @@ void assertPasswordIsExpected()
 template<bsl::size_t SIZE>
 void toHex(bsl::string *output, const unsigned char (&input)[SIZE])
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(output);
     const char *hexTable = "0123456789abcdef";
     output->clear();
     for (bsl::size_t index = 0; index != SIZE; ++index) {
@@ -414,9 +417,9 @@ void testKnownHashes(const char *const (&expected)[6])
     bsl::string   hexDigest;
     for (bsl::size_t index = 0; index != arraySize(inputMessages); ++index)
     {
-        const char *message = inputMessages[index].c_str();
+        const char *message = BSLS_ASSERT_CONVEYOR_REF(inputMessages[index]).c_str();
         HASHER      hasher;
-        hasher.update(message, inputMessages[index].size());
+        hasher.update(message, BSLS_ASSERT_CONVEYOR_REF(inputMessages[index]).size());
         hasher.loadDigest(digest);
 
         toHex(&hexDigest, digest);
@@ -459,6 +462,7 @@ void testPrinting(const char *const (&expected)[6])
     for (bsl::size_t index = 0; index != arraySize(inputMessages); ++index)
     {
         const bsl::string & message = inputMessages[index];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&message);
         const HASHER digest(message.c_str(), message.size());
 
         bsl::stringstream printStream;

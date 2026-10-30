@@ -597,6 +597,7 @@ class Base64Decoder {
 inline
 int Base64Decoder::residualBits(int  bytesOutputSoFar) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= bytesOutputSoFar);
     BSLS_ASSERT(0 <= d_bitsInStack);
 
@@ -655,6 +656,7 @@ int Base64Decoder::convert(OUTPUT_ITERATOR  out,
                            INPUT_ITERATOR   end,
                            int              maxNumOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(numOut);
     BSLS_ASSERT(numIn);
 
@@ -792,6 +794,7 @@ int Base64Decoder::convert<char *, const char *>(
     const char *end,
     int         maxNumOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(numOut);
     BSLS_ASSERT(numIn);
 
@@ -1093,6 +1096,7 @@ int Base64Decoder::endConvert(OUTPUT_ITERATOR  out,
                               int             *numOut,
                               int              maxNumOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(numOut);
 
     if (!d_isPadded && e_INPUT_STATE == d_state) {

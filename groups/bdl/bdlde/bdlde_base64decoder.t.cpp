@@ -585,6 +585,7 @@ char RandGen::getChar()
 
 void RandGen::injectGarbage(bsl::string *result, bool padIsGarbage, bool url)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     const char *garbage = padIsGarbage
                         ? (url ? "~`!@#$%^&*(){}[]|\\\"':;<>,.?=+/"
                                : "~`!@#$%^&*(){}[]|\\\"':;<>,.?=-_")
@@ -606,6 +607,7 @@ void RandGen::injectGarbage(bsl::string *result, bool padIsGarbage, bool url)
 
 void RandGen::injectWhitespace(bsl::string *result)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     static const char        whitespace[] = { " \n\t\v\r\f" };
     static const bsl::size_t whiteLen     = sizeof(whitespace) - 1;
 
@@ -634,6 +636,7 @@ void RandGen::randString(bsl::string *result, int len)
 /// non-printable or whitespace characters.
 bsl::string displayStr(const bsl::string& str, bool allInHex = true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     bsl::string ret;
 
     static const char hexNybble[] = { "0123456789abcdef" };
@@ -660,6 +663,7 @@ bsl::string displayStr(const bsl::string& str, bool allInHex = true)
 /// `e_URL` encoding.
 void convertToUrlInput(bsl::string *result)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     for (unsigned idx = 0; idx < result->length(); ++idx) {
         char& c = (*result)[idx];
         if      ('+' == c) {
@@ -674,6 +678,7 @@ void convertToUrlInput(bsl::string *result)
 /// Remove all occurrences of '=' from the specified `*result`.
 void removePadding(bsl::string *result)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     for (unsigned uu = 0; uu < result->length(); ++uu) {
         if ('=' == (*result)[uu]) {
             result->erase(uu, 1);
@@ -1707,7 +1712,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
                             4 * bdlde::Base64Encoder::encodedLength(LENGTH, 1);
         if (worstCaseLength) {
             noiseFuzzInput.reserve(worstCaseLength);
-            BSLS_ASSERT(0 < FDV.length() || 0 == worstCaseLength);
+            BSLS_ASSERT_NONCONVEYOR(0 < FDV.length() || 0 == worstCaseLength);
             while (noiseFuzzInput.size() < worstCaseLength) {
                 const size_t len = bsl::min<bsl::size_t>(
                                        worstCaseLength - noiseFuzzInput.size(),

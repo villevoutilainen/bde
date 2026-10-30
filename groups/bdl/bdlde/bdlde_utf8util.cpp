@@ -220,12 +220,12 @@ Utf8Util::size_type replaceErrors(STRING_TYPE      *output,
                                   unsigned int      utf32ErrorCode)
 {
     BSLS_ASSERT(output);
-    BSLS_ASSERT(input.data());
+    BSLS_ASSERT_NONCONVEYOR(input.data());
 
     char utf8ErrorCodeBuf[4];
     int  errCodeLen = 0;
     if (utf32ErrorCode) {
-        BSLS_ASSERT(!u::isSurrogateValue(utf32ErrorCode));
+        BSLS_ASSERT_NONCONVEYOR(!u::isSurrogateValue(utf32ErrorCode));
         BSLS_ASSERT(utf32ErrorCode < 0x110000);
 
         errCodeLen = u::appendUtf8CodePointImpl(utf8ErrorCodeBuf,
@@ -683,7 +683,7 @@ Utf8Util_ImpUtil::size_type
 Utf8Util_ImpUtil::advancePastValidOrInvalidCodePoint(
                                                  const bsl::string_view& input)
 {
-    BSLS_ASSERT(!input.empty());
+    BSLS_ASSERT_NONCONVEYOR(!input.empty());
 
     size_type numBytes = 1;
 
@@ -1199,7 +1199,8 @@ Utf8Util::IntPtr Utf8Util::advanceRaw(const char **result,
           case 0xf: {
             // binary: 1111xxxx: Start of four-octet sequence.
 
-            BSLS_ASSERT(0 == (*string & 8));    // only legal if 11110xxx
+            BSLS_ASSERT_NONCONVEYOR(
+                              0 == (*string & 8));    // only legal if 11110xxx
 
             string += 4;
           } continue;
@@ -1212,7 +1213,8 @@ Utf8Util::IntPtr Utf8Util::advanceRaw(const char **result,
         break;
     }
 
-    BSLS_ASSERT(ret == numCodePoints || '\0' == *string); // impossible to fail
+    BSLS_ASSERT_NONCONVEYOR(
+                ret == numCodePoints || '\0' == *string); // impossible to fail
 
     *result = string;
     return ret;
@@ -1297,7 +1299,8 @@ Utf8Util::IntPtr Utf8Util::advanceRaw(const char **result,
           case 0xf: {
             // binary: 1111xxxx: Beginning of four-octet sequence.
 
-            BSLS_ASSERT(0 == (*string & 8));    // only legal if 11110xxx
+            BSLS_ASSERT_NONCONVEYOR(
+                              0 == (*string & 8));    // only legal if 11110xxx
 
             // binary: 11110xxx: Legal beginning of four-octet sequence
 
@@ -1345,7 +1348,7 @@ int Utf8Util::appendUtf8CodePoint(std::pmr::string *output,
 int Utf8Util::codePointValue(const char *codePoint)
 {
     BSLS_ASSERT(codePoint);
-    BSLS_ASSERT(u::isValidUtf8CodePoint(codePoint));
+    BSLS_ASSERT_NONCONVEYOR(u::isValidUtf8CodePoint(codePoint));
 
     int value = 0;
 
@@ -1370,7 +1373,7 @@ int Utf8Util::codePointValue(const char *codePoint)
 int Utf8Util::numBytesInCodePoint(const char *codePoint)
 {
     BSLS_ASSERT(codePoint);
-    BSLS_ASSERT(u::isValidUtf8CodePoint(codePoint));
+    BSLS_ASSERT_NONCONVEYOR(u::isValidUtf8CodePoint(codePoint));
 
     return u::utf8Size(codePoint[0]);
 }
@@ -1575,7 +1578,7 @@ bool Utf8Util::isValidCodePoint(int        *status,
 Utf8Util::IntPtr Utf8Util::numBytesRaw(const bsl::string_view& string,
                                        IntPtr                  numCodePoints)
 {
-    BSLS_ASSERT(string.data() || string.empty());
+    BSLS_ASSERT_NONCONVEYOR(string.data() || string.empty());
     BSLS_ASSERT(0 <= numCodePoints);
 
     size_t numBytes = 0;
@@ -1584,7 +1587,7 @@ Utf8Util::IntPtr Utf8Util::numBytesRaw(const bsl::string_view& string,
     // validation functions our work is very simple.
 
     for (IntPtr i = 0; i < numCodePoints && numBytes < string.length(); ++i) {
-        BSLS_ASSERT(u::isValidUtf8CodePoint(&string[numBytes]));
+        BSLS_ASSERT_NONCONVEYOR(u::isValidUtf8CodePoint(&string[numBytes]));
         numBytes += u::utf8Size(string[numBytes]);
     }
 
@@ -1655,18 +1658,18 @@ Utf8Util::IntPtr Utf8Util::numCodePointsRaw(const char *string)
           } break;
           case 0xc: BSLA_FALLTHROUGH;
           case 0xd: {
-            BSLS_ASSERT(string[1]);
+            BSLS_ASSERT_NONCONVEYOR(string[1]);
             string += 2;
           } break;
           case 0xe: {
-            BSLS_ASSERT(string[1]);
-            BSLS_ASSERT(string[2]);
+            BSLS_ASSERT_NONCONVEYOR(string[1]);
+            BSLS_ASSERT_NONCONVEYOR(string[2]);
             string += 3;
           } break;
           default: {
-            BSLS_ASSERT(string[1]);
-            BSLS_ASSERT(string[2]);
-            BSLS_ASSERT(string[3]);
+            BSLS_ASSERT_NONCONVEYOR(string[1]);
+            BSLS_ASSERT_NONCONVEYOR(string[2]);
+            BSLS_ASSERT_NONCONVEYOR(string[3]);
             string += 4;
           } break;
         }
@@ -1914,8 +1917,8 @@ Utf8Util::size_type Utf8Util::readIfValid(int            *status,
     }
     BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
-    BSLS_ASSERT(outputBuffer <= out);
-    BSLS_ASSERT(out <= outputBuffer + outputBufferLength);
+    BSLS_ASSERT_NONCONVEYOR(outputBuffer <= out);
+    BSLS_ASSERT_NONCONVEYOR(out <= outputBuffer + outputBufferLength);
 
     *status = rc;
 

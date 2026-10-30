@@ -406,6 +406,7 @@ Utf8PtrBasedEnd::Utf8PtrBasedEnd(const char *end)
 inline
 bool Utf8PtrBasedEnd::isFinished(const OctetType *position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (position < d_end) {
         return false;                                                 // RETURN
     }
@@ -424,7 +425,7 @@ const OctetType *Utf8PtrBasedEnd::skipContinuations(
     // is known that there are fewer continuation octets after 'octets' than
     // were expected, at least before 'd_end'.
 
-    BSLS_ASSERT(d_end >= octets);
+    BSLS_ASSERT_NONCONVEYOR(d_end >= octets);
     const OctetType *end = bsl::min(d_end, octets + skipBy);
 
     while (octets < end && (*octets & k_CONTINUE_MASK) == k_CONTINUE_TAG) {
@@ -439,7 +440,7 @@ bool Utf8PtrBasedEnd::verifyContinuations(const OctetType *octets,
                                           int              n) const
 {
     BSLS_ASSERT(n >= 1);
-    BSLS_ASSERT(d_end >= octets);
+    BSLS_ASSERT_NONCONVEYOR(d_end >= octets);
 
     const OctetType *end = octets + n;
     if (end > d_end) {
@@ -583,6 +584,7 @@ Utf32PtrBasedEnd::Utf32PtrBasedEnd(const unsigned int *end)
 inline
 bool Utf32PtrBasedEnd::isFinished(const unsigned int *position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (position < d_end_p) {
         return false;                                                 // RETURN
     }
@@ -1089,7 +1091,7 @@ void Utf8ToUtf32Translator<CAPACITY, END_FUNCTOR, SWAPPER>::advanceOutput()
 template <class CAPACITY, class END_FUNCTOR, class SWAPPER>
 int Utf8ToUtf32Translator<CAPACITY, END_FUNCTOR, SWAPPER>::decodeCodePoint()
 {
-    BSLS_ASSERT(d_capacity >= 1);
+    BSLS_ASSERT_NONCONVEYOR(d_capacity >= 1);
 
     OctetType    firstOctet = *d_input;
     unsigned int decodedCodePoint;
@@ -1147,7 +1149,7 @@ inline
 void
 Utf8ToUtf32Translator<CAPACITY, END_FUNCTOR, SWAPPER>::handleInvalidSequence()
 {
-    BSLS_ASSERT(d_capacity >= 2);
+    BSLS_ASSERT_NONCONVEYOR(d_capacity >= 2);
 
     d_invalidSequences = true;
 
@@ -1173,7 +1175,7 @@ int Utf8ToUtf32Translator<CAPACITY, END_FUNCTOR, SWAPPER>::translate(
                                                          endFunctor,
                                                          constOctetCast(input),
                                                          errorWord);
-    BSLS_ASSERT(translator.d_capacity >= 1);
+    BSLS_ASSERT_NONCONVEYOR(translator.d_capacity >= 1);
 
     int ret = 0;
     while (!endFunctor.isFinished(translator.d_input)) {
@@ -1184,7 +1186,7 @@ int Utf8ToUtf32Translator<CAPACITY, END_FUNCTOR, SWAPPER>::translate(
         }
     }
     ++translator.d_input;
-    BSLS_ASSERT(translator.d_capacity >= 1);
+    BSLS_ASSERT_NONCONVEYOR(translator.d_capacity >= 1);
 
     *translator.d_output = 0;
     translator.advanceOutput();
@@ -1193,7 +1195,7 @@ int Utf8ToUtf32Translator<CAPACITY, END_FUNCTOR, SWAPPER>::translate(
     *numWordsWritten = ncw;
     BSLS_ASSERT((bsl::is_same<CAPACITY, NoopCapacity>::value) ||
                                                               ncw <= capacity);
-    BSLS_ASSERT(ncw <=
+    BSLS_ASSERT_NONCONVEYOR(ncw <=
                    (bsl::size_t) (translator.d_input - constOctetCast(input)));
 
     if (translator.d_invalidSequences) {
@@ -1377,7 +1379,7 @@ template <class CAPACITY, class END_FUNCTOR, class SWAPPER>
 int Utf32ToUtf8Translator<CAPACITY, END_FUNCTOR, SWAPPER>::decodeCodePoint(
                                                          const unsigned int uc)
 {
-    BSLS_ASSERT(d_capacity >= 1);
+    BSLS_ASSERT_NONCONVEYOR(d_capacity >= 1);
 
     if      (fitsInSingleOctet(uc)) {
         if (d_capacity >= 2) {
@@ -1441,6 +1443,8 @@ int Utf32ToUtf8Translator<CAPACITY, END_FUNCTOR, SWAPPER>::translate(
                                       bsl::size_t        *numBytesWritten,
                                       const char          errorByte)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
+    BSLS_ASSERT_CONVEYOR_OBJECT(numBytesWritten);
     BSLS_ASSERT(0 == (0x80 & errorByte));
 
     Utf32ToUtf8Translator<CAPACITY, END_FUNCTOR, SWAPPER> translator(
@@ -1448,7 +1452,7 @@ int Utf32ToUtf8Translator<CAPACITY, END_FUNCTOR, SWAPPER>::translate(
                                                              capacity,
                                                              input,
                                                              errorByte);
-    BSLS_ASSERT(translator.d_capacity >= 1);
+    BSLS_ASSERT_NONCONVEYOR(translator.d_capacity >= 1);
 
     int          ret = 0;
     unsigned int uc;
@@ -1460,7 +1464,7 @@ int Utf32ToUtf8Translator<CAPACITY, END_FUNCTOR, SWAPPER>::translate(
             break;
         }
     }
-    BSLS_ASSERT(translator.d_capacity >= 1);
+    BSLS_ASSERT_NONCONVEYOR(translator.d_capacity >= 1);
 
     *translator.d_output = 0;
     translator.advance(1);
@@ -1490,6 +1494,7 @@ int utf8ToUtf32Impl(VECTOR                              *dstVector,
                     unsigned int                         errorWord,
                     BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(dstVector);
     typedef Utf8ToUtf32Translator<NoopCapacity,
                                   Utf8ZeroBasedEnd,
                                   Swapper> SwapTranslator;
@@ -1543,7 +1548,7 @@ int utf8ToUtf32Impl(VECTOR                              *dstVector,
         BSLS_ASSERT(0 != errorWord || 0 == (ret & k_INVALID_INPUT_BIT));
     }
 
-    BSLS_ASSERT(0 == dstVector->back());
+    BSLS_ASSERT_NONCONVEYOR(0 == dstVector->back());
 
     // Verify that the translator embedded no null words in the output before
     // the end.
@@ -1561,6 +1566,7 @@ int utf8ToUtf32Impl(VECTOR                              *dstVector,
                     unsigned int                         errorWord,
                     BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(dstVector);
     typedef Utf8ToUtf32Translator<NoopCapacity,
                                   Utf8PtrBasedEnd,
                                   Swapper> SwapTranslator;
@@ -1615,7 +1621,7 @@ int utf8ToUtf32Impl(VECTOR                              *dstVector,
                                              0 == (ret & k_INVALID_INPUT_BIT));
     }
 
-    BSLS_ASSERT(0 == dstVector->back());
+    BSLS_ASSERT_NONCONVEYOR(0 == dstVector->back());
 
     return ret;
 }
@@ -1628,6 +1634,8 @@ int utf32ToUtf8StringImpl(
                      unsigned char                        errorByte,
                      BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(dstString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     typedef Utf32ToUtf8Translator<NoopCapacity,
                                   Utf32ZeroBasedEnd,
                                   NoopSwapper> NoSwapTranslator;
@@ -1647,7 +1655,7 @@ int utf32ToUtf8StringImpl(
                                                                     errorByte);
     BSLS_ASSERT(bufferLen > 0);
     dstString->resize(bufferLen);
-    BSLS_ASSERT(dstString->length() == bufferLen);
+    BSLS_ASSERT_NONCONVEYOR(dstString->length() == bufferLen);
 
     bsl::size_t numBytesWritten, localNumCodePointsWritten;
     if (!numCodePointsWritten) {
@@ -1676,7 +1684,7 @@ int utf32ToUtf8StringImpl(
     BSLS_ASSERT(*numCodePointsWritten > 0);
     BSLS_ASSERT( numBytesWritten == bufferLen);
     BSLS_ASSERT(!(ret & k_OUT_OF_SPACE_BIT));
-    BSLS_ASSERT(0 == (*dstString)[numBytesWritten - 1]);
+    BSLS_ASSERT_NONCONVEYOR(0 == (*dstString)[numBytesWritten - 1]);
 
     // There are two '\0's in 'dstString->c_str()' beginning at char
     // 'dstString->length() - 1' -- adjust 'length' to reflect the earlier
@@ -1696,6 +1704,8 @@ int utf32ToUtf8StringImpl(
                      unsigned char                        errorByte,
                      BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(dstString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     typedef Utf32ToUtf8Translator<NoopCapacity,
                                   Utf32PtrBasedEnd,
                                   NoopSwapper> NoSwapTranslator;
@@ -1715,7 +1725,7 @@ int utf32ToUtf8StringImpl(
                                                                    errorByte);
     BSLS_ASSERT(bufferLen > 0);
     dstString->resize(bufferLen);
-    BSLS_ASSERT(dstString->length() == bufferLen);
+    BSLS_ASSERT_NONCONVEYOR(dstString->length() == bufferLen);
 
     bsl::size_t numBytesWritten, localNumCodePointsWritten;
     if (!numCodePointsWritten) {
@@ -1744,7 +1754,7 @@ int utf32ToUtf8StringImpl(
     BSLS_ASSERT(*numCodePointsWritten > 0);
     BSLS_ASSERT( numBytesWritten == bufferLen);
     BSLS_ASSERT(!(ret & k_OUT_OF_SPACE_BIT));
-    BSLS_ASSERT(0 == (*dstString)[numBytesWritten - 1]);
+    BSLS_ASSERT_NONCONVEYOR(0 == (*dstString)[numBytesWritten - 1]);
 
     // There are two '\0's in 'dstString->c_str()' beginning at char
     // 'dstString->length() - 1' -- adjust 'length' to reflect the earlier
@@ -1763,6 +1773,8 @@ int utf32ToUtf8VectorImpl(
                      unsigned char                        errorByte,
                      BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(dstVector);
+    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     typedef Utf32ToUtf8Translator<NoopCapacity,
                                   Utf32ZeroBasedEnd,
                                   NoopSwapper> NoSwapTranslator;
@@ -1811,7 +1823,7 @@ int utf32ToUtf8VectorImpl(
     BSLS_ASSERT(*numCodePointsWritten <= numBytesWritten);
     BSLS_ASSERT(0 == (ret & k_OUT_OF_SPACE_BIT));
     BSLS_ASSERT(numBytesWritten == bufferLen);
-    BSLS_ASSERT(0 == dstVector->back());
+    BSLS_ASSERT_NONCONVEYOR(0 == dstVector->back());
 
     return ret;
 }
@@ -1825,6 +1837,8 @@ int utf32ToUtf8VectorImpl(
                      unsigned char                        errorByte,
                      BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(dstVector);
+    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     typedef Utf32ToUtf8Translator<NoopCapacity,
                                   Utf32PtrBasedEnd,
                                   NoopSwapper> NoSwapTranslator;
@@ -1874,7 +1888,7 @@ int utf32ToUtf8VectorImpl(
     BSLS_ASSERT(*numCodePointsWritten <= numBytesWritten);
     BSLS_ASSERT(0 == (ret & k_OUT_OF_SPACE_BIT));
     BSLS_ASSERT(numBytesWritten == bufferLen);
-    BSLS_ASSERT(0 == dstVector->back());
+    BSLS_ASSERT_NONCONVEYOR(0 == dstVector->back());
 
     return ret;
 }
@@ -1898,7 +1912,7 @@ int CharConvertUtf32::utf8ToUtf32(bsl::vector<unsigned int> *dstVector,
 {
     BSLS_ASSERT(dstVector);
     BSLS_ASSERT(srcString);
-    BSLS_ASSERT(isLegalUtf32ErrorWord(errorWord));
+    BSLS_ASSERT_NONCONVEYOR(isLegalUtf32ErrorWord(errorWord));
 
     return utf8ToUtf32Impl(dstVector, srcString, errorWord, byteOrder);
 }
@@ -1910,7 +1924,7 @@ int CharConvertUtf32::utf8ToUtf32(std::vector<unsigned int> *dstVector,
 {
     BSLS_ASSERT(dstVector);
     BSLS_ASSERT(srcString);
-    BSLS_ASSERT(isLegalUtf32ErrorWord(errorWord));
+    BSLS_ASSERT_NONCONVEYOR(isLegalUtf32ErrorWord(errorWord));
 
     return utf8ToUtf32Impl(dstVector, srcString, errorWord, byteOrder);
 }
@@ -1923,7 +1937,7 @@ int CharConvertUtf32::utf8ToUtf32(std::pmr::vector<unsigned int> *dstVector,
 {
     BSLS_ASSERT(dstVector);
     BSLS_ASSERT(srcString);
-    BSLS_ASSERT(isLegalUtf32ErrorWord(errorWord));
+    BSLS_ASSERT_NONCONVEYOR(isLegalUtf32ErrorWord(errorWord));
 
     return utf8ToUtf32Impl(dstVector, srcString, errorWord, byteOrder);
 }
@@ -1935,8 +1949,8 @@ int CharConvertUtf32::utf8ToUtf32(bsl::vector<unsigned int> *dstVector,
                                   ByteOrder::Enum            byteOrder)
 {
     BSLS_ASSERT(dstVector);
-    BSLS_ASSERT(srcString.data());
-    BSLS_ASSERT(isLegalUtf32ErrorWord(errorWord));
+    BSLS_ASSERT_NONCONVEYOR(srcString.data());
+    BSLS_ASSERT_NONCONVEYOR(isLegalUtf32ErrorWord(errorWord));
 
     return utf8ToUtf32Impl(dstVector, srcString, errorWord, byteOrder);
 }
@@ -1947,8 +1961,8 @@ int CharConvertUtf32::utf8ToUtf32(std::vector<unsigned int> *dstVector,
                                   ByteOrder::Enum            byteOrder)
 {
     BSLS_ASSERT(dstVector);
-    BSLS_ASSERT(srcString.data());
-    BSLS_ASSERT(isLegalUtf32ErrorWord(errorWord));
+    BSLS_ASSERT_NONCONVEYOR(srcString.data());
+    BSLS_ASSERT_NONCONVEYOR(isLegalUtf32ErrorWord(errorWord));
 
     return utf8ToUtf32Impl(dstVector, srcString, errorWord, byteOrder);
 }
@@ -1960,8 +1974,8 @@ int CharConvertUtf32::utf8ToUtf32(std::pmr::vector<unsigned int> *dstVector,
                                   ByteOrder::Enum                 byteOrder)
 {
     BSLS_ASSERT(dstVector);
-    BSLS_ASSERT(srcString.data());
-    BSLS_ASSERT(isLegalUtf32ErrorWord(errorWord));
+    BSLS_ASSERT_NONCONVEYOR(srcString.data());
+    BSLS_ASSERT_NONCONVEYOR(isLegalUtf32ErrorWord(errorWord));
 
     return utf8ToUtf32Impl(dstVector, srcString, errorWord, byteOrder);
 }
@@ -1976,7 +1990,7 @@ int CharConvertUtf32::utf8ToUtf32(unsigned int          *dstBuffer,
 {
     BSLS_ASSERT(dstBuffer);
     BSLS_ASSERT(srcString);
-    BSLS_ASSERT(isLegalUtf32ErrorWord(errorWord));
+    BSLS_ASSERT_NONCONVEYOR(isLegalUtf32ErrorWord(errorWord));
 
     typedef Utf8ToUtf32Translator<Capacity,
                                   Utf8ZeroBasedEnd,
@@ -2020,8 +2034,8 @@ int CharConvertUtf32::utf8ToUtf32(
                                  ByteOrder::Enum          byteOrder)
 {
     BSLS_ASSERT(dstBuffer);
-    BSLS_ASSERT(srcString.data());
-    BSLS_ASSERT(isLegalUtf32ErrorWord(errorWord));
+    BSLS_ASSERT_NONCONVEYOR(srcString.data());
+    BSLS_ASSERT_NONCONVEYOR(isLegalUtf32ErrorWord(errorWord));
 
     typedef Utf8ToUtf32Translator<Capacity,
                                   Utf8PtrBasedEnd,
@@ -2333,11 +2347,11 @@ int CharConvertUtf32::utf32ToUtf8(char               *dstBuffer,
     // The following are internal consistency checks that should never fail in
     // production, so they are for testing purposes only.
 
-    BSLS_ASSERT(*numCodePointsWritten > 0);
-    BSLS_ASSERT(*numBytesWritten > 0);
-    BSLS_ASSERT(*numCodePointsWritten <= *numBytesWritten);
-    BSLS_ASSERT(*numBytesWritten <= dstCapacity);
-    BSLS_ASSERT(0 == dstBuffer[*numBytesWritten - 1]);
+    BSLS_ASSERT_NONCONVEYOR(*numCodePointsWritten > 0);
+    BSLS_ASSERT_NONCONVEYOR(*numBytesWritten > 0);
+    BSLS_ASSERT_NONCONVEYOR(*numCodePointsWritten <= *numBytesWritten);
+    BSLS_ASSERT_NONCONVEYOR(*numBytesWritten <= dstCapacity);
+    BSLS_ASSERT_NONCONVEYOR(0 == dstBuffer[*numBytesWritten - 1]);
 
     return ret;
 }
@@ -2397,11 +2411,11 @@ int CharConvertUtf32::utf32ToUtf8(char               *dstBuffer,
     // The following are internal consistency checks that should never fail in
     // production, so they are for testing purposes only.
 
-    BSLS_ASSERT(*numCodePointsWritten > 0);
-    BSLS_ASSERT(*numBytesWritten > 0);
-    BSLS_ASSERT(*numCodePointsWritten <= *numBytesWritten);
-    BSLS_ASSERT(*numBytesWritten <= dstCapacity);
-    BSLS_ASSERT(0 == dstBuffer[*numBytesWritten - 1]);
+    BSLS_ASSERT_NONCONVEYOR(*numCodePointsWritten > 0);
+    BSLS_ASSERT_NONCONVEYOR(*numBytesWritten > 0);
+    BSLS_ASSERT_NONCONVEYOR(*numCodePointsWritten <= *numBytesWritten);
+    BSLS_ASSERT_NONCONVEYOR(*numBytesWritten <= dstCapacity);
+    BSLS_ASSERT_NONCONVEYOR(0 == dstBuffer[*numBytesWritten - 1]);
 
     return ret;
 }

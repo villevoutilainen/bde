@@ -2595,11 +2595,13 @@ wchar_t *sBegin(bsl::wstring& s)
 
 char *sEnd(bsl::string& s)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&s);
     return &s[0] + s.length() + 1;
 }
 
 wchar_t *sEnd(bsl::wstring& s)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&s);
     return &s[0] + s.length() + 1;
 }
 
@@ -5017,6 +5019,7 @@ void TestDriver::copyUtf16ToWstring(
                                  const bsl::vector<unsigned short>&  utf16In,
                                  bdlde::ByteOrder::Enum              byteOrder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utf16In);
     const bsl::size_t len = utf16In.size() - 1;
 
     wStr->clear();
@@ -5043,6 +5046,7 @@ void TestDriver::copyUtf16ToWstring(
 /// preceding contents of `*string` is a truncated sequence.
 void TestDriver::appendRandomInvalidSingleOctet(bsl::string *string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     enum ErrorType { e_ILLEGAL_CHAR,
                      e_UNEXPECTED_CONTINUATION,
                      k_NUM_ERROR_TYPES,
@@ -5093,6 +5097,7 @@ void TestDriver::appendRandomInvalidTwoOctets(bsl::string *string)
     switch (errorType) {
       case e_TRUNC:
       case e_END: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(string);
         // truncated two-byte sequence
 
         // first byte is correct start to 2-byte sequence `110xxxxx`
@@ -5101,12 +5106,14 @@ void TestDriver::appendRandomInvalidTwoOctets(bsl::string *string)
 
         if (e_TRUNC == errorType) {
             unsigned char wrongByte;
+            BSLS_ASSERT_CONVEYOR_OBJECT(string);
             do {
                 wrongByte = static_cast<unsigned char>(s_randGen.getChar());
             } while (!wrongByte || isContinuation(wrongByte));
 
             *string += static_cast<char>(wrongByte);
         }
+      BSLS_ASSERT_CONVEYOR_OBJECT(string);
       } break;
       case e_NON_MINIMAL: {
         // non-minimal two-byte encoding
@@ -5152,6 +5159,7 @@ void TestDriver::appendRandomInvalidThreeOctets(bsl::string *string)
     switch (errorType) {
       case e_TRUNC:
       case e_END: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(string);
         // three-byte sequence truncated before completion
 
         // first byte is correct start to 3-byte sequence `1110xxxx`
@@ -5159,6 +5167,7 @@ void TestDriver::appendRandomInvalidThreeOctets(bsl::string *string)
         *string += static_cast<char>(0xe0u | s_randGen.bits(4));
 
         const bool contByte = s_randGen.bits(1);
+BSLS_ASSERT_CONVEYOR_OBJECT(string);
 
         if (contByte) {
             // append correct continuation
@@ -5169,6 +5178,7 @@ void TestDriver::appendRandomInvalidThreeOctets(bsl::string *string)
         if (e_TRUNC == errorType) {
             // append non-continuation to interrupt, cause error
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(string);
             unsigned char wrongByte;
             do {
                 wrongByte = s_randGen.getChar();
@@ -5181,6 +5191,7 @@ void TestDriver::appendRandomInvalidThreeOctets(bsl::string *string)
 
                k_RAND_UC_BITS = k_DATA_BITS };
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(string);
         const unsigned uc = s_randGen.bits(k_RAND_UC_BITS);
 
         ASSERT(fitsInTwoOctets(uc));
@@ -5207,6 +5218,7 @@ void TestDriver::appendRandomInvalidThreeOctets(bsl::string *string)
         unsigned uc = k_FLOOR + s_randGen.bits(k_RAND_UC_BITS);
         BSLS_ASSERT_SAFE(uc >= k_MIN_SURROGATE);
         BSLS_ASSERT_SAFE(uc <= k_MAX_SURROGATE);
+BSLS_ASSERT_CONVEYOR_OBJECT(string);
 
         ASSERT(!fitsInTwoOctets(uc));
         ASSERT(fitsInThreeOctets(uc));
@@ -5248,6 +5260,7 @@ void TestDriver::appendRandomInvalidFourOctets(bsl::string *string)
                                                   s_randGen.bits(k_RAND_BITS));
 
     switch (errorType) {
+      BSLS_ASSERT_CONVEYOR_OBJECT(string);
       case e_TRUNC:
       case e_END: {
         // first byte of 4-byte sequence `11110xxx`
@@ -5266,6 +5279,7 @@ void TestDriver::appendRandomInvalidFourOctets(bsl::string *string)
         const unsigned contBytes = s_randGen.bits(k_RAND_CONT_BITS) %
                                                                     k_CONT_MOD;
         ASSERT(contBytes <= 2);
+BSLS_ASSERT_CONVEYOR_OBJECT(string);
 
         for (unsigned uu = 0; uu < contBytes; ++uu) {
             // continuation byte: `10xxxxxx`
@@ -5276,6 +5290,7 @@ void TestDriver::appendRandomInvalidFourOctets(bsl::string *string)
         if (e_TRUNC == errorType) {
             // append non-continuation to interrupt, cause error
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(string);
             unsigned char wrongByte;
             do {
                 wrongByte = s_randGen.getChar();
@@ -5290,6 +5305,7 @@ void TestDriver::appendRandomInvalidFourOctets(bsl::string *string)
 
         BSLMF_ASSERT(k_MOD == (1u << k_RAND_UC_BITS));
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(string);
         unsigned uc = s_randGen.bits(k_RAND_UC_BITS);
 
         ASSERT(fitsInThreeOctets(uc));
@@ -5310,6 +5326,7 @@ void TestDriver::appendRandomInvalidFourOctets(bsl::string *string)
         BSLMF_ASSERT(k_RAND_BITS < 32);
         BSLMF_ASSERT(k_MOD * k_RAND_FUDGE_MULTIPLE < (1u << k_RAND_BITS));
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(string);
         const unsigned uc = k_FLOOR + s_randGen.bits(k_RAND_BITS) % k_MOD;
 
         ASSERT(uc < (1u << k_DATA_BITS));
@@ -5356,6 +5373,7 @@ void TestDriver::appendRandomInvalidUtf8CodePoint(bsl::string *string)
 
 void TestDriver::appendRandomValidSingleOctet(bsl::string *string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     char c;
     do {
         c = static_cast<char>(s_randGen.bits(7));
@@ -5366,6 +5384,7 @@ void TestDriver::appendRandomValidSingleOctet(bsl::string *string)
 
 void TestDriver::appendRandomValidTwoOctets(bsl::string *string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     enum { k_FLOOR     = CONTINUE_TAG,
            k_DATA_BITS = TWO_OCT_CONT_WID + CONTINUE_CONT_WID,
            k_MOD       = (1u << k_DATA_BITS) - k_FLOOR,
@@ -5386,6 +5405,7 @@ void TestDriver::appendRandomValidTwoOctets(bsl::string *string)
 
 void TestDriver::appendRandomValidThreeOctets(bsl::string *string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     enum { k_FLOOR     = 1 << (TWO_OCT_CONT_WID + CONTINUE_CONT_WID),
            k_DATA_BITS = THREE_OCT_CONT_WID + 2 * CONTINUE_CONT_WID,
            k_MOD       = (1 << k_DATA_BITS) - k_FLOOR,
@@ -5414,6 +5434,7 @@ void TestDriver::appendRandomValidThreeOctets(bsl::string *string)
 
 void TestDriver::appendRandomValidFourOctets(bsl::string *string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     const unsigned k_FLOOR_BITS = THREE_OCT_CONT_WID + 2 * CONTINUE_CONT_WID;
     const unsigned k_FLOOR      = 1 << k_FLOOR_BITS;
     const unsigned k_DATA_BITS  = FOUR_OCT_CONT_WID  + 3 * CONTINUE_CONT_WID;
@@ -5576,6 +5597,7 @@ void TestDriver::randomInvalidUtf16Vector(
                                         unsigned                     numWords,
                                         bdlde::ByteOrder::Enum       byteOrder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     // The rules for correct UTF-16 are extremely simple -- surrogates are only
     // allowed to occur in pairs, a lo immediately followed by a hi.  Other
     // than that, single words can occur anywhere.

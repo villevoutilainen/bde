@@ -2181,6 +2181,7 @@ char *decodeUtf32(char *outBuf, unsigned val)
 /// human-readable form.
 bsl::string dumpVec(const bsl::vector<int>& vec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
     bsl::ostringstream oss;
     for (unsigned u = 0; u < vec.size(); ++u) {
         oss << (u ? " " : "") << vec[u];
@@ -2201,6 +2202,7 @@ bsl::string dumpVec(const bsl::vector<unsigned int>& vec)
 /// human-readable form.
 bsl::string dumpVec(const bsl::vector<char>& vec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
     if (vec.empty()) {
         return "";                                                    // RETURN
     }
@@ -2217,6 +2219,7 @@ bsl::string dumpVec(const bsl::vector<char>& vec)
 /// human-readable form.
 bsl::string dumpVec(const std::vector<int>& vec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
     bsl::ostringstream oss;
     for (unsigned u = 0; u < vec.size(); ++u) {
         oss << (u ? " " : "") << vec[u];
@@ -2237,6 +2240,7 @@ bsl::string dumpVec(const std::vector<unsigned int>& vec)
 /// human-readable form.
 bsl::string dumpVec(const std::vector<char>& vec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
     if (vec.empty()) {
         return "";                                                    // RETURN
     }
@@ -2254,6 +2258,7 @@ bsl::string dumpVec(const std::vector<char>& vec)
 /// human-readable form.
 bsl::string dumpVec(const std::pmr::vector<int>& vec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
     bsl::ostringstream oss;
     for (unsigned u = 0; u < vec.size(); ++u) {
         oss << (u ? " " : "") << vec[u];
@@ -2274,6 +2279,7 @@ bsl::string dumpVec(const std::pmr::vector<unsigned int>& vec)
 /// human-readable form.
 bsl::string dumpVec(const std::pmr::vector<char>& vec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
     if (vec.empty()) {
         return "";                                                    // RETURN
     }
@@ -2402,6 +2408,7 @@ bsl::ostream& outputSequence(bsl::ostream& stream, unsigned val)
 
 bsl::string dumpUtf8Vec(const bsl::vector<char>& utf8Vec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utf8Vec);
     bsl::ostringstream oss;
 
     oss << bsl::hex;
@@ -2418,6 +2425,7 @@ bsl::string dumpUtf8Vec(const bsl::vector<char>& utf8Vec)
 template <class VECTOR>
 bsl::string dumpUtf32Vec(const VECTOR& utf32Vec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utf32Vec);
     bsl::ostringstream oss;
 
     oss << bsl::hex;

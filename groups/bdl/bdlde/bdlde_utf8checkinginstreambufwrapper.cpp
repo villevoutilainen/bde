@@ -33,6 +33,7 @@ inline
 bsl::streambuf::pos_type Utf8CheckingInStreamBufWrapper::setSeekFailure(
                                                   bsl::ios_base::openmode mode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_seekable) {
         BSLS_ASSERT_OPT(d_heldStreamBuf_p);
 
@@ -75,12 +76,13 @@ bsl::streamsize Utf8CheckingInStreamBufWrapper::showmanyc()
 
 bsl::streambuf::int_type Utf8CheckingInStreamBufWrapper::underflow()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!isValid()) {
         return traits_type::eof();                                    // RETURN
     }
 
     if (d_putBackMode) {
-        BSLS_ASSERT(gptr() == egptr());
+        BSLS_ASSERT_NONCONVEYOR(gptr() == egptr());
 
         setg(d_savedEback_p, d_savedEback_p, d_savedEgptr_p);
         d_putBackMode = false;
@@ -91,7 +93,7 @@ bsl::streambuf::int_type Utf8CheckingInStreamBufWrapper::underflow()
     }
 
     BSLS_ASSERT(!d_putBackMode);
-    BSLS_ASSERT(gptr() == egptr());
+    BSLS_ASSERT_NONCONVEYOR(gptr() == egptr());
 
     if (0 != d_bufEndStatus) {
         d_errorStatus = d_bufEndStatus;
@@ -170,7 +172,7 @@ Utf8CheckingInStreamBufWrapper::pbackfail(int_type c)
 
     // switch to putback mode
 
-    BSLS_ASSERT(eback() == gptr());
+    BSLS_ASSERT_NONCONVEYOR(eback() == gptr());
 
     d_savedEback_p = eback();
     d_savedEgptr_p = egptr();
@@ -189,7 +191,7 @@ bsl::streambuf::pos_type Utf8CheckingInStreamBufWrapper::seekoff(
                                                 bsl::ios_base::seekdir  whence,
                                                 bsl::ios_base::openmode mode)
 {
-    BSLS_ASSERT(mode & bsl::ios_base::in);
+    BSLS_ASSERT_NONCONVEYOR(mode & bsl::ios_base::in);
 
     if (bsl::ios_base::end == whence || !d_heldStreamBuf_p) {
         d_offset = 0;
@@ -307,7 +309,7 @@ bsl::streamsize Utf8CheckingInStreamBufWrapper::xsgetn(
     const char * const start = buffer;
     const char * const end   = buffer + numBytes;
 
-    BSLS_ASSERT(start <= end);
+    BSLS_ASSERT_NONCONVEYOR(start <= end);
 
     IntPtr outBufLen;
     while (0 < (outBufLen = static_cast<int_type>(end - buffer))) {

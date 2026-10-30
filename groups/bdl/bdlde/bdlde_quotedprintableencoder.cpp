@@ -85,6 +85,7 @@ const char *QuotedPrintableEncoder::s_defaultEquivClass_p =
 
 // PRIVATE MANIPULATORS
 void QuotedPrintableEncoder::appendSoftLineBreak(char *out) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     *out = '=';
     ++d_outputLength;
 
@@ -99,6 +100,7 @@ void QuotedPrintableEncoder::appendSoftLineBreak(char *out) {
 }
 
 void QuotedPrintableEncoder::appendHardLineBreak(char *out) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_lastWasWS) {
         *out = '=';
         ++d_outputLength;
@@ -125,6 +127,7 @@ void QuotedPrintableEncoder::appendHardLineBreak(char *out) {
 }
 
 void QuotedPrintableEncoder::appendPrintable(char *out, char ch) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 == d_bufferLength);
 
     if (d_outputLength - d_lineStart >= d_maxLineLength - 1) {
@@ -142,6 +145,7 @@ void QuotedPrintableEncoder::appendPrintable(char *out, char ch) {
 }
 
 void QuotedPrintableEncoder::appendAsHex(char *out, char ch, bool isFinal) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 == d_bufferLength);
 
     d_buffer[d_bufferLength++] = bdeHex[ch & 0xf];

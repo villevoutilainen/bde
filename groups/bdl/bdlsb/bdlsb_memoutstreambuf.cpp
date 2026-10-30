@@ -143,7 +143,7 @@ bsl::streamsize MemOutStreamBuf::xsputn(const char_type *source,
 
     const bsl::size_t newLength =
                                  static_cast<bsl::size_t>(length() + numChars);
-    BSLS_ASSERT(newLength >= length());
+    BSLS_ASSERT_NONCONVEYOR(newLength >= length());
 
     if (newLength > capacity()) {
         grow(newLength);

@@ -723,6 +723,7 @@ class StateTransitionMatrix {
         for (int i = 0; i < d_numStates; ++i) {
             for (int j = 0; j < d_numInputTypes; ++j) {
                 const EquivalenceClass *type = d_inputTypes_p[j];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&type);
                 for (int k = 0; k < (int)type->d_ranges.size(); ++k) {
                     const Range &range = type->d_ranges[k];
                     for (unsigned char m = range.start; m < range.end; ++m) {

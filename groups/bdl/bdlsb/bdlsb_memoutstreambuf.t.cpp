@@ -392,6 +392,7 @@ LimitsTestAllocator::~LimitsTestAllocator()
 
 void *LimitsTestAllocator::allocate(size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     void *address = 0;
     d_numAllocations += 1;
 
@@ -413,6 +414,7 @@ void *LimitsTestAllocator::allocate(size_type size)
 
 void LimitsTestAllocator::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (address) {
         d_numDeallocations += 1;
         d_numBlocksInUse   -= 1;

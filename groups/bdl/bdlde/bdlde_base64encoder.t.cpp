@@ -445,7 +445,7 @@ bool checkRange(const EncoderOptions&  options,
                 const char            *begin,
                 const char            *end)
 {
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 
     const bool noCrlf = 0 == options.maxLineLength();
 

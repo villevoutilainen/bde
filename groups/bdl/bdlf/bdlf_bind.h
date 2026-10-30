@@ -1305,6 +1305,7 @@ class BindWrapper {
     template <class t_ARG_TUPLE>
     inline ResultType invoke(t_ARG_TUPLE& arguments) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_impl->invoke(arguments);
     }
 
@@ -1312,6 +1313,7 @@ class BindWrapper {
     /// wrapper.
     const bdlf::Bind<t_RET, t_FUNC, t_BOUND_TUPLE>& operator*() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return *(this->d_impl);
     }
 
@@ -1319,6 +1321,7 @@ class BindWrapper {
     /// wrapper.
     const bdlf::Bind<t_RET, t_FUNC, t_BOUND_TUPLE>* operator->() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return this->d_impl.ptr();
     }
 
@@ -1327,6 +1330,7 @@ class BindWrapper {
     /// result.
     inline ResultType operator()() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)();
     }
 
@@ -1337,6 +1341,7 @@ class BindWrapper {
     template <class P1>
     inline ResultType operator()(P1& p1)  const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1);
     }
 
@@ -1347,6 +1352,7 @@ class BindWrapper {
     template <class P1>
     inline ResultType operator()(P1 const& p1)  const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1);
     }
 
@@ -1357,6 +1363,7 @@ class BindWrapper {
     template <class P1, class P2>
     inline ResultType operator()(P1& p1, P2& p2) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2);
     }
 
@@ -1367,6 +1374,7 @@ class BindWrapper {
     template <class P1, class P2>
     inline ResultType operator()(P1 const& p1, P2 const& p2) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2);
     }
 
@@ -1377,6 +1385,7 @@ class BindWrapper {
     template <class P1, class P2, class P3>
     inline ResultType operator()(P1& p1, P2& p2, P3& p3) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3);
     }
 
@@ -1388,6 +1397,7 @@ class BindWrapper {
     inline ResultType operator()(P1 const& p1, P2 const& p2, P3 const& p3)
     const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3);
     }
 
@@ -1398,6 +1408,7 @@ class BindWrapper {
     template <class P1, class P2, class P3, class P4>
     inline ResultType operator()(P1& p1, P2& p2, P3& p3, P4& p4) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4);
     }
 
@@ -1409,6 +1420,7 @@ class BindWrapper {
     inline ResultType operator()(P1 const& p1, P2 const& p2, P3 const& p3,
                                  P4 const& p4) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4);
     }
 
@@ -1419,6 +1431,7 @@ class BindWrapper {
     template <class P1, class P2, class P3, class P4, class P5>
     inline ResultType operator()(P1& p1, P2& p2, P3& p3, P4& p4, P5& p5) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5);
     }
 
@@ -1430,6 +1443,7 @@ class BindWrapper {
     inline ResultType operator()(P1 const& p1, P2 const& p2, P3 const& p3,
                                  P4 const& p4, P5 const& p5) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5);
     }
 
@@ -1441,6 +1455,7 @@ class BindWrapper {
     inline ResultType operator()(P1& p1, P2& p2, P3& p3, P4& p4, P5& p5,
                                  P6& p6) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6);
     }
 
@@ -1453,6 +1468,7 @@ class BindWrapper {
                                  P4 const& p4, P5 const& p5, P6 const& p6)
     const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6);
     }
 
@@ -1466,6 +1482,7 @@ class BindWrapper {
                                  P6& p6, P7& p7) const
 
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7);
     }
 
@@ -1480,6 +1497,7 @@ class BindWrapper {
                                  P7 const& p7) const
 
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7);
     }
 
@@ -1492,6 +1510,7 @@ class BindWrapper {
     inline ResultType operator()(P1& p1, P2& p2, P3& p3, P4& p4, P5& p5,
                                  P6& p6, P7& p7, P8& p8) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8);
     }
 
@@ -1505,6 +1524,7 @@ class BindWrapper {
                                  P4 const& p4, P5 const& p5, P6 const& p6,
                                  P7 const& p7, P8 const& p8) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8);
     }
 
@@ -1517,6 +1537,7 @@ class BindWrapper {
     inline ResultType operator()(P1& p1, P2& p2, P3& p3, P4& p4, P5& p5,
                                  P6& p6, P7& p7, P8& p8, P9& p9) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9);
     }
 
@@ -1531,6 +1552,7 @@ class BindWrapper {
                                  P7 const& p7, P8 const& p8, P9 const& p9)
     const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9);
     }
 
@@ -1544,6 +1566,7 @@ class BindWrapper {
                                  P6&  p6, P7& p7, P8& p8, P9& p9,
                                  P10& p10) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
     }
 
@@ -1558,6 +1581,7 @@ class BindWrapper {
                                  P7 const&  p7, P8 const& p8, P9 const& p9,
                                  P10 const& p10) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
     }
 
@@ -1571,6 +1595,7 @@ class BindWrapper {
                                  P6&  p6, P7& p7, P8& p8, P9& p9, P10& p10,
                                  P11& p11) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
     }
 
@@ -1585,6 +1610,7 @@ class BindWrapper {
                                  P7 const&  p7,  P8 const&  p8, P9 const& p9,
                                  P10 const& p10, P11 const& p11) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
     }
 
@@ -1598,6 +1624,7 @@ class BindWrapper {
                                  P6&  p6,  P7&  p7, P8& p8, P9& p9, P10& p10,
                                  P11& p11, P12& p12) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
     }
 
@@ -1613,6 +1640,7 @@ class BindWrapper {
                                  P10 const& p10, P11 const& p11,
                                  P12 const& p12) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
     }
 
@@ -1627,6 +1655,7 @@ class BindWrapper {
                                  P6&  p6,  P7&  p7,  P8&  p8, P9& p9, P10& p10,
                                  P11& p11, P12& p12, P13& p13) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12,
                          p13);
     }
@@ -1644,6 +1673,7 @@ class BindWrapper {
                                  P10 const& p10, P11 const& p11,
                                  P12 const& p12, P13 const& p13) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12,
                          p13);
     }
@@ -1661,6 +1691,7 @@ class BindWrapper {
                                  P10& p10, P11& p11, P12& p12,
                                  P13& p13, P14& p14) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12,
                          p13, p14);
     }
@@ -1679,6 +1710,7 @@ class BindWrapper {
                                  P12 const& p12, P13 const& p13,
                                  P14 const& p14) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return (*d_impl)(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12,
                          p13, p14);
     }
@@ -6902,6 +6934,7 @@ class Bind_MemFnObjectWrapper {
     t_TYPE *getObjectPtr(t_ARG_TYPE&       pointerLike,
                          bsl::true_type    )  // has pointer semantics
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&pointerLike);
         return &*pointerLike;
     }
     template <class t_ARG_TYPE>

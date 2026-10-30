@@ -71,7 +71,7 @@ OverflowMemOutStreamBuf::overflow(OverflowMemOutStreamBuf::int_type c)
     pbump(static_cast<int>(d_dataLength - d_initialBufferSize));
     d_inOverflowBufferFlag = true;
 
-    BSLS_ASSERT(pptr() != epptr());
+    BSLS_ASSERT_NONCONVEYOR(pptr() != epptr());
 
     *pptr() = static_cast<char_type>(c);
     pbump(1);
@@ -84,6 +84,7 @@ OverflowMemOutStreamBuf::seekoff(off_type                offset,
                                  bsl::ios_base::seekdir  way,
                                  bsl::ios_base::openmode which)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!(which & bsl::ios_base::out)) {
         return pos_type(-1);                                          // RETURN
     }

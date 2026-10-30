@@ -428,6 +428,7 @@ struct Utf8 {
         /// `position <= d_end`.
         bool isFinished(const OctetType *position) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             if (position < d_end) {
                 return false;                                         // RETURN
             }
@@ -446,7 +447,7 @@ struct Utf8 {
             // when it is known that there are fewer continuation octets after
             // 'octets' than were expected, at least before 'd_end'.
 
-            BSLS_ASSERT(d_end >= octets);
+            BSLS_ASSERT_NONCONVEYOR(d_end >= octets);
 
             while (octets < d_end &&
                                    (*octets & CONTINUE_MASK) == CONTINUE_TAG) {
@@ -464,7 +465,7 @@ struct Utf8 {
         bool verifyContinuations(const OctetType *octets, int n) const
         {
             BSLS_ASSERT(n >= 1);
-            BSLS_ASSERT(d_end >= octets);
+            BSLS_ASSERT_NONCONVEYOR(d_end >= octets);
 
             const OctetType *end = octets + n;
             if (end > d_end) {
@@ -767,6 +768,7 @@ struct Utf16 {
         /// input, and `false` otherwise.
         bool isFinished(const UTF16_WORD *utf16Buf) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             if (utf16Buf < d_end) {
                 return false;                                         // RETURN
             }
@@ -1159,7 +1161,7 @@ int localUtf8ToUtf16(UTF16_WORD       *dstBuffer,
                      bsl::size_t      *numWordsWritten,
                      UTF16_WORD        errorWord)
 {
-    BSLS_ASSERT(Utf16::isValidOneWord(errorWord));
+    BSLS_ASSERT_NONCONVEYOR(Utf16::isValidOneWord(errorWord));
 
     // Note that 'dstCapacity', 'endFunctor', and 'swapper' are passed by
     // value, not by reference -- they're at most one pointer in size, so
@@ -1380,7 +1382,7 @@ int localUtf8ToUtf16(UTF16_WORD       *dstBuffer,
             ++nCodePoints;
         }
     }
-    BSLS_ASSERT(endFunctor.isFinished(octets) ||
+    BSLS_ASSERT_NONCONVEYOR(endFunctor.isFinished(octets) ||
                                             (returnStatus & OUT_OF_SPACE_BIT));
 
     *dstBuffer++ = 0;
@@ -1450,7 +1452,7 @@ bsl::size_t requiredUtf8BytesImp(const UTF16_WORD *srcBuffer,
             ++bytesNeeded;    // error byte
         }
     }
-    BSLS_ASSERT(endFunctor.isFinished(srcBuffer));
+    BSLS_ASSERT_NONCONVEYOR(endFunctor.isFinished(srcBuffer));
 
     return bytesNeeded + 1;
 }
@@ -1624,7 +1626,7 @@ int localUtf16ToUtf8(char             *dstBuffer,
         ++nCodePoints;
     }
 
-    BSLS_ASSERT(endFunctor.isFinished(srcBuffer) ||
+    BSLS_ASSERT_NONCONVEYOR(endFunctor.isFinished(srcBuffer) ||
                                             (returnStatus & OUT_OF_SPACE_BIT));
 
     *dstBuffer++ = 0;
@@ -1664,7 +1666,8 @@ void resizeToZeroTerminate(
 #endif
                           , void *>::type = 0)
 {
-    BSLS_ASSERT(numBytesWritten <= container->length());
+    BSLS_ASSERT_CONVEYOR_OBJECT(container);
+    BSLS_ASSERT_NONCONVEYOR(numBytesWritten <= container->length());
 
     // 'numBytesWritten' may be much smaller than 'length()', plus we always
     // have to get rid of the '\0'.
@@ -1690,6 +1693,7 @@ void resizeToZeroTerminate(
 #endif
                , void *>::type = 0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(container);
     if (numBytesWritten != container->size()) {
         BSLS_ASSERT(numBytesWritten < container->size());
 
@@ -1715,6 +1719,7 @@ int localUtf16ToUtf8Container(CONTAINER        *container,
                               bsl::size_t      *numCodePointsWritten,
                               char              errorByte)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(container);
     bsl::size_t estimatedSize = requiredUtf8BytesImp(srcBuffer,
                                                      endFunctor,
                                                      swapper);
@@ -1740,7 +1745,7 @@ int localUtf16ToUtf8Container(CONTAINER        *container,
         BSLS_ASSERT(INVALID_INPUT_BIT & rc);
         BSLS_ASSERT(0 == errorByte);
     }
-    BSLS_ASSERT(0 == (*container)[numBytesWritten - 1]);
+    BSLS_ASSERT_NONCONVEYOR(0 == (*container)[numBytesWritten - 1]);
 
     resizeToZeroTerminate(container, numBytesWritten);
 
@@ -1754,6 +1759,7 @@ int utf8ToUtf16Impl(CONTAINER                           *dstContainer,
                     typename CONTAINER::value_type       errorWord,
                     BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(dstContainer);
     typedef typename CONTAINER::value_type ValueType;
 
     Utf8::PtrBasedEnd endFunctor(srcString.data() + srcString.length());
@@ -1797,7 +1803,7 @@ int utf8ToUtf16Impl(CONTAINER                           *dstContainer,
         BSLS_ASSERT(numWordsWritten < estLength);
         BSLS_ASSERT(INVALID_INPUT_BIT & rc);
     }
-    BSLS_ASSERT(0 == (*dstContainer)[numWordsWritten - 1]);
+    BSLS_ASSERT_NONCONVEYOR(0 == (*dstContainer)[numWordsWritten - 1]);
 
     resizeToZeroTerminate(dstContainer, numWordsWritten);
 
@@ -1811,6 +1817,7 @@ int utf8ToUtf16Impl(CONTAINER                           *dstContainer,
                     typename CONTAINER::value_type       errorWord,
                     BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(dstContainer);
     typedef typename CONTAINER::value_type ValueType;
 
     Utf8::ZeroBasedEnd endFunctor;
@@ -1853,7 +1860,7 @@ int utf8ToUtf16Impl(CONTAINER                           *dstContainer,
         BSLS_ASSERT(numWordsWritten < estLength);
         BSLS_ASSERT(INVALID_INPUT_BIT & rc);
     }
-    BSLS_ASSERT(0 == (*dstContainer)[numWordsWritten - 1]);
+    BSLS_ASSERT_NONCONVEYOR(0 == (*dstContainer)[numWordsWritten - 1]);
 
     resizeToZeroTerminate(dstContainer, numWordsWritten);
 

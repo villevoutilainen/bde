@@ -491,6 +491,7 @@ int utf8ToUcs2Impl(VECTOR         *result,
                    const char     *srcString,
                    unsigned short  errorCharacter)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     // Theory: We're mainly dealing with 7-bit ASCII, so we're going to try for
     // an "as tight as possible" inner loop for characters that fit in 7 bits,
     // and call 'convertUtf8ToUcs2' to deal with the harder cases.

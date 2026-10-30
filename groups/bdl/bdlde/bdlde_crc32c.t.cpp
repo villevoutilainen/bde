@@ -322,6 +322,8 @@ void threadFunction(bsl::vector<unsigned int> *out,
                     bslmt::Barrier            *barrier,
                     bool                       useSoftware)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&in);
+    BSLS_ASSERT_CONVEYOR_OBJECT(out);
     out->reserve(in.size());
     barrier->wait();
 
@@ -344,6 +346,7 @@ void threadFunction(bsl::vector<unsigned int> *out,
 static
 int populateBufferLengthsSorted(bsl::vector<int> *bufferLengths)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(bufferLengths);
     BSLS_ASSERT(bufferLengths);
 
     bufferLengths->clear();
@@ -390,6 +393,7 @@ static
 void printTableHeader(bsl::ostream&                   out,
                       const bsl::vector<bsl::string>& headers)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&headers);
     const bsl::size_t sumSizes = bsl::accumulate(headers.begin(),
                                                  headers.end(),
                                                  bsl::string()).size();
@@ -420,6 +424,9 @@ void printTableRows(bsl::ostream&                   out,
                     const bsl::vector<TableRecord>& tableRecords,
                     const bsl::vector<bsl::string>& headerCols)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&headerCols);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&tableRecords);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&headerCols);
     // PRECONDITIONS
     BSLS_ASSERT(headerCols.size() == 4);
 
@@ -900,7 +907,7 @@ void test3_calculateOnMisalignedBuffer()
     char *allocPtr = allocBuffer.buffer();
 
     // Sanity check: test.d_buffer at alignment boundary
-    BSLS_ASSERT_OPT(bsls::AlignmentUtil::calculateAlignmentOffset(
+    BSLS_ASSERT_OPT_NONCONVEYOR(bsls::AlignmentUtil::calculateAlignmentOffset(
                                                                 allocPtr,
                                                                 k_MY_ALIGNMENT)
                     == 0);
@@ -953,7 +960,8 @@ void test3_calculateOnMisalignedBuffer()
             //               *not* starting at an alignment boundary inside the
             //               aligned buffer.
             BSLS_ASSERT_OPT(k_BUFFER_SIZE >= NEW_LENGTH);
-            BSLS_ASSERT_OPT(bsls::AlignmentUtil::calculateAlignmentOffset(
+            BSLS_ASSERT_OPT_NONCONVEYOR(
+                                 bsls::AlignmentUtil::calculateAlignmentOffset(
                                                                 allocPtr + i,
                                                                 k_MY_ALIGNMENT)
                             != 0);
