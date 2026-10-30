@@ -154,6 +154,7 @@ void FixedThreadPool::workerThread()
 
 int FixedThreadPool::startNewThread()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #if defined(BSLS_PLATFORM_OS_UNIX)
     // Block all asynchronous signals.
 

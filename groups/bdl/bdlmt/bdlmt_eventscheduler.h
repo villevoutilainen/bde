@@ -2074,7 +2074,7 @@ void EventScheduler::scheduleRecurringEvent(
     // Note that when this review is converted to an assert, the following
     // assert is redundant and can be removed.
     BSLS_REVIEW(1 <= interval.totalMicroseconds());
-    BSLS_ASSERT(0 != interval);
+    BSLS_ASSERT_NONCONVEYOR(0 != interval);
 
     scheduleRecurringEventRaw(0, interval, callback, startEpochTime);
 }
@@ -2089,7 +2089,7 @@ void EventScheduler::scheduleRecurringEvent(
     // Note that when this review is converted to an assert, the following
     // assert is redundant and can be removed.
     BSLS_REVIEW(1 <= interval.totalMicroseconds());
-    BSLS_ASSERT(0 != interval);
+    BSLS_ASSERT_NONCONVEYOR(0 != interval);
     BSLS_ASSERT(event);
 
     scheduleRecurringEvent(
@@ -2108,7 +2108,7 @@ void EventScheduler::scheduleRecurringEvent(
         const bsl::function<void()>&                            callback,
         const bsl::chrono::time_point<t_CLOCK, t_DURATION>&     startEpochTime)
 {
-    BSLS_ASSERT(bsl::chrono::microseconds(1) <= interval);
+    BSLS_ASSERT_NONCONVEYOR(bsl::chrono::microseconds(1) <= interval);
 
     if (bslmt::ChronoUtil::isMatchingClock<t_CLOCK>(d_clockType)) {
         scheduleRecurringEvent(interval,
@@ -2187,7 +2187,7 @@ void EventScheduler::scheduleRecurringEventRaw(
       const bsl::chrono::time_point<t_CLOCK, t_DURATION>&       startEpochTime)
 {
     BSLS_ASSERT(event);
-    BSLS_ASSERT(bsl::chrono::microseconds(1) <= interval);
+    BSLS_ASSERT_NONCONVEYOR(bsl::chrono::microseconds(1) <= interval);
 
     if (bslmt::ChronoUtil::isMatchingClock<t_CLOCK>(d_clockType)) {
         scheduleRecurringEventRaw(event,

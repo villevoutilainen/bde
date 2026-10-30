@@ -274,6 +274,8 @@ bdlm::MetricsAdapter::CallbackHandle
                                 const bdlm::MetricDescriptor& metricDescriptor,
                                 const Callback&               /* callback */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricDescriptor);
     d_descriptors.push_back(metricDescriptor);
 
     int h = 7 + static_cast<int>(d_descriptors.size());
@@ -284,12 +286,15 @@ bdlm::MetricsAdapter::CallbackHandle
 
 int TestMetricsAdapter::removeCollectionCallback(const CallbackHandle& handle)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
     d_handles.erase(handle);
     return 0;
 }
 
 void TestMetricsAdapter::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_descriptors.clear();
     d_handles.clear();
 }
@@ -297,41 +302,43 @@ void TestMetricsAdapter::reset()
 // ACCESSORS
 bool TestMetricsAdapter::verify(const bsl::string& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     static bdlm::InstanceCount::Value count = 0;
 
     ++count;
 
     ASSERT(d_handles.empty());
     ASSERT(2 == d_descriptors.size());
-    ASSERT(d_descriptors[0].metricNamespace()        == "");
-    ASSERT(d_descriptors[0].metricName()             == "bde.backlog");
-    ASSERT(d_descriptors[0].objectTypeAbbreviation() == "ftp");
-    ASSERT(d_descriptors[0].objectTypeName()         ==
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricNamespace()        == "");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricName()             == "bde.backlog");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeAbbreviation() == "ftp");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeName()         ==
                                                       "bdlmt.fixedthreadpool");
-    ASSERT(d_descriptors[0].instanceNumber()         == count);
-    ASSERT(d_descriptors[0].objectIdentifier()       == name);
-    ASSERT(d_descriptors[1].metricNamespace()        == "");
-    ASSERT(d_descriptors[1].metricName()             == "bde.usedcapacity");
-    ASSERT(d_descriptors[1].objectTypeAbbreviation() == "ftp");
-    ASSERT(d_descriptors[1].objectTypeName()         ==
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).instanceNumber()         == count);
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectIdentifier()       == name);
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).metricNamespace()        == "");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).metricName()             == "bde.usedcapacity");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).objectTypeAbbreviation() == "ftp");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).objectTypeName()         ==
                                                       "bdlmt.fixedthreadpool");
-    ASSERT(d_descriptors[1].instanceNumber()         == count);
-    ASSERT(d_descriptors[1].objectIdentifier()       == name);
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).instanceNumber()         == count);
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).objectIdentifier()       == name);
 
     return d_handles.empty()
         && 2 == d_descriptors.size()
-        && d_descriptors[0].metricNamespace()        == ""
-        && d_descriptors[0].metricName()             == "bde.backlog"
-        && d_descriptors[0].objectTypeAbbreviation() == "ftp"
-        && d_descriptors[0].objectTypeName()         == "bdlmt.fixedthreadpool"
-        && d_descriptors[0].instanceNumber()         == count
-        && d_descriptors[0].objectIdentifier()       == name
-        && d_descriptors[1].metricNamespace()        == ""
-        && d_descriptors[1].metricName()             == "bde.usedcapacity"
-        && d_descriptors[1].objectTypeAbbreviation() == "ftp"
-        && d_descriptors[1].objectTypeName()         == "bdlmt.fixedthreadpool"
-        && d_descriptors[1].instanceNumber()         == count
-        && d_descriptors[1].objectIdentifier()       == name;
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricNamespace()        == ""
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricName()             == "bde.backlog"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeAbbreviation() == "ftp"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeName()         == "bdlmt.fixedthreadpool"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).instanceNumber()         == count
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectIdentifier()       == name
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).metricNamespace()        == ""
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).metricName()             == "bde.usedcapacity"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).objectTypeAbbreviation() == "ftp"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).objectTypeName()         == "bdlmt.fixedthreadpool"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).instanceNumber()         == count
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[1]).objectIdentifier()       == name;
 }
 
 // ============================================================================
@@ -644,12 +651,16 @@ static void myFastSearchJob(void *arg)
     FILE *file;
     myFastSearchJobInfo *job =  (myFastSearchJobInfo*)arg;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(job->d_path_p);
     file = fopen(job->d_path_p->c_str(), "r");
 
     if (file) {
      char  buffer[1024];
      bsl::size_t nread;
+     BSLS_ASSERT_CONVEYOR_OBJECT(job);
+     BSLS_ASSERT_CONVEYOR_OBJECT(job->d_word_p);
      bsl::size_t wordLen = job->d_word_p->length();
+     BSLS_ASSERT_CONVEYOR_OBJECT(job);
      const char *word = job->d_word_p->c_str();
 
      nread = fread( buffer, 1, sizeof(buffer)-1, file );
@@ -657,6 +668,9 @@ static void myFastSearchJob(void *arg)
          buffer[nread] = 0;
          if (strstr(buffer, word)) {
              bslmt::LockGuard<bslmt::Mutex> lock(job->d_mutex_p);
+             BSLS_ASSERT_CONVEYOR_OBJECT(job);
+             BSLS_ASSERT_CONVEYOR_OBJECT(job->d_outList_p);
+             BSLS_ASSERT_CONVEYOR_OBJECT(job->d_path_p);
              job->d_outList_p->push_back(*job->d_path_p);
              break;
 
@@ -677,6 +691,7 @@ static void myFastSearch(const bsl::string&              word,
                          const bsl::vector<bsl::string>& fileList,
                          bsl::vector<bsl::string>&       outFileList)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&fileList);
     bslmt::Mutex            mutex;
     bslmt::ThreadAttributes defaultAttributes;
     bdlmt::FixedThreadPool  pool(defaultAttributes,
@@ -695,7 +710,7 @@ static void myFastSearch(const bsl::string&              word,
     for (unsigned i=0; i<count; ++i) {
         myFastSearchJobInfo &job = jobInfoArray[i];
         job.d_word_p    = &word;
-        job.d_path_p    = &fileList[i];
+        job.d_path_p    = &BSLS_ASSERT_CONVEYOR_REF(fileList[i]);
         job.d_mutex_p   = &mutex;
         job.d_outList_p = &outFileList;
         pool.enqueueJob(myFastSearchJob, &job);
@@ -708,13 +723,16 @@ static void myFastSearch(const bsl::string&              word,
 //
 static void myFastFunctorSearchJob(myFastSearchJobInfo *job)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(job);
     FILE *file;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(job->d_path_p);
     file = fopen(job->d_path_p->c_str(), "r");
 
     if (file) {
         char  buffer[1024];
         bsl::size_t  nread;
+        BSLS_ASSERT_CONVEYOR_OBJECT(job->d_word_p);
         bsl::size_t  wordLen = job->d_word_p->length();
         const char  *word = job->d_word_p->c_str();
 
@@ -723,6 +741,8 @@ static void myFastFunctorSearchJob(myFastSearchJobInfo *job)
             buffer[nread] = 0;
             if (strstr(buffer, word)) {
                 bslmt::LockGuard<bslmt::Mutex> lock(job->d_mutex_p);
+                BSLS_ASSERT_CONVEYOR_OBJECT(job->d_outList_p);
+                BSLS_ASSERT_CONVEYOR_OBJECT(job->d_path_p);
                 job->d_outList_p->push_back(*job->d_path_p);
                 break;
 
@@ -741,6 +761,7 @@ static void myFastFunctorSearch(const bsl::string&              word,
                                 const bsl::vector<bsl::string>& fileList,
                                 bsl::vector<bsl::string>&       outFileList)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&fileList);
     bslmt::Mutex            mutex;
     bslmt::ThreadAttributes defaultAttributes;
     bdlmt::FixedThreadPool  pool(defaultAttributes,
@@ -760,7 +781,7 @@ static void myFastFunctorSearch(const bsl::string&              word,
     for (unsigned i=0; i<count; ++i) {
         myFastSearchJobInfo &job = jobInfoArray[i];
         job.d_word_p    = &word;
-        job.d_path_p    = &fileList[i];
+        job.d_path_p    = &BSLS_ASSERT_CONVEYOR_REF(fileList[i]);
         job.d_mutex_p   = &mutex;
         job.d_outList_p = &outFileList;
 

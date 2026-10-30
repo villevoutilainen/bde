@@ -247,6 +247,8 @@ bdlm::MetricsAdapter::CallbackHandle
                                 const bdlm::MetricDescriptor& metricDescriptor,
                                 const Callback&               /* callback */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricDescriptor);
     d_descriptors.push_back(metricDescriptor);
 
     int h = 7 + static_cast<int>(d_descriptors.size());
@@ -257,12 +259,15 @@ bdlm::MetricsAdapter::CallbackHandle
 
 int TestMetricsAdapter::removeCollectionCallback(const CallbackHandle& handle)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
     d_handles.erase(handle);
     return 0;
 }
 
 void TestMetricsAdapter::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_descriptors.clear();
     d_handles.clear();
 }
@@ -270,27 +275,29 @@ void TestMetricsAdapter::reset()
 // ACCESSORS
 bool TestMetricsAdapter::verify(const bsl::string& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     static bdlm::InstanceCount::Value count = 0;
 
     ++count;
 
     ASSERT(d_handles.empty());
     ASSERT(1 == d_descriptors.size());
-    ASSERT(d_descriptors[0].metricNamespace()        == "");
-    ASSERT(d_descriptors[0].metricName()             == "bde.backlog");
-    ASSERT(d_descriptors[0].objectTypeAbbreviation() == "tp");
-    ASSERT(d_descriptors[0].objectTypeName()         == "bdlmt.threadpool");
-    ASSERT(d_descriptors[0].instanceNumber()         == count);
-    ASSERT(d_descriptors[0].objectIdentifier()       == name);
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricNamespace()        == "");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricName()             == "bde.backlog");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeAbbreviation() == "tp");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeName()         == "bdlmt.threadpool");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).instanceNumber()         == count);
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectIdentifier()       == name);
 
     return d_handles.empty()
         && 1 == d_descriptors.size()
-        && d_descriptors[0].metricNamespace()        == ""
-        && d_descriptors[0].metricName()             == "bde.backlog"
-        && d_descriptors[0].objectTypeAbbreviation() == "tp"
-        && d_descriptors[0].objectTypeName()         == "bdlmt.threadpool"
-        && d_descriptors[0].instanceNumber()         == count
-        && d_descriptors[0].objectIdentifier()       == name;
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricNamespace()        == ""
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricName()             == "bde.backlog"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeAbbreviation() == "tp"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeName()         == "bdlmt.threadpool"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).instanceNumber()         == count
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectIdentifier()       == name;
 }
 
 // ============================================================================
@@ -555,13 +562,17 @@ namespace THREADPOOL_USAGE_EXAMPLE {
     static void myFastSearchJob(void *arg)
     {
         my_FastSearchJobInfo *job =  (my_FastSearchJobInfo*)arg;
+        BSLS_ASSERT_CONVEYOR_OBJECT(job);
         FILE *file;
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(job->d_path);
         file = fopen(job->d_path->c_str(), "r");
 
         if (file) {
             char  buffer[1024];
             size_t nread;
+            BSLS_ASSERT_CONVEYOR_OBJECT(job);
+            BSLS_ASSERT_CONVEYOR_OBJECT(job->d_word);
             size_t wordLen = job->d_word->length();
             const char *word = job->d_word->c_str();
 
@@ -583,6 +594,9 @@ namespace THREADPOOL_USAGE_EXAMPLE {
 // template class.
 // ```
                     bslmt::LockGuard<bslmt::Mutex> lock(job->d_mutex);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(job);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(job->d_outList);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(job->d_path);
                     job->d_outList->push_back(*job->d_path);
                     break;  // bslmt::LockGuard destructor unlocks mutex.
                 }
@@ -605,6 +619,7 @@ namespace THREADPOOL_USAGE_EXAMPLE {
                        const bsl::vector<bsl::string>& fileList,
                        bsl::vector<bsl::string>&       outFileList)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&fileList);
         bslmt::Mutex            mutex;
         bslmt::ThreadAttributes defaultAttributes;
 // ```
@@ -639,7 +654,7 @@ namespace THREADPOOL_USAGE_EXAMPLE {
         for (unsigned i = 0; i < count; ++i) {
             my_FastSearchJobInfo &job = jobInfoArray[i];
             job.d_word    = &word;
-            job.d_path    = &fileList[i];
+            job.d_path    = &BSLS_ASSERT_CONVEYOR_REF(fileList[i]);
             job.d_mutex   = &mutex;
             job.d_outList = &outFileList;
             pool.enqueueJob(myFastSearchJob, &job);
@@ -672,14 +687,17 @@ namespace THREADPOOL_USAGE_EXAMPLE {
 // ```
     static void my_FastFunctorSearchJob(my_FastSearchJobInfo *job)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(job);
         FILE *file;
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(job->d_path);
         file = fopen(job->d_path->c_str(), "r");
 
         // The rest of the function is unchanged.
         if (file) {
             char  buffer[1024];
             size_t nread;
+            BSLS_ASSERT_CONVEYOR_OBJECT(job->d_word);
             size_t wordLen = job->d_word->length();
             const char *word = job->d_word->c_str();
 
@@ -688,6 +706,8 @@ namespace THREADPOOL_USAGE_EXAMPLE {
                 buffer[nread] = 0;
                 if (strstr(buffer, word)) {
                     bslmt::LockGuard<bslmt::Mutex> lock(job->d_mutex);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(job->d_outList);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(job->d_path);
                     job->d_outList->push_back(*job->d_path);
                     break;  // bslmt::LockGuard destructor unlocks mutex.
                 }
@@ -706,6 +726,7 @@ namespace THREADPOOL_USAGE_EXAMPLE {
                                     const vector<string>& fileList,
                                     vector<string>&       outFileList)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&fileList);
         bslmt::Mutex            mutex;
         bslmt::ThreadAttributes defaultAttributes;
         bdlmt::ThreadPool       pool(defaultAttributes,
@@ -733,7 +754,7 @@ namespace THREADPOOL_USAGE_EXAMPLE {
         for (unsigned i = 0; i < count; ++i) {
             my_FastSearchJobInfo &job = jobInfoArray[i];
             job.d_word    = &word;
-            job.d_path    = &fileList[i];
+            job.d_path    = &BSLS_ASSERT_CONVEYOR_REF(fileList[i]);
             job.d_mutex   = &mutex;
             job.d_outList = &outFileList;
 

@@ -1105,7 +1105,8 @@ class SignalerConnection {
     /// `slotNodeBasePtr`.
     explicit
     SignalerConnection(const bsl::shared_ptr<SlotNode_Base>& slotNodeBasePtr)
-                                                         BSLS_KEYWORD_NOEXCEPT;
+                                                          BSLS_KEYWORD_NOEXCEPT
+                               BSLS_ASSERT_CONVEYOR_TRUST_PRE(slotNodeBasePtr);
 
   public:
     // CREATORS
@@ -1344,6 +1345,7 @@ template <class t_SIGNALER>
 inline
 void Signaler_Invocable<t_SIGNALER, void()>::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static_cast<const t_SIGNALER *>(this)->d_signalerNodePtr->invoke(
                                                             Signaler_NotArg(),
                                                             Signaler_NotArg(),
@@ -1361,6 +1363,7 @@ inline
 void Signaler_Invocable<t_SIGNALER, void(t_ARG1)>::operator()(
                                                              t_ARG1 arg1) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static_cast<const t_SIGNALER *>(this)->d_signalerNodePtr->invoke(
                       bslmf::ForwardingTypeUtil<t_ARG1>::forwardToTarget(arg1),
                       Signaler_NotArg(),
@@ -1379,6 +1382,7 @@ void Signaler_Invocable<t_SIGNALER, void(t_ARG1, t_ARG2)>::operator()(
                                                              t_ARG1 arg1,
                                                              t_ARG2 arg2) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static_cast<const t_SIGNALER *>(this)->d_signalerNodePtr->invoke(
                       bslmf::ForwardingTypeUtil<t_ARG1>::forwardToTarget(arg1),
                       bslmf::ForwardingTypeUtil<t_ARG2>::forwardToTarget(arg2),
@@ -1398,6 +1402,7 @@ void Signaler_Invocable<t_SIGNALER, void(t_ARG1, t_ARG2, t_ARG3)>::operator()(
                                                              t_ARG2 arg2,
                                                              t_ARG3 arg3) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static_cast<const t_SIGNALER *>(this)->d_signalerNodePtr->invoke(
                       bslmf::ForwardingTypeUtil<t_ARG1>::forwardToTarget(arg1),
                       bslmf::ForwardingTypeUtil<t_ARG2>::forwardToTarget(arg2),
@@ -1424,6 +1429,7 @@ void Signaler_Invocable<t_SIGNALER, void(t_ARG1,
                                                            t_ARG3 arg3,
                                                            t_ARG4 arg4) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static_cast<const t_SIGNALER *>(this)->d_signalerNodePtr->invoke(
                       bslmf::ForwardingTypeUtil<t_ARG1>::forwardToTarget(arg1),
                       bslmf::ForwardingTypeUtil<t_ARG2>::forwardToTarget(arg2),
@@ -1453,6 +1459,7 @@ void Signaler_Invocable<t_SIGNALER, void(t_ARG1,
                                                            t_ARG4 arg4,
                                                            t_ARG5 arg5) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static_cast<const t_SIGNALER *>(this)->d_signalerNodePtr->invoke(
                       bslmf::ForwardingTypeUtil<t_ARG1>::forwardToTarget(arg1),
                       bslmf::ForwardingTypeUtil<t_ARG2>::forwardToTarget(arg2),
@@ -1485,6 +1492,7 @@ void Signaler_Invocable<t_SIGNALER, void(t_ARG1,
                                                           t_ARG5 arg5,
                                                           t_ARG6 arg6) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static_cast<const t_SIGNALER *>(this)->d_signalerNodePtr->invoke(
                       bslmf::ForwardingTypeUtil<t_ARG1>::forwardToTarget(arg1),
                       bslmf::ForwardingTypeUtil<t_ARG2>::forwardToTarget(arg2),
@@ -1520,6 +1528,7 @@ void Signaler_Invocable<t_SIGNALER,
                                                   t_ARG6 arg6,
                                                   t_ARG7 arg7) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static_cast<const t_SIGNALER *>(this)->d_signalerNodePtr->invoke(
                       bslmf::ForwardingTypeUtil<t_ARG1>::forwardToTarget(arg1),
                       bslmf::ForwardingTypeUtil<t_ARG2>::forwardToTarget(arg2),
@@ -1558,6 +1567,7 @@ void Signaler_Invocable<t_SIGNALER,
                                                   t_ARG7 arg7,
                                                   t_ARG8 arg8) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static_cast<const t_SIGNALER *>(this)->d_signalerNodePtr->invoke(
                       bslmf::ForwardingTypeUtil<t_ARG1>::forwardToTarget(arg1),
                       bslmf::ForwardingTypeUtil<t_ARG2>::forwardToTarget(arg2),
@@ -1600,6 +1610,7 @@ Signaler_Invocable<t_SIGNALER, void(
                                             t_ARG8 arg8,
                                             t_ARG9 arg9) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static_cast<const t_SIGNALER *>(this)->d_signalerNodePtr->invoke(
                      bslmf::ForwardingTypeUtil<t_ARG1>::forwardToTarget(arg1),
                      bslmf::ForwardingTypeUtil<t_ARG2>::forwardToTarget(arg2),
@@ -1819,7 +1830,8 @@ Signaler_SlotNode<t_PROT>::Signaler_SlotNode(
          allocator,
          BSLS_COMPILERFEATURES_FORWARD(t_FUNC, func))
 {
-    BSLS_ASSERT(!signalerNodePtr.expired());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&signalerNodePtr);
+    BSLS_ASSERT_NONCONVEYOR(!signalerNodePtr.expired());
     BSLS_ASSERT(allocator);
 }
 
@@ -1828,6 +1840,7 @@ template <class t_PROT>
 inline
 void Signaler_SlotNode<t_PROT>::disconnect() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!d_isConnected.testAndSwap(true, false)) {
         return;                                                       // RETURN
     }
@@ -1844,6 +1857,7 @@ template <class t_PROT>
 inline
 void Signaler_SlotNode<t_PROT>::disconnectAndWait() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bool wasConnected = d_isConnected.testAndSwap(true, false);
 
     // Notify the associated signaler
@@ -1881,10 +1895,11 @@ void Signaler_SlotNode<t_PROT>::invoke(
                              typename ArgumentType::ForwardingType8 arg8,
                              typename ArgumentType::ForwardingType9 arg9) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // The only way we are called is from a 'Signaler', which should exist
     // throughout the call and be holding a shared ptr to the 'Signaler_Node'.
 
-    BSLS_ASSERT(!d_signalerNodePtr.expired());
+    BSLS_ASSERT_NONCONVEYOR(!d_signalerNodePtr.expired());
 
     if (!d_isConnected) {
         // The slot was evidently disconnected by another thread.  Do nothing.
@@ -1981,6 +1996,7 @@ SignalerConnection Signaler_Node<t_PROT>::connect(
                                BSLS_COMPILERFEATURES_FORWARD_REF(t_FUNC) func,
                                int                                       group)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // create a key the slot will be indexed by
 
     const SlotMapKey slotMapKey(group, ++d_keyId);
@@ -2128,6 +2144,7 @@ SignalerConnection Signaler<t_PROT>::connect(
                                BSLS_COMPILERFEATURES_FORWARD_REF(t_FUNC) func,
                                int                                       group)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_signalerNodePtr->connect(BSLS_COMPILERFEATURES_FORWARD(t_FUNC,
                                                                     func),
                                       group);
@@ -2137,6 +2154,7 @@ template <class t_PROT>
 inline
 void Signaler<t_PROT>::disconnectAllSlots() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_signalerNodePtr->disconnectAllSlots();
 }
 
@@ -2144,6 +2162,7 @@ template <class t_PROT>
 inline
 void Signaler<t_PROT>::disconnectAllSlotsAndWait() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_signalerNodePtr->disconnectAllSlotsAndWait();
 }
 
@@ -2151,6 +2170,7 @@ template <class t_PROT>
 inline
 void Signaler<t_PROT>::disconnectGroup(int group) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_signalerNodePtr->disconnectGroup(group);
 }
 
@@ -2158,6 +2178,7 @@ template <class t_PROT>
 inline
 void Signaler<t_PROT>::disconnectGroupAndWait(int group) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_signalerNodePtr->disconnectGroupAndWait(group);
 }
 
@@ -2166,6 +2187,7 @@ template <class t_PROT>
 inline
 bsl::size_t Signaler<t_PROT>::slotCount() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_signalerNodePtr->slotCount();
 }
 
@@ -2184,12 +2206,16 @@ void SignalerConnection::swap(SignalerConnection& other) BSLS_KEYWORD_NOEXCEPT
 inline
 bool operator==(const SignalerConnection& lhs, const SignalerConnection& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_slotNodeBasePtr.rep() == rhs.d_slotNodeBasePtr.rep();
 }
 
 inline
 bool operator<( const SignalerConnection& lhs, const SignalerConnection& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_slotNodeBasePtr.owner_before(rhs.d_slotNodeBasePtr);
 }
 

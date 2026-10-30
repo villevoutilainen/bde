@@ -186,7 +186,7 @@ EventSchedulerTestTimeSource_Data::EventSchedulerTestTimeSource_Data(
 bsls::TimeInterval EventSchedulerTestTimeSource_Data::advanceTime(
                                                      bsls::TimeInterval amount)
 {
-    BSLS_ASSERT(amount > 0);
+    BSLS_ASSERT_NONCONVEYOR(amount > 0);
 
     bslmt::LockGuard<bslmt::Mutex> lock(&d_currentTimeMutex);
     d_currentTime += amount;
@@ -221,6 +221,7 @@ bsls::Types::Int64 EventScheduler::returnZeroInt(int)
 // PRIVATE MANIPULATORS
 bsls::Types::Int64 EventScheduler::chooseNextEvent(bsls::AtomicInt64 *now)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 != d_currentRecurringEvent || 0 != d_currentEvent);
 
     bsls::Types::Int64 t = 0;
@@ -259,6 +260,7 @@ bsls::Types::Int64 EventScheduler::chooseNextEvent(bsls::AtomicInt64 *now)
 
 void EventScheduler::dispatchEvents()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // set the dispatcher thread id
     d_dispatcherThreadId.storeRelease(bslmt::ThreadUtil::selfIdAsUint64());
 
@@ -987,7 +989,8 @@ EventScheduler::EventScheduler(
 
 EventScheduler::~EventScheduler()
 {
-    BSLS_ASSERT(bslmt::ThreadUtil::invalidHandle() == d_dispatcherThread);
+    BSLS_ASSERT_NONCONVEYOR(
+                     bslmt::ThreadUtil::invalidHandle() == d_dispatcherThread);
 }
 
 // MANIPULATORS
@@ -1021,7 +1024,7 @@ void EventScheduler::cancelAllEvents()
 
 void EventScheduler::cancelAllEventsAndWait()
 {
-    BSLS_ASSERT(!isInDispatcherThread());
+    BSLS_ASSERT_NONCONVEYOR(!isInDispatcherThread());
 
     d_eventQueue.removeAll();
     d_recurringQueue.removeAll();
@@ -1040,7 +1043,7 @@ void EventScheduler::cancelAllEventsAndWait()
 
 int EventScheduler::cancelEventAndWait(const RecurringEvent *handle)
 {
-    BSLS_ASSERT(!isInDispatcherThread());
+    BSLS_ASSERT_NONCONVEYOR(!isInDispatcherThread());
 
     const RecurringEventQueue::Pair *itemPtr = castToQueuePair(handle);
     int ret = d_recurringQueue.remove(itemPtr);
@@ -1081,7 +1084,7 @@ int EventScheduler::cancelEventAndWait(const RecurringEvent *handle)
 
 int EventScheduler::cancelEventAndWait(const Event *handle)
 {
-    BSLS_ASSERT(!isInDispatcherThread());
+    BSLS_ASSERT_NONCONVEYOR(!isInDispatcherThread());
 
     const EventQueue::Pair *itemPtr = castToQueuePair(handle);
 
@@ -1168,7 +1171,7 @@ int EventScheduler::rescheduleEventAndWait(
                                        const Event               *handle,
                                        const bsls::TimeInterval&  newEpochTime)
 {
-    BSLS_ASSERT(!isInDispatcherThread());
+    BSLS_ASSERT_NONCONVEYOR(!isInDispatcherThread());
 
     const EventQueue::Pair *h = castToQueuePair(handle);
     int ret;
@@ -1248,7 +1251,7 @@ EventScheduler::scheduleRecurringEventRaw(
     // Note that when this review is converted to an assert, the following
     // assert is redundant and can be removed.
     BSLS_REVIEW(1 <= interval.totalMicroseconds());
-    BSLS_ASSERT(0 != interval);
+    BSLS_ASSERT_NONCONVEYOR(0 != interval);
 
     bsls::Types::Int64 stime(startEpochTime.totalMicroseconds());
     if (0 == stime) {
@@ -1278,7 +1281,8 @@ int EventScheduler::start()
 
 int EventScheduler::start(const bslmt::ThreadAttributes& threadAttributes)
 {
-    BSLS_ASSERT(!isInDispatcherThread());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(!isInDispatcherThread());
 
     // Implementation note: d_dispatcherMutex is in a lock hierarchy with
     // d_mutex and must be locked first.
@@ -1315,7 +1319,7 @@ int EventScheduler::start(const bslmt::ThreadAttributes& threadAttributes)
 
 void EventScheduler::stop()
 {
-    BSLS_ASSERT(!isInDispatcherThread());
+    BSLS_ASSERT_NONCONVEYOR(!isInDispatcherThread());
 
     // Implementation note: d_dispatcherMutex is in a lock hierarchy with
     // d_mutex and must be locked first.
@@ -1438,7 +1442,8 @@ EventSchedulerTestTimeSource::EventSchedulerTestTimeSource(
 bsls::TimeInterval EventSchedulerTestTimeSource::advanceTime(
                                                      bsls::TimeInterval amount)
 {
-    BSLS_ASSERT(amount > 0);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(amount > 0);
 
     // Returning the new time allows an atomic `advance` + `now` operation.
     // This feature may not be necessary.
@@ -1482,6 +1487,7 @@ bsls::TimeInterval EventSchedulerTestTimeSource::advanceTime(
 // ACCESSORS
 bsls::TimeInterval EventSchedulerTestTimeSource::now() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_data_sp->currentTime();
 }
 

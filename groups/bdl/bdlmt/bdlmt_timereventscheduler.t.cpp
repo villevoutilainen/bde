@@ -256,6 +256,8 @@ static const bsls::TimeInterval APPRECIABLE_DIFFERENCE (0, 100000000); // 100ms
 static inline bool isUnacceptable(const bsls::TimeInterval& t1,
                                   const bsls::TimeInterval& t2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&t1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&t2);
     (void) UNACCEPTABLE_DIFFERENCE;
     bsls::TimeInterval absDifference = (t1 > t2) ? (t1 - t2) : (t2 - t1);
     return (ALLOWABLE_DIFFERENCE > absDifference)? true : false;
@@ -267,6 +269,8 @@ static inline bool isUnacceptable(const bsls::TimeInterval& t1,
 static inline bool isApproxEqual(const bsls::TimeInterval& t1,
                                  const bsls::TimeInterval& t2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&t1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&t2);
     bsls::TimeInterval absDifference = (t1 > t2) ? (t1 - t2) : (t2 - t1);
     return (ALLOWABLE_DIFFERENCE > absDifference)? true : false;
 }
@@ -719,6 +723,7 @@ void cancelEventCallbackWithState(Obj                         *scheduler,
                                   int                         *handlePtr,
                                   const bsl::shared_ptr<int>&  state)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&state);
     const int s = *state;
     int ret = scheduler->cancelEvent(*handlePtr);
     ASSERTV(ret, s == *state);
@@ -884,6 +889,8 @@ bdlm::MetricsAdapter::CallbackHandle
                                 const bdlm::MetricDescriptor& metricDescriptor,
                                 const Callback&               /* callback */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricDescriptor);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     d_descriptors.push_back(metricDescriptor);
@@ -896,6 +903,8 @@ bdlm::MetricsAdapter::CallbackHandle
 
 int TestMetricsAdapter::removeCollectionCallback(const CallbackHandle& handle)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     d_handles.erase(handle);
@@ -904,6 +913,7 @@ int TestMetricsAdapter::removeCollectionCallback(const CallbackHandle& handle)
 
 void TestMetricsAdapter::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     d_descriptors.clear();
@@ -913,29 +923,31 @@ void TestMetricsAdapter::reset()
 // ACCESSORS
 bool TestMetricsAdapter::verify(const bsl::string& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     ++s_count;
 
     ASSERT(d_handles.empty());
     ASSERT(1 == d_descriptors.size());
-    ASSERT(d_descriptors[0].metricNamespace()        == "");
-    ASSERT(d_descriptors[0].metricName()             == "bde.startlag");
-    ASSERT(d_descriptors[0].objectTypeAbbreviation() == "tes");
-    ASSERT(d_descriptors[0].objectTypeName()         ==
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricNamespace()        == "");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricName()             == "bde.startlag");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeAbbreviation() == "tes");
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeName()         ==
                                                   "bdlmt.timereventscheduler");
-    ASSERT(d_descriptors[0].instanceNumber()         == s_count);
-    ASSERT(d_descriptors[0].objectIdentifier()       == name);
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).instanceNumber()         == s_count);
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectIdentifier()       == name);
 
     return d_handles.empty()
         && 1 == d_descriptors.size()
-        && d_descriptors[0].metricNamespace()        == ""
-        && d_descriptors[0].metricName()             == "bde.startlag"
-        && d_descriptors[0].objectTypeAbbreviation() == "tes"
-        && d_descriptors[0].objectTypeName()         ==
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricNamespace()        == ""
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).metricName()             == "bde.startlag"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeAbbreviation() == "tes"
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectTypeName()         ==
                                                     "bdlmt.timereventscheduler"
-        && d_descriptors[0].instanceNumber()         == s_count
-        && d_descriptors[0].objectIdentifier()       == name;
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).instanceNumber()         == s_count
+        && BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]).objectIdentifier()       == name;
 }
 
 // ----------------------------------------------------------------------------
@@ -1161,6 +1173,7 @@ bsls::AtomicBool         Func::s_finished;
 
 void Func::operator()()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     s_indexes.push_back(d_eventIndex);
 
     if (s_kamikaze == d_eventIndex) {

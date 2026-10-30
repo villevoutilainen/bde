@@ -310,18 +310,18 @@ bsls::TimeInterval toTime(const char *timeStr)
     BSLS_ASSERT(secondsStr);
 
     BSLS_ASSERT(!minutesStr || maxStr == minutesStr);
-    BSLS_ASSERT(maxStr <= secondsStr);
+    BSLS_ASSERT_NONCONVEYOR(maxStr <= secondsStr);
     maxStr = secondsStr;
     if (fracStr) {
-        BSLS_ASSERT(maxStr <= fracStr);
+        BSLS_ASSERT_NONCONVEYOR(maxStr <= fracStr);
         maxStr = fracStr;
     }
     if (nanoStr) {
-        BSLS_ASSERT(maxStr <= nanoStr);
+        BSLS_ASSERT_NONCONVEYOR(maxStr <= nanoStr);
     }
 
     for (const char *pc = buf; pc < buf + len; ++pc) {
-        BSLS_ASSERT(!*pc || isdigit(*pc));
+        BSLS_ASSERT_NONCONVEYOR(!*pc || isdigit(*pc));
     }
 
     bsls::TimeInterval ret;
@@ -369,6 +369,7 @@ bsls::TimeInterval tiAdapt(const bsls::TimeInterval& orig)
 /// `stream`.
 bsl::ostream& operator<<(bsl::ostream& stream, const bsl::vector<Int64>& v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&v);
     typedef bsl::vector<Int64>::const_iterator It;
 
     stream << endl;

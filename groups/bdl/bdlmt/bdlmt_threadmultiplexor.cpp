@@ -67,7 +67,7 @@ ThreadMultiplexor::ThreadMultiplexor(int               maxProcessors,
 
 ThreadMultiplexor::~ThreadMultiplexor()
 {
-    BSLS_ASSERT(0 == d_jobQueue_p->length());
+    BSLS_ASSERT_NONCONVEYOR(0 == d_jobQueue_p->length());
 
     d_allocator_p->deleteObjectRaw(d_jobQueue_p);
 }

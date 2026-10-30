@@ -81,7 +81,7 @@ void MultipriorityThreadPool::worker()
         if (e_STOPPING == d_threadStartState) {
             return;                                                   // RETURN
         }
-        BSLS_ASSERT(e_STARTING == d_threadStartState);
+        BSLS_ASSERT_NONCONVEYOR(e_STARTING == d_threadStartState);
 
         if (d_numThreads == ++d_numStartedThreads) {
             d_threadStartState = e_STARTED;
@@ -109,9 +109,9 @@ void MultipriorityThreadPool::worker()
                     --d_numStartedThreads;
                     return;                                           // RETURN
                 }
-                BSLS_ASSERT(e_STARTED == d_threadStartState);
+                BSLS_ASSERT_NONCONVEYOR(e_STARTED == d_threadStartState);
 
-                BSLS_ASSERT(e_SUSPENDED != d_threadSuspendState);
+                BSLS_ASSERT_NONCONVEYOR(e_SUSPENDED != d_threadSuspendState);
                 if (e_SUSPENDING == d_threadSuspendState) {
                     if (d_numThreads == ++d_numSuspendedThreads) {
                         d_threadSuspendState = e_SUSPENDED;
@@ -198,14 +198,15 @@ MultipriorityThreadPool::MultipriorityThreadPool(
 
 MultipriorityThreadPool::~MultipriorityThreadPool()
 {
-    BSLS_ASSERT(e_STOPPED == d_threadStartState);
+    BSLS_ASSERT_NONCONVEYOR(e_STOPPED == d_threadStartState);
 }
 
 // MANIPULATORS
 int MultipriorityThreadPool::enqueueJob(const ThreadFunctor& job,
                                         int                  priority)
 {
-    BSLS_ASSERT((unsigned) priority < (unsigned) d_queue.numPriorities());
+    BSLS_ASSERT_NONCONVEYOR(
+                     (unsigned) priority < (unsigned) d_queue.numPriorities());
     // checks '0 <= priority < numPriorities()'
 
     return d_queue.pushBack(job, priority);
@@ -236,7 +237,7 @@ int MultipriorityThreadPool::startThreads()
     if (e_STARTED == d_threadStartState) {
         return 0;                                                     // RETURN
     }
-    BSLS_ASSERT(e_STOPPED == d_threadStartState);
+    BSLS_ASSERT_NONCONVEYOR(e_STOPPED == d_threadStartState);
 
 #if defined(BSLS_PLATFORM_OS_UNIX)
     sigset_t oldBlockSet, newBlockSet;  // set of signals to be blocked in
@@ -268,6 +269,7 @@ int MultipriorityThreadPool::startThreads()
             bdlf::MemFnUtil::memFn(&MultipriorityThreadPool::worker, this);
 
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
         d_threadStartState = e_STARTING;
@@ -292,8 +294,8 @@ int MultipriorityThreadPool::startThreads()
                     d_allThreadsStartedCondition.wait(&d_mutex);
                 } while (e_STARTING == d_threadStartState);
             }
-            BSLS_ASSERT(e_STARTED      == d_threadStartState);
-            BSLS_ASSERT(d_numThreads == d_numStartedThreads);
+            BSLS_ASSERT_NONCONVEYOR(e_STARTED      == d_threadStartState);
+            BSLS_ASSERT_NONCONVEYOR(d_numThreads == d_numStartedThreads);
         }
         else {
             // start failed -- shut down all the threads
@@ -326,9 +328,9 @@ int MultipriorityThreadPool::startThreads()
     pthread_sigmask(SIG_SETMASK, &oldBlockSet, &newBlockSet);
 #endif
 
-    BSLS_ASSERT(e_STARTED   == d_threadStartState
+    BSLS_ASSERT_NONCONVEYOR(e_STARTED   == d_threadStartState
              || e_STOPPED   == d_threadStartState);
-    BSLS_ASSERT(e_RESUMED   == d_threadSuspendState
+    BSLS_ASSERT_NONCONVEYOR(e_RESUMED   == d_threadSuspendState
              || e_SUSPENDED == d_threadSuspendState);
 
     return rc;
@@ -343,12 +345,12 @@ void MultipriorityThreadPool::stopThreads()
         return;                                                       // RETURN
     }
 
-    BSLS_ASSERT(e_STARTED == d_threadStartState);
+    BSLS_ASSERT_NONCONVEYOR(e_STARTED == d_threadStartState);
     d_threadStartState = e_STOPPING;
 
     // Give waiting threads a chance to stop.
     if (e_SUSPENDED == d_threadSuspendState) {
-        BSLS_ASSERT(0 == numActiveThreads());
+        BSLS_ASSERT_NONCONVEYOR(0 == numActiveThreads());
         d_resumeCondition.broadcast();
     }
     else {
@@ -368,9 +370,9 @@ void MultipriorityThreadPool::stopThreads()
 
     d_threadStartState = e_STOPPED;
 
-    BSLS_ASSERT(0 == d_numStartedThreads);
-    BSLS_ASSERT(0 == d_numSuspendedThreads);
-    BSLS_ASSERT(0 == d_numActiveThreads);
+    BSLS_ASSERT_NONCONVEYOR(0 == d_numStartedThreads);
+    BSLS_ASSERT_NONCONVEYOR(0 == d_numSuspendedThreads);
+    BSLS_ASSERT_NONCONVEYOR(0 == d_numActiveThreads);
 }
 
 void MultipriorityThreadPool::suspendProcessing()
@@ -381,13 +383,13 @@ void MultipriorityThreadPool::suspendProcessing()
     if (e_SUSPENDED == d_threadSuspendState) {
         return;                                                       // RETURN
     }
-    BSLS_ASSERT(e_RESUMED == d_threadSuspendState);
+    BSLS_ASSERT_NONCONVEYOR(e_RESUMED == d_threadSuspendState);
 
     if (e_STOPPED == d_threadStartState) {
         d_threadSuspendState = e_SUSPENDED;
 
-        BSLS_ASSERT(0 == d_numStartedThreads);
-        BSLS_ASSERT(0 == d_numSuspendedThreads);
+        BSLS_ASSERT_NONCONVEYOR(0 == d_numStartedThreads);
+        BSLS_ASSERT_NONCONVEYOR(0 == d_numSuspendedThreads);
         return;                                                       // RETURN
     }
 
@@ -404,8 +406,8 @@ void MultipriorityThreadPool::suspendProcessing()
         d_allThreadsSuspendedCondition.wait(&d_mutex);
     } while (e_SUSPENDED != d_threadSuspendState);
 
-    BSLS_ASSERT(d_numThreads == d_numStartedThreads);
-    BSLS_ASSERT(d_numThreads == d_numSuspendedThreads);
+    BSLS_ASSERT_NONCONVEYOR(d_numThreads == d_numStartedThreads);
+    BSLS_ASSERT_NONCONVEYOR(d_numThreads == d_numSuspendedThreads);
 }
 
 void MultipriorityThreadPool::resumeProcessing()
@@ -415,7 +417,7 @@ void MultipriorityThreadPool::resumeProcessing()
     if (e_RESUMED == d_threadSuspendState) {
         return;                                                       // RETURN
     }
-    BSLS_ASSERT(e_SUSPENDED == d_threadSuspendState);
+    BSLS_ASSERT_NONCONVEYOR(e_SUSPENDED == d_threadSuspendState);
 
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
@@ -428,8 +430,8 @@ void MultipriorityThreadPool::drainJobs()
     bslmt::LockGuard<bslmt::Mutex> metaLock(&d_metaMutex);
 
     // If these two conditions are not true, this method will hang.
-    BSLS_ASSERT(e_STARTED == d_threadStartState);
-    BSLS_ASSERT(e_RESUMED == d_threadSuspendState);
+    BSLS_ASSERT_NONCONVEYOR(e_STARTED == d_threadStartState);
+    BSLS_ASSERT_NONCONVEYOR(e_RESUMED == d_threadSuspendState);
 
     bslmt::Barrier barrier(d_numThreads + 1);
     const ThreadFunctor barrierJob =

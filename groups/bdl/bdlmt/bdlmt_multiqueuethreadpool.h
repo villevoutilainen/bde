@@ -932,6 +932,7 @@ int MultiQueueThreadPool_Queue::batchSize() const
 inline
 bool MultiQueueThreadPool_Queue::isDrained() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
 
     return 0 == d_list.size() && (   e_NOT_SCHEDULED == d_runState
@@ -957,6 +958,7 @@ bool MultiQueueThreadPool_Queue::isPaused() const
 inline
 int MultiQueueThreadPool_Queue::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
 
     return static_cast<int>(d_list.size());
@@ -971,6 +973,7 @@ inline
 int MultiQueueThreadPool::findIfUsable(int                          id,
                                        MultiQueueThreadPool_Queue **queue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (   e_STATE_RUNNING != d_state
         ||               0 == d_threadPool_p->enabled()) {
         return 1;                                                     // RETURN
@@ -1083,6 +1086,7 @@ int MultiQueueThreadPool::setBatchSize(int id, int batchSize)
 inline
 int MultiQueueThreadPool::batchSize(int id) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_lock);
 
     QueueRegistry::const_iterator iter = d_queueRegistry.find(id);
@@ -1097,6 +1101,7 @@ int MultiQueueThreadPool::batchSize(int id) const
 inline
 bool MultiQueueThreadPool::isEnabled(int id) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_lock);
 
     QueueRegistry::const_iterator iter = d_queueRegistry.find(id);
@@ -1111,6 +1116,7 @@ bool MultiQueueThreadPool::isEnabled(int id) const
 inline
 bool MultiQueueThreadPool::isPaused(int id) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_lock);
 
     QueueRegistry::const_iterator iter = d_queueRegistry.find(id);
@@ -1133,6 +1139,7 @@ int MultiQueueThreadPool::numElements() const
 inline
 int MultiQueueThreadPool::numElements(int id) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_lock);
 
     QueueRegistry::const_iterator iter = d_queueRegistry.find(id);
@@ -1162,6 +1169,7 @@ void MultiQueueThreadPool::numProcessed(int *numExecuted,
 inline
 int MultiQueueThreadPool::numQueues() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_lock);
 
     return static_cast<int>(d_queueRegistry.size());

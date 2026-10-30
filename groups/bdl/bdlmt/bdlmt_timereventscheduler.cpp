@@ -101,6 +101,7 @@ extern "C" void *TimerEventSchedulerDispatcherThread(void *scheduler)
 void TimerEventSchedulerDispatcher::dispatchEvents(
                                                 TimerEventScheduler* scheduler)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(scheduler);
     BSLS_ASSERT(0 != scheduler);
 
     typedef TimerEventScheduler::ClockDataPtr  ClockDataPtr;
@@ -347,7 +348,7 @@ TimerEventSchedulerTestTimeSource_Data::TimerEventSchedulerTestTimeSource_Data(
 bsls::TimeInterval TimerEventSchedulerTestTimeSource_Data::advanceTime(
                                                      bsls::TimeInterval amount)
 {
-    BSLS_ASSERT(amount > 0);
+    BSLS_ASSERT_NONCONVEYOR(amount > 0);
 
     const bslmt::LockGuard<bslmt::Mutex> lock(&d_currentTimeMutex);
     d_currentTime += amount;
@@ -1019,12 +1020,14 @@ int TimerEventScheduler::start()
 
 int TimerEventScheduler::start(const bslmt::ThreadAttributes& threadAttributes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Implementation note: 'd_dispatcherMutex' is in a lock hierarchy with
     // 'd_mutex' and must always be locked first.
 
     const bslmt::LockGuard<bslmt::Mutex> dispatcherLock(&d_dispatcherMutex);
 
-    BSLS_ASSERT(! bslmt::ThreadUtil::isEqual(bslmt::ThreadUtil::self(),
+    BSLS_ASSERT_NONCONVEYOR(
+                        ! bslmt::ThreadUtil::isEqual(bslmt::ThreadUtil::self(),
                                              d_dispatcherThread));
 
     const bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -1066,7 +1069,8 @@ void TimerEventScheduler::stop()
 
     const bslmt::LockGuard<bslmt::Mutex> dispatcherLock(&d_dispatcherMutex);
 
-    BSLS_ASSERT(! bslmt::ThreadUtil::isEqual(bslmt::ThreadUtil::self(),
+    BSLS_ASSERT_NONCONVEYOR(
+                        ! bslmt::ThreadUtil::isEqual(bslmt::ThreadUtil::self(),
                                              d_dispatcherThread));
 
     {
@@ -1147,6 +1151,7 @@ int TimerEventScheduler::cancelEvent(TimerEventScheduler::Handle handle,
                                      const EventKey&             key,
                                      bool                        wait)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // First search in the event queue if we can find the event there.
 
     if (!d_eventTimeQueue.remove(handle, key)) {
@@ -1237,7 +1242,8 @@ TimerEventScheduler::startClock(const bsls::TimeInterval&    interval,
                                 const bsl::function<void()>& callback,
                                 const bsls::TimeInterval&    startTime)
 {
-    BSLS_ASSERT(0 != interval);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(0 != interval);
 
     bsls::TimeInterval stime(startTime);
     if (0 == stime) {
@@ -1414,7 +1420,8 @@ TimerEventSchedulerTestTimeSource::TimerEventSchedulerTestTimeSource(
 bsls::TimeInterval TimerEventSchedulerTestTimeSource::advanceTime(
                                                      bsls::TimeInterval amount)
 {
-    BSLS_ASSERT(amount > 0);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(amount > 0);
 
     // Returning the new time allows an atomic 'advance' + 'now' operation.
     // This feature may not be necessary.
@@ -1439,6 +1446,7 @@ bsls::TimeInterval TimerEventSchedulerTestTimeSource::advanceTime(
 // ACCESSORS
 bsls::TimeInterval TimerEventSchedulerTestTimeSource::now() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_data_p->currentTime();
 }
 

@@ -30,7 +30,8 @@ void Throttle::initialize(int                         maxSimultaneousActions,
     BSLS_ASSERT(0 <= maxSimultaneousActions);
     BSLS_ASSERT(0 <= nanosecondsPerAction);
     BSLS_ASSERT(maxSimultaneousActions || nanosecondsPerAction);
-    BSLS_ASSERT(LLONG_MAX / bsl::max(maxSimultaneousActions, 1) >=
+    BSLS_ASSERT_NONCONVEYOR(
+                        LLONG_MAX / bsl::max(maxSimultaneousActions, 1) >=
                                                      nanosecondsPerAction);
 
     BSLS_ASSERT(bsls::SystemClockType::e_MONOTONIC == clockType ||
@@ -59,6 +60,7 @@ void Throttle::initialize(int                         maxSimultaneousActions,
 
 bool Throttle::requestPermission(const bsls::TimeInterval& now)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&now);
 #if defined(BSLS_ASSERT_IS_ACTIVE)
     BSLS_ASSERT(now.seconds() <= k_MAX_SECONDS);
     BSLS_ASSERT(now.seconds() >= k_MIN_SECONDS);
@@ -105,6 +107,8 @@ bool Throttle::requestPermission(const bsls::TimeInterval& now)
 bool Throttle::requestPermission(int                       numActions,
                                  const bsls::TimeInterval& now)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&now);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #if defined(BSLS_ASSERT_IS_ACTIVE)
     BSLS_ASSERT(0 < numActions);
     BSLS_ASSERT(now.seconds() <= k_MAX_SECONDS);
@@ -167,6 +171,7 @@ int Throttle::requestPermissionIfValid(bool                      *result,
                                        int                        numActions,
                                        const bsls::TimeInterval&  now)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&now);
     if (numActions <= 0 || (d_maxSimultaneousActions < numActions &&
                                               0 != d_maxSimultaneousActions)) {
         return -1;                                                    // RETURN
@@ -187,6 +192,7 @@ int Throttle::requestPermissionIfValid(bool                      *result,
 // ACCESSOR
 int Throttle::nextPermit(bsls::TimeInterval *result, int numActions) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (numActions <= 0 || d_maxSimultaneousActions < numActions ||
                                       k_ALLOW_NONE == d_nanosecondsPerAction) {
         return -1;                                                    // RETURN

@@ -283,6 +283,7 @@ UsageTestChecker::operator TestQueue::Job()
 }
 
 void UsageTestChecker::eval() {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_semaphore) {
         d_semaphore->wait();
     }

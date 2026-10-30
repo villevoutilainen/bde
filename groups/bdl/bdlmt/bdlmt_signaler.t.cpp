@@ -155,6 +155,8 @@ void _assertCompare ## NAME(const P&    prefix,                               \
                             const char *yStr,                                 \
                             int         line)                                 \
 {                                                                             \
+    BSLS_ASSERT_CONVEYOR_OBJECT(&xResult);                                    \
+    BSLS_ASSERT_CONVEYOR_OBJECT(&yResult);                                    \
     if (!(xResult OP yResult)) {                                              \
         bdlsb::MemOutStreamBuf buffer(&ta);                                   \
         bsl::ostream os(&buffer);                                             \
@@ -728,6 +730,7 @@ void connectThem(bdlmt::Signaler<void(const char*)> *sig,
                  const FDeque&                       deque,
                  const int                          *groups)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&deque);
     bool taken[3];
     bsl::memset(taken, 0, sizeof(taken));
     for (int ii = 0; ii < 3; ++ii) {
@@ -735,7 +738,7 @@ void connectThem(bdlmt::Signaler<void(const char*)> *sig,
         while (taken[jj]) {
             jj = (jj + 1) % 3;
         }
-        sig->connect(deque[jj], groups[jj]);
+        sig->connect(BSLS_ASSERT_CONVEYOR_REF(deque[jj]), groups[jj]);
         taken[jj] = true;
     }
 }

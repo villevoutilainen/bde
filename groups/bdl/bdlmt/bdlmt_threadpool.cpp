@@ -115,12 +115,15 @@ const char ThreadPool::s_defaultThreadName[16] = { "bdl.ThreadPool" };
 // PRIVATE MANIPULATORS
 void ThreadPool::doEnqueueJob(const Job& job)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&job);
     d_queue.push_back(job);
     wakeThreadIfNeeded();
 }
 
 void ThreadPool::doEnqueueJob(bslmf::MovableRef<Job> job)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_queue.push_back(bslmf::MovableRefUtil::move(job));
     wakeThreadIfNeeded();
 }
@@ -184,6 +187,7 @@ void ThreadPool::wakeThreadIfNeeded()
 
 int ThreadPool::startThreadIfNeeded()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (static_cast<int>(d_queue.size()) + d_numActiveThreads > d_threadCount
        && d_threadCount < d_maxThreads) {
         int rc = startNewThread();
@@ -289,6 +293,7 @@ int ThreadPool::startNewThread()
 
 void ThreadPool::workerThread()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ThreadPoolWaitNode waitNode;
     Job functor(bsl::allocator_arg,
                 bsl::allocator<char>(d_queue.get_allocator()));
@@ -497,7 +502,8 @@ ThreadPool::ThreadPool(const bslmt::ThreadAttributes&  threadAttributes,
     BSLS_ASSERT(0                        <= minThreads);
     BSLS_ASSERT(minThreads               <= maxThreads);
     BSLS_ASSERT(bsls::TimeInterval(0, 0) <= maxIdleTime);
-    BSLS_ASSERT(INT_MAX                  >= maxIdleTime.totalMilliseconds());
+    BSLS_ASSERT_NONCONVEYOR(
+                  INT_MAX                  >= maxIdleTime.totalMilliseconds());
 
     initialize(
         0,
@@ -529,7 +535,8 @@ ThreadPool::ThreadPool(const bslmt::ThreadAttributes&  threadAttributes,
     BSLS_ASSERT(0                        <= minThreads);
     BSLS_ASSERT(minThreads               <= maxThreads);
     BSLS_ASSERT(bsls::TimeInterval(0, 0) <= maxIdleTime);
-    BSLS_ASSERT(INT_MAX                  >= maxIdleTime.totalMilliseconds());
+    BSLS_ASSERT_NONCONVEYOR(
+                  INT_MAX                  >= maxIdleTime.totalMilliseconds());
 
     if (d_threadAttributes.threadName().empty()) {
         d_threadAttributes.setThreadName(threadPoolName);
@@ -546,6 +553,7 @@ ThreadPool::~ThreadPool()
 // MANIPULATORS
 void ThreadPool::drain()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
     d_enabled = 0;
 
@@ -598,6 +606,7 @@ int ThreadPool::enqueueJob(bslmf::MovableRef<Job> functor)
 
 void ThreadPool::shutdown()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
     d_enabled = 0;
 
@@ -672,6 +681,7 @@ int ThreadPool::numWaitingThreads() const
 
 int ThreadPool::numPendingJobs() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
     return static_cast<int>(d_queue.size());
 }

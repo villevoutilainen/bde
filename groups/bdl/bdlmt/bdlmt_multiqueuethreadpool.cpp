@@ -93,6 +93,8 @@ template <class TYPE>
 inline
 MultiQueueThreadPool_ClearGuard<TYPE>::~MultiQueueThreadPool_ClearGuard()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
     d_object_p->clear();
 }
 
@@ -103,6 +105,7 @@ MultiQueueThreadPool_ClearGuard<TYPE>::~MultiQueueThreadPool_ClearGuard()
 // PRIVATE MANIPULATORS
 bool MultiQueueThreadPool_Queue::setPaused()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_PAUSING == d_runState);
 
     BSLMT_MUTEXASSERT_IS_LOCKED(&d_lock);
@@ -157,6 +160,7 @@ MultiQueueThreadPool_Queue::~MultiQueueThreadPool_Queue()
 // MANIPULATORS
 void MultiQueueThreadPool_Queue::setBatchSize(int batchSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(1 <= batchSize);
 
     bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
@@ -231,9 +235,10 @@ void MultiQueueThreadPool_Queue::executeFront()
     MultiQueueThreadPool *multiQueueThreadPool = d_multiQueueThreadPool_p;
 
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
 
-        BSLS_ASSERT(!d_list.empty());
+        BSLS_ASSERT_NONCONVEYOR(!d_list.empty());
 
         if (e_PAUSING == d_runState) {
             bool decrementQueueCount = setPaused();
@@ -279,6 +284,7 @@ void MultiQueueThreadPool_Queue::executeFront()
     // executing, we leave 'd_runState' as 'e_SCHEDULED'.
 
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         MultiQueueThreadPool_ClearGuard<bsl::vector<Job> > guard(&d_batch);
 
         for (bsl::size_t i = 0; i < d_batch.size(); ++i) {
@@ -293,9 +299,10 @@ void MultiQueueThreadPool_Queue::executeFront()
     bool decrementQueueCount = false;
 
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
 
-        BSLS_ASSERT(bslmt::ThreadUtil::self() == d_processor);
+        BSLS_ASSERT_NONCONVEYOR(bslmt::ThreadUtil::self() == d_processor);
 
         d_processor = bslmt::ThreadUtil::invalidHandle();
 
@@ -329,6 +336,7 @@ bool MultiQueueThreadPool_Queue::enqueueDeletion(
                                                 const Job&    cleanupFunctor,
                                                 bslmt::Latch *completionSignal)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that the queue is actually deleted by the thread pool while
     // executing the supplied 'functor' (which is
     // 'MultiQueueThreadPool::deleteQueueCb' bound with the required
@@ -395,6 +403,7 @@ int MultiQueueThreadPool_Queue::initiatePause()
 
 int MultiQueueThreadPool_Queue::pushBack(bslmf::MovableRef<Job> functor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
 
     if (e_ENQUEUING_ENABLED == d_enqueueState) {
@@ -421,6 +430,7 @@ int MultiQueueThreadPool_Queue::pushBack(bslmf::MovableRef<Job> functor)
 
 int MultiQueueThreadPool_Queue::pushFront(bslmf::MovableRef<Job> functor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
 
     if (e_ENQUEUING_ENABLED == d_enqueueState) {
@@ -448,6 +458,7 @@ int MultiQueueThreadPool_Queue::pushFront(bslmf::MovableRef<Job> functor)
 
 void MultiQueueThreadPool_Queue::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_list.clear();
     d_enqueueState = e_ENQUEUING_ENABLED;
     d_runState     = e_NOT_SCHEDULED;
@@ -458,6 +469,7 @@ void MultiQueueThreadPool_Queue::reset()
 
 int MultiQueueThreadPool_Queue::resume()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
 
     // If the queue is in the 'e_PAUSING' state, implying the pause will become
@@ -502,6 +514,7 @@ int MultiQueueThreadPool_Queue::resume()
 
 void MultiQueueThreadPool_Queue::waitWhilePausing()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
 
     BSLS_ASSERT(0 < d_pauseCount);
@@ -646,6 +659,7 @@ int MultiQueueThreadPool::createQueue()
 int MultiQueueThreadPool::deleteQueue(int                   id,
                                       const CleanupFunctor& cleanupFunctor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_lock);
 
     MultiQueueThreadPool_Queue *queue = 0;
@@ -663,6 +677,7 @@ int MultiQueueThreadPool::deleteQueue(int                   id,
 
 int MultiQueueThreadPool::deleteQueue(int id)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::Latch latch(1);
 
     bool isProcessor;
@@ -748,6 +763,7 @@ void MultiQueueThreadPool::drain()
 
 int MultiQueueThreadPool::drainQueue(int id)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (1) {
         {
             bslmt::ReadLockGuard<bslmt::ReaderWriterMutex>
@@ -808,6 +824,7 @@ int MultiQueueThreadPool::resumeQueue(int id)
 
 void MultiQueueThreadPool::shutdown()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     {
         bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_lock);
 
@@ -817,6 +834,7 @@ void MultiQueueThreadPool::shutdown()
             for (QueueRegistry::iterator it = d_queueRegistry.begin();
                  it != d_queueRegistry.end();
                  ++it) {
+                     BSLS_ASSERT_CONVEYOR_OBJECT(this);
                 d_queuePool.releaseObject(it->second);
             }
 
@@ -849,6 +867,7 @@ void MultiQueueThreadPool::shutdown()
     for (QueueRegistry::iterator it = d_queueRegistry.begin();
          it != d_queueRegistry.end();
          ++it) {
+             BSLS_ASSERT_CONVEYOR_OBJECT(this);
         MultiQueueThreadPool_Queue *queue = it->second;
 
         queue->enqueueDeletion(CleanupFunctor(), &latch);
@@ -874,6 +893,7 @@ void MultiQueueThreadPool::shutdown()
 
 int MultiQueueThreadPool::start()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (1) {
         {
             bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_lock);

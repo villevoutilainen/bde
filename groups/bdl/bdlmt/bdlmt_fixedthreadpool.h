@@ -680,7 +680,7 @@ void FixedThreadPool::enable()
 inline
 int FixedThreadPool::enqueueJob(const Job& functor)
 {
-    BSLS_ASSERT(functor);
+    BSLS_ASSERT_NONCONVEYOR(functor);
 
     return d_queue.pushBack(functor);
 }
@@ -688,7 +688,7 @@ int FixedThreadPool::enqueueJob(const Job& functor)
 inline
 int FixedThreadPool::enqueueJob(bslmf::MovableRef<Job> functor)
 {
-    BSLS_ASSERT(bslmf::MovableRefUtil::access(functor));
+    BSLS_ASSERT_NONCONVEYOR(static_cast<const Job&>(functor));
 
     return d_queue.pushBack(bslmf::MovableRefUtil::move(functor));
 }
@@ -705,7 +705,7 @@ int FixedThreadPool::enqueueJob(FixedThreadPoolJobFunc  function,
 inline
 int FixedThreadPool::tryEnqueueJob(const Job& functor)
 {
-    BSLS_ASSERT(functor);
+    BSLS_ASSERT_NONCONVEYOR(functor);
 
     return d_queue.tryPushBack(functor);
 }
@@ -713,7 +713,7 @@ int FixedThreadPool::tryEnqueueJob(const Job& functor)
 inline
 int FixedThreadPool::tryEnqueueJob(bslmf::MovableRef<Job> functor)
 {
-    BSLS_ASSERT(bslmf::MovableRefUtil::access(functor));
+    BSLS_ASSERT_NONCONVEYOR(static_cast<const Job&>(functor));
 
     return d_queue.tryPushBack(bslmf::MovableRefUtil::move(functor));
 }

@@ -313,6 +313,8 @@ BSLA_MAYBE_UNUSED static const bsls::TimeInterval k_APPRECIABLE_DIFFERENCE (0,
 static inline bool isUnacceptable(const bsls::TimeInterval& t1,
                                   const bsls::TimeInterval& t2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&t1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&t2);
     bsls::TimeInterval absDifference = (t1 > t2) ? (t1 - t2) : (t2 - t1);
     return (k_ALLOWABLE_DIFFERENCE > absDifference)? true : false;
 }
@@ -323,6 +325,8 @@ static inline bool isUnacceptable(const bsls::TimeInterval& t1,
 static inline bool isApproxEqual(const bsls::TimeInterval& t1,
                                  const bsls::TimeInterval& t2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&t1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&t2);
     bsls::TimeInterval absDifference = (t1 > t2) ? (t1 - t2) : (t2 - t1);
     return (k_ALLOWABLE_DIFFERENCE > absDifference)? true : false;
 }
@@ -803,6 +807,7 @@ void cancelEventCallbackWithState(Obj                         *scheduler,
                                   EventHandle                 *handle,
                                   const bsl::shared_ptr<int>&  state)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&state);
     const int s = *state;
     int ret = scheduler->cancelEvent(*handle);
     LOOP_ASSERT(ret, s == *state);
@@ -877,6 +882,7 @@ struct ChronoRecurringTest {
     /// Record what time this is called in the `d_callTimes` vector.
     void callback ()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_callTimes.push_back(CLOCK::now());
     }
 
@@ -891,6 +897,7 @@ struct ChronoRecurringTest {
     /// clock that we're testing.
     void checkResults(const char *clockName)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         // {DRQS 170729958}: The callback was sometimes being called earlier
         // than expected.  This was bug not in `bdlmt_eventscheduler`, but this
         // test driver; the contract of each relevant `schedule` method
@@ -951,7 +958,8 @@ struct ChronoRecurringTest {
             nanoseconds expectedDur =
                                     duration_cast<nanoseconds>(d_interval * i);
             nanoseconds actualDur   =
-                      duration_cast<nanoseconds>(d_callTimes[i] - d_startTime);
+                      duration_cast<nanoseconds>(
+                      BSLS_ASSERT_CONVEYOR_REF(d_callTimes[i]) - d_startTime);
 
             if (veryVerbose) {
                 cout << "Expected " << expectedDur.count()
@@ -961,7 +969,8 @@ struct ChronoRecurringTest {
                      << ")"
                      << endl;
             }
-            ASSERT(d_callTimes[i] >= d_startTime + (d_interval * i));
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(d_callTimes[i]) >=
+                                               d_startTime + (d_interval * i));
         }
     }
 
@@ -1072,6 +1081,8 @@ bdlm::MetricsAdapter::CallbackHandle
                                 const bdlm::MetricDescriptor& metricDescriptor,
                                 const Callback&               /* callback */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricDescriptor);
     d_descriptors.push_back(metricDescriptor);
 
     int h = 7 + static_cast<int>(d_descriptors.size());
@@ -1082,12 +1093,15 @@ bdlm::MetricsAdapter::CallbackHandle
 
 int TestMetricsAdapter::removeCollectionCallback(const CallbackHandle& handle)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
     d_handles.erase(handle);
     return 0;
 }
 
 void TestMetricsAdapter::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_descriptors.clear();
     d_handles.clear();
 }
@@ -1095,28 +1109,35 @@ void TestMetricsAdapter::reset()
 // ACCESSORS
 bool TestMetricsAdapter::verify(const bsl::string& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     static bdlm::InstanceCount::Value count = 0;
 
     ++count;
 
     ASSERT(d_handles.empty());
     ASSERT(1 == d_descriptors.size());
-    ASSERT(d_descriptors[0].metricNamespace()        == "");
-    ASSERT(d_descriptors[0].metricName()             == "bde.startlag");
-    ASSERT(d_descriptors[0].objectTypeAbbreviation() == "es");
-    ASSERT(d_descriptors[0].objectTypeName()         ==
-                                                       "bdlmt.eventscheduler");
-    ASSERT(d_descriptors[0].instanceNumber()         == count);
-    ASSERT(d_descriptors[0].objectIdentifier()       == name);
+    if (1 != d_descriptors.size()) {
+        return false;                                                 // RETURN
+    }
+
+    const bdlm::MetricDescriptor& descriptor =
+                                   BSLS_ASSERT_CONVEYOR_REF(d_descriptors[0]);
+
+    ASSERT(descriptor.metricNamespace()        == "");
+    ASSERT(descriptor.metricName()             == "bde.startlag");
+    ASSERT(descriptor.objectTypeAbbreviation() == "es");
+    ASSERT(descriptor.objectTypeName()         == "bdlmt.eventscheduler");
+    ASSERT(descriptor.instanceNumber()         == count);
+    ASSERT(descriptor.objectIdentifier()       == name);
 
     return d_handles.empty()
-        && 1 == d_descriptors.size()
-        && d_descriptors[0].metricNamespace()        == ""
-        && d_descriptors[0].metricName()             == "bde.startlag"
-        && d_descriptors[0].objectTypeAbbreviation() == "es"
-        && d_descriptors[0].objectTypeName()         == "bdlmt.eventscheduler"
-        && d_descriptors[0].instanceNumber()         == count
-        && d_descriptors[0].objectIdentifier()       == name;
+        && descriptor.metricNamespace()        == ""
+        && descriptor.metricName()             == "bde.startlag"
+        && descriptor.objectTypeAbbreviation() == "es"
+        && descriptor.objectTypeName()         == "bdlmt.eventscheduler"
+        && descriptor.instanceNumber()         == count
+        && descriptor.objectIdentifier()       == name;
 }
 
 // ============================================================================
@@ -1156,6 +1177,7 @@ struct SelfCancelingCallback {
     , d_handle_p(original.d_handle_p)
     , d_barrier(original.d_barrier)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&original);
         ASSERT(original.d_handle_p);
         ASSERT(1 == g_instanceRegistry.count(&original));
 
@@ -1174,6 +1196,7 @@ struct SelfCancelingCallback {
         // cycle, and we want to confirm that any reference cycle is broken.
 
         ASSERT(d_handle_p);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&local);
         ASSERT(local.d_handle_p);
         ASSERT(1 == g_instanceRegistry.count(&local));
 
@@ -1192,6 +1215,7 @@ struct SelfCancelingCallback {
 template <>
 void SelfCancelingCallback<EventHandle>::operator()()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_barrier.wait();
 
     // Now that we are past the first barrier and before second wait on the
@@ -1217,6 +1241,7 @@ void SelfCancelingCallback<EventHandle>::operator()()
 template <>
 void SelfCancelingCallback<RecurringEventHandle>::operator()()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(d_handle_p);
     ASSERT(1 == g_instanceRegistry.count(this));
 
@@ -1330,6 +1355,7 @@ typedef pair<bsls::TimeInterval, int> Value;
 
 void saveData(vector<Value> *array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(array);
     array->push_back(Value(bsls::SystemTime::nowRealtimeClock(), g_data));
 }
 

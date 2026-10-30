@@ -37,10 +37,11 @@ SignalerConnection::SignalerConnection(
                                                           BSLS_KEYWORD_NOEXCEPT
 : d_slotNodeBasePtr(slotNodeBasePtr)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&slotNodeBasePtr);
     // This function is called by 'Signaler::connect', which requires its not
     // throwing for it to provide the strong exception guarantee.
 
-    BSLS_ASSERT(slotNodeBasePtr);
+    BSLS_ASSERT_NONCONVEYOR(slotNodeBasePtr);
 }
 
 // CREATORS
@@ -88,12 +89,14 @@ SignalerConnection::operator=(bslmf::MovableRef<SignalerConnection> rhs)
 
 void SignalerConnection::reset() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_slotNodeBasePtr.reset();
 }
 
 // ACCESSORS
 void SignalerConnection::disconnect() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::shared_ptr<SlotNode_Base> slotNodeBasePtr = d_slotNodeBasePtr.lock();
     if (slotNodeBasePtr) {
         slotNodeBasePtr->disconnect();
@@ -102,6 +105,7 @@ void SignalerConnection::disconnect() const BSLS_KEYWORD_NOEXCEPT
 
 void SignalerConnection::disconnectAndWait() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::shared_ptr<SlotNode_Base> slotNodeBasePtr = d_slotNodeBasePtr.lock();
     if (slotNodeBasePtr) {
         slotNodeBasePtr->disconnectAndWait();
@@ -110,6 +114,7 @@ void SignalerConnection::disconnectAndWait() const BSLS_KEYWORD_NOEXCEPT
 
 bool SignalerConnection::isConnected() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::shared_ptr<SlotNode_Base> slotNodeBasePtr = d_slotNodeBasePtr.lock();
     return slotNodeBasePtr ? slotNodeBasePtr->isConnected() : false;
 }

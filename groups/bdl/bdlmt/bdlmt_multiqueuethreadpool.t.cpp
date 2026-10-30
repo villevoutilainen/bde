@@ -347,6 +347,7 @@ static void waitThenAppend(bslmt::Semaphore *semaphore,
                            bsl::string      *value,
                            char              letter)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     // Wait on the specified `semaphore`, then append the specified `letter` to
     // the specified `value`.
     semaphore->wait();
@@ -448,6 +449,8 @@ struct Reproducer {
 
     void operator()()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_handles);
         enum { k_SLEEP_HARDLY_TIME = 10 * 1000 };         // 0.01 sec
 
         bslmt::ThreadUtil::microSleep(k_SLEEP_HARDLY_TIME);
@@ -688,6 +691,7 @@ bsls::AtomicPointer<const CopyAndMoveDetector>
 static
 void case9Callback(bsls::AtomicInt *counter, bsl::vector<int> *results)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(results);
     ASSERT(counter);
     ASSERT(results);
 
@@ -896,12 +900,14 @@ class Case36Job {
 
 void Case36Journal::logInvoke(int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     d_journal.emplace_back(Case36JournalEntry::e_INVOKE, index);
 }
 
 void Case36Journal::logDestruction(int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     d_journal.emplace_back(Case36JournalEntry::e_DESTROY, index);
 }
@@ -914,6 +920,7 @@ void Case36Journal::copyJournal(Container *output)
 
 void Case36Journal::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     d_journal.clear();
 }
@@ -1023,6 +1030,7 @@ void Case36Job::operator()() const
     inline
     void my_SearchProfile::insert(const char *file)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ASSERT(file);
 
         d_fileSet.insert(file);
@@ -1031,6 +1039,7 @@ void Case36Job::operator()() const
     // ACCESSORS
     bool my_SearchProfile::isMatch(const char *file) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ASSERT(file);
 
         bool          found = false;
@@ -1092,6 +1101,9 @@ void Case36Job::operator()() const
                     int                              repetitions = 1,
                     bslma::Allocator                *basicAllocator = 0)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&wordList);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&fileList);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&resultSet);
         // Return the set of files, specified by `fileList`, containing every
         // word in the specified `wordList`, in the specified `resultSet`.
         // Optionally specify `repetitions`, the number of repetitions to run
@@ -1140,6 +1152,7 @@ void Case36Job::operator()() const
                                      bslma::Default::allocator(basicAllocator);
 
             const bsl::string& word = *it;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&word);
             int                id = pool.createQueue();
             ASSERTV(word, 0 != id);
             my_SearchProfile *profile = new (*allocator)
@@ -1149,8 +1162,10 @@ void Case36Job::operator()() const
             bslma::RawDeleterProctor<my_SearchProfile, bslma::Allocator>
                                                    deleter(profile, allocator);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&word);
             profileRegistry[word] = bsl::make_pair(id, profile);
             deleter.release();
+        BSLS_ASSERT_CONVEYOR_OBJECT(&wordList);
         }
 
         // Start the pool, enabling enqueuing and queue processing.
@@ -1167,6 +1182,7 @@ void Case36Job::operator()() const
                  ++jt) {
                 const bsl::string& file = *it;
                 const bsl::string& word = *jt;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&word);
                 RegistryValue&     rv   = profileRegistry[word];
                 Func               job;
                 makeFunc(&job, my_SearchCb, rv.second, file.c_str());
@@ -1190,6 +1206,7 @@ void Case36Job::operator()() const
             my_SearchProfile *profile = it->second.second;
             const bsl::set<bsl::string>& fileSet = profile->fileSet();
             bsl::set<bsl::string> tmpSet;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&fileSet);
             bsl::set_intersection(fileSet.begin(),
                                   fileSet.end(),
                                   resultSet.begin(),
@@ -1383,6 +1400,7 @@ MQPoolPerformance::VecTimeType MQPoolPerformance::runTests(
                                                VecIntType&                args,
                                                MQPoolPerformance::RunFunc func)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_seWTime = d_seUTime = d_seSTime = 0;
     d_avgWTime = d_avgUTime = d_avgSTime = 0;
 //bsl::cout << "NR=" << d_numRepeats << ",NC=" << d_numCalcs << "\n";
@@ -1460,6 +1478,7 @@ MQPoolPerformance::VecTimeType MQPoolPerformance::runTest(
                                                VecIntType&                args,
                                                MQPoolPerformance::RunFunc func)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&args);
     if (d_numThreads == 1) {
         // For a single thread, run calculation on the caller
         TimeType startWTime = bsls::TimeUtil::getTimer();
@@ -1497,6 +1516,7 @@ MQPoolPerformance::VecTimeType MQPoolPerformance::runTest(
     for (int i = 0; i < d_numThreads; ++i) {
         bslmt::ThreadUtil::join(handles[i], &results[i]);
         VecTimeType *pRes = reinterpret_cast<VecTimeType*>(results[i]);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&pRes);
         for (size_t j = 0; j < pRes->size(); ++j) times.push_back((*pRes)[j]);
         delete pRes;
     }
@@ -1506,6 +1526,7 @@ MQPoolPerformance::VecTimeType MQPoolPerformance::runTest(
 
 void MQPoolPerformance::printResult()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // print the output from the calculation
     bsl::cout << "Title=" << d_title << "\n";
     bsl::cout << bsl::fixed << bsl::setprecision(1);
