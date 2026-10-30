@@ -731,6 +731,7 @@ void TestDriver<t_CHAR>::testCase5(bool verbose, bool veryVerbose)
               const int                    arg1 = 91;
               const int                    arg2 = 92;
               FormatSpecificationParser<t_CHAR> parser;
+              BSLS_ASSERT_CONVEYOR_OBJECT(&spec);
               bsl::basic_string_view<t_CHAR>    input(spec.c_str(),
                                                       spec.length());
               bslfmt::MockParseContext<t_CHAR>  parseContext(input, 3);
@@ -793,6 +794,7 @@ void TestDriver<t_CHAR>::testCase4(bool verbose, bool veryVerbose)
               const bsl::string& spec = generator.spec();
               do {
                 CharParser                     parser;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&spec);
                 bsl::basic_string_view<char>   input(spec.c_str(),
                                                      spec.length());
                 bslfmt::MockParseContext<char> context(input, 3);
@@ -844,6 +846,7 @@ void TestDriver<t_CHAR>::testCase4(bool verbose, bool veryVerbose)
         int                counter = 0;
         do {
             CharParser                     parser;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&spec);
             bsl::basic_string_view<char>   input(spec.c_str(),
                                                  spec.length());
             bslfmt::MockParseContext<char> context(input, 3);

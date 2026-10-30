@@ -209,7 +209,9 @@ int main(int argc, char **argv)
 // `bsl::format` passes to the formatter's `parse` function, and one that can
 // be passed to the `bsl::format` function itself:
 // ```
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     ASSERT(""      == generator.spec());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     ASSERT("{:}"   == generator.formatSpec());
 // ```
 // Then, let's move on to the next state of the generator. When the generator
@@ -224,7 +226,9 @@ int main(int argc, char **argv)
     ASSERT(true     == generator.isStateValidForFormat());
     ASSERT(true     == generator.isSignOptionPresent());
     ASSERT(POSITIVE == generator.sign());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     ASSERT("+"      == generator.spec());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     ASSERT("{:+}"   == generator.formatSpec());
 // ```
 // The function `next` iterates over all possible states of the generator,
@@ -239,7 +243,9 @@ int main(int argc, char **argv)
     ASSERT(true     == generator.isStateValidForFormat());
     ASSERT(true     == generator.isSignOptionPresent());
     ASSERT(NEGATIVE == generator.sign());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     ASSERT("-"      == generator.spec());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     ASSERT("{:-}"   == generator.formatSpec());
 
     ASSERT(true     == generator.nextValidForFormat());
@@ -247,7 +253,9 @@ int main(int argc, char **argv)
     ASSERT(true     == generator.isStateValidForFormat());
     ASSERT(true     == generator.isSignOptionPresent());
     ASSERT(SPACE    == generator.sign());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     ASSERT(" "      == generator.spec());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     ASSERT("{: }"   == generator.formatSpec());
 // ```
 // Now, the generator is in its last state, so the `next` function should
@@ -258,7 +266,9 @@ int main(int argc, char **argv)
 // Finally, let's make sure that the generator is back in its initial state and
 // ready to go for the second round:
 // ```
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     ASSERT(""    == generator.spec());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
     ASSERT("{:}" == generator.formatSpec());
     ASSERT(true  == generator.next());
 // ```
@@ -361,6 +371,7 @@ int main(int argc, char **argv)
                               generator.alignment(),
                               ALIGNMENT == generator.alignment());
                   }
+                  BSLS_ASSERT_CONVEYOR_OBJECT(&spec);
                   ASSERTV(LINE,
                           EXP_SPEC.c_str(),
                           spec.c_str(),
@@ -393,8 +404,12 @@ int main(int argc, char **argv)
             const bsl::string& checkerSpec       = checker.spec();
             const bsl::string& checkerFormatSpec = checker.formatSpec();
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&checkerSpec);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&originSpec);
             ASSERTV(checkerSpec.c_str(), originSpec.c_str(),
                     checkerSpec == originSpec);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&checkerFormatSpec);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&originFormatSpec);
             ASSERTV(checkerFormatSpec.c_str(), originFormatSpec.c_str(),
                     checkerFormatSpec == originFormatSpec);
 
@@ -403,8 +418,12 @@ int main(int argc, char **argv)
             while (checker.next()) {
                ASSERT(origin.next());
 
+               BSLS_ASSERT_CONVEYOR_OBJECT(&checkerSpec);
+               BSLS_ASSERT_CONVEYOR_OBJECT(&originSpec);
                ASSERTV(checkerSpec.c_str(), originSpec.c_str(),
                        checkerSpec == originSpec);
+               BSLS_ASSERT_CONVEYOR_OBJECT(&checkerFormatSpec);
+               BSLS_ASSERT_CONVEYOR_OBJECT(&originFormatSpec);
                ASSERTV(checkerFormatSpec.c_str(), originFormatSpec.c_str(),
                        checkerFormatSpec == originFormatSpec);
                --originCounter;
@@ -412,8 +431,12 @@ int main(int argc, char **argv)
             ASSERT(!origin.next());
             --originCounter;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&checkerSpec);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&originSpec);
             ASSERTV(checkerSpec.c_str(), originSpec.c_str(),
                     checkerSpec == originSpec);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&checkerFormatSpec);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&originFormatSpec);
             ASSERTV(checkerFormatSpec.c_str(), originFormatSpec.c_str(),
                     checkerFormatSpec == originFormatSpec);
             ASSERTV(originCounter, 0 == originCounter);
@@ -548,8 +571,10 @@ int main(int argc, char **argv)
                 const bool       PRS_VALID   = DATA[i].d_isValidForParse;
                 const bool       FMT_VALID   = DATA[i].d_isValidForFormat;
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
                 ASSERTV(LINE, SPEC, generator.spec().c_str(),
                         SPEC == generator.spec());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&generator);
                 ASSERTV(LINE, FMT_SPEC, generator.formatSpec().c_str(),
                         FMT_SPEC == generator.formatSpec());
                 ASSERTV(LINE, generator.isWidthOptionPresent(),

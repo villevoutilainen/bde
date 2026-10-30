@@ -829,6 +829,7 @@ void TestDriver<t_CHAR>::testCase5(bool veryVerbose)
         const int                           arg1 = 91;
         const int                           arg2 = 92;
         StandardFormatSpecification<t_CHAR> specification;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&spec);
         bsl::basic_string_view<t_CHAR>      input(spec.c_str(), spec.length());
         bslfmt::MockParseContext<t_CHAR>    parseContext(input, 3);
         bslfmt::MockFormatContext<t_CHAR>   formatContext(arg0, arg1, arg2);
@@ -880,6 +881,7 @@ void TestDriver<t_CHAR>::testCase4(bool veryVerbose)
           int                              counter = 0;
           do {
               Obj                              mX;
+              BSLS_ASSERT_CONVEYOR_OBJECT(&spec);
               bsl::basic_string_view<t_CHAR>   input(spec.c_str(),
                                                      spec.length());
               bslfmt::MockParseContext<t_CHAR> context(input, 3);

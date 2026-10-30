@@ -141,7 +141,7 @@ to_chars(char *first, char *last, INTEGRAL_TYPE value, int base)
 {
     BSLS_ASSERT(2 <= base);
     BSLS_ASSERT(base <= 36);
-    BSLS_ASSERT(first < last);
+    BSLS_ASSERT_NONCONVEYOR(first < last);
 
     typedef bslalg::NumericFormatterUtil Util;
     typedef bsls::Types::Uint64          Uint64;

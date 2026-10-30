@@ -83,11 +83,13 @@ void aSsErT(bool condition, const char *message, int line)
 #define ASSERT_OPT_FAIL_RAW(EXPR) BSLS_ASSERTTEST_ASSERT_OPT_FAIL_RAW(EXPR)
 
 void check(const bsl::string& actual, const char *expected) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&actual);
     ASSERT(expected == actual);
 }
 
 void check(const bsl::wstring& actual, const wchar_t *expected)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&actual);
     ASSERT(expected == actual);
 }
 

@@ -649,11 +649,13 @@ class TestSpecificationGenerator {
 
     /// Return the specification for the formatters `parse` method based on the
     /// current state of this object.
-    const bsl::basic_string<t_CHAR>& spec() const;
+    const bsl::basic_string<t_CHAR>& spec() const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the specification for the formatters `format` method based on
     /// the current state of this object.
-    const bsl::basic_string<t_CHAR>& formatSpec() const;
+    const bsl::basic_string<t_CHAR>& formatSpec() const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the generated specification based on the current state
     /// of this object is valid for the formatters `parse` method, and `false`
@@ -761,6 +763,7 @@ void TestSpecificationGenerator<t_CHAR>::addOption(Option *newOption)
 template <class t_CHAR>
 void TestSpecificationGenerator<t_CHAR>::generateSpecification()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bslalg::NumericFormatterUtil NFUtil;
     const int maxIntValueLength = NFUtil::ToCharsMaxLength<int, 10>::k_VALUE;
 
@@ -1482,7 +1485,7 @@ bool TestSpecificationGenerator<t_CHAR>::isFillCharacterPresent() const
 template <class t_CHAR>
 char TestSpecificationGenerator<t_CHAR>::fillCharacter() const
 {
-    BSLS_ASSERT(isFillCharacterPresent());
+    BSLS_ASSERT_NONCONVEYOR(isFillCharacterPresent());
     return d_fillCharacter;
 }
 
@@ -1496,7 +1499,7 @@ template <class t_CHAR>
 typename TestSpecificationGenerator<t_CHAR>::Alignment
 TestSpecificationGenerator<t_CHAR>::alignment() const
 {
-    BSLS_ASSERT(isAlignOptionPresent());
+    BSLS_ASSERT_NONCONVEYOR(isAlignOptionPresent());
     return d_alignment;
 }
 
