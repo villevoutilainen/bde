@@ -650,7 +650,7 @@ struct EquivalenceClass {
     {
         d_name = inName;
         for (int i = 0; i < inNumRanges; ++i) {
-            d_ranges.push_back(inRanges[i]);
+            d_ranges.push_back(BSLS_ASSERT_CONVEYOR_REF(inRanges[i]));
         }
 
         d_numChars = 0;

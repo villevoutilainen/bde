@@ -268,6 +268,8 @@ void reseed(GuidState_Imp *guidStatePtr)
 void GuidState_Imp::seed(
       const bsl::array<bsl::uint64_t, GuidState_Imp::k_GENERATOR_COUNT>& state)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&state);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (int i = 0; i != GuidState_Imp::k_GENERATOR_COUNT; ++i) {
         d_generators[i].seed(state[i], i);
     }

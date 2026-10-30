@@ -5005,7 +5005,7 @@ int main(int argc, char *argv[])
                 for (bsl::size_t i = 0; i < NUM_ELEMS; ++i) {
                     if (veryVerbose) { P_(LINE) P(i) }
 
-                    mX.append(ARRAY[i]);
+                    mX.append(BSLS_ASSERT_CONVEYOR_REF(ARRAY[i]));
                 }
 
                 ostringstream os;
@@ -5547,7 +5547,7 @@ int main(int argc, char *argv[])
                 for (bsl::size_t i = 0; i < NUM_DATA; ++i) {
                     bsl::string data(DATA + i, 1);
 
-                    unique.insert(DATA[i]);
+                    unique.insert(BSLS_ASSERT_CONVEYOR_REF(DATA[i]));
                     mX.append(data);
 
                     if (veryVerbose) {  P(X);  }

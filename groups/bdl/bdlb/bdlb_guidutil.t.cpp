@@ -361,13 +361,14 @@ struct BasicBloomFilter
     bool check(
      const bsl::uint32_t (&randomInts)[bdlb::GuidState_Imp::k_GENERATOR_COUNT])
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         uint64_t rnd = randomInts[bdlb::GuidState_Imp::k_GENERATOR_COUNT - 1];
 
         for (int i = 0; i < bdlb::GuidState_Imp::k_GENERATOR_COUNT; i++)
         {
             rnd = ((rnd << 32) | randomInts[i]);
 
-            uint64_t&      val = d_filter[(rnd / 64) & k_BUCKET_BITMASK];
+            uint64_t&      val = BSLS_ASSERT_CONVEYOR_REF(d_filter[(rnd / 64) & k_BUCKET_BITMASK]);
             const uint64_t checkmask = 1ull << (rnd & 63);
 
             if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(!(val & checkmask))) {
@@ -388,6 +389,7 @@ struct BasicBloomFilter
     checkAndAdd(
      const bsl::uint32_t (&randomInts)[bdlb::GuidState_Imp::k_GENERATOR_COUNT])
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bool     exists = true;
         uint64_t rnd = randomInts[bdlb::GuidState_Imp::k_GENERATOR_COUNT - 1];
 
@@ -395,7 +397,7 @@ struct BasicBloomFilter
         {
             rnd = ((rnd << 32) | randomInts[i]);
 
-            uint64_t&      val = d_filter[(rnd / 64) & k_BUCKET_BITMASK];
+            uint64_t&      val = BSLS_ASSERT_CONVEYOR_REF(d_filter[(rnd / 64) & k_BUCKET_BITMASK]);
             const uint64_t checkmask = 1ull << (rnd & 63);
 
             if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(!(val & checkmask))) {
@@ -704,6 +706,7 @@ int main(int argc, char *argv[])
         for (bsl::vector<Obj>::const_iterator it = preForkGuids.cbegin();
              it != preForkGuids.cend();
              ++it) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             finalList.push_back(*it);
             if (veryVerbose) {
                 bsl::cout << "checking pre fork guid: " << *it << bsl::endl;
@@ -719,6 +722,7 @@ int main(int argc, char *argv[])
                                                   postForkParentGuids.cbegin();
              it != postForkParentGuids.cend();
              ++it) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
 
             finalList.push_back(*it);
             if (veryVerbose) {

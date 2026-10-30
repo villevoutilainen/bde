@@ -401,6 +401,7 @@ void MyAccessTracker::updateLastAccess(const bsl::string&  username,
 int MyAccessTracker::getLastAccess(bsl::tm            *result,
                                    const bsl::string&  username) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&username);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(0 != result);
 

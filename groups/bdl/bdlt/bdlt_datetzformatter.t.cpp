@@ -124,6 +124,7 @@ namespace u {
 void appendIso8601Date(bsl::string       *result,
                        const bdlt::Date&  date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     *result += bsl::format("{:04}-{:02}-{:02}",
                                         date.year(), date.month(), date.day());

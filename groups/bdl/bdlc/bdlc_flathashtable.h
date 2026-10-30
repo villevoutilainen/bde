@@ -1503,6 +1503,7 @@ bsl::size_t FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::findKey(
                                                    const KEY&  key,
                                                    bsl::size_t hashValue) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(hashValue == d_hasher(key));
 
     bsl::size_t  index   = (hashValue >> d_groupControlShift)
@@ -2043,7 +2044,7 @@ void FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::insert(
                                                           INPUT_ITERATOR last)
 {
     for (; first != last; ++first) {
-        insert(*first);
+        insert(BSLS_ASSERT_CONVEYOR_REF(*first));
     }
 }
 

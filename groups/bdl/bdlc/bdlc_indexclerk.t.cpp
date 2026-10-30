@@ -489,6 +489,7 @@ class Security {
                     bdlc::IndexClerk      *securityClerk,
                     const Security&        newSecurity)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&newSecurity);
         BSLS_ASSERT_CONVEYOR_OBJECT(securityClerk);
         BSLS_ASSERT_CONVEYOR_OBJECT(securityArray);
         BSLS_ASSERT(securityArray);

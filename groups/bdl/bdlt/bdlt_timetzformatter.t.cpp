@@ -110,6 +110,7 @@ void trimPrecision(bsl::string *s)
 void appendIso8601Time(bsl::string       *result,
                        const bdlt::Time&  time)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     *result += bsl::format("{:02}:{:02}:{:02}.{:03}",
                 time.hour(), time.minute(), time.second(), time.millisecond());

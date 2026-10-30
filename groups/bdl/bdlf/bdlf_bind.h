@@ -1276,6 +1276,7 @@ class BindWrapper {
                 bslmf::MovableRef<t_BOUND_TUPLE>              tuple,
                 bslma::Allocator                             *allocator = 0)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&func);
         this->d_impl.createInplace(allocator,
                                    func,
                                    bslmf::MovableRefUtil::move(tuple),

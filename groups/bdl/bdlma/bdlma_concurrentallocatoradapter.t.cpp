@@ -258,6 +258,7 @@ extern "C" void *workerThread(void *arg) {
         /// return the index of the new element.
         int pushBack(const TYPE& value)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
             BSLS_ASSERT_CONVEYOR_OBJECT(this);
             bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
             d_elements.push_back(value);
@@ -281,8 +282,9 @@ extern "C" void *workerThread(void *arg) {
         /// may be invalidated by another thread.
         TYPE element(int index) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
-            return d_elements[index];
+            return BSLS_ASSERT_CONVEYOR_REF(d_elements[index]);
         }
 
         /// Return the number of elements in this thread-enabled vector.

@@ -1396,10 +1396,11 @@ struct Matts {
     // MANIPULATORS
     bsltf::MovableAllocTestType& value(int n)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ASSERT(1 <= n);
         ASSERT(n <= 14);
 
-        return d_values[n];
+        return BSLS_ASSERT_CONVEYOR_REF(d_values[n]);
     }
 };
 

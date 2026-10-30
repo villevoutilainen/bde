@@ -1810,6 +1810,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert_or_assign(
                                        MAPPED&&                            obj)
 {
     const KEY& lvalue = key;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lvalue);
     iterator iter = find(lvalue);
     if (iter != end()) {
         iter->second = std::forward<MAPPED>(obj);

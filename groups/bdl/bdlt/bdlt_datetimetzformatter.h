@@ -381,6 +381,7 @@ class formatter<BloombergLP::bdlt::DatetimeTz, t_CHAR> {
     BSLS_KEYWORD_CONSTEXPR_CPP20 typename t_PARSE_CONTEXT::iterator parse(
                                                       t_PARSE_CONTEXT& context)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&context);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_formatter.parse(context);
     }
@@ -395,6 +396,7 @@ class formatter<BloombergLP::bdlt::DatetimeTz, t_CHAR> {
                                         const DatetimeTz&  value,
                                         t_FORMAT_CONTEXT&  formatContext) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&formatContext);
         BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         const FormatCache formatCache(value.localDatetime(), value.offset());

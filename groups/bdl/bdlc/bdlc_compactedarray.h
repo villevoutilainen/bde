@@ -1532,6 +1532,7 @@ CompactedArray<TYPE>::CompactedArray(bsl::size_t       numElements,
 : d_data(basicAllocator)
 , d_index(basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (numElements) {
         d_index.reserveCapacity(numElements, 1);
 

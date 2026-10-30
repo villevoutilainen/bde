@@ -4074,6 +4074,7 @@ void TestDriver::testCase9()
             }
             else {
                 for (const char *pc = UTF8_STRING; *pc; ++pc) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(pc);
                     compareVec.push_back(*pc);
                 }
             }
@@ -4124,6 +4125,7 @@ void TestDriver::testCase9()
         compareVec.push_back('1');
         if (!IS_ERROR) {
             for (const char *pc = UTF8_STRING; *pc; ++pc) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(pc);
                 compareVec.push_back(*pc);
             }
         }
@@ -4170,6 +4172,7 @@ void TestDriver::testCase8()
         compareVec.push_back('1');
         if (!IS_ERROR) {
             for (const char *pc = UTF8_STRING; *pc; ++pc) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(pc);
                 compareVec.push_back(*pc);
             }
         }
@@ -4285,6 +4288,7 @@ void TestDriver::testCase8()
         VECTOR outVec;
         if (!IS_ERROR) {
             for (const char *pc = UTF8_STRING; *pc; ++pc) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(pc);
                 compareVec.push_back(*pc);
             }
         }
@@ -4411,6 +4415,7 @@ void TestDriver::testCase8()
         compareVec.push_back('1');
         if (!IS_ERROR) {
             for (const char *pc = UTF8_STRING; *pc; ++pc) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(pc);
                 compareVec.push_back(*pc);
             }
         }
@@ -4535,6 +4540,7 @@ void TestDriver::testCase8()
         VECTOR outVec;
         if (!IS_ERROR) {
             for (const char *pc = UTF8_STRING; *pc; ++pc) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(pc);
                 compareVec.push_back(*pc);
             }
         }
@@ -4658,6 +4664,7 @@ void TestDriver::testCase7()
         VECTOR outVec;
         compareVec.push_back('1');
         for (const char *pc = UTF8_STRING; *pc; ++pc) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(pc);
             compareVec.push_back(*pc);
         }
         compareVec.push_back('z');
@@ -4806,6 +4813,7 @@ void TestDriver::testCase7()
         VECTOR compareVec;
         VECTOR outVec;
         for (const char *pc = UTF8_STRING; *pc; ++pc) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(pc);
             compareVec.push_back(*pc);
         }
         compareVec.push_back('z');
@@ -4940,6 +4948,7 @@ void TestDriver::testCase7()
         VECTOR outVec;
         compareVec.push_back('1');
         for (const char *pc = UTF8_STRING; *pc; ++pc) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(pc);
             compareVec.push_back(*pc);
         }
         compareVec.push_back(0);
@@ -5073,6 +5082,7 @@ void TestDriver::testCase7()
         VECTOR compareVec;
         VECTOR outVec;
         for (const char *pc = UTF8_STRING; *pc; ++pc) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(pc);
             compareVec.push_back(*pc);
         }
         compareVec.push_back(0);

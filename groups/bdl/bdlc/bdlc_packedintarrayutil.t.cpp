@@ -228,7 +228,7 @@ int main(int argc, char *argv[])
 
             // Insert a value and then verify the methods.
 
-            mOracle.push_back(DATA[i]);
+            mOracle.push_back(BSLS_ASSERT_CONVEYOR_REF(DATA[i]));
             mArray.push_back(DATA[i]);
 
             for (int v = 0; v < 100; ++v) {

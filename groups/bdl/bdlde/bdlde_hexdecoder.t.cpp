@@ -228,6 +228,7 @@ const char *BLOOMBERG_NEWS =
 /// The behaviour is undefined unless the `inputSize` is an even number.
 void decode(char *output, const char *input, bsl::size_t inputSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(input);
     bsl::map<char, const char *> decodeTable;
     decodeTable['0'] = "0000";
     decodeTable['1'] = "0001";
@@ -256,7 +257,7 @@ void decode(char *output, const char *input, bsl::size_t inputSize)
 
     while (inputSize) {
         for (char i = 0; i < 4; ++i) {
-            if ('1' == decodeTable[*input][i]) {
+            if ('1' == decodeTable[BSLS_ASSERT_CONVEYOR_REF(*input)][i]) {
                 *output |= static_cast<char>(1 << (7 - i));
             }
         }
@@ -264,7 +265,7 @@ void decode(char *output, const char *input, bsl::size_t inputSize)
         --inputSize;
 
         for (char i = 0; i < 4; ++i) {
-            if ('1' == decodeTable[*input][i]) {
+            if ('1' == decodeTable[BSLS_ASSERT_CONVEYOR_REF(*input)][i]) {
                 *output |= static_cast<char>(1 << (3 - i));
             }
         }

@@ -110,6 +110,7 @@ void trimPrecision(bsl::string *s)
 void appendIso8601Date(bsl::string       *result,
                        const bdlt::Date&  date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     *result += bsl::format(
                    "{:04}-{:02}-{:02}", date.year(), date.month(), date.day());
@@ -118,6 +119,7 @@ void appendIso8601Date(bsl::string       *result,
 void appendIso8601Time(bsl::string       *result,
                        const bdlt::Time&  time)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     *result += bsl::format("{:02}:{:02}:{:02}.{:03}",
                            time.hour(),

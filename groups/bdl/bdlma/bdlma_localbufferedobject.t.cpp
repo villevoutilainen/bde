@@ -170,7 +170,7 @@ namespace Usage {
                                    8192> uset;
 
         for (unsigned uu = 0; uu < numRawNames; ++uu) {
-            uset->insert(rawNames[uu]);
+            uset->insert(BSLS_ASSERT_CONVEYOR_REF(rawNames[uu]));
         }
 
         return uset->size();
@@ -221,7 +221,7 @@ namespace Usage {
                                    true> uset;
 
         for (unsigned uu = 0; uu < numRawNames; ++uu) {
-            uset->insert(rawNames[uu]);
+            uset->insert(BSLS_ASSERT_CONVEYOR_REF(rawNames[uu]));
         }
 
         return uset->size();

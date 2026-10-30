@@ -990,6 +990,7 @@ inline
 NullableAllocatedValue<TYPE>::NullableAllocatedValue(const TYPE& value)
 : d_allocator(bslma::Default::defaultAllocator())
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     makeValue(value);
 }
 
@@ -1000,6 +1001,7 @@ NullableAllocatedValue<TYPE>::NullableAllocatedValue(
                                          const bsl::allocator<char>& allocator)
 : d_allocator(allocator.mechanism())
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     makeValue(value);
 }
 

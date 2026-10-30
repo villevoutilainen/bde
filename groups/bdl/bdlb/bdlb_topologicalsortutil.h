@@ -769,6 +769,8 @@ TopologicalSortUtil_Helper<INPUT_ITER>::TopologicalSortUtil_Helper(
     for (INPUT_ITER iter = relationsBegin; iter != relationsEnd; ++iter) {
         const NodeType& from = EdgeTraits::from(*iter);
         const NodeType& to   = EdgeTraits::to(*iter);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&from);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&to);
         ++d_workSet[to].d_predecessorCount;
         d_workSet[from].d_successors.push_back(to);
     }
@@ -813,7 +815,8 @@ bool TopologicalSortUtil_Helper<INPUT_ITER>::processNextNodeInOrder(
                   successorIter != mapIter->second.d_successors.end();
                 ++successorIter) {
 
-        LinksMapIter succMapIter = d_workSet.find((*successorIter));
+        LinksMapIter succMapIter =
+            d_workSet.find(BSLS_ASSERT_CONVEYOR_REF(*successorIter));
         Links&       succLinks   = succMapIter->second;
 
         // One less predecessor now.

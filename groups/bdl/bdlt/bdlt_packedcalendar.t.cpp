@@ -1086,7 +1086,8 @@ static void reviewCount(const bsls::ReviewViolation&)
                                          it = calendar.beginHolidayCodes(date);
                                          it != calendar.endHolidayCodes(date);
                                        ++it) {
-            output << holidayNames[*it] << bsl::endl;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&holidayNames);
+            output << BSLS_ASSERT_CONVEYOR_REF(holidayNames[*it]) << bsl::endl;
         }
     }
 // ```

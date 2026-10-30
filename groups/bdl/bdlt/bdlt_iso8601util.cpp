@@ -1457,6 +1457,7 @@ int parseImp(Iso8601Util::DatetimeOrDatetimeTz *result,
              ParseConfiguration                 configuration =
                                                           ParseConfiguration())
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     DatetimeTz datetimeTz;
     bool       hasZoneDesignator = false;
 

@@ -487,11 +487,13 @@ class TransformIterator
 
     /// Return a reference providing modifiable access to the functor of
     /// this object.
-    FUNCTOR& functor() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    FUNCTOR& functor() BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the underlying
     /// iterator of this object.
-    ITERATOR& iterator();
+    ITERATOR& iterator() BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 
@@ -534,11 +536,13 @@ class TransformIterator
         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a `const` reference to the functor of this object.
-    const FUNCTOR& functor() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const FUNCTOR& functor() const BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a `const` reference to the underlying iterator of this
     /// object.
-    const ITERATOR& iterator() const;
+    const ITERATOR& iterator() const BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                           // ===========================
@@ -709,6 +713,7 @@ inline
 bslma::Allocator *TransformIterator_AllocatorOfFunctorMethod<BASE_TYPE, true>
 ::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<const BASE_TYPE&>(*this).functor().allocator();
 }
 
@@ -761,6 +766,7 @@ inline
 TransformIterator<FUNCTOR, ITERATOR>&
 TransformIterator<FUNCTOR, ITERATOR>::operator=(const TransformIterator& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     iterator() = rhs.iterator();
     functor()  = rhs.functor();
 
@@ -781,6 +787,7 @@ inline
 TransformIterator<FUNCTOR, ITERATOR>&
 TransformIterator<FUNCTOR, ITERATOR>::operator-=(difference_type offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     iterator() -= offset;
     return *this;
 }
@@ -799,6 +806,7 @@ inline
 TransformIterator<FUNCTOR, ITERATOR>&
 TransformIterator<FUNCTOR, ITERATOR>::operator--()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     --iterator();
     return *this;
 }
@@ -848,6 +856,8 @@ inline
 void TransformIterator<FUNCTOR, ITERATOR>::swap(
                                    TransformIterator<FUNCTOR, ITERATOR>& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     using bsl::swap;
     swap(functor(), other.functor());
     swap(iterator(), other.iterator());
@@ -949,6 +959,7 @@ bdlb::TransformIterator<FUNCTOR, ITERATOR> bdlb::operator++(
                                 TransformIterator<FUNCTOR, ITERATOR>& iterator,
                                 int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iterator);
     return TransformIterator<FUNCTOR, ITERATOR>(iterator.iterator()++,
                                                 iterator.functor());
 }
@@ -959,6 +970,7 @@ bdlb::TransformIterator<FUNCTOR, ITERATOR> bdlb::operator--(
                                 TransformIterator<FUNCTOR, ITERATOR>& iterator,
                                 int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iterator);
     return TransformIterator<FUNCTOR, ITERATOR>(iterator.iterator()--,
                                                 iterator.functor());
 }
@@ -969,6 +981,7 @@ bdlb::TransformIterator<FUNCTOR, ITERATOR> bdlb::operator+(
        const TransformIterator<FUNCTOR, ITERATOR>&                    iterator,
        typename TransformIterator<FUNCTOR, ITERATOR>::difference_type offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iterator);
     return TransformIterator<FUNCTOR, ITERATOR>(iterator.iterator() + offset,
                                                 iterator.functor());
 }
@@ -979,6 +992,7 @@ bdlb::TransformIterator<FUNCTOR, ITERATOR> bdlb::operator+(
        typename TransformIterator<FUNCTOR, ITERATOR>::difference_type offset,
        const TransformIterator<FUNCTOR, ITERATOR>&                    iterator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iterator);
     return TransformIterator<FUNCTOR, ITERATOR>(iterator.iterator() + offset,
                                                 iterator.functor());
 }
@@ -1008,6 +1022,8 @@ inline
 void bdlb::swap(TransformIterator<FUNCTOR, ITERATOR>& a,
                 TransformIterator<FUNCTOR, ITERATOR>& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
     using bsl::swap;
     swap(a.functor(), b.functor());
     swap(a.iterator(), b.iterator());

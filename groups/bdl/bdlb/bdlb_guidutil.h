@@ -366,6 +366,7 @@ inline
 void GuidState_Imp::generateRandomBits(
               bsl::uint32_t (*out)[GuidState_Imp::k_GENERATOR_COUNT])
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (int i = 0;  i < GuidState_Imp::k_GENERATOR_COUNT; i++) {
         (*out)[i] = d_generators[i].generate();
     }

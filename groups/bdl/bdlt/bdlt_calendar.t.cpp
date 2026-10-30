@@ -1015,6 +1015,7 @@ static void reviewCount(const bsls::ReviewViolation&)
     void MyPackedCalendarCache::assign(const bsl::string&          name,
                                        const bdlt::PackedCalendar& calendar)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&name);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_map[name] = calendar;
     }
@@ -1023,6 +1024,7 @@ static void reviewCount(const bsls::ReviewViolation&)
     const bdlt::PackedCalendar *MyPackedCalendarCache::lookup(
                                                  const bsl::string& name) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&name);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         typedef bsl::unordered_map<bsl::string, bdlt::PackedCalendar> Cache;
         Cache::const_iterator iter = d_map.find(name);
@@ -1101,6 +1103,7 @@ static void reviewCount(const bsls::ReviewViolation&)
 
     const bdlt::Calendar *MyCalendarCache::lookup(const bsl::string& name)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&name);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(d_datasource_p);
         typedef bsl::unordered_map<bsl::string, bdlt::Calendar> Cache;

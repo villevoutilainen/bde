@@ -632,6 +632,7 @@ int main(int argc, char *argv[])
     #else
     auto pricer = [&](const bsl::string &product) {
         BSLS_ASSERT_CONVEYOR_OBJECT(&prices);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&product);
         return prices[product];
     };
     #endif

@@ -2528,7 +2528,8 @@ class my_VariantWrapper {
 
     /// Return a reference providing modifiable access to the variant object
     /// held by this wrapper.
-    VARIANT& variant();
+    VARIANT& variant() BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class VISITOR>
     typename bsl::enable_if<
@@ -2607,7 +2608,8 @@ class my_VariantWrapper {
 
     /// Return a reference providing non-modifiable access to the variant
     /// object held by this wrapper.
-    const VARIANT& variant() const;
+    const VARIANT& variant() const BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class VISITOR>
     typename bsl::enable_if<
@@ -28509,14 +28511,18 @@ void TestUtil::testCase15()
         Obj   tmp(1);  // dummy used to initialize the variant
         VWrap wrappedVariant(tmp, &oa);
         VWrap wrappedVariant2(tmp, &oa);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&wrappedVariant);
         wrappedVariant.variant().createInPlace<bsl::string>(stringData(1));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&wrappedVariant2);
         wrappedVariant2.variant().createInPlace<bsl::string>(stringData(1));
 
         my_ConstVisitor visitor(1);
         wrappedVariant.apply(visitor);
         wrappedVariant2.applyRaw(visitor);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&wrappedVariant);
         ASSERT(stringData(1) == wrappedVariant.variant().the<bsl::string>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&wrappedVariant2);
         ASSERT(stringData(1) == wrappedVariant2.variant().the<bsl::string>());
     }
 
@@ -29368,8 +29374,9 @@ void TestUtil::testCase13()
                     // Assign to `X` the value `Y` and check the returned
                     // reference.
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                     ASSERTV(LINE1, LINE2, INT_DATA[VALUE_IDX2] ==
-                                                          (mX = Y).the<int>());
+                                                          BSLS_ASSERT_CONVEYOR_REF((mX = Y)).the<int>());
 
                     // Check that `Y` is not modified.
 
@@ -29384,8 +29391,9 @@ void TestUtil::testCase13()
 
                     TestInt Y = TEST_INT_DATA[VALUE_IDX2];
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                     ASSERTV(LINE1, LINE2, TEST_INT_DATA[VALUE_IDX2] ==
-                                                      (mX = Y).the<TestInt>());
+                                                      BSLS_ASSERT_CONVEYOR_REF((mX = Y)).the<TestInt>());
                     ASSERTV(LINE1, LINE2, TEST_INT_DATA[VALUE_IDX2] == Y);
                     ASSERTV(LINE1, LINE2, Y == X.the<TestInt>());
 
@@ -29394,8 +29402,9 @@ void TestUtil::testCase13()
 
                     bsl::string Y = stringData(VALUE_IDX2);
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                     ASSERTV(LINE1, LINE2, stringData(VALUE_IDX2) ==
-                                              (mX = Y).the<bsl::string>());
+                                              BSLS_ASSERT_CONVEYOR_REF((mX = Y)).the<bsl::string>());
                     ASSERTV(LINE1, LINE2, stringData(VALUE_IDX2) == Y);
                     ASSERTV(LINE1, LINE2, Y == X.the<bsl::string>());
 
@@ -29404,8 +29413,9 @@ void TestUtil::testCase13()
 
                     TestString Y = TEST_STRING_DATA[VALUE_IDX2];
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                     ASSERTV(LINE1, LINE2, TEST_STRING_DATA[VALUE_IDX2] ==
-                                                   (mX = Y).the<TestString>());
+                                                   BSLS_ASSERT_CONVEYOR_REF((mX = Y)).the<TestString>());
                     ASSERTV(LINE1, LINE2, TEST_STRING_DATA[VALUE_IDX2] == Y);
                     ASSERTV(LINE1, LINE2, Y == X.the<TestString>());
 
@@ -29414,8 +29424,9 @@ void TestUtil::testCase13()
 
                     TestVoid Y;
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                     ASSERTV(LINE1, LINE2, TestVoid() ==
-                                                     (mX = Y).the<TestVoid>());
+                                                     BSLS_ASSERT_CONVEYOR_REF((mX = Y)).the<TestVoid>());
                     ASSERTV(LINE1, LINE2, TestVoid() == Y);
                     ASSERTV(LINE1, LINE2, Y == X.the<TestVoid>());
 

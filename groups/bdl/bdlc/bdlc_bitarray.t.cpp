@@ -492,6 +492,7 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     void NullableVector<TYPE>::appendElement(const TYPE& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_values.push_back(value);
         d_nullFlags.append(false);
@@ -553,9 +554,10 @@ size_t countOnesOracle(const Obj& object, size_t begin, size_t end)
     inline
     const TYPE& NullableVector<TYPE>::constElement(bsl::size_t index) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         BSLS_ASSERT_SAFE(index < length());
 
-        return d_values[index];
+        return BSLS_ASSERT_CONVEYOR_REF(d_values[index]);
     }
 
     template <class TYPE>

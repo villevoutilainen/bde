@@ -376,7 +376,7 @@ int ggg(T *object, const char *spec, int verboseFlag = 1)
     for (; spec[i]; ++i) {
         if ('A' <= spec[i] && spec[i] <= 'E') {
             BSLS_ASSERT_CONVEYOR_OBJECT(object);
-            object->pushBack(VALUES[spec[i] - 'A']);
+            object->pushBack(BSLS_ASSERT_CONVEYOR_REF(VALUES[spec[i] - 'A']));
         }
         else if ('~' == spec[i]) {
             BSLS_ASSERT_CONVEYOR_OBJECT(object);
@@ -1123,7 +1123,8 @@ DEFINE_TEST_CASE(18) { // TBD doc here and above
                         gg(&s, S_SPEC);
                         const Obj2& S = s;
                         if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                        x.insert(DI, s[SI]);            // source non-`const`
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+                        x.insert(DI, BSLS_ASSERT_CONVEYOR_REF(s[SI]));            // source non-`const`
                         if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                         LOOP_ASSERT(LINE, EE == X);
                         LOOP_ASSERT(LINE, SS == S);     // source unchanged?
@@ -1182,7 +1183,8 @@ DEFINE_TEST_CASE(18) { // TBD doc here and above
                         gg(&s, S_SPEC);
                         const Obj2& S = s;
                         if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                        x.append(s[SI]);                // source non-`const`
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+                        x.append(BSLS_ASSERT_CONVEYOR_REF(s[SI]));                // source non-`const`
                         if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                         LOOP_ASSERT(LINE, EE == X);
                         LOOP_ASSERT(LINE, SS == S);     // source unchanged?
@@ -1201,7 +1203,8 @@ DEFINE_TEST_CASE(18) { // TBD doc here and above
                         gg(&s, S_SPEC);
                         const Obj2& S = s;
                         if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                        x.pushBack(s[SI]);              // source non-`const`
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+                        x.pushBack(BSLS_ASSERT_CONVEYOR_REF(s[SI]));              // source non-`const`
                         if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                         LOOP_ASSERT(LINE, EE == X);
                         LOOP_ASSERT(LINE, SS == S);     // source unchanged?
@@ -1220,7 +1223,8 @@ DEFINE_TEST_CASE(18) { // TBD doc here and above
                         gg(&s, S_SPEC);
                         const Obj2& S = s;
                         if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                        x.pushFront(s[SI]);             // source non-`const`
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+                        x.pushFront(BSLS_ASSERT_CONVEYOR_REF(s[SI]));             // source non-`const`
                         if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                         LOOP_ASSERT(LINE, EE == X);
                         LOOP_ASSERT(LINE, SS == S);     // source unchanged?
@@ -1320,7 +1324,8 @@ DEFINE_TEST_CASE(18) { // TBD doc here and above
                 if (1 == NE) {
                     x.removeAll();  gg(&x, D_SPEC);
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.insert(DI, SS[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&SS);
+                    x.insert(DI, BSLS_ASSERT_CONVEYOR_REF(SS[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                 }
@@ -1349,7 +1354,8 @@ DEFINE_TEST_CASE(18) { // TBD doc here and above
                 if (specLength(D_SPEC) == DI && 1 == NE) {
                     x.removeAll();  gg(&x, D_SPEC);
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.append(SS[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&SS);
+                    x.append(BSLS_ASSERT_CONVEYOR_REF(SS[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                 }
@@ -1951,7 +1957,8 @@ DEFINE_TEST_CASE(18) { // TBD doc here and above
                   BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(testAllocator) {
                     Obj2 x(DD, &testAllocator);  const Obj2& X = x;
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.insert(DI, X[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    x.insert(DI, BSLS_ASSERT_CONVEYOR_REF(X[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                   } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
@@ -1986,7 +1993,8 @@ DEFINE_TEST_CASE(18) { // TBD doc here and above
                   BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(testAllocator) {
                     Obj2 x(DD, &testAllocator);  const Obj2& X = x;
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.append(X[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    x.append(BSLS_ASSERT_CONVEYOR_REF(X[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                   } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
@@ -2029,7 +2037,8 @@ DEFINE_TEST_CASE(18) { // TBD doc here and above
                 if (1 == NE) {
                     x.removeAll();  gg(&x, X_SPEC);
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.insert(DI, X[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    x.insert(DI, BSLS_ASSERT_CONVEYOR_REF(X[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                 }
@@ -2058,7 +2067,8 @@ DEFINE_TEST_CASE(18) { // TBD doc here and above
                 if (specLength(X_SPEC) == DI && 1 == NE) {
                     x.removeAll();  gg(&x, X_SPEC);
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.append(X[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    x.append(BSLS_ASSERT_CONVEYOR_REF(X[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                 }
@@ -2414,7 +2424,7 @@ DEFINE_TEST_CASE(16) {
                 }
                 if (veryVerbose) cout <<
                 "\t--------------------------------------------------" << endl;
-                mX.append(VALUES[iLen % 3]);   // Extend with cyclic values.
+                mX.append(BSLS_ASSERT_CONVEYOR_REF(VALUES[iLen % 3]));   // Extend with cyclic values.
             }
         }
 
@@ -2461,7 +2471,7 @@ DEFINE_TEST_CASE(16) {
                 }
                 if (veryVerbose) cout <<
                 "\t--------------------------------------------------" << endl;
-                mX.append(VALUES[iLen % 3]);   // Extend with cyclic values.
+                mX.append(BSLS_ASSERT_CONVEYOR_REF(VALUES[iLen % 3]));   // Extend with cyclic values.
             }
         }
       }
@@ -3016,7 +3026,8 @@ DEFINE_TEST_CASE(14) {
                     {
                         Obj s(SS, &testAllocator);  const Obj& S = s;
                         if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                        x.replace(DI, s[SI]);           // source non-`const`
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+                        x.replace(DI, BSLS_ASSERT_CONVEYOR_REF(s[SI]));           // source non-`const`
                         if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                         LOOP_ASSERT(LINE, EE == X);
                         LOOP_ASSERT(LINE, SS == S);     // source unchanged?
@@ -3085,7 +3096,8 @@ DEFINE_TEST_CASE(14) {
                 if (1 == NE) {
                     x.removeAll();  gg(&x, D_SPEC);
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.replace(DI, SS[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&SS);
+                    x.replace(DI, BSLS_ASSERT_CONVEYOR_REF(SS[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                 }
@@ -3500,7 +3512,8 @@ DEFINE_TEST_CASE(14) {
                   BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(testAllocator) {
                     Obj x(DD, &testAllocator);  const Obj& X = x;
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.replace(DI, X[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    x.replace(DI, BSLS_ASSERT_CONVEYOR_REF(X[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                   } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
@@ -3540,7 +3553,8 @@ DEFINE_TEST_CASE(14) {
                 if (1 == NE) {
                     x.removeAll();  gg(&x, X_SPEC);
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.replace(DI, X[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    x.replace(DI, BSLS_ASSERT_CONVEYOR_REF(X[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                 }
@@ -4124,7 +4138,8 @@ DEFINE_TEST_CASE(13) {
                         gg(&s, S_SPEC);
                         const Obj& S = s;
                         if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                        x.insert(DI, s[SI]);            // source non-`const`
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+                        x.insert(DI, BSLS_ASSERT_CONVEYOR_REF(s[SI]));            // source non-`const`
                         if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                         LOOP_ASSERT(LINE, EE == X);
                         LOOP_ASSERT(LINE, SS == S);     // source unchanged?
@@ -4180,7 +4195,8 @@ DEFINE_TEST_CASE(13) {
                         gg(&s, S_SPEC);
                         const Obj& S = s;
                         if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                        x.append(s[SI]);                // source non-`const`
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+                        x.append(BSLS_ASSERT_CONVEYOR_REF(s[SI]));                // source non-`const`
                         if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                         LOOP_ASSERT(LINE, EE == X);
                         LOOP_ASSERT(LINE, SS == S);     // source unchanged?
@@ -4198,7 +4214,8 @@ DEFINE_TEST_CASE(13) {
                         gg(&s, S_SPEC);
                         const Obj& S = s;
                         if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                        x.pushBack(s[SI]);              // source non-`const`
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+                        x.pushBack(BSLS_ASSERT_CONVEYOR_REF(s[SI]));              // source non-`const`
                         if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                         LOOP_ASSERT(LINE, EE == X);
                         LOOP_ASSERT(LINE, SS == S);     // source unchanged?
@@ -4216,7 +4233,8 @@ DEFINE_TEST_CASE(13) {
                         gg(&s, S_SPEC);
                         const Obj& S = s;
                         if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                        x.pushFront(s[SI]);             // source non-`const`
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&s);
+                        x.pushFront(BSLS_ASSERT_CONVEYOR_REF(s[SI]));             // source non-`const`
                         if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                         LOOP_ASSERT(LINE, EE == X);
                         LOOP_ASSERT(LINE, SS == S);     // source unchanged?
@@ -4316,7 +4334,8 @@ DEFINE_TEST_CASE(13) {
                 if (1 == NE) {
                     x.removeAll();  gg(&x, D_SPEC);
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.insert(DI, SS[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&SS);
+                    x.insert(DI, BSLS_ASSERT_CONVEYOR_REF(SS[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                 }
@@ -4345,7 +4364,8 @@ DEFINE_TEST_CASE(13) {
                 if (specLength(D_SPEC) == DI && 1 == NE) {
                     x.removeAll();  gg(&x, D_SPEC);
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.append(SS[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&SS);
+                    x.append(BSLS_ASSERT_CONVEYOR_REF(SS[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                 }
@@ -4946,7 +4966,8 @@ DEFINE_TEST_CASE(13) {
                   BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(testAllocator) {
                     Obj x(DD, &testAllocator);  const Obj& X = x;
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.insert(DI, X[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    x.insert(DI, BSLS_ASSERT_CONVEYOR_REF(X[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                   } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
@@ -4981,7 +5002,8 @@ DEFINE_TEST_CASE(13) {
                   BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(testAllocator) {
                     Obj x(DD, &testAllocator);  const Obj& X = x;
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.append(X[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    x.append(BSLS_ASSERT_CONVEYOR_REF(X[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                   } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
@@ -5024,7 +5046,8 @@ DEFINE_TEST_CASE(13) {
                 if (1 == NE) {
                     x.removeAll();  gg(&x, X_SPEC);
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.insert(DI, X[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    x.insert(DI, BSLS_ASSERT_CONVEYOR_REF(X[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                 }
@@ -5053,7 +5076,8 @@ DEFINE_TEST_CASE(13) {
                 if (specLength(X_SPEC) == DI && 1 == NE) {
                     x.removeAll();  gg(&x, X_SPEC);
                     if (veryVerbose) { cout << "\t\t\tBEFORE: "; P(X); }
-                    x.append(X[SI]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    x.append(BSLS_ASSERT_CONVEYOR_REF(X[SI]));
                     if (veryVerbose) { cout << "\t\t\t AFTER: "; P(X); }
                     LOOP_ASSERT(LINE, EE == X);
                 }
@@ -7803,7 +7827,7 @@ DEFINE_TEST_CASE(2) {
 
                 Obj mX(&testAllocator);  const Obj& X = mX;             // 1.
                 for (k = 0; k < i; ++k) {                               // 2.
-                    mX.pushBack(VALUES[k % NUM_VALUES]);
+                    mX.pushBack(BSLS_ASSERT_CONVEYOR_REF(VALUES[k % NUM_VALUES]));
                 }
 
                 LOOP_ASSERT(i, i == X.length());                        // 3.
@@ -7853,7 +7877,7 @@ DEFINE_TEST_CASE(2) {
                     LOOP2_ASSERT(i, j, 0 == X.length());                // 5.
 
                     for (k = 0; k < j; ++k) {                           // 6.
-                        mX.pushBack(VALUES[k % NUM_VALUES]);
+                        mX.pushBack(BSLS_ASSERT_CONVEYOR_REF(VALUES[k % NUM_VALUES]));
                     }
 
                     LOOP2_ASSERT(i, j, j == X.length());                // 7.

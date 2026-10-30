@@ -522,8 +522,9 @@ namespace BDEU_HASHUTIL_USAGE_EXAMPLE {
         /// Advance to the next element.
         void next()
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             for (size_t i = 0;
-                 i < d_length && ++d_current[i] == d_ranges[i]; ++i) {
+                 i < d_length && ++d_current[i] == BSLS_ASSERT_CONVEYOR_REF(d_ranges[i]); ++i) {
                 d_current[i] = 0;
             }
         }

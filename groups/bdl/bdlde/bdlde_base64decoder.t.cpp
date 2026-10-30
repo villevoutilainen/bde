@@ -2345,7 +2345,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
                 const int idx = FuzzUtil::consumeNumberInRange(&inputVecFdv,
                                                                0,
                                                                63);
-                inputVec.push_back(alphaStr[idx]);
+                inputVec.push_back(BSLS_ASSERT_CONVEYOR_REF(alphaStr[idx]));
             }
 
             size_t toFill = (4 - inputVec.size() % 4) % 4;

@@ -2940,7 +2940,9 @@ class ConclusionsMatrix {
         const Calls::value_type& operator[](bsl::size_t idx) const
                                          BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
         {
-            return d_calls[idx];
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
+            return BSLS_ASSERT_CONVEYOR_REF(
+                                       BSLS_ASSERT_CONVEYOR_REF(d_calls)[idx]);
         }
 
         // ASPECTS
@@ -3533,7 +3535,7 @@ BenchmarkInput::BenchmarkInput(const TestDataRow(&testTable)[t_SIZE])
 {
     d_refs.reserve(t_SIZE);
     for (bsl::size_t ti = 0; ti < t_SIZE; ++ti) {
-        d_refs.emplace_back(testTable[ti].d_input);
+        d_refs.emplace_back(BSLS_ASSERT_CONVEYOR_REF(testTable[ti]).d_input);
     }
 }
 

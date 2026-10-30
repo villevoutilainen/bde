@@ -4109,7 +4109,7 @@ cout << endl
                 for (bsl::size_t i = 0; i < NUM_ELEMS; ++i) {
                     if (veryVerbose) { P_(LINE) P(i) }
 
-                    mX.insert(ARRAY[i]);
+                    mX.insert(BSLS_ASSERT_CONVEYOR_REF(ARRAY[i]));
                 }
 
                 ostringstream os;
