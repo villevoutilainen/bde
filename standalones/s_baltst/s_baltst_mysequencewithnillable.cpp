@@ -174,6 +174,7 @@ bsl::ostream& MySequenceWithNillable::print(bsl::ostream& stream,
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());
@@ -302,6 +303,7 @@ bsl::ostream& MySequenceWithNillableBase64Binary::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());
@@ -428,6 +430,7 @@ bsl::ostream& MySequenceWithNillableHexBinary::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());
@@ -554,6 +557,7 @@ bsl::ostream& MySequenceWithNillableIntArray::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());
@@ -758,6 +762,7 @@ bsl::ostream& MySequenceWithNillableStringArray::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());
@@ -883,6 +888,7 @@ bsl::ostream& MySequenceWithNillableStringSequenceArraySequence::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());
@@ -1009,6 +1015,7 @@ bsl::ostream& MySequenceWithNillableIntList::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());
@@ -1135,6 +1142,7 @@ bsl::ostream& MySequenceWithNillableIntSequenceArray::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());
@@ -1261,6 +1269,7 @@ bsl::ostream& MySequenceWithNillableStringList::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());
@@ -1387,6 +1396,7 @@ bsl::ostream& MySequenceWithNillableStringSequenceArray::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());

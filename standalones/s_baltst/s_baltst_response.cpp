@@ -156,6 +156,8 @@ Response::Response(
 Response&
 Response::operator=(const Response& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_RESPONSE_DATA: {
@@ -178,6 +180,8 @@ Response::operator=(const Response& rhs)
 Response&
 Response::operator=(Response&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_RESPONSE_DATA: {
@@ -198,6 +202,7 @@ Response::operator=(Response&& rhs)
 
 void Response::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_RESPONSE_DATA: {
         typedef bsl::string Type;
@@ -216,6 +221,7 @@ void Response::reset()
 
 int Response::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_RESPONSE_DATA: {
         makeResponseData();
@@ -365,6 +371,7 @@ bsl::ostream& Response::print(
 
 const char *Response::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_RESPONSE_DATA:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_RESPONSE_DATA].name();

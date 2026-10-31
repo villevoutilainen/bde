@@ -152,6 +152,8 @@ MyChoice::MyChoice(
 MyChoice&
 MyChoice::operator=(const MyChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -174,6 +176,8 @@ MyChoice::operator=(const MyChoice& rhs)
 MyChoice&
 MyChoice::operator=(MyChoice&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -194,6 +198,7 @@ MyChoice::operator=(MyChoice&& rhs)
 
 void MyChoice::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1: {
         // no destruction required
@@ -211,6 +216,7 @@ void MyChoice::reset()
 
 int MyChoice::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -342,6 +348,7 @@ bsl::ostream& MyChoice::print(
 
 const char *MyChoice::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SELECTION1].name();

@@ -93,6 +93,7 @@ bsl::ostream& MySequenceWithCustomizedBase64Binary::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("element", this->element());

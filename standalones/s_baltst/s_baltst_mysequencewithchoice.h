@@ -382,6 +382,8 @@ class MySequenceWithChoice {
     friend bool operator==(const MySequenceWithChoice& lhs,
                            const MySequenceWithChoice& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.mode() == rhs.mode();
     }
 
@@ -424,13 +426,16 @@ namespace s_baltst {
 inline
 bool MySequenceWithChoiceChoice::isEqualTo(const MySequenceWithChoiceChoice& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef MySequenceWithChoiceChoice Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
           case Class::SELECTION_ID_CHOICE_A:
             return this->choiceA() == rhs.choiceA();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }

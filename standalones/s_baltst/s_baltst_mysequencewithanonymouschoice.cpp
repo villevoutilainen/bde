@@ -153,6 +153,8 @@ MySequenceWithAnonymousChoiceChoice::MySequenceWithAnonymousChoiceChoice(
 MySequenceWithAnonymousChoiceChoice&
 MySequenceWithAnonymousChoiceChoice::operator=(const MySequenceWithAnonymousChoiceChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_MY_CHOICE1: {
@@ -175,6 +177,8 @@ MySequenceWithAnonymousChoiceChoice::operator=(const MySequenceWithAnonymousChoi
 MySequenceWithAnonymousChoiceChoice&
 MySequenceWithAnonymousChoiceChoice::operator=(MySequenceWithAnonymousChoiceChoice&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_MY_CHOICE1: {
@@ -195,6 +199,7 @@ MySequenceWithAnonymousChoiceChoice::operator=(MySequenceWithAnonymousChoiceChoi
 
 void MySequenceWithAnonymousChoiceChoice::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_MY_CHOICE1: {
         // no destruction required
@@ -212,6 +217,7 @@ void MySequenceWithAnonymousChoiceChoice::reset()
 
 int MySequenceWithAnonymousChoiceChoice::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_MY_CHOICE1: {
         makeMyChoice1();
@@ -343,6 +349,7 @@ bsl::ostream& MySequenceWithAnonymousChoiceChoice::print(
 
 const char *MySequenceWithAnonymousChoiceChoice::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_MY_CHOICE1:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_MY_CHOICE1].name();
@@ -511,6 +518,7 @@ bsl::ostream& MySequenceWithAnonymousChoice::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute1", this->attribute1());

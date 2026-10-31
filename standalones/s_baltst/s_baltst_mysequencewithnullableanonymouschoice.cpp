@@ -123,6 +123,8 @@ MySequenceWithNullableAnonymousChoiceChoice::MySequenceWithNullableAnonymousChoi
 MySequenceWithNullableAnonymousChoiceChoice&
 MySequenceWithNullableAnonymousChoiceChoice::operator=(const MySequenceWithNullableAnonymousChoiceChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_CHOICE_A: {
@@ -145,6 +147,8 @@ MySequenceWithNullableAnonymousChoiceChoice::operator=(const MySequenceWithNulla
 MySequenceWithNullableAnonymousChoiceChoice&
 MySequenceWithNullableAnonymousChoiceChoice::operator=(MySequenceWithNullableAnonymousChoiceChoice&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_CHOICE_A: {
@@ -165,6 +169,7 @@ MySequenceWithNullableAnonymousChoiceChoice::operator=(MySequenceWithNullableAno
 
 void MySequenceWithNullableAnonymousChoiceChoice::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHOICE_A: {
         // no destruction required
@@ -181,6 +186,7 @@ void MySequenceWithNullableAnonymousChoiceChoice::reset()
 
 int MySequenceWithNullableAnonymousChoiceChoice::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_CHOICE_A: {
         makeChoiceA();
@@ -294,6 +300,7 @@ bsl::ostream& MySequenceWithNullableAnonymousChoiceChoice::print(
 
 const char *MySequenceWithNullableAnonymousChoiceChoice::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHOICE_A:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_CHOICE_A].name();
@@ -415,6 +422,7 @@ bsl::ostream& MySequenceWithNullableAnonymousChoice::print(
         int           level,
         int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("choice", this->choice());

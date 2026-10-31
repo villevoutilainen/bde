@@ -178,6 +178,8 @@ TimingRequest::TimingRequest(
 TimingRequest&
 TimingRequest::operator=(const TimingRequest& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SQRT: {
@@ -203,6 +205,8 @@ TimingRequest::operator=(const TimingRequest& rhs)
 TimingRequest&
 TimingRequest::operator=(TimingRequest&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SQRT: {
@@ -226,6 +230,7 @@ TimingRequest::operator=(TimingRequest&& rhs)
 
 void TimingRequest::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SQRT: {
         typedef s_baltst::Sqrt Type;
@@ -248,6 +253,7 @@ void TimingRequest::reset()
 
 int TimingRequest::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SQRT: {
         makeSqrt();
@@ -451,6 +457,7 @@ bsl::ostream& TimingRequest::print(
 
 const char *TimingRequest::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SQRT:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SQRT].name();

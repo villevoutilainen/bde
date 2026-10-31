@@ -155,6 +155,7 @@ bsl::ostream& SimpleRequest::print(bsl::ostream& stream,
                                    int           level,
                                    int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("data", this->data());

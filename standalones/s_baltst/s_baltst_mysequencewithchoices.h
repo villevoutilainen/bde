@@ -656,6 +656,8 @@ class MySequenceWithChoices {
     friend bool operator==(const MySequenceWithChoices& lhs,
                            const MySequenceWithChoices& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.first() == rhs.first() &&
                lhs.second() == rhs.second();
     }
@@ -699,6 +701,8 @@ namespace s_baltst {
 inline
 bool MySequenceWithChoicesChoice1::isEqualTo(const MySequenceWithChoicesChoice1& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef MySequenceWithChoicesChoice1 Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -707,7 +711,8 @@ bool MySequenceWithChoicesChoice1::isEqualTo(const MySequenceWithChoicesChoice1&
           case Class::SELECTION_ID_CHOICE_B:
             return this->choiceB() == rhs.choiceB();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -825,6 +830,8 @@ bool MySequenceWithChoicesChoice1::isUndefinedValue() const
 inline
 bool MySequenceWithChoicesChoice2::isEqualTo(const MySequenceWithChoicesChoice2& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef MySequenceWithChoicesChoice2 Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -833,7 +840,8 @@ bool MySequenceWithChoicesChoice2::isEqualTo(const MySequenceWithChoicesChoice2&
           case Class::SELECTION_ID_CHOICE_D:
             return this->choiceD() == rhs.choiceD();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }

@@ -33,6 +33,7 @@ namespace s_baltst {
 
 int CustomString::checkRestrictions(const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const char                *invalid = 0;
     const bsls::Types::IntPtr  valueLength =
         bdlde::Utf8Util::numCodePointsIfValid(

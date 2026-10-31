@@ -300,6 +300,8 @@ Topchoice::Topchoice(
 Topchoice&
 Topchoice::operator=(const Topchoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -312,7 +314,7 @@ Topchoice::operator=(const Topchoice& rhs)
             makeSelection3(rhs.d_selection3.object());
           } break;
           case SELECTION_ID_SELECTION4: {
-            makeSelection4(*rhs.d_selection4);
+            makeSelection4(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection4));
           } break;
           case SELECTION_ID_SELECTION5: {
             makeSelection5(rhs.d_selection5.object());
@@ -340,6 +342,8 @@ Topchoice::operator=(const Topchoice& rhs)
 Topchoice&
 Topchoice::operator=(Topchoice&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -386,6 +390,7 @@ Topchoice::operator=(Topchoice&& rhs)
 
 void Topchoice::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1: {
         typedef s_baltst::Sequence1 Type;
@@ -426,6 +431,7 @@ void Topchoice::reset()
 
 int Topchoice::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -887,6 +893,7 @@ bsl::ostream& Topchoice::print(
 
 const char *Topchoice::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SELECTION1].name();

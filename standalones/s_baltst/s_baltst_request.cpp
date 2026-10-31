@@ -156,6 +156,8 @@ Request::Request(
 Request&
 Request::operator=(const Request& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SIMPLE_REQUEST: {
@@ -178,6 +180,8 @@ Request::operator=(const Request& rhs)
 Request&
 Request::operator=(Request&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SIMPLE_REQUEST: {
@@ -198,6 +202,7 @@ Request::operator=(Request&& rhs)
 
 void Request::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SIMPLE_REQUEST: {
         typedef s_baltst::SimpleRequest Type;
@@ -216,6 +221,7 @@ void Request::reset()
 
 int Request::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SIMPLE_REQUEST: {
         makeSimpleRequest();
@@ -365,6 +371,7 @@ bsl::ostream& Request::print(
 
 const char *Request::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SIMPLE_REQUEST:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SIMPLE_REQUEST].name();

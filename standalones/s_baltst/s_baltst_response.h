@@ -308,6 +308,8 @@ namespace s_baltst {
 inline
 bool Response::isEqualTo(const Response& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef Response Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -316,7 +318,8 @@ bool Response::isEqualTo(const Response& rhs) const
           case Class::SELECTION_ID_FEATURE_RESPONSE:
             return this->featureResponse() == rhs.featureResponse();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }

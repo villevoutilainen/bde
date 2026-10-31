@@ -528,13 +528,16 @@ int AnonChoiceSequence::a() const
 inline
 bool AnonChoice::isEqualTo(const AnonChoice& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef AnonChoice Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
           case Class::SELECTION_ID_SEQUENCE:
             return this->sequence() == rhs.sequence();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }

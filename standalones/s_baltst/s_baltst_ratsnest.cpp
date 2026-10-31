@@ -227,6 +227,7 @@ bsl::ostream& Sequence3::print(bsl::ostream& stream,
                                int           level,
                                int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("element1", this->element1());
@@ -475,6 +476,7 @@ Sequence5::operator=(Sequence5&& rhs)
 
 void Sequence5::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_element1);
     bdlat_ValueTypeFunctions::reset(d_element1);
     bdlat_ValueTypeFunctions::reset(&d_element2);
@@ -491,6 +493,7 @@ bsl::ostream& Sequence5::print(bsl::ostream& stream,
                                int           level,
                                int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("element1", this->element1());
@@ -848,6 +851,7 @@ bsl::ostream& Sequence6::print(bsl::ostream& stream,
                                int           level,
                                int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("element1", this->element1());
@@ -1044,6 +1048,8 @@ Choice3::Choice3(
 Choice3&
 Choice3::operator=(const Choice3& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -1072,6 +1078,8 @@ Choice3::operator=(const Choice3& rhs)
 Choice3&
 Choice3::operator=(Choice3&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -1098,6 +1106,7 @@ Choice3::operator=(Choice3&& rhs)
 
 void Choice3::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1: {
         d_selection1.object().~Sequence6();
@@ -1122,6 +1131,7 @@ void Choice3::reset()
 
 int Choice3::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -1361,6 +1371,7 @@ bsl::ostream& Choice3::print(
 
 const char *Choice3::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SELECTION1].name();
@@ -1555,6 +1566,8 @@ Choice1::Choice1(
 Choice1&
 Choice1::operator=(const Choice1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -1564,10 +1577,10 @@ Choice1::operator=(const Choice1& rhs)
             makeSelection2(rhs.d_selection2.object());
           } break;
           case SELECTION_ID_SELECTION3: {
-            makeSelection3(*rhs.d_selection3);
+            makeSelection3(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection3));
           } break;
           case SELECTION_ID_SELECTION4: {
-            makeSelection4(*rhs.d_selection4);
+            makeSelection4(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection4));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
@@ -1583,6 +1596,8 @@ Choice1::operator=(const Choice1& rhs)
 Choice1&
 Choice1::operator=(Choice1&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -1625,6 +1640,7 @@ Choice1::operator=(Choice1&& rhs)
 
 void Choice1::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1: {
         // no destruction required
@@ -1647,6 +1663,7 @@ void Choice1::reset()
 
 int Choice1::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -1868,6 +1885,7 @@ bsl::ostream& Choice1::print(
 
 const char *Choice1::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SELECTION1].name();
@@ -2059,6 +2077,8 @@ Choice2::Choice2(
 Choice2&
 Choice2::operator=(const Choice2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -2068,7 +2088,7 @@ Choice2::operator=(const Choice2& rhs)
             makeSelection2(rhs.d_selection2.object());
           } break;
           case SELECTION_ID_SELECTION3: {
-            makeSelection3(*rhs.d_selection3);
+            makeSelection3(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection3));
           } break;
           case SELECTION_ID_SELECTION4: {
             makeSelection4(rhs.d_selection4.object());
@@ -2087,6 +2107,8 @@ Choice2::operator=(const Choice2& rhs)
 Choice2&
 Choice2::operator=(Choice2&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -2121,6 +2143,7 @@ Choice2::operator=(Choice2&& rhs)
 
 void Choice2::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1: {
         // no destruction required
@@ -2144,6 +2167,7 @@ void Choice2::reset()
 
 int Choice2::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -2365,6 +2389,7 @@ bsl::ostream& Choice2::print(
 
 const char *Choice2::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SELECTION1].name();
@@ -2783,6 +2808,7 @@ bsl::ostream& Sequence4::print(bsl::ostream& stream,
                                int           level,
                                int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("element1", this->element1());
@@ -3017,6 +3043,7 @@ Sequence1::operator=(Sequence1&& rhs)
 
 void Sequence1::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bdlat_ValueTypeFunctions::reset(&d_element1);
     bdlat_ValueTypeFunctions::reset(&d_element2);
     BSLS_ASSERT(d_element3);
@@ -3031,6 +3058,7 @@ bsl::ostream& Sequence1::print(bsl::ostream& stream,
                                int           level,
                                int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("element1", this->element1());
@@ -3257,6 +3285,7 @@ bsl::ostream& Sequence2::print(bsl::ostream& stream,
                                int           level,
                                int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("element1", this->element1());

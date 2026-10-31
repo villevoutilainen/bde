@@ -125,6 +125,8 @@ MySequenceWithChoiceArrayChoice::MySequenceWithChoiceArrayChoice(MySequenceWithC
 MySequenceWithChoiceArrayChoice&
 MySequenceWithChoiceArrayChoice::operator=(const MySequenceWithChoiceArrayChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_CHOICE_A: {
@@ -147,6 +149,8 @@ MySequenceWithChoiceArrayChoice::operator=(const MySequenceWithChoiceArrayChoice
 MySequenceWithChoiceArrayChoice&
 MySequenceWithChoiceArrayChoice::operator=(MySequenceWithChoiceArrayChoice&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_CHOICE_A: {
@@ -167,6 +171,7 @@ MySequenceWithChoiceArrayChoice::operator=(MySequenceWithChoiceArrayChoice&& rhs
 
 void MySequenceWithChoiceArrayChoice::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHOICE_A: {
         // no destruction required
@@ -183,6 +188,7 @@ void MySequenceWithChoiceArrayChoice::reset()
 
 int MySequenceWithChoiceArrayChoice::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_CHOICE_A: {
         makeChoiceA();
@@ -296,6 +302,7 @@ bsl::ostream& MySequenceWithChoiceArrayChoice::print(
 
 const char *MySequenceWithChoiceArrayChoice::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHOICE_A:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_CHOICE_A].name();
@@ -423,6 +430,7 @@ bsl::ostream& MySequenceWithChoiceArray::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("choices", this->choices());

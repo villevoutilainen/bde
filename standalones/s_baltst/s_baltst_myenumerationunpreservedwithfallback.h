@@ -324,6 +324,7 @@ namespace s_baltst {
 inline
 int MyEnumerationUnpreservedWithFallback::fromString(Value *result, const bsl::string& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return fromString(result, string.c_str(), static_cast<int>(string.length()));
 }
 
@@ -471,6 +472,7 @@ bsl::ostream& s_baltst::operator<<(
         bsl::ostream& stream,
         s_baltst::MyEnumerationUnpreservedWithFallback::Value rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return s_baltst::MyEnumerationUnpreservedWithFallback::print(stream, rhs);
 }
 

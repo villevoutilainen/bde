@@ -172,6 +172,7 @@ bsl::ostream& Employee::print(bsl::ostream& stream,
                               int           level,
                               int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("name", this->name());

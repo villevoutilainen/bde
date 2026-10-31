@@ -171,6 +171,7 @@ bsl::ostream& Address::print(bsl::ostream& stream,
                              int           level,
                              int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("street", this->street());

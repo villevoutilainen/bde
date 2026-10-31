@@ -124,6 +124,8 @@ MySequenceWithChoicesChoice1::MySequenceWithChoicesChoice1(MySequenceWithChoices
 MySequenceWithChoicesChoice1&
 MySequenceWithChoicesChoice1::operator=(const MySequenceWithChoicesChoice1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_CHOICE_A: {
@@ -146,6 +148,8 @@ MySequenceWithChoicesChoice1::operator=(const MySequenceWithChoicesChoice1& rhs)
 MySequenceWithChoicesChoice1&
 MySequenceWithChoicesChoice1::operator=(MySequenceWithChoicesChoice1&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_CHOICE_A: {
@@ -166,6 +170,7 @@ MySequenceWithChoicesChoice1::operator=(MySequenceWithChoicesChoice1&& rhs)
 
 void MySequenceWithChoicesChoice1::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHOICE_A: {
         // no destruction required
@@ -182,6 +187,7 @@ void MySequenceWithChoicesChoice1::reset()
 
 int MySequenceWithChoicesChoice1::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_CHOICE_A: {
         makeChoiceA();
@@ -295,6 +301,7 @@ bsl::ostream& MySequenceWithChoicesChoice1::print(
 
 const char *MySequenceWithChoicesChoice1::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHOICE_A:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_CHOICE_A].name();
@@ -407,6 +414,8 @@ MySequenceWithChoicesChoice2::MySequenceWithChoicesChoice2(MySequenceWithChoices
 MySequenceWithChoicesChoice2&
 MySequenceWithChoicesChoice2::operator=(const MySequenceWithChoicesChoice2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_CHOICE_C: {
@@ -429,6 +438,8 @@ MySequenceWithChoicesChoice2::operator=(const MySequenceWithChoicesChoice2& rhs)
 MySequenceWithChoicesChoice2&
 MySequenceWithChoicesChoice2::operator=(MySequenceWithChoicesChoice2&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_CHOICE_C: {
@@ -449,6 +460,7 @@ MySequenceWithChoicesChoice2::operator=(MySequenceWithChoicesChoice2&& rhs)
 
 void MySequenceWithChoicesChoice2::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHOICE_C: {
         // no destruction required
@@ -465,6 +477,7 @@ void MySequenceWithChoicesChoice2::reset()
 
 int MySequenceWithChoicesChoice2::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_CHOICE_C: {
         makeChoiceC();
@@ -578,6 +591,7 @@ bsl::ostream& MySequenceWithChoicesChoice2::print(
 
 const char *MySequenceWithChoicesChoice2::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHOICE_C:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_CHOICE_C].name();
@@ -668,6 +682,7 @@ bsl::ostream& MySequenceWithChoices::print(bsl::ostream& stream,
                                            int           level,
                                            int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("first", this->first());

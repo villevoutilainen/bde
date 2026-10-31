@@ -185,6 +185,8 @@ AnonChoice::AnonChoice(AnonChoice&& original) noexcept
 AnonChoice&
 AnonChoice::operator=(const AnonChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SEQUENCE: {
@@ -204,6 +206,8 @@ AnonChoice::operator=(const AnonChoice& rhs)
 AnonChoice&
 AnonChoice::operator=(AnonChoice&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SEQUENCE: {
@@ -221,6 +225,7 @@ AnonChoice::operator=(AnonChoice&& rhs)
 
 void AnonChoice::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SEQUENCE: {
         d_sequence.object().~AnonChoiceSequence();
@@ -234,6 +239,7 @@ void AnonChoice::reset()
 
 int AnonChoice::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SEQUENCE: {
         makeSequence();
@@ -329,6 +335,7 @@ bsl::ostream& AnonChoice::print(
 
 const char *AnonChoice::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SEQUENCE:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SEQUENCE].name();

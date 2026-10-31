@@ -369,6 +369,8 @@ FeatureTestMessage::FeatureTestMessage(
 FeatureTestMessage&
 FeatureTestMessage::operator=(const FeatureTestMessage& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -381,7 +383,7 @@ FeatureTestMessage::operator=(const FeatureTestMessage& rhs)
             makeSelection3(rhs.d_selection3.object());
           } break;
           case SELECTION_ID_SELECTION4: {
-            makeSelection4(*rhs.d_selection4);
+            makeSelection4(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection4));
           } break;
           case SELECTION_ID_SELECTION5: {
             makeSelection5(rhs.d_selection5.object());
@@ -418,6 +420,8 @@ FeatureTestMessage::operator=(const FeatureTestMessage& rhs)
 FeatureTestMessage&
 FeatureTestMessage::operator=(FeatureTestMessage&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
@@ -473,6 +477,7 @@ FeatureTestMessage::operator=(FeatureTestMessage&& rhs)
 
 void FeatureTestMessage::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1: {
         typedef s_baltst::Sequence1 Type;
@@ -525,6 +530,7 @@ void FeatureTestMessage::reset()
 
 int FeatureTestMessage::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -1148,6 +1154,7 @@ bsl::ostream& FeatureTestMessage::print(
 
 const char *FeatureTestMessage::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SELECTION1].name();

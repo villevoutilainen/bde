@@ -671,6 +671,8 @@ bool s_baltst::operator==(
         const s_baltst::MySequenceWithNullableAnonymousChoiceChoice& lhs,
         const s_baltst::MySequenceWithNullableAnonymousChoiceChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef s_baltst::MySequenceWithNullableAnonymousChoiceChoice Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -679,7 +681,8 @@ bool s_baltst::operator==(
           case Class::SELECTION_ID_CHOICE_B:
             return lhs.choiceB() == rhs.choiceB();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -710,6 +713,8 @@ bool s_baltst::operator==(
         const s_baltst::MySequenceWithNullableAnonymousChoice& lhs,
         const s_baltst::MySequenceWithNullableAnonymousChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.choice() == rhs.choice();
 }
 
