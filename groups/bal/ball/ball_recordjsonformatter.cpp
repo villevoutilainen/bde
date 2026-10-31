@@ -481,7 +481,8 @@ class TimestampFormatter : public RecordJsonFormatter_FieldFormatter {
                        FractionalSecondPrecision              precision,
                        RecordFormatterTimezone::Enum          timezoneDefault,
                        const allocator_type&                  allocator)
-    : d_name(nameOverride.value_or(k_DEFAULT_NAME), allocator)
+    : d_name(BSLS_ASSERT_CONVEYOR_REF(nameOverride).value_or(k_DEFAULT_NAME),
+             allocator)
     , d_format(format)
     , d_timezone(timezoneDefault)
     , d_precision(precision)
@@ -550,7 +551,7 @@ class ThreadIdFormatter : public RecordJsonFormatter_FieldFormatter {
     ThreadIdFormatter(const bsl::optional<bsl::string_view>& nameOverride,
                       Type                                   type,
                       const allocator_type&                  allocator)
-    : d_name(nameOverride.value_or(
+    : d_name(BSLS_ASSERT_CONVEYOR_REF(nameOverride).value_or(
                      type == e_TID ? k_DEFAULT_TID_NAME : k_DEFAULT_KTID_NAME),
              allocator)
     , d_type(type)
@@ -566,7 +567,7 @@ class ThreadIdFormatter : public RecordJsonFormatter_FieldFormatter {
                       Type                                   type,
                       Format                                 format,
                       const allocator_type&                  allocator)
-    : d_name(nameOverride.value_or(
+    : d_name(BSLS_ASSERT_CONVEYOR_REF(nameOverride).value_or(
                      type == e_TID ? k_DEFAULT_TID_NAME : k_DEFAULT_KTID_NAME),
              allocator)
     , d_type(type)
@@ -593,7 +594,8 @@ class ThreadIdFormatter : public RecordJsonFormatter_FieldFormatter {
     // ACCESSORS
 
     /// Return the name of the log record field or attribute.
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -632,7 +634,8 @@ class FixedFieldFormatter : public RecordJsonFormatter_FieldFormatter {
     // ACCESSORS
 
     /// Return the name of the log record field or attribute.
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                    // ========================
@@ -657,7 +660,8 @@ class ProcessIdFormatter : public FixedFieldFormatter {
     /// object) to supply memory.
     ProcessIdFormatter(const bsl::optional<bsl::string_view>& nameOverride,
                        const allocator_type&                  allocator)
-    : FixedFieldFormatter(nameOverride.value_or(k_DEFAULT_NAME), allocator)
+    : FixedFieldFormatter(BSLS_ASSERT_CONVEYOR_REF(nameOverride).value_or(
+                                                    k_DEFAULT_NAME), allocator)
     {}
 
     // MANIPULATORS
@@ -695,7 +699,8 @@ class LineFormatter : public FixedFieldFormatter {
     /// object) to supply memory.
     LineFormatter(const bsl::optional<bsl::string_view>& nameOverride,
                   const allocator_type&                  allocator)
-    : FixedFieldFormatter(nameOverride.value_or(k_DEFAULT_NAME), allocator)
+    : FixedFieldFormatter(BSLS_ASSERT_CONVEYOR_REF(nameOverride).value_or(
+                                                    k_DEFAULT_NAME), allocator)
     {}
 
     // MANIPULATORS
@@ -733,7 +738,8 @@ class CategoryFormatter : public FixedFieldFormatter {
     /// of a `bslma::Allocator` object) to supply memory.
     CategoryFormatter(const bsl::optional<bsl::string_view>& nameOverride,
                       const allocator_type&                  allocator)
-    : FixedFieldFormatter(nameOverride.value_or(k_DEFAULT_NAME), allocator)
+    : FixedFieldFormatter(BSLS_ASSERT_CONVEYOR_REF(nameOverride).value_or(
+                                                    k_DEFAULT_NAME), allocator)
     {}
 
     // MANIPULATORS
@@ -771,7 +777,8 @@ class SeverityFormatter : public FixedFieldFormatter {
     /// of a `bslma::Allocator` object) to supply memory.
     SeverityFormatter(const bsl::optional<bsl::string_view>& nameOverride,
                       const allocator_type&                  allocator)
-    : FixedFieldFormatter(nameOverride.value_or(k_DEFAULT_NAME), allocator)
+    : FixedFieldFormatter(BSLS_ASSERT_CONVEYOR_REF(nameOverride).value_or(
+                                                    k_DEFAULT_NAME), allocator)
     {}
 
     // MANIPULATORS
@@ -809,7 +816,8 @@ class MessageFormatter : public FixedFieldFormatter {
     /// a `bslma::Allocator` object) to supply memory.
     MessageFormatter(const bsl::optional<bsl::string_view>& nameOverride,
                      const allocator_type&                  allocator)
-    : FixedFieldFormatter(nameOverride.value_or(k_DEFAULT_NAME), allocator)
+    : FixedFieldFormatter(BSLS_ASSERT_CONVEYOR_REF(nameOverride).value_or(
+                                                    k_DEFAULT_NAME), allocator)
     {}
 
     // MANIPULATORS
@@ -861,7 +869,8 @@ class FileFormatter : public RecordJsonFormatter_FieldFormatter {
     FileFormatter(const bsl::optional<bsl::string_view>& nameOverride,
                   Path                                   path,
                   const allocator_type&                  allocator)
-    : d_name(nameOverride.value_or(k_DEFAULT_NAME), allocator)
+    : d_name(BSLS_ASSERT_CONVEYOR_REF(nameOverride).value_or(k_DEFAULT_NAME),
+             allocator)
     , d_path(path)
     {}
 
@@ -943,7 +952,8 @@ class AttributeFormatter : public RecordJsonFormatter_FieldFormatter {
        // value otherwise.
 
     // ACCESSORS
-    const bsl::string& key() const;
+    const bsl::string& key() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
       // Return the key the user-defined attribute.
 };
 
@@ -1120,7 +1130,9 @@ class FieldFormattersDestructor {
     /// container supplied to this object at construction.
     ~FieldFormattersDestructor()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (d_formatters_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_formatters_p);
             typedef RecordJsonFormatter::FieldFormatters::iterator iterator;
             for (iterator it  = d_formatters_p->begin();
                           it != d_formatters_p->end();
@@ -1148,6 +1160,7 @@ void TimestampFormatter::deleteSelf(const bsl::allocator<> allocator)
 int TimestampFormatter::format(baljsn::SimpleFormatter *formatter,
                                const Record&            record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     bdlt::DatetimeInterval  offset;
 
     if (RecordFormatterTimezone::e_LOCAL == d_timezone) {
@@ -1266,6 +1279,7 @@ void ThreadIdFormatter::deleteSelf(const bsl::allocator<> allocator)
 int ThreadIdFormatter::format(baljsn::SimpleFormatter *formatter,
                               const Record&            record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     int rc = 0;
     switch (d_format) {
       case e_DECIMAL: {
@@ -1364,6 +1378,8 @@ void ProcessIdFormatter::deleteSelf(const bsl::allocator<> allocator)
 int ProcessIdFormatter::format(baljsn::SimpleFormatter *formatter,
                                const Record&            record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     return formatter->addValue(name(), record.fixedFields().processID());
 }
 
@@ -1383,6 +1399,8 @@ void LineFormatter::deleteSelf(const bsl::allocator<> allocator)
 int LineFormatter::format(baljsn::SimpleFormatter *formatter,
                           const Record&            record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     return formatter->addValue(name(), record.fixedFields().lineNumber());
 }
 
@@ -1402,6 +1420,8 @@ void CategoryFormatter::deleteSelf(const bsl::allocator<> allocator)
 int CategoryFormatter::format(baljsn::SimpleFormatter *formatter,
                               const Record&            record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     return formatter->addValue(name(), record.fixedFields().category());
 }
 
@@ -1421,6 +1441,8 @@ void SeverityFormatter::deleteSelf(const bsl::allocator<> allocator)
 int SeverityFormatter::format(baljsn::SimpleFormatter *formatter,
                               const Record&            record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     return formatter->addValue(name(),
                       Severity::toAscii(
                           static_cast<Severity::Level>(
@@ -1443,6 +1465,8 @@ void MessageFormatter::deleteSelf(const bsl::allocator<> allocator)
 int MessageFormatter::format(baljsn::SimpleFormatter *formatter,
                              const Record&            record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     return formatter->addValue(name(), record.fixedFields().messageRef());
 }
 
@@ -1462,6 +1486,7 @@ void FileFormatter::deleteSelf(const bsl::allocator<> allocator)
 int FileFormatter::format(baljsn::SimpleFormatter *formatter,
                           const Record&            record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     switch (d_path) {
       case e_FULL: {
         if (0 != formatter->addValue(d_name, record.fixedFields().fileName()))
@@ -1522,6 +1547,8 @@ void AttributeFormatter::deleteSelf(const bsl::allocator<> allocator)
 int AttributeFormatter::format(baljsn::SimpleFormatter *formatter,
                                const Record&            record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::vector<ball::ManagedAttribute> Attributes;
 
     const Attributes& attributes = record.attributes();
@@ -1534,7 +1561,7 @@ int AttributeFormatter::format(baljsn::SimpleFormatter *formatter,
              i != attributes.end();
              ++i)
         {
-            if (d_key == i->key()) {
+            if (d_key == BSLS_ASSERT_CONVEYOR_REF(*i).key()) {
                 d_index = static_cast<int>(bsl::distance(attributes.begin(),
                                                          i));
                 break;                                                 // BREAK
@@ -1581,7 +1608,8 @@ AttributesFormatter::AttributesFormatter(
     : d_skipAttributes_sp(skipAttributesSp)
     , d_cache(allocator)
 {
-    BSLS_ASSERT(allocator == skipAttributesSp->get_allocator());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&skipAttributesSp);
+    BSLS_ASSERT_NONCONVEYOR(allocator == skipAttributesSp->get_allocator());
 }
 
 // MANIPULATORS
@@ -1594,6 +1622,8 @@ void AttributesFormatter::deleteSelf(const bsl::allocator<> allocator)
 int AttributesFormatter::format(baljsn::SimpleFormatter *formatter,
                                 const Record&            record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const Attributes& attributes = record.attributes();
 
     for (Attributes::size_type i = 0; i < attributes.size(); ++i) {
@@ -1623,7 +1653,7 @@ inline
 int AttributesFormatter::parse(bdld::DatumMapRef v)
 {
     (void) v;
-    BSLS_ASSERT(0 == v.size());
+    BSLS_ASSERT_NONCONVEYOR(0 == v.size());
     return 0;
 }
 
@@ -1635,6 +1665,8 @@ int AttributesFormatter::parse(bdld::DatumMapRef v)
 RecordJsonFormatter_FieldFormatter *
 DatumParser::make(const bslstl::StringRef& v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&v);
     RecordJsonFormatter_FieldFormatter *formatter = 0;
 
     if (k_KEY_TIMESTAMP == v) {
@@ -1701,7 +1733,8 @@ DatumParser::make(const bslstl::StringRef& v)
                                                    d_allocator.mechanism(), v);
 
         if (d_skipAttributes_sp->end() == d_skipAttributes_sp->find(v)) {
-            d_skipAttributes_sp->emplace(formatter_mp->key());
+            d_skipAttributes_sp->emplace(
+                             BSLS_ASSERT_CONVEYOR_REF(*formatter_mp).key());
         }
 
         return formatter_mp.release().first;                          // RETURN
@@ -1725,6 +1758,7 @@ RecordJsonFormatter_FieldFormatter *DatumParser::make(bdld::DatumMapRef  v)
 
 int DatumParser::parse(FieldFormatters *formatters, const bdld::Datum&  v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(formatters);
 
     if (false == v.isArray()) {
         return -1;                                                    // RETURN
@@ -1762,6 +1796,7 @@ int FormatUtil::formatAttribute(baljsn::SimpleFormatter *formatter,
                                 const ManagedAttribute&  attribute,
                                 const bsl::string_view&  name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attribute);
     if (attribute.value().is<bsl::string>()) {
         return formatter->addValue(name, attribute.value().the<bsl::string>());
                                                                       // RETURN
@@ -2192,6 +2227,7 @@ RecordJsonFormatter& RecordJsonFormatter::operator=(
 void RecordJsonFormatter::operator()(bsl::ostream& stream,
                                      const Record& record) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     baljsn::SimpleFormatter formatter(stream);
     int rc;
     formatter.openObject();

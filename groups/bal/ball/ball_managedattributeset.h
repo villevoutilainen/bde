@@ -296,6 +296,8 @@ ManagedAttributeSet::ManagedAttributeSet(const ManagedAttributeSet&  original,
 inline
 bool ManagedAttributeSet::addAttribute(const ManagedAttribute& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return d_attributeSet.insert(value).second;
 }
 
@@ -308,18 +310,23 @@ int ManagedAttributeSet::addPredicate(const ManagedAttribute& value)
 inline
 bool ManagedAttributeSet::removeAttribute(const ManagedAttribute& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return !!d_attributeSet.erase(value);
 }
 
 inline
 int ManagedAttributeSet::removePredicate(const ManagedAttribute& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return static_cast<int>(d_attributeSet.erase(value));
 }
 
 inline
 void ManagedAttributeSet::removeAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_attributeSet.clear();
 }
 
@@ -340,12 +347,15 @@ ManagedAttributeSet::get_allocator() const
 inline
 bool ManagedAttributeSet::isMember(const ManagedAttribute& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return d_attributeSet.find(value) != d_attributeSet.end();
 }
 
 inline
 int ManagedAttributeSet::numAttributes() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_attributeSet.size());
 }
 
@@ -358,12 +368,14 @@ int ManagedAttributeSet::numPredicates() const
 inline
 ManagedAttributeSet::const_iterator ManagedAttributeSet::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_attributeSet.begin();
 }
 
 inline
 ManagedAttributeSet::const_iterator ManagedAttributeSet::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_attributeSet.end();
 }
 

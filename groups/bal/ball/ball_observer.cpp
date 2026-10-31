@@ -40,6 +40,7 @@ void Observer::publish(const Record&, const Context&)
 void Observer::publish(const bsl::shared_ptr<const Record>& record,
                        const Context&                       context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     publish(*record, context);
 }
 

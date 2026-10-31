@@ -27,6 +27,7 @@ bsl::ostream& Record::print(bsl::ostream& stream,
                             int           level,
                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 <= spacesPerLevel) {
         bdlb::Print::indent(stream, level, spacesPerLevel);
         stream << "[\n";

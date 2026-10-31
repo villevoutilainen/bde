@@ -23,6 +23,7 @@ struct ValueHashVisitor {
     /// Return the hash value for the specified `string`.
     unsigned int operator()(const bsl::string& string) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&string);
         return bdlb::HashUtil::hash1(string.data(),
                                      static_cast<int>(string.size()));
     }
@@ -75,6 +76,7 @@ bsl::ostream& Attribute::print(bsl::ostream& stream,
                                int           level,
                                int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // We use a negative spacesPerLevel to ensure the output is rendered on
     // one line.
 

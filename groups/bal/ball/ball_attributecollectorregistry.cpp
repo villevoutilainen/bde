@@ -18,6 +18,9 @@ namespace ball {
 int AttributeCollectorRegistry::addCollector(const Collector&        collector,
                                              const bsl::string_view& name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&collector);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     Registry::iterator first = d_collectors.begin();
@@ -36,12 +39,14 @@ int AttributeCollectorRegistry::addCollector(const Collector&        collector,
 
 void AttributeCollectorRegistry::removeAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
     d_collectors.clear();
 }
 
 int AttributeCollectorRegistry::removeCollector(const bsl::string_view& name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     Registry::iterator first = d_collectors.begin();
@@ -88,6 +93,7 @@ bool AttributeCollectorRegistry::hasCollector(const bsl::string_view& name)
 
 int AttributeCollectorRegistry::numCollectors() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     return static_cast<int>(d_collectors.size());

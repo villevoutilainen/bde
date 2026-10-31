@@ -137,6 +137,7 @@ my_OstreamObserver::~my_OstreamObserver() { }
 void my_OstreamObserver::publish(const ball::Record&  record,
                                  const ball::Context& context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
 
     d_stream << endl;  // skip a line
 

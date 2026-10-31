@@ -257,6 +257,7 @@ class BroadcastObserver : public Observer {
                     bsl::is_convertible<t_OBSERVER *, ball::Observer *>::value,
                     void *>::type = 0)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(result);
         bslstl::SharedPtrUtil::dynamicCast(result, findObserver(observerName));
         return *result ? 0 : 1;
     }
@@ -331,6 +332,7 @@ class BroadcastObserver : public Observer {
                                              const ball::Observer *>::value,
                          void *>::type = 0) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(result);
         bslstl::SharedPtrUtil::dynamicCast(result, findObserver(observerName));
         return *result ? 0 : 1;
     }
@@ -372,6 +374,7 @@ template <class t_VISITOR>
 inline
 void BroadcastObserver::visitObservers(t_VISITOR& visitor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     for (ObserverRegistry::const_iterator it = d_observers.cbegin();
@@ -385,6 +388,7 @@ void BroadcastObserver::visitObservers(t_VISITOR& visitor)
 inline
 int BroadcastObserver::numRegisteredObservers() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     return static_cast<int>(d_observers.size());
@@ -394,6 +398,7 @@ template <class t_VISITOR>
 inline
 void BroadcastObserver::visitObservers(const t_VISITOR& visitor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     for (ObserverRegistry::const_iterator it = d_observers.cbegin();

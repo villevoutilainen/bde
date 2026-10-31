@@ -53,7 +53,8 @@ CstdioObserver::~CstdioObserver()
 void CstdioObserver::publish(const bsl::shared_ptr<const Record>& record,
                              const Context&)
 {
-    BSLS_ASSERT(record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+    BSLS_ASSERT_NONCONVEYOR(record);
 
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 

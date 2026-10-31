@@ -145,15 +145,18 @@ class CategoryManager_RadixTree_Node {
 
     /// Return a reference providing non-modifiable access to the child nodes
     /// of this node.
-    const Children& children() const;
+    const Children& children() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the prefix string
     /// of this node.
-    const bsl::string& prefix() const;
+    const bsl::string& prefix() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the optional
     /// value of this node.
-    const bsl::optional<t_VALUE>& value() const;
+    const bsl::optional<t_VALUE>& value() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 

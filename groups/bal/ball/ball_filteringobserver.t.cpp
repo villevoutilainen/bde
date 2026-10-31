@@ -259,6 +259,7 @@ class AllocatingFilter
 
 bool categoryFilter(const ball::Record& record, const ball::Context&)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     return ball::PatternUtil::isMatch(record.fixedFields().category(),
                                       "EQUITY.*");
 }

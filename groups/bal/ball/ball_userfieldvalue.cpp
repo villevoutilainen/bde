@@ -20,27 +20,27 @@ ball::UserFieldType::Enum UserFieldValue::type() const
 {
     switch (d_value.typeIndex()) {
       case 0: {
-        BSLS_ASSERT(d_value.isUnset());
+        BSLS_ASSERT_NONCONVEYOR(d_value.isUnset());
         return ball::UserFieldType::e_VOID;                           // RETURN
       } break;
       case 1: {
-        BSLS_ASSERT(d_value.is<bsls::Types::Int64>());
+        BSLS_ASSERT_NONCONVEYOR(d_value.is<bsls::Types::Int64>());
         return ball::UserFieldType::e_INT64;                          // RETURN
       } break;
       case 2: {
-        BSLS_ASSERT(d_value.is<double>());
+        BSLS_ASSERT_NONCONVEYOR(d_value.is<double>());
         return ball::UserFieldType::e_DOUBLE;                         // RETURN
       } break;
       case 3: {
-        BSLS_ASSERT(d_value.is<bsl::string>());
+        BSLS_ASSERT_NONCONVEYOR(d_value.is<bsl::string>());
         return ball::UserFieldType::e_STRING;                         // RETURN
       } break;
       case 4: {
-        BSLS_ASSERT(d_value.is<bdlt::DatetimeTz>());
+        BSLS_ASSERT_NONCONVEYOR(d_value.is<bdlt::DatetimeTz>());
         return ball::UserFieldType::e_DATETIMETZ;                     // RETURN
       } break;
       case 5: {
-        BSLS_ASSERT(d_value.is<bsl::vector<char> >());
+        BSLS_ASSERT_NONCONVEYOR(d_value.is<bsl::vector<char> >());
         return ball::UserFieldType::e_CHAR_ARRAY;                     // RETURN
       } break;
       default: {

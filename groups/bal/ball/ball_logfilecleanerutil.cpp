@@ -40,6 +40,7 @@ void LogFileCleanerUtil::logPatternToFilePattern(
                                          bsl::string             *filePattern,
                                          const bsl::string_view&  logPattern)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(filePattern);
     filePattern->reserve(logPattern.length());
     filePattern->clear();
 

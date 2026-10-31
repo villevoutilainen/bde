@@ -361,6 +361,8 @@ void PrintUtil::appendAttribute(bsl::string             *result,
                                 const ManagedAttribute&  a,
                                 bool                     printKey)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     if (printKey) {
         *result += a.key();
         *result += '=';
@@ -404,6 +406,7 @@ void PrintUtil::appendAttribute(bsl::string             *result,
 
 void PrintUtil::appendCategory(bsl::string *result, const Record& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     *result += record.fixedFields().category();
 }
 
@@ -413,6 +416,8 @@ void PrintUtil::appendDatetime(bsl::string                  *result,
                                TimestampFormat               timestampFormat,
                                FractionalSecondPrecision     secondPrecision)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(timestampOffset);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     bdlt::DatetimeInterval  offset;
 
     if (PublishInLocalTimeUtil::k_ENABLE ==
@@ -518,6 +523,8 @@ void PrintUtil::appendFilename(bsl::string   *result,
                                bool           fullPath,
                                const Record&  record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     const bsl::string_view filename(record.fixedFields().fileName());
 
     if (fullPath) {
@@ -539,6 +546,7 @@ void PrintUtil::appendFilename(bsl::string   *result,
 void PrintUtil::appendHexDump(bsl::string             *result,
                               const bsl::string_view&  string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     static const char HEX[] = "0123456789ABCDEF";
 
     bsl::string_view::const_iterator i   = string.begin();
@@ -555,22 +563,26 @@ void PrintUtil::appendHexDump(bsl::string             *result,
 
 void PrintUtil::appendLineNumber(bsl::string *result, const Record& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     appendValue(result, record.fixedFields().lineNumber());
 }
 
 void PrintUtil::appendMessage(bsl::string *result, const Record& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     appendString(result, record.fixedFields().messageRef());
 }
 
 void PrintUtil::appendMessageNonPrintableChars(bsl::string   *result,
                                                const Record&  record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     appendString(result, record.fixedFields().messageRef(), true);
 }
 
 void PrintUtil::appendMessageAsHex(bsl::string *result, const Record& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     appendHexDump(result, record.fixedFields().messageRef());
 }
 
@@ -627,6 +639,7 @@ void PrintUtil::appendValue(bsl::string  *result, unsigned long long value)
 void PrintUtil::appendProcessId(bsl::string   *result,
                                 const Record&  record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     appendValue(result, record.fixedFields().processID());
 }
 
@@ -634,6 +647,7 @@ void PrintUtil::appendString(bsl::string             *result,
                              const bsl::string_view&  string,
                              bool                     notPrintable)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     if (notPrintable) {
 
         bsl::string_view::const_iterator startRange = string.begin();
@@ -671,36 +685,42 @@ void PrintUtil::appendString(bsl::string             *result,
 void PrintUtil::appendThreadId(bsl::string   *result,
                                const Record&  record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     appendValue(result, "%llu", record.fixedFields().threadID());
 }
 
 void PrintUtil::appendThreadIdAsHex(bsl::string   *result,
                                     const Record&  record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     appendValue(result, "%llX", record.fixedFields().threadID());
 }
 
 void PrintUtil::appendKernelThreadId(bsl::string   *result,
                                      const Record&  record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     appendValue(result, "%llu", record.fixedFields().kernelThreadID());
 }
 
 void PrintUtil::appendKernelThreadIdAsHex(bsl::string   *result,
                                           const Record&  record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     appendValue(result, "%llX", record.fixedFields().kernelThreadID());
 }
 
 void PrintUtil::appendSeverity(bsl::string   *result,
                                const Record&  record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     result->append(Severity::toAscii(static_cast<Severity::Level>(
                                             record.fixedFields().severity())));
 }
 
 void PrintUtil::appendUserFields(bsl::string *result, const Record& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     typedef UserFields Values;
     const Values& customFields    = record.customFields();
     const int     numCustomFields = customFields.length();
@@ -742,6 +762,7 @@ AttributeFormatter::AttributeFormatter(const bsl::string_view& key,
 
 void AttributeFormatter::operator()(bsl::string *result, const Record& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     const Attributes& attributes = record.attributes();
     if (k_UNSET == d_index ||
         d_index >= static_cast<int>(attributes.size()) ||
@@ -756,7 +777,7 @@ void AttributeFormatter::operator()(bsl::string *result, const Record& record)
              i != attributes.end();
              ++i)
         {
-            if (d_key == i->key()) {
+            if (d_key == BSLS_ASSERT_CONVEYOR_REF(*i).key()) {
                 d_index = static_cast<int>(bsl::distance(attributes.begin(),
                                                          i));
                 break;                                                 // BREAK
@@ -792,6 +813,8 @@ AttributesFormatter::AttributesFormatter(const AttributesFormatter& original,
 void AttributesFormatter::renderAllAttributes(bsl::string   *result,
                                               const Record&  record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     const Attributes&          attributes = record.attributes();
     Attributes::const_iterator i          = attributes.begin();
     Attributes::const_iterator end        = attributes.end();
@@ -805,6 +828,11 @@ void AttributesFormatter::renderAllAttributes(bsl::string   *result,
 void AttributesFormatter::renderNonSkippedAttributes(bsl::string   *result,
                                                      const Record&  record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    // called only when there are attributes to skip
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_skipAttributes_p);
     const Attributes& attributes = record.attributes();
 
     for (Attributes::size_type i = 0; i < attributes.size(); ++i) {
@@ -833,6 +861,7 @@ void AttributesFormatter::renderNonSkippedAttributes(bsl::string   *result,
 
 void AttributesFormatter::operator()(bsl::string *result, const Record& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     const bsl::string::size_type len = result->length();
 
     if (0 == d_skipAttributes_p) {
@@ -863,6 +892,7 @@ const char *RecordStringFormatter::k_BASIC_ATTRIBUTE_FORMAT =
 // PRIVATE MANIPULATORS
 void RecordStringFormatter::parseFormatSpecification()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_fieldFormatters.clear();
     d_skipAttributes.clear();
 
@@ -1303,16 +1333,19 @@ RecordStringFormatter::RecordStringFormatter(
 // MANIPULATORS
 void RecordStringFormatter::disablePublishInLocalTime()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_timestampOffset.setTotalMilliseconds(PublishInLocalTimeUtil::k_DISABLE);
 }
 
 void RecordStringFormatter::enablePublishInLocalTime()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_timestampOffset.setTotalMilliseconds(PublishInLocalTimeUtil::k_ENABLE);
 }
 
 bool RecordStringFormatter::isPublishInLocalTimeEnabled() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return PublishInLocalTimeUtil::k_ENABLE ==
                                          d_timestampOffset.totalMilliseconds();
 }
@@ -1364,6 +1397,8 @@ void RecordStringFormatter::operator()(bsl::ostream& stream,
 bool ball::operator==(const RecordStringFormatter& lhs,
                       const RecordStringFormatter& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return 0 == bsl::strcmp(lhs.format(), rhs.format())
         && lhs.timestampOffset() == rhs.timestampOffset();
 }

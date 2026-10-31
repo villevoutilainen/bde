@@ -316,6 +316,7 @@ Type::Enum charToFieldType(char c)
 /// `value`, and `false` otherwise.
 bool verifyFieldTypeAndValue(const Obj& object, char type, char value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     ASSERT(type >= 'A' && type <= 'E');
     ASSERT('1' == value || '2' == value);
 
@@ -3679,22 +3680,27 @@ int main(int argc, char *argv[])
                   } break;
                   case Type::e_INT64: {
                     mX.setInt64(A2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERT(A2 == X.theInt64());
                   } break;
                   case Type::e_DOUBLE: {
                     mX.setDouble(B2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERT(B2 == X.theDouble());
                   } break;
                   case Type::e_STRING: {
                     mX.setString(C2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERT(C2 == X.theString());
                   } break;
                   case Type::e_DATETIMETZ: {
                     mX.setDatetimeTz(D2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERT(D2 == X.theDatetimeTz());
                   } break;
                   case Type::e_CHAR_ARRAY: {
                     mX.setCharArray(E2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERT(E2 == X.theCharArray());
                   } break;
                 }

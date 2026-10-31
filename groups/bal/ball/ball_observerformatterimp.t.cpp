@@ -132,6 +132,7 @@ struct CustomRecordFormatter {
     void operator()(bsl::ostream&        stream,
                      const ball::Record& rec) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rec);
         stream << "CUSTOM: " << rec.fixedFields().message();
     }
 };
@@ -219,6 +220,7 @@ class MySimpleObserver : public ball::Observer {
     // ACCESSORS
     const bsl::string& getFormat() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
         return d_formatterImp.getFormat();
     }
@@ -388,6 +390,7 @@ int main(int argc, char *argv[])
 // We can also retrieve the current format configuration:
 // ```
   const bsl::string& currentFormat = observer.getFormat();
+  BSLS_ASSERT_CONVEYOR_OBJECT(&currentFormat);
   ASSERT("qjson://%t %s %m" == currentFormat);
 // ```
 // For backwards compatibility, we can also use a custom formatter functor:

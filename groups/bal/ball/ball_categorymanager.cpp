@@ -153,6 +153,7 @@ Category *CategoryManager::addNewCategory(const char *categoryName,
                                           int         triggerLevel,
                                           int         triggerAllLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Create a new category and add it to the category registry.
 
     Category *category = new (*d_allocator_p) Category(categoryName,
@@ -200,9 +201,10 @@ void CategoryManager::privateApplyRulesToCategory(Category* category)
 void CategoryManager::privateApplyRulesToAllCategories(
                                      bslmt::LockGuard<bslmt::Mutex>& ruleGuard)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::Types::Int64 Int64;
     BSLMT_MUTEXASSERT_IS_LOCKED(&d_ruleSetMutex);
-    BSLS_ASSERT(ruleGuard.ptr() == &d_ruleSetMutex);
+    BSLS_ASSERT_NONCONVEYOR(ruleGuard.ptr() == &d_ruleSetMutex);
     bsls::Types::Int64 localRulesetSequenceNumber = ++d_ruleSetSequenceNumber;
     ruleGuard.release()->unlock();
 
@@ -287,6 +289,7 @@ Category *CategoryManager::addCategory(CategoryHolder *categoryHolder,
                                        int             triggerLevel,
                                        int             triggerAllLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(categoryName);
 
     if (!Category::areValidThresholdLevels(recordLevel,
@@ -336,6 +339,7 @@ Category *CategoryManager::addCategory(CategoryHolder *categoryHolder,
 
 Category *CategoryManager::lookupCategory(const char *categoryName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterLock> registryGuard(
                                                               &d_registryLock);
 
@@ -346,6 +350,7 @@ Category *CategoryManager::lookupCategory(const char *categoryName)
 Category *CategoryManager::lookupCategory(CategoryHolder *categoryHolder,
                                           const char     *categoryName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_registryLock.lockReadReserveWrite();
 
     bslmt::WriteLockGuard<bslmt::ReaderWriterLock> registryGuard(
@@ -382,6 +387,7 @@ Category *CategoryManager::setThresholdLevels(const char *categoryName,
                                               int         triggerLevel,
                                               int         triggerAllLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(categoryName);
 
     if (!Category::areValidThresholdLevels(recordLevel,
@@ -493,6 +499,7 @@ void CategoryManager::removeAllRules()
 // ACCESSORS
 const Category *CategoryManager::lookupCategory(const char *categoryName) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterLock> registryGuard(
                                                               &d_registryLock);
 

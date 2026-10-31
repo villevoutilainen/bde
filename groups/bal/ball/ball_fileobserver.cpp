@@ -142,6 +142,7 @@ void FileObserver::disableStdoutLoggingPrefix()
 
 void FileObserver::disableUserFieldsLogging()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     if (false == d_userFieldsLoggingFlag) {
@@ -188,6 +189,7 @@ void FileObserver::enableStdoutLoggingPrefix()
 
 void FileObserver::enableUserFieldsLogging()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     if (true == d_userFieldsLoggingFlag) {
@@ -222,6 +224,7 @@ void FileObserver::enablePublishInLocalTime()
 void FileObserver::publish(const bsl::shared_ptr<const Record>& record,
                            const Context&                       context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     if (record->fixedFields().severity() <= d_stdoutThreshold) {
@@ -278,6 +281,7 @@ bslma::Allocator *FileObserver::allocator() const
 void FileObserver::getLogFormat(const char **logFileFormat,
                                 const char **stdoutFormat) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     *logFileFormat = d_fileObserver2.getFormat().c_str();

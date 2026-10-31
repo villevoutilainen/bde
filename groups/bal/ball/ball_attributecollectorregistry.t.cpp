@@ -169,6 +169,7 @@ namespace USAGE_EXAMPLE {
 /// `stream` in a human-readable format.
 void printAttribute(bsl::ostream *stream, const ball::Attribute& attribute)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attribute);
     *stream << attribute.name() << "=" << attribute.value() << " ";
 }
 
@@ -287,6 +288,7 @@ void assertVisitor(const ball::Attribute& attribute)
 void collectingVisitor(bsl::vector<ball::ManagedAttribute>  *vector,
                        const ball::Attribute&                attribute)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(vector);
     vector->push_back(ball::ManagedAttribute(attribute));
 }
 

@@ -28,6 +28,8 @@ BroadcastObserver::~BroadcastObserver()
 // MANIPULATORS
 int BroadcastObserver::deregisterObserver(const bsl::string_view& observerName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&observerName);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     ObserverRegistry::iterator it = d_observers.find(observerName);
@@ -47,6 +49,7 @@ int BroadcastObserver::deregisterObserver(const bsl::string_view& observerName)
 
 void BroadcastObserver::deregisterAllObservers()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     ObserverRegistry::iterator it = d_observers.begin();
@@ -63,6 +66,8 @@ void BroadcastObserver::deregisterAllObservers()
 bsl::shared_ptr<Observer> BroadcastObserver::findObserver(
                                           const bsl::string_view& observerName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&observerName);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     ObserverRegistry::iterator it = d_observers.find(observerName);
@@ -77,6 +82,7 @@ bsl::shared_ptr<Observer> BroadcastObserver::findObserver(
 void BroadcastObserver::publish(const bsl::shared_ptr<const Record>& record,
                                 const Context&                       context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     ObserverRegistry::const_iterator it  = d_observers.begin();
@@ -91,6 +97,9 @@ int BroadcastObserver::registerObserver(
                                  const bsl::shared_ptr<Observer>& observer,
                                  const bsl::string_view&          observerName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&observer);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&observerName);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     return !d_observers.emplace(observerName, observer).second;
@@ -98,6 +107,7 @@ int BroadcastObserver::registerObserver(
 
 void BroadcastObserver::releaseRecords()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     ObserverRegistry::const_iterator it  = d_observers.begin();
@@ -112,6 +122,8 @@ void BroadcastObserver::releaseRecords()
 bsl::shared_ptr<const Observer>
 BroadcastObserver::findObserver(const bsl::string_view& observerName) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&observerName);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_rwMutex);
 
     ObserverRegistry::const_iterator it = d_observers.find(observerName);

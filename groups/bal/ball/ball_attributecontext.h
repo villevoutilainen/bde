@@ -511,7 +511,8 @@ class AttributeContext {
     /// invocations return the key created on the initial call.  Note that
     /// it is more efficient to cache the return value of this method than
     /// to invoke it repeatedly.
-    static const bslmt::ThreadUtil::Key& contextKey();
+    static const bslmt::ThreadUtil::Key& contextKey()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Destroy the `AttributeContext` object pointed to by the specified
     /// `arg`.  Note that this function is intended to be called by the
@@ -646,7 +647,8 @@ class AttributeContext {
     /// maintained by this object.  Note that this method can be invoked
     /// safely even if the `initialize` class method has not yet been
     /// called.
-    const AttributeContainerList& containers() const;
+    const AttributeContainerList& containers() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Format this object to the specified output `stream` at the (absolute
     /// value of) the optionally specified indentation `level` and return a

@@ -102,6 +102,8 @@ typedef ball::ScopedAttribute_Container Obj_Container;
 void testVisitor(bsl::vector<ball::Attribute>  *result,
                  const ball::Attribute&         attribute)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attribute);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     result->push_back(attribute);
 }
 

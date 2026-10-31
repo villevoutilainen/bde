@@ -20,6 +20,7 @@ bsl::ostream& UserFields::print(bsl::ostream& stream,
                                 int           level,
                                 int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }

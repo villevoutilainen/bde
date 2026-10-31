@@ -216,27 +216,32 @@ class UserFieldValue {
     /// Return a reference providing non-modifiable access to the 64-bit
     /// integer value of this object.  The behavior is undefined unless
     /// `type() == ball::UserFieldType::e_INT64`.
-    const bsls::Types::Int64& theInt64() const;
+    const bsls::Types::Int64& theInt64() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the double
     /// value of this object.  The behavior is undefined unless
     /// `type() == ball::UserFieldType::e_DOUBLE`.
-    const double& theDouble() const;
+    const double& theDouble() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the string
     /// value of this object.  The behavior is undefined unless
     /// `type() == ball::UserFieldType::e_STRING`.
-    const bsl::string& theString() const;
+    const bsl::string& theString() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// `DatetimeTz` value of this object.  The behavior is undefined
     /// unless `type() == ball::UserFieldType::e_DATETIMETZ`.
-    const bdlt::DatetimeTz& theDatetimeTz() const;
+    const bdlt::DatetimeTz& theDatetimeTz() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// `bsl::vector<char>` value of this object.  The behavior is undefined
     /// unless `type() == ball::UserFieldType::e_CHAR_ARRAY`.
-    const bsl::vector<char>& theCharArray() const;
+    const bsl::vector<char>& theCharArray() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 
@@ -402,7 +407,7 @@ void UserFieldValue::setCharArray(const bsl::vector<char>& value)
 inline
 void UserFieldValue::swap(UserFieldValue& other)
 {
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
 
     d_value.swap(other.d_value);
 }

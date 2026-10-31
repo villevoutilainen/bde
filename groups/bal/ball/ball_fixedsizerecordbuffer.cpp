@@ -25,6 +25,7 @@ FixedSizeRecordBuffer::~FixedSizeRecordBuffer()
 // MANIPULATORS
 void FixedSizeRecordBuffer::popBack()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
 
     d_currentTotalSize -= (d_deque.back())->numAllocatedBytes();
@@ -37,6 +38,7 @@ void FixedSizeRecordBuffer::popBack()
 
 void FixedSizeRecordBuffer::popFront()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
 
     d_currentTotalSize -= (d_deque.front())->numAllocatedBytes();
@@ -49,6 +51,8 @@ void FixedSizeRecordBuffer::popFront()
 
 int FixedSizeRecordBuffer::pushBack(const bsl::shared_ptr<Record>& handle)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
 
     int size = handle->numAllocatedBytes() +
@@ -89,6 +93,8 @@ int FixedSizeRecordBuffer::pushBack(const bsl::shared_ptr<Record>& handle)
 
 int FixedSizeRecordBuffer::pushFront(const bsl::shared_ptr<Record>& handle)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
 
     int size = handle->numAllocatedBytes() +

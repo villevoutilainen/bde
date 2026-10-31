@@ -770,7 +770,8 @@ class FileObserver2 : public Observer {
     bool isSuppressUniqueFileNameOnRotation() const;
 
     /// Return the format config of the last successful `setFormat` call.
-    const bsl::string& getFormat() const;
+    const bsl::string& getFormat() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the lifetime of the log file that will trigger a file
     /// rotation by this file observer if rotation-on-lifetime is in effect,

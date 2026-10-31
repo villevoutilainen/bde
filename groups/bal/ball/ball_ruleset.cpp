@@ -82,6 +82,8 @@ RuleSet::RuleSet(const RuleSet& original, bslma::Allocator *basicAllocator)
 // MANIPULATORS
 int RuleSet::addRule(const Rule& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (d_ruleHashtable.find(value) != d_ruleHashtable.end()) {
         return -1;                                                    // RETURN
     }
@@ -122,19 +124,21 @@ int RuleSet::removeRule(const Rule& value)
 
 int RuleSet::removeRuleById(int id)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= id);
-    BSLS_ASSERT(id < maxNumRules());
+    BSLS_ASSERT_NONCONVEYOR(id < maxNumRules());
 
     const Rule *rule = d_ruleAddresses[id];
     if (!rule) {
         return 0;                                                     // RETURN
     }
+    BSLS_ASSERT_CONVEYOR_OBJECT(rule);
 
     d_numPredicates -= rule->numAttributes();
 
     // Note that removing 'iter' from 'd_ruleHashTable' invalidates 'rule'.
     HashtableType::iterator iter = d_ruleHashtable.find(*rule);
-    BSLS_ASSERT(iter != d_ruleHashtable.end());
+    BSLS_ASSERT_NONCONVEYOR(iter != d_ruleHashtable.end());
     d_ruleHashtable.erase(iter);
 
     d_ruleAddresses[id] = 0;
@@ -161,6 +165,7 @@ int RuleSet::removeRules(const RuleSet& rules)
 
 void RuleSet::removeAllRules()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_ruleAddresses.clear();
     d_ruleHashtable.clear();
     d_freeRuleIds.clear();
@@ -184,6 +189,8 @@ RuleSet& RuleSet::operator=(const RuleSet& rhs)
 // ACCESSORS
 int RuleSet::ruleId(const Rule& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     HashtableType::const_iterator iter = d_ruleHashtable.find(value);
 
     if (iter == d_ruleHashtable.end()) {

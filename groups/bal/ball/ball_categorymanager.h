@@ -406,7 +406,8 @@ class CategoryManager {
     /// Return a `const` reference to the category at the specified `index`
     /// in the registry of this category manager.  The behavior is undefined
     /// unless `0 <= index < length()`.
-    const Category& operator[](int index) const;
+    const Category& operator[](int index) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the number of categories in the registry of this category
     /// manager.
@@ -420,7 +421,8 @@ class CategoryManager {
     /// Return a `const` reference to the rule set maintained by this
     /// category manager.  The mutex returned by `rulesetMutex` should be
     /// locked prior to accessing the rule set.
-    const RuleSet& ruleSet() const;
+    const RuleSet& ruleSet() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the sequence number that tracks changes to the rule set
     /// maintained by this category manager.  The value returned by this
@@ -496,7 +498,8 @@ class CategoryManagerIter {
     /// Return a `const` reference to the category currently referred to by
     /// this iterator.  The behavior is undefined unless this iterator is
     /// valid.
-    const Category& operator()() const;
+    const Category& operator()() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                         // ==========================
@@ -581,6 +584,7 @@ bslmt::Mutex& CategoryManager::rulesetMutex()
 template <class t_CATEGORY_VISITOR>
 void CategoryManager::visitCategories(const t_CATEGORY_VISITOR& visitor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterLock> guard(&d_registryLock);
     for (bsl::vector<Category *>::iterator it = d_categories.begin();
          it != d_categories.end();
@@ -593,6 +597,7 @@ void CategoryManager::visitCategories(const t_CATEGORY_VISITOR& visitor)
 inline
 int CategoryManager::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterLock> guard(&d_registryLock);
     return static_cast<int>(d_categories.size());
 }
@@ -659,6 +664,8 @@ CategoryManagerIter::operator const void *() const
 inline
 const Category& CategoryManagerIter::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_cm_p);
     return d_cm_p->operator[](d_index);
 }
 

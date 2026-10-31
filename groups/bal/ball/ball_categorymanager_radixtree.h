@@ -269,12 +269,14 @@ class CategoryManager_RadixTree_Node {
 
     /// Return a reference providing modifiable access to the child nodes of
     /// this node.
-    Children& children();
+    Children& children()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the prefix string of
     /// this node.  Note that only a part of the prefix is stored in a node;
     /// the full key is obtained by concatenating the prefixes of all nodes.
-    bsl::string& prefix();
+    bsl::string& prefix()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Efficiently exchange the value of this object with the value of the
     /// specified `other` object.  This method provides the no-throw
@@ -284,21 +286,25 @@ class CategoryManager_RadixTree_Node {
 
     /// Return a reference providing modifiable access to the optional value of
     /// this node.
-    bsl::optional<t_VALUE>& value();
+    bsl::optional<t_VALUE>& value()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
     /// Return a reference providing non-modifiable access to the child nodes
     /// of this node.
-    const Children& children() const;
+    const Children& children() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the prefix string
     /// of this node.
-    const bsl::string& prefix() const;
+    const bsl::string& prefix() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the optional
     /// value of this node.
-    const bsl::optional<t_VALUE>& value() const;
+    const bsl::optional<t_VALUE>& value() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 
@@ -784,8 +790,9 @@ CategoryManager_RadixTree_ChildNodeGuard(Node          *parent,
 , d_child(child)
 , d_released(false)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(parent);
     BSLS_ASSERT(parent);
-    BSLS_ASSERT(child != parent->children().end());
+    BSLS_ASSERT_NONCONVEYOR(child != parent->children().end());
 }
 
 template <class t_VALUE>
@@ -793,7 +800,9 @@ inline
 CategoryManager_RadixTree_ChildNodeGuard<t_VALUE>::
 ~CategoryManager_RadixTree_ChildNodeGuard()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!d_released) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_parent_p);
         d_parent_p->children().erase(d_child);
     }
 }
@@ -932,7 +941,7 @@ void
 CategoryManager_RadixTree_Node<t_VALUE>::swap(
                                          CategoryManager_RadixTree_Node& other)
 {
-    BSLS_ASSERT(get_allocator() == other.get_allocator());
+    BSLS_ASSERT_NONCONVEYOR(get_allocator() == other.get_allocator());
 
     bslalg::SwapUtil::swap(&d_prefix,         &other.d_prefix);
     bslalg::SwapUtil::swap(&d_value.object(), &other.d_value.object());
@@ -994,6 +1003,8 @@ CategoryManager_RadixTree<t_VALUE>::emplaceImp(
                                          const bsl::string_view&  remainingKey,
                                          Args&&...                args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&remainingKey);
     BSLS_ASSERT(node);
 
     if (remainingKey.empty()) {
@@ -1048,7 +1059,8 @@ CategoryManager_RadixTree<t_VALUE>::emplaceImp(
     childCopy.prefix() = childPrefix.substr(commonLen);
 
     // Insert the child copy into split node (may throw)
-    splitNode.children().emplace(childCopy.prefix()[0],
+    splitNode.children().emplace(BSLS_ASSERT_CONVEYOR_REF(
+                                                        childCopy.prefix()[0]),
                                  bslmf::MovableRefUtil::move(childCopy));
 
     if (commonLen == remainingKey.size()) {
@@ -1079,6 +1091,7 @@ typename CategoryManager_RadixTree<t_VALUE>::size_type
 CategoryManager_RadixTree<t_VALUE>::eraseAllChildren(
                        typename CategoryManager_RadixTree<t_VALUE>::Node *node)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
     BSLS_ASSERT(node);
 
     size_type count = 0;
@@ -1104,6 +1117,7 @@ void CategoryManager_RadixTree<t_VALUE>::cleanupChildAfterErase(
                                    typename Node::Children::iterator it,
                                    char                              firstChar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
     BSLS_ASSERT(node);
 
     Node& child = it->second;
@@ -1141,6 +1155,7 @@ bool CategoryManager_RadixTree<t_VALUE>::eraseImp(
                                          Node                    *node,
                                          const bsl::string_view&  remainingKey)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
     BSLS_ASSERT(node);
 
     if (remainingKey.empty()) {
@@ -1185,6 +1200,7 @@ CategoryManager_RadixTree<t_VALUE>::erasePrefixImp(
                                       Node                    *node,
                                       const bsl::string_view&  remainingPrefix)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
     BSLS_ASSERT(node);
 
     if (remainingPrefix.empty()) {
@@ -1281,6 +1297,8 @@ CategoryManager_RadixTree<t_VALUE>::forEachImp(
                                             const bsl::string_view&  keyPrefix,
                                             const t_FUNCTOR&         functor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&keyPrefix);
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
     // Design Note: No return value with a count because it would always be
     // `size()` as we always run on all nodes with values.
 
@@ -1310,6 +1328,8 @@ CategoryManager_RadixTree<t_VALUE>::forEachPrefixImp(
                                               const bsl::string_view&  key,
                                               const t_FUNCTOR&         functor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BSLS_ASSERT(node);
 
     size_type count = 0;
@@ -1340,6 +1360,8 @@ CategoryManager_RadixTree<t_VALUE>::forEachPrefixImp(
                                               const bsl::string_view&  key,
                                               const t_FUNCTOR&         functor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BSLS_ASSERT(node);
 
     size_type count = 0;
@@ -1372,6 +1394,8 @@ CategoryManager_RadixTree<t_VALUE>::printNodeImp(
                                             int                 currLevel,
                                             int                 spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&keyPrefix);
+    BSLS_ASSERT_CONVEYOR_OBJECT(node);
     BSLS_ASSERT(node);
 
     const bool noFirstLineIndent = (currLevel < 0);
@@ -1533,6 +1557,7 @@ template <class t_VALUE>
 inline
 void CategoryManager_RadixTree<t_VALUE>::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_root.children().clear();
     d_root.value().reset();
     d_size = 0;
@@ -1553,10 +1578,12 @@ typename CategoryManager_RadixTree<t_VALUE>::size_type
 CategoryManager_RadixTree<t_VALUE>::eraseChildrenOfPrefix(
                                                 const bsl::string_view& prefix)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&prefix);
     Node      *node = &d_root;
     size_type  pos  = 0;
 
     while (pos < prefix.size()) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(node);
         typedef typename Node::Children::iterator Iter;
 
         Iter it = node->children().find(prefix[pos]);
@@ -1600,6 +1627,7 @@ CategoryManager_RadixTree<t_VALUE>::find(const bsl::string_view& key)
     bsl::string_view  remainingKey = key;
 
     while (true) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(currentNode);
         if (remainingKey.empty()) {
             return currentNode->value().has_value()
                   ? typename CategoryManager_RadixTree::OptValueRef(
@@ -1672,6 +1700,7 @@ CategoryManager_RadixTree<t_VALUE>::forEachPrefix(
     bsl::string  keySoFar;
     size_type    pos = 0;
     while (pos < prefix.size()) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(node);
         bool found = false;
         typedef typename Node::Children::iterator Iter;
         for (Iter it = node->children().begin();
@@ -1717,7 +1746,7 @@ template <class t_VALUE>
 inline
 void CategoryManager_RadixTree<t_VALUE>::swap(CategoryManager_RadixTree& other)
 {
-    BSLS_ASSERT(get_allocator() == other.get_allocator());
+    BSLS_ASSERT_NONCONVEYOR(get_allocator() == other.get_allocator());
 
     bslalg::SwapUtil::swap(&d_root, &other.d_root);
     bslalg::SwapUtil::swap(&d_size, &other.d_size);
@@ -1734,6 +1763,7 @@ bool CategoryManager_RadixTree<t_VALUE>::contains(
     bsl::string_view  remainingKey = key;
 
     while (true) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(currentNode);
         if (remainingKey.empty()) {
             return currentNode->value().has_value();                  // RETURN
         }
@@ -1762,6 +1792,7 @@ template <class t_VALUE>
 typename CategoryManager_RadixTree<t_VALUE>::size_type
 CategoryManager_RadixTree<t_VALUE>::countNodes() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     size_type count = 1;  // count root node
 
     // Recursively count all child nodes
@@ -1778,6 +1809,7 @@ CategoryManager_RadixTree<t_VALUE>::countNodes() const
 
         while (!stack.empty()) {
             const Node* node = stack.back();
+            BSLS_ASSERT_CONVEYOR_OBJECT(node);
             stack.pop_back();
 
             for (Iter childIt = node->children().begin();
@@ -1808,6 +1840,7 @@ CategoryManager_RadixTree<t_VALUE>::find(const bsl::string_view& key) const
     bsl::string_view  remainingKey = key;
 
     while (true) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(currentNode);
         if (remainingKey.empty()) {
             return currentNode->value().has_value()
                  ? typename CategoryManager_RadixTree::OptValueCRef(
@@ -1842,6 +1875,8 @@ bsl::string_view CategoryManager_RadixTree<t_VALUE>::findLongestCommonPrefix(
                                             const bsl::string_view&  key) const
 
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const Node  *node              = &d_root;
     size_type    matched           = 0;
     size_type    pos               = 0;
@@ -1855,6 +1890,7 @@ bsl::string_view CategoryManager_RadixTree<t_VALUE>::findLongestCommonPrefix(
     }
 
     while (pos < key.size()) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(node);
         typedef typename Node::Children::const_iterator Iter;
         const Iter it = node->children().find(key[pos]);
         if (it == node->children().end()) {
@@ -1916,6 +1952,7 @@ CategoryManager_RadixTree<t_VALUE>::forEachPrefix(
     size_type    pos = 0;
 
     while (pos < prefix.size()) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(node);
         bool found = false;
         typedef typename Node::Children::const_iterator Iter;
         for (Iter it = node->children().begin();
@@ -1982,6 +2019,7 @@ inline
 typename CategoryManager_RadixTree<t_VALUE>::allocator_type
 CategoryManager_RadixTree<t_VALUE>::get_allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_root.children().get_allocator();
 }
 
@@ -1996,6 +2034,8 @@ template <class t_VALUE>
 bool ball::operator==(const CategoryManager_RadixTree_Node<t_VALUE>& lhs,
                       const CategoryManager_RadixTree_Node<t_VALUE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.prefix()   == rhs.prefix()
         && lhs.value()    == rhs.value()
         && lhs.children() == rhs.children();

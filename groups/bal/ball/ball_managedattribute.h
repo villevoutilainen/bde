@@ -200,7 +200,8 @@ class ManagedAttribute {
     // ACCESSORS
 
     /// Return a `const` reference to the attribute of this object.
-    const Attribute& attribute() const;
+    const Attribute& attribute() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the allocator used by this object to supply memory.  Note
     /// that if no allocator was supplied at construction the default
@@ -221,7 +222,8 @@ class ManagedAttribute {
                         int           spacesPerLevel = 4) const;
 
     /// Return a `const` reference to the attribute name of this object.
-    const bsl::string& key() const;
+    const bsl::string& key() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the attribute name of this object.  Note that this accessor
     /// should not be used to get the attribute name if the name string
@@ -231,7 +233,8 @@ class ManagedAttribute {
     const char *name() const;
 
     /// Return a `const` reference to the attribute value of this object.
-    const Attribute::Value& value() const;
+    const Attribute::Value& value() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -277,7 +280,8 @@ inline
 ManagedAttribute::ManagedAttribute(const Attribute&      attribute,
                                    const allocator_type& allocator)
 : d_name(attribute.name(), allocator)
-, d_attribute(d_name.c_str(), attribute.value(), allocator)
+, d_attribute(d_name.c_str(), BSLS_ASSERT_CONVEYOR_REF(attribute).value(),
+              allocator)
 {
 }
 
@@ -375,7 +379,8 @@ inline
 ManagedAttribute::ManagedAttribute(const ManagedAttribute&  original,
                                    const allocator_type&    allocator)
 : d_name(original.d_name, allocator)
-, d_attribute(d_name.c_str(), original.d_attribute.value(), allocator)
+, d_attribute(d_name.c_str(), BSLS_ASSERT_CONVEYOR_REF(
+                                      original).d_attribute.value(), allocator)
 {
 }
 
@@ -383,6 +388,7 @@ ManagedAttribute::ManagedAttribute(const ManagedAttribute&  original,
 inline
 ManagedAttribute& ManagedAttribute::operator=(const ManagedAttribute& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     d_name       = rhs.d_name;
     d_attribute.setName(d_name.c_str());
     d_attribute.setValue(rhs.d_attribute.value());
@@ -496,6 +502,8 @@ inline
 bool ball::operator==(const ManagedAttribute& lhs,
                       const ManagedAttribute& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return (lhs.d_name == rhs.d_name
         && lhs.d_attribute.value() == rhs.d_attribute.value());
 }
@@ -504,6 +512,8 @@ inline
 bool ball::operator==(const ManagedAttribute& lhs,
                       const Attribute&        rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return (lhs.key() == rhs.name() && lhs.value() == rhs.value());
 }
 
@@ -511,6 +521,8 @@ inline
 bool ball::operator==(const Attribute&        lhs,
                       const ManagedAttribute& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return (lhs.name() == rhs.key() && lhs.value() == rhs.value());
 }
 

@@ -292,6 +292,7 @@ class my_ListType : public bsl::vector<void *> {
 inline
 void my_ListType::sort()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::sort(begin(), end());
 }
 
@@ -362,7 +363,8 @@ void *case9ThreadW(void *arg)
 
     for (int i = 0; i < NUM_NAMES; ++i) {
         if (veryVeryVerbose) {
-            MTCOUT << "Add category '" << names[i] << "'" << MTENDL;
+            MTCOUT << "Add category '" << BSLS_ASSERT_CONVEYOR_REF(
+                                                    names[i]) << "'" << MTENDL;
         }
 
         Holder mH;
@@ -373,11 +375,13 @@ void *case9ThreadW(void *arg)
             MTLOOP_ASSERT(mH.threshold(), 78  == mH.threshold());
             MTLOOP2_ASSERT(obj, mH.category(),
                            obj == (const void *) mH.category());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&results);
             results.push_back(obj);
         }
     }
 
     if (veryVerbose) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&results);
         MTCOUT << "\t"
                << bsl::setw(4)
                << results.size() << " categories were added" << MTENDL;
@@ -406,7 +410,8 @@ void *case9ThreadQ(void *arg)
 
     for (int i = 0; i < NUM_NAMES; ++i) {
         if (veryVeryVerbose) {
-            MTCOUT << "Lookup category '" << names[i] << "'" << MTENDL;
+            MTCOUT << "Lookup category '" << BSLS_ASSERT_CONVEYOR_REF(
+                                                    names[i]) << "'" << MTENDL;
         }
 
         Holder mH;
@@ -420,15 +425,18 @@ void *case9ThreadQ(void *arg)
         MTLOOP2_ASSERT(obj, mH.category(),
                        obj == (const void *) mH.category());
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&results);
         results.push_back(obj);
     }
 
     if (veryVeryVerbose) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&results);
         MTCOUT << "\t"
                << "NUM_NAMES = " << NUM_NAMES << ", "
                << "results.size() = " << results.size() << MTENDL;
     }
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&results);
     ASSERT(NUM_NAMES == (signed) results.size());
     results.sort();
     return 0;
@@ -485,8 +493,11 @@ extern "C" void *ruleThreadTest(void *args)
         barrier.wait();
 
         mX.rulesetMutex().lock();
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         int ruleId1 = X.ruleSet().ruleId(rule1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         int ruleId3 = X.ruleSet().ruleId(rule3);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         int ruleId4 = X.ruleSet().ruleId(rule4);
         mX.rulesetMutex().unlock();
 
@@ -515,6 +526,7 @@ extern "C" void *ruleThreadTest(void *args)
         ASSERT(1 <= mX.addRules(ruleSet));
 
         mX.rulesetMutex().lock();
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ruleId4 = X.ruleSet().ruleId(rule4);
         mX.rulesetMutex().unlock();
         barrier.wait();
@@ -524,6 +536,7 @@ extern "C" void *ruleThreadTest(void *args)
         {
             bslmt::LockGuard<bslmt::Mutex> guard(&mX.rulesetMutex());
             Int64 seqNo = X.ruleSetSequenceNumber();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             const ball::RuleSet& rules = X.ruleSet();
             int numRules      = rules.numRules();
             int numPredicates = rules.numPredicates();
@@ -1931,8 +1944,10 @@ int main(int argc, char *argv[])
         // Verify the number of categories added to the category manager.
         int totalAddedCategories = 0;
         for (int i = 0; i < NUM_W_THREADS; ++i) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&threads);
             totalAddedCategories +=
-                                 static_cast<int>(threads[i].d_results.size());
+                                 static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                 threads[i]).d_results.size());
             if (veryVeryVerbose) {
                 T_;
                 P_(i);
@@ -1941,7 +1956,8 @@ int main(int argc, char *argv[])
                 #else
                 P_(threads[i].d_handle.d_handle);
                 #endif
-                P_(threads[i].d_results.size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&threads);
+                P_(BSLS_ASSERT_CONVEYOR_REF(threads[i]).d_results.size());
                 P(totalAddedCategories);
             }
         }
@@ -1970,10 +1986,14 @@ int main(int argc, char *argv[])
                 #else
                 P_(threads[i].d_handle.d_handle);
                 #endif
-                P(threads[i].d_results.size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&threads);
+                P(BSLS_ASSERT_CONVEYOR_REF(threads[i]).d_results.size());
             }
-            LOOP2_ASSERT(i, threads[i].d_results.size(),
-                         results == threads[i].d_results);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&threads);
+            LOOP2_ASSERT(i,
+                         BSLS_ASSERT_CONVEYOR_REF(threads[i]).d_results.size(),
+                         results == BSLS_ASSERT_CONVEYOR_REF(
+                                                        threads[i]).d_results);
         }
 
         ASSERT(0 < ta.numAllocations());

@@ -176,6 +176,8 @@ struct AttributeComparator {
     bool operator()(const ball::Attribute& lhs,
                     const ball::Attribute& rhs) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         const int cmp = bsl::strcmp(lhs.name(), rhs.name());
         if (0 != cmp) {
             return cmp < 0;                                           // RETURN
@@ -293,11 +295,15 @@ AttributeSet::~AttributeSet()
 // MANIPULATORS
 void AttributeSet::insert(const ball::Attribute& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_set.insert(value);
 }
 
 bool AttributeSet::remove(const ball::Attribute& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bsl::set<ball::Attribute, AttributeComparator>::iterator it =
                                                             d_set.find(value);
     if (it != d_set.end()) {
@@ -310,6 +316,8 @@ bool AttributeSet::remove(const ball::Attribute& value)
 // ACCESSORS
 bool AttributeSet::hasValue(const ball::Attribute& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return d_set.find(value) != d_set.end();
 }
 
@@ -317,6 +325,7 @@ bsl::ostream& AttributeSet::print(bsl::ostream& stream,
                                   int           level,
                                   int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
 
@@ -331,6 +340,7 @@ bsl::ostream& AttributeSet::print(bsl::ostream& stream,
 void AttributeSet::visitAttributes(
               const bsl::function<void(const ball::Attribute&)>& visitor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::set<ball::Attribute>::const_iterator it = d_set.begin();
     for (; it != d_set.end(); ++it) {
         visitor(*it);
@@ -754,6 +764,7 @@ int randomValue(unsigned int *seed)
 /// Return the number of unique rules maintained in this specified `manager`'s
 /// `RuleSet`, while holding the `RuleSet`'s lock as per its API.
 int numRulesLocked(CatMngr *manager) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(manager);
     bslmt::LockGuard<bslmt::Mutex> guard(&manager->rulesetMutex());     // LOCK
     return manager->ruleSet().numRules();
 }
@@ -1119,6 +1130,7 @@ extern "C" void *case3ContextThread(void *)
 
     // Test with no attributes.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(0 == X.containers().numContainers());
 
         for (int i = 0; i < NUM_ATTRS; ++i) {
@@ -1127,6 +1139,7 @@ extern "C" void *case3ContextThread(void *)
 
         AttributeSet attributes;
         Obj::iterator it = mX->addAttributes(&attributes);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(1 == X.containers().numContainers());
 
         for (int i = 0; i < NUM_ATTRS; ++i) {
@@ -1136,13 +1149,16 @@ extern "C" void *case3ContextThread(void *)
         {
             AttributeSet attributes;
             Obj::iterator it = mX->addAttributes(&attributes);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(2 == X.containers().numContainers());
 
             mX->removeAttributes(it);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(1 == X.containers().numContainers());
         }
 
         mX->removeAttributes(it);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(0 == X.containers().numContainers());
     }
 
@@ -1150,43 +1166,51 @@ extern "C" void *case3ContextThread(void *)
     {
         AttributeSet attributes;
         Obj::iterator it = mX->addAttributes(&attributes);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(1 == X.containers().numContainers());
 
         for (int i = 0; i < NUM_ATTRS; ++i) {
             mX->removeAttributes(it);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(0 == X.containers().numContainers());
 
             attributes.insert(ATTRS[i]);
 
             it = mX->addAttributes(&attributes);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(1 == X.containers().numContainers());
 
             for (int j = 0; j < NUM_ATTRS; ++j) {
                 bool hasAttr = j <= i;
 
                 ASSERTV(i, j, hasAttr == X.hasAttribute(ATTRS[j]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(i, j, hasAttr == X.containers().hasValue(ATTRS[j]));
             }
         }
 
         for (int i = 0; i < NUM_ATTRS; ++i) {
             mX->removeAttributes(it);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(0 == X.containers().numContainers());
 
             attributes.remove(ATTRS[i]);
 
             it = mX->addAttributes(&attributes);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(1 == X.containers().numContainers());
 
             for (int j = 0; j < NUM_ATTRS; ++j) {
                 bool hasAttr = !(j <= i);
 
                 ASSERTV(i, j, hasAttr == X.hasAttribute(ATTRS[j]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(i, j, hasAttr == X.containers().hasValue(ATTRS[j]));
             }
         }
 
         mX->removeAttributes(it);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(0 == X.containers().numContainers());
     }
 
@@ -1194,14 +1218,17 @@ extern "C" void *case3ContextThread(void *)
     {
         AttributeSet attributes0;
         Obj::iterator it0 = mX->addAttributes(&attributes0);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(1 == X.containers().numContainers());
 
         AttributeSet attributes1;
         Obj::iterator it1 = mX->addAttributes(&attributes1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(2 == X.containers().numContainers());
 
         AttributeSet attributes2;
         Obj::iterator it2 = mX->addAttributes(&attributes2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(3 == X.containers().numContainers());
 
         for (int i = 0; i < NUM_ATTRS; ++i) {
@@ -1222,17 +1249,20 @@ extern "C" void *case3ContextThread(void *)
             }
 
             mX->removeAttributes(it);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(2 == X.containers().numContainers());
 
             as->insert(ATTRS[i]);
 
             mX->addAttributes(as);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(3 == X.containers().numContainers());
 
             for (int j = 0; j < NUM_ATTRS; ++j) {
                 bool hasAttr = j <= i;
 
                 ASSERTV(i, j, hasAttr == X.hasAttribute(ATTRS[j]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(i, j, hasAttr == X.containers().hasValue(ATTRS[j]));
             }
         }
@@ -1255,28 +1285,34 @@ extern "C" void *case3ContextThread(void *)
             }
 
             mX->removeAttributes(it);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(2 == X.containers().numContainers());
 
             as->remove(ATTRS[i]);
 
             mX->addAttributes(as);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(3 == X.containers().numContainers());
 
             for (int j = 0; j < NUM_ATTRS; ++j) {
                 bool hasAttr = !(j <= i);
 
                 ASSERTV(i, j, hasAttr == X.hasAttribute(ATTRS[j]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(i, j, hasAttr == X.containers().hasValue(ATTRS[j]));
             }
         }
 
         mX->removeAttributes(it1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(2 == X.containers().numContainers());
 
         mX->removeAttributes(it0);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(1 == X.containers().numContainers());
 
         mX->removeAttributes(it2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(0 == X.containers().numContainers());
     }
 
@@ -1337,13 +1373,15 @@ namespace u {
 static int invocationCount = 0;
 void myVisitorTest(const ball::Attribute& attribute)
 {
-    BSLS_ASSERT(0 == invocationCount);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attribute);
+    BSLS_ASSERT_NONCONVEYOR(0 == invocationCount);
     ++invocationCount;
 
     (void)attribute;
-    BSLS_ASSERT(0    == bsl::strcmp("testAttribute", attribute.name()));
-    BSLS_ASSERT(true == attribute.value().is<int>());
-    BSLS_ASSERT(1234 == attribute.value().the<int>());
+    BSLS_ASSERT_NONCONVEYOR(
+                       0    == bsl::strcmp("testAttribute", attribute.name()));
+    BSLS_ASSERT_NONCONVEYOR(true == attribute.value().is<int>());
+    BSLS_ASSERT_NONCONVEYOR(1234 == attribute.value().the<int>());
 }
 }  // close namespace u
 
@@ -1819,7 +1857,7 @@ int main(int argc, char *argv[])
 
         Obj::visitAttributes(u::myVisitorTest);
 
-        BSLS_ASSERT(1 == u::invocationCount);
+        BSLS_ASSERT_NONCONVEYOR(1 == u::invocationCount);
       } break;
       case 4: {
         // --------------------------------------------------------------------

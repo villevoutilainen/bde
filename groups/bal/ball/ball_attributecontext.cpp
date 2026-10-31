@@ -299,6 +299,7 @@ void AttributeContext::visitAttributes(
     if (!context) {
         return;                                                       // RETURN
     }
+    BSLS_ASSERT_CONVEYOR_OBJECT(context);
 
     const AttributeContainerList& containerList = context->containers();
 
@@ -323,8 +324,9 @@ bool AttributeContext::hasRelevantActiveRules(const Category *category) const
     // The 'rulesetMutex' is intentionally *not* locked before checking the
     // cache (see implementation note at the top).
 
+    CategoryManager& manager = BSLS_ASSERT_CONVEYOR_REF(*s_categoryManager_p);
     if (d_ruleCache_p.isDataAvailable(
-                                  s_categoryManager_p->ruleSetSequenceNumber(),
+                                  manager.ruleSetSequenceNumber(),
                                   relevantRulesMask)) {
         return relevantRulesMask & d_ruleCache_p.knownActiveRules();  // RETURN
     }
@@ -333,12 +335,12 @@ bool AttributeContext::hasRelevantActiveRules(const Category *category) const
     // them.
 
     bslmt::LockGuard<bslmt::Mutex> ruleGuard(
-                                         &s_categoryManager_p->rulesetMutex());
+                                         &manager.rulesetMutex());
 
     return relevantRulesMask
-           & d_ruleCache_p.update(s_categoryManager_p->ruleSetSequenceNumber(),
+           & d_ruleCache_p.update(manager.ruleSetSequenceNumber(),
                                   relevantRulesMask,
-                                  s_categoryManager_p->ruleSet(),
+                                  manager.ruleSet(),
                                   d_containerList);
 }
 
@@ -366,8 +368,9 @@ AttributeContext::determineThresholdLevels(ThresholdAggregate *levels,
     // active rules for 'category'.
 
     RuleSet::MaskType activeAndRelevantRules = 0;
+    CategoryManager& manager = BSLS_ASSERT_CONVEYOR_REF(*s_categoryManager_p);
     if (d_ruleCache_p.isDataAvailable(
-                                  s_categoryManager_p->ruleSetSequenceNumber(),
+                                  manager.ruleSetSequenceNumber(),
                                   relevantRulesMask)) {
         activeAndRelevantRules = d_ruleCache_p.knownActiveRules()
                                  & relevantRulesMask;
@@ -381,20 +384,20 @@ AttributeContext::determineThresholdLevels(ThresholdAggregate *levels,
     // before the lock was obtained.
 
     bslmt::LockGuard<bslmt::Mutex> ruleGuard(
-                                         &s_categoryManager_p->rulesetMutex());
+                                         &manager.rulesetMutex());
 
     // If 'isDataAvailable' returns 'true', the rule set has not changed and we
     // must have assigned 'activeAndRelevantRules' before obtaining the lock.
 
     if (!d_ruleCache_p.isDataAvailable(
-                                  s_categoryManager_p->ruleSetSequenceNumber(),
+                                  manager.ruleSetSequenceNumber(),
                                   relevantRulesMask)) {
           activeAndRelevantRules =
                 relevantRulesMask
                 & d_ruleCache_p.update(
-                                  s_categoryManager_p->ruleSetSequenceNumber(),
+                                  manager.ruleSetSequenceNumber(),
                                   relevantRulesMask,
-                                  s_categoryManager_p->ruleSet(),
+                                  manager.ruleSet(),
                                   d_containerList);
     }
 
@@ -405,7 +408,7 @@ AttributeContext::determineThresholdLevels(ThresholdAggregate *levels,
                                                  != RuleSet::e_MAX_NUM_RULES) {
         activeAndRelevantRules &= ~(1 << i);
 
-        const Rule *rule = s_categoryManager_p->ruleSet().getRuleById(i);
+        const Rule *rule = manager.ruleSet().getRuleById(i);
         BSLS_ASSERT(0 != rule);
 
         if (rule->recordLevel() > levels->recordLevel()) {

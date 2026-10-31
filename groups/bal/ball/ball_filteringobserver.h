@@ -206,7 +206,8 @@ FilteringObserver::FilteringObserver(
                  bsl::allocator<RecordFilterCallback>(basicAllocator),
                  recordFilterCallback)
 {
-    BSLS_ASSERT(observer);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&observer);
+    BSLS_ASSERT_NONCONVEYOR(observer);
 }
 
 // MANIPULATORS

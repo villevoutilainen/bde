@@ -171,6 +171,7 @@ bsl::ostream& RecordAttributes::print(bsl::ostream& stream,
                                       int           level,
                                       int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 <= spacesPerLevel) {
         bdlb::Print::indent(stream, level, spacesPerLevel);
         stream << "[\n";
@@ -290,6 +291,8 @@ bsl::ostream& RecordAttributes::print(bsl::ostream& stream,
 // FREE OPERATORS
 bool ball::operator==(const RecordAttributes& lhs, const RecordAttributes& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_timestamp == rhs.d_timestamp &&
            lhs.d_processID == rhs.d_processID &&
            lhs.d_threadID == rhs.d_threadID &&

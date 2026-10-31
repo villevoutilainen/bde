@@ -250,6 +250,7 @@ namespace {
 /// was replaced on success, and `bsl::string::npos` otherwise.
 bsl::string::size_type replaceSecondSpace(bsl::string *s, char value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(s);
     bsl::string::size_type index = s->find(' ');
     if (bsl::string::npos != index) {
         index = s->find(' ', index + 1);
@@ -420,6 +421,7 @@ class LogRotationCallbackTester {
     /// supplied at construction to the specified `rotatedFileName`.
     void operator()(int status, const bsl::string& rotatedFileName)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ++d_rep->d_invocations;
         d_rep->d_status          = status;
         d_rep->d_rotatedFileName = rotatedFileName;
@@ -428,6 +430,7 @@ class LogRotationCallbackTester {
     /// Reset the attributes of this object to their default values.
     void reset()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_rep->d_invocations     = 0;
         d_rep->d_status          = k_UNINITIALIZED;
         d_rep->d_rotatedFileName.clear();
@@ -438,18 +441,28 @@ class LogRotationCallbackTester {
     /// Return the number of times that the function-call operator has been
     /// invoked since the most recent call to `reset`, or if `reset` has
     /// not been called, since this objects construction.
-    int numInvocations() const { return d_rep->d_invocations; }
+    int numInvocations() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_rep->d_invocations;
+    }
 
     /// Return the status passed to the most recent invocation of the
     /// function-call operation, or `k_UNINITIALIZED` if `numInvocations` is
     /// 0.
-    int status() const { return d_rep->d_status; }
+    int status() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_rep->d_status;
+    }
 
     /// Return a `const` reference to the file name supplied to the most
     /// recent invocation of the function-call operator, or the empty string
     /// if `numInvocations` is 0.
     const bsl::string& rotatedFileName() const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_rep->d_rotatedFileName;
     }
 
@@ -486,6 +499,7 @@ bsls::TimeInterval TestCurrentTimeCallback::load()
 
 void TestCurrentTimeCallback::setUtcDatetime(const bdlt::Datetime &utcTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utcTime);
     ASSERT(bdlt::EpochUtil::epoch() <= utcTime);
 
     int rc = bdlt::EpochUtil::convertToTimeInterval(&s_utcTime, utcTime);
@@ -545,6 +559,8 @@ int readFileIntoString(int                lineNum,
                        const bsl::string& fileName,
                        bsl::string&       fileContent)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&fileName);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&fileContent);
     bsl::ifstream fs;
 
 #ifdef BSLS_PLATFORM_OS_UNIX
@@ -582,6 +598,7 @@ void splitStringIntoLines(bsl::vector<bsl::string> *result, const char *ascii)
                              bslstl::StringRef(""),
                              bslstl::StringRef("\n")); itr.isValid(); ++itr) {
         if (itr.token().length() > 0) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(result);
             result->push_back(itr.token());
         }
     }
@@ -1598,8 +1615,10 @@ int main(int argc, char *argv[])
             BALL_LOG_TRACE << "log";
 
             ASSERTV(cb.numInvocations(), 1 == cb.numInvocations());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&cb);
             ASSERTV(fileName,   cb.rotatedFileName(),
-                    fileName == cb.rotatedFileName());
+                    fileName == BSLS_ASSERT_CONVEYOR_REF(
+                                                        cb.rotatedFileName()));
 
             mX->disableFileLogging();
 

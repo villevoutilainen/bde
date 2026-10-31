@@ -252,6 +252,7 @@ MultiplexObserver::MultiplexObserver(bslma::Allocator *basicAllocator)
 inline
 int MultiplexObserver::numRegisteredObservers() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_rwMutex);
     return static_cast<int>(d_observerSet.size());
 }

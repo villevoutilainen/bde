@@ -1787,6 +1787,7 @@ int main(int argc, char *argv[])
                     Obj& mX = *objPtr;  const Obj& X = mX;
 
                     if (veryVerbose) {
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         T_ T_ P_(CONFIG) P(X.format())
                     }
 
@@ -3068,7 +3069,9 @@ int main(int argc, char *argv[])
             // Verify object has default-constructed value.
             // --------------------------------------------
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(CONFIG, X.format(), k_DEFAULT_FORMAT == X.format());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(CONFIG, X.recordSeparator(),
                     k_DEFAULT_RECORD_SEPARATOR == X.recordSeparator());
 
@@ -3097,14 +3100,17 @@ int main(int argc, char *argv[])
 
                 // Verify object value and expected memory use.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, LINE, SPEC, SPEC[0] == 0 ||
                                             SPEC == X.format());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, LINE, SPEC,
                         k_DEFAULT_RECORD_SEPARATOR == X.recordSeparator());
                 ASSERTV(CONFIG, LINE,
                         CONFIG == 'c' || 0 == noa.numBlocksTotal());
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             bsl::string lastFormat(X.format(), &scratch);
 
             for (int ti = 0; ti < NUM_SIMPLIFIED_DATA; ++ti) {
@@ -3126,14 +3132,17 @@ int main(int argc, char *argv[])
 
                 // Verify object value and expected memory use.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, LINE, SPEC, SPEC[0] == 0 ||
                                             SPEC == X.format());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, LINE, SPEC,
                         k_DEFAULT_RECORD_SEPARATOR == X.recordSeparator());
                 ASSERTV(CONFIG, LINE, CONFIG == 'c' ||
                                       0 == noa.numBlocksTotal());
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             lastFormat = X.format();
             for (int ti = 0; ti < NUM_RSEP_DATA; ++ti) {
                 const int               LINE = RSEP_DATA[ti].d_line;
@@ -3154,7 +3163,9 @@ int main(int argc, char *argv[])
 
                 // Verify object value and expected memory use.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, LINE, RSEP, RSEP == X.recordSeparator());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, LINE, lastFormat, lastFormat == X.format());
                 ASSERTV(CONFIG, LINE,
                         CONFIG == 'c' || 0 == noa.numBlocksTotal());
@@ -3180,7 +3191,9 @@ int main(int argc, char *argv[])
 
                 // Verify object value and expected memory use.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, LINE, RSEP, RSEP == X.recordSeparator());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, LINE, lastFormat, lastFormat == X.format());
                 ASSERTV(CONFIG, LINE,
                         CONFIG == 'c' || 0 == noa.numBlocksTotal());
@@ -3220,6 +3233,7 @@ int main(int argc, char *argv[])
 #endif  // BDE_BUILD_TARGET_EXC
 
                 // Verify setFormat forwards to setJsonFormat
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(JSON_FORMAT, JSON_FORMAT == X.format());
                 ASSERTV(CONFIG, CONFIG == 'c' || 0 == noa.numBlocksTotal());
             }
@@ -3235,28 +3249,38 @@ int main(int argc, char *argv[])
                 mX.setJsonFormat(F1);
                 mX.setRecordSeparator(RS1);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(F1,  F1 == X.format());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(RS1, RS1 == X.recordSeparator());
 
                 mX.setRecordSeparator(RS2);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(F1,  F1 == X.format());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(RS2, RS2 == X.recordSeparator());
 
                 mX.setJsonFormat(F2);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(F2,  F2 == X.format());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(RS2, RS2 == X.recordSeparator());
 
                 // Verify setSimplifiedFormat works independently
                 mX.setSimplifiedFormat(SF1);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(SF1, SF1 == X.format());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(RS2, RS2 == X.recordSeparator());
 
                 mX.setRecordSeparator(RS1);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(SF1, SF1 == X.format());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(RS1, RS1 == X.recordSeparator());
             }
 

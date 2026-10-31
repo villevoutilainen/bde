@@ -222,8 +222,10 @@ class Information
 
   public:
     Information(const char *heading, const char *contents);
-    const bsl::string& heading() const;
-    const bsl::string& contents() const;
+    const bsl::string& heading() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& contents() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 Information::Information(const char *heading, const char *contents)
@@ -244,6 +246,7 @@ const bsl::string& Information::contents() const
 
 bsl::ostream& operator<<(bsl::ostream& stream, const Information& information)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&information);
     stream << information.heading() << endl;
     stream << '\t';
     stream << information.contents() << endl;
@@ -263,6 +266,7 @@ void streamInformationIntoMessageAttribute(ball::RecordAttributes& attributes,
 
 void printMessage(ostream& stream, const ball::RecordAttributes& attributes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
 using namespace bsl;  // automatically added by script
 
     stream << "\tTimestamp: " << attributes.timestamp()  << endl;
@@ -278,6 +282,8 @@ using namespace bsl;  // automatically added by script
 void initRecordAttributes(ball::RecordAttributes&    lhs,
                           const my_RecordAttributes& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     lhs.setTimestamp(rhs.timestamp);
     lhs.setProcessID(rhs.processID);
     lhs.setThreadID(rhs.threadID);

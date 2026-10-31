@@ -447,6 +447,7 @@ namespace BALL_LOGGERMANAGER_USAGE_EXAMPLE_2 {
     static
     void toLower(bsl::string *buffer, const char *s)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
         ASSERT(buffer);
         ASSERT(s);
 
@@ -722,8 +723,10 @@ namespace BALL_LOGGERMANAGER_USAGE_EXAMPLE_3 {
       public:
         Information(const char *heading, const char *contents);
         ~Information();
-        const bsl::string& heading() const;
-        const bsl::string& contents() const;
+        const bsl::string& heading() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+        const bsl::string& contents() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     };
 // ```
 // In addition, we define the following free operator for streaming instances
@@ -732,6 +735,7 @@ namespace BALL_LOGGERMANAGER_USAGE_EXAMPLE_3 {
     bsl::ostream& operator<<(bsl::ostream&      stream,
                              const Information& information)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&information);
         stream << information.heading();
         stream << ": ";
         stream << information.contents() << bsl::endl;
@@ -1049,6 +1053,7 @@ void verifyLoggerManagerDefaults(const ball::LoggerManager&  manager,
 
     ASSERT(1                  == X.numCategories());
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
     const Cat& defaultCategory = X.defaultCategory();
     ASSERT(0 == bsl::strcmp(DEFAULT_CATEGORY_NAME,
                                               defaultCategory.categoryName()));
@@ -1151,6 +1156,8 @@ extern "C" void *initSingletonThread(void *args)
 
     for (int i = 0; i < k_NUM_ITERATIONS; ++i) {
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
+        BSLS_ASSERT_CONVEYOR_OBJECT(threadArgs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(threadArgs->d_lmc_p);
         ball::LoggerManager::initSingleton(threadArgs->d_to_p,
                                            *threadArgs->d_lmc_p);
 #else
@@ -1269,6 +1276,7 @@ class MyObserver : public ball::Observer {
     void publish(const ball::Record&  record,
                  const ball::Context& context) BSLS_KEYWORD_OVERRIDE
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&record);
         ++d_publishCount;
         d_stream << "Log " << context.recordIndex() + 1
                  << " of " << context.sequenceLength()
@@ -1662,6 +1670,7 @@ class TestObserverVisitor {
     void operator()(const bsl::shared_ptr<ball::Observer>& observer,
                     const bsl::string_view&                observerName) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&observer);
         ASSERT(observer == d_loggerManager_p->findObserver(observerName));
     }
 
@@ -1682,6 +1691,7 @@ namespace {
 
 void toLower(bsl::string *buffer, const char *s)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     ASSERT(buffer);
     ASSERT(s);
 
@@ -1776,7 +1786,9 @@ int main(int argc, char *argv[])
 
         bdlma::ConcurrentPool *pool =
                    static_cast<bdlma::ConcurrentPool *>(p.deleter().factory());
+        BSLS_ASSERT_CONVEYOR_OBJECT(pool);
         ASSERT(pool->allocator() == bslma::Default::globalAllocator());
+        BSLS_ASSERT_CONVEYOR_OBJECT(pool);
         pool->release();
       } break;
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
@@ -4241,6 +4253,7 @@ int main(int argc, char *argv[])
 
                 mX.setCategoryThresholdsToCurrentDefaults(
                                                       &(mX.defaultCategory()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 const Cat& defaultCat = X.defaultCategory();
 
                 // Verify default settings for threshold.
@@ -5257,6 +5270,7 @@ int main(int argc, char *argv[])
             ball::TestObserver *observer = i ? observer1
                                              : observer2.get();
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(observer);
             const Rec&  R = observer->lastPublishedRecord();
             if (veryVerbose) cout << R << endl;
 
@@ -5293,6 +5307,7 @@ int main(int argc, char *argv[])
             ball::TestObserver *observer = i ? observer1
                                              : observer2.get();
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(observer);
             const Rec&  R = observer->lastPublishedRecord();
             if (veryVerbose) cout << R << endl;
 
@@ -5329,6 +5344,7 @@ int main(int argc, char *argv[])
             for (int i = 0; i < 2; ++i) {
                 ball::TestObserver *observer = i ? observer1
                                                  : observer2.get();
+                BSLS_ASSERT_CONVEYOR_OBJECT(observer);
                 const Rec&  R = observer->lastPublishedRecord();
                 if (veryVerbose) cout << R << endl;
 
@@ -5353,6 +5369,7 @@ int main(int argc, char *argv[])
         for (int i = 0; i < 2; ++i) {
             ball::TestObserver *observer = i ? observer1
                                              : observer2.get();
+            BSLS_ASSERT_CONVEYOR_OBJECT(observer);
             const Rec&  R = observer->lastPublishedRecord();
             if (veryVerbose) cout << R << endl;
         }
@@ -5470,6 +5487,7 @@ int main(int argc, char *argv[])
             ball::TestObserver *observer = i ? observer1.get()
                                              : observer2.get();
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(observer);
             const Rec&  R2 = observer->lastPublishedRecord();
             if (veryVerbose) cout << R2 << endl;
 

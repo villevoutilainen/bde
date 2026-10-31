@@ -176,9 +176,10 @@ std::ptrdiff_t RecordSharedPtrUtil::s_sharedObjectOffset = 0;
 Record *RecordSharedPtrUtil::disassembleSharedPtr(
                                                bsl::shared_ptr<Record> *record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(record);
     BSLS_ASSERT(record);
-    BSLS_ASSERT(0 != s_sharedObjectOffset);
-    BSLS_ASSERT(s_sharedObjectOffset ==
+    BSLS_ASSERT_NONCONVEYOR(0 != s_sharedObjectOffset);
+    BSLS_ASSERT_NONCONVEYOR(s_sharedObjectOffset ==
                                     reinterpret_cast<char *>(record->get())
                                     - reinterpret_cast<char *>(record->rep()));
 
@@ -190,7 +191,7 @@ Record *RecordSharedPtrUtil::disassembleSharedPtr(
 bsl::shared_ptr<Record>
 RecordSharedPtrUtil::reassembleSharedPtr(Record *record)
 {
-    BSLS_ASSERT(0 != s_sharedObjectOffset);
+    BSLS_ASSERT_NONCONVEYOR(0 != s_sharedObjectOffset);
 
     RepType *rep = reinterpret_cast<RepType *>(reinterpret_cast<void *>(
                      reinterpret_cast<char *>(record) - s_sharedObjectOffset));
@@ -201,6 +202,7 @@ RecordSharedPtrUtil::reassembleSharedPtr(Record *record)
 void RecordSharedPtrUtil::initializeSharedObjectOffset(
                                          const bsl::shared_ptr<Record>& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     if (0 != s_sharedObjectOffset) {
         return;                                                       // RETURN
     }
@@ -211,7 +213,7 @@ void RecordSharedPtrUtil::initializeSharedObjectOffset(
     s_sharedObjectOffset = reinterpret_cast<char *>(record.get())
                            - reinterpret_cast<char *>(record.rep());
 
-    BSLS_ASSERT_OPT(0 != s_sharedObjectOffset);
+    BSLS_ASSERT_OPT_NONCONVEYOR(0 != s_sharedObjectOffset);
 }
 
 // HELPER FUNCTIONS
@@ -226,6 +228,7 @@ void bufferPoolDeleter(void *buffer, void *pool)
     BSLS_ASSERT(pool);
 
     bdlma::ConcurrentPool *p = static_cast<bdlma::ConcurrentPool *>(pool);
+    BSLS_ASSERT_CONVEYOR_OBJECT(p);
     p->deallocate(buffer);
 }
 
@@ -239,6 +242,7 @@ const char *filterName(
    const char                                              *originalName,
    const bsl::function<void(bsl::string *, const char *)>&  nameFilter)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(filteredNameBuffer);
     BSLS_ASSERT(filteredNameBuffer);
     BSLS_ASSERT(originalName);
 
@@ -374,6 +378,7 @@ const char *const k_TRIGGER_ALL_END =
 void copyAttributesWithoutMessage(ball::Record                  *record,
                                   const ball::RecordAttributes&  srcAttribute)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcAttribute);
     record->fixedFields().setTimestamp(srcAttribute.timestamp());
     record->fixedFields().setProcessID(srcAttribute.processID());
     record->fixedFields().setThreadID(srcAttribute.threadID());
@@ -409,7 +414,7 @@ Logger::Logger(const bsl::shared_ptr<Observer>&            observer,
 , d_triggerMarkers(triggerMarkers)
 , d_allocator_p(globalAllocator)
 {
-    BSLS_ASSERT(d_observer);
+    BSLS_ASSERT_NONCONVEYOR(d_observer);
     BSLS_ASSERT(d_recordBuffer_p);
     BSLS_ASSERT(d_allocator_p);
     BSLS_ASSERT(d_attributeCollectors_p);
@@ -422,9 +427,9 @@ Logger::Logger(const bsl::shared_ptr<Observer>&            observer,
 
 Logger::~Logger()
 {
-    BSLS_ASSERT(d_observer);
+    BSLS_ASSERT_NONCONVEYOR(d_observer);
     BSLS_ASSERT(d_recordBuffer_p);
-    BSLS_ASSERT(d_publishAll);
+    BSLS_ASSERT_NONCONVEYOR(d_publishAll);
     BSLS_ASSERT(d_scratchBuffer_p);
     BSLS_ASSERT(d_allocator_p);
 
@@ -455,6 +460,7 @@ void Logger::logMessage(const Category&                category,
                         const bsl::shared_ptr<Record>& record,
                         const ThresholdAggregate&      levels)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     record->fixedFields().setTimestamp(bdlt::CurrentTime::utc());
 
     record->fixedFields().setCategory(category.categoryName());
@@ -597,6 +603,7 @@ inline
 void Logger::publish(const bsl::shared_ptr<Record>& record,
                      const Context&                 context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Avoid temporary shared_ptr copy when passing `shared_ptr<Record>` as
     // `shared_ptr<const Record>`
     d_observer->publish(
@@ -660,6 +667,7 @@ char *Logger::obtainMessageBuffer(bslmt::Mutex **mutex, int *bufferSize)
 
 bslma::ManagedPtr<char> Logger::obtainMessageBuffer(int *bufferSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     *bufferSize = d_scratchBufferSize;
     char *buffer = static_cast<char *>(d_bufferPool.allocate());
 
@@ -691,7 +699,7 @@ void LoggerManager::initSingletonImpl(
                             const LoggerManagerConfiguration&  configuration,
                             bslma::Allocator                  *globalAllocator)
 {
-    BSLS_ASSERT(singletonQLock.isLocked());
+    BSLS_ASSERT_NONCONVEYOR(singletonQLock.isLocked());
 
     if (0 == s_singleton_p) {
 
@@ -738,17 +746,27 @@ LoggerManager::LoggerManager(
              BroadcastObserver(bslma::Default::globalAllocator(
                                                              globalAllocator)),
              bslma::Default::globalAllocator(globalAllocator))
-, d_nameFilter(configuration.categoryNameFilterCallback())
+, d_nameFilter(BSLS_ASSERT_CONVEYOR_REF(
+                                   configuration).categoryNameFilterCallback())
 , d_defaultThresholds(configuration.defaultThresholdLevelsCallback())
-, d_defaultThresholdLevels(configuration.defaults().defaultRecordLevel(),
-                           configuration.defaults().defaultPassLevel(),
-                           configuration.defaults().defaultTriggerLevel(),
-                           configuration.defaults().defaultTriggerAllLevel())
-, d_factoryThresholdLevels(configuration.defaults().defaultRecordLevel(),
-                           configuration.defaults().defaultPassLevel(),
-                           configuration.defaults().defaultTriggerLevel(),
-                           configuration.defaults().defaultTriggerAllLevel())
-, d_userFieldsPopulator(configuration.userFieldsPopulatorCallback())
+, d_defaultThresholdLevels(BSLS_ASSERT_CONVEYOR_REF(
+                                configuration).defaults().defaultRecordLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(
+                                  configuration).defaults().defaultPassLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(
+                               configuration).defaults().defaultTriggerLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(configuration).defaults()
+                                                     .defaultTriggerAllLevel())
+, d_factoryThresholdLevels(BSLS_ASSERT_CONVEYOR_REF(
+                                configuration).defaults().defaultRecordLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(
+                                  configuration).defaults().defaultPassLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(
+                               configuration).defaults().defaultTriggerLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(configuration).defaults()
+                                                     .defaultTriggerAllLevel())
+, d_userFieldsPopulator(BSLS_ASSERT_CONVEYOR_REF(
+                                  configuration).userFieldsPopulatorCallback())
 , d_attributeCollectors(bslma::Default::globalAllocator(globalAllocator))
 , d_logger_p(0)
 , d_defaultLoggerCount(0)
@@ -757,13 +775,14 @@ LoggerManager::LoggerManager(
 , d_loggers(bslma::Default::globalAllocator(globalAllocator))
 , d_recordBuffer_p(0)
 , d_defaultCategory_p(0)
-, d_scratchBufferSize(configuration.defaults().defaultLoggerBufferSize())
+, d_scratchBufferSize(BSLS_ASSERT_CONVEYOR_REF(
+                           configuration).defaults().defaultLoggerBufferSize())
 , d_defaultLoggers(bslma::Default::globalAllocator(globalAllocator))
 , d_logOrder(configuration.logOrder())
 , d_triggerMarkers(configuration.triggerMarkers())
 , d_allocator_p(bslma::Default::globalAllocator(globalAllocator))
 {
-    BSLS_ASSERT(d_observer);
+    BSLS_ASSERT_NONCONVEYOR(d_observer);
 
     BSLS_ASSERT(observer);
     bsl::shared_ptr<Observer> observerWrapper(observer,
@@ -782,6 +801,8 @@ LoggerManager::LoggerManager(
 void LoggerManager::constructObject(
                                const LoggerManagerConfiguration& configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 == d_logger_p);
     BSLS_ASSERT(0 == d_defaultCategory_p);
     BSLS_ASSERT(0 == d_recordBuffer_p);
@@ -821,6 +842,7 @@ void LoggerManager::constructObject(
 
 void LoggerManager::publishAllImp(Transmission::Cause cause)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterMutex> guard(&d_loggersLock);
 
     bsl::set<Logger *>::iterator itr;
@@ -908,7 +930,8 @@ LoggerManager& LoggerManager::initSingleton(
 
     // But we check that there is an observer registered under internal name.
 
-    BSLS_ASSERT(s_singleton_p->findObserver(k_INTERNAL_OBSERVER_NAME));
+    BSLS_ASSERT_NONCONVEYOR(
+                        s_singleton_p->findObserver(k_INTERNAL_OBSERVER_NAME));
 
     return *s_singleton_p;
 }
@@ -1145,17 +1168,27 @@ LoggerManager::LoggerManager(
              BroadcastObserver(bslma::Default::globalAllocator(
                                                              globalAllocator)),
              bslma::Default::globalAllocator(globalAllocator))
-, d_nameFilter(configuration.categoryNameFilterCallback())
+, d_nameFilter(BSLS_ASSERT_CONVEYOR_REF(
+                                   configuration).categoryNameFilterCallback())
 , d_defaultThresholds(configuration.defaultThresholdLevelsCallback())
-, d_defaultThresholdLevels(configuration.defaults().defaultRecordLevel(),
-                           configuration.defaults().defaultPassLevel(),
-                           configuration.defaults().defaultTriggerLevel(),
-                           configuration.defaults().defaultTriggerAllLevel())
-, d_factoryThresholdLevels(configuration.defaults().defaultRecordLevel(),
-                           configuration.defaults().defaultPassLevel(),
-                           configuration.defaults().defaultTriggerLevel(),
-                           configuration.defaults().defaultTriggerAllLevel())
-, d_userFieldsPopulator(configuration.userFieldsPopulatorCallback())
+, d_defaultThresholdLevels(BSLS_ASSERT_CONVEYOR_REF(
+                                configuration).defaults().defaultRecordLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(
+                                  configuration).defaults().defaultPassLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(
+                               configuration).defaults().defaultTriggerLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(configuration).defaults()
+                                                     .defaultTriggerAllLevel())
+, d_factoryThresholdLevels(BSLS_ASSERT_CONVEYOR_REF(
+                                configuration).defaults().defaultRecordLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(
+                                  configuration).defaults().defaultPassLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(
+                               configuration).defaults().defaultTriggerLevel(),
+                           BSLS_ASSERT_CONVEYOR_REF(configuration).defaults()
+                                                     .defaultTriggerAllLevel())
+, d_userFieldsPopulator(BSLS_ASSERT_CONVEYOR_REF(
+                                  configuration).userFieldsPopulatorCallback())
 , d_attributeCollectors(bslma::Default::globalAllocator(globalAllocator))
 , d_logger_p(0)
 , d_defaultLoggerCount(0)
@@ -1164,13 +1197,14 @@ LoggerManager::LoggerManager(
 , d_loggers(bslma::Default::globalAllocator(globalAllocator))
 , d_recordBuffer_p(0)
 , d_defaultCategory_p(0)
-, d_scratchBufferSize(configuration.defaults().defaultLoggerBufferSize())
+, d_scratchBufferSize(BSLS_ASSERT_CONVEYOR_REF(
+                           configuration).defaults().defaultLoggerBufferSize())
 , d_defaultLoggers(bslma::Default::globalAllocator(globalAllocator))
 , d_logOrder(configuration.logOrder())
 , d_triggerMarkers(configuration.triggerMarkers())
 , d_allocator_p(bslma::Default::globalAllocator(globalAllocator))
 {
-    BSLS_ASSERT(d_observer);
+    BSLS_ASSERT_NONCONVEYOR(d_observer);
 
     constructObject(configuration);
 }
@@ -1181,7 +1215,7 @@ LoggerManager::~LoggerManager()
     BSLS_ASSERT(d_recordBuffer_p);
     BSLS_ASSERT(d_defaultCategory_p);
     BSLS_ASSERT(d_allocator_p);
-    BSLS_ASSERT( 0 < d_loggers.size());
+    BSLS_ASSERT_NONCONVEYOR( 0 < d_loggers.size());
     BSLS_ASSERT(-1 <= (int)d_maxNumCategoriesMinusOne);
 
     // To minimize the chance that one thread is destroying the singleton
@@ -1206,6 +1240,7 @@ LoggerManager::~LoggerManager()
 
 Logger *LoggerManager::allocateLogger(RecordBuffer *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_loggersLock);
 
     Logger *logger = new(*d_allocator_p) Logger(d_observer,
@@ -1225,6 +1260,7 @@ Logger *LoggerManager::allocateLogger(RecordBuffer *buffer)
 Logger *LoggerManager::allocateLogger(RecordBuffer *buffer,
                                       int           scratchBufferSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_loggersLock);
 
     Logger *logger = new(*d_allocator_p) Logger(d_observer,
@@ -1245,6 +1281,7 @@ Logger *LoggerManager::allocateLogger(RecordBuffer *buffer,
 Logger *LoggerManager::allocateLogger(RecordBuffer *buffer,
                                       Observer     *observer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_loggersLock);
 
     bsl::shared_ptr<Observer> observerWrapper(observer,
@@ -1269,6 +1306,7 @@ Logger *LoggerManager::allocateLogger(RecordBuffer *buffer,
                                       int           scratchBufferSize,
                                       Observer     *observer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_loggersLock);
 
     bsl::shared_ptr<Observer> observerWrapper(observer,
@@ -1295,6 +1333,7 @@ Logger *LoggerManager::allocateLogger(
                                     RecordBuffer                     *buffer,
                                     const bsl::shared_ptr<Observer>&  observer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_loggersLock);
 
     Logger *logger = new(*d_allocator_p) Logger(observer,
@@ -1316,6 +1355,7 @@ Logger *LoggerManager::allocateLogger(
                            int                               scratchBufferSize,
                            const bsl::shared_ptr<Observer>&  observer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(&d_loggersLock);
 
     Logger *logger = new(*d_allocator_p) Logger(observer,
@@ -1335,6 +1375,7 @@ Logger *LoggerManager::allocateLogger(
 
 void LoggerManager::deallocateLogger(Logger *logger)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_loggersLock.lockWrite();
     d_loggers.erase(logger);
     d_loggersLock.unlock();
@@ -1360,6 +1401,7 @@ void LoggerManager::deallocateLogger(Logger *logger)
 
 Logger& LoggerManager::getLoggerSlow()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // TBD: optimize it using thread local storage
 
     d_defaultLoggersLock.lockRead();
@@ -1371,6 +1413,7 @@ Logger& LoggerManager::getLoggerSlow()
 
 void LoggerManager::setLogger(Logger *logger)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     void *id = (void *)bslmt::ThreadUtil::selfIdAsUint64();
 
     bslmt::WriteLockGuard<bslmt::ReaderWriterMutex> guard(

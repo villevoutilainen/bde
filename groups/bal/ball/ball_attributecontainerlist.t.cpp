@@ -178,6 +178,8 @@ bslma::TestAllocator testAllocator;
             bool operator()(const ball::Attribute& lhs,
                             const ball::Attribute& rhs) const
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
                 int cmp = bsl::strcmp(lhs.name(), rhs.name());
                 if (0 != cmp) {
                     return cmp < 0;                                   // RETURN
@@ -300,12 +302,16 @@ bslma::TestAllocator testAllocator;
     inline
     void AttributeSet::insert(const ball::Attribute& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         d_set.insert(value);
     }
 
     inline
     bool AttributeSet::remove(const ball::Attribute& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         return d_set.erase(value) > 0;
     }
 
@@ -319,6 +325,8 @@ bslma::TestAllocator testAllocator;
     // ACCESSORS
     bool AttributeSet::hasValue(const ball::Attribute& value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         return d_set.find(value) != d_set.end();
     }
 
@@ -326,6 +334,7 @@ bslma::TestAllocator testAllocator;
                                       int           level,
                                       int           spacesPerLevel) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         char EL = (spacesPerLevel < 0) ? ' ' : '\n';
         bdlb::Print::indent(stream, level, spacesPerLevel);
         stream << "[" << EL;
@@ -342,6 +351,7 @@ bslma::TestAllocator testAllocator;
     void AttributeSet::visitAttributes(
              const bsl::function<void(const ball::Attribute&)>& visitor) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bsl::set<ball::Attribute>::const_iterator it = d_set.begin();
         for (; it != d_set.end(); ++it) {
             visitor(*it);
@@ -479,10 +489,11 @@ static Obj& gg(Obj                   *obj,
                const char            *spec,
                const bsl::vector<T>&  containers)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&containers);
     for (const char *c = spec; *c; ++c) {
         int index = *c - '0';
         ASSERT(0 <= index && index < 10);
-        obj->pushFront(&containers[index]);
+        obj->pushFront(&BSLS_ASSERT_CONVEYOR_REF(containers[index]));
     };
     return *obj;
 }

@@ -162,6 +162,7 @@ int nextRecord(ball::Record& record)
 static
 bool isNthRecord(const ball::Record& record, int nth)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     const ball::RecordAttributes& attr = record.fixedFields();
 
     if (nth == attr.lineNumber() && nth == attr.processID()

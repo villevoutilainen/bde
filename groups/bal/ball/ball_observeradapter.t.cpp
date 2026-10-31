@@ -110,6 +110,7 @@ namespace USAGE_EXAMPLE_1 {
     void MyOstreamObserver::publish(const ball::Record&  record,
                                     const ball::Context&)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&record);
         const ball::RecordAttributes& fixedFields = record.fixedFields();
 
         *d_stream << fixedFields.timestamp()               << ' '

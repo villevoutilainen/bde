@@ -295,6 +295,7 @@ void my_DummyDeleter::deleteObject(ball::Record *)
     inline
     void my_RecordBuffer::popFront()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
         d_buffer.erase(d_buffer.begin());
     }
@@ -303,6 +304,8 @@ void my_DummyDeleter::deleteObject(ball::Record *)
     int my_RecordBuffer::pushBack(
                          const bsl::shared_ptr<ball::Record>& handle)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
         bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
         d_buffer.push_back(handle);
         return 0;
@@ -312,6 +315,8 @@ void my_DummyDeleter::deleteObject(ball::Record *)
     int my_RecordBuffer::pushFront(
                          const bsl::shared_ptr<ball::Record>& handle)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
         bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
         d_buffer.insert(d_buffer.begin(), handle);
         return 0;
@@ -320,6 +325,7 @@ void my_DummyDeleter::deleteObject(ball::Record *)
     inline
     void my_RecordBuffer::removeAll()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
         d_buffer.clear();
     }
@@ -328,6 +334,7 @@ void my_DummyDeleter::deleteObject(ball::Record *)
     inline
     const bsl::shared_ptr<ball::Record>& my_RecordBuffer::back() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
         return d_buffer.back();
     }
@@ -335,6 +342,7 @@ void my_DummyDeleter::deleteObject(ball::Record *)
     inline
     const bsl::shared_ptr<ball::Record>& my_RecordBuffer::front() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
         return d_buffer.front();
     }
@@ -342,6 +350,7 @@ void my_DummyDeleter::deleteObject(ball::Record *)
     inline
     int my_RecordBuffer::length() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
         return static_cast<int>(d_buffer.size());
     }
@@ -377,6 +386,8 @@ void my_DummyDeleter::deleteObject(ball::Record *)
     void processRecord(const bsl::shared_ptr<ball::Record>& handle,
                              ball::RecordBuffer&            buffer)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&buffer);
         int severity = handle->fixedFields().severity();
 //
         if (ball::Severity::e_WARN >= severity) {
@@ -387,7 +398,7 @@ void my_DummyDeleter::deleteObject(ball::Record *)
             buffer.beginSequence(); // lock the buffer before traversing
             int length = buffer.length();
             while (length--) {
-                bsl::cout << buffer.back();
+                bsl::cout << BSLS_ASSERT_CONVEYOR_REF(buffer.back());
                 buffer.popBack();
             }
             buffer.endSequence();   // unlock the buffer after traversing

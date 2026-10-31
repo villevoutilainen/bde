@@ -326,18 +326,23 @@ DefaultAttributeContainer::~DefaultAttributeContainer()
 inline
 bool DefaultAttributeContainer::addAttribute(const Attribute& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return d_attributeSet.insert(value).second;
 }
 
 inline
 bool DefaultAttributeContainer::removeAttribute(const Attribute& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return d_attributeSet.erase(value) != 0;
 }
 
 inline
 void DefaultAttributeContainer::removeAllAttributes()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_attributeSet.clear();
 }
 
@@ -345,6 +350,7 @@ void DefaultAttributeContainer::removeAllAttributes()
 inline
 int DefaultAttributeContainer::numAttributes() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_attributeSet.size());
 }
 
@@ -352,6 +358,7 @@ inline
 DefaultAttributeContainer::const_iterator
 DefaultAttributeContainer::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_attributeSet.begin();
 }
 
@@ -359,6 +366,7 @@ inline
 DefaultAttributeContainer::const_iterator
 DefaultAttributeContainer::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_attributeSet.end();
 }
 

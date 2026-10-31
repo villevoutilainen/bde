@@ -377,7 +377,8 @@ class RecordStringFormatter {
     /// record formatter.
     ///
     /// @DEPRECATED: Use `isPublishInLocalTimeEnabled` instead.
-    const bdlt::DatetimeInterval& timestampOffset() const;
+    const bdlt::DatetimeInterval& timestampOffset() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 

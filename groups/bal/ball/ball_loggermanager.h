@@ -1455,11 +1455,13 @@ class LoggerManager {
     /// method (which takes a *shared* pointer to an `observer`), instead.
     static LoggerManager& initSingleton(
                        Observer                          *observer,
-                       bslma::Allocator                  *globalAllocator = 0);
+                       bslma::Allocator                  *globalAllocator = 0)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static LoggerManager& initSingleton(
                        Observer                          *observer,
                        const LoggerManagerConfiguration&  configuration,
-                       bslma::Allocator                  *globalAllocator = 0);
+                       bslma::Allocator                  *globalAllocator = 0)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED
 
     /// Initialize the logger manager singleton.  Optionally specify a
@@ -1471,10 +1473,12 @@ class LoggerManager {
     /// non-`const` reference to the logger manager singleton.  This method
     /// has no effect (aside from logging a warning) if the logger manager
     /// singleton already exists.
-    static LoggerManager& initSingleton(bslma::Allocator *globalAllocator = 0);
+    static LoggerManager& initSingleton(bslma::Allocator *globalAllocator = 0)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static LoggerManager& initSingleton(
                        const LoggerManagerConfiguration&  configuration,
-                       bslma::Allocator                  *globalAllocator = 0);
+                       bslma::Allocator                  *globalAllocator = 0)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Initialize the logger manager singleton with the specified
     /// `singleton`.  Optionally specify an `adoptSingleton` flag indicating
@@ -1537,7 +1541,8 @@ class LoggerManager {
 
     /// Return a non-`const` reference to the logger manager singleton.  The
     /// behavior is undefined unless the logger manager singleton exists.
-    static LoggerManager& singleton();
+    static LoggerManager& singleton()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // CREATORS
 
@@ -1881,7 +1886,8 @@ class LoggerManager {
 
     /// Return a `const` reference to the *Default* *Category* in the
     /// category registry of this logger manager.
-    const Category& defaultCategory() const;
+    const Category& defaultCategory() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the default pass threshold level of this logger manager.
     int defaultPassThresholdLevel() const;
@@ -1958,7 +1964,8 @@ class LoggerManager {
 
     /// Return a `const` reference to the rule set maintained by this
     /// object.
-    const RuleSet& ruleSet() const;
+    const RuleSet& ruleSet() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the address of the non-modifiable user populator functor
     /// registered with this logger manager, or 0 if there is no registered
@@ -1992,7 +1999,8 @@ class LoggerManager {
 
     /// Return the default threshold levels associated with this logger
     /// manager object.
-    const ThresholdAggregate& defaultThresholdLevels() const;
+    const ThresholdAggregate& defaultThresholdLevels() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Load into the specified `*levels` the threshold levels that would be
     /// set for a newly created category, irrespective of whether a category
@@ -2117,7 +2125,8 @@ class LoggerManagerCategoryIter {
     /// Return a `const` reference to the category currently referred to by
     /// this iterator.  The behavior is undefined unless this iterator is
     /// valid.
-    const Category& operator()() const;
+    const Category& operator()() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                         // ================================
@@ -2254,12 +2263,14 @@ const Category *LoggerManager::setCategory(const char *categoryName)
 inline
 void LoggerManager::deregisterAllObservers()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_observer->deregisterAllObservers();
 }
 
 inline
 int LoggerManager::deregisterObserver(const bsl::string_view& observerName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_observer->deregisterObserver(observerName);
 }
 
@@ -2274,6 +2285,7 @@ inline
 bsl::shared_ptr<Observer>
 LoggerManager::findObserver(const bsl::string_view& observerName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_observer->findObserver(observerName);
 }
 
@@ -2282,6 +2294,7 @@ inline
 int LoggerManager::findObserver(bsl::shared_ptr<t_OBSERVER> *result,
                                 const bsl::string_view&      observerName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_observer->findObserver(result, observerName);
 }
 
@@ -2290,6 +2303,7 @@ int
 LoggerManager::registerObserver(const bsl::shared_ptr<Observer>& observer,
                                 const bsl::string_view&          observerName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_observer->registerObserver(observer, observerName);
 }
 
@@ -2361,6 +2375,7 @@ inline
 void LoggerManager::visitObservers(
                  BSLS_COMPILERFEATURES_FORWARD_REF(t_OBSERVER_VISITOR) visitor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_observer->visitObservers(
                    BSLS_COMPILERFEATURES_FORWARD(t_OBSERVER_VISITOR, visitor));
 }
@@ -2416,6 +2431,7 @@ inline
 bsl::shared_ptr<const Observer>
 LoggerManager::findObserver(const bsl::string_view& observerName) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const BroadcastObserver *observerPtr = d_observer.get();
 
     return observerPtr->findObserver(observerName);
@@ -2427,6 +2443,7 @@ int LoggerManager::findObserver(
                          bsl::shared_ptr<const t_OBSERVER> *result,
                          const bsl::string_view&            observerName) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const BroadcastObserver *observerPtr = d_observer.get();
 
     return observerPtr->findObserver(result, observerName);
@@ -2462,6 +2479,7 @@ inline
 void LoggerManager::visitObservers(
            BSLS_COMPILERFEATURES_FORWARD_REF(t_OBSERVER_VISITOR) visitor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_observer->visitObservers(
                    BSLS_COMPILERFEATURES_FORWARD(t_OBSERVER_VISITOR, visitor));
 }
@@ -2478,6 +2496,7 @@ LoggerManagerScopedGuard::LoggerManagerScopedGuard(
                             const LoggerManagerConfiguration&  configuration,
                             bslma::Allocator                  *globalAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     LoggerManager::initSingleton(observer, configuration, globalAllocator);
 }
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED
@@ -2487,6 +2506,7 @@ LoggerManagerScopedGuard::LoggerManagerScopedGuard(
                             const LoggerManagerConfiguration&  configuration,
                             bslma::Allocator                  *globalAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     LoggerManager::initSingleton(configuration, globalAllocator);
 }
 

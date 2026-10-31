@@ -222,17 +222,20 @@ class Record {
     // ACCESSORS
 
     /// Return the non-modifiable fixed fields of this log record.
-    const RecordAttributes& fixedFields() const;
+    const RecordAttributes& fixedFields() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the custom
     /// user-defined fields of this log record.
     ///
     /// @DEPRECATED: Use log record attributes.
-    const ball::UserFields& customFields() const;
+    const ball::UserFields& customFields() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the attributes
     /// of this log record.
-    const bsl::vector<ball::ManagedAttribute>& attributes() const;
+    const bsl::vector<ball::ManagedAttribute>& attributes() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the total number of bytes of dynamic memory allocated by
     /// this log record object.  Note that this value does not include
@@ -335,12 +338,14 @@ Record& Record::operator=(const Record& rhs)
 inline
 void Record::addAttribute(const Attribute& attribute)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_attributes.push_back(ManagedAttribute(attribute));
 }
 
 inline
 void Record::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     fixedFields().clearMessage();
     customFields().removeAll();
     d_attributes.clear();
@@ -401,6 +406,8 @@ int Record::numAllocatedBytes() const
 inline
 bool ball::operator==(const Record& lhs, const Record& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_fixedFields  == rhs.d_fixedFields
         && lhs.d_userFields   == rhs.d_userFields
         && lhs.d_attributes   == rhs.d_attributes;

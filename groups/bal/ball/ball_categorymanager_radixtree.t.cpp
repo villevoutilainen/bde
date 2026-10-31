@@ -368,6 +368,8 @@ struct EntryCollector {
 
     void operator()(const bsl::string_view& key, int value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_entries_p);
         d_entries_p->push_back(bsl::make_pair(key, value));
     }
 
@@ -479,10 +481,20 @@ class AllocAwareType {
     // ACCESSORS
 
     /// Return the first value.
-    const bsl::string& first() const { return d_first; }
+    const bsl::string& first() const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_first;
+    }
 
     /// Return the second value.
-    const bsl::string& second() const { return d_second; }
+    const bsl::string& second() const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_second;
+    }
 
     /// Return the allocator used by this object to supply memory.
     bslma::Allocator *allocator() const
@@ -569,6 +581,7 @@ void noop2(const bsl::string_view&, int)
 struct Printer {
     void operator()(const bsl::string_view& key,
                     const bsl::string&      value) const {
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         bsl::cout << key << ": " << value << bsl::endl;
     }
 };
@@ -581,6 +594,8 @@ struct PrefixCollector {
     }
 
     void operator()(const bsl::string_view& key, const bsl::string&) const {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_vec_p);
         d_vec_p->push_back(bsl::string(key));
     }
 };
@@ -2055,6 +2070,7 @@ int main(int argc, char *argv[])
                                                          it != entries.end();
                                                        ++it) {
                 const EntryCollector::Entries::value_type& entry = *it;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&entry);
                 if (entry.first == "apple" && entry.second == 1) {
                     foundApple = true;
                 }
@@ -2426,12 +2442,16 @@ int main(int argc, char *argv[])
 
             ASSERT(mY.size() == 2);
             AllocAwareTree::OptValueRef result = mY.find("key1");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&result);
             ASSERT(result && result->get().first() == "first1");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&result);
             ASSERT(result && result->get().second() == "second1");
             ASSERT(result && result->get().allocator() == &ta);
 
             result = mY.find("key2");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&result);
             ASSERT(result && result->get().first() == "first2");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&result);
             ASSERT(result && result->get().second() == "second2");
             ASSERT(result && result->get().allocator() == &ta);
 
@@ -3225,7 +3245,9 @@ int main(int argc, char *argv[])
             AllocAwareTree::EmplaceResult result =
                 mX.emplace("key1", "first", "second");
             ASSERT(result.first);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&result);
             ASSERT(result.second.get().first() == "first");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&result);
             ASSERT(result.second.get().second() == "second");
             ASSERT(result.second.get().allocator() == &ta);
             ASSERT(mX.size() == 1);
@@ -3233,19 +3255,25 @@ int main(int argc, char *argv[])
             // Emplace another entry
             result = mX.emplace("key2", "alpha", "beta");
             ASSERT(result.first);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&result);
             ASSERT(result.second.get().first() == "alpha");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&result);
             ASSERT(result.second.get().second() == "beta");
             ASSERT(result.second.get().allocator() == &ta);
             ASSERT(mX.size() == 2);
 
             // Verify find returns correct values
             AllocAwareTree::OptValueRef found = mX.find("key1");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&found);
             ASSERT(found && found->get().first() == "first");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&found);
             ASSERT(found && found->get().second() == "second");
             ASSERT(found && found->get().allocator() == &ta);
 
             found = mX.find("key2");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&found);
             ASSERT(found && found->get().first() == "alpha");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&found);
             ASSERT(found && found->get().second() == "beta");
             ASSERT(found && found->get().allocator() == &ta);
 

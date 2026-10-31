@@ -306,7 +306,8 @@ class Attribute {
 
     /// Return a reference to the non-modifiable attribute value of this
     /// object.
-    const Value& value() const;
+    const Value& value() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Format this object to the specified output `stream` at the (absolute
     /// value of) the optionally specified indentation `level` and return a
@@ -366,6 +367,7 @@ Attribute::Attribute(const char              *name,
 , d_hashValue(-1)
 , d_hashSize(0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_value.createInPlace<bsl::string>(value);
 }
 
@@ -567,6 +569,8 @@ void Attribute::setValue(bdlb::Guid value)
 inline
 void Attribute::setValue(const bsl::string_view& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_value.createInPlace<bsl::string>(value);
     d_hashValue = -1;
 }
@@ -574,6 +578,7 @@ void Attribute::setValue(const bsl::string_view& value)
 inline
 void Attribute::setValue(const char *value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.createInPlace<bsl::string>(value);
     d_hashValue = -1;
 }

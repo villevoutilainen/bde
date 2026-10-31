@@ -329,6 +329,7 @@ const Rule *RuleSet::getRuleById(int id) const
 inline
 int RuleSet::numRules() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_ruleHashtable.size());
 }
 

@@ -1656,7 +1656,8 @@ class Log_Stream {
     /// Return the address of the modifiable log record held by this logging
     /// stream.  The address remains valid until this logging stream is
     /// destroyed.
-    Record *record();
+    Record *record()
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return a reference to the modifiable stream held by this logging
     /// stream.  The reference remains valid until this logging stream is
@@ -1672,7 +1673,8 @@ class Log_Stream {
     /// Return the address of the non-modifiable log record held by this
     /// logging stream.  The address remains valid until this logging stream
     /// is destroyed.
-    const Record *record() const;
+    const Record *record() const
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return the severity held by this logging stream.
     int severity() const;
@@ -1829,6 +1831,8 @@ const Category *Log::setCategoryHierarchically(const char *categoryName)
 inline
 Record *Log_Stream::record()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_record_p);
     return d_record_p;
 }
 
@@ -1848,6 +1852,8 @@ const Category *Log_Stream::category() const
 inline
 const Record *Log_Stream::record() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_record_p);
     return d_record_p;
 }
 

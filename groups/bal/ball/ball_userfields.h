@@ -152,8 +152,10 @@ class UserFields {
     /// Return a reference providing modifiable access to the value at the
     /// specified `index`.  The behavior is undefined unless
     /// `0 <= index && index < length()`.
-    ball::UserFieldValue& operator[](int index);
-    ball::UserFieldValue& value(int index);
+    ball::UserFieldValue& operator[](int index)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    ball::UserFieldValue& value(int index)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 
@@ -181,8 +183,10 @@ class UserFields {
     /// Return a reference providing non-modifiable access to the value at
     /// the specified `index`.  The behavior is undefined unless
     /// `0 <= index && index < length()`.
-    const ball::UserFieldValue& operator[](int index) const;
-    const ball::UserFieldValue& value(int index) const;
+    const ball::UserFieldValue& operator[](int index) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const ball::UserFieldValue& value(int index) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 
@@ -275,12 +279,15 @@ UserFields& UserFields::operator=(const UserFields& rhs)
 inline
 void UserFields::removeAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_values.clear();
 }
 
 inline
 void UserFields::append(const UserFieldValue& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_values.emplace_back(value);
 }
 
@@ -288,55 +295,66 @@ void UserFields::append(const UserFieldValue& value)
 inline
 void UserFields::appendNull()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_values.emplace_back();
 }
 
 inline
 void UserFields::appendInt64(bsls::Types::Int64 value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_values.emplace_back(value);
 }
 
 inline
 void UserFields::appendDouble(double value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_values.emplace_back(value);
 }
 
 inline
 void UserFields::appendString(const bsl::string_view& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_values.emplace_back(value);
 }
 
 inline
 void UserFields::appendDatetimeTz(const bdlt::DatetimeTz& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_values.emplace_back(value);
 }
 
 inline
 void UserFields::appendCharArray(const bsl::vector<char>& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_values.emplace_back(value);
 }
 
 inline
 UserFieldValue& UserFields::operator[](int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_values[index];
 }
 
 inline
 UserFieldValue& UserFields::value(int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_values[index];
 }
 
 inline
 void UserFields::swap(UserFields& other)
 {
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
 
     d_values.swap(other.d_values);
 }
@@ -351,18 +369,21 @@ bslma::Allocator *UserFields::allocator() const
 inline
 UserFields::ConstIterator UserFields::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_values.begin();
 }
 
 inline
 UserFields::ConstIterator UserFields::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_values.end();
 }
 
 inline
 int UserFields::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_values.size());
 }
 
@@ -384,6 +405,8 @@ const UserFieldValue& UserFields::value(int index) const
 inline
 bool ball::operator==(const UserFields& lhs, const UserFields& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_values == rhs.d_values;
 }
 

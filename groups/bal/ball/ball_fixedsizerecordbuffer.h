@@ -302,6 +302,7 @@ void FixedSizeRecordBuffer::endSequence()
 inline
 void FixedSizeRecordBuffer::removeAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
     d_deque.clear();
     d_currentTotalSize = 0;
@@ -311,6 +312,7 @@ void FixedSizeRecordBuffer::removeAll()
 inline
 const bsl::shared_ptr<Record>& FixedSizeRecordBuffer::back() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
     return d_deque.back();
 }
@@ -318,6 +320,7 @@ const bsl::shared_ptr<Record>& FixedSizeRecordBuffer::back() const
 inline
 const bsl::shared_ptr<Record>& FixedSizeRecordBuffer::front() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
     return d_deque.front();
 }
@@ -325,6 +328,7 @@ const bsl::shared_ptr<Record>& FixedSizeRecordBuffer::front() const
 inline
 int FixedSizeRecordBuffer::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::RecursiveMutex> guard(&d_mutex);
     return static_cast<int>(d_deque.size());
 }

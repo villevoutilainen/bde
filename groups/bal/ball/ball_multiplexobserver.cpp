@@ -25,12 +25,13 @@ namespace ball {
 // CREATORS
 MultiplexObserver::~MultiplexObserver()
 {
-    BSLS_ASSERT(0 <= numRegisteredObservers());
+    BSLS_ASSERT_NONCONVEYOR(0 <= numRegisteredObservers());
 }
 
 // MANIPULATORS
 void MultiplexObserver::publish(const Record& record, const Context& context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_rwMutex);
 
     // Print warning once that this publish method is deprecated.
@@ -52,6 +53,7 @@ void MultiplexObserver::publish(const Record& record, const Context& context)
 void MultiplexObserver::publish(const bsl::shared_ptr<const Record>& record,
                                 const Context&                       context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_rwMutex);
 
     bsl::set<Observer *>::const_iterator it = d_observerSet.begin();
@@ -62,6 +64,7 @@ void MultiplexObserver::publish(const bsl::shared_ptr<const Record>& record,
 
 void MultiplexObserver::releaseRecords()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_rwMutex);
 
     bsl::set<Observer *>::const_iterator it = d_observerSet.begin();
@@ -83,6 +86,7 @@ void MultiplexObserver::releaseRecords()
 
 int MultiplexObserver::registerObserver(Observer *observer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == observer) {
         return 1;                                                     // RETURN
     }
@@ -93,6 +97,7 @@ int MultiplexObserver::registerObserver(Observer *observer)
 
 int MultiplexObserver::deregisterObserver(Observer *observer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == observer) {
         return 1;                                                     // RETURN
     }

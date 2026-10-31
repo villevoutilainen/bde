@@ -177,6 +177,7 @@ class my_Logger {
 void my_Logger::publish(const bsl::string&   message,
                         const ball::Context& context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&message);
     switch (context.transmissionCause()) {
       case ball::Transmission::e_PASSTHROUGH: {
         d_os << "Single Pass-through Message: ";
@@ -206,6 +207,8 @@ my_Logger::~my_Logger() { }
 // MANIPULATORS
 void my_Logger::logMessage(const bsl::string& message, Severity severity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&message);
     archive.push_back(message);
     switch (severity) {
       case TRACE: {
@@ -220,7 +223,7 @@ void my_Logger::logMessage(const bsl::string& message, Severity severity)
         int length = (int)archive.size();
         ball::Context context(ball::Transmission::e_TRIGGER, index, length);
         while (length--) {
-            publish(archive[length], context);
+            publish(BSLS_ASSERT_CONVEYOR_REF(archive[length]), context);
             context.setRecordIndexRaw(++index);
         }
         archive.clear();  // flush archive

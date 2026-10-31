@@ -101,6 +101,7 @@ static int getErrorCode(void)
 /// Return the specified `timestamp` in the `YYYYMMDD_hhmmss` format.
 static bsl::string getTimestampSuffix(const bdlt::Datetime& timestamp)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timestamp);
     char buffer[16];
 
     snprintf(buffer,
@@ -127,6 +128,7 @@ static void getLogFileName(bsl::string    *logFileName,
                            const char     *logFilePattern,
                            bool            publishInLocalTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(timestampUtc);
     BSLS_ASSERT(logFileName);
     BSLS_ASSERT(timestampUtc);
     BSLS_ASSERT(logFilePattern);
@@ -281,7 +283,10 @@ bool fuzzyEqual(const bdlt::Datetime&         a,
                 const bdlt::Datetime&         b,
                 const bdlt::DatetimeInterval& interval)
 {
-    BSLS_ASSERT(0 <= interval.totalMilliseconds());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&interval);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_NONCONVEYOR(0 <= interval.totalMilliseconds());
 
     // Note that 'abs(long long)' not available across platforms (C++11).
 
@@ -308,7 +313,10 @@ static bdlt::Datetime computeNextRotationTime(
                    const bdlt::DatetimeInterval& interval,
                    const bdlt::Datetime&         fileCreationTimeUtc)
 {
-    BSLS_ASSERT(0 < interval.totalMilliseconds());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&interval);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&fileCreationTimeUtc);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&referenceStartTime);
+    BSLS_ASSERT_NONCONVEYOR(0 < interval.totalMilliseconds());
 
     bdlt::Datetime fileCreationTime(fileCreationTimeUtc);
 
@@ -358,6 +366,7 @@ static bdlt::Datetime computeNextRotationTime(
 // PRIVATE MANIPULATORS
 int FileObserver2::rotateFile(bsl::string *rotatedLogFileName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(rotatedLogFileName);
 
     if (!d_logStreamBuf.isOpened()) {
@@ -459,8 +468,10 @@ int FileObserver2::rotateFile(bsl::string *rotatedLogFileName)
 int FileObserver2::rotateIfNecessary(bsl::string           *rotatedLogFileName,
                                      const bdlt::Datetime&  currentLogTimeUtc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&currentLogTimeUtc);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_rotationSize >= 0);
-    BSLS_ASSERT(d_rotationInterval.totalSeconds() >= 0);
+    BSLS_ASSERT_NONCONVEYOR(d_rotationInterval.totalSeconds() >= 0);
     BSLS_ASSERT(rotatedLogFileName);
 
     if (!d_logStreamBuf.isOpened()) {
@@ -562,6 +573,7 @@ void FileObserver2::disableSizeRotation()
 
 void FileObserver2::disableTimeIntervalRotation()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     d_rotationInterval.setTotalSeconds(0);
@@ -569,6 +581,7 @@ void FileObserver2::disableTimeIntervalRotation()
 
 int FileObserver2::enableFileLogging(const char *logFilenamePattern)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(logFilenamePattern);
 
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
@@ -649,6 +662,7 @@ void FileObserver2::enablePublishInLocalTime()
 void FileObserver2::publish(const bsl::shared_ptr<const Record>& record,
                             const Context&)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     bsl::string rotatedFileName;
     int         rotationStatus;
 
@@ -707,7 +721,8 @@ void FileObserver2::rotateOnTimeInterval(
                                        const bdlt::DatetimeInterval& interval,
                                        const bdlt::Datetime&         startTime)
 {
-    BSLS_ASSERT(0 < interval.totalMilliseconds());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&interval);
+    BSLS_ASSERT_NONCONVEYOR(0 < interval.totalMilliseconds());
 
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 

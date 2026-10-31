@@ -1040,17 +1040,23 @@ int main(int argc, char *argv[])
 #endif
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, FA == X.fixedFields());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, VALUES_A == X.customFields());
 
                 bslma::TestAllocatorMonitor tam(&oa);
 
                 mX.setFixedFields(FB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, FB == X.fixedFields());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, VALUES_A == X.customFields());
 
                 mX.setFixedFields(FD);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, FD == X.fixedFields());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, VALUES_A == X.customFields());
 
                 ASSERTV(CONFIG, tam.isTotalSame());
@@ -1075,17 +1081,23 @@ int main(int argc, char *argv[])
 #endif
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, UFA == X.customFields());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, FD == X.fixedFields());
 
                 bslma::TestAllocatorMonitor tam(&oa);
 
                 mX.setCustomFields(VALUES_B);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, VALUES_B == X.customFields());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, FD == X.fixedFields());
 
                 mX.setCustomFields(VALUES_A);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, VALUES_A == X.customFields());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, FD == X.fixedFields());
 
                 ASSERTV(CONFIG, tam.isTotalSame());
@@ -1109,20 +1121,29 @@ int main(int argc, char *argv[])
 #endif
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, 1 == X.attributes().size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, AA == X.attributes()[0]);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, FD == X.fixedFields());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, VALUES_A == X.customFields());
 
                 bslma::TestAllocatorMonitor tam(&oa);
 
                 mX.addAttribute(AB);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, 2 == X.attributes().size());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, AA == X.attributes()[0]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, AB == X.attributes()[1]);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, FD == X.fixedFields());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, VALUES_A == X.customFields());
 
                 ASSERTV(CONFIG, tam.isTotalUp());

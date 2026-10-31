@@ -48,7 +48,8 @@ void TestObserver::publish(const Record& record, const Context& context)
 void TestObserver::publish(const bsl::shared_ptr<const Record>& record,
                            const Context&                       context)
 {
-    BSLS_ASSERT(record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+    BSLS_ASSERT_NONCONVEYOR(record);
 
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 

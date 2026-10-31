@@ -134,6 +134,7 @@ class my_OstreamObserver : public ball::Observer {
 void my_OstreamObserver::publish(const ball::Record&  record,
                                  const ball::Context& context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
 
     switch (context.transmissionCause()) {
       case ball::Transmission::e_PASSTHROUGH: {
@@ -198,6 +199,7 @@ static int nextRecord(ball::Record& record)
 /// publication sequence, and 0 otherwise.
 static int isNthRecord(const ball::Record& record, int nth)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     const ball::RecordAttributes& attr = record.fixedFields();
 
     if (nth == attr.lineNumber()

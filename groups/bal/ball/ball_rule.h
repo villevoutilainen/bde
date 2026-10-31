@@ -514,6 +514,8 @@ bool Rule::isMatch(const char *inputString) const
 inline
 bool ball::operator==(const Rule& lhs, const Rule& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.d_hashValue > 0
      && rhs.d_hashValue > 0
      && lhs.d_hashSize  == rhs.d_hashSize

@@ -288,13 +288,15 @@ class TestObserver : public Observer {
     /// test observer.  The behavior is undefined unless `publish` has been
     /// called at least once, and no other thread is manipulating this
     /// object concurrently (i.e., this function is *not* thread safe).
-    const Context& lastPublishedContext() const;
+    const Context& lastPublishedContext() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the record most recently published by this
     /// test observer.  The behavior is undefined unless `publish` has been
     /// called at least once, and no other thread is manipulating this
     /// object concurrently (i.e., this function is *not* thread safe).
-    const Record& lastPublishedRecord() const;
+    const Record& lastPublishedRecord() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the total number of records that this test observer has
     /// published.

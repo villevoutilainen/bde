@@ -298,6 +298,8 @@ static Obj& gg(Obj *obj, const char *spec)
 void testVisitor(bsl::vector<ball::Attribute>  *result,
                  const ball::Attribute&         attribute)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attribute);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     result->push_back(attribute);
 }
 
@@ -383,6 +385,8 @@ int main(int argc, char *argv[])
         attributeContainer.visitAttributes(
             [&result](const ball::Attribute& attribute)
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&result);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&attribute);
                 result.push_back(attribute);
             });
 #else

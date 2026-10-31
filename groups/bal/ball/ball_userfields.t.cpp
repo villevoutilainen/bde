@@ -182,10 +182,11 @@ BSLMF_ASSERT(true == bslma::UsesBslmaAllocator<Obj>::value);
     /// identifier.  The behavior is undefined unless `fields` is empty.
     void populateLoggingFields(ball::UserFields *fields)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(fields);
 // ```
 // Next, we assert the precondition that `fields` is empty:
 // ```
-      BSLS_ASSERT(0 == fields->length());
+      BSLS_ASSERT_NONCONVEYOR(0 == fields->length());
 // ```
 // Now, we populate the `fields` object with the username and current task
 // identifier (for the purpose of illustration, these are simply constants):
@@ -269,8 +270,10 @@ int main(int argc, char *argv[])
         populateLoggingFields(&result);
 
         ASSERT(2          == result.length());
-        ASSERT("testUser" == result[0].theString());
-        ASSERT(4315       == result[1].theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&result);
+        ASSERT("testUser" == BSLS_ASSERT_CONVEYOR_REF(result[0]).theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&result);
+        ASSERT(4315       == BSLS_ASSERT_CONVEYOR_REF(result[1]).theInt64());
 
       } break;
       case 5: {

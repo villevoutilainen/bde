@@ -38,6 +38,8 @@ DefaultAttributeContainer::operator=(const DefaultAttributeContainer& rhs)
 // ACCESSORS
 bool DefaultAttributeContainer::hasValue(const Attribute& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return d_attributeSet.find(value) != d_attributeSet.end();
 }
 

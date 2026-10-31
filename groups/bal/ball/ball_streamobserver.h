@@ -282,7 +282,8 @@ class StreamObserver : public Observer {
     bool isPublishInLocalTimeEnabled() const;
 
     /// Return the format config of the last successful `setFormat` call.
-    const bsl::string& getFormat() const;
+    const bsl::string& getFormat() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // ============================================================================

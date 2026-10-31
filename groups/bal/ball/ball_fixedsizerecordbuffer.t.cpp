@@ -283,7 +283,8 @@ void *workerThread15(void *arg)
     // print record message in LIFO order
     recordBuffer.beginSequence();
     while (recordBuffer.length()) {
-        const ball::Record &rec = *recordBuffer.back();
+        const ball::Record &rec =
+                         *BSLS_ASSERT_CONVEYOR_REF(recordBuffer.back());
         if (veryVerbose) cout << "\t" << rec.fixedFields().message() << endl;
         recordBuffer.popBack();
     }
@@ -728,8 +729,11 @@ int main(int argc, char *argv[])
         ASSERT(0 == rb.pushFront(H1));
         LOOP_ASSERT(rb.length(), rb.length() == 1);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.front() == *R1);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R1==>\n\t\t" << *R1 << endl;
 
@@ -743,16 +747,22 @@ int main(int argc, char *argv[])
         ASSERT(0 == rb.pushFront(H3));
         LOOP_ASSERT(rb.length(), rb.length() == 2);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.front() == *R3);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R3);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R3==>\n\t\t" << *R3 << endl;
 
         rb.popFront();
         LOOP_ASSERT(rb.length(), rb.length() == 1);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.front() == *R2);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R2==>\n\t\t" << *R2 << endl;
 
@@ -767,24 +777,33 @@ int main(int argc, char *argv[])
         ASSERT(0 == rb.pushFront(H6));
         LOOP_ASSERT(rb.length(), rb.length() == 3);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.front() == *R6);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R6);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R6==>\n\t\t" << *R6 << endl;
 
         rb.popFront();
         LOOP_ASSERT(rb.length(), rb.length() == 2);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.front() == *R5);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R5);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R5==>\n\t\t" << *R5 << endl;
 
         rb.popFront();
         LOOP_ASSERT(rb.length(), rb.length() == 1);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.front() == *R4);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R4);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R4==>\n\t\t" << *R4 << endl;
 
@@ -920,8 +939,11 @@ int main(int argc, char *argv[])
         rb.popFront();
         LOOP_ASSERT(rb.length(), rb.length() == 1);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.front() == *R3);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R3);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R3==>\n\t\t" << *R3 << endl;
 
@@ -936,8 +958,11 @@ int main(int argc, char *argv[])
         rb.popFront();
         LOOP_ASSERT(rb.length(), rb.length() == 2);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.front() == *R5);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R5);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R5==>\n\t\t" << *R5 << endl;
       } break;
@@ -1011,16 +1036,22 @@ int main(int argc, char *argv[])
         if (verbose)
             cout << "\tinvoking `front` on a buffer with one record"
                  << endl;
-        ASSERT(*rb.front() == *R1);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R1==>\n\t\t" << *R1 << endl;
 
         ASSERT(0 == rb.pushBack(H2));
         if (verbose)
             cout << "\tinvoking `front` on a buffer with two record" << endl;
-        ASSERT(*rb.front() == *R1);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R1==>\n\t\t" << *R1 << endl;
 
@@ -1028,8 +1059,11 @@ int main(int argc, char *argv[])
         if (verbose)
             cout << "\tinvoking `front` on a buffer with three record"
                  << endl;
-        ASSERT(*rb.front() == *R1);
-        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t" << *rb.front()
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.front()) == *R1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        if (veryVerbose) cout << "\t*rb.front()==>\n\t\t"
+                              << *BSLS_ASSERT_CONVEYOR_REF(rb.front())
                               << "\n\n"
                               <<  "\t*R1==>\n\t\t" << *R1 << endl;
 
@@ -1399,26 +1433,35 @@ int main(int argc, char *argv[])
         if (verbose)
             cout << "\tinvoking `back` on a buffer with one record"
                  << endl;
-        ASSERT(*rb.back() == *R1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R1==>\n\t\t" << *R1 << endl;
 
         ASSERT(0 == rb.pushBack(H2));
         if (verbose)
             cout << "\tinvoking `back` on a buffer with two record" << endl;
-        ASSERT(*rb.back() == *R2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R2==>\n\t\t" << *R2 << endl;
 
         ASSERT(0 == rb.pushBack(H3));
         if (verbose)
             cout << "\tinvoking `back` on a buffer with three record"
                  << endl;
-        ASSERT(*rb.back() == *R3);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R3);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R3==>\n\t\t" << *R3 << endl;
 
       } break;
@@ -1689,9 +1732,12 @@ int main(int argc, char *argv[])
         rb.popBack();
         LOOP_ASSERT(rb.length(), rb.length() == 1);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R2==>\n\t\t" << *R2 << endl;
 
         rb.removeAll();
@@ -1705,9 +1751,12 @@ int main(int argc, char *argv[])
         rb.popBack();
         LOOP_ASSERT(rb.length(), rb.length() == 2);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R5);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R5);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R5==>\n\t\t" << *R5 << endl;
       } break;
 
@@ -1824,9 +1873,12 @@ int main(int argc, char *argv[])
         ASSERT(0 == rb.pushBack(H1));
         LOOP_ASSERT(rb.length(), rb.length() == 1);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      <<  "\t*R1==>\n\t\t" << *R1 << endl;
 
         rb.popBack();
@@ -1839,17 +1891,23 @@ int main(int argc, char *argv[])
         ASSERT(0 == rb.pushBack(H3));
         LOOP_ASSERT(rb.length(), rb.length() == 2);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R3);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R3);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      <<  "\t*R3==>\n\t\t" << *R3 << endl;
 
         rb.popBack();
         LOOP_ASSERT(rb.length(), rb.length() == 1);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R2==>\n\t\t" << *R2 << endl;
 
         rb.popBack();
@@ -1863,25 +1921,34 @@ int main(int argc, char *argv[])
         ASSERT(0 == rb.pushBack(H6));
         LOOP_ASSERT(rb.length(), rb.length() == 3);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R6);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R6);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R6==>\n\t\t" << *R6 << endl;
 
         rb.popBack();
         LOOP_ASSERT(rb.length(), rb.length() == 2);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R5);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R5);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R5==>\n\t\t" << *R5 << endl;
 
         rb.popBack();
         LOOP_ASSERT(rb.length(), rb.length() == 1);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R4);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R4);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R4==>\n\t\t" << *R4 << endl;
 
         rb.popBack();
@@ -2003,27 +2070,36 @@ int main(int argc, char *argv[])
         ASSERT(0 == rb.pushBack(H3));
         LOOP_ASSERT(rb.length(), rb.length() == 3);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R3);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R3);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R3==>\n\t\t" << *R3 << endl;
 
         if (verbose) cout << "\trb.popBack()" << endl;
         rb.popBack();
         LOOP_ASSERT(rb.length(), rb.length() == 2);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R2==>\n\t\t" << *R2 << endl;
 
         if (verbose) cout << "\trb.popBack()" << endl;
         rb.popBack();
         LOOP_ASSERT(rb.length(), rb.length() == 1);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      << "\t*R1==>\n\t\t" << *R1 << endl;
 
         if (verbose) cout << "\trb.removeAll()" << endl;
@@ -2044,27 +2120,36 @@ int main(int argc, char *argv[])
         ASSERT(0 == rb.pushBack(H6));
         LOOP_ASSERT(rb.length(), rb.length() == 3);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R6);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R6);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      <<  "\t*R6==>\n\t\t" << *R6 << endl;
 
         if (verbose) cout << "\trb.popBack()" << endl;
         rb.popBack();
         LOOP_ASSERT(rb.length(), rb.length() == 2);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R5);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R5);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      <<  "\t*R5==>\n\t\t" << *R5 << endl;
 
         if (verbose) cout << "\trb.popBack()" << endl;
         rb.popBack();
         LOOP_ASSERT(rb.length(), rb.length() == 1);
         if (veryVerbose) cout << "\trb.length() = " << rb.length() << endl;
-        ASSERT(*rb.back() == *R4);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
+        ASSERT(*BSLS_ASSERT_CONVEYOR_REF(rb.back()) == *R4);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rb);
         if (veryVerbose)
-                cout << "\t*rb.back()==>\n\t\t" << *rb.back() << "\n\n"
+                cout << "\t*rb.back()==>\n\t\t"
+                     << *BSLS_ASSERT_CONVEYOR_REF(rb.back()) << "\n\n"
                      <<  "\t*R4==>\n\t\t" << *R4 << endl;
 
         if (verbose) cout << "\trb.removeAll()" << endl;

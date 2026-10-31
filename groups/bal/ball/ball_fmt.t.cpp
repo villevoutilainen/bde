@@ -151,6 +151,7 @@ static bool isRecordOkay(
            int                                                      lineNumber,
            const char                                              *message)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&observer);
     const BloombergLP::ball::RecordAttributes& attributes =
                                  observer->lastPublishedRecord().fixedFields();
 

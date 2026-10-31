@@ -341,6 +341,7 @@ static bool isRecordOkay(
            int                                                      lineNumber,
            const char                                              *message)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&observer);
     const BloombergLP::ball::RecordAttributes& attributes =
                                  observer->lastPublishedRecord().fixedFields();
 
@@ -2596,6 +2597,8 @@ class my_Observer : public BloombergLP::ball::Observer {
     void publish(const BloombergLP::ball::Record&  record,
                  const BloombergLP::ball::Context&) BSLS_KEYWORD_OVERRIDE
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_mutex.lock();
         d_publishedMessages.push_back(record.fixedFields().message());
         d_mutex.unlock();
@@ -2609,8 +2612,10 @@ class my_Observer : public BloombergLP::ball::Observer {
 
     void print() const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         for (int i = 0; i < (signed) d_publishedMessages.size(); ++i) {
-            bsl::cout << d_publishedMessages[i] << bsl::endl;
+            bsl::cout << BSLS_ASSERT_CONVEYOR_REF(
+                                          d_publishedMessages[i]) << bsl::endl;
         }
     }
 };
@@ -7586,7 +7591,9 @@ if (verbose) bsl::cout << "printf-style macro usage" << bsl::endl;
 
             ASSERTV(CATEGORY, L.category(), CATEGORY == L.category());
             ASSERTV(SEVERITY, L.severity(), SEVERITY == L.severity());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&L);
             ASSERTV(LINE, LINE == L.record()->fixedFields().lineNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&L);
             ASSERTV(LINE, 0 ==
                             bsl::strcmp(FILENAME,
                                         L.record()->fixedFields().fileName()));
@@ -8710,13 +8717,18 @@ if (verbose) bsl::cout << "printf-style macro usage" << bsl::endl;
         // `vv[i]` contains the message information for i'th thread
 
         const bsl::vector<bsl::string>& v = observer->get();
+        BSLS_ASSERT_CONVEYOR_OBJECT(&v);
         ASSERT(v.size() == NUM_THREADS * EXP_N_TOTAL);
         // ignore any unconditional printing
+        BSLS_ASSERT_CONVEYOR_OBJECT(&v);
         for (int i = 0; i < (int)v.size(); ++i) {
-            bsl::istringstream is(v[i]);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
+            bsl::istringstream is(BSLS_ASSERT_CONVEYOR_REF(v[i]));
             int id, type, iter;
             is >> id; is >> type; is >> iter;
-            vv[id].push_back(bsl::pair<int, int> (type, iter));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&vv);
+            BSLS_ASSERT_CONVEYOR_REF(vv[id]).push_back(bsl::pair<int,
+                                                       int> (type, iter));
         }
 
         for (int i = 0; i < NUM_THREADS; ++i) {

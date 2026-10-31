@@ -147,6 +147,7 @@ void my_OstreamObserver::publish(
                             const bsl::shared_ptr<const ball::Record>& record,
                             const ball::Context&                       context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
 
     switch (context.transmissionCause()) {
       case ball::Transmission::e_PASSTHROUGH: {
@@ -232,6 +233,7 @@ static int nextRecord(ball::Record& record)
 /// publication sequence, and `false` otherwise.
 static bool isNthRecord(const ball::Record& record, int nth)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     const ball::RecordAttributes& attr = record.fixedFields();
 
     if (nth    == attr.lineNumber()
@@ -640,7 +642,9 @@ int main(int argc, char *argv[])
 
             ASSERT(1 == O1.numPublishedRecords());
             ASSERT(1 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthRecord(O1.lastPublishedRecord(), I1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthContext(O1.lastPublishedContext(), I1));
 
             //   X
@@ -653,7 +657,9 @@ int main(int argc, char *argv[])
             mX.releaseRecords();
             ASSERT(1 == O1.numPublishedRecords());
             ASSERT(2 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthRecord(O1.lastPublishedRecord(), I1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthContext(O1.lastPublishedContext(), I1));
 
             //   X
@@ -669,7 +675,9 @@ int main(int argc, char *argv[])
             mX.releaseRecords();
             ASSERT(2 == O1.numPublishedRecords());
             ASSERT(3 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthRecord(O1.lastPublishedRecord(), I3));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthContext(O1.lastPublishedContext(), I3));
 
             //     X
@@ -685,11 +693,15 @@ int main(int argc, char *argv[])
             mX.releaseRecords();
             ASSERT(3 == O1.numPublishedRecords());
             ASSERT(4 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthRecord(O1.lastPublishedRecord(), I4));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthContext(O1.lastPublishedContext(), I4));
             ASSERT(1 == O2.numPublishedRecords());
             ASSERT(1 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthRecord(O2.lastPublishedRecord(), I4));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthContext(O2.lastPublishedContext(), I4));
 
             //     --X--
@@ -705,11 +717,15 @@ int main(int argc, char *argv[])
             mX.releaseRecords();
             ASSERT(4 == O1.numPublishedRecords());
             ASSERT(5 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthRecord(O1.lastPublishedRecord(), I5));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthContext(O1.lastPublishedContext(), I5));
             ASSERT(2 == O2.numPublishedRecords());
             ASSERT(2 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthRecord(O2.lastPublishedRecord(), I5));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthContext(O2.lastPublishedContext(), I5));
 
             //     --X--
@@ -728,15 +744,21 @@ int main(int argc, char *argv[])
             mX.releaseRecords();
             ASSERT(5 == O1.numPublishedRecords());
             ASSERT(6 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthRecord(O1.lastPublishedRecord(), I6));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthContext(O1.lastPublishedContext(), I6));
             ASSERT(3 == O2.numPublishedRecords());
             ASSERT(3 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthRecord(O2.lastPublishedRecord(), I6));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthContext(O2.lastPublishedContext(), I6));
             ASSERT(1 == O3.numPublishedRecords());
             ASSERT(1 == O3.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT(1 == isNthRecord(O3.lastPublishedRecord(), I6));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT(1 == isNthContext(O3.lastPublishedContext(), I6));
 
             //     X
@@ -754,15 +776,21 @@ int main(int argc, char *argv[])
             mX.releaseRecords();
             ASSERT(6 == O1.numPublishedRecords());
             ASSERT(7 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthRecord(O1.lastPublishedRecord(), I7));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthContext(O1.lastPublishedContext(), I7));
             ASSERT(3 == O2.numPublishedRecords());
             ASSERT(4 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthRecord(O2.lastPublishedRecord(), I6));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthContext(O2.lastPublishedContext(), I6));
             ASSERT(2 == O3.numPublishedRecords());
             ASSERT(2 == O3.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT(1 == isNthRecord(O3.lastPublishedRecord(), I7));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT(1 == isNthContext(O3.lastPublishedContext(), I7));
 
             //     X
@@ -781,15 +809,21 @@ int main(int argc, char *argv[])
             mX.releaseRecords();
             ASSERT(7 == O1.numPublishedRecords());
             ASSERT(8 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthRecord(O1.lastPublishedRecord(), I8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthContext(O1.lastPublishedContext(), I8));
             ASSERT(4 == O2.numPublishedRecords());
             ASSERT(5 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthRecord(O2.lastPublishedRecord(), I8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthContext(O2.lastPublishedContext(), I8));
             ASSERT(3 == O3.numPublishedRecords());
             ASSERT(3 == O3.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT(1 == isNthRecord(O3.lastPublishedRecord(), I8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT(1 == isNthContext(O3.lastPublishedContext(), I8));
 
             //     X
@@ -807,15 +841,21 @@ int main(int argc, char *argv[])
             mX.releaseRecords();
             ASSERT(8 == O1.numPublishedRecords());
             ASSERT(9 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthRecord(O1.lastPublishedRecord(), I9));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT(1 == isNthContext(O1.lastPublishedContext(), I9));
             ASSERT(5 == O2.numPublishedRecords());
             ASSERT(6 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthRecord(O2.lastPublishedRecord(), I9));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT(1 == isNthContext(O2.lastPublishedContext(), I9));
             ASSERT(3 == O3.numPublishedRecords());
             ASSERT(4 == O3.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT(1 == isNthRecord(O3.lastPublishedRecord(), I8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT(1 == isNthContext(O3.lastPublishedContext(), I8));
 
             //   X   Y
@@ -831,15 +871,21 @@ int main(int argc, char *argv[])
             mX.releaseRecords();
             ASSERT( 9 == O1.numPublishedRecords());
             ASSERT(10 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT( 1 == isNthRecord(O1.lastPublishedRecord(), I10));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT( 1 == isNthContext(O1.lastPublishedContext(), I10));
             ASSERT( 5 == O2.numPublishedRecords());
             ASSERT( 7 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT( 1 == isNthRecord(O2.lastPublishedRecord(), I9));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT( 1 == isNthContext(O2.lastPublishedContext(), I9));
             ASSERT( 3 == O3.numPublishedRecords());
             ASSERT( 4 == O3.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT( 1 == isNthRecord(O3.lastPublishedRecord(), I8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT( 1 == isNthContext(O3.lastPublishedContext(), I8));
 
             const int I11 = nextRecord(*mR); ASSERT(1 == isNthRecord(*R, I11));
@@ -848,15 +894,21 @@ int main(int argc, char *argv[])
             mY.releaseRecords();
             ASSERT( 9 == O1.numPublishedRecords());
             ASSERT(10 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT( 1 == isNthRecord(O1.lastPublishedRecord(), I10));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT( 1 == isNthContext(O1.lastPublishedContext(), I10));
             ASSERT( 6 == O2.numPublishedRecords());
             ASSERT( 8 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT( 1 == isNthRecord(O2.lastPublishedRecord(), I11));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT( 1 == isNthContext(O2.lastPublishedContext(), I11));
             ASSERT( 3 == O3.numPublishedRecords());
             ASSERT( 4 == O3.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT( 1 == isNthRecord(O3.lastPublishedRecord(), I8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT( 1 == isNthContext(O3.lastPublishedContext(), I8));
 
             //   X   Y
@@ -872,15 +924,21 @@ int main(int argc, char *argv[])
             mX.releaseRecords();
             ASSERT( 9 == O1.numPublishedRecords());
             ASSERT(11 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT( 1 == isNthRecord(O1.lastPublishedRecord(), I10));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT( 1 == isNthContext(O1.lastPublishedContext(), I10));
             ASSERT( 6 == O2.numPublishedRecords());
             ASSERT( 8 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT( 1 == isNthRecord(O2.lastPublishedRecord(), I11));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT( 1 == isNthContext(O2.lastPublishedContext(), I11));
             ASSERT( 3 == O3.numPublishedRecords());
             ASSERT( 4 == O3.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT( 1 == isNthRecord(O3.lastPublishedRecord(), I8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT( 1 == isNthContext(O3.lastPublishedContext(), I8));
 
             const int I13 = nextRecord(*mR); ASSERT(1 == isNthRecord(*R, I13));
@@ -889,15 +947,21 @@ int main(int argc, char *argv[])
             mY.releaseRecords();
             ASSERT( 9 == O1.numPublishedRecords());
             ASSERT(11 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT( 1 == isNthRecord(O1.lastPublishedRecord(), I10));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT( 1 == isNthContext(O1.lastPublishedContext(), I10));
             ASSERT( 7 == O2.numPublishedRecords());
             ASSERT( 9 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT( 1 == isNthRecord(O2.lastPublishedRecord(), I13));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT( 1 == isNthContext(O2.lastPublishedContext(), I13));
             ASSERT( 3 == O3.numPublishedRecords());
             ASSERT( 4 == O3.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT( 1 == isNthRecord(O3.lastPublishedRecord(), I8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT( 1 == isNthContext(O3.lastPublishedContext(), I8));
 
             //   X   Y
@@ -913,15 +977,21 @@ int main(int argc, char *argv[])
             mY.releaseRecords();
             ASSERT( 9 == O1.numPublishedRecords());
             ASSERT(11 == O1.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT( 1 == isNthRecord(O1.lastPublishedRecord(), I10));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O1);
             ASSERT( 1 == isNthContext(O1.lastPublishedContext(), I10));
             ASSERT( 7 == O2.numPublishedRecords());
             ASSERT(10 == O2.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT( 1 == isNthRecord(O2.lastPublishedRecord(), I13));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O2);
             ASSERT( 1 == isNthContext(O2.lastPublishedContext(), I13));
             ASSERT( 3 == O3.numPublishedRecords());
             ASSERT( 4 == O3.numReleases());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT( 1 == isNthRecord(O3.lastPublishedRecord(), I8));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&O3);
             ASSERT( 1 == isNthContext(O3.lastPublishedContext(), I8));
         }
       } break;

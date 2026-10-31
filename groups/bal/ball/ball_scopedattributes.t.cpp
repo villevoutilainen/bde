@@ -136,6 +136,8 @@ bool veryVeryVerbose;
             bool operator()(const ball::Attribute& lhs,
                             const ball::Attribute& rhs) const
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
                 int cmp = bsl::strcmp(lhs.name(), rhs.name());
                 if (0 != cmp) {
                     return cmp < 0;                                   // RETURN
@@ -250,12 +252,16 @@ bool veryVeryVerbose;
     inline
     void AttributeSet::insert(const ball::Attribute& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         d_set.insert(value);
     }
 
     inline
     bool AttributeSet::remove(const ball::Attribute& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         return d_set.erase(value) > 0;
     }
 
@@ -269,6 +275,8 @@ bool veryVeryVerbose;
     // ACCESSORS
     bool AttributeSet::hasValue(const ball::Attribute& value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         return d_set.find(value) != d_set.end();
     }
 
@@ -276,6 +284,7 @@ bool veryVeryVerbose;
                                       int           level,
                                       int           spacesPerLevel) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         char EL = (spacesPerLevel < 0) ? ' ' : '\n';
         bdlb::Print::indent(stream, level, spacesPerLevel);
         stream << "[" << EL;
@@ -292,6 +301,7 @@ bool veryVeryVerbose;
     void AttributeSet::visitAttributes(
             const bsl::function<void(const ball::Attribute&)>& visitor) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bsl::set<ball::Attribute>::const_iterator it = d_set.begin();
         for (; it != d_set.end(); ++it) {
             visitor(*it);

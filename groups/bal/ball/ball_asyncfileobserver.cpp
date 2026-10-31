@@ -148,6 +148,7 @@ AsyncFileObserver_Record createStopRecord()
 /// by `stopThread` to signal to the publication thread to stop.
 bool isStopRecord(const AsyncFileObserver_Record& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     return 0 == record.d_record.get();
 }
 
@@ -168,7 +169,7 @@ void AsyncFileObserver::publishThreadEntryPoint()
     // 'e_NOT_RUNNING', since that state is only returned to after completing
     // this function.
 
-    BSLS_ASSERT(e_RUNNING == d_threadState);
+    BSLS_ASSERT_NONCONVEYOR(e_RUNNING == d_threadState);
 
     bool done = false;
 
@@ -304,7 +305,8 @@ AsyncFileObserver::~AsyncFileObserver()
 void AsyncFileObserver::publish(const bsl::shared_ptr<const Record>& record,
                                 const Context&                       context)
 {
-    BSLS_ASSERT(record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+    BSLS_ASSERT_NONCONVEYOR(record);
 
     AsyncFileObserver_Record asyncRecord;
 
@@ -365,13 +367,13 @@ int AsyncFileObserver::shutdownPublicationThread()
 
     // d_threadState and d_threadHandle should be consistent.
 
-    BSLS_ASSERT((e_NOT_RUNNING == d_threadState) ==
+    BSLS_ASSERT_NONCONVEYOR((e_NOT_RUNNING == d_threadState) ==
                 (bslmt::ThreadUtil::invalidHandle() == d_threadHandle));
 
     int result = 0;
 
     if (bslmt::ThreadUtil::invalidHandle() != d_threadHandle) {
-        BSLS_ASSERT(e_RUNNING == d_threadState);
+        BSLS_ASSERT_NONCONVEYOR(e_RUNNING == d_threadState);
 
         d_recordQueue.disablePopFront();
 
@@ -384,8 +386,9 @@ int AsyncFileObserver::shutdownPublicationThread()
     // 'd_threadState' after the thread is stopped, so 'd_threadState'
     // and 'd_threadHandle' should be consistent.
 
-    BSLS_ASSERT(e_NOT_RUNNING == d_threadState);
-    BSLS_ASSERT(bslmt::ThreadUtil::invalidHandle() == d_threadHandle);
+    BSLS_ASSERT_NONCONVEYOR(e_NOT_RUNNING == d_threadState);
+    BSLS_ASSERT_NONCONVEYOR(
+                         bslmt::ThreadUtil::invalidHandle() == d_threadHandle);
 
     return result;
 }
@@ -396,13 +399,13 @@ int AsyncFileObserver::startPublicationThread()
 
     // d_threadState and d_threadHandle should be consistent.
 
-    BSLS_ASSERT((e_NOT_RUNNING == d_threadState) ==
+    BSLS_ASSERT_NONCONVEYOR((e_NOT_RUNNING == d_threadState) ==
                 (bslmt::ThreadUtil::invalidHandle() == d_threadHandle));
 
     int result = 0;
 
     if (bslmt::ThreadUtil::invalidHandle() == d_threadHandle) {
-        BSLS_ASSERT(e_NOT_RUNNING == d_threadState);
+        BSLS_ASSERT_NONCONVEYOR(e_NOT_RUNNING == d_threadState);
 
         d_threadState = e_RUNNING;
         d_recordQueue.enablePopFront();
@@ -427,13 +430,13 @@ int AsyncFileObserver::stopPublicationThread()
 
     // d_threadState and d_threadHandle should be consistent.
 
-    BSLS_ASSERT((e_NOT_RUNNING == d_threadState) ==
+    BSLS_ASSERT_NONCONVEYOR((e_NOT_RUNNING == d_threadState) ==
                 (bslmt::ThreadUtil::invalidHandle() == d_threadHandle));
 
 
     int result = 0;
     if (bslmt::ThreadUtil::invalidHandle() != d_threadHandle) {
-        BSLS_ASSERT(e_RUNNING == d_threadState);
+        BSLS_ASSERT_NONCONVEYOR(e_RUNNING == d_threadState);
 
         AsyncFileObserver_Record asyncRecord = createStopRecord();
         {
@@ -453,8 +456,9 @@ int AsyncFileObserver::stopPublicationThread()
         d_threadHandle = bslmt::ThreadUtil::invalidHandle();
     }
 
-    BSLS_ASSERT(e_NOT_RUNNING == d_threadState);
-    BSLS_ASSERT(bslmt::ThreadUtil::invalidHandle() == d_threadHandle);
+    BSLS_ASSERT_NONCONVEYOR(e_NOT_RUNNING == d_threadState);
+    BSLS_ASSERT_NONCONVEYOR(
+                         bslmt::ThreadUtil::invalidHandle() == d_threadHandle);
 
     return result;
 }

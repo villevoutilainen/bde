@@ -297,6 +297,7 @@ static bool isRecordOkay(const BloombergLP::ball::TestObserver&  observer,
                          int                                     lineNumber,
                          const char                             *message)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&observer);
     const BloombergLP::ball::RecordAttributes& attributes =
                                   observer.lastPublishedRecord().fixedFields();
 
@@ -536,6 +537,7 @@ void testMain(
              u::TestType                                              testType,
              TestAllocator                                           *alloc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&TO);
     using namespace BloombergLP;
     ball::LoggerManagerConfiguration lmc;
     ball::LoggerManagerScopedGuard   lmg(lmc, alloc);
@@ -751,6 +753,7 @@ void testMain(
              u::TestType                                              testType,
              TestAllocator                                           *alloc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&TO);
     BloombergLP::ball::LoggerManagerConfiguration lmc;
     BloombergLP::ball::LoggerManagerScopedGuard lmg(lmc, alloc);
     BloombergLP::ball::LoggerManager::singleton().registerObserver(TO, "TO");

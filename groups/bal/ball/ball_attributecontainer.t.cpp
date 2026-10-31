@@ -258,6 +258,8 @@ typedef ball::AttributeContainer Obj;
             bool operator()(const ball::Attribute& lhs,
                             const ball::Attribute& rhs) const
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
                 int cmp = bsl::strcmp(lhs.name(), rhs.name());
                 if (0 != cmp) {
                     return cmp < 0;                                   // RETURN
@@ -361,12 +363,16 @@ typedef ball::AttributeContainer Obj;
     inline
     void AttributeSet::insert(const ball::Attribute& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         d_set.insert(value);
     }
 
     inline
     bool AttributeSet::remove(const ball::Attribute& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         return d_set.erase(value) > 0;
     }
 
@@ -382,6 +388,8 @@ typedef ball::AttributeContainer Obj;
     inline
     bool AttributeSet::hasValue(const ball::Attribute& value) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         return d_set.find(value) != d_set.end();
     }
 
@@ -390,6 +398,7 @@ typedef ball::AttributeContainer Obj;
                                       int           level,
                                       int           spacesPerLevel) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
         bslim::Printer printer(&stream, level, spacesPerLevel);
         printer.start();
@@ -408,6 +417,7 @@ typedef ball::AttributeContainer Obj;
     void AttributeSet::visitAttributes(
               const bsl::function<void(const ball::Attribute&)> &visitor) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bsl::set<ball::Attribute, AttributeComparator>::const_iterator it
                                                                = d_set.begin();
         for (; it != d_set.end(); ++it) {

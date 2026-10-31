@@ -28,7 +28,9 @@ FilteringObserver::~FilteringObserver()
 void FilteringObserver::publish(const bsl::shared_ptr<const Record>& record,
                                 const Context&                       context)
 {
-    BSLS_ASSERT(record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(record);
 
     if (d_recordFilter && d_recordFilter(*record, context)) {
         // If the filter is installed and returns true, pass the log record to

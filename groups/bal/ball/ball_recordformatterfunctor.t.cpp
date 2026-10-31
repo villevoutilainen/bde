@@ -97,6 +97,7 @@ void myFormatter(bsl::ostream& stream, const ball::Record& record)
     // Write a simple representation of the specified 'record' to the
     // specified 'stream'.
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     stream << "Log: " << record.fixedFields().message();
 }
 

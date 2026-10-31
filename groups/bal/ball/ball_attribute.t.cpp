@@ -806,6 +806,8 @@ class MyAttributeValue {
 
     bool operator==(const MyAttributeValue& rhs) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         if (d_type != rhs.d_type) {
             return false;                                             // RETURN
         }
@@ -841,6 +843,7 @@ class MyAttributeValue {
                         int           level = 0,
                         int           spacesPerLevel = 4) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         (void)level;
         (void)spacesPerLevel;
 
@@ -1000,7 +1003,8 @@ class MyAttribute {
 
     /// Return a reference to the non-modifiable attribute value of this
     /// object.
-    const Value& value() const;
+    const Value& value() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Format this object to the specified output `stream` at the
     /// (absolute value of) the optionally specified indentation `level`

@@ -188,6 +188,7 @@ inline
 void ObserverAdapter::publish(const bsl::shared_ptr<const Record>& record,
                               const Context&                       context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     publish(*record, context);
 }
 

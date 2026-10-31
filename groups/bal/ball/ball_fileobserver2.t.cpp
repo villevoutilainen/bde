@@ -218,6 +218,7 @@ void enableFileLogging(
                     const bsl::string&                    fileName,
                     const bool                            addTimestamp = false)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&observer);
     ASSERT(false == observer->isFileLoggingEnabled());
 
     if (!addTimestamp) {
@@ -253,6 +254,7 @@ bdlt::Datetime getCurrentLocalTime()
 /// Output the specified `record` into the specified `stream`.
 void logRecord1(bsl::ostream& stream, const ball::Record& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     ball::Severity::Level severityLevel =
         (ball::Severity::Level) record.fixedFields().severity();
 
@@ -289,6 +291,7 @@ void logRecord1(bsl::ostream& stream, const ball::Record& record)
 /// Output the specified `record` into the specified `stream`.
 void logRecord2(bsl::ostream& stream, const ball::Record& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     ball::Severity::Level severityLevel =
         (ball::Severity::Level) record.fixedFields().severity();
 
@@ -316,6 +319,8 @@ int readFileIntoString(int                lineNum,
                        const bsl::string& fileName,
                        bsl::string&       fileContent)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&fileName);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&fileContent);
     bsl::ifstream fs;
 
 #ifdef BSLS_PLATFORM_OS_UNIX
@@ -405,6 +410,7 @@ class LogRotationCallbackTester {
     /// supplied at construction to the specified `rotatedFileName`.
     void operator()(int status, const bsl::string& rotatedFileName)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ++d_rep->d_invocations;
         d_rep->d_status          = status;
         d_rep->d_rotatedFileName = rotatedFileName;
@@ -413,6 +419,7 @@ class LogRotationCallbackTester {
     /// Reset the attributes of this object to their default values.
     void reset()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_rep->d_invocations     = 0;
         d_rep->d_status          = k_UNINITIALIZED;
         d_rep->d_rotatedFileName.clear();
@@ -423,18 +430,28 @@ class LogRotationCallbackTester {
     /// Return the number of times that the function-call operator has been
     /// invoked since the most recent call to `reset`, or if `reset` has
     /// not been called, since this objects construction.
-    int numInvocations() const { return d_rep->d_invocations; }
+    int numInvocations() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_rep->d_invocations;
+    }
 
     /// Return the status passed to the most recent invocation of the
     /// function-call operation, or `k_UNINITIALIZED` if `numInvocations` is
     /// 0.
-    int status() const { return d_rep->d_status; }
+    int status() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return d_rep->d_status;
+    }
 
     /// Return a `const` reference to the file name supplied to the most
     /// recent invocation of the function-call operator, or the empty string
     /// if `numInvocations` is 0.
     const bsl::string& rotatedFileName() const
+                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         return d_rep->d_rotatedFileName;
     }
 };
@@ -536,6 +553,7 @@ bsls::TimeInterval TestCurrentTimeCallback::load()
 
 void TestCurrentTimeCallback::setUtcDatetime(const bdlt::Datetime &utcTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utcTime);
     ASSERT(bdlt::EpochUtil::epoch() <= utcTime);
 
     int rc = bdlt::EpochUtil::convertToTimeInterval(&s_utcTime, utcTime);
@@ -590,6 +608,7 @@ int TestLocalTimeOffsetCallback::loadCount()
 void splitStringIntoLines(bsl::vector<bsl::string> *result,
                           const char               *ascii)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(result);
     ASSERT(ascii);
 
@@ -643,6 +662,8 @@ bool parseTimestampFromFilename(bdlt::Datetime         *result,
                                  const bsl::string&      baseFilename,
                                  FilenamePattern         pattern)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&baseFilename);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&filename);
     bsl::string timestamp;
 
     if (pattern == e_NON_UNIQUE) {
@@ -2002,8 +2023,10 @@ int main(int argc, char *argv[])
 
                 ASSERT(1 == FsUtil::exists(fileName.c_str()));
                 ASSERTV(cb.numInvocations(), 2 == cb.numInvocations());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cb);
                 ASSERTV(fileName,   cb.rotatedFileName(),
-                        fileName == cb.rotatedFileName());
+                        fileName == BSLS_ASSERT_CONVEYOR_REF(
+                                                        cb.rotatedFileName()));
             }
 
             mX->disableFileLogging();
@@ -2251,8 +2274,10 @@ int main(int argc, char *argv[])
 
                 ASSERTV(i, cb.numInvocations(), 1 == cb.numInvocations());
                 ASSERTV(i, cb.status(), 0 == cb.status());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cb);
                 ASSERTV(i, logName, cb.rotatedFileName(),
-                        logName == cb.rotatedFileName());
+                        logName == BSLS_ASSERT_CONVEYOR_REF(
+                                                        cb.rotatedFileName()));
 
                 if (veryVeryVerbose) {
                     P(cb.rotatedFileName());
@@ -2619,8 +2644,10 @@ int main(int argc, char *argv[])
 
                 if (veryVeryVerbose) { P(rotatedFileName) }
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cb);
                 ASSERTV(ti, cb.rotatedFileName(),
-                        rotatedFileName == cb.rotatedFileName());
+                        rotatedFileName == BSLS_ASSERT_CONVEYOR_REF(
+                                                        cb.rotatedFileName()));
 
                 cb.reset();
             }
