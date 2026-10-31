@@ -701,6 +701,7 @@ inline
 int DatetimeTz::validateAndSetDatetimeTz(const Datetime& localDatetime,
                                          int             offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return setDatetimeTzIfValid(localDatetime, offset);
 }
 

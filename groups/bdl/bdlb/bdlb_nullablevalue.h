@@ -1720,6 +1720,7 @@ template <class TYPE>
 template <class STREAM>
 STREAM& NullableValue<TYPE>::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     using bslx::InStreamFunctions::bdexStreamIn;
 
     char isNull = 0;  // Redundant initialization to suppress -Werror.
@@ -1884,6 +1885,7 @@ template <class TYPE>
 inline
 const TYPE *NullableValue<TYPE>::valueOrNull() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->has_value() ? this-> operator->() : 0;
 }
 

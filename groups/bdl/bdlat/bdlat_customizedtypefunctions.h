@@ -1009,6 +1009,7 @@ const int& bdlat_CustomizedTypeFunctions_Imp::convertToBaseType(
                                                            const TYPE&  object,
                                                            int         *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLMF_ASSERT((bslalg::HasTrait<TYPE,
                                   bdlat_TypeTraitBasicCustomizedType>::value));
 
@@ -1216,6 +1217,7 @@ const bsl::vector<char>& bdlat_CustomizedTypeFunctions_Imp::convertToBaseType(
                                                      const TYPE&        object,
                                                      bsl::vector<char> *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLMF_ASSERT((bslalg::HasTrait<TYPE,
                                   bdlat_TypeTraitBasicCustomizedType>::value));
 
