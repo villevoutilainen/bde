@@ -179,6 +179,7 @@ double PeriodDayCountUtil::yearsDiff(
                                  double                         periodYearDiff,
                                  DayCountConvention::Enum       convention)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&periodDate);
     return yearsDiffImp(beginDate,
                         endDate,
                         periodDate.data(),
@@ -195,6 +196,7 @@ double PeriodDayCountUtil::yearsDiff(
                                  double                         periodYearDiff,
                                  DayCountConvention::Enum       convention)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&periodDate);
     // Some implmentations of 'std::vector', notably Aix and Solaris, do not
     // provide the 'data' accessor.
 
@@ -218,6 +220,7 @@ double PeriodDayCountUtil::yearsDiff(
                             double                              periodYearDiff,
                             DayCountConvention::Enum            convention)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&periodDate);
     // This function is defined here to avoid having to include
     // 'memory_resource' in the .h file.
 

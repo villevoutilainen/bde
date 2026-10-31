@@ -53,6 +53,7 @@ void computeSerialMonthAndDay(int               *serialMonth,
                               int               *day,
                               const bdlt::Date&  date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     int year;
     int month;
     date.getYearMonthDay(&year, &month, day);
@@ -77,7 +78,8 @@ bdlt::Date getDayOfMonth(int year, int month, int day, int dayOfFeb)
     int resultDay = bsl::min(last,
                              (dayOfFeb == 0 || month != 2) ? day : dayOfFeb);
 
-    BSLS_ASSERT(bdlt::Date::isValidYearMonthDay(year, month, resultDay));
+    BSLS_ASSERT_NONCONVEYOR(
+                      bdlt::Date::isValidYearMonthDay(year, month, resultDay));
 
     return bdlt::Date(year, month, resultDay);
 }
@@ -207,6 +209,8 @@ int adjustMonthRange(int *startSerialMonth,
                      int  latestSerialMonth,
                      int  intervalInMonths)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(startSerialMonth);
+    BSLS_ASSERT_CONVEYOR_OBJECT(endSerialMonth);
     BSLS_ASSERT(   *startSerialMonth <= u::k_MAX_SERIAL_MONTH
                 && *startSerialMonth >= u::k_MIN_SERIAL_MONTH);
     BSLS_ASSERT(   *endSerialMonth <= u::k_MAX_SERIAL_MONTH
@@ -258,8 +262,12 @@ void generateFromDayIntervalImp(VECTOR            *schedule,
                                 const bdlt::Date&  example,
                                 int                intervalInDays)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&example);
+    BSLS_ASSERT_CONVEYOR_OBJECT(schedule);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&latest);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&earliest);
     BSLS_ASSERT(schedule);
-    BSLS_ASSERT(earliest <= latest);
+    BSLS_ASSERT_NONCONVEYOR(earliest <= latest);
     BSLS_ASSERT(1 <= intervalInDays);
 
     BSLMF_ASSERT((u::IsVector<VECTOR, bdlt::Date>::value));
@@ -299,8 +307,11 @@ void generateFromDayOfMonthImp(VECTOR            *schedule,
                                int                targetDayOfMonth,
                                int                targetDayOfFeb)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(schedule);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&latest);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&earliest);
     BSLS_ASSERT(schedule);
-    BSLS_ASSERT(earliest <= latest);
+    BSLS_ASSERT_NONCONVEYOR(earliest <= latest);
     BSLS_ASSERT(1 <= intervalInMonths);
     BSLS_ASSERT(1 <= exampleYear      && 9999 >= exampleYear);
     BSLS_ASSERT(1 <= exampleMonth     &&   12 >= exampleMonth);
@@ -398,8 +409,12 @@ void generateFromBusinessDayOfMonthImp(
                              const bdlt::Calendar&  calendar,
                              int                    targetBusinessDayOfMonth)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
+    BSLS_ASSERT_CONVEYOR_OBJECT(schedule);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&latest);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&earliest);
     BSLS_ASSERT(schedule);
-    BSLS_ASSERT(earliest <= latest);
+    BSLS_ASSERT_NONCONVEYOR(earliest <= latest);
     BSLS_ASSERT(1 <= intervalInMonths);
     BSLS_ASSERT(1 <= exampleYear    && 9999 >= exampleYear);
     BSLS_ASSERT(1 <= exampleMonth   &&   12 >= exampleMonth);
@@ -525,8 +540,11 @@ void generateFromDayOfWeekAfterDayOfMonthImp(
                                      bdlt::DayOfWeek::Enum  dayOfWeek,
                                      int                    dayOfMonth)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&latest);
+    BSLS_ASSERT_CONVEYOR_OBJECT(schedule);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&earliest);
     BSLS_ASSERT(schedule);
-    BSLS_ASSERT(earliest <= latest);
+    BSLS_ASSERT_NONCONVEYOR(earliest <= latest);
     BSLS_ASSERT(1 <= intervalInMonths);
     BSLS_ASSERT(1 <= exampleYear    && 9999 >= exampleYear);
     BSLS_ASSERT(1 <= exampleMonth   &&   12 >= exampleMonth);
@@ -648,8 +666,11 @@ void generateFromDayOfWeekInMonthImp(VECTOR                *schedule,
                                      bdlt::DayOfWeek::Enum  dayOfWeek,
                                      int                    occurrenceWeek)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&latest);
+    BSLS_ASSERT_CONVEYOR_OBJECT(schedule);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&earliest);
     BSLS_ASSERT(schedule);
-    BSLS_ASSERT(earliest <= latest);
+    BSLS_ASSERT_NONCONVEYOR(earliest <= latest);
     BSLS_ASSERT(1 <= intervalInMonths);
     BSLS_ASSERT(1 <= exampleYear    && 9999 >= exampleYear);
     BSLS_ASSERT(1 <= exampleMonth   &&   12 >= exampleMonth);

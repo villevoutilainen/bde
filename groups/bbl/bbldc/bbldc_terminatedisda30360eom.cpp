@@ -19,6 +19,9 @@ int TerminatedIsda30360Eom::daysDiff(const bdlt::Date& beginDate,
                                      const bdlt::Date& endDate,
                                      const bdlt::Date& terminationDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&terminationDate);
     int y1, m1, d1, y2, m2, d2;
 
     bool negationFlag;

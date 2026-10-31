@@ -117,6 +117,9 @@ int CalendarBus252::daysDiff(const bdlt::Date&     beginDate,
                              const bdlt::Date&     endDate,
                              const bdlt::Calendar& calendar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
     BSLS_ASSERT_SAFE(calendar.isInRange(beginDate));
     BSLS_ASSERT_SAFE(calendar.isInRange(endDate));
 

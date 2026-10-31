@@ -111,6 +111,8 @@ inline
 int BasicActual365Fixed::daysDiff(const bdlt::Date& beginDate,
                                   const bdlt::Date& endDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
     return endDate - beginDate;
 }
 

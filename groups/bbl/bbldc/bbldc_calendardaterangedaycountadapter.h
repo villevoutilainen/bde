@@ -210,10 +210,15 @@ int CalendarDateRangeDayCountAdapter<CONVENTION>::daysDiff(
                                                const bdlt::Date& beginDate,
                                                const bdlt::Date& endDate) const
 {
-    BSLS_ASSERT(d_calendar.firstDate() <= beginDate);
-    BSLS_ASSERT(                          beginDate <= d_calendar.lastDate());
-    BSLS_ASSERT(d_calendar.firstDate() <= endDate);
-    BSLS_ASSERT(                          endDate   <= d_calendar.lastDate());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_calendar.firstDate() <= beginDate);
+    BSLS_ASSERT_NONCONVEYOR(
+                                           beginDate <= d_calendar.lastDate());
+    BSLS_ASSERT_NONCONVEYOR(d_calendar.firstDate() <= endDate);
+    BSLS_ASSERT_NONCONVEYOR(
+                                           endDate   <= d_calendar.lastDate());
 
     return CONVENTION::daysDiff(beginDate, endDate, d_calendar);
 }
@@ -223,6 +228,7 @@ inline
 const bdlt::Date& CalendarDateRangeDayCountAdapter<CONVENTION>::
                                                               firstDate() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_calendar.firstDate();
 }
 
@@ -231,6 +237,7 @@ inline
 const bdlt::Date& CalendarDateRangeDayCountAdapter<CONVENTION>::
                                                                lastDate() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_calendar.lastDate();
 }
 
@@ -240,10 +247,15 @@ double CalendarDateRangeDayCountAdapter<CONVENTION>::yearsDiff(
                                                const bdlt::Date& beginDate,
                                                const bdlt::Date& endDate) const
 {
-    BSLS_ASSERT(d_calendar.firstDate() <= beginDate);
-    BSLS_ASSERT(                          beginDate <= d_calendar.lastDate());
-    BSLS_ASSERT(d_calendar.firstDate() <= endDate);
-    BSLS_ASSERT(                          endDate   <= d_calendar.lastDate());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_calendar.firstDate() <= beginDate);
+    BSLS_ASSERT_NONCONVEYOR(
+                                           beginDate <= d_calendar.lastDate());
+    BSLS_ASSERT_NONCONVEYOR(d_calendar.firstDate() <= endDate);
+    BSLS_ASSERT_NONCONVEYOR(
+                                           endDate   <= d_calendar.lastDate());
 
     return CONVENTION::yearsDiff(beginDate, endDate, d_calendar);
 }
@@ -255,6 +267,7 @@ inline
 bslma::Allocator *CalendarDateRangeDayCountAdapter<CONVENTION>::
                                                               allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_calendar.allocator();
 }
 

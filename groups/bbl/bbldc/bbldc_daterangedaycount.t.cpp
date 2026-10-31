@@ -132,6 +132,8 @@ my_Convention::~my_Convention() {
 
 int my_Convention::daysDiff(const bdlt::Date& beginDate,
                             const bdlt::Date& endDate) const {
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
     if (beginDate < endDate) {
         return  1;                                                    // RETURN
     }
@@ -153,6 +155,8 @@ const bdlt::Date& my_Convention::lastDate() const {
 
 double my_Convention::yearsDiff(const bdlt::Date& beginDate,
                                 const bdlt::Date& endDate) const {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
     if (beginDate < endDate) {
         return  2.0;                                                  // RETURN
     }
@@ -266,6 +270,8 @@ struct ProtocolClassTestImp : bsls::ProtocolTestImp<ProtocolClass> {
     int my_DayCountConvention::daysDiff(const bdlt::Date& beginDate,
                                         const bdlt::Date& endDate) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
         return endDate - beginDate;
     }
 
@@ -282,6 +288,8 @@ struct ProtocolClassTestImp : bsls::ProtocolTestImp<ProtocolClass> {
     double my_DayCountConvention::yearsDiff(const bdlt::Date& beginDate,
                                             const bdlt::Date& endDate) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
         return static_cast<double>(endDate - beginDate) / 365.0;
     }
 // ```

@@ -220,8 +220,12 @@ int main(int argc, char *argv[])
 
                 const bbldc::DateRangeDayCount& protocol = mX;
 
-                ASSERT(bdlt::Date(   1,  1,  1)  == protocol.firstDate());
-                ASSERT(bdlt::Date(9999, 12, 31)  == protocol.lastDate());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(bdlt::Date(   1,  1,  1) ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.firstDate()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(bdlt::Date(9999, 12, 31) ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.lastDate()));
             }
 
             {
@@ -229,8 +233,12 @@ int main(int argc, char *argv[])
 
                 const bbldc::DateRangeDayCount& protocol = mX;
 
-                ASSERT(bdlt::Date(   1,  1,  1)  == protocol.firstDate());
-                ASSERT(bdlt::Date(9999, 12, 31)  == protocol.lastDate());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(bdlt::Date(   1,  1,  1) ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.firstDate()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(bdlt::Date(9999, 12, 31) ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.lastDate()));
             }
         }
 

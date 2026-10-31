@@ -54,11 +54,16 @@ double PeriodIcmaActualActual::yearsDiff(const bdlt::Date&  beginDate,
                                          const bdlt::Date  *periodDateEnd,
                                          double             periodYearDiff)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(periodDateBegin);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
     BSLS_ASSERT(2 <= periodDateEnd - periodDateBegin);
-    BSLS_ASSERT(*periodDateBegin <= beginDate);
-    BSLS_ASSERT(                    beginDate <= *(periodDateEnd - 1));
-    BSLS_ASSERT(*periodDateBegin <= endDate);
-    BSLS_ASSERT(                    endDate   <= *(periodDateEnd - 1));
+    BSLS_ASSERT_NONCONVEYOR(*periodDateBegin <= beginDate);
+    BSLS_ASSERT_NONCONVEYOR(
+              beginDate <= BSLS_ASSERT_CONVEYOR_REF(*(periodDateEnd - 1)));
+    BSLS_ASSERT_NONCONVEYOR(*periodDateBegin <= endDate);
+    BSLS_ASSERT_NONCONVEYOR(
+              endDate   <= BSLS_ASSERT_CONVEYOR_REF(*(periodDateEnd - 1)));
 
     BSLS_ASSERT_SAFE(u::isSortedAndUnique(periodDateBegin, periodDateEnd));
 
@@ -101,6 +106,11 @@ double PeriodIcmaActualActual::yearsDiff(const bdlt::Date&  beginDate,
     const bdlt::Date *endIter2 =
                      bsl::lower_bound(periodDateBegin, periodDateEnd, maxDate);
     const bdlt::Date *endIter1 = endIter2 - 1;
+
+    BSLS_ASSERT_CONVEYOR_OBJECT(beginIter1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(beginIter2);
+    BSLS_ASSERT_CONVEYOR_OBJECT(endIter1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(endIter2);
 
     // Compute the fractional number of periods * 'periodYearDiff'.
 

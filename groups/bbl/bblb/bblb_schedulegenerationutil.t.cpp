@@ -156,6 +156,7 @@ static
 void toString(bsl::ostringstream *output,
               const VECTOR& date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     static const bool isVector =
                   bsl::is_same<VECTOR, bsl::vector<bdlt::Date> >::value
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR
@@ -166,7 +167,7 @@ void toString(bsl::ostringstream *output,
 
     output->str(std::string());
     for (bsl::size_t i = 0; i < date.size(); i++) {
-        (*output) << bdlt::DateUtil::convertToYYYYMMDD(date[i]) << ",";
+        (*output) << bdlt::DateUtil::convertToYYYYMMDD(BSLS_ASSERT_CONVEYOR_REF(date[i])) << ",";
     }
     output->flush();
 }
@@ -201,6 +202,7 @@ class TestCalendarLoader : public bdlt::CalendarLoader
     int load(bdlt::PackedCalendar *result, const char * /* calendar name */)
                                                           BSLS_KEYWORD_OVERRIDE
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(result);
         const int startYear = 2000;
         const int endYear = 2020;
 

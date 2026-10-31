@@ -49,11 +49,16 @@ double PeriodDayCountUtil::yearsDiffImp(
                                      double                    periodYearDiff,
                                      DayCountConvention::Enum  convention)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(periodDateBegin);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
     BSLS_ASSERT(2 <= periodDateEnd - periodDateBegin);
-    BSLS_ASSERT(*periodDateBegin <= beginDate);
-    BSLS_ASSERT(                    beginDate <= *(periodDateEnd - 1));
-    BSLS_ASSERT(*periodDateBegin <= endDate);
-    BSLS_ASSERT(                    endDate   <= *(periodDateEnd - 1));
+    BSLS_ASSERT_NONCONVEYOR(*periodDateBegin <= beginDate);
+    BSLS_ASSERT_NONCONVEYOR(
+              beginDate <= BSLS_ASSERT_CONVEYOR_REF(*(periodDateEnd - 1)));
+    BSLS_ASSERT_NONCONVEYOR(*periodDateBegin <= endDate);
+    BSLS_ASSERT_NONCONVEYOR(
+              endDate   <= BSLS_ASSERT_CONVEYOR_REF(*(periodDateEnd - 1)));
 
     BSLS_ASSERT_SAFE(isSortedAndUnique(periodDateBegin, periodDateEnd));
 

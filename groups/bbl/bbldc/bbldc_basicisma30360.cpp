@@ -20,6 +20,8 @@ namespace bbldc {
 static int computeDaysDiff(const bdlt::Date& beginDate,
                            const bdlt::Date& endDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
     int yBegin, mBegin, dBegin, yEnd, mEnd, dEnd;
 
     beginDate.getYearMonthDay(&yBegin, &mBegin, &dBegin);

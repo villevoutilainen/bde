@@ -144,12 +144,14 @@ class PeriodDateRangeDayCountAdapter : public DateRangeDayCount {
     PeriodDateRangeDayCountAdapter(
                       const std::vector<bdlt::Date>&       periodDate,
                       double                               periodYearDiff,
-                      bslma::Allocator                    *basicAllocator = 0);
+                      bslma::Allocator                    *basicAllocator = 0)
+                                 BSLS_ASSERT_CONVEYOR_TRUST_PRE(periodDate);
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR
     PeriodDateRangeDayCountAdapter(
                       const std::pmr::vector<bdlt::Date>&  periodDate,
                       double                               periodYearDiff,
-                      bslma::Allocator                    *basicAllocator = 0);
+                      bslma::Allocator                    *basicAllocator = 0)
+                                 BSLS_ASSERT_CONVEYOR_TRUST_PRE(periodDate);
 #endif
         // Create a day-count adapter that uses the specified 'periodDate' and
         // 'periodYearDiff' during invocations of 'yearsDiff'.  'periodDate'
@@ -245,6 +247,7 @@ PeriodDateRangeDayCountAdapter<CONVENTION>::PeriodDateRangeDayCountAdapter(
 : d_periodDate(periodDate, basicAllocator)
 , d_periodYearDiff(periodYearDiff)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&periodDate);
     BSLS_ASSERT(d_periodDate.size() >= 2);
 
     BSLS_ASSERT_SAFE(isSortedAndUnique(d_periodDate));
@@ -259,6 +262,7 @@ PeriodDateRangeDayCountAdapter<CONVENTION>::PeriodDateRangeDayCountAdapter(
 : d_periodDate(periodDate.begin(), periodDate.end(), basicAllocator)
 , d_periodYearDiff(periodYearDiff)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&periodDate);
     BSLS_ASSERT(d_periodDate.size() >= 2);
 
     BSLS_ASSERT_SAFE(isSortedAndUnique(d_periodDate));
@@ -300,6 +304,7 @@ template <class CONVENTION>
 inline
 const bdlt::Date& PeriodDateRangeDayCountAdapter<CONVENTION>::firstDate() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_periodDate.front();
 }
 
@@ -307,6 +312,7 @@ template <class CONVENTION>
 inline
 const bdlt::Date& PeriodDateRangeDayCountAdapter<CONVENTION>::lastDate() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_periodDate.back();
 }
 
@@ -316,10 +322,15 @@ double PeriodDateRangeDayCountAdapter<CONVENTION>::yearsDiff(
                                                const bdlt::Date& beginDate,
                                                const bdlt::Date& endDate) const
 {
-    BSLS_ASSERT(d_periodDate.front() <= beginDate);
-    BSLS_ASSERT(                        beginDate <= d_periodDate.back());
-    BSLS_ASSERT(d_periodDate.front() <= endDate);
-    BSLS_ASSERT(                        endDate   <= d_periodDate.back());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_periodDate.front() <= beginDate);
+    BSLS_ASSERT_NONCONVEYOR(
+                                             beginDate <= d_periodDate.back());
+    BSLS_ASSERT_NONCONVEYOR(d_periodDate.front() <= endDate);
+    BSLS_ASSERT_NONCONVEYOR(
+                                             endDate   <= d_periodDate.back());
 
     return CONVENTION::yearsDiff(beginDate,
                                  endDate,

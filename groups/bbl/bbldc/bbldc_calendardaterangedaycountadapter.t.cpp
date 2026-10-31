@@ -277,8 +277,12 @@ int main(int argc, char *argv[])
 
                 const bbldc::DateRangeDayCount& protocol = mX;
 
-                ASSERT(CALENDAR.firstDate() == protocol.firstDate());
-                ASSERT(CALENDAR.lastDate()  == protocol.lastDate());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(CALENDAR.firstDate() ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.firstDate()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(CALENDAR.lastDate() ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.lastDate()));
             }
         }
 

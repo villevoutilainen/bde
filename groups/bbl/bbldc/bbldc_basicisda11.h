@@ -91,6 +91,8 @@ inline
 double BasicIsda11::yearsDiff(const bdlt::Date& beginDate,
                               const bdlt::Date& endDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
     return beginDate < endDate ? 1.0 : beginDate == endDate ? 0.0 : -1.0;
 }
 
@@ -98,6 +100,8 @@ inline
 int BasicIsda11::daysDiff(const bdlt::Date& beginDate,
                                     const bdlt::Date& endDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
     return beginDate < endDate ? 1 : beginDate == endDate ? 0 : -1;
 }
 

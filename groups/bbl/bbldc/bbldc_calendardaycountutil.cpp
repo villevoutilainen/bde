@@ -24,8 +24,11 @@ int CalendarDayCountUtil::daysDiff(const bdlt::Date&        beginDate,
                                    const bdlt::Calendar&    calendar,
                                    DayCountConvention::Enum convention)
 {
-    BSLS_ASSERT(calendar.isInRange(beginDate));
-    BSLS_ASSERT(calendar.isInRange(endDate));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
+    BSLS_ASSERT_NONCONVEYOR(calendar.isInRange(beginDate));
+    BSLS_ASSERT_NONCONVEYOR(calendar.isInRange(endDate));
 
     int numDays;
 
@@ -64,8 +67,11 @@ double CalendarDayCountUtil::yearsDiff(const bdlt::Date&        beginDate,
                                        const bdlt::Calendar&    calendar,
                                        DayCountConvention::Enum convention)
 {
-    BSLS_ASSERT(calendar.isInRange(beginDate));
-    BSLS_ASSERT(calendar.isInRange(endDate));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
+    BSLS_ASSERT_NONCONVEYOR(calendar.isInRange(beginDate));
+    BSLS_ASSERT_NONCONVEYOR(calendar.isInRange(endDate));
 
     double numYears;
 

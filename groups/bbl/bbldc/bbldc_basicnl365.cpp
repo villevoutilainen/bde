@@ -15,6 +15,8 @@ namespace bbldc {
 int BasicNl365::daysDiff(const bdlt::Date& beginDate,
                          const bdlt::Date& endDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
     static int s_daysInMonthCorrection[13] =
                                      { 0, 0, 0, 3, 3, 4, 4, 5, 5, 5, 6, 6, 7 };
 

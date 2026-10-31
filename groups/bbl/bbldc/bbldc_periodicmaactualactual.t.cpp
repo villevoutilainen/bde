@@ -151,12 +151,14 @@ double doubleAbort()
 template <class VECTOR>
 const typename VECTOR::value_type *data(const VECTOR& v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&v);
     return v.empty() ? 0 : &*v.begin();
 }
 
 template <class VECTOR>
 const typename VECTOR::value_type *dataEnd(const VECTOR& v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&v);
     return u::data(v) + v.size();
 }
 
@@ -480,6 +482,7 @@ int main(int argc, char *argv[])
                 const double NUM_YEARS = DATA[di].d_numYears;
 
                 const BslVector& SCHED_BSL = *DATA[di].d_sched;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&SCHED_BSL);
                 const StdVector  SCHED_STD(SCHED_BSL.begin(), SCHED_BSL.end());
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR
                 const PmrVector  SCHED_PMR(SCHED_BSL.begin(), SCHED_BSL.end());

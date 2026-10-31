@@ -22,6 +22,8 @@ inline
 static int computeDaysDiff(const bdlt::Date& beginDate,
                            const bdlt::Date& endDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
     int y1, m1, d1, y2, m2, d2;
     int negationFlag = beginDate > endDate;
     if (negationFlag) {

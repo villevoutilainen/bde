@@ -160,6 +160,8 @@ inline
 int PeriodIcmaActualActual::daysDiff(const bdlt::Date& beginDate,
                                      const bdlt::Date& endDate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&beginDate);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&endDate);
     return endDate - beginDate;
 }
 
@@ -170,6 +172,7 @@ double PeriodIcmaActualActual::yearsDiff(
                                  const bsl::vector<bdlt::Date>& periodDate,
                                  double                         periodYearDiff)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&periodDate);
     return yearsDiff(beginDate,
                      endDate,
                      periodDate.data(),
@@ -184,6 +187,7 @@ double PeriodIcmaActualActual::yearsDiff(
                                  const std::vector<bdlt::Date>& periodDate,
                                  double                         periodYearDiff)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&periodDate);
     // Some implmentations of 'std::vector', notably Aix and Solaris, do not
     // provide the 'data' accessor.
 
@@ -205,6 +209,7 @@ double PeriodIcmaActualActual::yearsDiff(
                             const std::pmr::vector<bdlt::Date>& periodDate,
                             double                              periodYearDiff)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&periodDate);
     return yearsDiff(beginDate,
                      endDate,
                      periodDate.data(),

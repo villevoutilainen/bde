@@ -305,8 +305,12 @@ int main(int argc, char *argv[])
 
                 const bbldc::DateRangeDayCount& protocol = mX;
 
-                ASSERT(SCHEDULE.front() == protocol.firstDate());
-                ASSERT(SCHEDULE.back()  == protocol.lastDate());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(SCHEDULE.front() ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.firstDate()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(SCHEDULE.back() ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.lastDate()));
             }
             {
                 bbldc::PeriodDateRangeDayCountAdapter<
@@ -314,8 +318,12 @@ int main(int argc, char *argv[])
 
                 const bbldc::DateRangeDayCount& protocol = mX;
 
-                ASSERT(SCHEDULE.front() == protocol.firstDate());
-                ASSERT(SCHEDULE.back()  == protocol.lastDate());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(SCHEDULE.front() ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.firstDate()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(SCHEDULE.back() ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.lastDate()));
             }
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR
             {
@@ -324,8 +332,12 @@ int main(int argc, char *argv[])
 
                 const bbldc::DateRangeDayCount& protocol = mX;
 
-                ASSERT(SCHEDULE.front() == protocol.firstDate());
-                ASSERT(SCHEDULE.back()  == protocol.lastDate());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(SCHEDULE.front() ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.firstDate()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&protocol);
+                ASSERT(SCHEDULE.back() ==
+                       BSLS_ASSERT_CONVEYOR_REF(protocol.lastDate()));
             }
 #endif
         }
