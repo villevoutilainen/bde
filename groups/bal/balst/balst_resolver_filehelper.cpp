@@ -48,6 +48,7 @@ bsl::string_view Resolver_FileHelper::FileReader::loadString(
                                                       const Span& writeSpan,
                                                       Offset      offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&writeSpan);
     BSLS_ASSERT(0 <= offset);
 
     using bsl::string_view;
@@ -79,7 +80,7 @@ bsl::string_view Resolver_FileHelper::FileReader::loadString(
         if (rc <= 0) {
             break;
         }
-        BSLS_ASSERT(rc <= bsl::ssize(spanRemaining));
+        BSLS_ASSERT_NONCONVEYOR(rc <= bsl::ssize(spanRemaining));
 
         const string_view newData(spanRemaining.data(), rc);
         const size_t      zero = newData.find('\0');
@@ -100,6 +101,7 @@ bsl::span<const char> Resolver_FileHelper::FileReader::readBytes(
                                                       const Span& outSpan,
                                                       Offset      offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&outSpan);
     BSLS_ASSERT(offset >= 0);
 
     if (outSpan.empty()) {
@@ -129,6 +131,7 @@ Resolver_FileHelper::MappedFileReader::MappedFileReader(
                                                        const CSpan& mappedFile)
 : d_mappedFile(mappedFile)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mappedFile);
     BSLS_ASSERT(!mappedFile.empty());
 }
 
@@ -137,6 +140,7 @@ inline
 Resolver_FileHelper::Offset
 Resolver_FileHelper::MappedFileReader::fileSize() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_mappedFile.size();
 }
 
@@ -144,6 +148,8 @@ bsl::string_view Resolver_FileHelper::MappedFileReader::loadString(
                                                       const Span& writeSpan,
                                                       Offset      offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&writeSpan);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= offset);
 
     if (bsl::ssize(d_mappedFile) <= offset) {
@@ -155,7 +161,7 @@ bsl::string_view Resolver_FileHelper::MappedFileReader::loadString(
     typedef CSpan::iterator It;
 
     const It start    =  d_mappedFile.begin() + static_cast<ptrdiff_t>(offset);
-    BSLS_ASSERT(start <= d_mappedFile.end());
+    BSLS_ASSERT_NONCONVEYOR(start <= d_mappedFile.end());
     size_t minSize    = bsl::min(
                                d_mappedFile.size(),
                                static_cast<size_t>(offset) + writeSpan.size());
@@ -172,6 +178,7 @@ bsl::span<const char> Resolver_FileHelper::MappedFileReader::readBytes(
                                                     const Span& writeSpan,
                                                     Offset      offsetIn) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&writeSpan);
     BSLS_ASSERT(offsetIn >= 0);
 
     if (bsl::ssize(d_mappedFile) <= offsetIn || writeSpan.empty()) {
@@ -199,6 +206,7 @@ Resolver_FileHelper::Resolver_FileHelper()
 // MANIPULATORS
 int Resolver_FileHelper::openFile(const char *fileName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!fileName || !*fileName) {
         d_reader.emplace<bsl::monostate>();
         return -1;                                                    // RETURN
@@ -220,6 +228,8 @@ int Resolver_FileHelper::openFile(const char *fileName)
 
 int Resolver_FileHelper::openMappedFile(const CSpan& mappedFile)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mappedFile);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (mappedFile.empty()) {
         d_reader.emplace<bsl::monostate>();
         return -1;                                                    // RETURN
@@ -233,6 +243,7 @@ int Resolver_FileHelper::openMappedFile(const CSpan& mappedFile)
 // ACCESSORS
 Resolver_FileHelper::Offset Resolver_FileHelper::fileSize() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_reader.index()) {
       case e_OPEN_FILE: {
         const FileReader& fileReader = bsl::get<FileReader>(d_reader);
@@ -253,6 +264,8 @@ Resolver_FileHelper::Offset Resolver_FileHelper::fileSize() const
 bsl::string_view Resolver_FileHelper::loadString(const Span& writeSpan,
                                                  Offset      offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&writeSpan);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(writeSpan.size() < static_cast<unsigned>(INT_MAX));
     BSLS_ASSERT(0 <= offset);
 
@@ -280,6 +293,8 @@ bsl::string_view Resolver_FileHelper::loadString(const Span& writeSpan,
 bsl::span<const char> Resolver_FileHelper::readBytes(const Span& outSpan,
                                                      Offset      offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&outSpan);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(offset >= 0);
 
     if (outSpan.empty()) {

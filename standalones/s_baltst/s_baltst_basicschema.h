@@ -182,7 +182,8 @@ class BasicSchemaAnnotationElement {
 
     /// Return a reference to the modifiable "Documentation" attribute of
     /// this object.
-    bdlb::NullableValue<bsl::string>& documentation();
+    bdlb::NullableValue<bsl::string>& documentation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -231,7 +232,8 @@ class BasicSchemaAnnotationElement {
 
     /// Return a reference to the non-modifiable "Documentation" attribute
     /// of this object.
-    const bdlb::NullableValue<bsl::string>& documentation() const;
+    const bdlb::NullableValue<bsl::string>& documentation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -381,11 +383,16 @@ class BasicSchemaEnumerationElementChoice {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    BasicSchemaAnnotationElement& makeAnnotation();
-    BasicSchemaAnnotationElement& makeAnnotation(const BasicSchemaAnnotationElement& value);
+    BasicSchemaAnnotationElement& makeAnnotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                     const BasicSchemaAnnotationElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaAnnotationElement& makeAnnotation(BasicSchemaAnnotationElement&& value);
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                          BasicSchemaAnnotationElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Annotation" value.  Optionally
         // specify the 'value' of the "Annotation".  If 'value' is not
@@ -402,7 +409,8 @@ class BasicSchemaEnumerationElementChoice {
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
     /// undefined unless "Annotation" is the selection of this object.
-    BasicSchemaAnnotationElement& annotation();
+    BasicSchemaAnnotationElement& annotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -435,7 +443,8 @@ class BasicSchemaEnumerationElementChoice {
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
     /// is undefined unless "Annotation" is the selection of this object.
-    const BasicSchemaAnnotationElement& annotation() const;
+    const BasicSchemaAnnotationElement& annotation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Annotation" value,
     /// and return `false` otherwise.
@@ -611,11 +620,13 @@ class BasicSchemaEnumerationElement {
 
     /// Return a reference to the modifiable "Value" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& value();
+    bdlb::NullableValue<bsl::string>& value()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    bsl::vector<BasicSchemaEnumerationElementChoice>& choice();
+    bsl::vector<BasicSchemaEnumerationElementChoice>& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -664,11 +675,13 @@ class BasicSchemaEnumerationElement {
 
     /// Return a reference to the non-modifiable "Value" attribute of this
     /// object.
-    const bdlb::NullableValue<bsl::string>& value() const;
+    const bdlb::NullableValue<bsl::string>& value() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Choice" attribute of this
     /// object.
-    const bsl::vector<BasicSchemaEnumerationElementChoice>& choice() const;
+    const bsl::vector<BasicSchemaEnumerationElementChoice>& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -821,21 +834,31 @@ class BasicSchemaRestrictionElementChoice {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    BasicSchemaAnnotationElement& makeAnnotation();
-    BasicSchemaAnnotationElement& makeAnnotation(const BasicSchemaAnnotationElement& value);
+    BasicSchemaAnnotationElement& makeAnnotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                     const BasicSchemaAnnotationElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaAnnotationElement& makeAnnotation(BasicSchemaAnnotationElement&& value);
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                          BasicSchemaAnnotationElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Annotation" value.  Optionally
         // specify the 'value' of the "Annotation".  If 'value' is not
         // specified, the default "Annotation" value is used.
 
-    BasicSchemaEnumerationElement& makeEnumeration();
-    BasicSchemaEnumerationElement& makeEnumeration(const BasicSchemaEnumerationElement& value);
+    BasicSchemaEnumerationElement& makeEnumeration()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaEnumerationElement& makeEnumeration(
+                                    const BasicSchemaEnumerationElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaEnumerationElement& makeEnumeration(BasicSchemaEnumerationElement&& value);
+    BasicSchemaEnumerationElement& makeEnumeration(
+                                         BasicSchemaEnumerationElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Enumeration" value.
         // Optionally specify the 'value' of the "Enumeration".  If 'value' is
@@ -852,12 +875,14 @@ class BasicSchemaRestrictionElementChoice {
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
     /// undefined unless "Annotation" is the selection of this object.
-    BasicSchemaAnnotationElement& annotation();
+    BasicSchemaAnnotationElement& annotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Enumeration" selection of this
     /// object if "Enumeration" is the current selection.  The behavior is
     /// undefined unless "Enumeration" is the selection of this object.
-    BasicSchemaEnumerationElement& enumeration();
+    BasicSchemaEnumerationElement& enumeration()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -890,12 +915,14 @@ class BasicSchemaRestrictionElementChoice {
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
     /// is undefined unless "Annotation" is the selection of this object.
-    const BasicSchemaAnnotationElement& annotation() const;
+    const BasicSchemaAnnotationElement& annotation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Enumeration" selection of
     /// this object if "Enumeration" is the current selection.  The behavior
     /// is undefined unless "Enumeration" is the selection of this object.
-    const BasicSchemaEnumerationElement& enumeration() const;
+    const BasicSchemaEnumerationElement& enumeration() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Annotation" value,
     /// and return `false` otherwise.
@@ -1075,11 +1102,13 @@ class BasicSchemaRestrictionElement {
 
     /// Return a reference to the modifiable "Base" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& base();
+    bdlb::NullableValue<bsl::string>& base()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    bsl::vector<BasicSchemaRestrictionElementChoice>& choice();
+    bsl::vector<BasicSchemaRestrictionElementChoice>& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1128,11 +1157,13 @@ class BasicSchemaRestrictionElement {
 
     /// Return a reference to the non-modifiable "Base" attribute of this
     /// object.
-    const bdlb::NullableValue<bsl::string>& base() const;
+    const bdlb::NullableValue<bsl::string>& base() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Choice" attribute of this
     /// object.
-    const bsl::vector<BasicSchemaRestrictionElementChoice>& choice() const;
+    const bsl::vector<BasicSchemaRestrictionElementChoice>& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1284,21 +1315,31 @@ class BasicSchemaSimpleTypeElementChoice {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    BasicSchemaAnnotationElement& makeAnnotation();
-    BasicSchemaAnnotationElement& makeAnnotation(const BasicSchemaAnnotationElement& value);
+    BasicSchemaAnnotationElement& makeAnnotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                     const BasicSchemaAnnotationElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaAnnotationElement& makeAnnotation(BasicSchemaAnnotationElement&& value);
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                          BasicSchemaAnnotationElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Annotation" value.  Optionally
         // specify the 'value' of the "Annotation".  If 'value' is not
         // specified, the default "Annotation" value is used.
 
-    BasicSchemaRestrictionElement& makeRestriction();
-    BasicSchemaRestrictionElement& makeRestriction(const BasicSchemaRestrictionElement& value);
+    BasicSchemaRestrictionElement& makeRestriction()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaRestrictionElement& makeRestriction(
+                                    const BasicSchemaRestrictionElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaRestrictionElement& makeRestriction(BasicSchemaRestrictionElement&& value);
+    BasicSchemaRestrictionElement& makeRestriction(
+                                         BasicSchemaRestrictionElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Restriction" value.
         // Optionally specify the 'value' of the "Restriction".  If 'value' is
@@ -1315,12 +1356,14 @@ class BasicSchemaSimpleTypeElementChoice {
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
     /// undefined unless "Annotation" is the selection of this object.
-    BasicSchemaAnnotationElement& annotation();
+    BasicSchemaAnnotationElement& annotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Restriction" selection of this
     /// object if "Restriction" is the current selection.  The behavior is
     /// undefined unless "Restriction" is the selection of this object.
-    BasicSchemaRestrictionElement& restriction();
+    BasicSchemaRestrictionElement& restriction()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1353,12 +1396,14 @@ class BasicSchemaSimpleTypeElementChoice {
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
     /// is undefined unless "Annotation" is the selection of this object.
-    const BasicSchemaAnnotationElement& annotation() const;
+    const BasicSchemaAnnotationElement& annotation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Restriction" selection of
     /// this object if "Restriction" is the current selection.  The behavior
     /// is undefined unless "Restriction" is the selection of this object.
-    const BasicSchemaRestrictionElement& restriction() const;
+    const BasicSchemaRestrictionElement& restriction() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Annotation" value,
     /// and return `false` otherwise.
@@ -1541,15 +1586,18 @@ class BasicSchemaSimpleTypeElement {
 
     /// Return a reference to the modifiable "Name" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& name();
+    bdlb::NullableValue<bsl::string>& name()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "PreserveEnumOrder" attribute
     /// of this object.
-    bdlb::NullableValue<bsl::string>& preserveEnumOrder();
+    bdlb::NullableValue<bsl::string>& preserveEnumOrder()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    bsl::vector<BasicSchemaSimpleTypeElementChoice>& choice();
+    bsl::vector<BasicSchemaSimpleTypeElementChoice>& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1598,15 +1646,18 @@ class BasicSchemaSimpleTypeElement {
 
     /// Return a reference to the non-modifiable "Name" attribute of this
     /// object.
-    const bdlb::NullableValue<bsl::string>& name() const;
+    const bdlb::NullableValue<bsl::string>& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "PreserveEnumOrder"
     /// attribute of this object.
-    const bdlb::NullableValue<bsl::string>& preserveEnumOrder() const;
+    const bdlb::NullableValue<bsl::string>& preserveEnumOrder() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Choice" attribute of this
     /// object.
-    const bsl::vector<BasicSchemaSimpleTypeElementChoice>& choice() const;
+    const bsl::vector<BasicSchemaSimpleTypeElementChoice>& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1769,7 +1820,8 @@ class BasicSchemaChoiceElement {
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    bsl::vector<BasicSchemaChoiceElementChoice>& choice();
+    bsl::vector<BasicSchemaChoiceElementChoice>& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1818,7 +1870,8 @@ class BasicSchemaChoiceElement {
 
     /// Return a reference to the non-modifiable "Choice" attribute of this
     /// object.
-    const bsl::vector<BasicSchemaChoiceElementChoice>& choice() const;
+    const bsl::vector<BasicSchemaChoiceElementChoice>& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1970,21 +2023,29 @@ class BasicSchemaChoiceElementChoice {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    BasicSchemaAnnotationElement& makeAnnotation();
-    BasicSchemaAnnotationElement& makeAnnotation(const BasicSchemaAnnotationElement& value);
+    BasicSchemaAnnotationElement& makeAnnotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                     const BasicSchemaAnnotationElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaAnnotationElement& makeAnnotation(BasicSchemaAnnotationElement&& value);
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                          BasicSchemaAnnotationElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Annotation" value.  Optionally
         // specify the 'value' of the "Annotation".  If 'value' is not
         // specified, the default "Annotation" value is used.
 
-    BasicSchemaElement& makeElement();
-    BasicSchemaElement& makeElement(const BasicSchemaElement& value);
+    BasicSchemaElement& makeElement()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaElement& makeElement(const BasicSchemaElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaElement& makeElement(BasicSchemaElement&& value);
+    BasicSchemaElement& makeElement(BasicSchemaElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Element" value.  Optionally
         // specify the 'value' of the "Element".  If 'value' is not specified,
@@ -2001,12 +2062,14 @@ class BasicSchemaChoiceElementChoice {
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
     /// undefined unless "Annotation" is the selection of this object.
-    BasicSchemaAnnotationElement& annotation();
+    BasicSchemaAnnotationElement& annotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element" selection of this
     /// object if "Element" is the current selection.  The behavior is
     /// undefined unless "Element" is the selection of this object.
-    BasicSchemaElement& element();
+    BasicSchemaElement& element()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2039,12 +2102,14 @@ class BasicSchemaChoiceElementChoice {
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
     /// is undefined unless "Annotation" is the selection of this object.
-    const BasicSchemaAnnotationElement& annotation() const;
+    const BasicSchemaAnnotationElement& annotation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element" selection of this
     /// object if "Element" is the current selection.  The behavior is
     /// undefined unless "Element" is the selection of this object.
-    const BasicSchemaElement& element() const;
+    const BasicSchemaElement& element() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Annotation" value,
     /// and return `false` otherwise.
@@ -2224,11 +2289,13 @@ class BasicSchemaComplexTypeElement {
 
     /// Return a reference to the modifiable "Name" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& name();
+    bdlb::NullableValue<bsl::string>& name()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    bsl::vector<BasicSchemaComplexTypeElementChoice>& choice();
+    bsl::vector<BasicSchemaComplexTypeElementChoice>& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2277,11 +2344,13 @@ class BasicSchemaComplexTypeElement {
 
     /// Return a reference to the non-modifiable "Name" attribute of this
     /// object.
-    const bdlb::NullableValue<bsl::string>& name() const;
+    const bdlb::NullableValue<bsl::string>& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Choice" attribute of this
     /// object.
-    const bsl::vector<BasicSchemaComplexTypeElementChoice>& choice() const;
+    const bsl::vector<BasicSchemaComplexTypeElementChoice>& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -2437,31 +2506,44 @@ class BasicSchemaComplexTypeElementChoice {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    BasicSchemaAnnotationElement& makeAnnotation();
-    BasicSchemaAnnotationElement& makeAnnotation(const BasicSchemaAnnotationElement& value);
+    BasicSchemaAnnotationElement& makeAnnotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                     const BasicSchemaAnnotationElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaAnnotationElement& makeAnnotation(BasicSchemaAnnotationElement&& value);
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                          BasicSchemaAnnotationElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Annotation" value.  Optionally
         // specify the 'value' of the "Annotation".  If 'value' is not
         // specified, the default "Annotation" value is used.
 
-    BasicSchemaSequenceElement& makeSequence();
-    BasicSchemaSequenceElement& makeSequence(const BasicSchemaSequenceElement& value);
+    BasicSchemaSequenceElement& makeSequence()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaSequenceElement& makeSequence(
+                                       const BasicSchemaSequenceElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaSequenceElement& makeSequence(BasicSchemaSequenceElement&& value);
+    BasicSchemaSequenceElement& makeSequence(
+                                            BasicSchemaSequenceElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Sequence" value.  Optionally
         // specify the 'value' of the "Sequence".  If 'value' is not specified,
         // the default "Sequence" value is used.
 
-    BasicSchemaChoiceElement& makeChoice();
-    BasicSchemaChoiceElement& makeChoice(const BasicSchemaChoiceElement& value);
+    BasicSchemaChoiceElement& makeChoice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaChoiceElement& makeChoice(const BasicSchemaChoiceElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaChoiceElement& makeChoice(BasicSchemaChoiceElement&& value);
+    BasicSchemaChoiceElement& makeChoice(BasicSchemaChoiceElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Choice" value.  Optionally
         // specify the 'value' of the "Choice".  If 'value' is not specified,
@@ -2478,17 +2560,20 @@ class BasicSchemaComplexTypeElementChoice {
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
     /// undefined unless "Annotation" is the selection of this object.
-    BasicSchemaAnnotationElement& annotation();
+    BasicSchemaAnnotationElement& annotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Sequence" selection of this
     /// object if "Sequence" is the current selection.  The behavior is
     /// undefined unless "Sequence" is the selection of this object.
-    BasicSchemaSequenceElement& sequence();
+    BasicSchemaSequenceElement& sequence()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Choice" selection of this
     /// object if "Choice" is the current selection.  The behavior is
     /// undefined unless "Choice" is the selection of this object.
-    BasicSchemaChoiceElement& choice();
+    BasicSchemaChoiceElement& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2521,17 +2606,20 @@ class BasicSchemaComplexTypeElementChoice {
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
     /// is undefined unless "Annotation" is the selection of this object.
-    const BasicSchemaAnnotationElement& annotation() const;
+    const BasicSchemaAnnotationElement& annotation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Sequence" selection of
     /// this object if "Sequence" is the current selection.  The behavior is
     /// undefined unless "Sequence" is the selection of this object.
-    const BasicSchemaSequenceElement& sequence() const;
+    const BasicSchemaSequenceElement& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Choice" selection of this
     /// object if "Choice" is the current selection.  The behavior is
     /// undefined unless "Choice" is the selection of this object.
-    const BasicSchemaChoiceElement& choice() const;
+    const BasicSchemaChoiceElement& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Annotation" value,
     /// and return `false` otherwise.
@@ -2738,43 +2826,53 @@ class BasicSchemaElement {
 
     /// Return a reference to the modifiable "Name" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& name();
+    bdlb::NullableValue<bsl::string>& name()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Type" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& type();
+    bdlb::NullableValue<bsl::string>& type()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "MinOccurs" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& minOccurs();
+    bdlb::NullableValue<bsl::string>& minOccurs()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "MaxOccurs" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& maxOccurs();
+    bdlb::NullableValue<bsl::string>& maxOccurs()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "DefaultValue" attribute of
     /// this object.
-    bdlb::NullableValue<bsl::string>& defaultValue();
+    bdlb::NullableValue<bsl::string>& defaultValue()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Cppdefault" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& cppdefault();
+    bdlb::NullableValue<bsl::string>& cppdefault()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Cpptype" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& cpptype();
+    bdlb::NullableValue<bsl::string>& cpptype()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "AllocatesMemory" attribute of
     /// this object.
-    bdlb::NullableValue<bsl::string>& allocatesMemory();
+    bdlb::NullableValue<bsl::string>& allocatesMemory()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "AllowsDirectManipulation"
     /// attribute of this object.
-    bdlb::NullableValue<bsl::string>& allowsDirectManipulation();
+    bdlb::NullableValue<bsl::string>& allowsDirectManipulation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    bsl::vector<BasicSchemaElementChoice>& choice();
+    bsl::vector<BasicSchemaElementChoice>& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2823,43 +2921,53 @@ class BasicSchemaElement {
 
     /// Return a reference to the non-modifiable "Name" attribute of this
     /// object.
-    const bdlb::NullableValue<bsl::string>& name() const;
+    const bdlb::NullableValue<bsl::string>& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Type" attribute of this
     /// object.
-    const bdlb::NullableValue<bsl::string>& type() const;
+    const bdlb::NullableValue<bsl::string>& type() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "MinOccurs" attribute of
     /// this object.
-    const bdlb::NullableValue<bsl::string>& minOccurs() const;
+    const bdlb::NullableValue<bsl::string>& minOccurs() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "MaxOccurs" attribute of
     /// this object.
-    const bdlb::NullableValue<bsl::string>& maxOccurs() const;
+    const bdlb::NullableValue<bsl::string>& maxOccurs() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "DefaultValue" attribute of
     /// this object.
-    const bdlb::NullableValue<bsl::string>& defaultValue() const;
+    const bdlb::NullableValue<bsl::string>& defaultValue() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Cppdefault" attribute of
     /// this object.
-    const bdlb::NullableValue<bsl::string>& cppdefault() const;
+    const bdlb::NullableValue<bsl::string>& cppdefault() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Cpptype" attribute of this
     /// object.
-    const bdlb::NullableValue<bsl::string>& cpptype() const;
+    const bdlb::NullableValue<bsl::string>& cpptype() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "AllocatesMemory" attribute
     /// of this object.
-    const bdlb::NullableValue<bsl::string>& allocatesMemory() const;
+    const bdlb::NullableValue<bsl::string>& allocatesMemory() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "AllowsDirectManipulation"
     /// attribute of this object.
-    const bdlb::NullableValue<bsl::string>& allowsDirectManipulation() const;
+    const bdlb::NullableValue<bsl::string>& allowsDirectManipulation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Choice" attribute of this
     /// object.
-    const bsl::vector<BasicSchemaElementChoice>& choice() const;
+    const bsl::vector<BasicSchemaElementChoice>& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -3014,31 +3122,46 @@ class BasicSchemaElementChoice {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    BasicSchemaAnnotationElement& makeAnnotation();
-    BasicSchemaAnnotationElement& makeAnnotation(const BasicSchemaAnnotationElement& value);
+    BasicSchemaAnnotationElement& makeAnnotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                     const BasicSchemaAnnotationElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaAnnotationElement& makeAnnotation(BasicSchemaAnnotationElement&& value);
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                          BasicSchemaAnnotationElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Annotation" value.  Optionally
         // specify the 'value' of the "Annotation".  If 'value' is not
         // specified, the default "Annotation" value is used.
 
-    BasicSchemaSimpleTypeElement& makeSimpleType();
-    BasicSchemaSimpleTypeElement& makeSimpleType(const BasicSchemaSimpleTypeElement& value);
+    BasicSchemaSimpleTypeElement& makeSimpleType()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaSimpleTypeElement& makeSimpleType(
+                                     const BasicSchemaSimpleTypeElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaSimpleTypeElement& makeSimpleType(BasicSchemaSimpleTypeElement&& value);
+    BasicSchemaSimpleTypeElement& makeSimpleType(
+                                          BasicSchemaSimpleTypeElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "SimpleType" value.  Optionally
         // specify the 'value' of the "SimpleType".  If 'value' is not
         // specified, the default "SimpleType" value is used.
 
-    BasicSchemaComplexTypeElement& makeComplexType();
-    BasicSchemaComplexTypeElement& makeComplexType(const BasicSchemaComplexTypeElement& value);
+    BasicSchemaComplexTypeElement& makeComplexType()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaComplexTypeElement& makeComplexType(
+                                    const BasicSchemaComplexTypeElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaComplexTypeElement& makeComplexType(BasicSchemaComplexTypeElement&& value);
+    BasicSchemaComplexTypeElement& makeComplexType(
+                                         BasicSchemaComplexTypeElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "ComplexType" value.
         // Optionally specify the 'value' of the "ComplexType".  If 'value' is
@@ -3055,17 +3178,20 @@ class BasicSchemaElementChoice {
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
     /// undefined unless "Annotation" is the selection of this object.
-    BasicSchemaAnnotationElement& annotation();
+    BasicSchemaAnnotationElement& annotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "SimpleType" selection of this
     /// object if "SimpleType" is the current selection.  The behavior is
     /// undefined unless "SimpleType" is the selection of this object.
-    BasicSchemaSimpleTypeElement& simpleType();
+    BasicSchemaSimpleTypeElement& simpleType()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "ComplexType" selection of this
     /// object if "ComplexType" is the current selection.  The behavior is
     /// undefined unless "ComplexType" is the selection of this object.
-    BasicSchemaComplexTypeElement& complexType();
+    BasicSchemaComplexTypeElement& complexType()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -3098,17 +3224,20 @@ class BasicSchemaElementChoice {
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
     /// is undefined unless "Annotation" is the selection of this object.
-    const BasicSchemaAnnotationElement& annotation() const;
+    const BasicSchemaAnnotationElement& annotation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "SimpleType" selection of
     /// this object if "SimpleType" is the current selection.  The behavior
     /// is undefined unless "SimpleType" is the selection of this object.
-    const BasicSchemaSimpleTypeElement& simpleType() const;
+    const BasicSchemaSimpleTypeElement& simpleType() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "ComplexType" selection of
     /// this object if "ComplexType" is the current selection.  The behavior
     /// is undefined unless "ComplexType" is the selection of this object.
-    const BasicSchemaComplexTypeElement& complexType() const;
+    const BasicSchemaComplexTypeElement& complexType() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Annotation" value,
     /// and return `false` otherwise.
@@ -3289,7 +3418,8 @@ class BasicSchemaSequenceElement {
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    bsl::vector<BasicSchemaSequenceElementChoice>& choice();
+    bsl::vector<BasicSchemaSequenceElementChoice>& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -3338,7 +3468,8 @@ class BasicSchemaSequenceElement {
 
     /// Return a reference to the non-modifiable "Choice" attribute of this
     /// object.
-    const bsl::vector<BasicSchemaSequenceElementChoice>& choice() const;
+    const bsl::vector<BasicSchemaSequenceElementChoice>& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -3490,21 +3621,29 @@ class BasicSchemaSequenceElementChoice {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    BasicSchemaAnnotationElement& makeAnnotation();
-    BasicSchemaAnnotationElement& makeAnnotation(const BasicSchemaAnnotationElement& value);
+    BasicSchemaAnnotationElement& makeAnnotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                     const BasicSchemaAnnotationElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaAnnotationElement& makeAnnotation(BasicSchemaAnnotationElement&& value);
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                          BasicSchemaAnnotationElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Annotation" value.  Optionally
         // specify the 'value' of the "Annotation".  If 'value' is not
         // specified, the default "Annotation" value is used.
 
-    BasicSchemaElement& makeElement();
-    BasicSchemaElement& makeElement(const BasicSchemaElement& value);
+    BasicSchemaElement& makeElement()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaElement& makeElement(const BasicSchemaElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaElement& makeElement(BasicSchemaElement&& value);
+    BasicSchemaElement& makeElement(BasicSchemaElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Element" value.  Optionally
         // specify the 'value' of the "Element".  If 'value' is not specified,
@@ -3521,12 +3660,14 @@ class BasicSchemaSequenceElementChoice {
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
     /// undefined unless "Annotation" is the selection of this object.
-    BasicSchemaAnnotationElement& annotation();
+    BasicSchemaAnnotationElement& annotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element" selection of this
     /// object if "Element" is the current selection.  The behavior is
     /// undefined unless "Element" is the selection of this object.
-    BasicSchemaElement& element();
+    BasicSchemaElement& element()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -3559,12 +3700,14 @@ class BasicSchemaSequenceElementChoice {
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
     /// is undefined unless "Annotation" is the selection of this object.
-    const BasicSchemaAnnotationElement& annotation() const;
+    const BasicSchemaAnnotationElement& annotation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element" selection of this
     /// object if "Element" is the current selection.  The behavior is
     /// undefined unless "Element" is the selection of this object.
-    const BasicSchemaElement& element() const;
+    const BasicSchemaElement& element() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Annotation" value,
     /// and return `false` otherwise.
@@ -3732,31 +3875,46 @@ class BasicSchemaChoice {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    BasicSchemaAnnotationElement& makeAnnotation();
-    BasicSchemaAnnotationElement& makeAnnotation(const BasicSchemaAnnotationElement& value);
+    BasicSchemaAnnotationElement& makeAnnotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                     const BasicSchemaAnnotationElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaAnnotationElement& makeAnnotation(BasicSchemaAnnotationElement&& value);
+    BasicSchemaAnnotationElement& makeAnnotation(
+                                          BasicSchemaAnnotationElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Annotation" value.  Optionally
         // specify the 'value' of the "Annotation".  If 'value' is not
         // specified, the default "Annotation" value is used.
 
-    BasicSchemaSimpleTypeElement& makeSimpleType();
-    BasicSchemaSimpleTypeElement& makeSimpleType(const BasicSchemaSimpleTypeElement& value);
+    BasicSchemaSimpleTypeElement& makeSimpleType()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaSimpleTypeElement& makeSimpleType(
+                                     const BasicSchemaSimpleTypeElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaSimpleTypeElement& makeSimpleType(BasicSchemaSimpleTypeElement&& value);
+    BasicSchemaSimpleTypeElement& makeSimpleType(
+                                          BasicSchemaSimpleTypeElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "SimpleType" value.  Optionally
         // specify the 'value' of the "SimpleType".  If 'value' is not
         // specified, the default "SimpleType" value is used.
 
-    BasicSchemaComplexTypeElement& makeComplexType();
-    BasicSchemaComplexTypeElement& makeComplexType(const BasicSchemaComplexTypeElement& value);
+    BasicSchemaComplexTypeElement& makeComplexType()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    BasicSchemaComplexTypeElement& makeComplexType(
+                                    const BasicSchemaComplexTypeElement& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    BasicSchemaComplexTypeElement& makeComplexType(BasicSchemaComplexTypeElement&& value);
+    BasicSchemaComplexTypeElement& makeComplexType(
+                                         BasicSchemaComplexTypeElement&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "ComplexType" value.
         // Optionally specify the 'value' of the "ComplexType".  If 'value' is
@@ -3773,17 +3931,20 @@ class BasicSchemaChoice {
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
     /// undefined unless "Annotation" is the selection of this object.
-    BasicSchemaAnnotationElement& annotation();
+    BasicSchemaAnnotationElement& annotation()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "SimpleType" selection of this
     /// object if "SimpleType" is the current selection.  The behavior is
     /// undefined unless "SimpleType" is the selection of this object.
-    BasicSchemaSimpleTypeElement& simpleType();
+    BasicSchemaSimpleTypeElement& simpleType()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "ComplexType" selection of this
     /// object if "ComplexType" is the current selection.  The behavior is
     /// undefined unless "ComplexType" is the selection of this object.
-    BasicSchemaComplexTypeElement& complexType();
+    BasicSchemaComplexTypeElement& complexType()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -3816,17 +3977,20 @@ class BasicSchemaChoice {
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
     /// is undefined unless "Annotation" is the selection of this object.
-    const BasicSchemaAnnotationElement& annotation() const;
+    const BasicSchemaAnnotationElement& annotation() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "SimpleType" selection of
     /// this object if "SimpleType" is the current selection.  The behavior
     /// is undefined unless "SimpleType" is the selection of this object.
-    const BasicSchemaSimpleTypeElement& simpleType() const;
+    const BasicSchemaSimpleTypeElement& simpleType() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "ComplexType" selection of
     /// this object if "ComplexType" is the current selection.  The behavior
     /// is undefined unless "ComplexType" is the selection of this object.
-    const BasicSchemaComplexTypeElement& complexType() const;
+    const BasicSchemaComplexTypeElement& complexType() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Annotation" value,
     /// and return `false` otherwise.
@@ -4017,23 +4181,28 @@ class BasicSchema {
                             int           nameLength);
 
     /// Return a reference to the modifiable "Xs" attribute of this object.
-    bdlb::NullableValue<bsl::string>& xs();
+    bdlb::NullableValue<bsl::string>& xs()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Bdem" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& bdem();
+    bdlb::NullableValue<bsl::string>& bdem()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Package" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& package();
+    bdlb::NullableValue<bsl::string>& package()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "ElementFormDefault" attribute
     /// of this object.
-    bdlb::NullableValue<bsl::string>& elementFormDefault();
+    bdlb::NullableValue<bsl::string>& elementFormDefault()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    bsl::vector<BasicSchemaChoice>& choice();
+    bsl::vector<BasicSchemaChoice>& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -4082,23 +4251,28 @@ class BasicSchema {
 
     /// Return a reference to the non-modifiable "Xs" attribute of this
     /// object.
-    const bdlb::NullableValue<bsl::string>& xs() const;
+    const bdlb::NullableValue<bsl::string>& xs() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Bdem" attribute of this
     /// object.
-    const bdlb::NullableValue<bsl::string>& bdem() const;
+    const bdlb::NullableValue<bsl::string>& bdem() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Package" attribute of this
     /// object.
-    const bdlb::NullableValue<bsl::string>& package() const;
+    const bdlb::NullableValue<bsl::string>& package() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "ElementFormDefault"
     /// attribute of this object.
-    const bdlb::NullableValue<bsl::string>& elementFormDefault() const;
+    const bdlb::NullableValue<bsl::string>& elementFormDefault() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Choice" attribute of this
     /// object.
-    const bsl::vector<BasicSchemaChoice>& choice() const;
+    const bsl::vector<BasicSchemaChoice>& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -4280,6 +4454,7 @@ BasicSchemaEnumerationElementChoice::~BasicSchemaEnumerationElementChoice()
 template <class MANIPULATOR>
 int BasicSchemaEnumerationElementChoice::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case BasicSchemaEnumerationElementChoice::SELECTION_ID_ANNOTATION:
         return manipulator(&d_annotation.object(),
@@ -4293,6 +4468,7 @@ int BasicSchemaEnumerationElementChoice::manipulateSelection(MANIPULATOR& manipu
 inline
 BasicSchemaAnnotationElement& BasicSchemaEnumerationElementChoice::annotation()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -4307,6 +4483,7 @@ int BasicSchemaEnumerationElementChoice::selectionId() const
 template <class ACCESSOR>
 int BasicSchemaEnumerationElementChoice::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_ANNOTATION:
         return accessor(d_annotation.object(),
@@ -4320,6 +4497,7 @@ int BasicSchemaEnumerationElementChoice::accessSelection(ACCESSOR& accessor) con
 inline
 const BasicSchemaAnnotationElement& BasicSchemaEnumerationElementChoice::annotation() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -4522,6 +4700,7 @@ BasicSchemaRestrictionElementChoice::~BasicSchemaRestrictionElementChoice()
 template <class MANIPULATOR>
 int BasicSchemaRestrictionElementChoice::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case BasicSchemaRestrictionElementChoice::SELECTION_ID_ANNOTATION:
         return manipulator(&d_annotation.object(),
@@ -4538,6 +4717,7 @@ int BasicSchemaRestrictionElementChoice::manipulateSelection(MANIPULATOR& manipu
 inline
 BasicSchemaAnnotationElement& BasicSchemaRestrictionElementChoice::annotation()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -4545,6 +4725,7 @@ BasicSchemaAnnotationElement& BasicSchemaRestrictionElementChoice::annotation()
 inline
 BasicSchemaEnumerationElement& BasicSchemaRestrictionElementChoice::enumeration()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ENUMERATION == d_selectionId);
     return d_enumeration.object();
 }
@@ -4559,6 +4740,7 @@ int BasicSchemaRestrictionElementChoice::selectionId() const
 template <class ACCESSOR>
 int BasicSchemaRestrictionElementChoice::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_ANNOTATION:
         return accessor(d_annotation.object(),
@@ -4575,6 +4757,7 @@ int BasicSchemaRestrictionElementChoice::accessSelection(ACCESSOR& accessor) con
 inline
 const BasicSchemaAnnotationElement& BasicSchemaRestrictionElementChoice::annotation() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -4793,6 +4976,7 @@ BasicSchemaSimpleTypeElementChoice::~BasicSchemaSimpleTypeElementChoice()
 template <class MANIPULATOR>
 int BasicSchemaSimpleTypeElementChoice::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case BasicSchemaSimpleTypeElementChoice::SELECTION_ID_ANNOTATION:
         return manipulator(&d_annotation.object(),
@@ -4809,6 +4993,7 @@ int BasicSchemaSimpleTypeElementChoice::manipulateSelection(MANIPULATOR& manipul
 inline
 BasicSchemaAnnotationElement& BasicSchemaSimpleTypeElementChoice::annotation()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -4816,6 +5001,7 @@ BasicSchemaAnnotationElement& BasicSchemaSimpleTypeElementChoice::annotation()
 inline
 BasicSchemaRestrictionElement& BasicSchemaSimpleTypeElementChoice::restriction()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_RESTRICTION == d_selectionId);
     return d_restriction.object();
 }
@@ -4830,6 +5016,7 @@ int BasicSchemaSimpleTypeElementChoice::selectionId() const
 template <class ACCESSOR>
 int BasicSchemaSimpleTypeElementChoice::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_ANNOTATION:
         return accessor(d_annotation.object(),
@@ -4846,6 +5033,7 @@ int BasicSchemaSimpleTypeElementChoice::accessSelection(ACCESSOR& accessor) cons
 inline
 const BasicSchemaAnnotationElement& BasicSchemaSimpleTypeElementChoice::annotation() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -5204,6 +5392,7 @@ BasicSchemaChoiceElementChoice::BasicSchemaChoiceElementChoice(bslma::Allocator 
 inline
 BasicSchemaChoiceElementChoice::~BasicSchemaChoiceElementChoice()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
 }
 
@@ -5211,6 +5400,7 @@ BasicSchemaChoiceElementChoice::~BasicSchemaChoiceElementChoice()
 template <class MANIPULATOR>
 int BasicSchemaChoiceElementChoice::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case BasicSchemaChoiceElementChoice::SELECTION_ID_ANNOTATION:
         return manipulator(&d_annotation.object(),
@@ -5227,6 +5417,7 @@ int BasicSchemaChoiceElementChoice::manipulateSelection(MANIPULATOR& manipulator
 inline
 BasicSchemaAnnotationElement& BasicSchemaChoiceElementChoice::annotation()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -5234,6 +5425,7 @@ BasicSchemaAnnotationElement& BasicSchemaChoiceElementChoice::annotation()
 inline
 BasicSchemaElement& BasicSchemaChoiceElementChoice::element()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ELEMENT == d_selectionId);
     return *d_element;
 }
@@ -5248,6 +5440,7 @@ int BasicSchemaChoiceElementChoice::selectionId() const
 template <class ACCESSOR>
 int BasicSchemaChoiceElementChoice::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_ANNOTATION:
         return accessor(d_annotation.object(),
@@ -5264,6 +5457,7 @@ int BasicSchemaChoiceElementChoice::accessSelection(ACCESSOR& accessor) const
 inline
 const BasicSchemaAnnotationElement& BasicSchemaChoiceElementChoice::annotation() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -5475,6 +5669,7 @@ BasicSchemaComplexTypeElementChoice::BasicSchemaComplexTypeElementChoice(bslma::
 inline
 BasicSchemaComplexTypeElementChoice::~BasicSchemaComplexTypeElementChoice()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
 }
 
@@ -5482,6 +5677,7 @@ BasicSchemaComplexTypeElementChoice::~BasicSchemaComplexTypeElementChoice()
 template <class MANIPULATOR>
 int BasicSchemaComplexTypeElementChoice::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case BasicSchemaComplexTypeElementChoice::SELECTION_ID_ANNOTATION:
         return manipulator(&d_annotation.object(),
@@ -5501,6 +5697,7 @@ int BasicSchemaComplexTypeElementChoice::manipulateSelection(MANIPULATOR& manipu
 inline
 BasicSchemaAnnotationElement& BasicSchemaComplexTypeElementChoice::annotation()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -5508,6 +5705,7 @@ BasicSchemaAnnotationElement& BasicSchemaComplexTypeElementChoice::annotation()
 inline
 BasicSchemaSequenceElement& BasicSchemaComplexTypeElementChoice::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SEQUENCE == d_selectionId);
     return *d_sequence;
 }
@@ -5515,6 +5713,7 @@ BasicSchemaSequenceElement& BasicSchemaComplexTypeElementChoice::sequence()
 inline
 BasicSchemaChoiceElement& BasicSchemaComplexTypeElementChoice::choice()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_CHOICE == d_selectionId);
     return *d_choice;
 }
@@ -5529,6 +5728,7 @@ int BasicSchemaComplexTypeElementChoice::selectionId() const
 template <class ACCESSOR>
 int BasicSchemaComplexTypeElementChoice::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_ANNOTATION:
         return accessor(d_annotation.object(),
@@ -5548,6 +5748,7 @@ int BasicSchemaComplexTypeElementChoice::accessSelection(ACCESSOR& accessor) con
 inline
 const BasicSchemaAnnotationElement& BasicSchemaComplexTypeElementChoice::annotation() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -5555,6 +5756,7 @@ const BasicSchemaAnnotationElement& BasicSchemaComplexTypeElementChoice::annotat
 inline
 const BasicSchemaSequenceElement& BasicSchemaComplexTypeElementChoice::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SEQUENCE == d_selectionId);
     return *d_sequence;
 }
@@ -6007,6 +6209,7 @@ BasicSchemaElementChoice::BasicSchemaElementChoice(bslma::Allocator *basicAlloca
 inline
 BasicSchemaElementChoice::~BasicSchemaElementChoice()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
 }
 
@@ -6014,6 +6217,7 @@ BasicSchemaElementChoice::~BasicSchemaElementChoice()
 template <class MANIPULATOR>
 int BasicSchemaElementChoice::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case BasicSchemaElementChoice::SELECTION_ID_ANNOTATION:
         return manipulator(&d_annotation.object(),
@@ -6033,6 +6237,7 @@ int BasicSchemaElementChoice::manipulateSelection(MANIPULATOR& manipulator)
 inline
 BasicSchemaAnnotationElement& BasicSchemaElementChoice::annotation()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -6040,6 +6245,7 @@ BasicSchemaAnnotationElement& BasicSchemaElementChoice::annotation()
 inline
 BasicSchemaSimpleTypeElement& BasicSchemaElementChoice::simpleType()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SIMPLE_TYPE == d_selectionId);
     return d_simpleType.object();
 }
@@ -6047,6 +6253,7 @@ BasicSchemaSimpleTypeElement& BasicSchemaElementChoice::simpleType()
 inline
 BasicSchemaComplexTypeElement& BasicSchemaElementChoice::complexType()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_COMPLEX_TYPE == d_selectionId);
     return *d_complexType;
 }
@@ -6061,6 +6268,7 @@ int BasicSchemaElementChoice::selectionId() const
 template <class ACCESSOR>
 int BasicSchemaElementChoice::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_ANNOTATION:
         return accessor(d_annotation.object(),
@@ -6080,6 +6288,7 @@ int BasicSchemaElementChoice::accessSelection(ACCESSOR& accessor) const
 inline
 const BasicSchemaAnnotationElement& BasicSchemaElementChoice::annotation() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -6273,11 +6482,13 @@ BasicSchemaSequenceElementChoice::BasicSchemaSequenceElementChoice(bslma::Alloca
 : d_selectionId(SELECTION_ID_UNDEFINED)
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
 BasicSchemaSequenceElementChoice::~BasicSchemaSequenceElementChoice()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
 }
 
@@ -6285,6 +6496,7 @@ BasicSchemaSequenceElementChoice::~BasicSchemaSequenceElementChoice()
 template <class MANIPULATOR>
 int BasicSchemaSequenceElementChoice::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case BasicSchemaSequenceElementChoice::SELECTION_ID_ANNOTATION:
         return manipulator(&d_annotation.object(),
@@ -6301,6 +6513,7 @@ int BasicSchemaSequenceElementChoice::manipulateSelection(MANIPULATOR& manipulat
 inline
 BasicSchemaAnnotationElement& BasicSchemaSequenceElementChoice::annotation()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -6316,12 +6529,14 @@ BasicSchemaElement& BasicSchemaSequenceElementChoice::element()
 inline
 int BasicSchemaSequenceElementChoice::selectionId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_selectionId;
 }
 
 template <class ACCESSOR>
 int BasicSchemaSequenceElementChoice::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_ANNOTATION:
         return accessor(d_annotation.object(),
@@ -6402,6 +6617,7 @@ BasicSchemaChoice::BasicSchemaChoice(bslma::Allocator *basicAllocator)
 inline
 BasicSchemaChoice::~BasicSchemaChoice()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
 }
 
@@ -6409,6 +6625,7 @@ BasicSchemaChoice::~BasicSchemaChoice()
 template <class MANIPULATOR>
 int BasicSchemaChoice::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case BasicSchemaChoice::SELECTION_ID_ANNOTATION:
         return manipulator(&d_annotation.object(),
@@ -6428,6 +6645,7 @@ int BasicSchemaChoice::manipulateSelection(MANIPULATOR& manipulator)
 inline
 BasicSchemaAnnotationElement& BasicSchemaChoice::annotation()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -6442,6 +6660,7 @@ BasicSchemaSimpleTypeElement& BasicSchemaChoice::simpleType()
 inline
 BasicSchemaComplexTypeElement& BasicSchemaChoice::complexType()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_COMPLEX_TYPE == d_selectionId);
     return *d_complexType;
 }
@@ -6450,12 +6669,14 @@ BasicSchemaComplexTypeElement& BasicSchemaChoice::complexType()
 inline
 int BasicSchemaChoice::selectionId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_selectionId;
 }
 
 template <class ACCESSOR>
 int BasicSchemaChoice::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_ANNOTATION:
         return accessor(d_annotation.object(),
@@ -6475,6 +6696,7 @@ int BasicSchemaChoice::accessSelection(ACCESSOR& accessor) const
 inline
 const BasicSchemaAnnotationElement& BasicSchemaChoice::annotation() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ANNOTATION == d_selectionId);
     return d_annotation.object();
 }
@@ -6780,6 +7002,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaAnnotationElement& lhs,
         const s_baltst::BasicSchemaAnnotationElement& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.documentation() == rhs.documentation();
 }
 
@@ -6805,13 +7029,16 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaEnumerationElementChoice& lhs,
         const s_baltst::BasicSchemaEnumerationElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef s_baltst::BasicSchemaEnumerationElementChoice Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
           case Class::SELECTION_ID_ANNOTATION:
             return lhs.annotation() == rhs.annotation();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -6842,6 +7069,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaEnumerationElement& lhs,
         const s_baltst::BasicSchemaEnumerationElement& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.value() == rhs.value()
          && lhs.choice() == rhs.choice();
 }
@@ -6868,6 +7097,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaRestrictionElementChoice& lhs,
         const s_baltst::BasicSchemaRestrictionElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef s_baltst::BasicSchemaRestrictionElementChoice Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -6876,7 +7107,8 @@ bool s_baltst::operator==(
           case Class::SELECTION_ID_ENUMERATION:
             return lhs.enumeration() == rhs.enumeration();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -6898,6 +7130,7 @@ bsl::ostream& s_baltst::operator<<(
         bsl::ostream& stream,
         const s_baltst::BasicSchemaRestrictionElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -6907,6 +7140,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaRestrictionElement& lhs,
         const s_baltst::BasicSchemaRestrictionElement& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.base() == rhs.base()
          && lhs.choice() == rhs.choice();
 }
@@ -6933,6 +7168,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaSimpleTypeElementChoice& lhs,
         const s_baltst::BasicSchemaSimpleTypeElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef s_baltst::BasicSchemaSimpleTypeElementChoice Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -6941,7 +7178,8 @@ bool s_baltst::operator==(
           case Class::SELECTION_ID_RESTRICTION:
             return lhs.restriction() == rhs.restriction();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -6963,6 +7201,7 @@ bsl::ostream& s_baltst::operator<<(
         bsl::ostream& stream,
         const s_baltst::BasicSchemaSimpleTypeElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -6972,6 +7211,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaSimpleTypeElement& lhs,
         const s_baltst::BasicSchemaSimpleTypeElement& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.name() == rhs.name()
          && lhs.preserveEnumOrder() == rhs.preserveEnumOrder()
          && lhs.choice() == rhs.choice();
@@ -6990,6 +7231,7 @@ bsl::ostream& s_baltst::operator<<(
         bsl::ostream& stream,
         const s_baltst::BasicSchemaSimpleTypeElement& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -6999,6 +7241,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaChoiceElement& lhs,
         const s_baltst::BasicSchemaChoiceElement& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.choice() == rhs.choice();
 }
 
@@ -7024,6 +7268,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaChoiceElementChoice& lhs,
         const s_baltst::BasicSchemaChoiceElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef s_baltst::BasicSchemaChoiceElementChoice Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -7032,7 +7278,8 @@ bool s_baltst::operator==(
           case Class::SELECTION_ID_ELEMENT:
             return lhs.element() == rhs.element();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -7054,6 +7301,7 @@ bsl::ostream& s_baltst::operator<<(
         bsl::ostream& stream,
         const s_baltst::BasicSchemaChoiceElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -7063,6 +7311,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaComplexTypeElement& lhs,
         const s_baltst::BasicSchemaComplexTypeElement& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.name() == rhs.name()
          && lhs.choice() == rhs.choice();
 }
@@ -7089,6 +7339,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaComplexTypeElementChoice& lhs,
         const s_baltst::BasicSchemaComplexTypeElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef s_baltst::BasicSchemaComplexTypeElementChoice Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -7099,7 +7351,8 @@ bool s_baltst::operator==(
           case Class::SELECTION_ID_CHOICE:
             return lhs.choice() == rhs.choice();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -7121,6 +7374,7 @@ bsl::ostream& s_baltst::operator<<(
         bsl::ostream& stream,
         const s_baltst::BasicSchemaComplexTypeElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -7130,6 +7384,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaElement& lhs,
         const s_baltst::BasicSchemaElement& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.name() == rhs.name()
          && lhs.type() == rhs.type()
          && lhs.minOccurs() == rhs.minOccurs()
@@ -7164,6 +7420,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaElementChoice& lhs,
         const s_baltst::BasicSchemaElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef s_baltst::BasicSchemaElementChoice Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -7174,7 +7432,8 @@ bool s_baltst::operator==(
           case Class::SELECTION_ID_COMPLEX_TYPE:
             return lhs.complexType() == rhs.complexType();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -7196,6 +7455,7 @@ bsl::ostream& s_baltst::operator<<(
         bsl::ostream& stream,
         const s_baltst::BasicSchemaElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -7205,6 +7465,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaSequenceElement& lhs,
         const s_baltst::BasicSchemaSequenceElement& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.choice() == rhs.choice();
 }
 
@@ -7230,6 +7492,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaSequenceElementChoice& lhs,
         const s_baltst::BasicSchemaSequenceElementChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef s_baltst::BasicSchemaSequenceElementChoice Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -7238,7 +7502,8 @@ bool s_baltst::operator==(
           case Class::SELECTION_ID_ELEMENT:
             return lhs.element() == rhs.element();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -7269,6 +7534,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchemaChoice& lhs,
         const s_baltst::BasicSchemaChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef s_baltst::BasicSchemaChoice Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -7279,7 +7546,8 @@ bool s_baltst::operator==(
           case Class::SELECTION_ID_COMPLEX_TYPE:
             return lhs.complexType() == rhs.complexType();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -7301,6 +7569,7 @@ bsl::ostream& s_baltst::operator<<(
         bsl::ostream& stream,
         const s_baltst::BasicSchemaChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -7310,6 +7579,8 @@ bool s_baltst::operator==(
         const s_baltst::BasicSchema& lhs,
         const s_baltst::BasicSchema& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.xs() == rhs.xs()
          && lhs.bdem() == rhs.bdem()
          && lhs.package() == rhs.package()

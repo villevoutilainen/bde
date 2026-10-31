@@ -122,15 +122,18 @@ class UnsignedSequence {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    unsigned int& element1();
+    unsigned int& element1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    unsigned short& element2();
+    unsigned short& element2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bsls::Types::Uint64& element3();
+    bsls::Types::Uint64& element3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 

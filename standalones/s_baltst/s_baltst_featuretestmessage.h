@@ -192,61 +192,79 @@ class FeatureTestMessage {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    s_baltst::Sequence1& makeSelection1();
-    s_baltst::Sequence1& makeSelection1(const s_baltst::Sequence1& value);
+    s_baltst::Sequence1& makeSelection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::Sequence1& makeSelection1(const s_baltst::Sequence1& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::Sequence1& makeSelection1(s_baltst::Sequence1&& value);
+    s_baltst::Sequence1& makeSelection1(s_baltst::Sequence1&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection1" value.  Optionally
         // specify the 'value' of the "Selection1".  If 'value' is not
         // specified, the default "Selection1" value is used.
 
-    bsl::vector<char>& makeSelection2();
-    bsl::vector<char>& makeSelection2(const bsl::vector<char>& value);
+    bsl::vector<char>& makeSelection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<char>& makeSelection2(const bsl::vector<char>& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    bsl::vector<char>& makeSelection2(bsl::vector<char>&& value);
+    bsl::vector<char>& makeSelection2(bsl::vector<char>&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection2" value.  Optionally
         // specify the 'value' of the "Selection2".  If 'value' is not
         // specified, the default "Selection2" value is used.
 
-    s_baltst::Sequence2& makeSelection3();
-    s_baltst::Sequence2& makeSelection3(const s_baltst::Sequence2& value);
+    s_baltst::Sequence2& makeSelection3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::Sequence2& makeSelection3(const s_baltst::Sequence2& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::Sequence2& makeSelection3(s_baltst::Sequence2&& value);
+    s_baltst::Sequence2& makeSelection3(s_baltst::Sequence2&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection3" value.  Optionally
         // specify the 'value' of the "Selection3".  If 'value' is not
         // specified, the default "Selection3" value is used.
 
-    s_baltst::Sequence3& makeSelection4();
-    s_baltst::Sequence3& makeSelection4(const s_baltst::Sequence3& value);
+    s_baltst::Sequence3& makeSelection4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::Sequence3& makeSelection4(const s_baltst::Sequence3& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::Sequence3& makeSelection4(s_baltst::Sequence3&& value);
+    s_baltst::Sequence3& makeSelection4(s_baltst::Sequence3&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection4" value.  Optionally
         // specify the 'value' of the "Selection4".  If 'value' is not
         // specified, the default "Selection4" value is used.
 
-    bdlt::DatetimeTz& makeSelection5();
-    bdlt::DatetimeTz& makeSelection5(const bdlt::DatetimeTz& value);
+    bdlt::DatetimeTz& makeSelection5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlt::DatetimeTz& makeSelection5(const bdlt::DatetimeTz& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    bdlt::DatetimeTz& makeSelection5(bdlt::DatetimeTz&& value);
+    bdlt::DatetimeTz& makeSelection5(bdlt::DatetimeTz&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection5" value.  Optionally
         // specify the 'value' of the "Selection5".  If 'value' is not
         // specified, the default "Selection5" value is used.
 
-    s_baltst::CustomString& makeSelection6();
-    s_baltst::CustomString& makeSelection6(const s_baltst::CustomString& value);
+    s_baltst::CustomString& makeSelection6()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::CustomString& makeSelection6(const s_baltst::CustomString& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::CustomString& makeSelection6(s_baltst::CustomString&& value);
+    s_baltst::CustomString& makeSelection6(s_baltst::CustomString&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection6" value.  Optionally
         // specify the 'value' of the "Selection6".  If 'value' is not
@@ -255,44 +273,63 @@ class FeatureTestMessage {
     /// Set the value of this object to be a "Selection7" value.  Optionally
     /// specify the `value` of the "Selection7".  If `value` is not
     /// specified, the default "Selection7" value is used.
-    s_baltst::Enumerated::Value& makeSelection7();
-    s_baltst::Enumerated::Value& makeSelection7(s_baltst::Enumerated::Value value);
+    s_baltst::Enumerated::Value& makeSelection7()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::Enumerated::Value& makeSelection7(
+                                             s_baltst::Enumerated::Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    s_baltst::Choice3& makeSelection8();
-    s_baltst::Choice3& makeSelection8(const s_baltst::Choice3& value);
+    s_baltst::Choice3& makeSelection8()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::Choice3& makeSelection8(const s_baltst::Choice3& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::Choice3& makeSelection8(s_baltst::Choice3&& value);
+    s_baltst::Choice3& makeSelection8(s_baltst::Choice3&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection8" value.  Optionally
         // specify the 'value' of the "Selection8".  If 'value' is not
         // specified, the default "Selection8" value is used.
 
-    s_baltst::VoidSequence& makeSelection9();
-    s_baltst::VoidSequence& makeSelection9(const s_baltst::VoidSequence& value);
+    s_baltst::VoidSequence& makeSelection9()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::VoidSequence& makeSelection9(const s_baltst::VoidSequence& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::VoidSequence& makeSelection9(s_baltst::VoidSequence&& value);
+    s_baltst::VoidSequence& makeSelection9(s_baltst::VoidSequence&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection9" value.  Optionally
         // specify the 'value' of the "Selection9".  If 'value' is not
         // specified, the default "Selection9" value is used.
 
-    s_baltst::UnsignedSequence& makeSelection10();
-    s_baltst::UnsignedSequence& makeSelection10(const s_baltst::UnsignedSequence& value);
+    s_baltst::UnsignedSequence& makeSelection10()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::UnsignedSequence& makeSelection10(
+                                       const s_baltst::UnsignedSequence& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::UnsignedSequence& makeSelection10(s_baltst::UnsignedSequence&& value);
+    s_baltst::UnsignedSequence& makeSelection10(
+                                            s_baltst::UnsignedSequence&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection10" value.
         // Optionally specify the 'value' of the "Selection10".  If 'value' is
         // not specified, the default "Selection10" value is used.
 
-    s_baltst::SequenceWithAnonymity& makeSelection11();
-    s_baltst::SequenceWithAnonymity& makeSelection11(const s_baltst::SequenceWithAnonymity& value);
+    s_baltst::SequenceWithAnonymity& makeSelection11()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::SequenceWithAnonymity& makeSelection11(
+                                  const s_baltst::SequenceWithAnonymity& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::SequenceWithAnonymity& makeSelection11(s_baltst::SequenceWithAnonymity&& value);
+    s_baltst::SequenceWithAnonymity& makeSelection11(
+                                       s_baltst::SequenceWithAnonymity&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection11" value.
         // Optionally specify the 'value' of the "Selection11".  If 'value' is
@@ -309,57 +346,68 @@ class FeatureTestMessage {
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
     /// undefined unless "Selection1" is the selection of this object.
-    s_baltst::Sequence1& selection1();
+    s_baltst::Sequence1& selection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection2" selection of this
     /// object if "Selection2" is the current selection.  The behavior is
     /// undefined unless "Selection2" is the selection of this object.
-    bsl::vector<char>& selection2();
+    bsl::vector<char>& selection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection3" selection of this
     /// object if "Selection3" is the current selection.  The behavior is
     /// undefined unless "Selection3" is the selection of this object.
-    s_baltst::Sequence2& selection3();
+    s_baltst::Sequence2& selection3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection4" selection of this
     /// object if "Selection4" is the current selection.  The behavior is
     /// undefined unless "Selection4" is the selection of this object.
-    s_baltst::Sequence3& selection4();
+    s_baltst::Sequence3& selection4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection5" selection of this
     /// object if "Selection5" is the current selection.  The behavior is
     /// undefined unless "Selection5" is the selection of this object.
-    bdlt::DatetimeTz& selection5();
+    bdlt::DatetimeTz& selection5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection6" selection of this
     /// object if "Selection6" is the current selection.  The behavior is
     /// undefined unless "Selection6" is the selection of this object.
-    s_baltst::CustomString& selection6();
+    s_baltst::CustomString& selection6()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection7" selection of this
     /// object if "Selection7" is the current selection.  The behavior is
     /// undefined unless "Selection7" is the selection of this object.
-    s_baltst::Enumerated::Value& selection7();
+    s_baltst::Enumerated::Value& selection7()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection8" selection of this
     /// object if "Selection8" is the current selection.  The behavior is
     /// undefined unless "Selection8" is the selection of this object.
-    s_baltst::Choice3& selection8();
+    s_baltst::Choice3& selection8()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection9" selection of this
     /// object if "Selection9" is the current selection.  The behavior is
     /// undefined unless "Selection9" is the selection of this object.
-    s_baltst::VoidSequence& selection9();
+    s_baltst::VoidSequence& selection9()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection10" selection of this
     /// object if "Selection10" is the current selection.  The behavior is
     /// undefined unless "Selection10" is the selection of this object.
-    s_baltst::UnsignedSequence& selection10();
+    s_baltst::UnsignedSequence& selection10()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection11" selection of this
     /// object if "Selection11" is the current selection.  The behavior is
     /// undefined unless "Selection11" is the selection of this object.
-    s_baltst::SequenceWithAnonymity& selection11();
+    s_baltst::SequenceWithAnonymity& selection11()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -392,57 +440,68 @@ class FeatureTestMessage {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const s_baltst::Sequence1& selection1() const;
+    const s_baltst::Sequence1& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const bsl::vector<char>& selection2() const;
+    const bsl::vector<char>& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection3" selection of
     /// this object if "Selection3" is the current selection.  The behavior
     /// is undefined unless "Selection3" is the selection of this object.
-    const s_baltst::Sequence2& selection3() const;
+    const s_baltst::Sequence2& selection3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection4" selection of
     /// this object if "Selection4" is the current selection.  The behavior
     /// is undefined unless "Selection4" is the selection of this object.
-    const s_baltst::Sequence3& selection4() const;
+    const s_baltst::Sequence3& selection4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection5" selection of
     /// this object if "Selection5" is the current selection.  The behavior
     /// is undefined unless "Selection5" is the selection of this object.
-    const bdlt::DatetimeTz& selection5() const;
+    const bdlt::DatetimeTz& selection5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection6" selection of
     /// this object if "Selection6" is the current selection.  The behavior
     /// is undefined unless "Selection6" is the selection of this object.
-    const s_baltst::CustomString& selection6() const;
+    const s_baltst::CustomString& selection6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection7" selection of
     /// this object if "Selection7" is the current selection.  The behavior
     /// is undefined unless "Selection7" is the selection of this object.
-    const s_baltst::Enumerated::Value& selection7() const;
+    const s_baltst::Enumerated::Value& selection7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection8" selection of
     /// this object if "Selection8" is the current selection.  The behavior
     /// is undefined unless "Selection8" is the selection of this object.
-    const s_baltst::Choice3& selection8() const;
+    const s_baltst::Choice3& selection8() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection9" selection of
     /// this object if "Selection9" is the current selection.  The behavior
     /// is undefined unless "Selection9" is the selection of this object.
-    const s_baltst::VoidSequence& selection9() const;
+    const s_baltst::VoidSequence& selection9() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection10" selection of
     /// this object if "Selection10" is the current selection.  The behavior
     /// is undefined unless "Selection10" is the selection of this object.
-    const s_baltst::UnsignedSequence& selection10() const;
+    const s_baltst::UnsignedSequence& selection10() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection11" selection of
     /// this object if "Selection11" is the current selection.  The behavior
     /// is undefined unless "Selection11" is the selection of this object.
-    const s_baltst::SequenceWithAnonymity& selection11() const;
+    const s_baltst::SequenceWithAnonymity& selection11() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -546,6 +605,8 @@ namespace s_baltst {
 inline
 bool FeatureTestMessage::isEqualTo(const FeatureTestMessage& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef FeatureTestMessage Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -572,7 +633,8 @@ bool FeatureTestMessage::isEqualTo(const FeatureTestMessage& rhs) const
           case Class::SELECTION_ID_SELECTION11:
             return this->selection11() == rhs.selection11();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -599,6 +661,7 @@ FeatureTestMessage::~FeatureTestMessage()
 template <typename t_MANIPULATOR>
 int FeatureTestMessage::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case FeatureTestMessage::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -642,6 +705,7 @@ int FeatureTestMessage::manipulateSelection(t_MANIPULATOR& manipulator)
 inline
 s_baltst::Sequence1& FeatureTestMessage::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -649,6 +713,7 @@ s_baltst::Sequence1& FeatureTestMessage::selection1()
 inline
 bsl::vector<char>& FeatureTestMessage::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -656,6 +721,7 @@ bsl::vector<char>& FeatureTestMessage::selection2()
 inline
 s_baltst::Sequence2& FeatureTestMessage::selection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -663,6 +729,7 @@ s_baltst::Sequence2& FeatureTestMessage::selection3()
 inline
 s_baltst::Sequence3& FeatureTestMessage::selection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return *d_selection4;
 }
@@ -670,6 +737,7 @@ s_baltst::Sequence3& FeatureTestMessage::selection4()
 inline
 bdlt::DatetimeTz& FeatureTestMessage::selection5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION5 == d_selectionId);
     return d_selection5.object();
 }
@@ -677,6 +745,7 @@ bdlt::DatetimeTz& FeatureTestMessage::selection5()
 inline
 s_baltst::CustomString& FeatureTestMessage::selection6()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION6 == d_selectionId);
     return d_selection6.object();
 }
@@ -684,6 +753,7 @@ s_baltst::CustomString& FeatureTestMessage::selection6()
 inline
 s_baltst::Enumerated::Value& FeatureTestMessage::selection7()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION7 == d_selectionId);
     return d_selection7.object();
 }
@@ -691,6 +761,7 @@ s_baltst::Enumerated::Value& FeatureTestMessage::selection7()
 inline
 s_baltst::Choice3& FeatureTestMessage::selection8()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION8 == d_selectionId);
     return d_selection8.object();
 }
@@ -698,6 +769,7 @@ s_baltst::Choice3& FeatureTestMessage::selection8()
 inline
 s_baltst::VoidSequence& FeatureTestMessage::selection9()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION9 == d_selectionId);
     return d_selection9.object();
 }
@@ -705,6 +777,7 @@ s_baltst::VoidSequence& FeatureTestMessage::selection9()
 inline
 s_baltst::UnsignedSequence& FeatureTestMessage::selection10()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION10 == d_selectionId);
     return d_selection10.object();
 }
@@ -712,6 +785,7 @@ s_baltst::UnsignedSequence& FeatureTestMessage::selection10()
 inline
 s_baltst::SequenceWithAnonymity& FeatureTestMessage::selection11()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION11 == d_selectionId);
     return d_selection11.object();
 }
@@ -726,6 +800,7 @@ int FeatureTestMessage::selectionId() const
 template <typename t_ACCESSOR>
 int FeatureTestMessage::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -769,6 +844,7 @@ int FeatureTestMessage::accessSelection(t_ACCESSOR& accessor) const
 inline
 const s_baltst::Sequence1& FeatureTestMessage::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -776,6 +852,7 @@ const s_baltst::Sequence1& FeatureTestMessage::selection1() const
 inline
 const bsl::vector<char>& FeatureTestMessage::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -783,6 +860,7 @@ const bsl::vector<char>& FeatureTestMessage::selection2() const
 inline
 const s_baltst::Sequence2& FeatureTestMessage::selection3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -790,6 +868,7 @@ const s_baltst::Sequence2& FeatureTestMessage::selection3() const
 inline
 const s_baltst::Sequence3& FeatureTestMessage::selection4() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return *d_selection4;
 }
@@ -797,6 +876,7 @@ const s_baltst::Sequence3& FeatureTestMessage::selection4() const
 inline
 const bdlt::DatetimeTz& FeatureTestMessage::selection5() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION5 == d_selectionId);
     return d_selection5.object();
 }
@@ -804,6 +884,7 @@ const bdlt::DatetimeTz& FeatureTestMessage::selection5() const
 inline
 const s_baltst::CustomString& FeatureTestMessage::selection6() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION6 == d_selectionId);
     return d_selection6.object();
 }
@@ -811,6 +892,7 @@ const s_baltst::CustomString& FeatureTestMessage::selection6() const
 inline
 const s_baltst::Enumerated::Value& FeatureTestMessage::selection7() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION7 == d_selectionId);
     return d_selection7.object();
 }
@@ -818,6 +900,7 @@ const s_baltst::Enumerated::Value& FeatureTestMessage::selection7() const
 inline
 const s_baltst::Choice3& FeatureTestMessage::selection8() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION8 == d_selectionId);
     return d_selection8.object();
 }
@@ -825,6 +908,7 @@ const s_baltst::Choice3& FeatureTestMessage::selection8() const
 inline
 const s_baltst::VoidSequence& FeatureTestMessage::selection9() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION9 == d_selectionId);
     return d_selection9.object();
 }
@@ -832,6 +916,7 @@ const s_baltst::VoidSequence& FeatureTestMessage::selection9() const
 inline
 const s_baltst::UnsignedSequence& FeatureTestMessage::selection10() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION10 == d_selectionId);
     return d_selection10.object();
 }

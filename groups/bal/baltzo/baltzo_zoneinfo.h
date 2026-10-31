@@ -306,7 +306,8 @@ class ZoneinfoTransition {
 
     /// Return a reference providing non-modifiable access to the
     /// `descriptor` attribute of this object.
-    const LocalTimeDescriptor& descriptor() const;
+    const LocalTimeDescriptor& descriptor() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the `utcTime` attribute of this object.
     bdlt::EpochUtil::TimeT64 utcTime() const;
@@ -526,7 +527,8 @@ class Zoneinfo {
     /// Return a reference providing non-modifiable access to the first
     /// transition contained in this object.  The behavior is undefined
     /// unless `numTransitions() > 0`.
-    const ZoneinfoTransition& firstTransition() const;
+    const ZoneinfoTransition& firstTransition() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the allocator used by this object to supply memory.  Note
     /// that if no allocator was supplied at construction the default
@@ -535,13 +537,15 @@ class Zoneinfo {
 
     /// Return a reference providing non-modifiable access to the
     /// `identifier` attribute of this object.
-    const bsl::string& identifier() const;
+    const bsl::string& identifier() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// `posixExtendedRangeDescription` attribute of this object, used to
     /// describe local time transitions far in the future (see
     /// {posixExtendedRangeDescription}).
-    const bsl::string& posixExtendedRangeDescription() const;
+    const bsl::string& posixExtendedRangeDescription() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the number of transitions maintained by this zone info.
     bsl::size_t numTransitions() const;
@@ -654,6 +658,8 @@ inline
 bool baltzo::operator==(const ZoneinfoTransition& lhs,
                         const ZoneinfoTransition& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.utcTime()    == rhs.utcTime()
          && lhs.descriptor() == rhs.descriptor();
 }
@@ -708,7 +714,7 @@ Zoneinfo& Zoneinfo::operator=(const Zoneinfo& rhs)
 inline
 void Zoneinfo::setIdentifier(const bsl::string_view& value)
 {
-    BSLS_ASSERT(0 != value.data());
+    BSLS_ASSERT_NONCONVEYOR(0 != value.data());
 
     d_identifier = value;
 }
@@ -724,7 +730,7 @@ void Zoneinfo::setIdentifier(const char *value)
 inline
 void Zoneinfo::setPosixExtendedRangeDescription(const bsl::string_view& value)
 {
-    BSLS_ASSERT(0 != value.data());
+    BSLS_ASSERT_NONCONVEYOR(0 != value.data());
 
     d_posixExtendedRangeDescription.assign(value.begin(), value.end());
 }
@@ -740,7 +746,7 @@ void Zoneinfo::setPosixExtendedRangeDescription(const char *value)
 inline
 void Zoneinfo::swap(Zoneinfo& other)
 {
-    BSLS_ASSERT(get_allocator() == other.get_allocator());
+    BSLS_ASSERT_NONCONVEYOR(get_allocator() == other.get_allocator());
 
     bslalg::SwapUtil::swap(&d_identifier,  &other.d_identifier);
     bslalg::SwapUtil::swap(&d_descriptors, &other.d_descriptors);
@@ -759,7 +765,8 @@ bslma::Allocator *Zoneinfo::allocator() const
 inline
 const ZoneinfoTransition& Zoneinfo::firstTransition() const
 {
-    BSLS_ASSERT(numTransitions() > 0);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(numTransitions() > 0);
 
     return d_transitions.front();
 }
@@ -785,18 +792,21 @@ const bsl::string& Zoneinfo::posixExtendedRangeDescription() const
 inline
 bsl::size_t Zoneinfo::numTransitions() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_transitions.size();
 }
 
 inline
 Zoneinfo::TransitionConstIterator Zoneinfo::beginTransitions() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_transitions.begin();
 }
 
 inline
 Zoneinfo::TransitionConstIterator Zoneinfo::endTransitions() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_transitions.end();
 }
 
@@ -806,6 +816,8 @@ Zoneinfo::TransitionConstIterator Zoneinfo::endTransitions() const
 inline
 bool baltzo::operator==(const Zoneinfo& lhs, const Zoneinfo& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.identifier() == rhs.identifier()
         && lhs.posixExtendedRangeDescription() ==
                                             rhs.posixExtendedRangeDescription()

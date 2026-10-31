@@ -133,6 +133,7 @@ namespace {
 
 void onEcho(const bsl::string& prefix, bsl::istream& stream)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&prefix);
     bsl::string word;
     bsl::cout << "onEcho: \"" << prefix << ' ';
     while (stream.good()) {
@@ -194,13 +195,15 @@ class Dispatcher
 
     void addFunction(const string& function)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
         d_functions.push_back(bsl::make_pair(function, 0));
     }
 
     int count(int i)
     {
-        return d_functions[i].second;
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return BSLS_ASSERT_CONVEYOR_REF(d_functions[i]).second;
     }
 
     bslmt::Barrier* barrier()
@@ -210,6 +213,7 @@ class Dispatcher
 
     void run()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         d_barrier.wait();
         for (int i = 1; i < d_iterations; ++i) {
             bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);

@@ -109,7 +109,8 @@ class CustomizedBase64Binary {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `bsl::vector<char>`.
-    const bsl::vector<char>& toVector() const;
+    const bsl::vector<char>& toVector() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PUBLIC CLASS METHODS
 
@@ -126,6 +127,8 @@ class CustomizedBase64Binary {
     friend bool operator==(const CustomizedBase64Binary& lhs,
                            const CustomizedBase64Binary& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.d_value == rhs.d_value;
     }
 
@@ -136,6 +139,8 @@ class CustomizedBase64Binary {
     friend bool operator!=(const CustomizedBase64Binary& lhs,
                            const CustomizedBase64Binary& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.d_value != rhs.d_value;
     }
 
@@ -189,7 +194,7 @@ inline
 CustomizedBase64Binary::CustomizedBase64Binary(const bsl::vector<char>& value)
 : d_value(value)
 {
-    BSLS_ASSERT(checkRestrictions(value) == 0);
+    BSLS_ASSERT_NONCONVEYOR(checkRestrictions(value) == 0);
 }
 
 inline
@@ -228,6 +233,7 @@ bsl::ostream& CustomizedBase64Binary::print(bsl::ostream& stream,
                                  int           level,
                                  int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 

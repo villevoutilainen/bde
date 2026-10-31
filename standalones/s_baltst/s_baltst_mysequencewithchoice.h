@@ -132,8 +132,10 @@ class MySequenceWithChoiceChoice {
     /// Set the value of this object to be a "ChoiceA" value.  Optionally
     /// specify the `value` of the "ChoiceA".  If `value` is not specified,
     /// the default "ChoiceA" value is used.
-    int& makeChoiceA();
-    int& makeChoiceA(int value);
+    int& makeChoiceA()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeChoiceA(int value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -146,7 +148,8 @@ class MySequenceWithChoiceChoice {
     /// Return a reference to the modifiable "ChoiceA" selection of this
     /// object if "ChoiceA" is the current selection.  The behavior is
     /// undefined unless "ChoiceA" is the selection of this object.
-    int& choiceA();
+    int& choiceA()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -179,7 +182,8 @@ class MySequenceWithChoiceChoice {
     /// Return a reference to the non-modifiable "ChoiceA" selection of this
     /// object if "ChoiceA" is the current selection.  The behavior is
     /// undefined unless "ChoiceA" is the selection of this object.
-    const int& choiceA() const;
+    const int& choiceA() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "ChoiceA" value, and
     /// return `false` otherwise.
@@ -317,7 +321,8 @@ class MySequenceWithChoice {
 
     /// Return a reference to the modifiable "Mode" attribute of this
     /// object.
-    MySequenceWithChoiceChoice& mode();
+    MySequenceWithChoiceChoice& mode()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -366,7 +371,8 @@ class MySequenceWithChoice {
 
     /// Return a reference offering non-modifiable access to the "Mode"
     /// attribute of this object.
-    const MySequenceWithChoiceChoice& mode() const;
+    const MySequenceWithChoiceChoice& mode() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 

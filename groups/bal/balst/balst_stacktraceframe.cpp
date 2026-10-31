@@ -43,7 +43,7 @@ void StackTraceFrame::swap(StackTraceFrame& other)
 {
     // 'swap' is undefined for objects with non-equal allocators.
 
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
 
     bslalg::SwapUtil::swap(&d_address,           &other.d_address);
     bslalg::SwapUtil::swap(&d_libraryFileName,   &other.d_libraryFileName);
@@ -60,6 +60,7 @@ void StackTraceFrame::swap(StackTraceFrame& other)
 bsl::ostream& balst::operator<<(bsl::ostream&          stream,
                                 const StackTraceFrame& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }

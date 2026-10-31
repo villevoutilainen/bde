@@ -303,6 +303,7 @@ int ListParser<TYPE>::beginParse(TYPE *object)
 template <class TYPE>
 int ListParser<TYPE>::endParse()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_object_p);
 
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
@@ -323,6 +324,7 @@ template <class TYPE>
 template <class INPUT_ITERATOR>
 int ListParser<TYPE>::pushCharacters(INPUT_ITERATOR begin, INPUT_ITERATOR end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_object_p);
 
     enum { k_SUCCESS = 0, k_FAILURE = -1 };

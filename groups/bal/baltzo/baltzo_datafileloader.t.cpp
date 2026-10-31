@@ -730,10 +730,13 @@ int main(int argc, char *argv[])
     ASSERT(BANGKOK_ID == timeZone.identifier());
     baltzo::Zoneinfo::TransitionConstIterator iterator =
                                                    timeZone.beginTransitions();
+    BSLS_ASSERT_CONVEYOR_OBJECT(iterator);
     ASSERT("LMT" == iterator->descriptor().description());
     ++iterator;
+    BSLS_ASSERT_CONVEYOR_OBJECT(iterator);
     ASSERT("BMT" == iterator->descriptor().description());
     ++iterator;
+    BSLS_ASSERT_CONVEYOR_OBJECT(iterator);
     ASSERT("ICT" == iterator->descriptor().description());
     ++iterator;
     ASSERT(timeZone.endTransitions() == iterator);
@@ -1258,6 +1261,7 @@ int main(int argc, char *argv[])
 
                 mX.configureRootPath(PATH);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP3_ASSERT(LINE, PATH, X.rootPath(), PATH == X.rootPath());
                 LOOP3_ASSERT(LINE, IS_PLAUSIBLE, X.isRootPathPlausible(),
                              IS_PLAUSIBLE == X.isRootPathPlausible());
@@ -1316,6 +1320,7 @@ int main(int argc, char *argv[])
                 ASSERT(true ==
                              Obj::isPlausibleZoneinfoRootPath(TEST_DIRECTORY));
                 ASSERT(0 == mX.configureRootPathIfPlausible(TEST_DIRECTORY));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                 ASSERT(TEST_DIRECTORY == mX.rootPath());
             }
         }
@@ -1428,6 +1433,7 @@ int main(int argc, char *argv[])
             // Verify the object's attribute values.
             // -------------------------------------
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT_FAIL(X.rootPath());
             ASSERT_FAIL(X.isRootPathPlausible());
 
@@ -1446,10 +1452,12 @@ int main(int argc, char *argv[])
             {
                 BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(sa){
                     mX.configureRootPath(A1);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
                 LOOP_ASSERT(CONFIG, A1 == X.rootPath());
 
                 mX.configureRootPath(B1);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, B1 == X.rootPath());
 
                 mX.configureRootPath(D1);

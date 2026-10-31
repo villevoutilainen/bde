@@ -518,20 +518,28 @@ int main(int argc, char *argv[])
 // Next, we verify the frames have the values we expect:
 // ```
     ASSERT((void *) 0x12ab               == frame0.address());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&frame0);
     ASSERT("/a/b/c/balst_stacktrace.t.dbg_exc_mt"
                                          == frame0.libraryFileName());
     ASSERT(  5                           == frame0.lineNumber());
     ASSERT(116                           == frame0.offsetFromSymbol());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&frame0);
     ASSERT("/a/b/c/sourceFile.cpp"       == frame0.sourceFileName());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&frame0);
     ASSERT("_woof_1a"                    == frame0.mangledSymbolName());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&frame0);
     ASSERT("woof"                        == frame0.symbolName());
 
     ASSERT((void *) 0x34cd               == frame1.address());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&frame1);
     ASSERT("/lib/libd.a"                 == frame1.libraryFileName());
     ASSERT( 15                           == frame1.lineNumber());
     ASSERT(228                           == frame1.offsetFromSymbol());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&frame1);
     ASSERT("/a/b/c/secondSourceFile.cpp" == frame1.sourceFileName());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&frame1);
     ASSERT("_arf_1a"                     == frame1.mangledSymbolName());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&frame1);
     ASSERT("arf"                         == frame1.symbolName());
 // ```
 // Next, we output the stack-trace object:
@@ -3615,8 +3623,12 @@ int main(int argc, char *argv[])
                 LOOP_ASSERT(LINE, LENGTH == Y.length());
                 int i;
                 for (i = 0; i < LENGTH; ++i) {
-                    LOOP2_ASSERT(LINE, i, *E[i] == X[i]);
-                    LOOP2_ASSERT(LINE, i, *E[i] == Y[i]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    LOOP2_ASSERT(LINE, i,
+                                 *E[i] == BSLS_ASSERT_CONVEYOR_REF(X[i]));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
+                    LOOP2_ASSERT(LINE, i,
+                                 *E[i] == BSLS_ASSERT_CONVEYOR_REF(Y[i]));
                 }
             }
         }
@@ -3788,8 +3800,12 @@ int main(int argc, char *argv[])
                 LOOP_ASSERT(LINE, LENGTH == X.length());
                 LOOP_ASSERT(LINE, LENGTH == Y.length());
                 for (int i = 0; i < LENGTH; ++i) {
-                    LOOP2_ASSERT(LINE, i, *E[i] == X[i]);
-                    LOOP2_ASSERT(LINE, i, *E[i] == Y[i]);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    LOOP2_ASSERT(LINE, i,
+                                 *E[i] == BSLS_ASSERT_CONVEYOR_REF(X[i]));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
+                    LOOP2_ASSERT(LINE, i,
+                                 *E[i] == BSLS_ASSERT_CONVEYOR_REF(Y[i]));
                 }
             }
         }

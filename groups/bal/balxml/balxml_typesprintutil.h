@@ -255,7 +255,8 @@ struct TypesPrintUtil {
     static bsl::ostream& printDecimal(
                                      bsl::ostream&         stream,
                                      const TYPE&           object,
-                                     const EncoderOptions *encoderOptions = 0);
+                                     const EncoderOptions *encoderOptions = 0)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Format the specified `object` to the specified output `stream` using
     /// the `bdlat_FormattingMode::e_DEFAULT` formatting mode and the
@@ -265,7 +266,8 @@ struct TypesPrintUtil {
     static bsl::ostream& printDefault(
                                      bsl::ostream&         stream,
                                      const TYPE&           object,
-                                     const EncoderOptions *encoderOptions = 0);
+                                     const EncoderOptions *encoderOptions = 0)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Format the specified `object` to the specified output `stream` using
     /// the `bdlat_FormattingMode::e_HEX` formatting mode and the
@@ -335,7 +337,8 @@ struct TypesPrintUtil_Imp {
     static bsl::ostream& printDateAndTime(
                                          bsl::ostream&         stream,
                                          const TYPE&           value,
-                                         const EncoderOptions *encoderOptions);
+                                         const EncoderOptions *encoderOptions)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                             // BASE64 FUNCTIONS
 
@@ -344,14 +347,16 @@ struct TypesPrintUtil_Imp {
                             bsl::ostream&                       stream,
                             const TYPE&                         object,
                             const EncoderOptions               *encoderOptions,
-                            bdlat_TypeCategory::CustomizedType);
+                            bdlat_TypeCategory::CustomizedType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE>
     static bsl::ostream& printBase64(
                                bsl::ostream&                    stream,
                                const TYPE&                      object,
                                const EncoderOptions            *encoderOptions,
-                               bdlat_TypeCategory::DynamicType);
+                               bdlat_TypeCategory::DynamicType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE, class ANY_CATEGORY>
     static bsl::ostream& printBase64(bsl::ostream&         stream,
@@ -363,7 +368,8 @@ struct TypesPrintUtil_Imp {
                                     bsl::ostream&               stream,
                                     const bsl::string_view&     object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE>
     static typename bsl::enable_if<
@@ -387,21 +393,24 @@ struct TypesPrintUtil_Imp {
                                bsl::ostream&                    stream,
                                const TYPE&                      object,
                                const EncoderOptions            *encoderOptions,
-                               bdlat_TypeCategory::Enumeration);
+                               bdlat_TypeCategory::Enumeration)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE>
     static bsl::ostream& printDecimal(
                             bsl::ostream&                       stream,
                             const TYPE&                         object,
                             const EncoderOptions               *encoderOptions,
-                            bdlat_TypeCategory::CustomizedType);
+                            bdlat_TypeCategory::CustomizedType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         template <class TYPE>
     static bsl::ostream& printDecimal(
                                bsl::ostream&                    stream,
                                const TYPE&                      object,
                                const EncoderOptions            *encoderOptions,
-                               bdlat_TypeCategory::DynamicType);
+                               bdlat_TypeCategory::DynamicType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE, class ANY_CATEGORY>
     static bsl::ostream& printDecimal(bsl::ostream&         stream,
@@ -413,74 +422,88 @@ struct TypesPrintUtil_Imp {
                                     bsl::ostream&               stream,
                                     const bool&                 object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const char&                 object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const short&                object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const int&                  object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const long&                 object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const bsls::Types::Int64&   object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const unsigned char&        object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const unsigned short&       object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const unsigned int&         object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const unsigned long&        object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const bsls::Types::Uint64&  object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const float&                object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const double&               object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDecimal(
                                     bsl::ostream&               stream,
                                     const bdldfp::Decimal64&    object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                             // DEFAULT FUNCTIONS
 
@@ -489,28 +512,32 @@ struct TypesPrintUtil_Imp {
                                bsl::ostream&                    stream,
                                const TYPE&                      object,
                                const EncoderOptions            *encoderOptions,
-                               bdlat_TypeCategory::Enumeration);
+                               bdlat_TypeCategory::Enumeration)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE>
     static bsl::ostream& printDefault(
                             bsl::ostream&                       stream,
                             const TYPE&                         object,
                             const EncoderOptions               *encoderOptions,
-                            bdlat_TypeCategory::CustomizedType);
+                            bdlat_TypeCategory::CustomizedType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE>
     static bsl::ostream& printDefault(
                              bsl::ostream&                      stream,
                              const TYPE&                        object,
                              const EncoderOptions              *encoderOptions,
-                             bdlat_TypeCategory::DynamicType);
+                             bdlat_TypeCategory::DynamicType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE>
     static bsl::ostream& printDefault(
                              bsl::ostream&                      stream,
                              const TYPE&                        object,
                              const EncoderOptions              *encoderOptions,
-                             bdlat_TypeCategory::NullableValue);
+                             bdlat_TypeCategory::NullableValue)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE, class ANY_CATEGORY>
     static bsl::ostream& printDefault(bsl::ostream&         stream,
@@ -522,82 +549,98 @@ struct TypesPrintUtil_Imp {
                                     bsl::ostream&               stream,
                                     const bool&                 object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const char&                 object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const short&                object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const int&                  object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const long&                 object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const bsls::Types::Int64&   object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const unsigned char&        object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const unsigned short&       object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const unsigned int&         object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const unsigned long&        object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const bsls::Types::Uint64&  object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const float&                object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const double&               object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const bdldfp::Decimal64&    object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const char                 *object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const bsl::string_view&     object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE>
     static typename bsl::enable_if<
@@ -613,52 +656,62 @@ struct TypesPrintUtil_Imp {
                                     bsl::ostream&               stream,
                                     const bdlt::Date&           object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const bdlt::DateTz&         object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const bdlt::Datetime&       object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const bdlt::DatetimeTz&     object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const bdlt::Time&           object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const bdlt::TimeTz&         object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const DateOrDateTz&         object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                     bsl::ostream&               stream,
                                     const TimeOrTimeTz&         object,
                                     const EncoderOptions       *encoderOptions,
-                                    bdlat_TypeCategory::Simple);
+                                    bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                    bsl::ostream&                stream,
                                    const DatetimeOrDatetimeTz&  object,
                                    const EncoderOptions        *encoderOptions,
-                                   bdlat_TypeCategory::Simple);
+                                   bdlat_TypeCategory::Simple)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     static bsl::ostream& printDefault(
                                      bsl::ostream&              stream,
                                      const bsl::vector<char>&   object,
                                      const EncoderOptions      *encoderOptions,
-                                     bdlat_TypeCategory::Array);
+                                     bdlat_TypeCategory::Array)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                             // HEX FUNCTIONS
 
@@ -667,14 +720,16 @@ struct TypesPrintUtil_Imp {
                             bsl::ostream&                       stream,
                             const TYPE&                         object,
                             const EncoderOptions               *encoderOptions,
-                            bdlat_TypeCategory::CustomizedType);
+                            bdlat_TypeCategory::CustomizedType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE>
     static bsl::ostream& printHex(
                                bsl::ostream&                    stream,
                                const TYPE&                      object,
                                const EncoderOptions            *encoderOptions,
-                               bdlat_TypeCategory::DynamicType);
+                               bdlat_TypeCategory::DynamicType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE, class ANY_CATEGORY>
     static bsl::ostream& printHex(bsl::ostream&         stream,
@@ -715,7 +770,8 @@ struct TypesPrintUtil_Imp {
                                bsl::ostream&                    stream,
                                const TYPE&                      object,
                                const EncoderOptions            *encoderOptions,
-                               bdlat_TypeCategory::DynamicType);
+                               bdlat_TypeCategory::DynamicType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE, class ANY_CATEGORY>
     static bsl::ostream& printList(bsl::ostream&         stream,
@@ -730,21 +786,24 @@ struct TypesPrintUtil_Imp {
                                bsl::ostream&                    stream,
                                const TYPE&                      object,
                                const EncoderOptions            *encoderOptions,
-                               bdlat_TypeCategory::Enumeration);
+                               bdlat_TypeCategory::Enumeration)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE>
     static bsl::ostream& printText(
                             bsl::ostream&                       stream,
                             const TYPE&                         object,
                             const EncoderOptions               *encoderOptions,
-                            bdlat_TypeCategory::CustomizedType);
+                            bdlat_TypeCategory::CustomizedType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE>
     static bsl::ostream& printText(
                                bsl::ostream&                    stream,
                                const TYPE&                      object,
                                const EncoderOptions            *encoderOptions,
-                               bdlat_TypeCategory::DynamicType);
+                               bdlat_TypeCategory::DynamicType)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class TYPE, class ANY_CATEGORY>
     static bsl::ostream& printText(bsl::ostream&         stream,
@@ -813,6 +872,9 @@ class TypesPrintUtilImp_PrintBase64 {
     template <class TYPE, class ANY_CATEGORY>
     int operator()(const TYPE& object, ANY_CATEGORY category) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_stream_p);
         TypesPrintUtil_Imp::printBase64(*d_stream_p,
                                         object,
                                         d_encoderOptions_p,
@@ -853,6 +915,9 @@ class TypesPrintUtilImp_PrintDecimal {
     template <class TYPE, class ANY_CATEGORY>
     int operator()(const TYPE& object, ANY_CATEGORY category) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_stream_p);
         TypesPrintUtil_Imp::printDecimal(*d_stream_p,
                                          object,
                                          d_encoderOptions_p,
@@ -893,6 +958,9 @@ class TypesPrintUtilImp_PrintDefault {
     template <class TYPE, class ANY_CATEGORY>
     int operator()(const TYPE& object, ANY_CATEGORY category) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_stream_p);
         TypesPrintUtil_Imp::printDefault(*d_stream_p,
                                          object,
                                          d_encoderOptions_p,
@@ -933,6 +1001,9 @@ class TypesPrintUtilImp_PrintHex {
     template <class TYPE, class ANY_CATEGORY>
     int operator()(const TYPE& object, ANY_CATEGORY category) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_stream_p);
         TypesPrintUtil_Imp::printHex(*d_stream_p,
                                      object,
                                      d_encoderOptions_p,
@@ -1034,11 +1105,14 @@ class TypesPrintUtilImp_PrintListElementDefault {
     template <class TYPE, class OTHER_CATEGORY>
     int operator()(const TYPE& object, OTHER_CATEGORY category)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (d_doesNextElemNeedDelimiter) {
             *d_stream_p << " ";
         }
 
         d_doesNextElemNeedDelimiter = true;
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_stream_p);
         TypesPrintUtil_Imp::printDefault(*d_stream_p,
                                          object,
                                          d_encoderOptions_p,
@@ -1073,12 +1147,16 @@ class TypesPrintUtilImp_PrintText {
     : d_stream_p(stream)
     , d_encoderOptions_p(encoderOptions)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
     }
 
     // ACCESSORS
     template <class TYPE, class ANY_CATEGORY>
     int operator()(const TYPE& object, ANY_CATEGORY category) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_stream_p);
         TypesPrintUtil_Imp::printText(*d_stream_p,
                                       object,
                                       d_encoderOptions_p,
@@ -1109,6 +1187,8 @@ bsl::ostream& TypesPrintUtil::print(bsl::ostream&         stream,
                                     int                   formattingMode,
                                     const EncoderOptions *encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     typedef typename bdlat_TypeCategory::Select<TYPE>::Type Tag;
 
     if (formattingMode & bdlat_FormattingMode::e_LIST) {
@@ -1152,6 +1232,8 @@ bsl::ostream& TypesPrintUtil::printBase64(bsl::ostream&         stream,
                                           const TYPE&           object,
                                           const EncoderOptions *encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     typedef typename bdlat_TypeCategory::Select<TYPE>::Type Tag;
     return TypesPrintUtil_Imp::printBase64(
         stream, object, encoderOptions, Tag());
@@ -1188,6 +1270,8 @@ bsl::ostream& TypesPrintUtil::printHex(bsl::ostream&         stream,
                                        const TYPE&           object,
                                        const EncoderOptions *encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
 
     typedef typename bdlat_TypeCategory::Select<TYPE>::Type Tag;
     return TypesPrintUtil_Imp::printHex(
@@ -1200,6 +1284,8 @@ bsl::ostream& TypesPrintUtil::printList(bsl::ostream&         stream,
                                         const TYPE&           object,
                                         const EncoderOptions *encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     typedef typename bdlat_TypeCategory::Select<TYPE>::Type Tag;
     return TypesPrintUtil_Imp::printList(
         stream, object, encoderOptions, Tag());
@@ -1211,6 +1297,8 @@ bsl::ostream& TypesPrintUtil::printText(bsl::ostream&         stream,
                                         const TYPE&           object,
                                         const EncoderOptions *encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
 
     typedef typename bdlat_TypeCategory::Select<TYPE>::Type Tag;
     return TypesPrintUtil_Imp::printText(
@@ -1232,7 +1320,9 @@ bsl::ostream& TypesPrintUtil_Imp::printBase64(
 {
     return TypesPrintUtil::printBase64(
                       stream,
-                      bdlat_CustomizedTypeFunctions::convertToBaseType(object),
+                      BSLS_ASSERT_CONVEYOR_REF(
+                      bdlat_CustomizedTypeFunctions::convertToBaseType(
+                                                                      object)),
                       encoderOptions);
 }
 
@@ -1259,6 +1349,7 @@ TypesPrintUtil_Imp::printBase64(bsl::ostream&         stream,
                                  const EncoderOptions *encoderOptions,
                                  bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return printBase64(stream,
                        static_cast<bsl::string_view>(object),
                        encoderOptions,
@@ -1325,7 +1416,9 @@ bsl::ostream& TypesPrintUtil_Imp::printDecimal(
 {
     return TypesPrintUtil::printDecimal(
                       stream,
-                      bdlat_CustomizedTypeFunctions::convertToBaseType(object),
+                      BSLS_ASSERT_CONVEYOR_REF(
+                      bdlat_CustomizedTypeFunctions::convertToBaseType(
+                                                                      object)),
                       encoderOptions);
 }
 
@@ -1497,7 +1590,9 @@ bsl::ostream& TypesPrintUtil_Imp::printDefault(
 {
     return TypesPrintUtil::printDefault(
                       stream,
-                      bdlat_CustomizedTypeFunctions::convertToBaseType(object),
+                      BSLS_ASSERT_CONVEYOR_REF(
+                      bdlat_CustomizedTypeFunctions::convertToBaseType(
+                                                                      object)),
                       encoderOptions);
 }
 
@@ -1710,6 +1805,8 @@ TypesPrintUtil_Imp::printDefault(bsl::ostream&         stream,
                                   const EncoderOptions *encoderOptions,
                                   bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return printDefault(stream,
                         static_cast<const bsl::string_view&>(object),
                         encoderOptions,
@@ -1723,6 +1820,8 @@ bsl::ostream& TypesPrintUtil_Imp::printDateAndTime(
                                           const TYPE&           value,
                                           const EncoderOptions *encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bdlt::Iso8601UtilConfiguration config;
     if (encoderOptions) {
         config.setFractionalSecondPrecision(
@@ -1852,7 +1951,9 @@ bsl::ostream& TypesPrintUtil_Imp::printHex(
 {
     return TypesPrintUtil::printHex(
                       stream,
-                      bdlat_CustomizedTypeFunctions::convertToBaseType(object),
+                      BSLS_ASSERT_CONVEYOR_REF(
+                      bdlat_CustomizedTypeFunctions::convertToBaseType(
+                                                                      object)),
                       encoderOptions);
 }
 
@@ -1996,7 +2097,9 @@ bsl::ostream& TypesPrintUtil_Imp::printText(
 {
     return TypesPrintUtil::printText(
                       stream,
-                      bdlat_CustomizedTypeFunctions::convertToBaseType(object),
+                      BSLS_ASSERT_CONVEYOR_REF(
+                      bdlat_CustomizedTypeFunctions::convertToBaseType(
+                                                                      object)),
                       encoderOptions);
 }
 

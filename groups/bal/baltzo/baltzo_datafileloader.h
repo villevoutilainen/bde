@@ -199,6 +199,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
 #include <bsls_keyword.h>
 #include <bsls_libraryfeatures.h>
 #include <bsls_platform.h>
@@ -323,7 +324,8 @@ class DataFileLoader : public Loader {
     /// will attempt to load Zoneinfo binary data files.  The behavior is
     /// undefined unless either `configureRootPath` has been called or
     /// `configureRootPathIfValid` has been called successfully.
-    const bsl::string& rootPath() const;
+    const bsl::string& rootPath() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the directory returned by the `rootPath` method
     /// exists and appears to contain valid Zoneinfo time-zone information
@@ -351,6 +353,7 @@ class DataFileLoader : public Loader {
 inline
 bool DataFileLoader::isRootPathPlausible() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return isPlausibleZoneinfoRootPath(rootPath().c_str());
 }
 

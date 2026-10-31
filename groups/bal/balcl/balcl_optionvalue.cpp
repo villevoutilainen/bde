@@ -23,7 +23,8 @@ namespace balcl {
 // PRIVATE MANIPULATORS
 void OptionValue::init(OptionType::Enum type)
 {
-    BSLS_ASSERT(d_value.isUnset());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_value.isUnset());
 
     switch (type) {
       case OptionType::e_VOID: {
@@ -60,6 +61,7 @@ void OptionValue::init(OptionType::Enum type)
 // ACCESSORS
 OptionType::Enum OptionValue::type() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_value.is<OptionValue_NullOf>()) {
         return d_value.the<OptionValue_NullOf>().type();              // RETURN
     }

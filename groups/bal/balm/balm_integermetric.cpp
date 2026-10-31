@@ -24,7 +24,8 @@ void IntegerMetric_MacroImp::getCollector(IntegerCollector **collector,
     *collector = manager->collectorRepository().getDefaultIntegerCollector(
                                                              category, metric);
     manager->metricRegistry().registerCategoryHolder(
-                                 (*collector)->metricId().category(), holder);
+                BSLS_ASSERT_CONVEYOR_REF(**collector).metricId().category(),
+                holder);
 }
 
 void IntegerMetric_MacroImp::getCollector(
@@ -41,9 +42,11 @@ void IntegerMetric_MacroImp::getCollector(
     *collector = manager->collectorRepository().getDefaultIntegerCollector(
                                                              category, metric);
     manager->metricRegistry().registerCategoryHolder(
-                                 (*collector)->metricId().category(), holder);
+                BSLS_ASSERT_CONVEYOR_REF(**collector).metricId().category(),
+                holder);
     manager->metricRegistry().setPreferredPublicationType(
-                          (*collector)->metricId(), preferredPublicationType);
+                             BSLS_ASSERT_CONVEYOR_REF(**collector).metricId(),
+                             preferredPublicationType);
 }
 
 }  // close package namespace

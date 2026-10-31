@@ -541,6 +541,8 @@ void MetricsManager_PublicationHelper::updateSampleCache(
                                 const MetricSampleGroup&           sampleGroup,
                                 const bdlt::DatetimeTz&            timeStamp)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
+    BSLS_ASSERT_CONVEYOR_OBJECT(sampleCache);
     SampleCache::iterator it = sampleCache->find(publisher);
     if (it == sampleCache->end()) {
         MetricSample newSample;
@@ -558,6 +560,7 @@ void MetricsManager_PublicationHelper::collect(
                                         const bsls::TimeInterval&  now,
                                         bool                       resetFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(manager);
     typedef MetricsManager::RecordsCollectionCallback Callback;
     typedef bsl::vector<const Callback *>             CBVector;
     typedef MetricsManager_CallbackRegistry::iterator CBRegistryIterator;
@@ -603,6 +606,8 @@ void MetricsManager_PublicationHelper::publish(
                           bool                                 resetFlag)
 
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&categoriesBegin);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&categoriesEnd);
     if (categoriesBegin == categoriesEnd) {
         return;                                                       // RETURN
     }
@@ -710,6 +715,7 @@ void MetricsManager_PublicationHelper::publishAll(
                                             const SET&      excludedCategories,
                                             bool            resetFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&excludedCategories);
     typedef typename SET::key_type KeyType;
 
     BSLMF_ASSERT((u::IsSet<SET, KeyType>::value));
@@ -729,6 +735,7 @@ void MetricsManager_PublicationHelper::publishAll(
     includedCats.reserve(allCats.size() - excludedCategories.size());
 
     for (CatVec::iterator it = allCats.begin(); it < allCats.end(); ++it) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         if (!excludedCategories.count(*it)) {
             includedCats.push_back(*it);
         }
@@ -770,7 +777,9 @@ template <class CONTAINER>
 inline
 MapProctor<CONTAINER>::~MapProctor()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 != d_map && d_iterator.second) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_map);
         d_map->erase(d_iterator.first);
     }
 }
@@ -804,6 +813,8 @@ MetricsManager_PublisherRegistry::~MetricsManager_PublisherRegistry()
 int MetricsManager_PublisherRegistry::addGeneralPublisher(
                               const bsl::shared_ptr<Publisher>& publisher)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
     if (d_generalPublishers.end() !=
         d_generalPublishers.find(publisher)) {
         // This 'publisher' is already registered to publish every category.
@@ -830,6 +841,8 @@ int MetricsManager_PublisherRegistry::addSpecificPublisher(
                             const Category                    *category,
                             const bsl::shared_ptr<Publisher>&  publisher)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
     if (d_generalPublishers.end() !=
         d_generalPublishers.find(publisher)) {
         // This 'publisher' is already registered to publish every category.
@@ -863,6 +876,7 @@ int MetricsManager_PublisherRegistry::addSpecificPublisher(
 int MetricsManager_PublisherRegistry::removePublisher(
                                                const Publisher *publisher)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::shared_ptr<Publisher> publisherSPtr(
                               const_cast<Publisher *>(publisher),
                               bslstl::SharedPtrNilDeleter(),
@@ -878,7 +892,8 @@ int MetricsManager_PublisherRegistry::removePublisher(
         // Since this publisher was registered as a general publisher it
         // should not have been registered as a category specific publisher.
 
-        BSLS_ASSERT(d_registry.end() == d_registry.find(publisherSPtr) ||
+        BSLS_ASSERT_NONCONVEYOR(
+                          d_registry.end() == d_registry.find(publisherSPtr) ||
                     d_registry.find(publisherSPtr)->second.empty());
 
         return 0;                                                     // RETURN
@@ -902,6 +917,7 @@ inline
 MetricsManager_PublisherRegistry::general_iterator
 MetricsManager_PublisherRegistry::beginGeneral()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_generalPublishers.begin();
 }
 
@@ -909,6 +925,7 @@ inline
 MetricsManager_PublisherRegistry::general_iterator
 MetricsManager_PublisherRegistry::endGeneral()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_generalPublishers.end();
 }
 
@@ -916,6 +933,7 @@ inline
 MetricsManager_PublisherRegistry::specific_iterator
 MetricsManager_PublisherRegistry::beginSpecific()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_specificPublishers.begin();
 }
 
@@ -923,6 +941,7 @@ inline
 MetricsManager_PublisherRegistry::specific_iterator
 MetricsManager_PublisherRegistry::endSpecific()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_specificPublishers.end();
 }
 
@@ -931,6 +950,7 @@ MetricsManager_PublisherRegistry::specific_iterator
 MetricsManager_PublisherRegistry::lowerBound(
                                                 const Category *category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_specificPublishers.lower_bound(category);
 }
 
@@ -939,6 +959,7 @@ MetricsManager_PublisherRegistry::specific_iterator
 MetricsManager_PublisherRegistry::upperBound(
                                                 const Category *category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_specificPublishers.upper_bound(category);
 }
 
@@ -947,6 +968,8 @@ template <class VECTOR>
 int MetricsManager_PublisherRegistry::findGeneralPublishers(
                                                       VECTOR *publishers) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(publishers);
     typedef typename VECTOR::value_type ValueType;
 
     BSLMF_ASSERT((u::IsVector<VECTOR,       ValueType>::value));
@@ -969,6 +992,8 @@ int MetricsManager_PublisherRegistry::findSpecificPublishers(
                                                 VECTOR         *publishers,
                                                 const Category *category) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(publishers);
     typedef typename VECTOR::value_type ValueType;
 
     BSLMF_ASSERT((u::IsVector<VECTOR,       ValueType>::value));
@@ -1012,6 +1037,7 @@ MetricsManager_CallbackRegistry::registerCollectionCallback(
                                     const Category                   *category,
                                     const RecordsCollectionCallback&  callback)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int handle = d_nextHandle++;
     CallbackMap::iterator it =
                d_callbacks.insert(CallbackMap::value_type(category, callback));
@@ -1028,6 +1054,7 @@ MetricsManager_CallbackRegistry::registerCollectionCallback(
 int MetricsManager_CallbackRegistry::removeCollectionCallback(
                                                          CallbackHandle handle)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     CallbackHandleMap::iterator it = d_handles.find(handle);
     if (it == d_handles.end()) {
         return -1;                                                    // RETURN
@@ -1042,6 +1069,7 @@ inline
 MetricsManager_CallbackRegistry::iterator
 MetricsManager_CallbackRegistry::begin()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_callbacks.begin();
 }
 
@@ -1049,6 +1077,7 @@ inline
 MetricsManager_CallbackRegistry::iterator
 MetricsManager_CallbackRegistry::lowerBound(const Category *category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_callbacks.lower_bound(category);
 }
 
@@ -1056,6 +1085,7 @@ inline
 MetricsManager_CallbackRegistry::iterator
 MetricsManager_CallbackRegistry::upperBound(const Category *category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_callbacks.upper_bound(category);
 }
 
@@ -1063,6 +1093,7 @@ inline
 MetricsManager_CallbackRegistry::iterator
 MetricsManager_CallbackRegistry::end()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_callbacks.end();
 }
 
@@ -1071,6 +1102,8 @@ int MetricsManager_CallbackRegistry::findCallbacks(
                bsl::vector<const RecordsCollectionCallback *> *callbacks,
                const Category                                 *category) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(callbacks);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int count = static_cast<int>(d_callbacks.count(category));
     if (0 == count) {
         return 0;                                                     // RETURN
@@ -1096,6 +1129,7 @@ void MetricsManager::collectSampleImp(MetricSample              *sample,
                                       int                        numCategories,
                                       bool                       resetFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(records);
 
     bsls::TimeInterval now = bdlt::CurrentTime::now();
     bdlt::DatetimeTz   timeStamp(bdlt::EpochUtil::epoch() + now, 0);
@@ -1222,6 +1256,7 @@ void MetricsManager::publish(const Category *const categories[],
 void MetricsManager::publish(const bsl::set<const Category *>& categories,
                              bool                              resetFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&categories);
     MetricsManager_PublicationHelper::publish(this, categories.begin(),
                                                   categories.end(), resetFlag);
 }
@@ -1229,6 +1264,7 @@ void MetricsManager::publish(const bsl::set<const Category *>& categories,
 void MetricsManager::publish(const std::set<const Category *>& categories,
                              bool                              resetFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&categories);
     MetricsManager_PublicationHelper::publish(this, categories.begin(),
                                                   categories.end(), resetFlag);
 }
@@ -1237,6 +1273,7 @@ void MetricsManager::publish(const std::set<const Category *>& categories,
 void MetricsManager::publish(const std::pmr::set<const Category *>& categories,
                              bool                                   resetFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&categories);
     MetricsManager_PublicationHelper::publish(this, categories.begin(),
                                                   categories.end(), resetFlag);
 }
@@ -1318,6 +1355,7 @@ int MetricsManager::removePublisher(const Publisher *publisher)
 int MetricsManager::removePublisher(
                                    const bsl::shared_ptr<Publisher>& publisher)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
     bslmt::WriteLockGuard<bslmt::RWMutex> guard(&d_rwLock);
     return d_publishers->removePublisher(publisher.get());
 }

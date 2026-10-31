@@ -24,6 +24,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bslalg_constructorproxy.h>
 
+#include <bsls_assert.h>
+
 #include <s_baltst_testnilvalue.h>
 
 namespace BloombergLP {
@@ -176,7 +178,8 @@ struct TestDynamicType_CustomizedTypeImpUtil {
     template <class BASE_TYPE>
     static int convertFromBaseType(Value *value, const BASE_TYPE& object);
 
-    static const BaseType& convertToBaseType(const Value& value);
+    static const BaseType& convertToBaseType(const Value& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 /// This utility `struct` provides a namespace for a suite of utility
@@ -194,7 +197,8 @@ struct TestDynamicType_CustomizedTypeImpUtil<VALUE_TYPE, false> {
     template <class BASE_TYPE>
     static int convertFromBaseType(Value *, const BASE_TYPE&);
 
-    static const BaseType& convertToBaseType(const Value&);
+    static const BaseType& convertToBaseType(const Value&)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                   // ========================================
@@ -542,7 +546,8 @@ class TestDynamicType {
 
     bdlat_TypeCategory::Value select() const;
 
-    const Value& value() const;
+    const Value& value() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1499,7 +1504,7 @@ int TestDynamicType<VALUE_TYPE>::arrayManipulateElement(
                                                       MANIPULATOR& manipulator,
                                                       int          index)
 {
-    BSLS_ASSERT(valueHasCategory(e_ARRAY));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_ARRAY));
 
     return ArrayImpUtil::manipulateElement(
         &d_value.object(), manipulator, index);
@@ -1508,7 +1513,7 @@ int TestDynamicType<VALUE_TYPE>::arrayManipulateElement(
 template <class VALUE_TYPE>
 void TestDynamicType<VALUE_TYPE>::arrayResize(int newSize)
 {
-    BSLS_ASSERT(valueHasCategory(e_ARRAY));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_ARRAY));
 
     return ArrayImpUtil::resize(&d_value.object(), newSize);
 }
@@ -1526,7 +1531,7 @@ int TestDynamicType<VALUE_TYPE>::choiceMakeSelection(
                                                const char *selectionName,
                                                int         selectionNameLength)
 {
-    BSLS_ASSERT(valueHasCategory(e_CHOICE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_CHOICE));
 
     return ChoiceImpUtil::makeSelection(
         &d_value.object(), selectionName, selectionNameLength);
@@ -1537,7 +1542,7 @@ template <class MANIPULATOR>
 int TestDynamicType<VALUE_TYPE>::choiceManipulateSelection(
                                                       MANIPULATOR& manipulator)
 {
-    BSLS_ASSERT(valueHasCategory(e_CHOICE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_CHOICE));
 
     return ChoiceImpUtil::manipulateSelection(&d_value.object(), manipulator);
 }
@@ -1597,7 +1602,7 @@ int TestDynamicType<VALUE_TYPE>::sequenceManipulateAttribute(
                                              const char   *attributeName,
                                              int           attributeNameLength)
 {
-    BSLS_ASSERT(valueHasCategory(e_SEQUENCE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_SEQUENCE));
 
     return SequenceImpUtil::manipulateAttribute(
         &d_value.object(), manipulator, attributeName, attributeNameLength);
@@ -1609,7 +1614,7 @@ int TestDynamicType<VALUE_TYPE>::sequenceManipulateAttribute(
                                                       MANIPULATOR& manipulator,
                                                       int          attributeId)
 {
-    BSLS_ASSERT(valueHasCategory(e_SEQUENCE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_SEQUENCE));
 
     return SequenceImpUtil::manipulateAttribute(
         &d_value.object(), manipulator, attributeId);
@@ -1620,7 +1625,7 @@ template <class MANIPULATOR>
 int TestDynamicType<VALUE_TYPE>::sequenceManipulateAttributes(
                                                       MANIPULATOR& manipulator)
 {
-    BSLS_ASSERT(valueHasCategory(e_SEQUENCE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_SEQUENCE));
 
     return SequenceImpUtil::manipulateAttributes(&d_value.object(),
                                                  manipulator);
@@ -1650,7 +1655,7 @@ template <class ACCESSOR>
 int TestDynamicType<VALUE_TYPE>::arrayAccessElement(ACCESSOR& accessor,
                                                     int       index) const
 {
-    BSLS_ASSERT(valueHasCategory(e_ARRAY));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_ARRAY));
 
     return ArrayImpUtil::accessElement(d_value.object(), accessor, index);
 }
@@ -1658,7 +1663,7 @@ int TestDynamicType<VALUE_TYPE>::arrayAccessElement(ACCESSOR& accessor,
 template <class VALUE_TYPE>
 bsl::size_t TestDynamicType<VALUE_TYPE>::arraySize() const
 {
-    BSLS_ASSERT(valueHasCategory(e_ARRAY));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_ARRAY));
 
     return ArrayImpUtil::size(d_value.object());
 }
@@ -1668,7 +1673,7 @@ template <class ACCESSOR>
 int TestDynamicType<VALUE_TYPE>::choiceAccessSelection(
                                                       ACCESSOR& accessor) const
 {
-    BSLS_ASSERT(valueHasCategory(e_CHOICE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_CHOICE));
 
     return ChoiceImpUtil::accessSelection(d_value.object(), accessor);
 }
@@ -1686,7 +1691,7 @@ bool TestDynamicType<VALUE_TYPE>::choiceHasSelection(
                                          const char *selectionName,
                                          int         selectionNameLength) const
 {
-    BSLS_ASSERT(valueHasCategory(e_CHOICE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_CHOICE));
 
     return ChoiceImpUtil::hasSelection(
         d_value.object(), selectionName, selectionNameLength);
@@ -1695,7 +1700,7 @@ bool TestDynamicType<VALUE_TYPE>::choiceHasSelection(
 template <class VALUE_TYPE>
 int TestDynamicType<VALUE_TYPE>::choiceSelectionId() const
 {
-    BSLS_ASSERT(valueHasCategory(e_CHOICE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_CHOICE));
 
     return ChoiceImpUtil::selectionId(d_value.object());
 }
@@ -1763,7 +1768,7 @@ int TestDynamicType<VALUE_TYPE>::sequenceAccessAttribute(
                                                    ACCESSOR& accessor,
                                                    int       attributeId) const
 {
-    BSLS_ASSERT(valueHasCategory(e_SEQUENCE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_SEQUENCE));
 
     return SequenceImpUtil::accessAttribute(
         d_value.object(), accessor, attributeId);
@@ -1774,7 +1779,7 @@ template <class ACCESSOR>
 int TestDynamicType<VALUE_TYPE>::sequenceAccessAttributes(
                                                       ACCESSOR& accessor) const
 {
-    BSLS_ASSERT(valueHasCategory(e_SEQUENCE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_SEQUENCE));
 
     return SequenceImpUtil::accessAttributes(d_value.object(), accessor);
 }
@@ -1784,7 +1789,7 @@ bool TestDynamicType<VALUE_TYPE>::sequenceHasAttribute(
                                          const char *attributeName,
                                          int         attributeNameLength) const
 {
-    BSLS_ASSERT(valueHasCategory(e_SEQUENCE));
+    BSLS_ASSERT_NONCONVEYOR(valueHasCategory(e_SEQUENCE));
 
     return SequenceImpUtil::hasAttribute(
         d_value.object(), attributeName, attributeNameLength);
@@ -1816,6 +1821,7 @@ template <class VALUE_TYPE>
 bsl::ostream& operator<<(bsl::ostream&                      stream,
                          const TestDynamicType<VALUE_TYPE>& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return stream << "[" << object.className() << " value " << object.value()
                   << "]";
 }

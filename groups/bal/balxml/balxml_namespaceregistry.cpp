@@ -47,6 +47,8 @@ namespace balxml {
 int
 NamespaceRegistry::lookupOrRegister(const bsl::string_view& namespaceUri)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&namespaceUri);
     if (namespaceUri.length() == 0) {
         return -1;                                                    // RETURN
     }
@@ -64,6 +66,7 @@ NamespaceRegistry::lookupOrRegister(const bsl::string_view& namespaceUri)
 int
 NamespaceRegistry::lookup(const bsl::string_view& namespaceUri) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Registry is typically small, so linear search is appropriate.  Since
     // numeric ID is equal to index of string within the vector, it would not
     // be correct to sort or otherwise re-order the vector.
@@ -87,6 +90,7 @@ NamespaceRegistry::lookup(const bsl::string_view& namespaceUri) const
 const char *
 NamespaceRegistry::lookup(int id) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // If id is non-negative, return registered namespace.
     if (0 <= id && size_t(id) < d_namespaces.size()) {
         return  d_namespaces[id].c_str();                             // RETURN
@@ -101,10 +105,12 @@ NamespaceRegistry::lookup(int id) const
 void
 NamespaceRegistry::print(bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::vector<bsl::string>::const_iterator it1(d_namespaces.begin());
     bsl::vector<bsl::string>::const_iterator it2(d_namespaces.end());
 
     for(int i=0; it1 != it2; ++it1, ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(it1);
         stream << i << " => " << (*it1) << bsl::endl;
     }
 }

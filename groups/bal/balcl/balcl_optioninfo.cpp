@@ -15,6 +15,7 @@ namespace BloombergLP {
 // FREE OPERATORS
 bsl::ostream& balcl::operator<<(bsl::ostream& stream, const OptionInfo& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     static const char NL = '\n';
 
     stream << "{" << '\n';

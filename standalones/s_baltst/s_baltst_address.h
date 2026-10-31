@@ -165,15 +165,18 @@ class Address {
 
     /// Return a reference to the modifiable "Street" attribute of this
     /// object.
-    bsl::string& street();
+    bsl::string& street()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "City" attribute of this
     /// object.
-    bsl::string& city();
+    bsl::string& city()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "State" attribute of this
     /// object.
-    bsl::string& state();
+    bsl::string& state()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -222,15 +225,18 @@ class Address {
 
     /// Return a reference offering non-modifiable access to the "Street"
     /// attribute of this object.
-    const bsl::string& street() const;
+    const bsl::string& street() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "City"
     /// attribute of this object.
-    const bsl::string& city() const;
+    const bsl::string& city() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "State"
     /// attribute of this object.
-    const bsl::string& state() const;
+    const bsl::string& state() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -239,6 +245,8 @@ class Address {
     /// have the same value if each respective attribute has the same value.
     friend bool operator==(const Address& lhs, const Address& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.street() == rhs.street() &&
                lhs.city() == rhs.city() &&
                lhs.state() == rhs.state();

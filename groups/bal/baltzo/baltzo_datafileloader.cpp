@@ -129,9 +129,10 @@ int loadTimeZoneFilePath_Impl(STRING             *result,
                               const char         *timeZoneId,
                               const bsl::string&  rootPath)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rootPath);
     BSLS_ASSERT(result);
     BSLS_ASSERT(timeZoneId);
-    BSLS_ASSERT(u::INVALID_PATH != rootPath);
+    BSLS_ASSERT_NONCONVEYOR(u::INVALID_PATH != rootPath);
 
     BSLMF_ASSERT(u::IsString<STRING>::value);
 
@@ -302,7 +303,8 @@ int DataFileLoader::loadTimeZoneFilePath(std::pmr::string *result,
 
 const bsl::string& DataFileLoader::rootPath() const
 {
-    BSLS_ASSERT(u::INVALID_PATH != d_rootPath);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(u::INVALID_PATH != d_rootPath);
 
     return d_rootPath;
 }

@@ -176,7 +176,8 @@ class CombinationIterator {
                         int               numValues,
                         bslma::Allocator *allocator);
     CombinationIterator(const bsl::vector<T>&  values,
-                        bslma::Allocator      *allocator);
+                        bslma::Allocator      *allocator)
+                                        BSLS_ASSERT_CONVEYOR_TRUST_PRE(values);
 
     /// If this iterator is not at the end of the sequence of combinations,
     /// iterator to the next combination of value and return `true`,
@@ -187,7 +188,8 @@ class CombinationIterator {
 
     /// Return a reference to the non-modifiable combination of
     /// values that the iterator currently is positioned at.
-    const bsl::vector<T>& current() const;
+    const bsl::vector<T>& current() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the `current()` combination contains the value at
     /// the specified `index` in the sequence supplied at construction.
@@ -206,10 +208,12 @@ class CombinationIterator {
 template <class T>
 void CombinationIterator<T>::createCurrentCombination()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_currentCombination.clear();
     for (bsl::size_t i = 0; i < d_values.size(); ++i) {
         if (d_bits & (1 << i)) {
-            d_currentCombination.push_back(d_values[i]);
+            d_currentCombination.push_back(BSLS_ASSERT_CONVEYOR_REF(
+                                                                 d_values[i]));
         }
     }
 }
@@ -282,6 +286,7 @@ int CombinationIterator<T>::position() const
 // FREE OPERATORS
 void gg(balm::MetricFormat *format, const bsl::vector<Type::Value>& types)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&types);
     bsl::vector<Type::Value>::const_iterator tIt = types.begin();
     for ( ; tIt != types.end(); ++tIt) {
         format->setFormatSpec(*tIt, Spec(static_cast<float>(*tIt), "%x"));
@@ -786,7 +791,9 @@ int main(int argc, char *argv[])
 
                 // Add the format spec's based on the combination of types.
                 const bsl::vector<Type::Value>& types = cIter.current();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&types);
                 bsl::vector<Type::Value>::const_iterator tIt = types.begin();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&types);
                 for ( ; tIt != types.end(); ++tIt) {
                     mX.setFormatSpec(*tIt,
                                      Spec(static_cast<float>(*tIt), "%x"));
@@ -1267,8 +1274,10 @@ int main(int argc, char *argv[])
                 bsl::string result1(Z), result2(Z);
 
                 const bsl::vector<char>& combination = iter.current();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&combination);
                 for (bsl::size_t j = 0; j < combination.size();++j) {
-                    result1 += combination[j];
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&combination);
+                    result1 += BSLS_ASSERT_CONVEYOR_REF(combination[j]);
                 }
 
                 for (bsl::size_t j = 0; j < bsl::strlen(VALUES); ++j) {

@@ -70,7 +70,8 @@ PipeTaskManager::PipeTaskManager(
 , d_controlChannel_p(0)
 , d_controlManager_p(controlManager)
 {
-    BSLS_ASSERT(controlManager);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&controlManager);
+    BSLS_ASSERT_NONCONVEYOR(controlManager);
 
     d_controlChannel_p = u::makeControlChannel(d_controlManager_p.get(),
                                                d_allocator_p);
@@ -78,7 +79,7 @@ PipeTaskManager::PipeTaskManager(
 
 PipeTaskManager::~PipeTaskManager()
 {
-    BSLS_ASSERT(d_controlManager_p);
+    BSLS_ASSERT_NONCONVEYOR(d_controlManager_p);
     BSLS_ASSERT(d_controlChannel_p);
 
     shutdown();

@@ -511,11 +511,13 @@ class PipeTaskManager {
 
     /// Return a `const` reference to the `ControlManager` object of this
     /// `PipeTaskManager`.
-    const balb::ControlManager& controlManager() const;
+    const balb::ControlManager& controlManager() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the path of the named pipe used by the implementation.  The
     /// behavior is undefined unless the task manager has been started.
-    const bsl::string& pipeName() const;
+    const bsl::string& pipeName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 
@@ -537,6 +539,7 @@ class PipeTaskManager {
 inline
 balb::ControlManager& PipeTaskManager::controlManager()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_controlManager_p;
 }
 
@@ -557,13 +560,16 @@ int PipeTaskManager::stop()
 inline
 const balb::ControlManager& PipeTaskManager::controlManager() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_controlManager_p;
 }
 
 inline
 const bsl::string& PipeTaskManager::pipeName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_controlChannel_p);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_controlChannel_p);
 
     return d_controlChannel_p->pipeName();
 }

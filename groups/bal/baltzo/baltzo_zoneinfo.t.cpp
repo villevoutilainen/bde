@@ -413,6 +413,8 @@ Obj g(const char *spec)
     static bdlt::DatetimeTz utcToLocalTime(const bdlt::Datetime&   utcTime,
                                            const baltzo::Zoneinfo& timeZone)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&timeZone);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&utcTime);
         // Return the `bdlt::DatetimeTz` value representing the date, time and
         // offset from UTC (rounded to the minute) value of the local time,
         // corresponding to the specified `utcTime` in the specified
@@ -424,8 +426,8 @@ Obj g(const char *spec)
 // `timeZone` contains at least one transitions and comparing `utcTime` to the
 // first transition time in `timeZone`:
 // ```
-        BSLS_ASSERT(0 < timeZone.numTransitions());
-        BSLS_ASSERT(timeZone.firstTransition().utcTime() <=
+        BSLS_ASSERT_NONCONVEYOR(0 < timeZone.numTransitions());
+        BSLS_ASSERT_NONCONVEYOR(timeZone.firstTransition().utcTime() <=
                                    bdlt::EpochUtil::convertToTimeT64(utcTime));
 // ```
 // Next, we obtain the appropriate `baltzo::ZoneinfoTransition` object,
@@ -438,6 +440,7 @@ Obj g(const char *spec)
 // refers, and calculate the offset from UTC rounded to the minute:
 // ..
         const baltzo::ZoneinfoTransition& transition = *it;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&transition);
         const int offsetInMinutes =
                              transition.descriptor().utcOffsetInSeconds() / 60;
 // ```
@@ -542,9 +545,12 @@ int main(int argc, char *argv[])
                                             newYorkTimeZone.beginTransitions();
 
         ASSERT(it->utcTime()    == edtTransitionTime);
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         ASSERT(it->descriptor() == edt);
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         ++it;
         ASSERT(it->utcTime()    == estTransitionTime);
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         ASSERT(it->descriptor() == est);
     }
 // ```
@@ -2568,8 +2574,10 @@ int main(int argc, char *argv[])
                         LOOP4_ASSERT(LINE, CONFIG, ZZ, Z, ZZ == Z);
 
                         // Verify any attribute allocators are installed
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         // properly.
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         LOOP2_ASSERT(LINE, CONFIG,
                                      &oa == X.identifier().get_allocator());
                         LOOP2_ASSERT(LINE, CONFIG,
@@ -3621,6 +3629,7 @@ int main(int argc, char *argv[])
 
                     Obj mA(&oa);  const Obj& A = gg(&mA, SPEC1);
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&A);
                     Transition mX = A.firstTransition();
                     const Transition& X = mX;
 
@@ -3647,17 +3656,21 @@ int main(int argc, char *argv[])
                     bslma::TestAllocator oa2("object2", veryVeryVeryVerbose);
 
                     Obj mA(&oa1);  const Obj& A = gg(&mA, SPEC1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&A);
                     Obj mB(&oa1);  const Obj& B = gg(&mB, SPEC1);
 
                     Transition mX = A.firstTransition();
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&B);
                     const Transition& X = mX;
 
                     const Transition C = B.firstTransition();
 
                     Obj mM(&oa2);  const Obj& M = gg(&mM, SPEC2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&M);
                     Obj mN(&oa2);  const Obj& N = gg(&mN, SPEC2);
 
                     Transition mY = M.firstTransition();
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&N);
                     const Transition& Y = mY;
 
                     const Transition D = N.firstTransition();
@@ -3811,6 +3824,7 @@ int main(int argc, char *argv[])
 
             Obj mA(&oa1);  const Obj& A = gg(&mA, SPEC1);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&A);
             const Transition& X = A.firstTransition();
 
             if (veryVerbose) { T_ P_(LINE1) P_(X) }
@@ -3828,6 +3842,7 @@ int main(int argc, char *argv[])
 
                 Obj mB(&oa2);  const Obj& B = gg(&mB, SPEC2);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&B);
                 const Transition& Z = B.firstTransition();
 
                 const bool EXP = ti == tj;  // expected for equality comparison
@@ -4087,6 +4102,7 @@ int main(int argc, char *argv[])
 
                 Obj mA(&oa);  const Obj& A = gg(&mA, SPEC);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&A);
                 const Transition& X = A.firstTransition();
 
                 if (veryVerbose) { T_ P_(LINE) P_(X) }
@@ -4223,6 +4239,7 @@ int main(int argc, char *argv[])
             ASSERT(1 == (end - begin));
 
             LOOP2_ASSERT(A1, begin->utcTime(),    A1 == begin->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(begin);
             LOOP2_ASSERT(A2, begin->descriptor(), A2 == begin->descriptor());
 
             ASSERT(oam.isInUseSame());  ASSERT(dam.isInUseSame());
@@ -4244,10 +4261,13 @@ int main(int argc, char *argv[])
             ASSERT(2 == (end - begin));
 
             LOOP2_ASSERT(D1, begin->utcTime(),    D1 == begin->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(begin);
             LOOP2_ASSERT(D2, begin->descriptor(), D2 == begin->descriptor());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(begin);
             ++begin;
             LOOP2_ASSERT(A1, begin->utcTime(),    A1 == begin->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(begin);
             LOOP2_ASSERT(A2, begin->descriptor(), A2 == begin->descriptor());
 
             ASSERT(oam.isInUseSame());  ASSERT(dam.isInUseSame());
@@ -4398,6 +4418,7 @@ int main(int argc, char *argv[])
                     const Transition&        T = *objIter;
                     const my_Transition& EXP_T = *expIter;
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&T);
                     LOOP3_ASSERT(LINE, EXP_T.first, T.utcTime(),
                                  EXP_T.first == T.utcTime());
                     LOOP3_ASSERT(LINE, EXP_T.second, T.descriptor(),
@@ -4602,6 +4623,7 @@ int main(int argc, char *argv[])
 
                 // -------------------------------------------------------
                 // Verify any attribute allocators are installed properly.
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 // -------------------------------------------------------
 
                 LOOP_ASSERT(CONFIG, &oa == X.identifier().get_allocator());
@@ -4610,12 +4632,14 @@ int main(int argc, char *argv[])
 
                 // -------------------------------------
                 // Verify the object's attribute values.
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 // -------------------------------------
 
                 LOOP2_ASSERT(CONFIG, X.identifier(),
                              ID == X.identifier());
                 LOOP2_ASSERT(CONFIG, X.numTransitions(),
                              0 == X.numTransitions());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG,
                             X.beginTransitions() == X.endTransitions());
                 LOOP2_ASSERT(CONFIG, X.posixExtendedRangeDescription(),
@@ -4729,6 +4753,7 @@ int main(int argc, char *argv[])
                             const Transition&        T = *objIter;
                             const my_Transition& EXP_T = *expIter;
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&T);
                             LOOP3_ASSERT(LINE, EXP_T.first, T.utcTime(),
                                          EXP_T.first == T.utcTime());
                             LOOP3_ASSERT(LINE, EXP_T.second, T.descriptor(),
@@ -4962,17 +4987,25 @@ int main(int argc, char *argv[])
 
         {
             Obj::TransitionConstIterator itT;
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             itT = X1.beginTransitions();
             ASSERT(FIRST_DATETIME64 == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_A          == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTA_A == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_A == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTB_A == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTB_A == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTC_A == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTC_A == itT->descriptor());
             ++itT;  ASSERT(X1.endTransitions() == itT);
 
@@ -4997,17 +5030,25 @@ int main(int argc, char *argv[])
 
         {
             baltzo::Zoneinfo::TransitionConstIterator itT;
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             itT = X2.beginTransitions();
             ASSERT(FIRST_DATETIME64 == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_A          == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTA_A == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_A == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTB_A == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTB_A == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTC_A == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTC_A == itT->descriptor());
             ++itT;  ASSERT(X2.endTransitions() == itT);
 
@@ -5042,14 +5083,20 @@ int main(int argc, char *argv[])
 
         {
             baltzo::Zoneinfo::TransitionConstIterator itT;
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             itT = X1.beginTransitions();
             ASSERT(FIRST_DATETIME64 == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_B          == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTA_B == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_B == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTB_B == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTB_B == itT->descriptor());
             ++itT;  ASSERT(X1.endTransitions() == itT);
 
@@ -5127,11 +5174,15 @@ int main(int argc, char *argv[])
 
         {
             baltzo::Zoneinfo::TransitionConstIterator itT;
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             itT = X3.beginTransitions();
             ASSERT(FIRST_DATETIME64 == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(           LTA_C == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTA_C == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_C == itT->descriptor());
             ++itT;  ASSERT(X3.endTransitions() == itT);
 
@@ -5158,14 +5209,20 @@ int main(int argc, char *argv[])
 
         {
             baltzo::Zoneinfo::TransitionConstIterator itT;
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             itT = X2.beginTransitions();
             ASSERT(FIRST_DATETIME64 == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_B == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTA_B == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_B == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTB_B == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTB_B == itT->descriptor());
             ++itT;  ASSERT(X2.endTransitions() == itT);
 
@@ -5189,11 +5246,15 @@ int main(int argc, char *argv[])
 
         {
             baltzo::Zoneinfo::TransitionConstIterator itT;
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             itT = X2.beginTransitions();
             ASSERT(FIRST_DATETIME64 == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_C == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTA_C == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_C == itT->descriptor());
             ++itT;  ASSERT(X2.endTransitions() == itT);
             ASSERT(2 == X2.numTransitions());
@@ -5219,14 +5280,20 @@ int main(int argc, char *argv[])
 
         {
             baltzo::Zoneinfo::TransitionConstIterator itT;
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             itT = X1.beginTransitions();
             ASSERT(FIRST_DATETIME64 == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_B == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTA_B == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTA_B == itT->descriptor());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ++itT;
             ASSERT(TTB_B == itT->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(itT);
             ASSERT(LTB_B == itT->descriptor());
             ++itT;  ASSERT(X1.endTransitions() == itT);
             ASSERT(3 == X1.numTransitions());

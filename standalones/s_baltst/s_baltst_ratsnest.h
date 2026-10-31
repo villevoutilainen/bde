@@ -199,27 +199,33 @@ class Sequence3 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    bsl::vector<s_baltst::Enumerated::Value>& element1();
+    bsl::vector<s_baltst::Enumerated::Value>& element1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bsl::vector<bsl::string>& element2();
+    bsl::vector<bsl::string>& element2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bdlb::NullableValue<bool>& element3();
+    bdlb::NullableValue<bool>& element3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& element4();
+    bdlb::NullableValue<bsl::string>& element4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    bdlb::NullableAllocatedValue<Sequence5>& element5();
+    bdlb::NullableAllocatedValue<Sequence5>& element5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element6" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<s_baltst::Enumerated::Value> >& element6();
+    bsl::vector<bdlb::NullableValue<s_baltst::Enumerated::Value> >& element6()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -268,27 +274,33 @@ class Sequence3 {
 
     /// Return a reference offering non-modifiable access to the "Element1"
     /// attribute of this object.
-    const bsl::vector<s_baltst::Enumerated::Value>& element1() const;
+    const bsl::vector<s_baltst::Enumerated::Value>& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element2"
     /// attribute of this object.
-    const bsl::vector<bsl::string>& element2() const;
+    const bsl::vector<bsl::string>& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element3"
     /// attribute of this object.
-    const bdlb::NullableValue<bool>& element3() const;
+    const bdlb::NullableValue<bool>& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element4"
     /// attribute of this object.
-    const bdlb::NullableValue<bsl::string>& element4() const;
+    const bdlb::NullableValue<bsl::string>& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element5"
     /// attribute of this object.
-    const bdlb::NullableAllocatedValue<Sequence5>& element5() const;
+    const bdlb::NullableAllocatedValue<Sequence5>& element5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element6"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<s_baltst::Enumerated::Value> >& element6() const;
+    const bsl::vector<bdlb::NullableValue<s_baltst::Enumerated::Value> >& element6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -471,31 +483,38 @@ class Sequence5 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    Sequence3& element1();
+    Sequence3& element1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<bool> >& element2();
+    bsl::vector<bdlb::NullableValue<bool> >& element2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<double> >& element3();
+    bsl::vector<bdlb::NullableValue<double> >& element3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::vector<char> >& element4();
+    bdlb::NullableValue<bsl::vector<char> >& element4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<int> >& element5();
+    bsl::vector<bdlb::NullableValue<int> >& element5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element6" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& element6();
+    bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& element6()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element7" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& element7();
+    bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& element7()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -544,31 +563,38 @@ class Sequence5 {
 
     /// Return a reference offering non-modifiable access to the "Element1"
     /// attribute of this object.
-    const Sequence3& element1() const;
+    const Sequence3& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element2"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<bool> >& element2() const;
+    const bsl::vector<bdlb::NullableValue<bool> >& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element3"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<double> >& element3() const;
+    const bsl::vector<bdlb::NullableValue<double> >& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element4"
     /// attribute of this object.
-    const bdlb::NullableValue<bsl::vector<char> >& element4() const;
+    const bdlb::NullableValue<bsl::vector<char> >& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element5"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<int> >& element5() const;
+    const bsl::vector<bdlb::NullableValue<int> >& element5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element6"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& element6() const;
+    const bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& element6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element7"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& element7() const;
+    const bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& element7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -774,63 +800,78 @@ class Sequence6 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    bdlb::NullableValue<unsigned char>& element1();
+    bdlb::NullableValue<unsigned char>& element1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bdlb::NullableValue<s_baltst::CustomString>& element2();
+    bdlb::NullableValue<s_baltst::CustomString>& element2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bdlb::NullableValue<s_baltst::CustomInt>& element3();
+    bdlb::NullableValue<s_baltst::CustomInt>& element3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    unsigned int& element4();
+    unsigned int& element4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    unsigned char& element5();
+    unsigned char& element5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element6" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<s_baltst::CustomInt> >& element6();
+    bsl::vector<bdlb::NullableValue<s_baltst::CustomInt> >& element6()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element7" attribute of this
     /// object.
-    s_baltst::CustomString& element7();
+    s_baltst::CustomString& element7()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element8" attribute of this
     /// object.
-    s_baltst::CustomInt& element8();
+    s_baltst::CustomInt& element8()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element9" attribute of this
     /// object.
-    bdlb::NullableValue<unsigned int>& element9();
+    bdlb::NullableValue<unsigned int>& element9()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element10" attribute of this
     /// object.
-    bsl::vector<unsigned char>& element10();
+    bsl::vector<unsigned char>& element10()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element11" attribute of this
     /// object.
-    bsl::vector<s_baltst::CustomString>& element11();
+    bsl::vector<s_baltst::CustomString>& element11()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element12" attribute of this
     /// object.
-    bsl::vector<unsigned int>& element12();
+    bsl::vector<unsigned int>& element12()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element13" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<unsigned char> >& element13();
+    bsl::vector<bdlb::NullableValue<unsigned char> >& element13()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element14" attribute of this
     /// object.
-    bsl::vector<s_baltst::CustomInt>& element14();
+    bsl::vector<s_baltst::CustomInt>& element14()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element15" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<unsigned int> >& element15();
+    bsl::vector<bdlb::NullableValue<unsigned int> >& element15()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -879,15 +920,18 @@ class Sequence6 {
 
     /// Return a reference offering non-modifiable access to the "Element1"
     /// attribute of this object.
-    const bdlb::NullableValue<unsigned char>& element1() const;
+    const bdlb::NullableValue<unsigned char>& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element2"
     /// attribute of this object.
-    const bdlb::NullableValue<s_baltst::CustomString>& element2() const;
+    const bdlb::NullableValue<s_baltst::CustomString>& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element3"
     /// attribute of this object.
-    const bdlb::NullableValue<s_baltst::CustomInt>& element3() const;
+    const bdlb::NullableValue<s_baltst::CustomInt>& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the "Element4" attribute of this object.
     unsigned int element4() const;
@@ -897,43 +941,53 @@ class Sequence6 {
 
     /// Return a reference offering non-modifiable access to the "Element6"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<s_baltst::CustomInt> >& element6() const;
+    const bsl::vector<bdlb::NullableValue<s_baltst::CustomInt> >& element6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element7"
     /// attribute of this object.
-    const s_baltst::CustomString& element7() const;
+    const s_baltst::CustomString& element7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element8"
     /// attribute of this object.
-    const s_baltst::CustomInt& element8() const;
+    const s_baltst::CustomInt& element8() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element9"
     /// attribute of this object.
-    const bdlb::NullableValue<unsigned int>& element9() const;
+    const bdlb::NullableValue<unsigned int>& element9() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element10"
     /// attribute of this object.
-    const bsl::vector<unsigned char>& element10() const;
+    const bsl::vector<unsigned char>& element10() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element11"
     /// attribute of this object.
-    const bsl::vector<s_baltst::CustomString>& element11() const;
+    const bsl::vector<s_baltst::CustomString>& element11() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element12"
     /// attribute of this object.
-    const bsl::vector<unsigned int>& element12() const;
+    const bsl::vector<unsigned int>& element12() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element13"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<unsigned char> >& element13() const;
+    const bsl::vector<bdlb::NullableValue<unsigned char> >& element13() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element14"
     /// attribute of this object.
-    const bsl::vector<s_baltst::CustomInt>& element14() const;
+    const bsl::vector<s_baltst::CustomInt>& element14() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element15"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<unsigned int> >& element15() const;
+    const bsl::vector<bdlb::NullableValue<unsigned int> >& element15() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -1092,11 +1146,14 @@ class Choice3 {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    Sequence6& makeSelection1();
-    Sequence6& makeSelection1(const Sequence6& value);
+    Sequence6& makeSelection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence6& makeSelection1(const Sequence6& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    Sequence6& makeSelection1(Sequence6&& value);
+    Sequence6& makeSelection1(Sequence6&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection1" value.  Optionally
         // specify the 'value' of the "Selection1".  If 'value' is not
@@ -1105,24 +1162,32 @@ class Choice3 {
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    unsigned char& makeSelection2();
-    unsigned char& makeSelection2(unsigned char value);
+    unsigned char& makeSelection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned char& makeSelection2(unsigned char value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    s_baltst::CustomString& makeSelection3();
-    s_baltst::CustomString& makeSelection3(const s_baltst::CustomString& value);
+    s_baltst::CustomString& makeSelection3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::CustomString& makeSelection3(const s_baltst::CustomString& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::CustomString& makeSelection3(s_baltst::CustomString&& value);
+    s_baltst::CustomString& makeSelection3(s_baltst::CustomString&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection3" value.  Optionally
         // specify the 'value' of the "Selection3".  If 'value' is not
         // specified, the default "Selection3" value is used.
 
-    s_baltst::CustomInt& makeSelection4();
-    s_baltst::CustomInt& makeSelection4(const s_baltst::CustomInt& value);
+    s_baltst::CustomInt& makeSelection4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::CustomInt& makeSelection4(const s_baltst::CustomInt& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::CustomInt& makeSelection4(s_baltst::CustomInt&& value);
+    s_baltst::CustomInt& makeSelection4(s_baltst::CustomInt&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection4" value.  Optionally
         // specify the 'value' of the "Selection4".  If 'value' is not
@@ -1139,22 +1204,26 @@ class Choice3 {
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
     /// undefined unless "Selection1" is the selection of this object.
-    Sequence6& selection1();
+    Sequence6& selection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection2" selection of this
     /// object if "Selection2" is the current selection.  The behavior is
     /// undefined unless "Selection2" is the selection of this object.
-    unsigned char& selection2();
+    unsigned char& selection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection3" selection of this
     /// object if "Selection3" is the current selection.  The behavior is
     /// undefined unless "Selection3" is the selection of this object.
-    s_baltst::CustomString& selection3();
+    s_baltst::CustomString& selection3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection4" selection of this
     /// object if "Selection4" is the current selection.  The behavior is
     /// undefined unless "Selection4" is the selection of this object.
-    s_baltst::CustomInt& selection4();
+    s_baltst::CustomInt& selection4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1187,22 +1256,26 @@ class Choice3 {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const Sequence6& selection1() const;
+    const Sequence6& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const unsigned char& selection2() const;
+    const unsigned char& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection3" selection of
     /// this object if "Selection3" is the current selection.  The behavior
     /// is undefined unless "Selection3" is the selection of this object.
-    const s_baltst::CustomString& selection3() const;
+    const s_baltst::CustomString& selection3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection4" selection of
     /// this object if "Selection4" is the current selection.  The behavior
     /// is undefined unless "Selection4" is the selection of this object.
-    const s_baltst::CustomInt& selection4() const;
+    const s_baltst::CustomInt& selection4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -1388,30 +1461,40 @@ class Choice1 {
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    int& makeSelection1();
-    int& makeSelection1(int value);
+    int& makeSelection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeSelection1(int value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    double& makeSelection2();
-    double& makeSelection2(double value);
+    double& makeSelection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    double& makeSelection2(double value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    Sequence4& makeSelection3();
-    Sequence4& makeSelection3(const Sequence4& value);
+    Sequence4& makeSelection3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence4& makeSelection3(const Sequence4& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    Sequence4& makeSelection3(Sequence4&& value);
+    Sequence4& makeSelection3(Sequence4&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection3" value.  Optionally
         // specify the 'value' of the "Selection3".  If 'value' is not
         // specified, the default "Selection3" value is used.
 
-    Choice2& makeSelection4();
-    Choice2& makeSelection4(const Choice2& value);
+    Choice2& makeSelection4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Choice2& makeSelection4(const Choice2& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    Choice2& makeSelection4(Choice2&& value);
+    Choice2& makeSelection4(Choice2&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection4" value.  Optionally
         // specify the 'value' of the "Selection4".  If 'value' is not
@@ -1428,22 +1511,26 @@ class Choice1 {
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
     /// undefined unless "Selection1" is the selection of this object.
-    int& selection1();
+    int& selection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection2" selection of this
     /// object if "Selection2" is the current selection.  The behavior is
     /// undefined unless "Selection2" is the selection of this object.
-    double& selection2();
+    double& selection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection3" selection of this
     /// object if "Selection3" is the current selection.  The behavior is
     /// undefined unless "Selection3" is the selection of this object.
-    Sequence4& selection3();
+    Sequence4& selection3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection4" selection of this
     /// object if "Selection4" is the current selection.  The behavior is
     /// undefined unless "Selection4" is the selection of this object.
-    Choice2& selection4();
+    Choice2& selection4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1476,22 +1563,26 @@ class Choice1 {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const int& selection1() const;
+    const int& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const double& selection2() const;
+    const double& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection3" selection of
     /// this object if "Selection3" is the current selection.  The behavior
     /// is undefined unless "Selection3" is the selection of this object.
-    const Sequence4& selection3() const;
+    const Sequence4& selection3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection4" selection of
     /// this object if "Selection4" is the current selection.  The behavior
     /// is undefined unless "Selection4" is the selection of this object.
-    const Choice2& selection4() const;
+    const Choice2& selection4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -1677,24 +1768,32 @@ class Choice2 {
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    bool& makeSelection1();
-    bool& makeSelection1(bool value);
+    bool& makeSelection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bool& makeSelection1(bool value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    bsl::string& makeSelection2();
-    bsl::string& makeSelection2(const bsl::string& value);
+    bsl::string& makeSelection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& makeSelection2(const bsl::string& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    bsl::string& makeSelection2(bsl::string&& value);
+    bsl::string& makeSelection2(bsl::string&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection2" value.  Optionally
         // specify the 'value' of the "Selection2".  If 'value' is not
         // specified, the default "Selection2" value is used.
 
-    Choice1& makeSelection3();
-    Choice1& makeSelection3(const Choice1& value);
+    Choice1& makeSelection3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Choice1& makeSelection3(const Choice1& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    Choice1& makeSelection3(Choice1&& value);
+    Choice1& makeSelection3(Choice1&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection3" value.  Optionally
         // specify the 'value' of the "Selection3".  If 'value' is not
@@ -1703,8 +1802,10 @@ class Choice2 {
     /// Set the value of this object to be a "Selection4" value.  Optionally
     /// specify the `value` of the "Selection4".  If `value` is not
     /// specified, the default "Selection4" value is used.
-    unsigned int& makeSelection4();
-    unsigned int& makeSelection4(unsigned int value);
+    unsigned int& makeSelection4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned int& makeSelection4(unsigned int value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -1717,22 +1818,26 @@ class Choice2 {
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
     /// undefined unless "Selection1" is the selection of this object.
-    bool& selection1();
+    bool& selection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection2" selection of this
     /// object if "Selection2" is the current selection.  The behavior is
     /// undefined unless "Selection2" is the selection of this object.
-    bsl::string& selection2();
+    bsl::string& selection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection3" selection of this
     /// object if "Selection3" is the current selection.  The behavior is
     /// undefined unless "Selection3" is the selection of this object.
-    Choice1& selection3();
+    Choice1& selection3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection4" selection of this
     /// object if "Selection4" is the current selection.  The behavior is
     /// undefined unless "Selection4" is the selection of this object.
-    unsigned int& selection4();
+    unsigned int& selection4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1765,22 +1870,26 @@ class Choice2 {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const bool& selection1() const;
+    const bool& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const bsl::string& selection2() const;
+    const bsl::string& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection3" selection of
     /// this object if "Selection3" is the current selection.  The behavior
     /// is undefined unless "Selection3" is the selection of this object.
-    const Choice1& selection3() const;
+    const Choice1& selection3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection4" selection of
     /// this object if "Selection4" is the current selection.  The behavior
     /// is undefined unless "Selection4" is the selection of this object.
-    const unsigned int& selection4() const;
+    const unsigned int& selection4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -2022,79 +2131,98 @@ class Sequence4 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    bsl::vector<Sequence3>& element1();
+    bsl::vector<Sequence3>& element1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bsl::vector<Choice1>& element2();
+    bsl::vector<Choice1>& element2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::vector<char> >& element3();
+    bdlb::NullableValue<bsl::vector<char> >& element3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    bdlb::NullableValue<int>& element4();
+    bdlb::NullableValue<int>& element4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    bdlb::NullableValue<bdlt::DatetimeTz>& element5();
+    bdlb::NullableValue<bdlt::DatetimeTz>& element5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element6" attribute of this
     /// object.
-    bdlb::NullableValue<s_baltst::CustomString>& element6();
+    bdlb::NullableValue<s_baltst::CustomString>& element6()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element7" attribute of this
     /// object.
-    bdlb::NullableValue<s_baltst::Enumerated::Value>& element7();
+    bdlb::NullableValue<s_baltst::Enumerated::Value>& element7()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element8" attribute of this
     /// object.
-    bool& element8();
+    bool& element8()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element9" attribute of this
     /// object.
-    bsl::string& element9();
+    bsl::string& element9()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element10" attribute of this
     /// object.
-    double& element10();
+    double& element10()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element11" attribute of this
     /// object.
-    bsl::vector<char>& element11();
+    bsl::vector<char>& element11()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element12" attribute of this
     /// object.
-    int& element12();
+    int& element12()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element13" attribute of this
     /// object.
-    s_baltst::Enumerated::Value& element13();
+    s_baltst::Enumerated::Value& element13()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element14" attribute of this
     /// object.
-    bsl::vector<bool>& element14();
+    bsl::vector<bool>& element14()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element15" attribute of this
     /// object.
-    bsl::vector<double>& element15();
+    bsl::vector<double>& element15()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element16" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::vector<char> >& element16();
+    bdlb::NullableValue<bsl::vector<char> >& element16()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element17" attribute of this
     /// object.
-    bsl::vector<int>& element17();
+    bsl::vector<int>& element17()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element18" attribute of this
     /// object.
-    bsl::vector<bdlt::DatetimeTz>& element18();
+    bsl::vector<bdlt::DatetimeTz>& element18()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element19" attribute of this
     /// object.
-    bsl::vector<s_baltst::CustomString>& element19();
+    bsl::vector<s_baltst::CustomString>& element19()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2143,45 +2271,54 @@ class Sequence4 {
 
     /// Return a reference offering non-modifiable access to the "Element1"
     /// attribute of this object.
-    const bsl::vector<Sequence3>& element1() const;
+    const bsl::vector<Sequence3>& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element2"
     /// attribute of this object.
-    const bsl::vector<Choice1>& element2() const;
+    const bsl::vector<Choice1>& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element3"
     /// attribute of this object.
-    const bdlb::NullableValue<bsl::vector<char> >& element3() const;
+    const bdlb::NullableValue<bsl::vector<char> >& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element4"
     /// attribute of this object.
-    const bdlb::NullableValue<int>& element4() const;
+    const bdlb::NullableValue<int>& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element5"
     /// attribute of this object.
-    const bdlb::NullableValue<bdlt::DatetimeTz>& element5() const;
+    const bdlb::NullableValue<bdlt::DatetimeTz>& element5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element6"
     /// attribute of this object.
-    const bdlb::NullableValue<s_baltst::CustomString>& element6() const;
+    const bdlb::NullableValue<s_baltst::CustomString>& element6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element7"
     /// attribute of this object.
-    const bdlb::NullableValue<s_baltst::Enumerated::Value>& element7() const;
+    const bdlb::NullableValue<s_baltst::Enumerated::Value>& element7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the "Element8" attribute of this object.
     bool element8() const;
 
     /// Return a reference offering non-modifiable access to the "Element9"
     /// attribute of this object.
-    const bsl::string& element9() const;
+    const bsl::string& element9() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the "Element10" attribute of this object.
     double element10() const;
 
     /// Return a reference offering non-modifiable access to the "Element11"
     /// attribute of this object.
-    const bsl::vector<char>& element11() const;
+    const bsl::vector<char>& element11() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the "Element12" attribute of this object.
     int element12() const;
@@ -2191,27 +2328,33 @@ class Sequence4 {
 
     /// Return a reference offering non-modifiable access to the "Element14"
     /// attribute of this object.
-    const bsl::vector<bool>& element14() const;
+    const bsl::vector<bool>& element14() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element15"
     /// attribute of this object.
-    const bsl::vector<double>& element15() const;
+    const bsl::vector<double>& element15() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element16"
     /// attribute of this object.
-    const bdlb::NullableValue<bsl::vector<char> >& element16() const;
+    const bdlb::NullableValue<bsl::vector<char> >& element16() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element17"
     /// attribute of this object.
-    const bsl::vector<int>& element17() const;
+    const bsl::vector<int>& element17() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element18"
     /// attribute of this object.
-    const bsl::vector<bdlt::DatetimeTz>& element18() const;
+    const bsl::vector<bdlt::DatetimeTz>& element18() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element19"
     /// attribute of this object.
-    const bsl::vector<s_baltst::CustomString>& element19() const;
+    const bsl::vector<s_baltst::CustomString>& element19() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -2388,23 +2531,28 @@ class Sequence1 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    bdlb::NullableValue<Choice3>& element1();
+    bdlb::NullableValue<Choice3>& element1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bsl::vector<Choice1>& element2();
+    bsl::vector<Choice1>& element2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    Choice2& element3();
+    Choice2& element3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<Choice1> >& element4();
+    bsl::vector<bdlb::NullableValue<Choice1> >& element4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    bsl::vector<Choice3>& element5();
+    bsl::vector<Choice3>& element5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2453,23 +2601,28 @@ class Sequence1 {
 
     /// Return a reference offering non-modifiable access to the "Element1"
     /// attribute of this object.
-    const bdlb::NullableValue<Choice3>& element1() const;
+    const bdlb::NullableValue<Choice3>& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element2"
     /// attribute of this object.
-    const bsl::vector<Choice1>& element2() const;
+    const bsl::vector<Choice1>& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element3"
     /// attribute of this object.
-    const Choice2& element3() const;
+    const Choice2& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element4"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<Choice1> >& element4() const;
+    const bsl::vector<bdlb::NullableValue<Choice1> >& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element5"
     /// attribute of this object.
-    const bsl::vector<Choice3>& element5() const;
+    const bsl::vector<Choice3>& element5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -2651,31 +2804,38 @@ class Sequence2 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    s_baltst::CustomString& element1();
+    s_baltst::CustomString& element1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    unsigned char& element2();
+    unsigned char& element2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bdlt::DatetimeTz& element3();
+    bdlt::DatetimeTz& element3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    bdlb::NullableValue<Choice1>& element4();
+    bdlb::NullableValue<Choice1>& element4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    bdlb::NullableValue<double>& element5();
+    bdlb::NullableValue<double>& element5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element6" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<bsl::string> >& element6();
+    bsl::vector<bdlb::NullableValue<bsl::string> >& element6()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element7" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<s_baltst::CustomString> >& element7();
+    bsl::vector<bdlb::NullableValue<s_baltst::CustomString> >& element7()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2724,30 +2884,36 @@ class Sequence2 {
 
     /// Return a reference offering non-modifiable access to the "Element1"
     /// attribute of this object.
-    const s_baltst::CustomString& element1() const;
+    const s_baltst::CustomString& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the "Element2" attribute of this object.
     unsigned char element2() const;
 
     /// Return a reference offering non-modifiable access to the "Element3"
     /// attribute of this object.
-    const bdlt::DatetimeTz& element3() const;
+    const bdlt::DatetimeTz& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element4"
     /// attribute of this object.
-    const bdlb::NullableValue<Choice1>& element4() const;
+    const bdlb::NullableValue<Choice1>& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element5"
     /// attribute of this object.
-    const bdlb::NullableValue<double>& element5() const;
+    const bdlb::NullableValue<double>& element5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element6"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<bsl::string> >& element6() const;
+    const bsl::vector<bdlb::NullableValue<bsl::string> >& element6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element7"
     /// attribute of this object.
-    const bsl::vector<bdlb::NullableValue<s_baltst::CustomString> >& element7() const;
+    const bsl::vector<bdlb::NullableValue<s_baltst::CustomString> >& element7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -2795,6 +2961,8 @@ namespace s_baltst {
 inline
 bool Sequence3::isEqualTo(const Sequence3& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->element1() == rhs.element1() &&
            this->element2() == rhs.element2() &&
            this->element3() == rhs.element3() &&
@@ -3056,6 +3224,8 @@ const bsl::vector<bdlb::NullableValue<s_baltst::Enumerated::Value> >& Sequence3:
 inline
 bool Sequence5::isEqualTo(const Sequence5& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->element1() == rhs.element1() &&
            this->element2() == rhs.element2() &&
            this->element3() == rhs.element3() &&
@@ -3070,6 +3240,7 @@ bool Sequence5::isEqualTo(const Sequence5& rhs) const
 template <typename t_MANIPULATOR>
 int Sequence5::manipulateAttributes(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int ret;
 
     BSLS_ASSERT(d_element1);
@@ -3114,6 +3285,7 @@ int Sequence5::manipulateAttributes(t_MANIPULATOR& manipulator)
 template <typename t_MANIPULATOR>
 int Sequence5::manipulateAttribute(t_MANIPULATOR& manipulator, int id)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { NOT_FOUND = -1 };
 
     switch (id) {
@@ -3150,6 +3322,7 @@ int Sequence5::manipulateAttribute(
         const char    *name,
         int            nameLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { NOT_FOUND = -1 };
 
     const bdlat_AttributeInfo *attributeInfo =
@@ -3164,6 +3337,7 @@ int Sequence5::manipulateAttribute(
 inline
 Sequence3& Sequence5::element1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_element1);
     return *d_element1;
 }
@@ -3208,6 +3382,7 @@ bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& Sequence5::element7()
 template <typename t_ACCESSOR>
 int Sequence5::accessAttributes(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int ret;
 
     BSLS_ASSERT(d_element1);
@@ -3252,6 +3427,7 @@ int Sequence5::accessAttributes(t_ACCESSOR& accessor) const
 template <typename t_ACCESSOR>
 int Sequence5::accessAttribute(t_ACCESSOR& accessor, int id) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { NOT_FOUND = -1 };
 
     switch (id) {
@@ -3288,6 +3464,7 @@ int Sequence5::accessAttribute(
         const char  *name,
         int          nameLength) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { NOT_FOUND = -1 };
 
     const bdlat_AttributeInfo *attributeInfo =
@@ -3302,6 +3479,7 @@ int Sequence5::accessAttribute(
 inline
 const Sequence3& Sequence5::element1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_element1);
     return *d_element1;
 }
@@ -3352,6 +3530,8 @@ const bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& Sequence5::element7
 inline
 bool Sequence6::isEqualTo(const Sequence6& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->element1() == rhs.element1() &&
            this->element2() == rhs.element2() &&
            this->element3() == rhs.element3() &&
@@ -3875,6 +4055,8 @@ const bsl::vector<bdlb::NullableValue<unsigned int> >& Sequence6::element15() co
 inline
 bool Choice3::isEqualTo(const Choice3& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef Choice3 Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -3887,7 +4069,8 @@ bool Choice3::isEqualTo(const Choice3& rhs) const
           case Class::SELECTION_ID_SELECTION4:
             return this->selection4() == rhs.selection4();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -3914,6 +4097,7 @@ Choice3::~Choice3()
 template <typename t_MANIPULATOR>
 int Choice3::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case Choice3::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -3936,6 +4120,7 @@ int Choice3::manipulateSelection(t_MANIPULATOR& manipulator)
 inline
 Sequence6& Choice3::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -3943,6 +4128,7 @@ Sequence6& Choice3::selection1()
 inline
 unsigned char& Choice3::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -3950,6 +4136,7 @@ unsigned char& Choice3::selection2()
 inline
 s_baltst::CustomString& Choice3::selection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -3957,6 +4144,7 @@ s_baltst::CustomString& Choice3::selection3()
 inline
 s_baltst::CustomInt& Choice3::selection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return d_selection4.object();
 }
@@ -3971,6 +4159,7 @@ int Choice3::selectionId() const
 template <typename t_ACCESSOR>
 int Choice3::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -3993,6 +4182,7 @@ int Choice3::accessSelection(t_ACCESSOR& accessor) const
 inline
 const Sequence6& Choice3::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -4000,6 +4190,7 @@ const Sequence6& Choice3::selection1() const
 inline
 const unsigned char& Choice3::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -4007,6 +4198,7 @@ const unsigned char& Choice3::selection2() const
 inline
 const s_baltst::CustomString& Choice3::selection3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -4058,6 +4250,8 @@ bool Choice3::isUndefinedValue() const
 inline
 bool Choice1::isEqualTo(const Choice1& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef Choice1 Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -4070,7 +4264,8 @@ bool Choice1::isEqualTo(const Choice1& rhs) const
           case Class::SELECTION_ID_SELECTION4:
             return this->selection4() == rhs.selection4();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -4097,6 +4292,7 @@ Choice1::~Choice1()
 template <typename t_MANIPULATOR>
 int Choice1::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case Choice1::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -4119,6 +4315,7 @@ int Choice1::manipulateSelection(t_MANIPULATOR& manipulator)
 inline
 int& Choice1::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -4126,6 +4323,7 @@ int& Choice1::selection1()
 inline
 double& Choice1::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -4133,6 +4331,7 @@ double& Choice1::selection2()
 inline
 Sequence4& Choice1::selection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return *d_selection3;
 }
@@ -4140,6 +4339,7 @@ Sequence4& Choice1::selection3()
 inline
 Choice2& Choice1::selection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return *d_selection4;
 }
@@ -4148,12 +4348,14 @@ Choice2& Choice1::selection4()
 inline
 int Choice1::selectionId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_selectionId;
 }
 
 template <typename t_ACCESSOR>
 int Choice1::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -4176,6 +4378,7 @@ int Choice1::accessSelection(t_ACCESSOR& accessor) const
 inline
 const int& Choice1::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -4183,6 +4386,7 @@ const int& Choice1::selection1() const
 inline
 const double& Choice1::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -4190,6 +4394,7 @@ const double& Choice1::selection2() const
 inline
 const Sequence4& Choice1::selection3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return *d_selection3;
 }
@@ -4241,6 +4446,8 @@ bool Choice1::isUndefinedValue() const
 inline
 bool Choice2::isEqualTo(const Choice2& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef Choice2 Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -4253,7 +4460,8 @@ bool Choice2::isEqualTo(const Choice2& rhs) const
           case Class::SELECTION_ID_SELECTION4:
             return this->selection4() == rhs.selection4();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -4273,6 +4481,7 @@ Choice2::Choice2(bslma::Allocator *basicAllocator)
 inline
 Choice2::~Choice2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
 }
 
@@ -4280,6 +4489,7 @@ Choice2::~Choice2()
 template <typename t_MANIPULATOR>
 int Choice2::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case Choice2::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -4302,6 +4512,7 @@ int Choice2::manipulateSelection(t_MANIPULATOR& manipulator)
 inline
 bool& Choice2::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -4309,6 +4520,7 @@ bool& Choice2::selection1()
 inline
 bsl::string& Choice2::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -4316,6 +4528,7 @@ bsl::string& Choice2::selection2()
 inline
 Choice1& Choice2::selection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return *d_selection3;
 }
@@ -4323,6 +4536,7 @@ Choice1& Choice2::selection3()
 inline
 unsigned int& Choice2::selection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return d_selection4.object();
 }
@@ -4331,12 +4545,14 @@ unsigned int& Choice2::selection4()
 inline
 int Choice2::selectionId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_selectionId;
 }
 
 template <typename t_ACCESSOR>
 int Choice2::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -4359,6 +4575,7 @@ int Choice2::accessSelection(t_ACCESSOR& accessor) const
 inline
 const bool& Choice2::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -4366,6 +4583,7 @@ const bool& Choice2::selection1() const
 inline
 const bsl::string& Choice2::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -4399,18 +4617,21 @@ bool Choice2::isSelection2Value() const
 inline
 bool Choice2::isSelection3Value() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return SELECTION_ID_SELECTION3 == d_selectionId;
 }
 
 inline
 bool Choice2::isSelection4Value() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return SELECTION_ID_SELECTION4 == d_selectionId;
 }
 
 inline
 bool Choice2::isUndefinedValue() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return SELECTION_ID_UNDEFINED == d_selectionId;
 }
 
@@ -4423,6 +4644,8 @@ bool Choice2::isUndefinedValue() const
 inline
 bool Sequence4::isEqualTo(const Sequence4& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->element1() == rhs.element1() &&
            this->element2() == rhs.element2() &&
            this->element3() == rhs.element3() &&
@@ -5036,6 +5259,7 @@ const bdlb::NullableValue<bsl::vector<char> >& Sequence4::element16() const
 inline
 const bsl::vector<int>& Sequence4::element17() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element17;
 }
 
@@ -5048,6 +5272,7 @@ const bsl::vector<bdlt::DatetimeTz>& Sequence4::element18() const
 inline
 const bsl::vector<s_baltst::CustomString>& Sequence4::element19() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element19;
 }
 
@@ -5061,6 +5286,8 @@ const bsl::vector<s_baltst::CustomString>& Sequence4::element19() const
 inline
 bool Sequence1::isEqualTo(const Sequence1& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->element1() == rhs.element1() &&
            this->element2() == rhs.element2() &&
            this->element3() == rhs.element3() &&
@@ -5073,6 +5300,7 @@ bool Sequence1::isEqualTo(const Sequence1& rhs) const
 template <typename t_MANIPULATOR>
 int Sequence1::manipulateAttributes(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int ret;
 
     ret = manipulator(&d_element1, ATTRIBUTE_INFO_ARRAY[ATTRIBUTE_INDEX_ELEMENT1]);
@@ -5107,6 +5335,7 @@ int Sequence1::manipulateAttributes(t_MANIPULATOR& manipulator)
 template <typename t_MANIPULATOR>
 int Sequence1::manipulateAttribute(t_MANIPULATOR& manipulator, int id)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { NOT_FOUND = -1 };
 
     switch (id) {
@@ -5163,6 +5392,7 @@ bsl::vector<Choice1>& Sequence1::element2()
 inline
 Choice2& Sequence1::element3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_element3);
     return *d_element3;
 }
@@ -5183,6 +5413,7 @@ bsl::vector<Choice3>& Sequence1::element5()
 template <typename t_ACCESSOR>
 int Sequence1::accessAttributes(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int ret;
 
     ret = accessor(d_element1, ATTRIBUTE_INFO_ARRAY[ATTRIBUTE_INDEX_ELEMENT1]);
@@ -5217,6 +5448,7 @@ int Sequence1::accessAttributes(t_ACCESSOR& accessor) const
 template <typename t_ACCESSOR>
 int Sequence1::accessAttribute(t_ACCESSOR& accessor, int id) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { NOT_FOUND = -1 };
 
     switch (id) {
@@ -5273,6 +5505,7 @@ const bsl::vector<Choice1>& Sequence1::element2() const
 inline
 const Choice2& Sequence1::element3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_element3);
     return *d_element3;
 }
@@ -5299,6 +5532,8 @@ const bsl::vector<Choice3>& Sequence1::element5() const
 inline
 bool Sequence2::isEqualTo(const Sequence2& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->element1() == rhs.element1() &&
            this->element2() == rhs.element2() &&
            this->element3() == rhs.element3() &&

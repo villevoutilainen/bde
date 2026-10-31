@@ -265,6 +265,9 @@ const int UTC_MAX =  24 * 60 * 60 - 1;
                               const bdlt::Datetime&  utcTime,
                               const Obj&             period)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&period);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&utcTime);
+        BSLS_ASSERT_CONVEYOR_OBJECT(result);
         BSLS_ASSERT(result);
 
         if (utcTime <  period.utcStartTime() ||
@@ -1071,6 +1074,7 @@ int main(int argc, char *argv[])
                     ASSERTV(LINE, CONFIG, ZZ, Z, &oa == &za || ZZ == Z);
 
                     // -------------------------------------------------------
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     // Verify any attribute allocators are installed properly.
                     // -------------------------------------------------------
 
@@ -2447,6 +2451,7 @@ int main(int argc, char *argv[])
                     LOOP4_ASSERT(LINE, CONFIG, ZZ, Z, ZZ == Z);
 
                     // -------------------------------------------------------
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     // Verify any attribute allocators are installed properly.
                     // -------------------------------------------------------
 
@@ -3557,12 +3562,15 @@ int main(int argc, char *argv[])
                     }
 
                     // -------------------------------------
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     // Verify the object's attribute values.
                     // -------------------------------------
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP4_ASSERT(LINE, CONFIG, DESCR, X.descriptor(),
                                  DESCR == X.descriptor());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP4_ASSERT(LINE, CONFIG, START, X.utcStartTime(),
                                  START == X.utcStartTime());
 
@@ -3570,6 +3578,7 @@ int main(int argc, char *argv[])
                                  END == X.utcEndTime());
 
                     // -------------------------------------------------------
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     // Verify any attribute allocators are installed properly.
                     // -------------------------------------------------------
 
@@ -3885,6 +3894,7 @@ int main(int argc, char *argv[])
             bslma::TestAllocator& noa = 'd' != CONFIG ? sa : da;
 
             // -------------------------------------------------------
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             // Verify any attribute allocators are installed properly.
             // -------------------------------------------------------
 
@@ -3902,6 +3912,7 @@ int main(int argc, char *argv[])
                          0 == noa.numBlocksTotal());
 
             // -------------------------------------
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             // Verify the object's attribute values.
             // -------------------------------------
 
@@ -3924,19 +3935,24 @@ int main(int argc, char *argv[])
                     bslma::TestAllocatorMonitor tam(&oa);
                     mX.setDescriptor(A1);
                     LOOP_ASSERT(CONFIG, tam.isInUseUp());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
 
                 bslma::TestAllocatorMonitor tam(&oa);
 
                 LOOP_ASSERT(CONFIG, A1 == X.descriptor());
                 LOOP_ASSERT(CONFIG, D2 == X.utcStartTime());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D3 == X.utcEndTime());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setDescriptor(B1);
                 LOOP_ASSERT(CONFIG, B1 == X.descriptor());
                 LOOP_ASSERT(CONFIG, D2 == X.utcStartTime());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D3 == X.utcEndTime());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setDescriptor(D1);
                 LOOP_ASSERT(CONFIG, D1 == X.descriptor());
                 LOOP_ASSERT(CONFIG, D2 == X.utcStartTime());
@@ -3949,13 +3965,17 @@ int main(int argc, char *argv[])
             {
                 bslma::TestAllocatorMonitor tam(&oa);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(A2 != A3);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setUtcStartAndEndTime(A2, A3);
                 LOOP_ASSERT(CONFIG, D1 == X.descriptor());
                 LOOP_ASSERT(CONFIG, A2 == X.utcStartTime());
                 LOOP_ASSERT(CONFIG, A3 == X.utcEndTime());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(B2 != B3);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setUtcStartAndEndTime(B2, B3);
                 LOOP_ASSERT(CONFIG, D1 == X.descriptor());
                 LOOP_ASSERT(CONFIG, B2 == X.utcStartTime());
@@ -3971,7 +3991,9 @@ int main(int argc, char *argv[])
                 // Set all attributes to their `A` values.
 
                 mX.setDescriptor(A1);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(A2 != A3);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setUtcStartAndEndTime(A2, A3);
 
                 LOOP_ASSERT(CONFIG, A1 == X.descriptor());
@@ -3981,7 +4003,9 @@ int main(int argc, char *argv[])
                 // Set all attributes to their `B` values.
 
                 mX.setDescriptor(B1);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(B2 != B3);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setUtcStartAndEndTime(B2, B3);
 
                 LOOP_ASSERT(CONFIG, B1 == X.descriptor());

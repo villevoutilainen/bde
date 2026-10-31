@@ -170,15 +170,18 @@ class MySequenceWithNillables {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bdlb::NullableValue<int>& attribute1();
+    bdlb::NullableValue<int>& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& attribute2();
+    bdlb::NullableValue<bsl::string>& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute3" attribute of this
     /// object.
-    bdlb::NullableValue<s_baltst::MySequence>& attribute3();
+    bdlb::NullableValue<s_baltst::MySequence>& attribute3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -227,15 +230,18 @@ class MySequenceWithNillables {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bdlb::NullableValue<int>& attribute1() const;
+    const bdlb::NullableValue<int>& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute2" attribute of this object.
-    const bdlb::NullableValue<bsl::string>& attribute2() const;
+    const bdlb::NullableValue<bsl::string>& attribute2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute3" attribute of this object.
-    const bdlb::NullableValue<s_baltst::MySequence>& attribute3() const;
+    const bdlb::NullableValue<s_baltst::MySequence>& attribute3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -245,6 +251,8 @@ class MySequenceWithNillables {
     friend bool operator==(const MySequenceWithNillables& lhs,
                            const MySequenceWithNillables& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1() &&
                lhs.attribute2() == rhs.attribute2() &&
                lhs.attribute3() == rhs.attribute3();

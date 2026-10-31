@@ -2822,8 +2822,10 @@ static int verifyTimeZone(const ZoneinfoData&     data,
                   localTimeTypeBuf[index].isDst(),
                   &abbrevDataBuf[localTimeTypeBuf[index].abbreviationIndex()]);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(XT);
         if (D != XT->descriptor()) {
             if (!expectToFail) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(XT);
                 LOOP4_ASSERT(LINE, i, D, XT->descriptor(),
                              D == XT->descriptor());
             }
@@ -2949,8 +2951,10 @@ static int verifyTimeZoneModernVersionFormat(
                   localTimeTypeBuf[index].isDst(),
                   &abbrevDataBuf[localTimeTypeBuf[index].abbreviationIndex()]);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(XT);
         if (D != XT->descriptor()) {
             if (!expectToFail) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(XT);
                 LOOP4_ASSERT(LINE, i, D, XT->descriptor(),
                              D == XT->descriptor());
             }
@@ -2962,6 +2966,7 @@ static int verifyTimeZoneModernVersionFormat(
 
     // Verify time zone string.
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
     bsl::string zoneInfoString = X.posixExtendedRangeDescription();
     bsl::string zoneInfoDataString(data.getTimeZoneString(),
                                    data.timeZoneStringLength());
@@ -5507,6 +5512,7 @@ int main(int argc, char *argv[])
                         ASSERTV(ti, 0 == "Unexpected number of transitions");
                     }
                     else {
+                        BSLS_ASSERT_CONVEYOR_OBJECT(iter);
                         ASSERTV(LINE,
                                 AB_STRING == iter->descriptor().description());
                     }
@@ -5581,6 +5587,7 @@ int main(int argc, char *argv[])
                         continue;                                   // CONTINUE
                     }
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(iter);
                     ASSERTV(LINE,
                             AB_STRING == iter->descriptor().description());
                 }

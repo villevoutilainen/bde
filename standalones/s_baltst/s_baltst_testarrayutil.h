@@ -3,6 +3,8 @@
 #define INCLUDED_S_BALTST_TESTARRAYUTIL
 
 #include <bsls_ident.h>
+
+#include <bsls_assert.h>
 BSLS_IDENT("$Id: $")
 
 //@PURPOSE: Provide a utilty for generating test arrays.
@@ -63,6 +65,7 @@ bsl::vector<VALUE_TYPE> TestArrayUtil::generate(
 template <class VALUE_TYPE>
 bsl::vector<VALUE_TYPE> TestArrayUtil::generate(const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bsl::vector<VALUE_TYPE> result;
     result.push_back(value);
     return result;
@@ -72,6 +75,8 @@ template <class VALUE_TYPE>
 bsl::vector<VALUE_TYPE> TestArrayUtil::generate(const VALUE_TYPE& value0,
                                                 const VALUE_TYPE& value1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value0);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value1);
     bsl::vector<VALUE_TYPE> result;
     result.push_back(value0);
     result.push_back(value1);
@@ -83,6 +88,9 @@ bsl::vector<VALUE_TYPE> TestArrayUtil::generate(const VALUE_TYPE& value0,
                                                 const VALUE_TYPE& value1,
                                                 const VALUE_TYPE& value2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value0);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value2);
     bsl::vector<VALUE_TYPE> result;
     result.push_back(value0);
     result.push_back(value1);

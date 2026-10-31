@@ -30,6 +30,8 @@ int TimeZoneUtil::addInterval(LocalDatetime             *result,
                               const LocalDatetime&       originalTime,
                               const bsls::TimeInterval&  interval)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&interval);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&originalTime);
     BSLS_ASSERT(result);
 
     bdlt::DatetimeInterval datetimeInterval;
@@ -234,6 +236,7 @@ int TimeZoneUtil::validateLocalTime(bool                    *result,
                                     const bdlt::DatetimeTz&  localTime,
                                     const char              *timeZoneId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&localTime);
     BSLS_ASSERT(result);
     BSLS_ASSERT(timeZoneId);
 

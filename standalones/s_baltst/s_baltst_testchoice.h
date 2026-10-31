@@ -160,11 +160,14 @@ class TestChoice {
 
     int selectionId() const;
 
-    const Selection0Type& theSelection0() const;
+    const Selection0Type& theSelection0() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    const Selection1Type& theSelection1() const;
+    const Selection1Type& theSelection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    const Selection2Type& theSelection2() const;
+    const Selection2Type& theSelection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -455,7 +458,8 @@ int TestChoice<TYPED_SELECTION_0, TYPED_SELECTION_1, TYPED_SELECTION_2>::
       } break;
       case 1: {
         BSLS_ASSERT(k_HAS_CHOICE_0);
-        BSLS_ASSERT(d_value.object().template is<Selection0Type>());
+        BSLS_ASSERT_NONCONVEYOR(
+                               d_value.object().template is<Selection0Type>());
         return ImplUtil::manipulate(
             manipulator,
             &d_value.object().template the<Selection0Type>(),
@@ -463,7 +467,8 @@ int TestChoice<TYPED_SELECTION_0, TYPED_SELECTION_1, TYPED_SELECTION_2>::
       } break;
       case 2: {
         BSLS_ASSERT(k_HAS_CHOICE_1);
-        BSLS_ASSERT(d_value.object().template is<Selection1Type>());
+        BSLS_ASSERT_NONCONVEYOR(
+                               d_value.object().template is<Selection1Type>());
         return ImplUtil::manipulate(
             manipulator,
             &d_value.object().template the<Selection1Type>(),
@@ -471,7 +476,8 @@ int TestChoice<TYPED_SELECTION_0, TYPED_SELECTION_1, TYPED_SELECTION_2>::
       } break;
       case 3: {
         BSLS_ASSERT(k_HAS_CHOICE_2);
-        BSLS_ASSERT(d_value.object().template is<Selection2Type>());
+        BSLS_ASSERT_NONCONVEYOR(
+                               d_value.object().template is<Selection2Type>());
         return ImplUtil::manipulate(
             manipulator,
             &d_value.object().template the<Selection2Type>(),
@@ -510,7 +516,8 @@ int TestChoice<TYPED_SELECTION_0, TYPED_SELECTION_1, TYPED_SELECTION_2>::
       } break;
       case 1: {
         BSLS_ASSERT(k_HAS_CHOICE_0);
-        BSLS_ASSERT(d_value.object().template is<Selection0Type>());
+        BSLS_ASSERT_NONCONVEYOR(
+                               d_value.object().template is<Selection0Type>());
         return ImplUtil::access(
             accessor,
             d_value.object().template the<Selection0Type>(),
@@ -518,7 +525,8 @@ int TestChoice<TYPED_SELECTION_0, TYPED_SELECTION_1, TYPED_SELECTION_2>::
       } break;
       case 2: {
         BSLS_ASSERT(k_HAS_CHOICE_1);
-        BSLS_ASSERT(d_value.object().template is<Selection1Type>());
+        BSLS_ASSERT_NONCONVEYOR(
+                               d_value.object().template is<Selection1Type>());
         return ImplUtil::access(
             accessor,
             d_value.object().template the<Selection1Type>(),
@@ -526,7 +534,8 @@ int TestChoice<TYPED_SELECTION_0, TYPED_SELECTION_1, TYPED_SELECTION_2>::
       } break;
       case 3: {
         BSLS_ASSERT(k_HAS_CHOICE_2);
-        BSLS_ASSERT(d_value.object().template is<Selection2Type>());
+        BSLS_ASSERT_NONCONVEYOR(
+                               d_value.object().template is<Selection2Type>());
         return ImplUtil::access(
             accessor,
             d_value.object().template the<Selection2Type>(),
@@ -609,7 +618,7 @@ const typename TYPED_SELECTION_0::Type&
 TestChoice<TYPED_SELECTION_0, TYPED_SELECTION_1, TYPED_SELECTION_2>::
     theSelection0() const
 {
-    BSLS_ASSERT(d_value.object().typeIndex() == 1);
+    BSLS_ASSERT_NONCONVEYOR(d_value.object().typeIndex() == 1);
     return d_value.object().template the<Selection0Type>();
 }
 
@@ -620,7 +629,7 @@ const typename TYPED_SELECTION_1::Type&
 TestChoice<TYPED_SELECTION_0, TYPED_SELECTION_1, TYPED_SELECTION_2>::
     theSelection1() const
 {
-    BSLS_ASSERT(d_value.object().typeIndex() == 2);
+    BSLS_ASSERT_NONCONVEYOR(d_value.object().typeIndex() == 2);
     return d_value.object().template the<Selection1Type>();
 }
 
@@ -631,7 +640,7 @@ const typename TYPED_SELECTION_2::Type&
 TestChoice<TYPED_SELECTION_0, TYPED_SELECTION_1, TYPED_SELECTION_2>::
     theSelection2() const
 {
-    BSLS_ASSERT(d_value.object().typeIndex() == 3);
+    BSLS_ASSERT_NONCONVEYOR(d_value.object().typeIndex() == 3);
     return d_value.object().template the<Selection2Type>();
 }
 
@@ -640,6 +649,7 @@ template <class V0, class V1, class V2>
 bsl::ostream& operator<<(bsl::ostream&                 stream,
                          const TestChoice<V0, V1, V2>& choice)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&choice);
     typedef TestChoice<V0, V1, V2> Choice;
 
     stream << "[" << choice.className() << " ";

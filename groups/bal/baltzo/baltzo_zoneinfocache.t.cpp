@@ -324,7 +324,8 @@ class TestDriverTestLoader : public baltzo::Loader {
     /// Return the time zone identifier supplied on the most recent call to
     /// `loadTimeZone` or `NO_REQUESTS` if `loadTimeZone` has not been
     /// called.
-    const bsl::string& lastRequestedTimeZone() const;
+    const bsl::string& lastRequestedTimeZone() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -362,6 +363,7 @@ void TestDriverTestLoader::addTimeZone(const char *identifier,
                                        bool        dstFlag,
                                        const char *name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     baltzo::Zoneinfo zoneinfo;
     zoneinfo.setIdentifier(identifier);
 
@@ -375,7 +377,7 @@ void TestDriverTestLoader::addTimeZone(const char *identifier,
                                   bdlt::EpochUtil::convertToTimeT64(firstTime);
         zoneinfo.addTransition(firstTimeT, type);
     }
-    d_timeZones[identifier] = zoneinfo;
+    BSLS_ASSERT_CONVEYOR_REF(d_timeZones[identifier]) = zoneinfo;
 }
 
 void TestDriverTestLoader::addTimeZone(const char *timeZoneId,
@@ -384,11 +386,12 @@ void TestDriverTestLoader::addTimeZone(const char *timeZoneId,
                                        bool        dstFlag,
                                        const char *name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     baltzo::Zoneinfo zoneinfo;
     zoneinfo.setIdentifier(timeZoneId);
 
     if (0 == timeZoneId) {
-        d_timeZones[cacheIdentifier] = zoneinfo;
+        BSLS_ASSERT_CONVEYOR_REF(d_timeZones[cacheIdentifier]) = zoneinfo;
         return;                                                       // RETURN
     }
 
@@ -398,12 +401,13 @@ void TestDriverTestLoader::addTimeZone(const char *timeZoneId,
                                   bdlt::EpochUtil::convertToTimeT64(firstTime);
 
     zoneinfo.addTransition(firstTimeT, type);
-    d_timeZones[cacheIdentifier] = zoneinfo;
+    BSLS_ASSERT_CONVEYOR_REF(d_timeZones[cacheIdentifier]) = zoneinfo;
 }
 
 int TestDriverTestLoader::loadTimeZone(baltzo::Zoneinfo *result,
                                        const char       *timeZoneId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Ensure that this method is not invoked concurrently.
 
     ConcurrencyCounterGuard guard(&d_concurrentCallCount);
@@ -597,6 +601,8 @@ TestLoader::~TestLoader()
 // MANIPULATORS
 void TestLoader::setTimeZone(const baltzo::Zoneinfo& timeZone)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeZone);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     TimeZoneMap::iterator it = d_timeZones.find(timeZone.identifier());
     if (it == d_timeZones.end()) {
         d_timeZones.insert(TimeZoneMap::value_type(timeZone.identifier(),
@@ -610,6 +616,7 @@ void TestLoader::setTimeZone(const baltzo::Zoneinfo& timeZone)
 int TestLoader::loadTimeZone(baltzo::Zoneinfo *timeZone,
                              const char       *timeZoneId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     TimeZoneMap::const_iterator it = d_timeZones.find(timeZoneId);
 
     if (it == d_timeZones.end()) {
@@ -762,6 +769,7 @@ int main(int argc, char *argv[])
 //
     ASSERT(0 == rc);
     ASSERT(0 != newYork);
+    BSLS_ASSERT_CONVEYOR_OBJECT(newYork);
     ASSERT("America/New_York" == newYork->identifier());
 // ```
 // Next, we verify that a subsequent call `lookupZoneinfo` for New York,
@@ -777,6 +785,7 @@ int main(int argc, char *argv[])
     const baltzo::Zoneinfo *london = cache.getZoneinfo(&rc, "Europe/London");
     ASSERT(0 == rc);
     ASSERT(0 != london);
+    BSLS_ASSERT_CONVEYOR_OBJECT(london);
     ASSERT("Europe/London" == london->identifier());
 // ```
 // Finally, we call `getZoneinfo` with time zone identifier unknown to our
@@ -1026,12 +1035,14 @@ int main(int argc, char *argv[])
                 for (int i = 0; i < NUM_VALUES; ++i) {
                     const int   LINE    = VALUES[i].d_line;
                     const char *ID      = VALUES[i].d_id;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&testLoader);
                     const bool  SUCCESS = VALUES[i].d_abbrev != 0;
 
                     Zone expected(&ta); const Zone& EXPECTED = expected;
                     testLoader.loadTimeZone(&expected, ID);
 
                     const Zone *result = mX.getZoneinfo(ID);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&testLoader);
                     ASSERT(ID == testLoader.lastRequestedTimeZone());
                     if (SUCCESS) {
                         LOOP_ASSERT(LINE, 0 != result);
@@ -1578,6 +1589,7 @@ int main(int argc, char *argv[])
             ASSERTV(CONFIG,  oa.numBytesInUse(), 0 ==  oa.numBytesInUse());
             ASSERTV(CONFIG, noa.numBytesInUse(), 0 == noa.numBytesInUse());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&testLoader);
             ASSERT(NO_REQ  == testLoader.lastRequestedTimeZone());
 
             for (int i = 0; i < NUM_VALUES; ++i) {
@@ -1588,12 +1600,14 @@ int main(int argc, char *argv[])
                 bslma::TestAllocator za("zone",   veryVeryVeryVerbose);
                 Zone                 expected(&za);
                 const Zone&          EXPECTED = expected;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&testLoader);
                 testLoader.loadTimeZone(&expected, ID);
 
                 const bsls::Types::Int64 NUM_BYTES_IN_USE = oa.numBytesInUse();
 
                 int         rc     = INT_MIN;
                 const Zone *result = mX.getZoneinfo(&rc, ID);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&testLoader);
                 ASSERT(ID == testLoader.lastRequestedTimeZone());
 
                 if (SUCCESS) {
@@ -1687,6 +1701,7 @@ int main(int argc, char *argv[])
             TDTL mX(&ta); const TDTL& X = mX;
             Zone zone(&ta);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(TDTL::NO_REQUESTS == X.lastRequestedTimeZone());
             ASSERT(UNSUPPORTED_ERR   == mX.loadTimeZone(&zone, "A"));
 
@@ -1728,12 +1743,14 @@ int main(int argc, char *argv[])
                 for (int j = 0; j < NUM_VALUES; ++j) {
                     const char *ID      = VALUES[j].d_id;
                     bool        INVALID = VALUES[j].d_abbrev == 0;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     bool        DST     = VALUES[j].d_dstFlag;
                     const char *ABBREV  = VALUES[j].d_abbrev;
                     const int   OFFSET  = VALUES[j].d_utcOffset;
 
                     Zone result(&ta);
                     int rc = mX.loadTimeZone(&result, ID);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP_ASSERT(LINE, ID == X.lastRequestedTimeZone());
 
                     if (veryVeryVerbose) {
@@ -1754,6 +1771,7 @@ int main(int argc, char *argv[])
                                                      result.beginTransitions();
                         LOOP_ASSERT(LINE, result.endTransitions() != itT);
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(itT);
                         const baltzo::LocalTimeDescriptor& D =
                                                              itT->descriptor();
                         LOOP_ASSERT(LINE, DST    == D.dstInEffectFlag());
@@ -1836,6 +1854,7 @@ int main(int argc, char *argv[])
             const Zone *TZ = mX.getZoneinfo(&rc, ID_ARRAY[i]);
             ASSERT(0           == rc);
             ASSERT(0           != TZ);
+            BSLS_ASSERT_CONVEYOR_OBJECT(TZ);
             ASSERT(ID_ARRAY[i] == TZ->identifier());
 
             ASSERT(timeZones[i] == *TZ);

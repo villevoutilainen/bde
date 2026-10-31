@@ -704,6 +704,7 @@ int TimeZoneUtil::convertLocalToLocalTime(
                                         const char           *targetTimeZoneId,
                                         const LocalDatetime&  srcTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcTime);
     BSLS_ASSERT(result);
     BSLS_ASSERT(targetTimeZoneId);
 
@@ -718,6 +719,7 @@ int TimeZoneUtil::convertLocalToLocalTime(
                                      const char              *targetTimeZoneId,
                                      const bdlt::DatetimeTz&  srcTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcTime);
     BSLS_ASSERT(result);
     BSLS_ASSERT(targetTimeZoneId);
 
@@ -732,6 +734,7 @@ int TimeZoneUtil::convertLocalToLocalTime(
                                         const char           *targetTimeZoneId,
                                         const LocalDatetime&  srcTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcTime);
     BSLS_ASSERT(result);
     BSLS_ASSERT(targetTimeZoneId);
 
@@ -746,6 +749,7 @@ int TimeZoneUtil::convertLocalToLocalTime(
                                      const char              *targetTimeZoneId,
                                      const bdlt::DatetimeTz&  srcTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&srcTime);
     BSLS_ASSERT(result);
     BSLS_ASSERT(targetTimeZoneId);
 
@@ -795,6 +799,7 @@ inline
 int TimeZoneUtil::loadLocalTimePeriod(LocalTimePeriod      *result,
                                       const LocalDatetime&  localTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&localTime);
     BSLS_ASSERT(result);
 
     return loadLocalTimePeriod(result,
@@ -807,6 +812,7 @@ int TimeZoneUtil::loadLocalTimePeriod(LocalTimePeriod         *result,
                                       const bdlt::DatetimeTz&  localTime,
                                       const char              *timeZoneId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&localTime);
     BSLS_ASSERT(result);
     BSLS_ASSERT(timeZoneId);
 
@@ -839,6 +845,7 @@ inline
 int TimeZoneUtil::validateLocalTime(bool                 *result,
                                     const LocalDatetime&  localTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&localTime);
     BSLS_ASSERT(result);
 
     return validateLocalTime(result,

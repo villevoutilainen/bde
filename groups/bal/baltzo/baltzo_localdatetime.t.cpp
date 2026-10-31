@@ -230,6 +230,8 @@ typedef bslx::TestOutStream  Out;
 /// `false` otherwise.
 static bool someDiff(const Obj& a, const Obj& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
     return a.datetimeTz() != b.datetimeTz()
         || a.timeZoneId() != b.timeZoneId();
 }
@@ -2938,6 +2940,7 @@ int main(int argc, char *argv[])
 
                     // -------------------------------------------------------
                     // Verify any attribute allocators are installed properly.
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     // -------------------------------------------------------
 
                     ASSERTV(LINE, CONFIG,
@@ -3969,8 +3972,11 @@ int main(int argc, char *argv[])
 
                     // -------------------------------------
                     // Verify the object's attribute values.
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&DTTZ);
                     // -------------------------------------
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERTV(LINE, CONFIG, DTTZ, X.datetimeTz(),
                             DTTZ == X.datetimeTz());
 
@@ -3979,6 +3985,7 @@ int main(int argc, char *argv[])
 
                     // -------------------------------------------------------
                     // Verify any attribute allocators are installed properly.
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     // -------------------------------------------------------
 
                     ASSERTV(LINE, CONFIG,
@@ -4064,6 +4071,7 @@ int main(int argc, char *argv[])
                     if (veryVeryVerbose) { T_ T_ Q(ExceptionTestBody) }
 
                     Obj obj(DTTZ, TZID, &sa);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&DTTZ);
                     ASSERTV(LINE, DTTZ, obj.datetimeTz(),
                             DTTZ == obj.datetimeTz());
                     ASSERTV(LINE, TZID, obj.timeZoneId(),
@@ -4261,6 +4269,7 @@ int main(int argc, char *argv[])
 
             // -------------------------------------------------------
             // Verify any attribute allocators are installed properly.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             // -------------------------------------------------------
 
             ASSERTV(CONFIG, &oa == X.timeZoneId().get_allocator());
@@ -4276,6 +4285,7 @@ int main(int argc, char *argv[])
 
             // -------------------------------------
             // Verify the object's attribute values.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             // -------------------------------------
 
             ASSERTV(CONFIG, D1, X.datetimeTz(), D1   == X.datetimeTz());
@@ -4289,14 +4299,17 @@ int main(int argc, char *argv[])
             {
                 bslma::TestAllocatorMonitor tam(&oa);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setDatetimeTz(A1);
                 ASSERTV(CONFIG, A1   == X.datetimeTz());
                 ASSERTV(CONFIG, D2SV == X.timeZoneId());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setDatetimeTz(B1);
                 ASSERTV(CONFIG, B1   == X.datetimeTz());
                 ASSERTV(CONFIG, D2SV == X.timeZoneId());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setDatetimeTz(D1);
                 ASSERTV(CONFIG, D1   == X.datetimeTz());
                 ASSERTV(CONFIG, D2SV == X.timeZoneId());
@@ -4310,18 +4323,22 @@ int main(int argc, char *argv[])
                     if (veryVeryVerbose) { T_ T_ Q(ExceptionTestBody) }
 
                     bslma::TestAllocatorMonitor tam(&oa);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     mX.setTimeZoneId(A2);
                     ASSERTV(CONFIG, tam.isInUseUp());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
                 ASSERTV(CONFIG, D1 == X.datetimeTz());
                 ASSERTV(CONFIG, A2 == X.timeZoneId());
 
                 bslma::TestAllocatorMonitor tam(&oa);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setTimeZoneId(B2);
                 ASSERTV(CONFIG, D1 == X.datetimeTz());
                 ASSERTV(CONFIG, B2 == X.timeZoneId());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setTimeZoneId(D2);
                 ASSERTV(CONFIG, D1   == X.datetimeTz());
                 ASSERTV(CONFIG, D2SV == X.timeZoneId());
@@ -4334,6 +4351,7 @@ int main(int argc, char *argv[])
                 // Set all attributes to their `A` values.
 
                 mX.setDatetimeTz(A1);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setTimeZoneId(A2);
 
                 ASSERTV(CONFIG, A1 == X.datetimeTz());
@@ -4341,10 +4359,12 @@ int main(int argc, char *argv[])
 
                 // Set all attributes to their `B` values.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setDatetimeTz(B1);
                 ASSERTV(CONFIG, B1 == X.datetimeTz());
                 ASSERTV(CONFIG, A2 == X.timeZoneId());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 mX.setTimeZoneId(B2);
                 ASSERTV(CONFIG, B1 == X.datetimeTz());
                 ASSERTV(CONFIG, B2 == X.timeZoneId());

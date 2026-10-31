@@ -339,7 +339,9 @@ int main(int argc, char *argv[])
             Obj mX(&manager, "namespace", "prefix");
             const Obj& X = mX;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT("namespace"       == X.defaultMetricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT("prefix"          == X.defaultObjectIdentifierPrefix());
             ASSERT(&defaultAllocator == X.allocator());
         }
@@ -360,7 +362,9 @@ int main(int argc, char *argv[])
             Obj mX(&manager, metricNamespace, prefix, &testAllocator);
             const Obj& X = mX;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(metricNamespace == X.defaultMetricNamespace());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(prefix          == X.defaultObjectIdentifierPrefix());
             ASSERT(&testAllocator  == X.allocator());
 

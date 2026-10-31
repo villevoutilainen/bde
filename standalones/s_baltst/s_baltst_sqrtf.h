@@ -114,7 +114,8 @@ class SqrtF {
 
     /// Return a reference to the modifiable "Value" attribute of this
     /// object.
-    float& value();
+    float& value()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 

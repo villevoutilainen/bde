@@ -179,6 +179,7 @@ struct XmlEl {
 
 void prepareXmlFromTable(bsl::string& outDoc, XmlEl* table, int count)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&outDoc);
     outDoc.clear();
     for (int i=0; i < count; ++i) {
 
@@ -745,6 +746,7 @@ const char strXmlEnd[] =
     "</xs:schema>";
 
 void addOpenTag(bsl::string& xmlStr, int indent, const char* tag, int n) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&xmlStr);
     bsl::stringstream ss;
 
     ss << bsl::setw(indent) << "" << "<" << tag << n << ">\n"
@@ -758,6 +760,7 @@ void addOpenTag(bsl::string& xmlStr, int indent, const char* tag, int n) {
 }
 
 void addCloseTag(bsl::string& xmlStr, int indent, const char* tag, int n) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&xmlStr);
     bsl::stringstream ss;
 
     ss << bsl::setw(indent) << "" << "</" << tag << n << ">\n";
@@ -1019,6 +1022,7 @@ int findLoc(int                *line,
             const bsl::string&  pattern,
             bsl::size_t         offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&pattern);
     if (pattern.length() < offset) {
         return -1;                                                    // RETURN
     }
@@ -2237,12 +2241,15 @@ int main(int argc, char *argv[])
 
             advanceN(reader, 2);  // XML declaration --> <xs:schema>
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&reader);
             // Skip to end node fails, cannot find the end of the comment:
 
             LOOP_ASSERT(rc, (rc = reader.advanceToEndNodeRaw()) == -1);
             ASSERT(reader.isError());
-            LOOP_ASSERT(reader.errorInfo().message(),
-                        reader.errorInfo().message() == "Unclosed comment.");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&reader);
+            LOOP_ASSERT(BSLS_ASSERT_CONVEYOR_REF(reader.errorInfo()).message(),
+                        BSLS_ASSERT_CONVEYOR_REF(reader.errorInfo()).message()
+                                                       == "Unclosed comment.");
 
             reader.close();
         }
@@ -2267,12 +2274,15 @@ int main(int argc, char *argv[])
 
             advanceN(reader, 2);  // XML declaration --> <xs:schema>
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&reader);
             // Skip to end node fails, cannot find the end of the CDATA:
 
             LOOP_ASSERT(rc, (rc = reader.advanceToEndNodeRaw()) == -1);
             ASSERT(reader.isError());
-            LOOP_ASSERT(reader.errorInfo().message(),
-                        reader.errorInfo().message() == "Unclosed CDATA.");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&reader);
+            LOOP_ASSERT(BSLS_ASSERT_CONVEYOR_REF(reader.errorInfo()).message(),
+                        BSLS_ASSERT_CONVEYOR_REF(reader.errorInfo()).message()
+                                                         == "Unclosed CDATA.");
 
             reader.close();
         }
@@ -3875,6 +3885,7 @@ int main(int argc, char *argv[])
           ASSERT(errorInfo.isError());
           ASSERT(13 == errorInfo.lineNumber());
           ASSERT(19 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           ASSERT(bsl::strstr(errorInfo.message().c_str(), "tag mismatch"));
 
           reader.close();
@@ -3920,6 +3931,7 @@ int main(int argc, char *argv[])
           ASSERT(errorInfo.isError());
           ASSERT(13 == errorInfo.lineNumber());
           ASSERT(1 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           ASSERT(bsl::strstr(errorInfo.message().c_str(), "No End Element"));
 
           reader.close();
@@ -3984,6 +3996,7 @@ int main(int argc, char *argv[])
           LOOP_ASSERT(errorInfo.lineNumber(), 6 == errorInfo.lineNumber());
           LOOP_ASSERT(errorInfo.columnNumber(),
                       26 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           LOOP_ASSERT(errorInfo.message(),
                       npos != errorInfo.message().find("No space"));
 
@@ -4032,6 +4045,7 @@ int main(int argc, char *argv[])
           LOOP_ASSERT(errorInfo.lineNumber(), 3  == errorInfo.lineNumber());
           LOOP_ASSERT(errorInfo.columnNumber(),
                       16 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           LOOP_ASSERT(errorInfo.message(),
                       npos != errorInfo.message().find("No '='"));
 
@@ -4098,6 +4112,7 @@ int main(int argc, char *argv[])
           const balxml::ErrorInfo& errorInfo = reader.errorInfo();
           ASSERT(6  == errorInfo.lineNumber());
           ASSERT(26 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           LOOP_ASSERT(errorInfo.message(),
                       npos != errorInfo.message().find("No space"));
 
@@ -4160,6 +4175,7 @@ int main(int argc, char *argv[])
           const balxml::ErrorInfo& errorInfo = reader.errorInfo();
           ASSERT(6  == errorInfo.lineNumber());
           ASSERT(26 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           LOOP_ASSERT(errorInfo.message(),
                       npos != errorInfo.message().find("No space"));
 
@@ -4221,6 +4237,7 @@ int main(int argc, char *argv[])
           const balxml::ErrorInfo& errorInfo = reader.errorInfo();
           ASSERT(6  == errorInfo.lineNumber());
           ASSERT(15 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           ASSERT(bsl::strstr(errorInfo.message().c_str(), "Attribute value"));
 
           reader.close();
@@ -4282,6 +4299,7 @@ int main(int argc, char *argv[])
           LOOP_ASSERT(errorInfo.lineNumber(), 6  == errorInfo.lineNumber());
           LOOP_ASSERT(errorInfo.columnNumber(),
                       27 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           LOOP_ASSERT(errorInfo.message(),
                       npos != errorInfo.message().find("No space"));
 
@@ -4341,6 +4359,7 @@ int main(int argc, char *argv[])
           const balxml::ErrorInfo& errorInfo = reader.errorInfo();
           ASSERT(3 == errorInfo.lineNumber());
           ASSERT(8 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           ASSERT(bsl::strstr(errorInfo.message().c_str(),
                              "Undefined namespace"));
 

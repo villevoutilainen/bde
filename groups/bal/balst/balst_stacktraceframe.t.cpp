@@ -1894,12 +1894,16 @@ int main(int argc, char *argv[])
                     // Verify any attribute allocators are installed properly.
                     // -------------------------------------------------------
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP2_ASSERT(LINE, CONFIG,
                                    &oa == X.libraryFileName().get_allocator());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP2_ASSERT(LINE, CONFIG,
                                  &oa == X.mangledSymbolName().get_allocator());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP2_ASSERT(LINE, CONFIG,
                                     &oa == X.sourceFileName().get_allocator());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP2_ASSERT(LINE, CONFIG,
                                         &oa == X.symbolName().get_allocator());
 
@@ -3274,6 +3278,7 @@ int main(int argc, char *argv[])
                     LOOP4_ASSERT(LINE, CONFIG, ADDRESS, X.address(),
                                  ADDRESS == X.address());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP4_ASSERT(LINE, CONFIG, LIB_FILE_NAME,
                                                            X.libraryFileName(),
                                  LIB_FILE_NAME == X.libraryFileName());
@@ -3281,6 +3286,7 @@ int main(int argc, char *argv[])
                     LOOP4_ASSERT(LINE, CONFIG, LINENO, X.lineNumber(),
                                  LINENO == X.lineNumber());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP4_ASSERT(LINE, CONFIG, MNGLD_SYM_NAME,
                                                          X.mangledSymbolName(),
                                  MNGLD_SYM_NAME == X.mangledSymbolName());
@@ -3288,10 +3294,12 @@ int main(int argc, char *argv[])
                     LOOP4_ASSERT(LINE, CONFIG, OFFSET, X.offsetFromSymbol(),
                                  OFFSET == X.offsetFromSymbol());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP4_ASSERT(LINE, CONFIG, SRC_FILE_NAME,
                                                             X.sourceFileName(),
                                  SRC_FILE_NAME == X.sourceFileName());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP4_ASSERT(LINE, CONFIG, SYM_NAME, X.symbolName(),
                                  SYM_NAME == X.symbolName());
 
@@ -3299,12 +3307,16 @@ int main(int argc, char *argv[])
                     // Verify any attribute allocators are installed properly.
                     // -------------------------------------------------------
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP2_ASSERT(LINE, CONFIG,
                                    &oa == X.libraryFileName().get_allocator());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP2_ASSERT(LINE, CONFIG,
                                  &oa == X.mangledSymbolName().get_allocator());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP2_ASSERT(LINE, CONFIG,
                                     &oa == X.sourceFileName().get_allocator());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     LOOP2_ASSERT(LINE, CONFIG,
                                         &oa == X.symbolName().get_allocator());
 
@@ -3680,9 +3692,13 @@ int main(int argc, char *argv[])
             // Verify any attribute allocators are installed properly.
             // -------------------------------------------------------
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             LOOP_ASSERT(CONFIG, &oa == X.libraryFileName().get_allocator());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             LOOP_ASSERT(CONFIG, &oa == X.mangledSymbolName().get_allocator());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             LOOP_ASSERT(CONFIG, &oa == X.sourceFileName().get_allocator());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             LOOP_ASSERT(CONFIG, &oa == X.symbolName().get_allocator());
 
             // Also invoke the object's `allocator` accessor.
@@ -3702,16 +3718,20 @@ int main(int argc, char *argv[])
 
             LOOP3_ASSERT(CONFIG, D1, X.address(),
                          D1 == X.address());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             LOOP3_ASSERT(CONFIG, D2, X.libraryFileName(),
                          D2 == X.libraryFileName());
             LOOP3_ASSERT(CONFIG, D3, X.lineNumber(),
                          D3 == X.lineNumber());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             LOOP3_ASSERT(CONFIG, D4, X.mangledSymbolName(),
                          D4 == X.mangledSymbolName());
             LOOP3_ASSERT(CONFIG, D5, X.offsetFromSymbol(),
                          D5 == X.offsetFromSymbol());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             LOOP3_ASSERT(CONFIG, D6, X.sourceFileName(),
                          D6 == X.sourceFileName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             LOOP3_ASSERT(CONFIG, D7, X.symbolName(),
                          D7 == X.symbolName());
 
@@ -3725,29 +3745,41 @@ int main(int argc, char *argv[])
 
                 mX.setAddress(A1);
                 LOOP_ASSERT(CONFIG, A1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 mX.setAddress(B1);
                 LOOP_ASSERT(CONFIG, B1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 mX.setAddress(D1);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 LOOP_ASSERT(CONFIG, tam.isTotalSame());
@@ -3763,31 +3795,43 @@ int main(int argc, char *argv[])
                     LOOP_ASSERT(CONFIG, tam.isInUseUp());
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, A2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 bslma::TestAllocatorMonitor tam(&oa);
 
                 mX.setLibraryFileName(B2);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, B2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 mX.setLibraryFileName(D2);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 LOOP_ASSERT(CONFIG, tam.isTotalSame());
@@ -3799,29 +3843,41 @@ int main(int argc, char *argv[])
 
                 mX.setLineNumber(A3);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, A3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 mX.setLineNumber(B3);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, B3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 mX.setLineNumber(D3);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 LOOP_ASSERT(CONFIG, tam.isTotalSame());
@@ -3837,31 +3893,43 @@ int main(int argc, char *argv[])
                     LOOP_ASSERT(CONFIG, tam.isInUseUp());
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, A4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 bslma::TestAllocatorMonitor tam(&oa);
 
                 mX.setMangledSymbolName(B4);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, B4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 mX.setMangledSymbolName(D4);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 LOOP_ASSERT(CONFIG, tam.isTotalSame());
@@ -3873,29 +3941,41 @@ int main(int argc, char *argv[])
 
                 mX.setOffsetFromSymbol(A5);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, A5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 mX.setOffsetFromSymbol(B5);
                 ASSERT(D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(D2 == X.libraryFileName());
                 ASSERT(D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(D4 == X.mangledSymbolName());
                 ASSERT(B5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(D7 == X.symbolName());
 
                 mX.setOffsetFromSymbol(D5);
                 ASSERT(D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(D2 == X.libraryFileName());
                 ASSERT(D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(D4 == X.mangledSymbolName());
                 ASSERT(D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(D7 == X.symbolName());
 
                 LOOP_ASSERT(CONFIG, tam.isTotalSame());
@@ -3911,31 +3991,43 @@ int main(int argc, char *argv[])
                     LOOP_ASSERT(CONFIG, tam.isInUseUp());
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, A6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 bslma::TestAllocatorMonitor tam(&oa);
 
                 mX.setSourceFileName(B6);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, B6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 mX.setSourceFileName(D6);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 LOOP_ASSERT(CONFIG, tam.isTotalSame());
@@ -3951,31 +4043,43 @@ int main(int argc, char *argv[])
                     LOOP_ASSERT(CONFIG, tam.isInUseUp());
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, A7 == X.symbolName());
 
                 bslma::TestAllocatorMonitor tam(&oa);
 
                 mX.setSymbolName(B7);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, B7 == X.symbolName());
 
                 mX.setSymbolName(D7);
                 LOOP_ASSERT(CONFIG, D1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, D3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, D5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, D7 == X.symbolName());
 
                 LOOP_ASSERT(CONFIG, tam.isTotalSame());
@@ -3994,11 +4098,15 @@ int main(int argc, char *argv[])
                 mX.setSymbolName(A7);
 
                 LOOP_ASSERT(CONFIG, A1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, A2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, A3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, A4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, A5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, A6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, A7 == X.symbolName());
 
                 bslma::TestAllocatorMonitor tam(&oa);
@@ -4014,11 +4122,15 @@ int main(int argc, char *argv[])
                 mX.setSymbolName(B7);
 
                 LOOP_ASSERT(CONFIG, B1 == X.address());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, B2 == X.libraryFileName());
                 LOOP_ASSERT(CONFIG, B3 == X.lineNumber());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, B4 == X.mangledSymbolName());
                 LOOP_ASSERT(CONFIG, B5 == X.offsetFromSymbol());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, B6 == X.sourceFileName());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 LOOP_ASSERT(CONFIG, B7 == X.symbolName());
 
                 LOOP_ASSERT(CONFIG, tam.isTotalSame());

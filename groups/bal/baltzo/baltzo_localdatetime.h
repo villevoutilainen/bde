@@ -258,11 +258,13 @@ class LocalDatetime {
 
     /// Return a reference providing non-modifiable access to the
     /// `datetimeTz` attribute of this object.
-    const bdlt::DatetimeTz& datetimeTz() const;
+    const bdlt::DatetimeTz& datetimeTz() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the `timeZoneId`
     /// attribute of this object.
-    const bsl::string& timeZoneId() const;
+    const bsl::string& timeZoneId() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                 // Aspects
 
@@ -288,7 +290,8 @@ class LocalDatetime {
     /// `bslx` package-level documentation for more information on BDEX
     /// streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Write the value of this object to the specified output `stream` in a
     /// human-readable format, and return a reference providing modifiable
@@ -495,7 +498,7 @@ STREAM& LocalDatetime::bdexStreamIn(STREAM& stream, int version)
 inline
 void LocalDatetime::swap(LocalDatetime& other)
 {
-    BSLS_ASSERT(get_allocator() == other.get_allocator());
+    BSLS_ASSERT_NONCONVEYOR(get_allocator() == other.get_allocator());
 
     bslalg::SwapUtil::swap(&d_datetimeTz, &other.d_datetimeTz);
     bslalg::SwapUtil::swap(&d_timeZoneId, &other.d_timeZoneId);
@@ -566,6 +569,8 @@ int LocalDatetime::maxSupportedBdexVersion()
 inline
 bool baltzo::operator==(const LocalDatetime& lhs, const LocalDatetime& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.datetimeTz() == rhs.datetimeTz()
         && lhs.timeZoneId() == rhs.timeZoneId();
 }
@@ -573,6 +578,8 @@ bool baltzo::operator==(const LocalDatetime& lhs, const LocalDatetime& rhs)
 inline
 bool baltzo::operator!=(const LocalDatetime& lhs, const LocalDatetime& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.datetimeTz() != rhs.datetimeTz()
         || lhs.timeZoneId() != rhs.timeZoneId();
 }

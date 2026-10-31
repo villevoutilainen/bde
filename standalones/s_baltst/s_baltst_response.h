@@ -153,21 +153,29 @@ class Response {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    bsl::string& makeResponseData();
-    bsl::string& makeResponseData(const bsl::string& value);
+    bsl::string& makeResponseData()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& makeResponseData(const bsl::string& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    bsl::string& makeResponseData(bsl::string&& value);
+    bsl::string& makeResponseData(bsl::string&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "ResponseData" value.
         // Optionally specify the 'value' of the "ResponseData".  If 'value' is
         // not specified, the default "ResponseData" value is used.
 
-    s_baltst::FeatureTestMessage& makeFeatureResponse();
-    s_baltst::FeatureTestMessage& makeFeatureResponse(const s_baltst::FeatureTestMessage& value);
+    s_baltst::FeatureTestMessage& makeFeatureResponse()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::FeatureTestMessage& makeFeatureResponse(
+                                     const s_baltst::FeatureTestMessage& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::FeatureTestMessage& makeFeatureResponse(s_baltst::FeatureTestMessage&& value);
+    s_baltst::FeatureTestMessage& makeFeatureResponse(
+                                          s_baltst::FeatureTestMessage&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "FeatureResponse" value.
         // Optionally specify the 'value' of the "FeatureResponse".  If 'value'
@@ -185,13 +193,15 @@ class Response {
     /// this object if "ResponseData" is the current selection.  The
     /// behavior is undefined unless "ResponseData" is the selection of this
     /// object.
-    bsl::string& responseData();
+    bsl::string& responseData()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "FeatureResponse" selection of
     /// this object if "FeatureResponse" is the current selection.  The
     /// behavior is undefined unless "FeatureResponse" is the selection of
     /// this object.
-    s_baltst::FeatureTestMessage& featureResponse();
+    s_baltst::FeatureTestMessage& featureResponse()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -225,13 +235,15 @@ class Response {
     /// this object if "ResponseData" is the current selection.  The
     /// behavior is undefined unless "ResponseData" is the selection of this
     /// object.
-    const bsl::string& responseData() const;
+    const bsl::string& responseData() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "FeatureResponse" selection
     /// of this object if "FeatureResponse" is the current selection.  The
     /// behavior is undefined unless "FeatureResponse" is the selection of
     /// this object.
-    const s_baltst::FeatureTestMessage& featureResponse() const;
+    const s_baltst::FeatureTestMessage& featureResponse() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "ResponseData" value,
     /// and return `false` otherwise.

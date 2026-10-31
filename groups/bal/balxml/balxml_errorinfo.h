@@ -295,6 +295,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_ostream.h>
 #include <bsl_string.h>
 
@@ -431,10 +433,12 @@ class ErrorInfo
     int columnNumber() const;
 
     /// Return the string that identifies the document being parsed.
-    const bsl::string& source() const;
+    const bsl::string& source() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the string describing the error or warning.
-    const bsl::string& message() const;
+    const bsl::string& message() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS

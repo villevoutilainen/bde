@@ -162,11 +162,13 @@ class MySequence {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    int& attribute1();
+    int& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bsl::string& attribute2();
+    bsl::string& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -218,7 +220,8 @@ class MySequence {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute2" attribute of this object.
-    const bsl::string& attribute2() const;
+    const bsl::string& attribute2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -227,6 +230,8 @@ class MySequence {
     /// have the same value if each respective attribute has the same value.
     friend bool operator==(const MySequence& lhs, const MySequence& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1() &&
                lhs.attribute2() == rhs.attribute2();
     }

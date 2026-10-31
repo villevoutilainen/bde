@@ -1085,6 +1085,7 @@ TypesPrintUtil_Imp::printBase64(bsl::ostream&              stream,
                                 const EncoderOptions      *,
                                 bdlat_TypeCategory::Array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     // Calls a function in the unnamed namespace.  Cannot be inlined.
     return u::encodeBase64(stream, object.begin(), object.end());
 }
@@ -1108,6 +1109,7 @@ TypesPrintUtil_Imp::printHex(bsl::ostream&              stream,
                              const EncoderOptions      *,
                              bdlat_TypeCategory::Array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return bdlb::Print::singleLineHexDump(stream,
                                           object.begin(),
                                           object.end());
@@ -1157,6 +1159,7 @@ TypesPrintUtil_Imp::printText(bsl::ostream&              stream,
                               const EncoderOptions      *encoderOptions,
                               bdlat_TypeCategory::Array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     // Calls a function in the unnamed namespace.  Cannot be inlined.
 
     // This 'if' statement prevents us from invoking undefined behavior by
@@ -1186,11 +1189,14 @@ TypesPrintUtil_Imp::printDecimal(bsl::ostream&               stream,
                                  bdlat_TypeCategory::Simple)
 {
     if (!encoderOptions
-        || (encoderOptions->maxDecimalTotalDigits().isNull()
-            && encoderOptions->maxDecimalFractionDigits().isNull())) {
+        || (BSLS_ASSERT_CONVEYOR_REF(*encoderOptions).maxDecimalTotalDigits()
+                                                                      .isNull()
+            && BSLS_ASSERT_CONVEYOR_REF(*encoderOptions)
+                                       .maxDecimalFractionDigits().isNull())) {
         u::printDecimalUsingNecessaryDigitsOnly(stream, object);
     }
     else {
+        BSLS_ASSERT_CONVEYOR_OBJECT(encoderOptions);
         const int maxTotalDigits =
                          encoderOptions->maxDecimalTotalDigits().isNull()
                              ? DBL_DIG + 1

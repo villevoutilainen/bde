@@ -104,7 +104,8 @@ class CustomInt {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `int`.
-    const int& toInt() const;
+    const int& toInt() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PUBLIC CLASS METHODS
 
@@ -173,7 +174,7 @@ inline
 CustomInt::CustomInt(const int& value)
 : d_value(value)
 {
-    BSLS_ASSERT(checkRestrictions(value) == 0);
+    BSLS_ASSERT_NONCONVEYOR(checkRestrictions(value) == 0);
 }
 
 inline
@@ -212,6 +213,7 @@ bsl::ostream& CustomInt::print(bsl::ostream& stream,
                                  int           level,
                                  int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 

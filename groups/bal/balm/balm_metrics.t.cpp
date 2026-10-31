@@ -436,16 +436,22 @@ void StandardMacroConcurrencyTest::execute()
         BALM::Collector *E = repository.getDefaultCollector("A", "E");
         BALM::Collector *F = repository.getDefaultCollector("A", "F");
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(A);
         ASSERT(BALM::MetricRecord(
                     A->metricId(), 7 * REPS, 28 * REPS, 1, 7) == recordVal(A));
+        BSLS_ASSERT_CONVEYOR_OBJECT(B);
         ASSERT(BALM::MetricRecord(
                     B->metricId(), 5 * REPS, 20 * REPS, 2, 6) == recordVal(B));
+        BSLS_ASSERT_CONVEYOR_OBJECT(C);
         ASSERT(BALM::MetricRecord(
                     C->metricId(), 4 * REPS, 18 * REPS, 3, 6) == recordVal(C));
+        BSLS_ASSERT_CONVEYOR_OBJECT(D);
         ASSERT(BALM::MetricRecord(
                     D->metricId(), 3 * REPS, 15 * REPS, 4, 6) == recordVal(D));
+        BSLS_ASSERT_CONVEYOR_OBJECT(E);
         ASSERT(BALM::MetricRecord(
                     E->metricId(), 2 * REPS, 11 * REPS, 5, 6) == recordVal(E));
+        BSLS_ASSERT_CONVEYOR_OBJECT(F);
         ASSERT(BALM::MetricRecord(
                     F->metricId(), 1 * REPS,  6 * REPS, 6, 6) == recordVal(F));
     }
@@ -893,16 +899,22 @@ void StandardIntMacroConcurrencyTest::execute()
         IntCollector *E = repository.getDefaultIntegerCollector("A", "E");
         IntCollector *F = repository.getDefaultIntegerCollector("A", "F");
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(A);
         ASSERT(BALM::MetricRecord(
                     A->metricId(), 9 * REPS, 30 * REPS, 1, 7) == recordVal(A));
+        BSLS_ASSERT_CONVEYOR_OBJECT(B);
         ASSERT(BALM::MetricRecord(
                     B->metricId(), 5 * REPS, 20 * REPS, 2, 6) == recordVal(B));
+        BSLS_ASSERT_CONVEYOR_OBJECT(C);
         ASSERT(BALM::MetricRecord(
                     C->metricId(), 4 * REPS, 18 * REPS, 3, 6) == recordVal(C));
+        BSLS_ASSERT_CONVEYOR_OBJECT(D);
         ASSERT(BALM::MetricRecord(
                     D->metricId(), 3 * REPS, 15 * REPS, 4, 6) == recordVal(D));
+        BSLS_ASSERT_CONVEYOR_OBJECT(E);
         ASSERT(BALM::MetricRecord(
                     E->metricId(), 2 * REPS, 11 * REPS, 5, 6) == recordVal(E));
+        BSLS_ASSERT_CONVEYOR_OBJECT(F);
         ASSERT(BALM::MetricRecord(
                     F->metricId(), 1 * REPS,  6 * REPS, 6, 6) == recordVal(F));
     }
@@ -1298,6 +1310,7 @@ void TlsIntMacroConcurrencyTest::runTest()
     /// value otherwise.
     int processEvent(int eventId, const bsl::string& eventMessage)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&eventMessage);
         (void)eventId;
 
         int returnCode = 0;

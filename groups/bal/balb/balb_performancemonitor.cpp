@@ -150,6 +150,7 @@ int PerformanceMonitor_LinuxProcStatistics::readProcStatString(
                                                            bsl::string *buffer,
                                                            int          pid)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     bsl::ostringstream oss;
     oss << "/proc/" << pid << "/stat";
     const bsl::string& ossString = oss.str();
@@ -213,6 +214,7 @@ int PerformanceMonitor_LinuxProcStatistics::parseProcStatString(
                                              const bsl::string& procStatString,
                                              int                pid)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&procStatString);
     *this = PerformanceMonitor_LinuxProcStatistics();
 
     const char *psCStr = procStatString.c_str();
@@ -400,6 +402,7 @@ PerformanceMonitor::Collector<bsls::Platform::OsLinux>
 int PerformanceMonitor::Collector<bsls::Platform::OsLinux>
 ::initialize(Statistics *stats, int pid, const bsl::string_view& description)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(stats);
     int rc;
 
     stats->d_pid         = pid;
@@ -461,6 +464,7 @@ int PerformanceMonitor::Collector<bsls::Platform::OsLinux>
 int PerformanceMonitor::Collector<bsls::Platform::OsLinux>
 ::collect(Statistics *stats)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(stats);
 
     bslmt::WriteLockGuard<bslmt::RWMutex> guard(&stats->d_guard);
 
@@ -546,11 +550,13 @@ int PerformanceMonitor::Collector<bsls::Platform::OsLinux>
     for (int i = 0; i < e_NUM_MEASURES; ++i) {
         if (s_measureData[i].hasAverage &&
             samplesCollected[s_measureData[i].measureType] > 0) {
-            stats->d_minData[i]  = bsl::min(stats->d_minData[i],
-                                            stats->d_lstData[i]);
+            stats->d_minData[i]  = bsl::min(
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_minData[i]),
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_lstData[i]));
 
-            stats->d_maxData[i]  = bsl::max(stats->d_maxData[i],
-                                            stats->d_lstData[i]);
+            stats->d_maxData[i]  = bsl::max(
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_maxData[i]),
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_lstData[i]));
 
             stats->d_totData[i] += stats->d_lstData[i];
         }
@@ -784,11 +790,13 @@ int PerformanceMonitor::Collector<bsls::Platform::OsFreeBsd>
         if (s_measureData[i].hasAverage &&
             samplesCollected[s_measureData[i].measureType] > 0) {
 
-            stats->d_minData[i]  = bsl::min(stats->d_minData[i],
-                                            stats->d_lstData[i]);
+            stats->d_minData[i]  = bsl::min(
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_minData[i]),
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_lstData[i]));
 
-            stats->d_maxData[i]  = bsl::max(stats->d_maxData[i],
-                                            stats->d_lstData[i]);
+            stats->d_maxData[i]  = bsl::max(
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_maxData[i]),
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_lstData[i]));
 
             stats->d_totData[i] += stats->d_lstData[i];
         }
@@ -926,10 +934,12 @@ int PerformanceMonitor::Collector<bsls::Platform::OsDarwin>
     for (int i = 0; i < e_NUM_MEASURES; ++i) {
         if (s_measureData[i].hasAverage &&
             samplesCollected[s_measureData[i].measureType] > 0) {
-            stats->d_minData[i]  = bsl::min(stats->d_minData[i],
-                                            stats->d_lstData[i]);
-            stats->d_maxData[i]  = bsl::max(stats->d_maxData[i],
-                                            stats->d_lstData[i]);
+            stats->d_minData[i]  = bsl::min(
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_minData[i]),
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_lstData[i]));
+            stats->d_maxData[i]  = bsl::max(
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_maxData[i]),
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_lstData[i]));
             stats->d_totData[i] += stats->d_lstData[i];
         }
     }
@@ -1587,11 +1597,13 @@ int PerformanceMonitor::Collector<bsls::Platform::OsWindows>
     for (int i = 0; i < e_NUM_MEASURES; ++i) {
         if (s_measureData[i].hasAverage &&
             samplesCollected[s_measureData[i].measureType] > 0) {
-            stats->d_minData[i]  = bsl::min(stats->d_minData[i],
-                                            stats->d_lstData[i]);
+            stats->d_minData[i]  = bsl::min(
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_minData[i]),
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_lstData[i]));
 
-            stats->d_maxData[i]  = bsl::max(stats->d_maxData[i],
-                                            stats->d_lstData[i]);
+            stats->d_maxData[i]  = bsl::max(
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_maxData[i]),
+                                BSLS_ASSERT_CONVEYOR_REF(stats->d_lstData[i]));
 
             stats->d_totData[i] += stats->d_lstData[i];
         }
@@ -1651,6 +1663,7 @@ void PerformanceMonitor::Statistics::print(bsl::ostream& os) const
 void PerformanceMonitor::Statistics::print(bsl::ostream& os,
                                            Measure       measure) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_guard);
 
     os << bsl::fixed;
@@ -1799,6 +1812,7 @@ PerformanceMonitor::~PerformanceMonitor()
 
 int PerformanceMonitor::registerPid(int pid, const bsl::string& description)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (pid == 0) {
         pid = bdls::ProcessUtil::getProcessId();
     }
@@ -1821,6 +1835,7 @@ int PerformanceMonitor::registerPid(int pid, const bsl::string& description)
 
 int PerformanceMonitor::unregisterPid(int pid)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (pid == 0) {
         pid = bdls::ProcessUtil::getProcessId();
     }
@@ -1831,6 +1846,7 @@ int PerformanceMonitor::unregisterPid(int pid)
 
 void PerformanceMonitor::setCollectionInterval(double interval)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_scheduler_p);
 
     if ((interval <= 0.0) && (d_clock != INVALID_TIMER_HANDLE)) {
@@ -1853,6 +1869,7 @@ void PerformanceMonitor::setCollectionInterval(double interval)
 
 void PerformanceMonitor::collect()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_mapGuard);
 
     for (PidMap::iterator it  = d_pidMap.begin();
@@ -1868,6 +1885,7 @@ void PerformanceMonitor::collect()
 
 void PerformanceMonitor::resetStatistics()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_mapGuard);
 
     for (PidMap::iterator it  = d_pidMap.begin();

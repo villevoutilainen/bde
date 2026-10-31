@@ -952,7 +952,7 @@ void setLinkedVariable(Obj      *typeInfo,
                                                                               \
       if (isOptionalLinkedVariable) {                                         \
         BSLS_ASSERT(Ot::e_BOOL != type);                                      \
-        BSLS_ASSERT(false      == Ot::isArrayType(type));                     \
+        BSLS_ASSERT_NONCONVEYOR(false      == Ot::isArrayType(type));         \
                                                                               \
         typedef bsl::optional<LinkType> OptLinkType;                          \
                                                                               \
@@ -1119,7 +1119,7 @@ Obj *constructTypeInfo(void     *buffer,
                                                                               \
       if (isOptionalLinkedVariable) {                                         \
         BSLS_ASSERT(Ot::e_BOOL != type);                                      \
-        BSLS_ASSERT(false      == Ot::isArrayType(type));                     \
+        BSLS_ASSERT_NONCONVEYOR(false      == Ot::isArrayType(type));         \
                                                                               \
         typedef bsl::optional<LinkType> OptLinkType;                          \
                                                                               \
@@ -1199,7 +1199,7 @@ Obj *constructTypeInfo(void             *buffer,
                                                                               \
       if (isOptionalLinkedVariable) {                                         \
         BSLS_ASSERT(Ot::e_BOOL != type);                                      \
-        BSLS_ASSERT(false      == Ot::isArrayType(type));                     \
+        BSLS_ASSERT_NONCONVEYOR(false      == Ot::isArrayType(type));         \
                                                                               \
         typedef bsl::optional<LinkType> OptLinkType;                          \
         ptr = new (buffer) Obj(static_cast<OptLinkType *>(variable),          \
@@ -1286,7 +1286,7 @@ Obj *constructTypeInfo(void     *buffer,
                                                                               \
       if (isOptionalLinkedVariable) {                                         \
         BSLS_ASSERT(Ot::e_BOOL != type);                                      \
-        BSLS_ASSERT(false      == Ot::isArrayType(type));                     \
+        BSLS_ASSERT_NONCONVEYOR(false      == Ot::isArrayType(type));         \
                                                                               \
         typedef bsl::optional<LinkType>       OptLinkType;                    \
         ptr = new (buffer) Obj(static_cast<   OptLinkType *>(variable),       \
@@ -1377,7 +1377,7 @@ Obj *constructTypeInfo(void             *buffer,
                                                                               \
       if (isOptionalLinkedVariable) {                                         \
         BSLS_ASSERT(Ot::e_BOOL != type);                                      \
-        BSLS_ASSERT(false      == Ot::isArrayType(type));                     \
+        BSLS_ASSERT_NONCONVEYOR(false      == Ot::isArrayType(type));         \
                                                                               \
         typedef bsl::optional<LinkType>       OptLinkType;                    \
         ptr = new (buffer) Obj(static_cast<   OptLinkType *>(variable),       \
@@ -1526,7 +1526,7 @@ void setOptionValue(OptionValue *dst, const void *src, ElemType type)
     BSLS_ASSERT(dst);
     BSLS_ASSERT(src);
     BSLS_ASSERT(Ot::e_VOID != type);
-    BSLS_ASSERT(dst->type()        == type);
+    BSLS_ASSERT_NONCONVEYOR(dst->type()        == type);
 
     switch (type) {
       case Ot::e_VOID: {
@@ -1602,6 +1602,7 @@ void normalizeIndentation(bsl::string        *output,
                           int                 level,
                           int                 spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(output);
     BSLS_ASSERT(output);
     BSLS_ASSERT(output->empty());
     BSLS_ASSERT(0 <= level);
@@ -1657,6 +1658,8 @@ bool areEqualValues(const OptionValue& element, const void *value)
 {
     BSLS_ASSERT(value);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&element);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
 #define CASE(ENUM)                                                            \
     case ENUM: {                                                              \
       return      element.the<      Ot::EnumToType<ENUM>::type  >()           \
@@ -1702,6 +1705,7 @@ void printValue(ostream& stream, Ot::Enum type, const void *value)
 {
     BSLS_ASSERT(value);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
 #define CASE_SCALAR(ENUM)                                                     \
     case ENUM: {                                                              \
           stream << *(static_cast<const Ot::EnumToType<ENUM>::type *>(value)) \
@@ -1886,7 +1890,8 @@ int main(int argc, const char *argv[])  {
             StringVec expVec;    const StringVec& EXP_VEC = expVec;
             bsl::string s;
             for (unsigned vv = 0; EXP[vv]; ++vv) {
-                expVec.push_back(s = EXP[vv]);
+                s = BSLS_ASSERT_CONVEYOR_REF(EXP[vv]);
+                expVec.push_back(s);
             }
             ASSERT(EXP_VEC.size() < 5);
 

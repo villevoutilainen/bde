@@ -136,14 +136,18 @@ class MySequenceWithChoicesChoice1 {
     /// Set the value of this object to be a "ChoiceA" value.  Optionally
     /// specify the `value` of the "ChoiceA".  If `value` is not specified,
     /// the default "ChoiceA" value is used.
-    int& makeChoiceA();
-    int& makeChoiceA(int value);
+    int& makeChoiceA()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeChoiceA(int value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Set the value of this object to be a "ChoiceB" value.  Optionally
     /// specify the `value` of the "ChoiceB".  If `value` is not specified,
     /// the default "ChoiceB" value is used.
-    int& makeChoiceB();
-    int& makeChoiceB(int value);
+    int& makeChoiceB()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeChoiceB(int value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -156,12 +160,14 @@ class MySequenceWithChoicesChoice1 {
     /// Return a reference to the modifiable "ChoiceA" selection of this
     /// object if "ChoiceA" is the current selection.  The behavior is
     /// undefined unless "ChoiceA" is the selection of this object.
-    int& choiceA();
+    int& choiceA()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "ChoiceB" selection of this
     /// object if "ChoiceB" is the current selection.  The behavior is
     /// undefined unless "ChoiceB" is the selection of this object.
-    int& choiceB();
+    int& choiceB()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -194,12 +200,14 @@ class MySequenceWithChoicesChoice1 {
     /// Return a reference to the non-modifiable "ChoiceA" selection of this
     /// object if "ChoiceA" is the current selection.  The behavior is
     /// undefined unless "ChoiceA" is the selection of this object.
-    const int& choiceA() const;
+    const int& choiceA() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "ChoiceB" selection of this
     /// object if "ChoiceB" is the current selection.  The behavior is
     /// undefined unless "ChoiceB" is the selection of this object.
-    const int& choiceB() const;
+    const int& choiceB() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "ChoiceA" value, and
     /// return `false` otherwise.
@@ -361,14 +369,18 @@ class MySequenceWithChoicesChoice2 {
     /// Set the value of this object to be a "ChoiceC" value.  Optionally
     /// specify the `value` of the "ChoiceC".  If `value` is not specified,
     /// the default "ChoiceC" value is used.
-    int& makeChoiceC();
-    int& makeChoiceC(int value);
+    int& makeChoiceC()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeChoiceC(int value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Set the value of this object to be a "ChoiceD" value.  Optionally
     /// specify the `value` of the "ChoiceD".  If `value` is not specified,
     /// the default "ChoiceD" value is used.
-    int& makeChoiceD();
-    int& makeChoiceD(int value);
+    int& makeChoiceD()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeChoiceD(int value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -381,12 +393,14 @@ class MySequenceWithChoicesChoice2 {
     /// Return a reference to the modifiable "ChoiceC" selection of this
     /// object if "ChoiceC" is the current selection.  The behavior is
     /// undefined unless "ChoiceC" is the selection of this object.
-    int& choiceC();
+    int& choiceC()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "ChoiceD" selection of this
     /// object if "ChoiceD" is the current selection.  The behavior is
     /// undefined unless "ChoiceD" is the selection of this object.
-    int& choiceD();
+    int& choiceD()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -419,12 +433,14 @@ class MySequenceWithChoicesChoice2 {
     /// Return a reference to the non-modifiable "ChoiceC" selection of this
     /// object if "ChoiceC" is the current selection.  The behavior is
     /// undefined unless "ChoiceC" is the selection of this object.
-    const int& choiceC() const;
+    const int& choiceC() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "ChoiceD" selection of this
     /// object if "ChoiceD" is the current selection.  The behavior is
     /// undefined unless "ChoiceD" is the selection of this object.
-    const int& choiceD() const;
+    const int& choiceD() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "ChoiceC" value, and
     /// return `false` otherwise.
@@ -569,11 +585,13 @@ class MySequenceWithChoices {
 
     /// Return a reference to the modifiable "First" attribute of this
     /// object.
-    MySequenceWithChoicesChoice1& first();
+    MySequenceWithChoicesChoice1& first()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Second" attribute of this
     /// object.
-    MySequenceWithChoicesChoice2& second();
+    MySequenceWithChoicesChoice2& second()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -622,11 +640,13 @@ class MySequenceWithChoices {
 
     /// Return a reference offering non-modifiable access to the "First"
     /// attribute of this object.
-    const MySequenceWithChoicesChoice1& first() const;
+    const MySequenceWithChoicesChoice1& first() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Second"
     /// attribute of this object.
-    const MySequenceWithChoicesChoice2& second() const;
+    const MySequenceWithChoicesChoice2& second() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 

@@ -125,6 +125,7 @@ void format(bsl::size_t                     start,
             bsl::ostream&                   stream,
             bsl::size_t                     col = 0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&strings);
     if (0 == strings.size()) {
         return;                                                       // RETURN
     }
@@ -280,6 +281,7 @@ void OptionValueUtil::setLinkedVariableValue(
                                   bool                isOptionalLinkedVariable,
                                   const OptionValue&  src)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&src);
     BSLS_ASSERT(dst);
 
     typedef OptionType Ot;
@@ -296,8 +298,8 @@ void OptionValueUtil::setLinkedVariableValue(
         typedef Ot::EnumToType<ENUM>::type Type;                              \
                                                                               \
         if (isOptionalLinkedVariable) {                                       \
-          BSLS_ASSERT(Ot::e_BOOL != src.type());                              \
-          BSLS_ASSERT(false      == Ot::isArrayType(src.type()));             \
+          BSLS_ASSERT_NONCONVEYOR(Ot::e_BOOL != src.type());                  \
+          BSLS_ASSERT_NONCONVEYOR(false == Ot::isArrayType(src.type()));      \
                                                                               \
           typedef bsl::optional<Type> OptType;                                \
                                                                               \
@@ -371,6 +373,7 @@ bool isValidEnvironmentVariableName(
 /// the specified `errorStream`.
 int validate(const bsl::vector<Option>& options, bsl::ostream& errorStream)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&options);
     int status = 0;
 
     for (bsl::size_t i = 0; i < options.size(); ++i) {
@@ -610,6 +613,7 @@ bsl::ptrdiff_t parseEnvironmentVariable(
                                 const Option&            option,
                                 bsl::ostream&            errorStream)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&option);
     const TypeInfo::ParseInputSource e_ENV_VAR =
                                               TypeInfo::e_ENVIRONMENT_VARIABLE;
 
@@ -695,6 +699,10 @@ void initialize(bsl::vector<OptionValue>       *data,
                 bool                           *environmentVariablesPresent,
                 const bsl::vector<Option>&      options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&options);
+    BSLS_ASSERT_CONVEYOR_OBJECT(positions);
+    BSLS_ASSERT_CONVEYOR_OBJECT(data);
+    BSLS_ASSERT_CONVEYOR_OBJECT(nonOptionIndices);
     BSLS_ASSERT(data);
     BSLS_ASSERT(positions);
     BSLS_ASSERT(nonOptionIndices);
@@ -747,6 +755,7 @@ namespace balcl {
 // PRIVATE MANIPULATORS
 void CommandLine::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_options.clear();
     d_positions.clear();
     d_nonOptionIndices.clear();
@@ -761,6 +770,7 @@ void CommandLine::clear()
 
 void CommandLine::initArgs(int argc, const char * const argv[])
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (int i = 0; i < argc; ++i) {
         d_arguments.push_back(argv[i]);
     }
@@ -768,6 +778,7 @@ void CommandLine::initArgs(int argc, const char * const argv[])
 
 int CommandLine::parseImp(bsl::ostream& errorStream)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_NOT_PARSED == d_state);
 
     bsl::size_t nonOptionRank = 0;
@@ -870,7 +881,7 @@ int CommandLine::parseImp(bsl::ostream& errorStream)
         if ('-' == d_arguments[i][1]) {
             {
                 const int temp = i;
-                BSLS_ASSERT(0 != d_arguments[temp][2]);
+                BSLS_ASSERT_NONCONVEYOR(0 != d_arguments[temp][2]);
                 (void)temp;
             }
 
@@ -1075,7 +1086,7 @@ int CommandLine::parseImp(bsl::ostream& errorStream)
                 continue;
             }
 
-            BSLS_ASSERT(d_positions[index].empty());
+            BSLS_ASSERT_NONCONVEYOR(d_positions[index].empty());
 
             const u::EnvironmentVariableAccessor envVarValue(
                                                            envVarName.c_str());
@@ -1100,6 +1111,7 @@ int CommandLine::parseImp(bsl::ostream& errorStream)
 
 int CommandLine::postParseImp(bsl::ostream& errorStream)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int index = missing();
     if (index >= 0) {
         const Option& thisOption = d_options[index];
@@ -1139,7 +1151,7 @@ int CommandLine::postParseImp(bsl::ostream& errorStream)
             // This might be redundant, since 'data[i]' was set in
             // 'validateAndInitialize'.  But to be safe...
 
-            BSLS_ASSERT(false == info.isOptionalLinkedVariable());
+            BSLS_ASSERT_NONCONVEYOR(false == info.isOptionalLinkedVariable());
 
             if (info.linkedVariable()) {
                 u::OptionValueUtil::setLinkedVariableValue(
@@ -1158,7 +1170,7 @@ int CommandLine::postParseImp(bsl::ostream& errorStream)
                     // 'e_REQUIRED' is ignored for flags.
             }
             else {
-                BSLS_ASSERT(!defaultInfo.isRequired());
+                BSLS_ASSERT_NONCONVEYOR(!defaultInfo.isRequired());
                 element.setNull();
             }
 
@@ -1191,6 +1203,7 @@ void CommandLine::validateAndInitialize(bsl::ostream& errorStream)
 // PRIVATE ACCESSORS
 int CommandLine::findName(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (unsigned int i = 0; i < d_options.size(); ++i) {
         if (d_options[i].name() == name) {
             return i;                                                 // RETURN
@@ -1201,6 +1214,7 @@ int CommandLine::findName(const bsl::string_view& name) const
 
 int CommandLine::findTag(const bsl::string_view& longTag) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (unsigned int i = 0; i < d_options.size(); ++i) {
         if   (d_options[i].argType() != OptionInfo::e_NON_OPTION
            && d_options[i].longTag() == longTag) {
@@ -1212,6 +1226,7 @@ int CommandLine::findTag(const bsl::string_view& longTag) const
 
 int CommandLine::findTag(char shortTag) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (unsigned int i = 0; i < d_options.size(); ++i) {
         if (d_options[i].argType() != OptionInfo::e_NON_OPTION
          && d_options[i].shortTag() == shortTag) {
@@ -1246,6 +1261,7 @@ void CommandLine::location(bsl::ostream& errorStream,
 
 int CommandLine::longestNonFlagNameSize() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int max = 0;
     for (unsigned int i = 0; i < d_options.size(); ++i) {
         if (d_options[i].argType() != OptionInfo::e_FLAG) {
@@ -1260,6 +1276,7 @@ int CommandLine::longestNonFlagNameSize() const
 
 int CommandLine::longestTagSize() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int max = 0;
     int len;
     for (unsigned int i = 0; i < d_options.size(); ++i) {
@@ -1274,6 +1291,7 @@ int CommandLine::longestTagSize() const
 
 int CommandLine::missing(bool checkAlsoNonOptions) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (unsigned int i = 0; i < d_options.size(); ++i) {
         OptionInfo::ArgType argType = d_options[i].argType();
         if (0 == d_positions[i].size()  // no value specified
@@ -1370,6 +1388,7 @@ CommandLine::CommandLine(const CommandLine&  original,
 , d_isBindin2Valid(false)
 , d_envVarsPresent(false)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     BSLS_ASSERT(original.d_state != e_INVALID);
 
     // This isn't a typical copy constructor, because it has side-effects like
@@ -1398,9 +1417,11 @@ CommandLine::~CommandLine()
 // MANIPULATORS
 CommandLine& CommandLine::operator=(const CommandLine& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_state != e_INVALID);
 
     if (&rhs != this) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         BSLS_ASSERT(rhs.d_state != e_INVALID);
 
         clear();
@@ -1443,11 +1464,13 @@ int CommandLine::parse(int                argc,
 // ACCESSORS
 bool CommandLine::hasOption(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 <= findName(name);
 }
 
 bool CommandLine::hasValue(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_PARSED == d_state);
 
     const int index = findName(name);
@@ -1483,12 +1506,14 @@ bool CommandLine::isValid() const
 
 int CommandLine::numSpecified(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const int index = findName(name);
     return static_cast<int>(0 <= index ? d_positions[index].size() : 0);
 }
 
 CommandLineOptionsHandle CommandLine::options() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_PARSED == d_state);
 
     return CommandLineOptionsHandle(&d_dataFinal, &d_schema);
@@ -1496,6 +1521,7 @@ CommandLineOptionsHandle CommandLine::options() const
 
 int CommandLine::position(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // The behavior is undefined unless 'name' exists and it is not an array.
     // -1 is returned if option is never entered on command line (possible in
     // case of flags, or options with default values).
@@ -1503,7 +1529,7 @@ int CommandLine::position(const bsl::string_view& name) const
     const int index = findName(name);
 
     BSLS_ASSERT(index >= 0);
-    BSLS_ASSERT(!d_options[index].isArray());
+    BSLS_ASSERT_NONCONVEYOR(!d_options[index].isArray());
 
     return 0 == d_positions[index].size() ? -1 : d_positions[index][0];
 }
@@ -1511,6 +1537,7 @@ int CommandLine::position(const bsl::string_view& name) const
 const bsl::vector<int>& CommandLine::positions(
                                             const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const int index = findName(name);
 
     BSLS_ASSERT(index >= 0);
@@ -1530,11 +1557,13 @@ void CommandLine::printUsage(const bsl::string_view& programName) const
 
 void CommandLine::printUsage(bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     printUsage(stream, bsl::string_view());
 }
 
 CommandLineOptionsHandle CommandLine::specifiedOptions() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(e_PARSED == d_state);
 
     if (!d_isBindin2Valid) {
@@ -1562,6 +1591,7 @@ CommandLineOptionsHandle CommandLine::specifiedOptions() const
 
 OptionType::Enum CommandLine::type(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int index = findName(name);
     BSLS_ASSERT(0 <= index); // Moral equivalent of 'hasOption(name)'.
 
@@ -1571,10 +1601,12 @@ OptionType::Enum CommandLine::type(const bsl::string_view& name) const
 // BDE_VERIFY pragma: -FABC01  // not in alphabetic order
 bool CommandLine::theBool(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     const int index = findName(name);
 
     BSLS_ASSERT(index >= 0);
-    BSLS_ASSERT(
+    BSLS_ASSERT_NONCONVEYOR(
           OptionInfo::e_FLAG == d_options[index].argType());
     (void)index;
 
@@ -1583,50 +1615,54 @@ bool CommandLine::theBool(const bsl::string_view& name) const
 
 char CommandLine::theChar(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_CHAR == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_CHAR == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::Char>(name);
 }
 
 int CommandLine::theInt(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_INT == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_INT == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::Int>(name);
 }
 
 bsls::Types::Int64 CommandLine::theInt64(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_INT64 == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_INT64 == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::Int64>(name);
 }
 
 double CommandLine::theDouble(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_DOUBLE == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_DOUBLE == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::Double>(name);
 }
 
 const bsl::string& CommandLine::theString(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_STRING == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_STRING == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::String>(name);
 }
@@ -1634,30 +1670,30 @@ const bsl::string& CommandLine::theString(const bsl::string_view& name) const
 const bdlt::Datetime& CommandLine::theDatetime(
                                             const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_DATETIME == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_DATETIME == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::Datetime>(name);
 }
 
 const bdlt::Date& CommandLine::theDate(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_DATE == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_DATE == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::Date>(name);
 }
 
 const bdlt::Time& CommandLine::theTime(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_TIME == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_TIME == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::Time>(name);
 }
@@ -1665,10 +1701,10 @@ const bdlt::Time& CommandLine::theTime(const bsl::string_view& name) const
 const bsl::vector<char>&
 CommandLine::theCharArray(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_CHAR_ARRAY == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_CHAR_ARRAY == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::CharArray>(name);
 }
@@ -1676,10 +1712,10 @@ CommandLine::theCharArray(const bsl::string_view& name) const
 const bsl::vector<int>&
 CommandLine::theIntArray(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_INT_ARRAY == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_INT_ARRAY == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::IntArray>(name);
 }
@@ -1687,10 +1723,11 @@ CommandLine::theIntArray(const bsl::string_view& name) const
 const bsl::vector<bsls::Types::Int64>&
 CommandLine::theInt64Array(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_INT64_ARRAY == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_INT64_ARRAY == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::Int64Array>(name);
 }
@@ -1698,10 +1735,11 @@ CommandLine::theInt64Array(const bsl::string_view& name) const
 const bsl::vector<double>&
 CommandLine::theDoubleArray(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_DOUBLE_ARRAY == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_DOUBLE_ARRAY == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::DoubleArray>(name);
 }
@@ -1709,10 +1747,11 @@ CommandLine::theDoubleArray(const bsl::string_view& name) const
 const bsl::vector<bsl::string>&
 CommandLine::theStringArray(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_STRING_ARRAY == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_STRING_ARRAY == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::StringArray>(name);
 }
@@ -1720,10 +1759,11 @@ CommandLine::theStringArray(const bsl::string_view& name) const
 const bsl::vector<bdlt::Datetime>&
 CommandLine::theDatetimeArray(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_DATETIME_ARRAY == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_DATETIME_ARRAY == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::DatetimeArray>(name);
 }
@@ -1731,10 +1771,11 @@ CommandLine::theDatetimeArray(const bsl::string_view& name) const
 const bsl::vector<bdlt::Date>&
 CommandLine::theDateArray(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_DATE_ARRAY == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_DATE_ARRAY == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::DateArray>(name);
 }
@@ -1742,10 +1783,11 @@ CommandLine::theDateArray(const bsl::string_view& name) const
 const bsl::vector<bdlt::Time>&
 CommandLine::theTimeArray(const bsl::string_view& name) const
 {
-    BSLS_ASSERT(isParsed());
-    BSLS_ASSERT(hasOption(name));
-    BSLS_ASSERT(OptionType::e_TIME_ARRAY == type(name));
-    BSLS_ASSERT(hasValue(name));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_NONCONVEYOR(isParsed());
+    BSLS_ASSERT_NONCONVEYOR(hasOption(name));
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_TIME_ARRAY == type(name));
+    BSLS_ASSERT_NONCONVEYOR(hasValue(name));
 
     return options().the<OptionType::TimeArray>(name);
 }
@@ -1761,6 +1803,7 @@ bslma::Allocator *CommandLine::allocator() const
 void CommandLine::printUsage(bsl::ostream&           stream,
                              const bsl::string_view& programName) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::string usage("Usage: ");
     if (programName.size()) {
         usage.append(programName.data(), programName.size());
@@ -1911,7 +1954,9 @@ void CommandLine::printUsage(bsl::ostream&           stream,
             if (OptionInfo::e_OPTION ==
                                                       d_options[i].argType()) {
                 str.append(k_NAME_START_POSITION - str.size(), ' ');
-                str.append(1, '<').append(d_options[i].name()).append(1, '>');
+                str.append(1, '<');
+                str.append(d_options[i].name());
+                str.append(1, '>');
             }
 
             if (k_DESCRIPTION_NEW_LINE) {
@@ -1991,6 +2036,7 @@ bsl::ostream& CommandLine::print(bsl::ostream& stream,
                                  int           level,
                                  int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= spacesPerLevel);
 
     if (e_PARSED == d_state) {
@@ -2047,10 +2093,12 @@ namespace balcl {
 // ACCESSORS
 int CommandLineOptionsHandle::index(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (CommandLine_Schema::const_iterator itr  = d_schema_p->cbegin(),
                                             end  = d_schema_p->cend();
                                             end != itr; ++itr) {
         if (itr->d_name_p == name) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_schema_p);
             return static_cast<int>(bsl::distance(d_schema_p->begin(), itr));
                                                                       // RETURN
         }

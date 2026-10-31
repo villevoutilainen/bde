@@ -305,6 +305,7 @@ class Resolver_FileHelper {
 inline
 int Resolver_FileHelper::readExact(const Span& outSpan, Offset offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&outSpan);
     BSLS_ASSERT(offset >= 0);
 
     CSpan res = readBytes(outSpan, offset);

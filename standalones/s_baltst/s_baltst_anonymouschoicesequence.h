@@ -114,7 +114,8 @@ class AnonChoiceSequence {
                             int           nameLength);
 
     /// Return a reference to the modifiable "A" attribute of this object.
-    int& a();
+    int& a()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -297,11 +298,14 @@ class AnonChoice {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    AnonChoiceSequence& makeSequence();
-    AnonChoiceSequence& makeSequence(const AnonChoiceSequence& value);
+    AnonChoiceSequence& makeSequence()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    AnonChoiceSequence& makeSequence(const AnonChoiceSequence& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    AnonChoiceSequence& makeSequence(AnonChoiceSequence&& value);
+    AnonChoiceSequence& makeSequence(AnonChoiceSequence&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Sequence" value.  Optionally
         // specify the 'value' of the "Sequence".  If 'value' is not specified,
@@ -318,7 +322,8 @@ class AnonChoice {
     /// Return a reference to the modifiable "Sequence" selection of this
     /// object if "Sequence" is the current selection.  The behavior is
     /// undefined unless "Sequence" is the selection of this object.
-    AnonChoiceSequence& sequence();
+    AnonChoiceSequence& sequence()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -351,7 +356,8 @@ class AnonChoice {
     /// Return a reference to the non-modifiable "Sequence" selection of
     /// this object if "Sequence" is the current selection.  The behavior is
     /// undefined unless "Sequence" is the selection of this object.
-    const AnonChoiceSequence& sequence() const;
+    const AnonChoiceSequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Sequence" value, and
     /// return `false` otherwise.

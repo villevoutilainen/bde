@@ -238,6 +238,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmf_assert.h>
 
+#include <bsls_assert.h>
 #include <bsls_atomic.h>
 #include <bsls_libraryfeatures.h>
 
@@ -440,7 +441,8 @@ class PipeControlChannel {
     int permissions() const;
 
     /// Return the fully qualified system name of the pipe.
-    const bsl::string& pipeName() const;
+    const bsl::string& pipeName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 

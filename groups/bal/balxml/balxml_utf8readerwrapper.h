@@ -264,6 +264,7 @@ BSLS_IDENT("$Id: $")
 #include <bdlsb_fixedmeminstreambuf.h>
 
 #include <bslmf_nestedtraitdeclaration.h>
+#include <bsls_assert.h>
 #include <bsls_keyword.h>
 
 #include <bsl_cstddef.h> // for size_t
@@ -318,7 +319,9 @@ class Utf8ReaderWrapper : public Reader {
     int doOpen(const char *url, const char *encoding);
 
     /// Return a pointer providing modifiable access to the held `Reader`.
-    Reader *heldReader();
+    Reader *heldReader()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Called when a UTF-8 error is encountered, to make `d_errorInfo` into
     /// a combination of `heldReader()->errorInfo()` and the nature of the
@@ -331,7 +334,9 @@ class Utf8ReaderWrapper : public Reader {
 
     /// Return a pointer providing non-modifiable access to the held
     /// `Reader`.
-    const Reader *heldReader() const;
+    const Reader *heldReader() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
   public:
     // CREATORS

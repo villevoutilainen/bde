@@ -253,7 +253,8 @@ class Choice4 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -269,12 +270,14 @@ class Choice4 {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const bsl::vector<bsl::string>& selection1() const;
+    const bsl::vector<bsl::string>& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const int& selection2() const;
+    const int& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -388,7 +391,8 @@ class CustomInt {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the most current `bdex` streaming version number supported by
     /// this class.  See the `bslx` package-level documentation for more
@@ -412,7 +416,8 @@ class CustomInt {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `int`.
-    const int& toInt() const;
+    const int& toInt() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PUBLIC CLASS METHODS
 
@@ -529,7 +534,8 @@ class CustomString {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the most current `bdex` streaming version number supported by
     /// this class.  See the `bslx` package-level documentation for more
@@ -553,7 +559,8 @@ class CustomString {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `bsl::string`.
-    const bsl::string& toString() const;
+    const bsl::string& toString() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PUBLIC CLASS METHODS
 
@@ -664,7 +671,8 @@ struct Enumerated {
     /// Write to the specified `stream` the string representation of
     /// the specified enumeration `value`.  Return a reference to
     /// the modifiable `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Write the specified `value` to the specified output `stream` and
     /// return a reference to the modifiable `stream`.  Optionally specify
@@ -857,7 +865,8 @@ class SequenceWithAnonymityChoice1 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -873,12 +882,14 @@ class SequenceWithAnonymityChoice1 {
     /// Return a reference to the non-modifiable "Selection5" selection of
     /// this object if "Selection5" is the current selection.  The behavior
     /// is undefined unless "Selection5" is the selection of this object.
-    const bool& selection5() const;
+    const bool& selection5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection6" selection of
     /// this object if "Selection6" is the current selection.  The behavior
     /// is undefined unless "Selection6" is the selection of this object.
-    const bsl::string& selection6() const;
+    const bsl::string& selection6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection5" value,
     /// and return `false` otherwise.
@@ -1074,7 +1085,8 @@ class SimpleRequest {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -1106,7 +1118,8 @@ class SimpleRequest {
 
     /// Return a reference to the non-modifiable "Data" attribute of this
     /// object.
-    const bsl::string& data() const;
+    const bsl::string& data() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "ResponseLength" attribute
     /// of this object.
@@ -1294,7 +1307,8 @@ class UnsignedSequence {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -1489,7 +1503,8 @@ class VoidSequence {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -1709,7 +1724,8 @@ class Choice5 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -1725,12 +1741,14 @@ class Choice5 {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const Choice4& selection1() const;
+    const Choice4& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const int& selection2() const;
+    const int& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -1954,7 +1972,8 @@ class Sequence3 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -1986,27 +2005,33 @@ class Sequence3 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const bsl::vector<Enumerated::Value>& element1() const;
+    const bsl::vector<Enumerated::Value>& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
-    const bsl::vector<bsl::string>& element2() const;
+    const bsl::vector<bsl::string>& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const bdlb::NullableValue<bool>& element3() const;
+    const bdlb::NullableValue<bool>& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const bdlb::NullableValue<bsl::string>& element4() const;
+    const bdlb::NullableValue<bsl::string>& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element5" attribute of
     /// this object.
-    const bdlb::NullableAllocatedValue<Sequence5>& element5() const;
+    const bdlb::NullableAllocatedValue<Sequence5>& element5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element6" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<Enumerated::Value> >& element6() const;
+    const bsl::vector<bdlb::NullableValue<Enumerated::Value> >& element6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -2224,7 +2249,8 @@ class Sequence5 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -2256,31 +2282,38 @@ class Sequence5 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const Sequence3& element1() const;
+    const Sequence3& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<bool> >& element2() const;
+    const bsl::vector<bdlb::NullableValue<bool> >& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<double> >& element3() const;
+    const bsl::vector<bdlb::NullableValue<double> >& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<bsl::vector<char> > >& element4() const;
+    const bsl::vector<bdlb::NullableValue<bsl::vector<char> > >& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element5" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<int> >& element5() const;
+    const bsl::vector<bdlb::NullableValue<int> >& element5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element6" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& element6() const;
+    const bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& element6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element7" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& element7() const;
+    const bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& element7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -2553,7 +2586,8 @@ class Sequence6 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -2585,15 +2619,18 @@ class Sequence6 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const bdlb::NullableValue<unsigned char>& element1() const;
+    const bdlb::NullableValue<unsigned char>& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
-    const bdlb::NullableValue<CustomString>& element2() const;
+    const bdlb::NullableValue<CustomString>& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const bdlb::NullableValue<CustomInt>& element3() const;
+    const bdlb::NullableValue<CustomInt>& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
@@ -2605,43 +2642,53 @@ class Sequence6 {
 
     /// Return a reference to the non-modifiable "Element6" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<CustomInt> >& element6() const;
+    const bsl::vector<bdlb::NullableValue<CustomInt> >& element6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element7" attribute of
     /// this object.
-    const CustomString& element7() const;
+    const CustomString& element7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element8" attribute of
     /// this object.
-    const CustomInt& element8() const;
+    const CustomInt& element8() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element9" attribute of
     /// this object.
-    const bdlb::NullableValue<unsigned int>& element9() const;
+    const bdlb::NullableValue<unsigned int>& element9() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element10" attribute of
     /// this object.
-    const bsl::vector<unsigned char>& element10() const;
+    const bsl::vector<unsigned char>& element10() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element11" attribute of
     /// this object.
-    const bsl::vector<CustomString>& element11() const;
+    const bsl::vector<CustomString>& element11() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element12" attribute of
     /// this object.
-    const bsl::vector<unsigned int>& element12() const;
+    const bsl::vector<unsigned int>& element12() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element13" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<unsigned char> >& element13() const;
+    const bsl::vector<bdlb::NullableValue<unsigned char> >& element13() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element14" attribute of
     /// this object.
-    const bsl::vector<CustomInt>& element14() const;
+    const bsl::vector<CustomInt>& element14() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element15" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<unsigned int> >& element15() const;
+    const bsl::vector<bdlb::NullableValue<unsigned int> >& element15() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -2861,7 +2908,8 @@ class Choice3 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -2877,22 +2925,26 @@ class Choice3 {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const Sequence6& selection1() const;
+    const Sequence6& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const unsigned char& selection2() const;
+    const unsigned char& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection3" selection of
     /// this object if "Selection3" is the current selection.  The behavior
     /// is undefined unless "Selection3" is the selection of this object.
-    const CustomString& selection3() const;
+    const CustomString& selection3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection4" selection of
     /// this object if "Selection4" is the current selection.  The behavior
     /// is undefined unless "Selection4" is the selection of this object.
-    const CustomInt& selection4() const;
+    const CustomInt& selection4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -3134,7 +3186,8 @@ class SequenceWithAnonymityChoice {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -3150,22 +3203,26 @@ class SequenceWithAnonymityChoice {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const Sequence6& selection1() const;
+    const Sequence6& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const unsigned char& selection2() const;
+    const unsigned char& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection3" selection of
     /// this object if "Selection3" is the current selection.  The behavior
     /// is undefined unless "Selection3" is the selection of this object.
-    const CustomString& selection3() const;
+    const CustomString& selection3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection4" selection of
     /// this object if "Selection4" is the current selection.  The behavior
     /// is undefined unless "Selection4" is the selection of this object.
-    const CustomInt& selection4() const;
+    const CustomInt& selection4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -3407,7 +3464,8 @@ class Choice1 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -3423,22 +3481,26 @@ class Choice1 {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const int& selection1() const;
+    const int& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const double& selection2() const;
+    const double& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection3" selection of
     /// this object if "Selection3" is the current selection.  The behavior
     /// is undefined unless "Selection3" is the selection of this object.
-    const Sequence4& selection3() const;
+    const Sequence4& selection3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection4" selection of
     /// this object if "Selection4" is the current selection.  The behavior
     /// is undefined unless "Selection4" is the selection of this object.
-    const Choice2& selection4() const;
+    const Choice2& selection4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -3680,7 +3742,8 @@ class Choice2 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -3696,22 +3759,26 @@ class Choice2 {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const bool& selection1() const;
+    const bool& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const bsl::string& selection2() const;
+    const bsl::string& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection3" selection of
     /// this object if "Selection3" is the current selection.  The behavior
     /// is undefined unless "Selection3" is the selection of this object.
-    const Choice1& selection3() const;
+    const Choice1& selection3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection4" selection of
     /// this object if "Selection4" is the current selection.  The behavior
     /// is undefined unless "Selection4" is the selection of this object.
-    const unsigned int& selection4() const;
+    const unsigned int& selection4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -4034,7 +4101,8 @@ class Sequence4 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -4066,31 +4134,38 @@ class Sequence4 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const bsl::vector<Sequence3>& element1() const;
+    const bsl::vector<Sequence3>& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
-    const bsl::vector<Choice1>& element2() const;
+    const bsl::vector<Choice1>& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const bdlb::NullableValue<bsl::vector<char> >& element3() const;
+    const bdlb::NullableValue<bsl::vector<char> >& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const bdlb::NullableValue<int>& element4() const;
+    const bdlb::NullableValue<int>& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element5" attribute of
     /// this object.
-    const bdlb::NullableValue<bdlt::DatetimeTz>& element5() const;
+    const bdlb::NullableValue<bdlt::DatetimeTz>& element5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element6" attribute of
     /// this object.
-    const bdlb::NullableValue<CustomString>& element6() const;
+    const bdlb::NullableValue<CustomString>& element6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element7" attribute of
     /// this object.
-    const bdlb::NullableValue<Enumerated::Value>& element7() const;
+    const bdlb::NullableValue<Enumerated::Value>& element7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element8" attribute of
     /// this object.
@@ -4098,7 +4173,8 @@ class Sequence4 {
 
     /// Return a reference to the non-modifiable "Element9" attribute of
     /// this object.
-    const bsl::string& element9() const;
+    const bsl::string& element9() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element10" attribute of
     /// this object.
@@ -4106,7 +4182,8 @@ class Sequence4 {
 
     /// Return a reference to the non-modifiable "Element11" attribute of
     /// this object.
-    const bsl::vector<char>& element11() const;
+    const bsl::vector<char>& element11() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element12" attribute of
     /// this object.
@@ -4118,27 +4195,33 @@ class Sequence4 {
 
     /// Return a reference to the non-modifiable "Element14" attribute of
     /// this object.
-    const bsl::vector<bool>& element14() const;
+    const bsl::vector<bool>& element14() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element15" attribute of
     /// this object.
-    const bsl::vector<double>& element15() const;
+    const bsl::vector<double>& element15() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element16" attribute of
     /// this object.
-    const bsl::vector<bsl::vector<char> >& element16() const;
+    const bsl::vector<bsl::vector<char> >& element16() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element17" attribute of
     /// this object.
-    const bsl::vector<int>& element17() const;
+    const bsl::vector<int>& element17() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element18" attribute of
     /// this object.
-    const bsl::vector<bdlt::DatetimeTz>& element18() const;
+    const bsl::vector<bdlt::DatetimeTz>& element18() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element19" attribute of
     /// this object.
-    const bsl::vector<CustomString>& element19() const;
+    const bsl::vector<CustomString>& element19() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -4342,7 +4425,8 @@ class Sequence1 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -4374,23 +4458,28 @@ class Sequence1 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const bdlb::NullableValue<Choice3>& element1() const;
+    const bdlb::NullableValue<Choice3>& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
-    const bsl::vector<Choice1>& element2() const;
+    const bsl::vector<Choice1>& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const Choice2& element3() const;
+    const Choice2& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<Choice1> >& element4() const;
+    const bsl::vector<bdlb::NullableValue<Choice1> >& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element5" attribute of
     /// this object.
-    const bsl::vector<Choice3>& element5() const;
+    const bsl::vector<Choice3>& element5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -4593,7 +4682,8 @@ class Sequence2 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -4625,7 +4715,8 @@ class Sequence2 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const CustomString& element1() const;
+    const CustomString& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
@@ -4633,15 +4724,18 @@ class Sequence2 {
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const bdlt::DatetimeTz& element3() const;
+    const bdlt::DatetimeTz& element3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const bdlb::NullableValue<Choice1>& element4() const;
+    const bdlb::NullableValue<Choice1>& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element5" attribute of
     /// this object.
-    const bdlb::NullableValue<double>& element5() const;
+    const bdlb::NullableValue<double>& element5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -4833,7 +4927,8 @@ class SequenceWithAnonymityChoice2 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -4849,12 +4944,14 @@ class SequenceWithAnonymityChoice2 {
     /// Return a reference to the non-modifiable "Selection7" selection of
     /// this object if "Selection7" is the current selection.  The behavior
     /// is undefined unless "Selection7" is the selection of this object.
-    const Sequence4& selection7() const;
+    const Sequence4& selection7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection8" selection of
     /// this object if "Selection8" is the current selection.  The behavior
     /// is undefined unless "Selection8" is the selection of this object.
-    const Choice2& selection8() const;
+    const Choice2& selection8() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection7" value,
     /// and return `false` otherwise.
@@ -5064,7 +5161,8 @@ class SequenceWithAnonymity {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -5096,19 +5194,23 @@ class SequenceWithAnonymity {
 
     /// Return a reference to the non-modifiable "Choice" attribute of this
     /// object.
-    const SequenceWithAnonymityChoice& choice() const;
+    const SequenceWithAnonymityChoice& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Choice1" attribute of this
     /// object.
-    const SequenceWithAnonymityChoice1& choice1() const;
+    const SequenceWithAnonymityChoice1& choice1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Choice2" attribute of this
     /// object.
-    const bdlb::NullableValue<SequenceWithAnonymityChoice2>& choice2() const;
+    const bdlb::NullableValue<SequenceWithAnonymityChoice2>& choice2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const Sequence6& element4() const;
+    const Sequence6& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -5426,7 +5528,8 @@ class FeatureTestMessage {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -5442,57 +5545,68 @@ class FeatureTestMessage {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const Sequence1& selection1() const;
+    const Sequence1& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const bsl::vector<char>& selection2() const;
+    const bsl::vector<char>& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection3" selection of
     /// this object if "Selection3" is the current selection.  The behavior
     /// is undefined unless "Selection3" is the selection of this object.
-    const Sequence2& selection3() const;
+    const Sequence2& selection3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection4" selection of
     /// this object if "Selection4" is the current selection.  The behavior
     /// is undefined unless "Selection4" is the selection of this object.
-    const Sequence3& selection4() const;
+    const Sequence3& selection4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection5" selection of
     /// this object if "Selection5" is the current selection.  The behavior
     /// is undefined unless "Selection5" is the selection of this object.
-    const bdlt::DatetimeTz& selection5() const;
+    const bdlt::DatetimeTz& selection5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection6" selection of
     /// this object if "Selection6" is the current selection.  The behavior
     /// is undefined unless "Selection6" is the selection of this object.
-    const CustomString& selection6() const;
+    const CustomString& selection6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection7" selection of
     /// this object if "Selection7" is the current selection.  The behavior
     /// is undefined unless "Selection7" is the selection of this object.
-    const Enumerated::Value& selection7() const;
+    const Enumerated::Value& selection7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection8" selection of
     /// this object if "Selection8" is the current selection.  The behavior
     /// is undefined unless "Selection8" is the selection of this object.
-    const Choice3& selection8() const;
+    const Choice3& selection8() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection9" selection of
     /// this object if "Selection9" is the current selection.  The behavior
     /// is undefined unless "Selection9" is the selection of this object.
-    const VoidSequence& selection9() const;
+    const VoidSequence& selection9() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection10" selection of
     /// this object if "Selection10" is the current selection.  The behavior
     /// is undefined unless "Selection10" is the selection of this object.
-    const UnsignedSequence& selection10() const;
+    const UnsignedSequence& selection10() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection11" selection of
     /// this object if "Selection11" is the current selection.  The behavior
     /// is undefined unless "Selection11" is the selection of this object.
-    const SequenceWithAnonymity& selection11() const;
+    const SequenceWithAnonymity& selection11() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -5736,7 +5850,8 @@ class Request {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -5753,13 +5868,15 @@ class Request {
     /// of this object if "SimpleRequest" is the current selection.  The
     /// behavior is undefined unless "SimpleRequest" is the selection of
     /// this object.
-    const SimpleRequest& simpleRequest() const;
+    const SimpleRequest& simpleRequest() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "FeatureRequest" selection
     /// of this object if "FeatureRequest" is the current selection.  The
     /// behavior is undefined unless "FeatureRequest" is the selection of
     /// this object.
-    const FeatureTestMessage& featureRequest() const;
+    const FeatureTestMessage& featureRequest() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "SimpleRequest"
     /// value, and return `false` otherwise.
@@ -5967,7 +6084,8 @@ class Response {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the id of the current selection if the selection is defined,
     /// and -1 otherwise.
@@ -5984,13 +6102,15 @@ class Response {
     /// this object if "ResponseData" is the current selection.  The
     /// behavior is undefined unless "ResponseData" is the selection of this
     /// object.
-    const bsl::string& responseData() const;
+    const bsl::string& responseData() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "FeatureResponse" selection
     /// of this object if "FeatureResponse" is the current selection.  The
     /// behavior is undefined unless "FeatureResponse" is the selection of
     /// this object.
-    const FeatureTestMessage& featureResponse() const;
+    const FeatureTestMessage& featureResponse() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "ResponseData" value,
     /// and return `false` otherwise.
@@ -6135,6 +6255,7 @@ int Choice4::manipulateSelection(MANIPULATOR& manipulator)
 inline
 bsl::vector<bsl::string>& Choice4::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -6142,6 +6263,7 @@ bsl::vector<bsl::string>& Choice4::selection1()
 inline
 int& Choice4::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -6179,6 +6301,7 @@ int Choice4::selectionId() const
 template <class ACCESSOR>
 int Choice4::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -6195,6 +6318,7 @@ int Choice4::accessSelection(ACCESSOR& accessor) const
 inline
 const bsl::vector<bsl::string>& Choice4::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -6202,6 +6326,7 @@ const bsl::vector<bsl::string>& Choice4::selection1() const
 inline
 const int& Choice4::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -6246,7 +6371,7 @@ inline
 CustomInt::CustomInt(const int& value)
 : d_value(value)
 {
-    BSLS_ASSERT(checkRestrictions(value) == 0);
+    BSLS_ASSERT_NONCONVEYOR(checkRestrictions(value) == 0);
 }
 
 inline
@@ -6315,6 +6440,7 @@ bsl::ostream& CustomInt::print(bsl::ostream& stream,
                                  int           level,
                                  int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 
@@ -6347,7 +6473,7 @@ inline
 CustomString::CustomString(const bsl::string& value, bslma::Allocator *basicAllocator)
 : d_value(value, basicAllocator)
 {
-    BSLS_ASSERT(checkRestrictions(value) == 0);
+    BSLS_ASSERT_NONCONVEYOR(checkRestrictions(value) == 0);
 }
 
 inline
@@ -6416,6 +6542,7 @@ bsl::ostream& CustomString::print(bsl::ostream& stream,
                                  int           level,
                                  int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 
@@ -6441,6 +6568,7 @@ int Enumerated::maxSupportedBdexVersion()
 inline
 int Enumerated::fromString(Value *result, const bsl::string& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return fromString(result, string.c_str(), static_cast<int>(string.length()));
 }
 
@@ -6554,6 +6682,7 @@ STREAM& SequenceWithAnonymityChoice1::bdexStreamIn(STREAM& stream, int version)
 template <class MANIPULATOR>
 int SequenceWithAnonymityChoice1::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SequenceWithAnonymityChoice1::SELECTION_ID_SELECTION5:
         return manipulator(&d_selection5.object(),
@@ -6570,6 +6699,7 @@ int SequenceWithAnonymityChoice1::manipulateSelection(MANIPULATOR& manipulator)
 inline
 bool& SequenceWithAnonymityChoice1::selection5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION5 == d_selectionId);
     return d_selection5.object();
 }
@@ -6577,6 +6707,7 @@ bool& SequenceWithAnonymityChoice1::selection5()
 inline
 bsl::string& SequenceWithAnonymityChoice1::selection6()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION6 == d_selectionId);
     return d_selection6.object();
 }
@@ -6614,6 +6745,7 @@ int SequenceWithAnonymityChoice1::selectionId() const
 template <class ACCESSOR>
 int SequenceWithAnonymityChoice1::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION5:
         return accessor(d_selection5.object(),
@@ -6630,6 +6762,7 @@ int SequenceWithAnonymityChoice1::accessSelection(ACCESSOR& accessor) const
 inline
 const bool& SequenceWithAnonymityChoice1::selection5() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION5 == d_selectionId);
     return d_selection5.object();
 }
@@ -6637,6 +6770,7 @@ const bool& SequenceWithAnonymityChoice1::selection5() const
 inline
 const bsl::string& SequenceWithAnonymityChoice1::selection6() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION6 == d_selectionId);
     return d_selection6.object();
 }
@@ -7216,6 +7350,7 @@ STREAM& Choice5::bdexStreamIn(STREAM& stream, int version)
 template <class MANIPULATOR>
 int Choice5::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case Choice5::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -7232,6 +7367,7 @@ int Choice5::manipulateSelection(MANIPULATOR& manipulator)
 inline
 Choice4& Choice5::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -7239,6 +7375,7 @@ Choice4& Choice5::selection1()
 inline
 int& Choice5::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -7276,6 +7413,7 @@ int Choice5::selectionId() const
 template <class ACCESSOR>
 int Choice5::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -7292,6 +7430,7 @@ int Choice5::accessSelection(ACCESSOR& accessor) const
 inline
 const Choice4& Choice5::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -8574,6 +8713,7 @@ STREAM& Choice3::bdexStreamIn(STREAM& stream, int version)
 template <class MANIPULATOR>
 int Choice3::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case Choice3::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -8596,6 +8736,7 @@ int Choice3::manipulateSelection(MANIPULATOR& manipulator)
 inline
 Sequence6& Choice3::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -8603,6 +8744,7 @@ Sequence6& Choice3::selection1()
 inline
 unsigned char& Choice3::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -8610,6 +8752,7 @@ unsigned char& Choice3::selection2()
 inline
 CustomString& Choice3::selection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -8617,6 +8760,7 @@ CustomString& Choice3::selection3()
 inline
 CustomInt& Choice3::selection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return d_selection4.object();
 }
@@ -8662,6 +8806,7 @@ int Choice3::selectionId() const
 template <class ACCESSOR>
 int Choice3::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -8684,6 +8829,7 @@ int Choice3::accessSelection(ACCESSOR& accessor) const
 inline
 const Sequence6& Choice3::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -8691,6 +8837,7 @@ const Sequence6& Choice3::selection1() const
 inline
 const unsigned char& Choice3::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -8698,6 +8845,7 @@ const unsigned char& Choice3::selection2() const
 inline
 const CustomString& Choice3::selection3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -8816,6 +8964,7 @@ STREAM& SequenceWithAnonymityChoice::bdexStreamIn(STREAM& stream, int version)
 template <class MANIPULATOR>
 int SequenceWithAnonymityChoice::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SequenceWithAnonymityChoice::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -8838,6 +8987,7 @@ int SequenceWithAnonymityChoice::manipulateSelection(MANIPULATOR& manipulator)
 inline
 Sequence6& SequenceWithAnonymityChoice::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -8845,6 +8995,7 @@ Sequence6& SequenceWithAnonymityChoice::selection1()
 inline
 unsigned char& SequenceWithAnonymityChoice::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -8852,6 +9003,7 @@ unsigned char& SequenceWithAnonymityChoice::selection2()
 inline
 CustomString& SequenceWithAnonymityChoice::selection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -8859,6 +9011,7 @@ CustomString& SequenceWithAnonymityChoice::selection3()
 inline
 CustomInt& SequenceWithAnonymityChoice::selection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return d_selection4.object();
 }
@@ -8904,6 +9057,7 @@ int SequenceWithAnonymityChoice::selectionId() const
 template <class ACCESSOR>
 int SequenceWithAnonymityChoice::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -8926,6 +9080,7 @@ int SequenceWithAnonymityChoice::accessSelection(ACCESSOR& accessor) const
 inline
 const Sequence6& SequenceWithAnonymityChoice::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -8933,6 +9088,7 @@ const Sequence6& SequenceWithAnonymityChoice::selection1() const
 inline
 const unsigned char& SequenceWithAnonymityChoice::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -8940,6 +9096,7 @@ const unsigned char& SequenceWithAnonymityChoice::selection2() const
 inline
 const CustomString& SequenceWithAnonymityChoice::selection3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -9058,6 +9215,7 @@ STREAM& Choice1::bdexStreamIn(STREAM& stream, int version)
 template <class MANIPULATOR>
 int Choice1::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case Choice1::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -9080,6 +9238,7 @@ int Choice1::manipulateSelection(MANIPULATOR& manipulator)
 inline
 int& Choice1::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -9087,6 +9246,7 @@ int& Choice1::selection1()
 inline
 double& Choice1::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -9094,6 +9254,7 @@ double& Choice1::selection2()
 inline
 Sequence4& Choice1::selection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return *d_selection3;
 }
@@ -9101,6 +9262,7 @@ Sequence4& Choice1::selection3()
 inline
 Choice2& Choice1::selection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return *d_selection4;
 }
@@ -9146,6 +9308,7 @@ int Choice1::selectionId() const
 template <class ACCESSOR>
 int Choice1::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -9168,6 +9331,7 @@ int Choice1::accessSelection(ACCESSOR& accessor) const
 inline
 const int& Choice1::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -9175,6 +9339,7 @@ const int& Choice1::selection1() const
 inline
 const double& Choice1::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -9182,6 +9347,7 @@ const double& Choice1::selection2() const
 inline
 const Sequence4& Choice1::selection3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return *d_selection3;
 }
@@ -9300,6 +9466,7 @@ STREAM& Choice2::bdexStreamIn(STREAM& stream, int version)
 template <class MANIPULATOR>
 int Choice2::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case Choice2::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -9322,6 +9489,7 @@ int Choice2::manipulateSelection(MANIPULATOR& manipulator)
 inline
 bool& Choice2::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -9329,6 +9497,7 @@ bool& Choice2::selection1()
 inline
 bsl::string& Choice2::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -9336,6 +9505,7 @@ bsl::string& Choice2::selection2()
 inline
 Choice1& Choice2::selection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return *d_selection3;
 }
@@ -9343,6 +9513,7 @@ Choice1& Choice2::selection3()
 inline
 unsigned int& Choice2::selection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return d_selection4.object();
 }
@@ -9382,12 +9553,14 @@ STREAM& Choice2::bdexStreamOut(STREAM& stream, int version) const
 inline
 int Choice2::selectionId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_selectionId;
 }
 
 template <class ACCESSOR>
 int Choice2::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -9410,6 +9583,7 @@ int Choice2::accessSelection(ACCESSOR& accessor) const
 inline
 const bool& Choice2::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -9417,6 +9591,7 @@ const bool& Choice2::selection1() const
 inline
 const bsl::string& Choice2::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -9424,6 +9599,7 @@ const bsl::string& Choice2::selection2() const
 inline
 const Choice1& Choice2::selection3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return *d_selection3;
 }
@@ -10738,6 +10914,7 @@ STREAM& SequenceWithAnonymityChoice2::bdexStreamIn(STREAM& stream, int version)
 template <class MANIPULATOR>
 int SequenceWithAnonymityChoice2::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SequenceWithAnonymityChoice2::SELECTION_ID_SELECTION7:
         return manipulator(d_selection7,
@@ -10754,6 +10931,7 @@ int SequenceWithAnonymityChoice2::manipulateSelection(MANIPULATOR& manipulator)
 inline
 Sequence4& SequenceWithAnonymityChoice2::selection7()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION7 == d_selectionId);
     return *d_selection7;
 }
@@ -10761,6 +10939,7 @@ Sequence4& SequenceWithAnonymityChoice2::selection7()
 inline
 Choice2& SequenceWithAnonymityChoice2::selection8()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION8 == d_selectionId);
     return *d_selection8;
 }
@@ -10798,6 +10977,7 @@ int SequenceWithAnonymityChoice2::selectionId() const
 template <class ACCESSOR>
 int SequenceWithAnonymityChoice2::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION7:
         return accessor(*d_selection7,
@@ -10814,6 +10994,7 @@ int SequenceWithAnonymityChoice2::accessSelection(ACCESSOR& accessor) const
 inline
 const Sequence4& SequenceWithAnonymityChoice2::selection7() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION7 == d_selectionId);
     return *d_selection7;
 }
@@ -10821,6 +11002,7 @@ const Sequence4& SequenceWithAnonymityChoice2::selection7() const
 inline
 const Choice2& SequenceWithAnonymityChoice2::selection8() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION8 == d_selectionId);
     return *d_selection8;
 }
@@ -11187,6 +11369,7 @@ STREAM& FeatureTestMessage::bdexStreamIn(STREAM& stream, int version)
 template <class MANIPULATOR>
 int FeatureTestMessage::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case FeatureTestMessage::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -11230,6 +11413,7 @@ int FeatureTestMessage::manipulateSelection(MANIPULATOR& manipulator)
 inline
 Sequence1& FeatureTestMessage::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -11237,6 +11421,7 @@ Sequence1& FeatureTestMessage::selection1()
 inline
 bsl::vector<char>& FeatureTestMessage::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -11244,6 +11429,7 @@ bsl::vector<char>& FeatureTestMessage::selection2()
 inline
 Sequence2& FeatureTestMessage::selection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -11251,6 +11437,7 @@ Sequence2& FeatureTestMessage::selection3()
 inline
 Sequence3& FeatureTestMessage::selection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return *d_selection4;
 }
@@ -11258,6 +11445,7 @@ Sequence3& FeatureTestMessage::selection4()
 inline
 bdlt::DatetimeTz& FeatureTestMessage::selection5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION5 == d_selectionId);
     return d_selection5.object();
 }
@@ -11265,6 +11453,7 @@ bdlt::DatetimeTz& FeatureTestMessage::selection5()
 inline
 CustomString& FeatureTestMessage::selection6()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION6 == d_selectionId);
     return d_selection6.object();
 }
@@ -11272,6 +11461,7 @@ CustomString& FeatureTestMessage::selection6()
 inline
 Enumerated::Value& FeatureTestMessage::selection7()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION7 == d_selectionId);
     return d_selection7.object();
 }
@@ -11279,6 +11469,7 @@ Enumerated::Value& FeatureTestMessage::selection7()
 inline
 Choice3& FeatureTestMessage::selection8()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION8 == d_selectionId);
     return d_selection8.object();
 }
@@ -11286,6 +11477,7 @@ Choice3& FeatureTestMessage::selection8()
 inline
 VoidSequence& FeatureTestMessage::selection9()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION9 == d_selectionId);
     return d_selection9.object();
 }
@@ -11293,6 +11485,7 @@ VoidSequence& FeatureTestMessage::selection9()
 inline
 UnsignedSequence& FeatureTestMessage::selection10()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION10 == d_selectionId);
     return d_selection10.object();
 }
@@ -11300,6 +11493,7 @@ UnsignedSequence& FeatureTestMessage::selection10()
 inline
 SequenceWithAnonymity& FeatureTestMessage::selection11()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION11 == d_selectionId);
     return d_selection11.object();
 }
@@ -11373,6 +11567,7 @@ int FeatureTestMessage::selectionId() const
 template <class ACCESSOR>
 int FeatureTestMessage::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -11416,6 +11611,7 @@ int FeatureTestMessage::accessSelection(ACCESSOR& accessor) const
 inline
 const Sequence1& FeatureTestMessage::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -11423,6 +11619,7 @@ const Sequence1& FeatureTestMessage::selection1() const
 inline
 const bsl::vector<char>& FeatureTestMessage::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -11430,6 +11627,7 @@ const bsl::vector<char>& FeatureTestMessage::selection2() const
 inline
 const Sequence2& FeatureTestMessage::selection3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -11437,6 +11635,7 @@ const Sequence2& FeatureTestMessage::selection3() const
 inline
 const Sequence3& FeatureTestMessage::selection4() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return *d_selection4;
 }
@@ -11444,6 +11643,7 @@ const Sequence3& FeatureTestMessage::selection4() const
 inline
 const bdlt::DatetimeTz& FeatureTestMessage::selection5() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION5 == d_selectionId);
     return d_selection5.object();
 }
@@ -11451,6 +11651,7 @@ const bdlt::DatetimeTz& FeatureTestMessage::selection5() const
 inline
 const CustomString& FeatureTestMessage::selection6() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION6 == d_selectionId);
     return d_selection6.object();
 }
@@ -11458,6 +11659,7 @@ const CustomString& FeatureTestMessage::selection6() const
 inline
 const Enumerated::Value& FeatureTestMessage::selection7() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION7 == d_selectionId);
     return d_selection7.object();
 }
@@ -11465,6 +11667,7 @@ const Enumerated::Value& FeatureTestMessage::selection7() const
 inline
 const Choice3& FeatureTestMessage::selection8() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION8 == d_selectionId);
     return d_selection8.object();
 }
@@ -11472,6 +11675,7 @@ const Choice3& FeatureTestMessage::selection8() const
 inline
 const VoidSequence& FeatureTestMessage::selection9() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION9 == d_selectionId);
     return d_selection9.object();
 }
@@ -11479,6 +11683,7 @@ const VoidSequence& FeatureTestMessage::selection9() const
 inline
 const UnsignedSequence& FeatureTestMessage::selection10() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION10 == d_selectionId);
     return d_selection10.object();
 }
@@ -11486,6 +11691,7 @@ const UnsignedSequence& FeatureTestMessage::selection10() const
 inline
 const SequenceWithAnonymity& FeatureTestMessage::selection11() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION11 == d_selectionId);
     return d_selection11.object();
 }
@@ -11592,6 +11798,7 @@ Request::~Request()
 template <class STREAM>
 STREAM& Request::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (stream) {
         switch (version) {
           case 1: {
@@ -11629,6 +11836,7 @@ STREAM& Request::bdexStreamIn(STREAM& stream, int version)
 template <class MANIPULATOR>
 int Request::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case Request::SELECTION_ID_SIMPLE_REQUEST:
         return manipulator(&d_simpleRequest.object(),
@@ -11645,6 +11853,7 @@ int Request::manipulateSelection(MANIPULATOR& manipulator)
 inline
 SimpleRequest& Request::simpleRequest()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SIMPLE_REQUEST == d_selectionId);
     return d_simpleRequest.object();
 }
@@ -11652,6 +11861,7 @@ SimpleRequest& Request::simpleRequest()
 inline
 FeatureTestMessage& Request::featureRequest()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_FEATURE_REQUEST == d_selectionId);
     return d_featureRequest.object();
 }
@@ -11660,6 +11870,7 @@ FeatureTestMessage& Request::featureRequest()
 template <class STREAM>
 STREAM& Request::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (version) {
       case 1: {
             stream.putInt16(d_selectionId);
@@ -11683,12 +11894,14 @@ STREAM& Request::bdexStreamOut(STREAM& stream, int version) const
 inline
 int Request::selectionId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_selectionId;
 }
 
 template <class ACCESSOR>
 int Request::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SIMPLE_REQUEST:
         return accessor(d_simpleRequest.object(),
@@ -11705,6 +11918,7 @@ int Request::accessSelection(ACCESSOR& accessor) const
 inline
 const SimpleRequest& Request::simpleRequest() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SIMPLE_REQUEST == d_selectionId);
     return d_simpleRequest.object();
 }
@@ -11764,6 +11978,7 @@ Response::~Response()
 template <class STREAM>
 STREAM& Response::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (stream) {
         switch (version) {
           case 1: {
@@ -11801,6 +12016,7 @@ STREAM& Response::bdexStreamIn(STREAM& stream, int version)
 template <class MANIPULATOR>
 int Response::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case Response::SELECTION_ID_RESPONSE_DATA:
         return manipulator(&d_responseData.object(),
@@ -11817,6 +12033,7 @@ int Response::manipulateSelection(MANIPULATOR& manipulator)
 inline
 bsl::string& Response::responseData()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_RESPONSE_DATA == d_selectionId);
     return d_responseData.object();
 }
@@ -11824,6 +12041,7 @@ bsl::string& Response::responseData()
 inline
 FeatureTestMessage& Response::featureResponse()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_FEATURE_RESPONSE == d_selectionId);
     return d_featureResponse.object();
 }
@@ -11832,6 +12050,7 @@ FeatureTestMessage& Response::featureResponse()
 template <class STREAM>
 STREAM& Response::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (version) {
       case 1: {
             stream.putInt16(d_selectionId);
@@ -11855,12 +12074,14 @@ STREAM& Response::bdexStreamOut(STREAM& stream, int version) const
 inline
 int Response::selectionId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_selectionId;
 }
 
 template <class ACCESSOR>
 int Response::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_RESPONSE_DATA:
         return accessor(d_responseData.object(),
@@ -11877,6 +12098,7 @@ int Response::accessSelection(ACCESSOR& accessor) const
 inline
 const bsl::string& Response::responseData() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_RESPONSE_DATA == d_selectionId);
     return d_responseData.object();
 }
@@ -11914,6 +12136,8 @@ bool balb::operator==(
         const balb::Choice4& lhs,
         const balb::Choice4& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::Choice4 Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -11922,7 +12146,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_SELECTION2:
             return lhs.selection2() == rhs.selection2();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -11978,6 +12203,8 @@ bool balb::operator==(
         const balb::CustomString& lhs,
         const balb::CustomString& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_value == rhs.d_value;
 }
 
@@ -11986,6 +12213,8 @@ bool balb::operator!=(
         const balb::CustomString& lhs,
         const balb::CustomString& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_value != rhs.d_value;
 }
 
@@ -11994,6 +12223,7 @@ bsl::ostream& balb::operator<<(
         bsl::ostream& stream,
         const balb::CustomString& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -12003,6 +12233,7 @@ bsl::ostream& balb::operator<<(
         bsl::ostream& stream,
         balb::Enumerated::Value rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return balb::Enumerated::print(stream, rhs);
 }
 
@@ -12012,6 +12243,8 @@ bool balb::operator==(
         const balb::SequenceWithAnonymityChoice1& lhs,
         const balb::SequenceWithAnonymityChoice1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::SequenceWithAnonymityChoice1 Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -12020,7 +12253,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_SELECTION6:
             return lhs.selection6() == rhs.selection6();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -12034,6 +12268,8 @@ bool balb::operator!=(
         const balb::SequenceWithAnonymityChoice1& lhs,
         const balb::SequenceWithAnonymityChoice1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -12051,6 +12287,8 @@ bool balb::operator==(
         const balb::SimpleRequest& lhs,
         const balb::SimpleRequest& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.data() == rhs.data()
          && lhs.responseLength() == rhs.responseLength();
 }
@@ -12060,6 +12298,8 @@ bool balb::operator!=(
         const balb::SimpleRequest& lhs,
         const balb::SimpleRequest& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.data() != rhs.data()
          || lhs.responseLength() != rhs.responseLength();
 }
@@ -12132,6 +12372,8 @@ bool balb::operator==(
         const balb::Choice5& lhs,
         const balb::Choice5& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::Choice5 Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -12140,7 +12382,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_SELECTION2:
             return lhs.selection2() == rhs.selection2();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -12162,6 +12405,7 @@ bsl::ostream& balb::operator<<(
         bsl::ostream& stream,
         const balb::Choice5& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -12171,6 +12415,8 @@ bool balb::operator==(
         const balb::Sequence3& lhs,
         const balb::Sequence3& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() == rhs.element1()
          && lhs.element2() == rhs.element2()
          && lhs.element3() == rhs.element3()
@@ -12184,6 +12430,8 @@ bool balb::operator!=(
         const balb::Sequence3& lhs,
         const balb::Sequence3& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() != rhs.element1()
          || lhs.element2() != rhs.element2()
          || lhs.element3() != rhs.element3()
@@ -12197,6 +12445,7 @@ bsl::ostream& balb::operator<<(
         bsl::ostream& stream,
         const balb::Sequence3& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -12206,6 +12455,8 @@ bool balb::operator==(
         const balb::Sequence5& lhs,
         const balb::Sequence5& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() == rhs.element1()
          && lhs.element2() == rhs.element2()
          && lhs.element3() == rhs.element3()
@@ -12220,6 +12471,8 @@ bool balb::operator!=(
         const balb::Sequence5& lhs,
         const balb::Sequence5& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() != rhs.element1()
          || lhs.element2() != rhs.element2()
          || lhs.element3() != rhs.element3()
@@ -12234,6 +12487,7 @@ bsl::ostream& balb::operator<<(
         bsl::ostream& stream,
         const balb::Sequence5& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -12243,6 +12497,8 @@ bool balb::operator==(
         const balb::Sequence6& lhs,
         const balb::Sequence6& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() == rhs.element1()
          && lhs.element2() == rhs.element2()
          && lhs.element3() == rhs.element3()
@@ -12265,6 +12521,8 @@ bool balb::operator!=(
         const balb::Sequence6& lhs,
         const balb::Sequence6& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() != rhs.element1()
          || lhs.element2() != rhs.element2()
          || lhs.element3() != rhs.element3()
@@ -12296,6 +12554,8 @@ bool balb::operator==(
         const balb::Choice3& lhs,
         const balb::Choice3& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::Choice3 Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -12308,7 +12568,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_SELECTION4:
             return lhs.selection4() == rhs.selection4();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -12339,6 +12600,8 @@ bool balb::operator==(
         const balb::SequenceWithAnonymityChoice& lhs,
         const balb::SequenceWithAnonymityChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::SequenceWithAnonymityChoice Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -12351,7 +12614,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_SELECTION4:
             return lhs.selection4() == rhs.selection4();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -12382,6 +12646,8 @@ bool balb::operator==(
         const balb::Choice1& lhs,
         const balb::Choice1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::Choice1 Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -12394,7 +12660,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_SELECTION4:
             return lhs.selection4() == rhs.selection4();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -12408,6 +12675,8 @@ bool balb::operator!=(
         const balb::Choice1& lhs,
         const balb::Choice1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -12416,6 +12685,7 @@ bsl::ostream& balb::operator<<(
         bsl::ostream& stream,
         const balb::Choice1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -12425,6 +12695,8 @@ bool balb::operator==(
         const balb::Choice2& lhs,
         const balb::Choice2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::Choice2 Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -12437,7 +12709,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_SELECTION4:
             return lhs.selection4() == rhs.selection4();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -12451,6 +12724,8 @@ bool balb::operator!=(
         const balb::Choice2& lhs,
         const balb::Choice2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -12459,6 +12734,7 @@ bsl::ostream& balb::operator<<(
         bsl::ostream& stream,
         const balb::Choice2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -12468,6 +12744,8 @@ bool balb::operator==(
         const balb::Sequence4& lhs,
         const balb::Sequence4& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() == rhs.element1()
          && lhs.element2() == rhs.element2()
          && lhs.element3() == rhs.element3()
@@ -12494,6 +12772,8 @@ bool balb::operator!=(
         const balb::Sequence4& lhs,
         const balb::Sequence4& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() != rhs.element1()
          || lhs.element2() != rhs.element2()
          || lhs.element3() != rhs.element3()
@@ -12520,6 +12800,7 @@ bsl::ostream& balb::operator<<(
         bsl::ostream& stream,
         const balb::Sequence4& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -12529,6 +12810,8 @@ bool balb::operator==(
         const balb::Sequence1& lhs,
         const balb::Sequence1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() == rhs.element1()
          && lhs.element2() == rhs.element2()
          && lhs.element3() == rhs.element3()
@@ -12541,6 +12824,8 @@ bool balb::operator!=(
         const balb::Sequence1& lhs,
         const balb::Sequence1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() != rhs.element1()
          || lhs.element2() != rhs.element2()
          || lhs.element3() != rhs.element3()
@@ -12553,6 +12838,7 @@ bsl::ostream& balb::operator<<(
         bsl::ostream& stream,
         const balb::Sequence1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -12562,6 +12848,8 @@ bool balb::operator==(
         const balb::Sequence2& lhs,
         const balb::Sequence2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() == rhs.element1()
          && lhs.element2() == rhs.element2()
          && lhs.element3() == rhs.element3()
@@ -12574,6 +12862,8 @@ bool balb::operator!=(
         const balb::Sequence2& lhs,
         const balb::Sequence2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.element1() != rhs.element1()
          || lhs.element2() != rhs.element2()
          || lhs.element3() != rhs.element3()
@@ -12595,6 +12885,8 @@ bool balb::operator==(
         const balb::SequenceWithAnonymityChoice2& lhs,
         const balb::SequenceWithAnonymityChoice2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::SequenceWithAnonymityChoice2 Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -12603,7 +12895,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_SELECTION8:
             return lhs.selection8() == rhs.selection8();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -12625,6 +12918,7 @@ bsl::ostream& balb::operator<<(
         bsl::ostream& stream,
         const balb::SequenceWithAnonymityChoice2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream, 0, -1);
 }
 
@@ -12634,6 +12928,8 @@ bool balb::operator==(
         const balb::SequenceWithAnonymity& lhs,
         const balb::SequenceWithAnonymity& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return  lhs.choice() == rhs.choice()
          && lhs.choice1() == rhs.choice1()
          && lhs.choice2() == rhs.choice2()
@@ -12645,6 +12941,8 @@ bool balb::operator!=(
         const balb::SequenceWithAnonymity& lhs,
         const balb::SequenceWithAnonymity& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.choice() != rhs.choice()
          || lhs.choice1() != rhs.choice1()
          || lhs.choice2() != rhs.choice2()
@@ -12665,6 +12963,8 @@ bool balb::operator==(
         const balb::FeatureTestMessage& lhs,
         const balb::FeatureTestMessage& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::FeatureTestMessage Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -12691,7 +12991,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_SELECTION11:
             return lhs.selection11() == rhs.selection11();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -12722,6 +13023,8 @@ bool balb::operator==(
         const balb::Request& lhs,
         const balb::Request& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::Request Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -12730,7 +13033,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_FEATURE_REQUEST:
             return lhs.featureRequest() == rhs.featureRequest();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -12761,6 +13065,8 @@ bool balb::operator==(
         const balb::Response& lhs,
         const balb::Response& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef balb::Response Class;
     if (lhs.selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -12769,7 +13075,8 @@ bool balb::operator==(
           case Class::SELECTION_ID_FEATURE_RESPONSE:
             return lhs.featureResponse() == rhs.featureResponse();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }

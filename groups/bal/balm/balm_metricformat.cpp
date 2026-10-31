@@ -88,6 +88,7 @@ bsl::ostream& MetricFormatSpec::print(bsl::ostream& stream,
 void MetricFormat::clearFormatSpec(
                                    PublicationType::Value publicationType)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_formatSpecs[publicationType].reset();
 
     // If there are no non-null format specs, then resize 'd_formatSpecs' to be
@@ -96,6 +97,7 @@ void MetricFormat::clearFormatSpec(
     bsl::vector<AggregateFormatSpec>::const_iterator it =
                                                          d_formatSpecs.begin();
     for (; it != d_formatSpecs.end(); ++it) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         if (!it->isNull()) {
             return;                                                   // RETURN
         }
@@ -108,6 +110,7 @@ bsl::ostream& MetricFormat::print(bsl::ostream& stream,
                                   int      level,
                                   int      spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const char *NL = (spacesPerLevel > 0) ? "\n" : " ";
 
     bdlb::Print::indent(stream, level, spacesPerLevel);

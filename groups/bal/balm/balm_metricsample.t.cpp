@@ -230,6 +230,8 @@ int gg(bsl::vector<balm::MetricSampleGroup>   *groups,
         const char                            *specification,
         const bsl::vector<balm::MetricRecord>&  recordBuffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&recordBuffer);
+    BSLS_ASSERT_CONVEYOR_OBJECT(groups);
     const char *c = specification;
 
     int totalNumRecords = 0;
@@ -1181,15 +1183,21 @@ int main(int argc, char *argv[])
 
         Group mX; const Group& MX = mX;
         ASSERT(0 == MX.begin());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
         ASSERT(0 == MX.end());
         for (int i = 0; i < NUM_VALUES; ++i) {
-            Group mX(VALUES[i].d_records->data(),
-                     static_cast<int>(VALUES[i].d_records->size()),
-                     bsls::TimeInterval(VALUES[i].d_time, 0));
+            Group mX(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data(),
+                     static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                 *VALUES[i].d_records).size()),
+                     bsls::TimeInterval(BSLS_ASSERT_CONVEYOR_REF(
+                                                        VALUES[i]).d_time, 0));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
             const Group& MX = mX;
 
-            ASSERT(VALUES[i].d_records->begin() == MX.begin());
-            ASSERT(VALUES[i].d_records->end()   == MX.end());
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).begin()
+                   == MX.begin());
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).end()
+                   == MX.end());
         }
 
       } break;
@@ -1279,15 +1287,20 @@ int main(int argc, char *argv[])
         };
         const int NUM_VALUES = sizeof(VALUES)/sizeof(*VALUES);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
         for (int i = 0; i < NUM_VALUES; ++i) {
             for (int j = 0; j < NUM_VALUES; ++j) {
-                Group u(VALUES[i].d_records->data(),
-                        static_cast<int>(VALUES[i].d_records->size()),
-                        bsls::TimeInterval(VALUES[i].d_time, 0));
+                Group u(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data(),
+                        static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                 *VALUES[i].d_records).size()),
+                        bsls::TimeInterval(BSLS_ASSERT_CONVEYOR_REF(
+                                                        VALUES[i]).d_time, 0));
                 const Group& U = u;
-                Group v(VALUES[j].d_records->data(),
-                        static_cast<int>(VALUES[j].d_records->size()),
-                        bsls::TimeInterval(VALUES[j].d_time, 0));
+                Group v(BSLS_ASSERT_CONVEYOR_REF(*VALUES[j].d_records).data(),
+                        static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                 *VALUES[j].d_records).size()),
+                        bsls::TimeInterval(BSLS_ASSERT_CONVEYOR_REF(
+                                                        VALUES[j]).d_time, 0));
                 const Group& V = v;
 
                 Group w(v); const Group& W = w;
@@ -1302,9 +1315,11 @@ int main(int argc, char *argv[])
                               << endl;
 
         for (int i = 0; i < NUM_VALUES; ++i) {
-            Group u(VALUES[i].d_records->data(),
-                    static_cast<int>(VALUES[i].d_records->size()),
-                    bsls::TimeInterval(VALUES[i].d_time, 0));
+            Group u(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data(),
+                    static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                 *VALUES[i].d_records).size()),
+                    bsls::TimeInterval(BSLS_ASSERT_CONVEYOR_REF(
+                                                        VALUES[i]).d_time, 0));
             const Group& U = u;
             Group w(U);  const Group& W = w;              // control
             u = u;
@@ -1346,14 +1361,19 @@ int main(int argc, char *argv[])
         const int NUM_VALUES = sizeof(VALUES)/sizeof(*VALUES);
 
         for (int i = 0; i < NUM_VALUES; ++i) {
-            Group x(VALUES[i].d_records->data(),
-                    static_cast<int>(VALUES[i].d_records->size()),
-                    bsls::TimeInterval(VALUES[i].d_time, 0));
+            Group x(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data(),
+                    static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                 *VALUES[i].d_records).size()),
+                    bsls::TimeInterval(BSLS_ASSERT_CONVEYOR_REF(
+                                                        VALUES[i]).d_time, 0));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
             const Group& X = x;
 
-            Group w(VALUES[i].d_records->data(),
-                    static_cast<int>(VALUES[i].d_records->size()),
-                    bsls::TimeInterval(VALUES[i].d_time, 0));
+            Group w(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data(),
+                    static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                 *VALUES[i].d_records).size()),
+                    bsls::TimeInterval(BSLS_ASSERT_CONVEYOR_REF(
+                                                        VALUES[i]).d_time, 0));
             const Group& W = w;
 
             Group y(X); const Group& Y = y;
@@ -1399,17 +1419,21 @@ int main(int argc, char *argv[])
         };
         const int NUM_VALUES = sizeof(VALUES)/sizeof(*VALUES);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
         for (int i = 0; i < NUM_VALUES; ++i) {
             bsls::TimeInterval interval(VALUES[i].d_time, 0);
-            Group u(VALUES[i].d_records->data(),
-                    static_cast<int>(VALUES[i].d_records->size()),
+            Group u(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data(),
+                    static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                 *VALUES[i].d_records).size()),
                     interval);
             const Group& U = u;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
             for (int j = 0; j < NUM_VALUES; ++j) {
                 bsls::TimeInterval interval(VALUES[j].d_time, 0);
-                Group v(VALUES[j].d_records->data(),
-                        static_cast<int>(VALUES[j].d_records->size()),
+                Group v(BSLS_ASSERT_CONVEYOR_REF(*VALUES[j].d_records).data(),
+                        static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                 *VALUES[j].d_records).size()),
                         interval);
                 const Group& V = v;
 
@@ -1450,17 +1474,22 @@ int main(int argc, char *argv[])
         };
         const int NUM_VALUES = sizeof(VALUES)/sizeof(*VALUES);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
         for (int i = 0; i < NUM_VALUES; ++i) {
             bsls::TimeInterval interval(VALUES[i].d_time, 0);
-            Group mX(VALUES[i].d_records->data(),
-                     static_cast<int>(VALUES[i].d_records->size()),
+            Group mX(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data(),
+                     static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                 *VALUES[i].d_records).size()),
                      interval);
             const Group& MX = mX;
 
             ASSERT(interval                    == MX.elapsedTime());
-            ASSERT(VALUES[i].d_records->data() == MX.records());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data()
+                   == MX.records());
 
-            ASSERT(static_cast<int>(VALUES[i].d_records->size()) ==
+            ASSERT(static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                               *VALUES[i].d_records).size()) ==
                                                               MX.numRecords());
 
             ASSERT(0 == defaultAllocator.numBytesInUse());
@@ -1530,15 +1559,21 @@ int main(int argc, char *argv[])
         for (int i = 0; i < NUM_VALUES; ++i) {
             bsls::TimeInterval interval(VALUES[i].d_time, 0);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
             Group mX; const Group& MX = mX;
             mX.setElapsedTime(interval);
-            mX.setRecords(VALUES[i].d_records->data(),
-                          static_cast<int>(VALUES[i].d_records->size()));
+            mX.setRecords(BSLS_ASSERT_CONVEYOR_REF(
+                                                  *VALUES[i].d_records).data(),
+                          static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                                *VALUES[i].d_records).size()));
 
             ASSERT(interval                    == MX.elapsedTime());
-            ASSERT(VALUES[i].d_records->data() == MX.records());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data()
+                   == MX.records());
 
-            ASSERT(static_cast<int>(VALUES[i].d_records->size()) ==
+            ASSERT(static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
+                                               *VALUES[i].d_records).size()) ==
                                                               MX.numRecords());
 
             ASSERT(0 == defaultAllocator.numBytesInUse());

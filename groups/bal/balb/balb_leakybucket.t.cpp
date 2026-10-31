@@ -209,6 +209,7 @@ void mock_LB::submit(bsls::Types::Uint64 numOfUnits)
 inline
 bool mock_LB::wouldOverflow(bsls::TimeInterval currentTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::TimeInterval delta = currentTime - d_lastUpdateTime;
 
     if (delta < d_submitInterval) {
@@ -224,6 +225,7 @@ inline
 bsls::TimeInterval mock_LB::calculateTimeToSubmit(
                                                 bsls::TimeInterval currentTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::TimeInterval delta = currentTime - d_lastUpdateTime;
 
     if (delta < d_submitInterval) {
@@ -354,6 +356,7 @@ static Ti testLB(
           Uint64    chunkSize,
           const Ti& minQueryInterval)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&minQueryInterval);
     Uint64 dataSent = 0;
 
     Ti now(0.0);

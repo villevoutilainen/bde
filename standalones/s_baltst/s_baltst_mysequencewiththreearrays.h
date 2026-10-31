@@ -168,15 +168,18 @@ class MySequenceWithThreeArrays {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bsl::vector<bsl::string>& attribute1();
+    bsl::vector<bsl::string>& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bsl::vector<int>& attribute2();
+    bsl::vector<int>& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute3" attribute of this
     /// object.
-    bsl::vector<double>& attribute3();
+    bsl::vector<double>& attribute3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -225,15 +228,18 @@ class MySequenceWithThreeArrays {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bsl::vector<bsl::string>& attribute1() const;
+    const bsl::vector<bsl::string>& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute2" attribute of this object.
-    const bsl::vector<int>& attribute2() const;
+    const bsl::vector<int>& attribute2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute3" attribute of this object.
-    const bsl::vector<double>& attribute3() const;
+    const bsl::vector<double>& attribute3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -243,6 +249,8 @@ class MySequenceWithThreeArrays {
     friend bool operator==(const MySequenceWithThreeArrays& lhs,
                            const MySequenceWithThreeArrays& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1() &&
                lhs.attribute2() == rhs.attribute2() &&
                lhs.attribute3() == rhs.attribute3();

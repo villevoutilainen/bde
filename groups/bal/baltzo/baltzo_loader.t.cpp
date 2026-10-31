@@ -196,7 +196,8 @@ struct ProtocolClassTestImp : bsls::ProtocolTestImp<ProtocolClass> {
                  bdlt::EpochUtil::convertToTimeT64(TRANSITION_TIMES[i]),
                  edt);
             result->addTransition(
-             bdlt::EpochUtil::convertToTimeT64(TRANSITION_TIMES[i + 1]),
+             bdlt::EpochUtil::convertToTimeT64(BSLS_ASSERT_CONVEYOR_REF(
+                                                     TRANSITION_TIMES[i + 1])),
              est);
         }
         return 0;
@@ -281,6 +282,7 @@ int main(int argc, char *argv[])
     for (; tIt != nyTimeZone.endTransitions(); ++tIt) {
        bdlt::Datetime transition =
                            bdlt::EpochUtil::convertFromTimeT64(tIt->utcTime());
+       BSLS_ASSERT_CONVEYOR_OBJECT(tIt);
        const baltzo::LocalTimeDescriptor& descritor = tIt->descriptor();
        if (verbose) {
            bsl::cout << "transition to "

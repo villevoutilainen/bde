@@ -39,6 +39,7 @@ StackTracePrinter::StackTracePrinter(int  maxFrames,
 bsl::ostream& balst::operator<<(bsl::ostream&            stream,
                                 const StackTracePrinter& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     stream << bsl::endl;
 
     bsl::ostream& rs = balst::StackTracePrintUtil::printStackTrace(

@@ -137,6 +137,7 @@ enum VecType { e_BEGIN,
 template <class VECTOR>
 typename VECTOR::value_type *vBeginPtr(VECTOR *v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(v);
     return v->empty() ? 0 : &(*v)[0];
 }
 
@@ -145,6 +146,7 @@ typename VECTOR::value_type *vBeginPtr(VECTOR *v)
 template <class VECTOR>
 typename VECTOR::value_type *vEndPtr(VECTOR *v)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(v);
     return v->empty() ? 0 : &(*v)[0] + v->size();
 }
 
@@ -186,6 +188,8 @@ void stringId(bsl::string *resultId,
 
 bool recordLess(const Rec& lhs, const Rec& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     int cmp = bsl::strcmp(lhs.metricId().categoryName(),
                           rhs.metricId().categoryName());
     if (0 == cmp) {
@@ -249,6 +253,7 @@ void ThreadTester::execute()
 
     const int NUM_THREADS = d_pool.numThreads();
     Obj& mX = *d_repository_p; const Obj& MX = mX;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&MX);
     Registry& reg = mX.registry(); const Registry& REG = MX.registry();
 
     // iterate the test 10 times.
@@ -294,13 +299,17 @@ void ThreadTester::execute()
                 const char *ID = IDS[k];
                 balm::MetricId id = reg.getId(CATEGORY, ID);
                 Col  *col   = mX.getDefaultCollector(CATEGORY, ID);
+                BSLS_ASSERT_CONVEYOR_OBJECT(col);
                 ICol *iCol  = mX.getDefaultIntegerCollector(CATEGORY, ID);
                 Col  *col2  = mX.addCollector(CATEGORY, ID).get();
+                BSLS_ASSERT_CONVEYOR_OBJECT(col2);
                 ICol *iCol2 = mX.addIntegerCollector(CATEGORY, ID).get();
 
                 ASSERT(id == col->metricId());
+                BSLS_ASSERT_CONVEYOR_OBJECT(iCol);
                 ASSERT(id == iCol->metricId());
                 ASSERT(id == col2->metricId());
+                BSLS_ASSERT_CONVEYOR_OBJECT(iCol2);
                 ASSERT(id == iCol2->metricId());
 
                 ColSPtrVector cols;
@@ -378,6 +387,8 @@ template <class T>
 bool vectorEquals(const bsl::vector<T *>&                 lhs,
                   const bsl::vector<bsl::shared_ptr<T> >& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.size() != rhs.size()) {
         return false;                                                 // RETURN
     }
@@ -392,6 +403,7 @@ bool vectorEquals(const bsl::vector<T *>&                 lhs,
     typename bsl::vector<bsl::shared_ptr<T> >::const_iterator rhsIt =
                                                              copyRhs.begin();
     for (; lhsIt != copyLhs.end(); ++lhsIt, ++rhsIt) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(rhsIt);
         if (*lhsIt != rhsIt->get()) {
             return false;                                             // RETURN
         }
@@ -642,10 +654,15 @@ int main(int argc, char *argv[])
                         balm::MetricId metric = reg.getId(CATEGORY,
                                                           METRICS[k]);
                         const Rec& R = recordsBegin[k];
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&R);
                         ASSERT(metric == R.metricId());
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&R);
                         ASSERT(2 * k * NUM_COLS     == R.count());
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&R);
                         ASSERT(4 * k * NUM_COLS == R.total());
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&R);
                         ASSERT(-k               == R.min());
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&R);
                         ASSERT( k               == R.max());
                     }
 
@@ -776,7 +793,9 @@ int main(int argc, char *argv[])
                 Col *col   = mX.getDefaultCollector(CATEGORY, NAME);
                 ICol *iCol = mX.getDefaultIntegerCollector(CATEGORY, NAME);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(col);
                 ASSERT(id   == col->metricId());
+                BSLS_ASSERT_CONVEYOR_OBJECT(iCol);
                 ASSERT(id   == iCol->metricId());
                 ASSERT(col  == mX.getDefaultCollector(id));
                 ASSERT(iCol == mX.getDefaultIntegerCollector(id));
@@ -819,6 +838,7 @@ int main(int argc, char *argv[])
                     Col *col = mX.getDefaultCollector(CATEGORY, NAME);
 
                     ASSERT( REG.findId(CATEGORY, NAME).isValid());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(col);
                     ASSERT( REG.findId(CATEGORY, NAME) == col->metricId());
                 }
                 {
@@ -829,6 +849,7 @@ int main(int argc, char *argv[])
                     ICol *iCol = mX.getDefaultIntegerCollector(CATEGORY, NAME);
 
                     ASSERT( REG.findId(CATEGORY, NAME).isValid());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(iCol);
                     ASSERT( REG.findId(CATEGORY, NAME) == iCol->metricId());
                 }
             }
@@ -914,7 +935,9 @@ int main(int argc, char *argv[])
 
                 ASSERT(0  != col);
                 ASSERT(0  != iCol);
+                BSLS_ASSERT_CONVEYOR_OBJECT(col);
                 ASSERT(id == col->metricId());
+                BSLS_ASSERT_CONVEYOR_OBJECT(iCol);
                 ASSERT(id == iCol->metricId());
 
                 cols[id].push_back(col);
@@ -966,6 +989,7 @@ int main(int argc, char *argv[])
                     Col *col = mX.addCollector(CATEGORY, NAME).get();
 
                     ASSERT( REG.findId(CATEGORY, NAME).isValid());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(col);
                     ASSERT( REG.findId(CATEGORY, NAME) == col->metricId());
                 }
                 {
@@ -976,6 +1000,7 @@ int main(int argc, char *argv[])
                     ICol *iCol = mX.addIntegerCollector(CATEGORY, NAME).get();
 
                     ASSERT( REG.findId(CATEGORY, NAME).isValid());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(iCol);
                     ASSERT( REG.findId(CATEGORY, NAME) == iCol->metricId());
                 }
             }
@@ -1097,10 +1122,15 @@ int main(int argc, char *argv[])
                         balm::MetricId metric = reg.getId(CATEGORY,
                                                           METRICS[k]);
                         const Rec& R = recordsBegin[k];
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&R);
                         ASSERT(metric == R.metricId());
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&R);
                         ASSERT(2 * (k + 1) * NUM_COLS   == R.count());
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&R);
                         ASSERT(4 * (k + 1) * NUM_COLS   == R.total());
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&R);
                         ASSERT(-10 * (k + 1)            == R.min());
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&R);
                         ASSERT( 10 * (k + 1)            == R.max());
                     }
 
@@ -1276,7 +1306,9 @@ int main(int argc, char *argv[])
                 Col *col   = mX.getDefaultCollector(id);
                 ICol *iCol = mX.getDefaultIntegerCollector(id);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(col);
                 ASSERT(id   == col->metricId());
+                BSLS_ASSERT_CONVEYOR_OBJECT(iCol);
                 ASSERT(id   == iCol->metricId());
                 ASSERT(col  == mX.getDefaultCollector(id));
                 ASSERT(iCol == mX.getDefaultIntegerCollector(id));
@@ -1401,7 +1433,9 @@ int main(int argc, char *argv[])
 
                 ASSERT(0  != collector);
                 ASSERT(0  != iCollector);
+                BSLS_ASSERT_CONVEYOR_OBJECT(collector);
                 ASSERT(id == collector->metricId());
+                BSLS_ASSERT_CONVEYOR_OBJECT(iCollector);
                 ASSERT(id == iCollector->metricId());
 
                 ids.insert(id);
@@ -1521,11 +1555,15 @@ int main(int argc, char *argv[])
             Col *COL_BA = mX.getDefaultCollector(METRIC_BA);
             Col *COL_BB = mX.getDefaultCollector(METRIC_BB);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AB);
             ASSERT(0 != COL_AA);
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BA);
             ASSERT(0 != COL_AB);
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BB);
             ASSERT(0 != COL_BA);
             ASSERT(0 != COL_BB);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AA);
             ASSERT(METRIC_AA == COL_AA->metricId());
             ASSERT(METRIC_AB == COL_AB->metricId());
             ASSERT(METRIC_BA == COL_BA->metricId());
@@ -1555,11 +1593,15 @@ int main(int argc, char *argv[])
             ASSERT(0 != COL_BA_2);
             ASSERT(0 != COL_BB_2);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AB_2);
             ASSERT(COL_AA_2 != COL_AA);
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BA_2);
             ASSERT(COL_AB_2 != COL_AB);
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BB_2);
             ASSERT(COL_BA_2 != COL_BA);
             ASSERT(COL_BB_2 != COL_BB);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AA_2);
             ASSERT(METRIC_AA == COL_AA_2->metricId());
             ASSERT(METRIC_AB == COL_AB_2->metricId());
             ASSERT(METRIC_BA == COL_BA_2->metricId());
@@ -1588,11 +1630,15 @@ int main(int argc, char *argv[])
             Col *COL_BA = mX.getDefaultCollector("B", "A");
             Col *COL_BB = mX.getDefaultCollector("B", "B");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AB);
             ASSERT(0 != COL_AA);
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BA);
             ASSERT(0 != COL_AB);
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BB);
             ASSERT(0 != COL_BA);
             ASSERT(0 != COL_BB);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AA);
             ASSERT(METRIC_AA == COL_AA->metricId());
             ASSERT(METRIC_AB == COL_AB->metricId());
             ASSERT(METRIC_BA == COL_BA->metricId());
@@ -1628,9 +1674,13 @@ int main(int argc, char *argv[])
             ASSERT(0 != COL_BA);
             ASSERT(0 != COL_BB);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AA);
             ASSERT(METRIC_AA == COL_AA->metricId());
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AB);
             ASSERT(METRIC_AB == COL_AB->metricId());
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BA);
             ASSERT(METRIC_BA == COL_BA->metricId());
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BB);
             ASSERT(METRIC_BB == COL_BB->metricId());
 
             ASSERT(COL_AA == mX.getDefaultIntegerCollector(METRIC_AA));
@@ -1657,9 +1707,13 @@ int main(int argc, char *argv[])
             ASSERT(0 != COL_BA_2);
             ASSERT(0 != COL_BB_2);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AA_2);
             ASSERT(METRIC_AA == COL_AA_2->metricId());
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AB_2);
             ASSERT(METRIC_AB == COL_AB_2->metricId());
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BA_2);
             ASSERT(METRIC_BA == COL_BA_2->metricId());
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BB_2);
             ASSERT(METRIC_BB == COL_BB_2->metricId());
 
             ASSERT(COL_AA == mX.getDefaultIntegerCollector(METRIC_AA));
@@ -1691,9 +1745,13 @@ int main(int argc, char *argv[])
             ASSERT(0 != COL_BA);
             ASSERT(0 != COL_BB);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AA);
             ASSERT(METRIC_AA == COL_AA->metricId());
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_AB);
             ASSERT(METRIC_AB == COL_AB->metricId());
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BA);
             ASSERT(METRIC_BA == COL_BA->metricId());
+            BSLS_ASSERT_CONVEYOR_OBJECT(COL_BB);
             ASSERT(METRIC_BB == COL_BB->metricId());
 
             ASSERT(COL_AA == mX.getDefaultIntegerCollector(METRIC_AA));

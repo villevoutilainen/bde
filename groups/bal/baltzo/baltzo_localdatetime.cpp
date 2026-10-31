@@ -41,6 +41,7 @@ bsl::ostream& LocalDatetime::print(bsl::ostream& stream,
 bsl::ostream& baltzo::operator<<(bsl::ostream&        stream,
                                  const LocalDatetime& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }

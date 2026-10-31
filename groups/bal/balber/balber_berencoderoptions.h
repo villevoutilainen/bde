@@ -272,7 +272,8 @@ class BerEncoderOptions {
         // in multiline mode only.
 
     template <typename t_STREAM>
-    t_STREAM& bdexStreamOut(t_STREAM& stream, int version) const;
+    t_STREAM& bdexStreamOut(t_STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Write the value of this object to the specified output 'stream'
         // using the specified 'version' format and return a reference to the
         // modifiable 'stream'.  If 'version' is not supported, 'stream' is

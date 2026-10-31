@@ -166,14 +166,19 @@ class SequenceWithAnonymityChoice1 {
     /// Set the value of this object to be a "Selection5" value.  Optionally
     /// specify the `value` of the "Selection5".  If `value` is not
     /// specified, the default "Selection5" value is used.
-    bool& makeSelection5();
-    bool& makeSelection5(bool value);
+    bool& makeSelection5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bool& makeSelection5(bool value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    bsl::string& makeSelection6();
-    bsl::string& makeSelection6(const bsl::string& value);
+    bsl::string& makeSelection6()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& makeSelection6(const bsl::string& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    bsl::string& makeSelection6(bsl::string&& value);
+    bsl::string& makeSelection6(bsl::string&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection6" value.  Optionally
         // specify the 'value' of the "Selection6".  If 'value' is not
@@ -190,12 +195,14 @@ class SequenceWithAnonymityChoice1 {
     /// Return a reference to the modifiable "Selection5" selection of this
     /// object if "Selection5" is the current selection.  The behavior is
     /// undefined unless "Selection5" is the selection of this object.
-    bool& selection5();
+    bool& selection5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection6" selection of this
     /// object if "Selection6" is the current selection.  The behavior is
     /// undefined unless "Selection6" is the selection of this object.
-    bsl::string& selection6();
+    bsl::string& selection6()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -228,12 +235,14 @@ class SequenceWithAnonymityChoice1 {
     /// Return a reference to the non-modifiable "Selection5" selection of
     /// this object if "Selection5" is the current selection.  The behavior
     /// is undefined unless "Selection5" is the selection of this object.
-    const bool& selection5() const;
+    const bool& selection5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection6" selection of
     /// this object if "Selection6" is the current selection.  The behavior
     /// is undefined unless "Selection6" is the selection of this object.
-    const bsl::string& selection6() const;
+    const bsl::string& selection6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection5" value,
     /// and return `false` otherwise.
@@ -413,11 +422,14 @@ class SequenceWithAnonymityChoice {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    s_baltst::Sequence6& makeSelection1();
-    s_baltst::Sequence6& makeSelection1(const s_baltst::Sequence6& value);
+    s_baltst::Sequence6& makeSelection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::Sequence6& makeSelection1(const s_baltst::Sequence6& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::Sequence6& makeSelection1(s_baltst::Sequence6&& value);
+    s_baltst::Sequence6& makeSelection1(s_baltst::Sequence6&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection1" value.  Optionally
         // specify the 'value' of the "Selection1".  If 'value' is not
@@ -426,24 +438,32 @@ class SequenceWithAnonymityChoice {
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    unsigned char& makeSelection2();
-    unsigned char& makeSelection2(unsigned char value);
+    unsigned char& makeSelection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned char& makeSelection2(unsigned char value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    s_baltst::CustomString& makeSelection3();
-    s_baltst::CustomString& makeSelection3(const s_baltst::CustomString& value);
+    s_baltst::CustomString& makeSelection3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::CustomString& makeSelection3(const s_baltst::CustomString& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::CustomString& makeSelection3(s_baltst::CustomString&& value);
+    s_baltst::CustomString& makeSelection3(s_baltst::CustomString&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection3" value.  Optionally
         // specify the 'value' of the "Selection3".  If 'value' is not
         // specified, the default "Selection3" value is used.
 
-    s_baltst::CustomInt& makeSelection4();
-    s_baltst::CustomInt& makeSelection4(const s_baltst::CustomInt& value);
+    s_baltst::CustomInt& makeSelection4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::CustomInt& makeSelection4(const s_baltst::CustomInt& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::CustomInt& makeSelection4(s_baltst::CustomInt&& value);
+    s_baltst::CustomInt& makeSelection4(s_baltst::CustomInt&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection4" value.  Optionally
         // specify the 'value' of the "Selection4".  If 'value' is not
@@ -460,22 +480,26 @@ class SequenceWithAnonymityChoice {
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
     /// undefined unless "Selection1" is the selection of this object.
-    s_baltst::Sequence6& selection1();
+    s_baltst::Sequence6& selection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection2" selection of this
     /// object if "Selection2" is the current selection.  The behavior is
     /// undefined unless "Selection2" is the selection of this object.
-    unsigned char& selection2();
+    unsigned char& selection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection3" selection of this
     /// object if "Selection3" is the current selection.  The behavior is
     /// undefined unless "Selection3" is the selection of this object.
-    s_baltst::CustomString& selection3();
+    s_baltst::CustomString& selection3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection4" selection of this
     /// object if "Selection4" is the current selection.  The behavior is
     /// undefined unless "Selection4" is the selection of this object.
-    s_baltst::CustomInt& selection4();
+    s_baltst::CustomInt& selection4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -508,22 +532,26 @@ class SequenceWithAnonymityChoice {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const s_baltst::Sequence6& selection1() const;
+    const s_baltst::Sequence6& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const unsigned char& selection2() const;
+    const unsigned char& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection3" selection of
     /// this object if "Selection3" is the current selection.  The behavior
     /// is undefined unless "Selection3" is the selection of this object.
-    const s_baltst::CustomString& selection3() const;
+    const s_baltst::CustomString& selection3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection4" selection of
     /// this object if "Selection4" is the current selection.  The behavior
     /// is undefined unless "Selection4" is the selection of this object.
-    const s_baltst::CustomInt& selection4() const;
+    const s_baltst::CustomInt& selection4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -705,21 +733,27 @@ class SequenceWithAnonymityChoice2 {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    s_baltst::Sequence4& makeSelection7();
-    s_baltst::Sequence4& makeSelection7(const s_baltst::Sequence4& value);
+    s_baltst::Sequence4& makeSelection7()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::Sequence4& makeSelection7(const s_baltst::Sequence4& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::Sequence4& makeSelection7(s_baltst::Sequence4&& value);
+    s_baltst::Sequence4& makeSelection7(s_baltst::Sequence4&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection7" value.  Optionally
         // specify the 'value' of the "Selection7".  If 'value' is not
         // specified, the default "Selection7" value is used.
 
-    s_baltst::Choice2& makeSelection8();
-    s_baltst::Choice2& makeSelection8(const s_baltst::Choice2& value);
+    s_baltst::Choice2& makeSelection8()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::Choice2& makeSelection8(const s_baltst::Choice2& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::Choice2& makeSelection8(s_baltst::Choice2&& value);
+    s_baltst::Choice2& makeSelection8(s_baltst::Choice2&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection8" value.  Optionally
         // specify the 'value' of the "Selection8".  If 'value' is not
@@ -736,12 +770,14 @@ class SequenceWithAnonymityChoice2 {
     /// Return a reference to the modifiable "Selection7" selection of this
     /// object if "Selection7" is the current selection.  The behavior is
     /// undefined unless "Selection7" is the selection of this object.
-    s_baltst::Sequence4& selection7();
+    s_baltst::Sequence4& selection7()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection8" selection of this
     /// object if "Selection8" is the current selection.  The behavior is
     /// undefined unless "Selection8" is the selection of this object.
-    s_baltst::Choice2& selection8();
+    s_baltst::Choice2& selection8()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -774,12 +810,14 @@ class SequenceWithAnonymityChoice2 {
     /// Return a reference to the non-modifiable "Selection7" selection of
     /// this object if "Selection7" is the current selection.  The behavior
     /// is undefined unless "Selection7" is the selection of this object.
-    const s_baltst::Sequence4& selection7() const;
+    const s_baltst::Sequence4& selection7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection8" selection of
     /// this object if "Selection8" is the current selection.  The behavior
     /// is undefined unless "Selection8" is the selection of this object.
-    const s_baltst::Choice2& selection8() const;
+    const s_baltst::Choice2& selection8() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection7" value,
     /// and return `false` otherwise.
@@ -972,19 +1010,23 @@ class SequenceWithAnonymity {
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    SequenceWithAnonymityChoice& choice();
+    SequenceWithAnonymityChoice& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Choice1" attribute of this
     /// object.
-    SequenceWithAnonymityChoice1& choice1();
+    SequenceWithAnonymityChoice1& choice1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Choice2" attribute of this
     /// object.
-    bdlb::NullableValue<SequenceWithAnonymityChoice2>& choice2();
+    bdlb::NullableValue<SequenceWithAnonymityChoice2>& choice2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    s_baltst::Sequence6& element4();
+    s_baltst::Sequence6& element4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1033,19 +1075,23 @@ class SequenceWithAnonymity {
 
     /// Return a reference offering non-modifiable access to the "Choice"
     /// attribute of this object.
-    const SequenceWithAnonymityChoice& choice() const;
+    const SequenceWithAnonymityChoice& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Choice1"
     /// attribute of this object.
-    const SequenceWithAnonymityChoice1& choice1() const;
+    const SequenceWithAnonymityChoice1& choice1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Choice2"
     /// attribute of this object.
-    const bdlb::NullableValue<SequenceWithAnonymityChoice2>& choice2() const;
+    const bdlb::NullableValue<SequenceWithAnonymityChoice2>& choice2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element4"
     /// attribute of this object.
-    const s_baltst::Sequence6& element4() const;
+    const s_baltst::Sequence6& element4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -1097,6 +1143,8 @@ namespace s_baltst {
 inline
 bool SequenceWithAnonymityChoice1::isEqualTo(const SequenceWithAnonymityChoice1& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef SequenceWithAnonymityChoice1 Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -1105,7 +1153,8 @@ bool SequenceWithAnonymityChoice1::isEqualTo(const SequenceWithAnonymityChoice1&
           case Class::SELECTION_ID_SELECTION6:
             return this->selection6() == rhs.selection6();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -1132,6 +1181,7 @@ SequenceWithAnonymityChoice1::~SequenceWithAnonymityChoice1()
 template <typename t_MANIPULATOR>
 int SequenceWithAnonymityChoice1::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SequenceWithAnonymityChoice1::SELECTION_ID_SELECTION5:
         return manipulator(&d_selection5.object(),
@@ -1148,6 +1198,7 @@ int SequenceWithAnonymityChoice1::manipulateSelection(t_MANIPULATOR& manipulator
 inline
 bool& SequenceWithAnonymityChoice1::selection5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION5 == d_selectionId);
     return d_selection5.object();
 }
@@ -1155,6 +1206,7 @@ bool& SequenceWithAnonymityChoice1::selection5()
 inline
 bsl::string& SequenceWithAnonymityChoice1::selection6()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION6 == d_selectionId);
     return d_selection6.object();
 }
@@ -1169,6 +1221,7 @@ int SequenceWithAnonymityChoice1::selectionId() const
 template <typename t_ACCESSOR>
 int SequenceWithAnonymityChoice1::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION5:
         return accessor(d_selection5.object(),
@@ -1185,6 +1238,7 @@ int SequenceWithAnonymityChoice1::accessSelection(t_ACCESSOR& accessor) const
 inline
 const bool& SequenceWithAnonymityChoice1::selection5() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION5 == d_selectionId);
     return d_selection5.object();
 }
@@ -1192,6 +1246,7 @@ const bool& SequenceWithAnonymityChoice1::selection5() const
 inline
 const bsl::string& SequenceWithAnonymityChoice1::selection6() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION6 == d_selectionId);
     return d_selection6.object();
 }
@@ -1224,6 +1279,8 @@ bool SequenceWithAnonymityChoice1::isUndefinedValue() const
 inline
 bool SequenceWithAnonymityChoice::isEqualTo(const SequenceWithAnonymityChoice& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef SequenceWithAnonymityChoice Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -1236,7 +1293,8 @@ bool SequenceWithAnonymityChoice::isEqualTo(const SequenceWithAnonymityChoice& r
           case Class::SELECTION_ID_SELECTION4:
             return this->selection4() == rhs.selection4();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -1263,6 +1321,7 @@ SequenceWithAnonymityChoice::~SequenceWithAnonymityChoice()
 template <typename t_MANIPULATOR>
 int SequenceWithAnonymityChoice::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SequenceWithAnonymityChoice::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -1285,6 +1344,7 @@ int SequenceWithAnonymityChoice::manipulateSelection(t_MANIPULATOR& manipulator)
 inline
 s_baltst::Sequence6& SequenceWithAnonymityChoice::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -1292,6 +1352,7 @@ s_baltst::Sequence6& SequenceWithAnonymityChoice::selection1()
 inline
 unsigned char& SequenceWithAnonymityChoice::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -1299,6 +1360,7 @@ unsigned char& SequenceWithAnonymityChoice::selection2()
 inline
 s_baltst::CustomString& SequenceWithAnonymityChoice::selection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -1306,6 +1368,7 @@ s_baltst::CustomString& SequenceWithAnonymityChoice::selection3()
 inline
 s_baltst::CustomInt& SequenceWithAnonymityChoice::selection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION4 == d_selectionId);
     return d_selection4.object();
 }
@@ -1320,6 +1383,7 @@ int SequenceWithAnonymityChoice::selectionId() const
 template <typename t_ACCESSOR>
 int SequenceWithAnonymityChoice::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -1342,6 +1406,7 @@ int SequenceWithAnonymityChoice::accessSelection(t_ACCESSOR& accessor) const
 inline
 const s_baltst::Sequence6& SequenceWithAnonymityChoice::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -1349,6 +1414,7 @@ const s_baltst::Sequence6& SequenceWithAnonymityChoice::selection1() const
 inline
 const unsigned char& SequenceWithAnonymityChoice::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -1356,6 +1422,7 @@ const unsigned char& SequenceWithAnonymityChoice::selection2() const
 inline
 const s_baltst::CustomString& SequenceWithAnonymityChoice::selection3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION3 == d_selectionId);
     return d_selection3.object();
 }
@@ -1407,6 +1474,8 @@ bool SequenceWithAnonymityChoice::isUndefinedValue() const
 inline
 bool SequenceWithAnonymityChoice2::isEqualTo(const SequenceWithAnonymityChoice2& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef SequenceWithAnonymityChoice2 Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -1415,7 +1484,8 @@ bool SequenceWithAnonymityChoice2::isEqualTo(const SequenceWithAnonymityChoice2&
           case Class::SELECTION_ID_SELECTION8:
             return this->selection8() == rhs.selection8();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -1435,6 +1505,7 @@ SequenceWithAnonymityChoice2::SequenceWithAnonymityChoice2(bslma::Allocator *bas
 inline
 SequenceWithAnonymityChoice2::~SequenceWithAnonymityChoice2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
 }
 
@@ -1442,6 +1513,7 @@ SequenceWithAnonymityChoice2::~SequenceWithAnonymityChoice2()
 template <typename t_MANIPULATOR>
 int SequenceWithAnonymityChoice2::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SequenceWithAnonymityChoice2::SELECTION_ID_SELECTION7:
         return manipulator(d_selection7,
@@ -1458,6 +1530,7 @@ int SequenceWithAnonymityChoice2::manipulateSelection(t_MANIPULATOR& manipulator
 inline
 s_baltst::Sequence4& SequenceWithAnonymityChoice2::selection7()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION7 == d_selectionId);
     return *d_selection7;
 }
@@ -1465,6 +1538,7 @@ s_baltst::Sequence4& SequenceWithAnonymityChoice2::selection7()
 inline
 s_baltst::Choice2& SequenceWithAnonymityChoice2::selection8()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION8 == d_selectionId);
     return *d_selection8;
 }
@@ -1479,6 +1553,7 @@ int SequenceWithAnonymityChoice2::selectionId() const
 template <typename t_ACCESSOR>
 int SequenceWithAnonymityChoice2::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION7:
         return accessor(*d_selection7,
@@ -1495,6 +1570,7 @@ int SequenceWithAnonymityChoice2::accessSelection(t_ACCESSOR& accessor) const
 inline
 const s_baltst::Sequence4& SequenceWithAnonymityChoice2::selection7() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION7 == d_selectionId);
     return *d_selection7;
 }
@@ -1533,6 +1609,8 @@ bool SequenceWithAnonymityChoice2::isUndefinedValue() const
 inline
 bool SequenceWithAnonymity::isEqualTo(const SequenceWithAnonymity& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->choice() == rhs.choice() &&
            this->choice1() == rhs.choice1() &&
            this->choice2() == rhs.choice2() &&

@@ -675,6 +675,7 @@ int BerDecoder::decode(bsl::istream& stream, TYPE *variable)
 template <typename TYPE>
 int BerDecoder::decode(bsl::streambuf *streamBuf, TYPE *variable)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 == d_streamBuf);
 
     d_streamBuf                 = streamBuf;
@@ -759,6 +760,8 @@ bslstl::StringRef BerDecoder::loggedMessages() const
 inline
 bool BerDecoder::maxDepthExceeded() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_options);
     return d_currentDepth > d_options->maxDepth();
 }
 
@@ -812,6 +815,7 @@ inline
 bool
 BerDecoder_Node::hasMore()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_tagType == BerConstants::e_CONSTRUCTED);
 
     if (BerUtil::k_INDEFINITE_LENGTH == d_expectedLength) {
@@ -1199,11 +1203,15 @@ template <typename TYPE>
 int
 BerDecoder_Node::decodeArray(TYPE *variable)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_tagType != BerConstants::e_CONSTRUCTED) {
         return logError("Expected CONSTRUCTED tag class for array");  // RETURN
     }
 
-    const int maxSize = d_decoder->decoderOptions()->maxSequenceSize();
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_decoder);
+    const int maxSize =
+                    BSLS_ASSERT_CONVEYOR_REF(*d_decoder->decoderOptions())
+                                                            .maxSequenceSize();
 
     // The hint is untrusted: always consume it (it applies to the next array
     // only), and honor it only as far as the buffered bytes can hold elements.

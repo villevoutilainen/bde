@@ -129,6 +129,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bdlt_datetimetz.h>
 
+#include <bsls_assert.h>
 #include <bsls_timeinterval.h>
 
 #include <bslma_allocator.h>
@@ -229,7 +230,8 @@ class MetricSampleGroup {
 
     /// Return a reference to the non-modifiable elapsed time interval over
     /// which this object's metric records were aggregated.
-    const bsls::TimeInterval& elapsedTime() const;
+    const bsls::TimeInterval& elapsedTime() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return an iterator positioned at the beginning of the sequence of
     /// `MetricRecord` objects referenced by this object.
@@ -391,10 +393,12 @@ class MetricSample {
     /// unless `0 <= index < numGroups()`.  Note that the returned
     /// reference will remain valid until this sample is modified by
     /// invoking `appendGroup` or `removeAllRecords()`.
-    const MetricSampleGroup& sampleGroup(int index) const;
+    const MetricSampleGroup& sampleGroup(int index) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable timestamp for this sample.
-    const bdlt::DatetimeTz& timeStamp() const;
+    const bdlt::DatetimeTz& timeStamp() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return an iterator positioned at the beginning of the sequence of
     /// `MetricSampleGroup` objects contained by this object.  Note that the
@@ -548,6 +552,8 @@ inline
 bool balm::operator==(const MetricSampleGroup& lhs,
                       const MetricSampleGroup& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.records()     == rhs.records()
         && lhs.numRecords()  == rhs.numRecords()
         && lhs.elapsedTime() == rhs.elapsedTime();
@@ -596,6 +602,8 @@ void MetricSample::setTimeStamp(const bdlt::DatetimeTz& timeStamp)
 inline
 void MetricSample::appendGroup(const MetricSampleGroup& group)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&group);
     if (0 < group.numRecords()) {
         d_records.push_back(group);
         d_numRecords += group.numRecords();
@@ -607,6 +615,7 @@ void MetricSample::appendGroup(const MetricRecord        *records,
                                int                        numRecords,
                                const bsls::TimeInterval&  elapsedTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 < numRecords) {
         d_records.push_back(SampleGroup(records, numRecords, elapsedTime));
         d_numRecords += numRecords;
@@ -616,6 +625,7 @@ void MetricSample::appendGroup(const MetricRecord        *records,
 inline
 void MetricSample::removeAllRecords()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_records.clear();
     d_numRecords = 0;
 }
@@ -624,6 +634,7 @@ void MetricSample::removeAllRecords()
 inline
 const MetricSampleGroup& MetricSample::sampleGroup(int index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_records[index];
 }
 
@@ -636,18 +647,21 @@ const bdlt::DatetimeTz& MetricSample::timeStamp() const
 inline
 MetricSample::const_iterator MetricSample::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_records.begin();
 }
 
 inline
 MetricSample::const_iterator MetricSample::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_records.end();
 }
 
 inline
 int MetricSample::numGroups() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_records.size());
 }
 
@@ -662,6 +676,8 @@ int MetricSample::numRecords() const
 inline
 bool balm::operator==(const MetricSample& lhs, const MetricSample& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_timeStamp == rhs.d_timeStamp
         && lhs.d_records   == rhs.d_records;
 }

@@ -160,6 +160,8 @@ typedef balm::MetricDescription Desc;
         /// Process the specified `request`.
         void processRequest(const bsl::string& request)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&request);
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             ++d_numRequests;
             d_totalRequestSize += static_cast<unsigned int>(request.size());
             d_minRequestSize   =  bsl::min(d_minRequestSize,

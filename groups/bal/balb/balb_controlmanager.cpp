@@ -65,6 +65,8 @@ int ControlManager::registerHandler(const bsl::string_view& prefix,
                                     const bsl::string_view& description,
                                     const ControlHandler&   handler)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&prefix);
     typedef Registry::iterator Iterator;
 
     bslmt::WriteLockGuard<bslmt::RWMutex> guard(&d_registryMutex);
@@ -117,6 +119,8 @@ int ControlManager::deregisterDefaultHandler()
 
 int ControlManager::deregisterHandler(const bsl::string_view& prefix)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&prefix);
     bslmt::WriteLockGuard<bslmt::RWMutex> guard(&d_registryMutex);
 
     Registry::iterator it = d_registry.find(prefix);
@@ -131,6 +135,7 @@ int ControlManager::deregisterHandler(const bsl::string_view& prefix)
 
 int ControlManager::dispatchMessage(const bsl::string_view& message) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const int len = static_cast<int>(message.length());
     BSLS_LOG_TRACE("Dispatching control message '%.*s'", len, message.data());
 
@@ -163,6 +168,8 @@ int ControlManager::dispatchMessage(const bsl::string_view& message) const
 int ControlManager::dispatchMessage(const bsl::string& prefix,
                                     bsl::istream&      stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&prefix);
     // Imp note: 'prefix' has to be 'bsl::string' and not a string view for the
     // sake of being able to be passed to the callback.
 
@@ -191,6 +198,7 @@ int ControlManager::dispatchMessage(const bsl::string& prefix,
 void ControlManager::printUsage(bsl::ostream&           stream,
                                 const bsl::string_view& preamble) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     stream << preamble << bsl::endl;
 
     bslmt::ReadLockGuard<bslmt::RWMutex> registryGuard(&d_registryMutex);

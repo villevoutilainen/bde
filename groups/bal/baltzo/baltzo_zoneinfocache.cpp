@@ -33,7 +33,7 @@ ZoneinfoCache::~ZoneinfoCache()
     for (ZoneinfoMap::iterator it  = d_cache.begin();
                                it != d_cache.end();
                                ++it) {
-        BSLS_ASSERT(0 != it->second);
+        BSLS_ASSERT_NONCONVEYOR(0 != it->second);
         d_allocator.mechanism()->deleteObject(it->second);
     }
 }
@@ -41,6 +41,7 @@ ZoneinfoCache::~ZoneinfoCache()
 // MANIPULATORS
 const Zoneinfo *ZoneinfoCache::getZoneinfo(int *rc, const char *timeZoneId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 != rc);
     BSLS_ASSERT(0 != timeZoneId);
 
@@ -71,7 +72,7 @@ const Zoneinfo *ZoneinfoCache::getZoneinfo(int *rc, const char *timeZoneId)
         // 'timeZoneId' must have been added to the map between the call to
         // 'lookupTimeZone', and the acquisition of the write-lock on 'd_lock'.
 
-        BSLS_ASSERT(0 != it->second);
+        BSLS_ASSERT_NONCONVEYOR(0 != it->second);
         *rc    = 0;
         result = it->second;
     }
@@ -100,6 +101,7 @@ const Zoneinfo *ZoneinfoCache::getZoneinfo(int *rc, const char *timeZoneId)
             return 0;                                                 // RETURN
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(newTimeZonePtr);
         if (newTimeZonePtr->identifier() != timeZoneId) {
             BSLS_LOG_ERROR("Loaded time zone id %s does not match "
                            "request id: %s",
@@ -126,6 +128,7 @@ const Zoneinfo *ZoneinfoCache::getZoneinfo(int *rc, const char *timeZoneId)
 // ACCESSORS
 const Zoneinfo *ZoneinfoCache::lookupZoneinfo(const char *timeZoneId) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 != timeZoneId);
 
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_lock);

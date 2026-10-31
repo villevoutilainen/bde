@@ -138,6 +138,7 @@ typedef baltzo::LocalTimeValidity                 Validity;
 /// `bdlt::EpochUtil::convertToTimeT64`.
 bdlt::EpochUtil::TimeT64 toTimeT(const bdlt::Datetime& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return bdlt::EpochUtil::convertToTimeT64(value);
 }
 
@@ -166,7 +167,7 @@ int toOffsetInMilliseconds(const char *iso8601Value)
     for (; *iso8601Value && *iso8601Value==' '; ++iso8601Value) {
     }
 
-    BSLS_ASSERT(*iso8601Value);
+    BSLS_ASSERT_NONCONVEYOR(*iso8601Value);
 
     int sign = 1;
     if (*iso8601Value == '-') {
@@ -371,7 +372,7 @@ int main(int argc, char *argv[])
                                                       TRANSITION_TIMES[i]),
                               edt);
         newYork.addTransition(bdlt::EpochUtil::convertToTimeT64(
-                                                     TRANSITION_TIMES[i + 1]),
+                          BSLS_ASSERT_CONVEYOR_REF(TRANSITION_TIMES[i + 1])),
                               est);
     }
 // ```
@@ -421,7 +422,9 @@ int main(int argc, char *argv[])
     ASSERT(utcTimeT >= transitionIter->utcTime());
     ASSERT(utcTimeT <  nextTransitionIter->utcTime());
 //
+    BSLS_ASSERT_CONVEYOR_OBJECT(transitionIter);
     ASSERT(false        == transitionIter->descriptor().dstInEffectFlag());
+    BSLS_ASSERT_CONVEYOR_OBJECT(transitionIter);
     ASSERT(-5 * 60 * 60 == transitionIter->descriptor().utcOffsetInSeconds());
     ASSERT("EST"        == transitionIter->descriptor().description());
 // ```
@@ -461,7 +464,9 @@ int main(int argc, char *argv[])
     ASSERT(baltzo::LocalTimeValidity::e_VALID_UNIQUE == validity);
     ASSERT(firstTransition == secondTransition);
 //
+    BSLS_ASSERT_CONVEYOR_OBJECT(firstTransition);
     ASSERT(false    == firstTransition->descriptor().dstInEffectFlag());
+    BSLS_ASSERT_CONVEYOR_OBJECT(firstTransition);
     ASSERT(-5*60*60 == firstTransition->descriptor().utcOffsetInSeconds());
     ASSERT("EST"    == firstTransition->descriptor().description());
 // ```
@@ -496,11 +501,15 @@ int main(int argc, char *argv[])
 // (daylight-saving time) and `second` will refer to a description of local
 // time after the transition (standard-time):
 // ```
+    BSLS_ASSERT_CONVEYOR_OBJECT(firstTransition);
     ASSERT(true      == firstTransition->descriptor().dstInEffectFlag());
+    BSLS_ASSERT_CONVEYOR_OBJECT(firstTransition);
     ASSERT(-4*60*60  == firstTransition->descriptor().utcOffsetInSeconds());
     ASSERT("EDT"     == firstTransition->descriptor().description());
 //
+    BSLS_ASSERT_CONVEYOR_OBJECT(secondTransition);
     ASSERT(false     == secondTransition->descriptor().dstInEffectFlag());
+    BSLS_ASSERT_CONVEYOR_OBJECT(secondTransition);
     ASSERT(-5*60*60  == secondTransition->descriptor().utcOffsetInSeconds());
     ASSERT("EST"     == secondTransition->descriptor().description());
 // ```
@@ -741,8 +750,10 @@ int main(int argc, char *argv[])
                                              &resultValidity,
                                              inputTime,
                                              TZ);
+                BSLS_ASSERT_CONVEYOR_OBJECT(resultIt1);
                 LOOP_ASSERT(LINE,
                             EXP_ID1 == resultIt1->descriptor().description());
+                BSLS_ASSERT_CONVEYOR_OBJECT(resultIt2);
                 LOOP_ASSERT(LINE,
                             EXP_ID2 == resultIt2->descriptor().description());
                 LOOP_ASSERT(LINE, EXP_VALIDITY == resultValidity);
@@ -897,6 +908,7 @@ int main(int argc, char *argv[])
                             ASSERT(resultIt1 == resultIt2);
                             const Desc *EXP = VALUE<minTime ? &desc1 : &desc2;
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(resultIt1);
                             bdlt::Datetime utcTime(VALUE);
                             utcTime.addSeconds(
                                 -resultIt1->descriptor().utcOffsetInSeconds());
@@ -910,12 +922,15 @@ int main(int argc, char *argv[])
                             TzIt next = resultIt1; ++next;
                             ASSERT(next      == resultIt2);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(resultIt2);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(resultIt1);
                             ASSERT(desc1 == resultIt1->descriptor());
                             ASSERT(desc2 == resultIt2->descriptor());
 
                             // The definition of ambiguity is that there are
                             // two valid UTC times which correspond to UTC
                             // time.
+                            BSLS_ASSERT_CONVEYOR_OBJECT(resultIt1);
                             bdlt::Datetime utcTime1(VALUE), utcTime2(VALUE);
                             utcTime1.addSeconds(
                                 -resultIt1->descriptor().utcOffsetInSeconds());
@@ -934,6 +949,8 @@ int main(int argc, char *argv[])
                             TzIt next = resultIt1; ++next;
                             ASSERT(next      == resultIt2);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(resultIt2);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(resultIt1);
                             ASSERT(desc1 == resultIt1->descriptor());
                             ASSERT(desc2 == resultIt2->descriptor());
 
@@ -1048,6 +1065,7 @@ int main(int argc, char *argv[])
                     if (VALUE < minTime || VALUE >= maxTime) {
                         ASSERT(U         == resultValidity);
                         ASSERT(resultIt1 == resultIt2);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(resultIt1);
                         const char *EXP = VALUE < minTime ? ID1 : ID2;
                         ASSERT(EXP == resultIt1->descriptor().description());
                     }
@@ -1055,7 +1073,9 @@ int main(int argc, char *argv[])
                         ASSERT(A         == resultValidity);
                         ASSERT(resultIt1 != resultIt2);
                         TzIt next = resultIt1; ++next;
+                        BSLS_ASSERT_CONVEYOR_OBJECT(resultIt1);
                         ASSERT(next      == resultIt2);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(resultIt2);
                         ASSERT(ID1 == resultIt1->descriptor().description());
                         ASSERT(ID2 == resultIt2->descriptor().description());
                     }
@@ -1066,6 +1086,8 @@ int main(int argc, char *argv[])
                         TzIt next = resultIt1; ++next;
                         ASSERT(next      == resultIt2);
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(resultIt2);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(resultIt1);
                         ASSERT(ID1 == resultIt1->descriptor().description());
                         ASSERT(ID2 == resultIt2->descriptor().description());
 
@@ -1112,6 +1134,7 @@ int main(int argc, char *argv[])
                                              TEST_TIME,
                                              TZ);
                 ASSERT(U         == resultValidity);
+                BSLS_ASSERT_CONVEYOR_OBJECT(resultIt1);
                 ASSERT(resultIt1 == resultIt2);
                 ASSERT(desc      == resultIt1->descriptor());
             }
@@ -1302,6 +1325,7 @@ int main(int argc, char *argv[])
                     ASSERT(resultIt->utcTime() ==
                            toTimeT(toDatetime(
                                        DATA[RESULT_IDX].d_transitionTime)));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(resultIt);
                     ASSERT(expDesc     == resultIt->descriptor());
                     ASSERT(VALUE       == result.utcDatetime());
                     ASSERT(expLocal    == result.localDatetime());
@@ -1585,7 +1609,8 @@ int main(int argc, char *argv[])
 
                     ASSERT(VALID == Obj::isWellFormed(TZ));
 
-                    if (bdlt::Datetime(1, 1, 1) == DATA[INDEX]) {
+                    if (bdlt::Datetime(1, 1, 1)
+                        == BSLS_ASSERT_CONVEYOR_REF(DATA[INDEX])) {
                         VALID = true;
                     }
                     bdlt::EpochUtil::TimeT64 timeT = toTimeT(DATA[INDEX]);
@@ -1865,20 +1890,29 @@ int main(int argc, char *argv[])
             bsls::Types::Int64 T2 = toTimeT(bdlt::Datetime(4, 5, 6, 7, 8, 9));
 
             TzIt it = TZ.beginTransitions();
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             ASSERT(T0    == it->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             ASSERT(0     == it->descriptor().utcOffsetInSeconds());
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             ASSERT("A"   == it->descriptor().description());
             ASSERT(false == it->descriptor().dstInEffectFlag());
 
             ++it;
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             ASSERT(T1    == it->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             ASSERT(-60   == it->descriptor().utcOffsetInSeconds());
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             ASSERT("B"   == it->descriptor().description());
             ASSERT(true  == it->descriptor().dstInEffectFlag());
 
             ++it;
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             ASSERT(T2    == it->utcTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             ASSERT(60    == it->descriptor().utcOffsetInSeconds());
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             ASSERT("C"   == it->descriptor().description());
             ASSERT(false == it->descriptor().dstInEffectFlag());
 
@@ -1986,9 +2020,11 @@ int main(int argc, char *argv[])
                 if (veryVerbose) { T_ P_(X) P(Y) }
 
                 ASSERT(newYork.endTransitions() != R);
+                BSLS_ASSERT_CONVEYOR_OBJECT(R);
                 LOOP_ASSERT(LINE,
                             R->descriptor().utcOffsetInSeconds() == OFF);
                 bool dstNonZero = (DST != 0);
+                BSLS_ASSERT_CONVEYOR_OBJECT(R);
                 LOOP_ASSERT(LINE,
                             R->descriptor().dstInEffectFlag()  == dstNonZero);
         }
@@ -2043,6 +2079,8 @@ int main(int argc, char *argv[])
                 Obj::loadRelevantTransitions(
                                            &y, &z, &validity, input, newYork);
                 if (veryVerbose) {
+                          BSLS_ASSERT_CONVEYOR_OBJECT(Z);
+                          BSLS_ASSERT_CONVEYOR_OBJECT(Y);
                           T_
                           P_(Y->utcTime()) P_(Z->utcTime())
                           P_(Y->descriptor()) P(Z->descriptor())

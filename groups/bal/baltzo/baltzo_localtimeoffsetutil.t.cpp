@@ -1097,6 +1097,7 @@ typedef bsl::vector<bslmt::ThreadUtil::Handle> Handles;
 /// `bdlt::EpochUtil::convertToTimeT64`.
 bdlt::EpochUtil::TimeT64 toTimeT(const bdlt::Datetime& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return bdlt::EpochUtil::convertToTimeT64(value);
 }
 

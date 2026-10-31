@@ -133,6 +133,7 @@ class AssertParsedTextIsEqual {
                     const TYPE&             expectedValue,
                     int                     formattingMode) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&expectedValue);
         TYPE      value;
         const int length = static_cast<int>(xml.length());
         const int rc     = balxml::TypesParserUtil::parse(&value,
@@ -147,6 +148,7 @@ class AssertParsedTextIsEqual {
 template <class T>
 void printValue(bsl::ostream& out, const T& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bdlb::PrintMethods::print(out, value, 0, -1);
 }
 
@@ -638,6 +640,7 @@ OBJECT_TYPE buildPrintTextInput(const bsl::string_view&  HEADER,
                                 const OBJECT_TYPE&       INPUT,
                                 const bsl::string_view&  TRAILER)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&INPUT);
     OBJECT_TYPE rv(HEADER.begin(), HEADER.end());
 
     rv.insert(rv.end(), INPUT.begin(), INPUT.end());
@@ -950,6 +953,7 @@ bsl::ostream& CustomizedInt::print(bsl::ostream& stream,
                                    int           level,
                                    int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 

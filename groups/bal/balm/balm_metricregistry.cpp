@@ -30,6 +30,8 @@ namespace {
 void combineUserData(bsl::vector<const void *>        *result,
                      const bsl::vector<const void *>&  userData)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&userData);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     if (result->size() < userData.size()) {
         result->resize(userData.size());
     }
@@ -67,6 +69,7 @@ namespace balm {
 bsl::pair<MetricId, bool>
 MetricRegistry::insertId(const char *category, const char *name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Insert the strings for 'category' and 'name' into the unique strings
     // table 'd_uniqueStrings' (if they are already in the table, this simply
     // looks them up).
@@ -115,6 +118,7 @@ void MetricRegistry::setCurrentUserData(
                                       MetricDescription::UserDataKey  key,
                                       const void                     *value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     CategoryAndName catAndName(category, "");
     MetricMap::iterator it = d_metrics.lower_bound(catAndName);
     while (it != d_metrics.end()
@@ -129,6 +133,7 @@ void MetricRegistry::defaultUserData(
                                  bsl::vector<const void *> *result,
                                  const char                *categoryName) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_categoryUserData.empty() && d_categoryPrefixUserData.empty()) {
         return;                                                       // RETURN
     }
@@ -203,6 +208,7 @@ MetricId MetricRegistry::getId(const char *category,
 
 const Category *MetricRegistry::addCategory(const char *category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::RWMutex> guard(&d_lock);
 
     // Insert the string for 'category' into the unique strings table
@@ -227,6 +233,7 @@ const Category *MetricRegistry::addCategory(const char *category)
 
 const Category *MetricRegistry::getCategory(const char *category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Lookup the 'category' using 'findCategory', as that uses only a
     // read-lock on 'd_lock'
 
@@ -271,6 +278,7 @@ void MetricRegistry::setCategoryEnabled(const Category* category,
 
 void MetricRegistry::setAllCategoriesEnabled(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::RWMutex> guard(&d_lock);
 
     if (d_defaultEnabled == value) {
@@ -312,6 +320,7 @@ void MetricRegistry::registerCategoryHolder(const Category *category,
 void MetricRegistry::setFormat(const MetricId&     metricId,
                                const MetricFormat& format)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     MetricDescription *desc =
                        const_cast<MetricDescription *>(metricId.description());
 
@@ -345,6 +354,7 @@ void MetricRegistry::setUserData(const MetricId&                 metricId,
                                  MetricDescription::UserDataKey  key,
                                  const void                     *value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= key && key < d_nextKey);
 
     MetricDescription *desc =
@@ -357,6 +367,7 @@ void MetricRegistry::setUserData(const char                     *categoryName,
                                  const void                     *value,
                                  bool                            prefixFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= key && key < d_nextKey);
 
     bslmt::WriteLockGuard<bslmt::RWMutex> guard(&d_lock);
@@ -395,18 +406,21 @@ MetricDescription::UserDataKey MetricRegistry::createUserDataKey()
 // ACCESSORS
 bsl::size_t MetricRegistry::numMetrics() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_lock);
     return d_metrics.size();
 }
 
 bsl::size_t MetricRegistry::numCategories() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_lock);
     return d_categories.size();
 }
 
 const Category *MetricRegistry::findCategory(const char *category) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_lock);
     CategoryRegistry::const_iterator it = d_categories.find(category);
     return it == d_categories.end() ? 0 : it->second.get();
@@ -415,6 +429,7 @@ const Category *MetricRegistry::findCategory(const char *category) const
 MetricId MetricRegistry::findId(const char *category,
                                 const char *name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_lock);
     MetricMap::const_iterator it =
                                 d_metrics.find(bsl::make_pair(category, name));
@@ -424,6 +439,8 @@ MetricId MetricRegistry::findId(const char *category,
 void MetricRegistry::getAllCategories(
                                bsl::vector<const Category *> *categories) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(categories);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_lock);
     categories->reserve(categories->size() + d_categories.size());
     CategoryRegistry::const_iterator it = d_categories.begin();
@@ -436,6 +453,7 @@ bsl::ostream& MetricRegistry::print(bsl::ostream& stream,
                                     int           level,
                                     int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_lock);
 
     char SEP = level <= 0 ? ' ' : '\n';

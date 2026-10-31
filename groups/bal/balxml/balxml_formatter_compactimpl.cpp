@@ -93,7 +93,7 @@ bsl::ostream& Formatter_CompactImplUtil::addHeader(
                                              State                   *state,
                                              const bsl::string_view&  encoding)
 {
-    BSLS_ASSERT(StateId::e_AT_START == state->id());
+    BSLS_ASSERT_NONCONVEYOR(StateId::e_AT_START == state->id());
 
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
@@ -169,10 +169,10 @@ bsl::ostream& Formatter_CompactImplUtil::closeElement(
                                                State                   *state,
                                                const bsl::string_view&  name)
 {
-    BSLS_ASSERT(StateId::e_IN_TAG == state->id() ||
+    BSLS_ASSERT_NONCONVEYOR(StateId::e_IN_TAG == state->id() ||
                 StateId::e_FIRST_DATA_BETWEEN_TAGS == state->id() ||
                 StateId::e_TRAILING_DATA_BETWEEN_TAGS == state->id());
-    BSLS_ASSERT(0 != state->indentLevel());
+    BSLS_ASSERT_NONCONVEYOR(0 != state->indentLevel());
 
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.

@@ -130,7 +130,8 @@ class CustomString {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `bsl::string`.
-    const bsl::string& toString() const;
+    const bsl::string& toString() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PUBLIC CLASS METHODS
 
@@ -146,6 +147,8 @@ class CustomString {
     /// have the same value if each respective attribute has the same value.
     friend bool operator==(const CustomString& lhs, const CustomString& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.d_value == rhs.d_value;
     }
 
@@ -155,6 +158,8 @@ class CustomString {
     /// attributes differ in values.
     friend bool operator!=(const CustomString& lhs, const CustomString& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.d_value != rhs.d_value;
     }
 
@@ -209,7 +214,7 @@ inline
 CustomString::CustomString(const bsl::string& value, bslma::Allocator *basicAllocator)
 : d_value(value, basicAllocator)
 {
-    BSLS_ASSERT(checkRestrictions(value) == 0);
+    BSLS_ASSERT_NONCONVEYOR(checkRestrictions(value) == 0);
 }
 
 inline
@@ -248,6 +253,7 @@ bsl::ostream& CustomString::print(bsl::ostream& stream,
                                  int           level,
                                  int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 

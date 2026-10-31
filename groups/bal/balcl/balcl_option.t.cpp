@@ -916,6 +916,7 @@ int TypesParser::parse(bsl::string  *result,
                        const char  **endPos,
                        const char   *inputString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(result);
     ASSERT(endPos);
     ASSERT(inputString);
@@ -1065,6 +1066,7 @@ int ArrayParserImpUtil::parse(bsl::vector<TYPE>  *result,
                               const char        **endPos,
                               const char         *inputString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(result);
     ASSERT(endPos);
     ASSERT(inputString);
@@ -1463,6 +1465,7 @@ int parseOccurrenceInfo(const char            **endpos,
                         const OccurrenceInfo&   occurrenceInfo,
                         const char             *input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
     enum { SUCCESS = 0, FAILURE = -1 };
 
     if (skipWhiteSpace(&input, input)) {
@@ -1524,6 +1527,7 @@ int parseOccurrenceInfo(const char            **endpos,
                 *endpos = input;
                 return FAILURE;                                       // RETURN
             }
+            BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
             switch (occurrenceInfo.defaultValue().type()) {
               case Ot::e_CHAR: {
                 char charValue = *input;
@@ -1532,6 +1536,7 @@ int parseOccurrenceInfo(const char            **endpos,
                     return FAILURE;                                   // RETURN
                 }
                 *endpos = ++input;
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_INT: {
                 int intValue;
@@ -1539,6 +1544,7 @@ int parseOccurrenceInfo(const char            **endpos,
                  || intValue != occurrenceInfo.defaultValue().the<Ot::Int>()) {
                     return FAILURE;                                   // RETURN
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_INT64: {
                 Int64 int64Value;
@@ -1547,6 +1553,7 @@ int parseOccurrenceInfo(const char            **endpos,
                               occurrenceInfo.defaultValue().the<Ot::Int64>()) {
                     return FAILURE;                                   // RETURN
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_DOUBLE: {
                 double doubleValue;
@@ -1556,6 +1563,7 @@ int parseOccurrenceInfo(const char            **endpos,
                     // There is no guaranteed round-trip on floating point I/O.
                     // Return `FAILURE`.
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_STRING: {
                 bsl::string stringValue;
@@ -1564,6 +1572,7 @@ int parseOccurrenceInfo(const char            **endpos,
                              occurrenceInfo.defaultValue().the<Ot::String>()) {
                     return FAILURE;                                   // RETURN
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_DATETIME: {
                 bdlt::Datetime datetimeValue;
@@ -1576,6 +1585,7 @@ int parseOccurrenceInfo(const char            **endpos,
                         return FAILURE;                               // RETURN
                     }
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_DATE: {
                 bdlt::Date dateValue;
@@ -1589,6 +1599,7 @@ int parseOccurrenceInfo(const char            **endpos,
                         return FAILURE;                               // RETURN
                     }
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_TIME: {
                 bdlt::Time timeValue;
@@ -1608,6 +1619,7 @@ int parseOccurrenceInfo(const char            **endpos,
                     // sequence of white-separated `CHAR`s enclosed by '[' ']'.
                     // Use `parseQuotedString` instead.
                     return FAILURE - 1;                               // RETURN
+                BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
                 }
                 bsl::vector<char> charArrayValue(charArrayAsString.begin(),
                                                  charArrayAsString.end());
@@ -1615,6 +1627,7 @@ int parseOccurrenceInfo(const char            **endpos,
                           occurrenceInfo.defaultValue().the<Ot::CharArray>()) {
                     return FAILURE - 2;                               // RETURN
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_INT_ARRAY: {
                 bsl::vector<int> intArrayValue;
@@ -1623,6 +1636,7 @@ int parseOccurrenceInfo(const char            **endpos,
                            occurrenceInfo.defaultValue().the<Ot::IntArray>()) {
                     return FAILURE;                                   // RETURN
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_INT64_ARRAY: {
                 bsl::vector<Int64> int64ArrayValue;
@@ -1631,6 +1645,7 @@ int parseOccurrenceInfo(const char            **endpos,
                          occurrenceInfo.defaultValue().the<Ot::Int64Array>()) {
                     return FAILURE;                                   // RETURN
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_DOUBLE_ARRAY: {
                 bsl::vector<double> doubleArrayValue;
@@ -1639,6 +1654,7 @@ int parseOccurrenceInfo(const char            **endpos,
                         occurrenceInfo.defaultValue().the<Ot::DoubleArray>()) {
                     // There is no guaranteed round-trip on floating point I/O.
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_STRING_ARRAY: {
                 bsl::vector<bsl::string> stringArrayValue;
@@ -1647,6 +1663,7 @@ int parseOccurrenceInfo(const char            **endpos,
                         occurrenceInfo.defaultValue().the<Ot::StringArray>()) {
                     return FAILURE;                                   // RETURN
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_DATETIME_ARRAY: {
                 bsl::vector<bdlt::Datetime> datetimeArrayValue;
@@ -1661,6 +1678,7 @@ int parseOccurrenceInfo(const char            **endpos,
                         return FAILURE;                               // RETURN
                     }
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_DATE_ARRAY: {
                 bsl::vector<bdlt::Date> dateArrayValue;
@@ -1673,6 +1691,7 @@ int parseOccurrenceInfo(const char            **endpos,
                         return FAILURE;                               // RETURN
                     }
                 }
+              BSLS_ASSERT_CONVEYOR_OBJECT(&occurrenceInfo);
               } break;
               case Ot::e_TIME_ARRAY: {
                 bsl::vector<bdlt::Time> timeArrayValue;
@@ -1712,6 +1731,7 @@ int parseOption(const char **endpos,
                 const Obj&   option,
                 const char  *input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&option);
     enum { SUCCESS = 0, FAILURE = -1 };
 
     bsl::string tagString, nameString, descriptionString;
@@ -1793,6 +1813,7 @@ int parseOption(const char **endpos,
 /// `e_NON_OPTION` of the specified `obj`.
 OptionInfo::ArgType argType(const Obj& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     if (obj.tagString().empty()) {
         return OptionInfo::e_NON_OPTION;                              // RETURN
     }
@@ -2138,19 +2159,26 @@ int main(int argc, const char *argv[])  {
 
             Obj& mX = *objPtr;  const Obj& X = mX;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             // Vet object allocators.
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(CONFIG, &oa == X.allocator());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(CONFIG, &oa == X.   description().get_allocator());
             ASSERTV(CONFIG, &oa == X.          name().get_allocator());
             ASSERTV(CONFIG, &oa == X.     tagString().get_allocator());
             ASSERTV(CONFIG, &oa == X.      typeInfo().allocator());
             ASSERTV(CONFIG, &oa == X.occurrenceInfo().allocator());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(CONFIG, &oa ==
                                   X.environmentVariableName().get_allocator());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             // Vet object value.
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(OptionInfo::e_NON_OPTION   == X.argType());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(""                         == X.description());
             ASSERT(false                      == X.isArray());
             ASSERT(""                         == X.name());
@@ -2612,8 +2640,11 @@ int main(int argc, const char *argv[])  {
 
                 Obj& mX = *objPtr;  const Obj& X = mX;
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 // Vet object allocators.
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, &oa == X.allocator());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, &oa == X.   description().get_allocator());
                 ASSERTV(CONFIG, &oa == X.          name().get_allocator());
                 ASSERTV(CONFIG, &oa == X.     tagString().get_allocator());
@@ -3257,17 +3288,25 @@ int main(int argc, const char *argv[])  {
 
                 Obj& mX = *objPtr;  const Obj& X = mX;
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 // Vet object allocators.
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, &oa == X.allocator());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, &oa == X.   description().get_allocator());
                 ASSERTV(CONFIG, &oa == X.          name().get_allocator());
                 ASSERTV(CONFIG, &oa == X.     tagString().get_allocator());
                 ASSERTV(CONFIG, &oa == X.      typeInfo().allocator());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, &oa == X.occurrenceInfo().allocator());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, &oa ==
                                   X.environmentVariableName().get_allocator());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 // Vet object value.
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(DESC            == X.description());
                 ASSERT(NAME            == X.name());
                 ASSERT(OCCURRENCE_INFO == X.occurrenceInfo());
@@ -3275,6 +3314,7 @@ int main(int argc, const char *argv[])  {
                 ASSERT(TYPEINFO        == X.typeInfo());
                 ASSERT(ENAME           == X.environmentVariableName());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 // Other accessors.
 
                 ASSERT(OI == X);
@@ -3283,11 +3323,13 @@ int main(int argc, const char *argv[])  {
                 const bool                IS_ARRAY = Ot::isArrayType(
                                                           X.typeInfo().type());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT(IS_ARRAY == X.isArray());
                 ASSERT(ARG_TYPE == X.argType());
 
                 // Negative (and positive) tests
                 {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     const char * const LONG_TAG
                                   = bsl::strchr(X.tagString().c_str(), '|')
                                   ? bsl::strchr(X.tagString().c_str(), '|') + 1
@@ -3318,6 +3360,7 @@ int main(int argc, const char *argv[])  {
                         ASSERT(!oss.str().empty());
                     } else {
                         ASSERT( X.isDescriptionValid(oss));
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         ASSERT( oss.str().empty());
                     }
 

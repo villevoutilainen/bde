@@ -237,20 +237,26 @@ bool parseValue(void                    *value,
 
         switch (type) {
           case OptionType::e_DATETIME: {
+            bdlt::Datetime *target = static_cast<bdlt::Datetime *>(value);
+            BSLS_ASSERT_CONVEYOR_OBJECT(target);
             result = !bdlt::Iso8601Util::parse(
-                                         static_cast<bdlt::Datetime *>(value),
+                                         target,
                                          inputStr.c_str(),
                                          static_cast<int>(input.length()));
           } break;
           case OptionType::e_DATE: {
+            bdlt::Date *target = static_cast<bdlt::Date *>(value);
+            BSLS_ASSERT_CONVEYOR_OBJECT(target);
             result = !bdlt::Iso8601Util::parse(
-                                         static_cast<bdlt::Date *>(value),
+                                         target,
                                          inputStr.c_str(),
                                          static_cast<int>(input.length()));
           } break;
           case OptionType::e_TIME: {
+            bdlt::Time *target = static_cast<bdlt::Time *>(value);
+            BSLS_ASSERT_CONVEYOR_OBJECT(target);
             result = !bdlt::Iso8601Util::parse(
-                                         static_cast<bdlt::Time *>(value),
+                                         target,
                                          inputStr.c_str(),
                                          static_cast<int>(input.length()));
           } break;
@@ -390,8 +396,8 @@ bool BoolConstraint::parse(OptionValue               *element,
                            ParseInputSource           inputSource) const
 {
     BSLS_ASSERT(element);
-    BSLS_ASSERT(element->hasNonVoidType());
-    BSLS_ASSERT(OptionType::e_BOOL == element->type());
+    BSLS_ASSERT_NONCONVEYOR(element->hasNonVoidType());
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_BOOL == element->type());
 
     if (TypeInfo::e_COMMAND_LINE == inputSource) {
         if (!input.empty()) {
@@ -557,7 +563,7 @@ ScalarConstraint<TYPE, CONSTRAINT_TYPE, ELEM_TYPE>::parse(
                                     ParseInputSource           ) const
 {
     BSLS_ASSERT(element);
-    BSLS_ASSERT(element->hasNonVoidType());
+    BSLS_ASSERT_NONCONVEYOR(element->hasNonVoidType());
 
     const OptionType::Enum elemType = element->type();
 
@@ -590,8 +596,9 @@ ScalarConstraint<TYPE, CONSTRAINT_TYPE, ELEM_TYPE>::validate(
                                                const OptionValue& element,
                                                bsl::ostream&      stream) const
 {
-    BSLS_ASSERT(element.hasNonVoidType());
-    BSLS_ASSERT(ELEM_TYPE == element.type());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&element);
+    BSLS_ASSERT_NONCONVEYOR(element.hasNonVoidType());
+    BSLS_ASSERT_NONCONVEYOR(ELEM_TYPE == element.type());
 
     return d_constraint
          ? d_constraint(&element.the<TYPE>(), stream)
@@ -741,8 +748,9 @@ ArrayConstraint<TYPE, CONSTRAINT_TYPE, ELEM_TYPE>::parse(
                                              const bsl::string_view&   input,
                                              ParseInputSource         ) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(element);
     BSLS_ASSERT(element);
-    BSLS_ASSERT(element->hasNonVoidType());
+    BSLS_ASSERT_NONCONVEYOR(element->hasNonVoidType());
 
     const OptionType::Enum elemType = element->type();
 
@@ -790,8 +798,9 @@ ArrayConstraint<TYPE, CONSTRAINT_TYPE, ELEM_TYPE>::validate(
                                                const OptionValue& element,
                                                bsl::ostream&      stream) const
 {
-    BSLS_ASSERT(element.hasNonVoidType());
-    BSLS_ASSERT(ELEM_TYPE == element.type());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&element);
+    BSLS_ASSERT_NONCONVEYOR(element.hasNonVoidType());
+    BSLS_ASSERT_NONCONVEYOR(ELEM_TYPE == element.type());
 
     typedef typename bsl::vector<TYPE>::size_type size_type;
     const bsl::vector<TYPE>& vec = element.the<bsl::vector<TYPE> >();
@@ -1611,6 +1620,7 @@ TypeInfo& TypeInfo::operator=(const TypeInfo& rhs)
 
 void TypeInfo::resetConstraint()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static bslma::Allocator *ga = bslma::Default::globalAllocator(0);
 
     // STATIC DATA
@@ -1769,6 +1779,7 @@ void TypeInfo::resetLinkedVariableAndConstraint()
 
 void TypeInfo::setConstraint(const Constraint::CharConstraint& constraint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (OptionType::e_CHAR == d_elemType) {
         d_constraint_p.reset(new (*d_allocator_p) u::CharConstraint(
                                                                 constraint,
@@ -1786,6 +1797,7 @@ void TypeInfo::setConstraint(const Constraint::CharConstraint& constraint)
 
 void TypeInfo::setConstraint(const Constraint::IntConstraint& constraint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (OptionType::e_INT == d_elemType) {
         d_constraint_p.reset(new (*d_allocator_p) u::IntConstraint(
                                                                 constraint,
@@ -1803,6 +1815,7 @@ void TypeInfo::setConstraint(const Constraint::IntConstraint& constraint)
 
 void TypeInfo::setConstraint(const Constraint::Int64Constraint& constraint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (OptionType::e_INT64 == d_elemType) {
         d_constraint_p.reset(new (*d_allocator_p) u::Int64Constraint(
                                                                 constraint,
@@ -1820,6 +1833,7 @@ void TypeInfo::setConstraint(const Constraint::Int64Constraint& constraint)
 
 void TypeInfo::setConstraint(const Constraint::DoubleConstraint& constraint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (OptionType::e_DOUBLE == d_elemType) {
         d_constraint_p.reset(new (*d_allocator_p) u::DoubleConstraint(
                                                                 constraint,
@@ -1837,6 +1851,7 @@ void TypeInfo::setConstraint(const Constraint::DoubleConstraint& constraint)
 
 void TypeInfo::setConstraint(const Constraint::StringConstraint& constraint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (OptionType::e_STRING == d_elemType) {
         d_constraint_p.reset(new (*d_allocator_p) u::StringConstraint(
                                                                 constraint,
@@ -1854,6 +1869,7 @@ void TypeInfo::setConstraint(const Constraint::StringConstraint& constraint)
 
 void TypeInfo::setConstraint(const Constraint::DatetimeConstraint& constraint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (OptionType::e_DATETIME == d_elemType) {
         d_constraint_p.reset(new (*d_allocator_p) u::DatetimeConstraint(
                                                                 constraint,
@@ -1871,6 +1887,7 @@ void TypeInfo::setConstraint(const Constraint::DatetimeConstraint& constraint)
 
 void TypeInfo::setConstraint(const Constraint::DateConstraint& constraint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (OptionType::e_DATE == d_elemType) {
         d_constraint_p.reset(new (*d_allocator_p) u::DateConstraint(
                                                                 constraint,
@@ -1888,6 +1905,7 @@ void TypeInfo::setConstraint(const Constraint::DateConstraint& constraint)
 
 void TypeInfo::setConstraint(const Constraint::TimeConstraint& constraint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (OptionType::e_TIME == d_elemType) {
         d_constraint_p.reset(new (*d_allocator_p) u::TimeConstraint(
                                                                 constraint,
@@ -2201,7 +2219,7 @@ namespace balcl {
 bool TypeInfoUtil::satisfiesConstraint(const OptionValue& element,
                                        const TypeInfo&    typeInfo)
 {
-    BSLS_ASSERT(typeInfo.type() == element.type());
+    BSLS_ASSERT_NONCONVEYOR(typeInfo.type() == element.type());
 
     return typeInfo.constraint()->validate(element);
 }
@@ -2210,7 +2228,7 @@ bool TypeInfoUtil::satisfiesConstraint(const OptionValue& element,
                                        const TypeInfo&    typeInfo,
                                        bsl::ostream&      stream)
 {
-    BSLS_ASSERT(typeInfo.type() == element.type());
+    BSLS_ASSERT_NONCONVEYOR(typeInfo.type() == element.type());
 
     return typeInfo.constraint()->validate(element, stream);
 }
@@ -2243,7 +2261,7 @@ bool TypeInfoUtil::parseAndValidate(OptionValue                *element,
                                     TypeInfo::ParseInputSource  inputSource)
 {
     BSLS_ASSERT(element);
-    BSLS_ASSERT(element->type() == typeInfo.type());
+    BSLS_ASSERT_NONCONVEYOR(element->type() == typeInfo.type());
 
     return typeInfo.constraint()->parse(element, stream, input, inputSource);
 }
@@ -2252,6 +2270,7 @@ int TypeInfoUtil::tokenizeArrayEnvironmentVariable(
                                               bsl::vector<bsl::string> *tokens,
                                               const bsl::string_view&   input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(tokens);
     // Implementation note: This tokenization function hardcodes ' ' (space) as
     // the array element separator character.  As is typical of white-space
     // characters, this is treated as a "soft delimiter", where as a visible
@@ -2294,7 +2313,7 @@ int TypeInfoUtil::tokenizeArrayEnvironmentVariable(
             remaining = remaining.substr(pos + 1);
         }
         else {
-            BSLS_ASSERT(remaining[pos] == '\\');
+            BSLS_ASSERT_NONCONVEYOR(remaining[pos] == '\\');
             if (remaining.size() <= pos + 1) {
                 // incomplete escape sequence
 

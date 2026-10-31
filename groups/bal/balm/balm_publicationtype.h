@@ -123,7 +123,8 @@ struct PublicationType {
     /// Write to the specified `stream` the string representation of the
     /// specified enumeration `value`.  Return a reference to the modifiable
     /// `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -172,6 +173,7 @@ inline
 bsl::ostream& balm::operator<<(bsl::ostream&          stream,
                                PublicationType::Value rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return PublicationType::print(stream, rhs);
 }
 

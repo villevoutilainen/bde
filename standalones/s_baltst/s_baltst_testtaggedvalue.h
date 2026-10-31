@@ -26,6 +26,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bslalg_constructorproxy.h>
 
+#include <bsls_assert.h>
+
 namespace BloombergLP {
 namespace s_baltst {
 
@@ -62,10 +64,12 @@ class TestTaggedValue_ArrayBase {
 
   private:
     // PRIVATE MANIPULATORS
-    VALUE_TYPE& object();
+    VALUE_TYPE& object()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PRIVATE ACCESSORS
-    const VALUE_TYPE& object() const;
+    const VALUE_TYPE& object() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
   public:
     // MANIPULATORS
@@ -115,10 +119,12 @@ class TestTaggedValue_ChoiceBase {
 
   private:
     // PRIVATE MANIPULATORS
-    VALUE_TYPE& object();
+    VALUE_TYPE& object()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PRIVATE ACCESSORS
-    const VALUE_TYPE& object() const;
+    const VALUE_TYPE& object() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
   public:
     // MANIPULATORS
@@ -183,10 +189,12 @@ class TestTaggedValue_CustomizedTypeBase {
 
   private:
     // PRIVATE MANIPULATORS
-    VALUE_TYPE& object();
+    VALUE_TYPE& object()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PRIVATE ACCESSORS
-    const VALUE_TYPE& object() const;
+    const VALUE_TYPE& object() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
   public:
     // MANIPULATORS
@@ -194,7 +202,8 @@ class TestTaggedValue_CustomizedTypeBase {
     int convertFromBaseType(const BASE_TYPE& object);
 
     // ACCESSORS
-    const BaseType& convertToBaseType() const;
+    const BaseType& convertToBaseType() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 /// This class provides a base class for `TestTaggedValue` specializations
@@ -229,7 +238,8 @@ class TestTaggedValue_DynamicTypeBase {
 
   private:
     // PRIVATE ACCESSORS
-    const VALUE_TYPE& object() const;
+    const VALUE_TYPE& object() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
   public:
     // ACCESSORS
@@ -274,10 +284,12 @@ class TestTaggedValue_EnumerationBase {
 
   private:
     // PRIVATE MANIPULATORS
-    VALUE_TYPE& object();
+    VALUE_TYPE& object()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PRIVATE ACCESSORS
-    const VALUE_TYPE& object() const;
+    const VALUE_TYPE& object() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
   public:
     // MANIPULATORS
@@ -333,10 +345,12 @@ class TestTaggedValue_NullableValueBase {
 
   private:
     // PRIVATE MANIPULATORS
-    VALUE_TYPE& object();
+    VALUE_TYPE& object()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PRIVATE ACCESSORS
-    const VALUE_TYPE& object() const;
+    const VALUE_TYPE& object() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
   public:
     // MANIPULATORS
@@ -388,10 +402,12 @@ class TestTaggedValue_SequenceBase {
 
   private:
     // PRIVATE MANIPULATORS
-    VALUE_TYPE& object();
+    VALUE_TYPE& object()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // PRIVATE ACCESSORS
-    const VALUE_TYPE& object() const;
+    const VALUE_TYPE& object() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
   public:
     // MANIPULATORS
@@ -1037,6 +1053,7 @@ bdlat_TypeCategory::Value
 TestTaggedValue_DynamicTypeBase<TAG_TYPE, VALUE_TYPE, IS_DYNAMIC_TYPE>::
     select() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlat_TypeCategoryFunctions::select(this->object());
 }
 
@@ -1187,6 +1204,7 @@ template <class MANIPULATOR>
 int TestTaggedValue_SequenceBase<TAG_TYPE, VALUE_TYPE, IS_SEQUENCE>::
     manipulateAttribute(MANIPULATOR& manipulator, int attributeId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlat_SequenceFunctions::manipulateAttribute(
         &this->object(), manipulator, attributeId);
 }
@@ -1198,6 +1216,7 @@ int TestTaggedValue_SequenceBase<TAG_TYPE, VALUE_TYPE, IS_SEQUENCE>::
                         const char   *attributeName,
                         int           attributeNameLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlat_SequenceFunctions::manipulateAttribute(
         &this->object(), manipulator, attributeName, attributeNameLength);
 }
@@ -1207,6 +1226,7 @@ template <class MANIPULATOR>
 int TestTaggedValue_SequenceBase<TAG_TYPE, VALUE_TYPE, IS_SEQUENCE>::
     manipulateAttributes(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlat_SequenceFunctions::manipulateAttributes(&this->object(),
                                                          manipulator);
 }
@@ -1254,6 +1274,7 @@ TestTaggedValue_SequenceBase<TAG_TYPE, VALUE_TYPE, IS_SEQUENCE>::hasAttribute(
                                          const char *attributeName,
                                          int         attributeNameLength) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlat_SequenceFunctions::hasAttribute(
         this->object(), attributeName, attributeNameLength);
 }

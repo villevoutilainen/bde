@@ -153,6 +153,7 @@ BSLS_IDENT("$Id: $")
 #include <balm_metric.h>
 #include <balm_metricsmanager.h>
 
+#include <bsls_assert.h>
 #include <bsls_platform.h>
 #include <bsls_stopwatch.h>
 
@@ -329,7 +330,9 @@ StopwatchScopedGuard::StopwatchScopedGuard(Collector *collector,
                                            Units      timeUnits)
 : d_stopwatch()
 , d_timeUnits(timeUnits)
-, d_collector_p((collector && collector->metricId().category()->enabled())
+, d_collector_p((collector &&
+                 BSLS_ASSERT_CONVEYOR_REF(*collector).metricId().category()
+                                                                   ->enabled())
                 ? collector
                 : 0)
 {
@@ -347,7 +350,8 @@ StopwatchScopedGuard::StopwatchScopedGuard(const MetricId&  metricId,
 {
     Collector *collector = Metric::lookupCollector(metricId, manager);
     d_collector_p = (collector &&
-                     collector->metricId().category()->enabled())
+                     BSLS_ASSERT_CONVEYOR_REF(*collector).metricId().category()
+                                                                   ->enabled())
                     ? collector : 0;
     if (d_collector_p) {
         d_stopwatch.start();
@@ -364,7 +368,8 @@ StopwatchScopedGuard::StopwatchScopedGuard(const MetricId&  metricId,
 {
     Collector *collector = Metric::lookupCollector(metricId, manager);
     d_collector_p = (collector &&
-                     collector->metricId().category()->enabled())
+                     BSLS_ASSERT_CONVEYOR_REF(*collector).metricId().category()
+                                                                   ->enabled())
                     ? collector : 0;
     if (d_collector_p) {
         d_stopwatch.start();
@@ -382,7 +387,8 @@ StopwatchScopedGuard::StopwatchScopedGuard(const char     *category,
     Collector *collector = Metric::lookupCollector(category, name, manager);
 
     d_collector_p = (collector &&
-                     collector->metricId().category()->enabled())
+                     BSLS_ASSERT_CONVEYOR_REF(*collector).metricId().category()
+                                                                   ->enabled())
                     ? collector : 0;
 
     if (d_collector_p) {
@@ -400,7 +406,9 @@ StopwatchScopedGuard::StopwatchScopedGuard(const char     *category,
 , d_collector_p(0)
 {
     Collector *collector = Metric::lookupCollector(category, name, manager);
-    d_collector_p = (collector && collector->metricId().category()->enabled())
+    d_collector_p = (collector &&
+                     BSLS_ASSERT_CONVEYOR_REF(*collector).metricId().category()
+                                                                   ->enabled())
                     ? collector : 0;
     if (d_collector_p) {
         d_stopwatch.start();
@@ -419,8 +427,10 @@ StopwatchScopedGuard::~StopwatchScopedGuard()
 inline
 bool StopwatchScopedGuard::isActive() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 != d_collector_p
-        && d_collector_p->metricId().category()->enabled();
+        && BSLS_ASSERT_CONVEYOR_REF(*d_collector_p).metricId().category()
+                                                                   ->enabled();
 }
 
 }  // close package namespace

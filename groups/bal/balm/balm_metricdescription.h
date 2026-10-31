@@ -201,7 +201,8 @@ class MetricDescription {
 
     /// Return the address of the non-modifiable category object indicating
     /// the category of the metric described by this object.
-    const Category *category() const;
+    const Category *category() const
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return the preferred publication type of this metric.  The
     /// preferred publication type of this metric indicates the preferred
@@ -231,12 +232,14 @@ class MetricDescription {
     /// Print the category and name of this metric description to the
     /// specified output `stream` in some single-line human-readable form,
     /// and return a reference to the modifiable `stream`.
-    bsl::ostream& print(bsl::ostream& stream) const;
+    bsl::ostream& print(bsl::ostream& stream) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Print the properties of this metric description to the specified
     /// output `stream` in some single-line human-readable form, and return
     /// a reference to the modifiable `stream`.
-    bsl::ostream& printDescription(bsl::ostream& stream) const;
+    bsl::ostream& printDescription(bsl::ostream& stream) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -302,6 +305,7 @@ void MetricDescription::setFormat(
 inline
 void MetricDescription::setUserData(UserDataKey key, const void *value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(key >= 0);
 
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
@@ -345,6 +349,7 @@ MetricDescription::format() const
 inline
 const void *MetricDescription::userData(UserDataKey key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(key >= 0);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     return ((unsigned int)key < d_userData.size()) ? d_userData[key] : 0;
@@ -357,6 +362,8 @@ inline
 bsl::ostream& balm::operator<<(bsl::ostream&      stream,
                          const MetricDescription& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return rhs.print(stream);
 }
 

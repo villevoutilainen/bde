@@ -209,16 +209,18 @@ OccurrenceInfo& OccurrenceInfo::operator=(const OccurrenceInfo& rhs)
 
 void OccurrenceInfo::setDefaultValue(const OptionValue& defaultValue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(!d_isRequired);
-    BSLS_ASSERT(OptionType::e_VOID != defaultValue.type());
-    BSLS_ASSERT(OptionType::e_BOOL != defaultValue.type());
-    BSLS_ASSERT(false              == defaultValue.isNull());
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_VOID != defaultValue.type());
+    BSLS_ASSERT_NONCONVEYOR(OptionType::e_BOOL != defaultValue.type());
+    BSLS_ASSERT_NONCONVEYOR(false              == defaultValue.isNull());
 
     d_defaultValue = defaultValue;
 }
 
 void OccurrenceInfo::setHidden()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(!d_isRequired);
 
     d_isHidden = true;
@@ -262,6 +264,7 @@ bsl::ostream& OccurrenceInfo::print(bsl::ostream& stream,
                                     int           level,
                                     int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }
@@ -311,6 +314,8 @@ bsl::ostream& OccurrenceInfo::print(bsl::ostream& stream,
 // FREE OPERATORS
 bool balcl::operator==(const OccurrenceInfo& lhs, const OccurrenceInfo& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs.occurrenceType()  == rhs.occurrenceType()
         && lhs.hasDefaultValue() == rhs.hasDefaultValue()
         && (!lhs.hasDefaultValue() ||

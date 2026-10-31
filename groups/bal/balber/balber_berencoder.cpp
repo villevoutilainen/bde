@@ -122,6 +122,7 @@ int BerEncoder::encodeImpl(const bsl::vector<char>&  value,
                            int                       formattingMode,
                            bdlat_TypeCategory::Array )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     switch (formattingMode & bdlat_FormattingMode::e_TYPE_MASK) {

@@ -509,7 +509,7 @@ class RateLimiter {
 inline
 void RateLimiter::cancelReserved(bsls::Types::Uint64 numUnits)
 {
-    BSLS_ASSERT(numUnits <= unitsReserved());
+    BSLS_ASSERT_NONCONVEYOR(numUnits <= unitsReserved());
 
     d_peakRateBucket.cancelReserved(numUnits);
     d_sustainedRateBucket.cancelReserved(numUnits);
@@ -565,7 +565,7 @@ void RateLimiter::submit(bsls::Types::Uint64 numUnits)
 inline
 void RateLimiter::submitReserved(bsls::Types::Uint64 numUnits)
 {
-    BSLS_ASSERT(numUnits <= unitsReserved());
+    BSLS_ASSERT_NONCONVEYOR(numUnits <= unitsReserved());
 
     // There is no need to check whether 'numUnits' causes overflow because the
     // reserved units was already checked by the 'reserve' method.

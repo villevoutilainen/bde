@@ -34,6 +34,8 @@ TestLoader::~TestLoader()
 // MANIPULATORS
 void TestLoader::setTimeZone(const Zoneinfo& timeZone)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeZone);
     TimeZoneMap::iterator it = d_timeZones.find(timeZone.identifier());
     if (it == d_timeZones.end()) {
         d_timeZones.emplace(timeZone.identifier(), timeZone);
@@ -67,6 +69,7 @@ int TestLoader::setTimeZone(const char *timeZoneId,
 
 int TestLoader::loadTimeZone(Zoneinfo *result, const char *timeZoneId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 != result);
     BSLS_ASSERT(0 != timeZoneId);
 
@@ -84,6 +87,7 @@ bsl::ostream& TestLoader::print(bsl::ostream& stream,
                                 int           level,
                                 int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }

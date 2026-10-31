@@ -97,6 +97,8 @@ template <class t_BYTE>
 int BerDecoder_Node::readVectorByte(bsl::vector<t_BYTE> *variable,
                                     const char          *typeName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(variable);
     BSLMF_ASSERT(1 == sizeof(t_BYTE));
 
     // The longest error message formatted below is approximately 80
@@ -125,7 +127,9 @@ int BerDecoder_Node::readVectorByte(bsl::vector<t_BYTE> *variable,
         // indefinite length.  We should implement this algorithm.
     }
 
-    const int maxSize = d_decoder->decoderOptions()->maxSequenceSize();
+    const int maxSize =
+                    BSLS_ASSERT_CONVEYOR_REF(*d_decoder->decoderOptions())
+                                                            .maxSequenceSize();
     if (d_expectedLength > maxSize) {
         bsl::format_to(bsl::back_inserter(*errMsg),
                        "'{}' length more than limit",
@@ -324,6 +328,7 @@ int BerDecoder_Node::decode(bsl::vector<unsigned char> *variable,
 
 int BerDecoder_Node::readTagHeader()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_decoder->maxDepthExceeded()) {
         return logError("Max depth exceeded");                        // RETURN
     }
@@ -342,7 +347,8 @@ int BerDecoder_Node::readTagHeader()
         return logError("Error reading BER length");                  // RETURN
     }
 
-    if (d_decoder->decoderOptions()->traceLevel() > 0) {
+    if (BSLS_ASSERT_CONVEYOR_REF(*d_decoder->decoderOptions()).traceLevel()
+                                                                         > 0) {
         bsl::ostream& out = d_decoder->logStream();
         this->print(out, d_decoder->d_currentDepth, 2, "Enter ");
     }
@@ -352,6 +358,7 @@ int BerDecoder_Node::readTagHeader()
 
 int BerDecoder_Node::readTagTrailer()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BerUtil::k_INDEFINITE_LENGTH == d_expectedLength) {
         if (0 != BerUtil::getEndOfContentOctets(d_decoder->d_streamBuf,
                                                 &d_consumedTailBytes)) {
@@ -363,7 +370,8 @@ int BerDecoder_Node::readTagTrailer()
                                                                       // RETURN
     }
 
-    if (d_decoder->decoderOptions()->traceLevel() > 0) {
+    if (BSLS_ASSERT_CONVEYOR_REF(*d_decoder->decoderOptions()).traceLevel()
+                                                                         > 0) {
         bsl::ostream& out = d_decoder->logStream();
         this->print(out, d_decoder->d_currentDepth, 2, "Leave ");
     }
@@ -373,7 +381,9 @@ int BerDecoder_Node::readTagTrailer()
 
 int BerDecoder_Node::skipField()
 {
-    if (!d_decoder->decoderOptions()->skipUnknownElements()) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    if (!BSLS_ASSERT_CONVEYOR_REF(*d_decoder->decoderOptions())
+                                                      .skipUnknownElements()) {
         return logError("Unknown element (skipping is disabled)");
                                                                       // RETURN
     }

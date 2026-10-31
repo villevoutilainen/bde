@@ -357,6 +357,8 @@ balxml::MiniReader::Node::swap(Node& other)
 void
 balxml::MiniReader::Node::addAttribute(const Attribute& attr)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attr);
     if (d_attrCount < d_attributes.size()) {
         d_attributes[d_attrCount] = attr;
     } else {
@@ -616,6 +618,7 @@ int MiniReader::bomCheck()
 
 int MiniReader::doOpen(const char *url, const char *encoding)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // reset active nodes stack
     d_activeNodesCount = 0;
     currentNode().reset();
@@ -955,6 +958,7 @@ int MiniReader::advanceToEndNode()
 MiniReader::StringType
 MiniReader::searchCommentCDataOrEndElementName(const bsl::string& name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT(!name.empty());
 
     static const char strSet[] = "\n<";
@@ -1050,6 +1054,7 @@ MiniReader::searchCommentCDataOrEndElementName(const bsl::string& name)
 MiniReader::StringType
 MiniReader::searchElementName(const bsl::string& name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT(!name.empty());
 
     static const char strSet[] = { "\n<" };
@@ -1230,6 +1235,7 @@ int MiniReader::advanceToEndNodeRawBare()
 int
 MiniReader::advanceToNextNode()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int rc = 0;
     // Return codes:
     // -1 (< 0)  errors, stop parsing
@@ -1436,6 +1442,7 @@ MiniReader::skipIfMatch(const char *str)
 void
 MiniReader::preAdvance()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (currentNode().d_type) {
       case e_NODE_TYPE_NONE: {
       } break;
@@ -1471,6 +1478,7 @@ MiniReader::preAdvance()
 void
 MiniReader::pushElementName()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_activeNodes.size() == d_activeNodesCount) {
         d_activeNodes.resize(d_activeNodesCount + 2);
     }
@@ -1786,6 +1794,7 @@ MiniReader::scanEndElementRaw()
 int
 MiniReader::scanEndElement()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int rc = scanEndElementRaw();
     if (rc < 0) {
         return rc;                                                    // RETURN
@@ -2130,6 +2139,7 @@ MiniReader::addAttribute()
 void
 MiniReader::rebasePointers(const char *newBase, size_t newLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // adjust current node
     d_currentNode.d_qualifiedName =
         rebasePointer(d_currentNode.d_qualifiedName, newBase);
@@ -2193,6 +2203,7 @@ MiniReader::rebasePointers(const char *newBase, size_t newLength)
 int
 MiniReader::readInput()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if ((d_flags & FLG_READ_EOF) != 0) {
         return 0;                                                     // RETURN
     }

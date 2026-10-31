@@ -96,6 +96,7 @@ bsl::ostream& printCategorySet(
                             bsl::ostream&                           stream,
                             const bsl::set<const balm::Category *>& categories)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&categories);
     bsl::vector<const balm::Category *> categoryList;
     categoryList.reserve(categories.size());
 
@@ -127,6 +128,8 @@ int getCategoryScheduleImp(VECTOR               *result,
                            bslmt::Mutex         *mutex,
                            const u::Categories&  categories)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&categories);
     BSLMF_ASSERT(u::IsVector<VECTOR>::value);
 
     typedef typename VECTOR::value_type    PairType;
@@ -240,7 +243,8 @@ class PublicationScheduler_ClockData {
 
     /// Return a reference to the modifiable set of categories scheduled at
     /// the clock's publication interval.
-    bsl::set<const Category *>& categories();
+    bsl::set<const Category *>& categories()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the boolean indicating whether the clock's
     /// publication interval is the default publication interval.
@@ -250,7 +254,8 @@ class PublicationScheduler_ClockData {
     /// `defaultClock()` is `true`, should *not* be published as part of the
     /// default publication.  If `defaultClock()` is false, the meaning of
     /// this property is undefined and the value must be an empty set.
-    bsl::set<const Category *>& nonDefaultCategories();
+    bsl::set<const Category *>& nonDefaultCategories()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                    // -------------------------------------
@@ -367,9 +372,12 @@ PublicationScheduler_Proctor::PublicationScheduler_Proctor(
 
 PublicationScheduler_Proctor::~PublicationScheduler_Proctor()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_scheduler_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_scheduler_p);
         PublicationScheduler::Clocks::iterator it =
                                               d_scheduler_p->d_clocks.begin();
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_scheduler_p);
         for (; it != d_scheduler_p->d_clocks.end(); ++it) {
             // Note that a clock may not have been scheduled (and therefore
             // have an invalid handle) if an exception occurred between the
@@ -382,7 +390,9 @@ PublicationScheduler_Proctor::~PublicationScheduler_Proctor()
             }
         }
         d_scheduler_p->d_defaultInterval = u::makeInvalidInterval();
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_scheduler_p);
         d_scheduler_p->d_clocks.clear();
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_scheduler_p);
         d_scheduler_p->d_categories.clear();
     }
 }
@@ -421,20 +431,22 @@ void PublicationScheduler::publish(bsl::shared_ptr<ClockData> clockData)
 void PublicationScheduler::cancelCategory(
                                          Categories::iterator categoryIterator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // This method erases 'categoryIt' from the map of categories
     // 'd_categories' and then removes the category from the associated
     // 'PublicationScheduler_ClockData' object held in 'd_clocks'.
 
-    BSLS_ASSERT(categoryIterator != d_categories.end());
+    BSLS_ASSERT_NONCONVEYOR(categoryIterator != d_categories.end());
     Clocks::iterator clockIterator = d_clocks.find(categoryIterator->second);
-    BSLS_ASSERT(clockIterator != d_clocks.end());
+    BSLS_ASSERT_NONCONVEYOR(clockIterator != d_clocks.end());
 
     const Category *category = categoryIterator->first;
     d_categories.erase(categoryIterator);
     bsl::shared_ptr<ClockData> clock = clockIterator->second;
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         bslmt::LockGuard<bslmt::Mutex> guard(clock->mutex());
-        BSLS_ASSERT(clock->categories().end() !=
+        BSLS_ASSERT_NONCONVEYOR(clock->categories().end() !=
                        clock->categories().find(category));
         clock->categories().erase(category);
     }
@@ -455,7 +467,7 @@ void PublicationScheduler::cancelCategory(
         // publication).
         if (d_defaultInterval != u::makeInvalidInterval()) {
             Clocks::iterator dfltIt = d_clocks.find(d_defaultInterval);
-            BSLS_ASSERT(d_clocks.end() != dfltIt);
+            BSLS_ASSERT_NONCONVEYOR(d_clocks.end() != dfltIt);
 
             bsl::shared_ptr<ClockData>& defaultClock = dfltIt->second;
             bslmt::LockGuard<bslmt::Mutex> guard(defaultClock->mutex());
@@ -466,6 +478,7 @@ void PublicationScheduler::cancelCategory(
 
 int PublicationScheduler::cancelDefaultSchedule()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Set the default interval data member 'd_defaultInterval' to the invalid
     // interval value, and update the associated
     // 'PublicationScheduler_ClockData' object to reflect that change.
@@ -478,7 +491,7 @@ int PublicationScheduler::cancelDefaultSchedule()
     d_defaultInterval = u::makeInvalidInterval();
 
     Clocks::iterator clockIt = d_clocks.find(interval);
-    BSLS_ASSERT(clockIt != d_clocks.end());
+    BSLS_ASSERT_NONCONVEYOR(clockIt != d_clocks.end());
     bsl::shared_ptr<ClockData> clock = clockIt->second;
 
     // If the default intervals 'ClockData' has no associated categories,
@@ -486,7 +499,7 @@ int PublicationScheduler::cancelDefaultSchedule()
     // otherwise (if there are categories scheduled at the same interval) mark
     // the 'ClockData' as not being the default schedule's clock.
     if (clock->categories().empty()) {
-        BSLS_ASSERT(clock->handle() !=
+        BSLS_ASSERT_NONCONVEYOR(clock->handle() !=
                        bdlmt::TimerEventScheduler::e_INVALID_HANDLE);
         d_scheduler_p->cancelClock(clock->handle());
         d_clocks.erase(clockIt);
@@ -524,6 +537,8 @@ void PublicationScheduler::scheduleCategory(
                                            const Category            *category,
                                            const bsls::TimeInterval&  interval)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&interval);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // This method locks the data members of this object; cancels the existing
     // schedule for the specified 'category' (if it has been previously
     // scheduled); then updates 'd_clocks' and 'd_categories' to reflect the
@@ -557,6 +572,7 @@ void PublicationScheduler::scheduleCategory(
     // Create a new 'ClockData' object if one does not exist for the
     // 'interval', otherwise update the existing 'clock'.
     if (clockIt == d_clocks.end()) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_allocator_p);
         clock.createInplace(d_allocator_p, d_allocator_p);
         clock->categories().insert(category);
         d_clocks.insert(bsl::make_pair(interval, clock));
@@ -580,7 +596,7 @@ void PublicationScheduler::scheduleCategory(
     if (!clock->defaultClock() && d_defaultInterval !=
                                                     u::makeInvalidInterval()) {
         Clocks::iterator dfltIt = d_clocks.find(d_defaultInterval);
-        BSLS_ASSERT(d_clocks.end() != dfltIt);
+        BSLS_ASSERT_NONCONVEYOR(d_clocks.end() != dfltIt);
 
         bsl::shared_ptr<ClockData>& defaultClock = dfltIt->second;
         bslmt::LockGuard<bslmt::Mutex> guard(defaultClock->mutex());
@@ -593,6 +609,8 @@ void PublicationScheduler::scheduleCategory(
 void PublicationScheduler::setDefaultSchedule(
                                             const bsls::TimeInterval& interval)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&interval);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // This method locks the data members of this object; cancels the existing
     // default schedule (if it has been previously set); then updates
     // 'd_clocks' and to reflect the indicated schedule, creating and
@@ -657,6 +675,7 @@ void PublicationScheduler::setDefaultSchedule(
 
 int PublicationScheduler::cancelCategorySchedule(const Category *category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     Categories::iterator cIt = d_categories.find(category);
@@ -671,6 +690,7 @@ int PublicationScheduler::cancelCategorySchedule(const Category *category)
 
 void PublicationScheduler::cancelAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     Clocks::iterator it = d_clocks.begin();
     for (; it != d_clocks.end(); ++it) {
@@ -692,6 +712,7 @@ bool
 PublicationScheduler::findCategorySchedule(bsls::TimeInterval *result,
                                            const Category     *category) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     Categories::const_iterator catIt = d_categories.find(category);
     if (catIt == d_categories.end()) {
@@ -704,6 +725,7 @@ PublicationScheduler::findCategorySchedule(bsls::TimeInterval *result,
 bool
 PublicationScheduler::getDefaultSchedule(bsls::TimeInterval *result) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     if (d_defaultInterval == u::makeInvalidInterval()) {
         return false;                                                 // RETURN
@@ -742,6 +764,7 @@ PublicationScheduler::print(bsl::ostream& stream,
                             int           level,
                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // We must sort the various sets of categories alphabetically to ensure
     // that the resulting formatted text is consistent (for testing).
 

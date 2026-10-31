@@ -441,12 +441,14 @@ TestReader::enableValidation(bool validationFlag)
 void
 TestReader::removeSchemas()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_schemasCache.clear();
 }
 
 int
 TestReader::addSchema(const char *location, bsl::streambuf *schema)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     SchemaInfo info;
 
     info.d_location  = location;
@@ -459,6 +461,7 @@ TestReader::addSchema(const char *location, bsl::streambuf *schema)
     bsl::vector<SchemaInfo>::iterator it2 = d_schemasCache.end();
 
     for (; it1 != it2; ++it1) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(it1);
         if (info.d_location == (*it1).d_location) {
             *it1 = info;
             return 0;                                                 // RETURN

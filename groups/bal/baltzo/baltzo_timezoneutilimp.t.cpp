@@ -839,6 +839,7 @@ static bdlt::Datetime fromTimeT(bdlt::EpochUtil::TimeT64 value)
 /// `bdlt::EpochUtil::convertToTimeT64`.
 static bdlt::EpochUtil::TimeT64 toTimeT(const bdlt::Datetime& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return bdlt::EpochUtil::convertToTimeT64(value);
 }
 
@@ -1083,7 +1084,7 @@ int main(int argc, char *argv[])
                                                           TRANSITION_TIMES[i]),
                               edt);
         newYork.addTransition(bdlt::EpochUtil::convertToTimeT64(
-                                                      TRANSITION_TIMES[i + 1]),
+                          BSLS_ASSERT_CONVEYOR_REF(TRANSITION_TIMES[i + 1])),
                               est);
     }
 // ```
@@ -1446,6 +1447,7 @@ int main(int argc, char *argv[])
                 // Double check that the descriptor of transition referred by
                 // `it` has the same value then the one loaded in `result`.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(it);
                 LOOP_ASSERT(DESC, it->descriptor() == DESC);
             }
         }
@@ -2343,6 +2345,7 @@ int main(int argc, char *argv[])
             LOOP2_ASSERT(LINE, resultValidity,
                          EXP_VALIDITY  == resultValidity);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(resultIterator);
             const Descriptor& resultDescriptor = resultIterator->descriptor();
 
             const bdlt::Datetime resultTransitionTime =

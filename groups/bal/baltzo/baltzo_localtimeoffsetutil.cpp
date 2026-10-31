@@ -96,9 +96,11 @@ void LocalTimeOffsetUtil::loadLocalTimeOffset(
 bsls::TimeInterval LocalTimeOffsetUtil::localTimeOffset(
                                              const bdlt::Datetime& utcDatetime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utcDatetime);
     bslmt::ReadLockGuard<bslmt::RWMutex> readLockGuard(privateLock());
 
     const LocalTimePeriod *localTimePeriod = privateLocalTimePeriod();
+    BSLS_ASSERT_CONVEYOR_OBJECT(localTimePeriod);
 
     int offsetInSeconds;
 
@@ -123,6 +125,7 @@ bsls::TimeInterval LocalTimeOffsetUtil::localTimeOffset(
                             localTimePeriod->descriptor().utcOffsetInSeconds();
         }
     } else {
+        BSLS_ASSERT_CONVEYOR_OBJECT(localTimePeriod);
         offsetInSeconds = localTimePeriod->descriptor().utcOffsetInSeconds();
     }
     return bsls::TimeInterval(offsetInSeconds);

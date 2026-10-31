@@ -116,7 +116,8 @@ class MySequenceWithCustomizedHexBinary {
 
     /// Return a reference to the modifiable "Element" attribute of this
     /// object.
-    s_baltst::CustomizedHexBinary& element();
+    s_baltst::CustomizedHexBinary& element()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -165,7 +166,8 @@ class MySequenceWithCustomizedHexBinary {
 
     /// Return a reference offering non-modifiable access to the "Element"
     /// attribute of this object.
-    const s_baltst::CustomizedHexBinary& element() const;
+    const s_baltst::CustomizedHexBinary& element() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -175,6 +177,8 @@ class MySequenceWithCustomizedHexBinary {
     friend bool operator==(const MySequenceWithCustomizedHexBinary& lhs,
                            const MySequenceWithCustomizedHexBinary& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.element() == rhs.element();
     }
 

@@ -165,6 +165,7 @@ struct XmlEl {
 
 void prepareXmlFromTable(bsl::string& outDoc, XmlEl* table, int count)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&outDoc);
     outDoc.clear();
     for (int i=0; i < count; ++i) {
 
@@ -575,6 +576,7 @@ const char strXmlEnd[] =
 
 void addOpenTag(bsl::string& xmlStr, int indent, const char* tag, int n)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&xmlStr);
     bsl::stringstream ss;
 
     ss << bsl::setw(indent) << "" << "<" << tag << n << ">\n"
@@ -589,6 +591,7 @@ void addOpenTag(bsl::string& xmlStr, int indent, const char* tag, int n)
 
 void addCloseTag(bsl::string& xmlStr, int indent, const char* tag, int n)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&xmlStr);
     bsl::stringstream ss;
 
     ss << bsl::setw(indent) << "" << "</" << tag << n << ">\n";
@@ -639,6 +642,7 @@ void ggg(bsl::string& xmlStr, int numNodes, int depth)
 /// containing non-ascii UTF-8.
 void nonAsciiUtf8(bsl::string *str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(str);
     static struct Record {
         const char *d_substitute;
         bsl::size_t d_substituteLen;
@@ -1075,6 +1079,7 @@ int findLoc(int                *line,
             const bsl::string&  pattern,
             bsl::size_t         offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&pattern);
     if (pattern.length() < offset) {
         return -1;                                                    // RETURN
     }
@@ -1119,6 +1124,7 @@ bsl::string utf8Dump(const char *utf8)
 void writeStringToFile(const char         *fileName,
                        const bsl::string&  str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     typedef bdls::FilesystemUtil FUtil;
 
     while (true) {
@@ -1523,12 +1529,14 @@ int main(int argc, char *argv[])
                         ++colPass;
                     }
                     else {
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
                         ++colFail;
                         ASSERTV(LINE, errorInfo.columnNumber(), expCol, badPos,
                          colPass, colFail, errorInfo.columnNumber() == expCol);
                         ASSERTV(LINE, badPos, xmlStr,
                                            errorInfo.columnNumber() == expCol);
                     }
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
                     ASSERT(bsl::string::npos != errorInfo.message().find(
                                                                       expMsg));
 
@@ -2415,14 +2423,17 @@ int main(int argc, char *argv[])
             ASSERT(reader.isOpen());
             ASSERT(reader.nodeType() == balxml::Reader::e_NODE_TYPE_NONE);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&reader);
             advanceN(reader, 2);  // XML declaration --> <xs:schema>
 
             // Skip to end node fails, cannot find the end of the comment:
 
             LOOP_ASSERT(rc, (rc = miniReader.advanceToEndNodeRaw()) == -1);
             ASSERT(reader.isError());
-            LOOP_ASSERT(reader.errorInfo().message(),
-                        reader.errorInfo().message() == "Unclosed comment.");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&reader);
+            LOOP_ASSERT(BSLS_ASSERT_CONVEYOR_REF(reader.errorInfo()).message(),
+                        BSLS_ASSERT_CONVEYOR_REF(reader.errorInfo()).message()
+                                                       == "Unclosed comment.");
 
             reader.close();
         }
@@ -2448,14 +2459,17 @@ int main(int argc, char *argv[])
             ASSERT(reader.isOpen());
             ASSERT(reader.nodeType() == balxml::Reader::e_NODE_TYPE_NONE);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&reader);
             advanceN(reader, 2);  // XML declaration --> <xs:schema>
 
             // Skip to end node fails, cannot find the end of the CDATA:
 
             LOOP_ASSERT(rc, (rc = miniReader.advanceToEndNodeRaw()) == -1);
             ASSERT(reader.isError());
-            LOOP_ASSERT(reader.errorInfo().message(),
-                        reader.errorInfo().message() == "Unclosed CDATA.");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&reader);
+            LOOP_ASSERT(BSLS_ASSERT_CONVEYOR_REF(reader.errorInfo()).message(),
+                        BSLS_ASSERT_CONVEYOR_REF(reader.errorInfo()).message()
+                                                         == "Unclosed CDATA.");
 
             reader.close();
         }
@@ -4139,6 +4153,7 @@ int main(int argc, char *argv[])
           ASSERT(errorInfo.isError());
           ASSERT(13 == errorInfo.lineNumber());
           ASSERT(19 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           ASSERT(bsl::strstr(errorInfo.message().c_str(), "tag mismatch"));
 
           ASSERT(reader.isOpen());
@@ -4190,6 +4205,7 @@ int main(int argc, char *argv[])
           ASSERT(errorInfo.isError());
           ASSERT(13 == errorInfo.lineNumber());
           ASSERT(1 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           ASSERT(bsl::strstr(errorInfo.message().c_str(), "No End Element"));
 
           ASSERT(reader.isOpen());
@@ -4260,6 +4276,7 @@ int main(int argc, char *argv[])
           LOOP_ASSERT(errorInfo.lineNumber(), 6 == errorInfo.lineNumber());
           LOOP_ASSERT(errorInfo.columnNumber(),
                       26 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           LOOP_ASSERT(errorInfo.message(),
                       npos != errorInfo.message().find("No space"));
 
@@ -4314,6 +4331,7 @@ int main(int argc, char *argv[])
           LOOP_ASSERT(errorInfo.lineNumber(), 3  == errorInfo.lineNumber());
           LOOP_ASSERT(errorInfo.columnNumber(),
                       16 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           LOOP_ASSERT(errorInfo.message(),
                       npos != errorInfo.message().find("No '='"));
 
@@ -4386,6 +4404,7 @@ int main(int argc, char *argv[])
           const balxml::ErrorInfo& errorInfo = reader.errorInfo();
           ASSERT(6  == errorInfo.lineNumber());
           ASSERT(26 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           LOOP_ASSERT(errorInfo.message(),
                       npos != errorInfo.message().find("No space"));
 
@@ -4454,6 +4473,7 @@ int main(int argc, char *argv[])
           const balxml::ErrorInfo& errorInfo = reader.errorInfo();
           ASSERT(6  == errorInfo.lineNumber());
           ASSERT(26 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           LOOP_ASSERT(errorInfo.message(),
                       npos != errorInfo.message().find("No space"));
 
@@ -4521,6 +4541,7 @@ int main(int argc, char *argv[])
           const balxml::ErrorInfo& errorInfo = reader.errorInfo();
           ASSERT(6  == errorInfo.lineNumber());
           ASSERT(15 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           ASSERT(bsl::strstr(errorInfo.message().c_str(), "Attribute value"));
 
           ASSERT(reader.isOpen());
@@ -4588,6 +4609,7 @@ int main(int argc, char *argv[])
           LOOP_ASSERT(errorInfo.lineNumber(), 6  == errorInfo.lineNumber());
           LOOP_ASSERT(errorInfo.columnNumber(),
                       27 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           LOOP_ASSERT(errorInfo.message(),
                       npos != errorInfo.message().find("No space"));
 
@@ -4653,6 +4675,7 @@ int main(int argc, char *argv[])
           const balxml::ErrorInfo& errorInfo = reader.errorInfo();
           ASSERT(3 == errorInfo.lineNumber());
           ASSERT(8 == errorInfo.columnNumber());
+          BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
           ASSERT(bsl::strstr(errorInfo.message().c_str(),
                              "Undefined namespace"));
 

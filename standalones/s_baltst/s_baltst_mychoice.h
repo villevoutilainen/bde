@@ -154,14 +154,19 @@ class MyChoice {
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    int& makeSelection1();
-    int& makeSelection1(int value);
+    int& makeSelection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeSelection1(int value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    bsl::string& makeSelection2();
-    bsl::string& makeSelection2(const bsl::string& value);
+    bsl::string& makeSelection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& makeSelection2(const bsl::string& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    bsl::string& makeSelection2(bsl::string&& value);
+    bsl::string& makeSelection2(bsl::string&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Selection2" value.  Optionally
         // specify the 'value' of the "Selection2".  If 'value' is not
@@ -178,12 +183,14 @@ class MyChoice {
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
     /// undefined unless "Selection1" is the selection of this object.
-    int& selection1();
+    int& selection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection2" selection of this
     /// object if "Selection2" is the current selection.  The behavior is
     /// undefined unless "Selection2" is the selection of this object.
-    bsl::string& selection2();
+    bsl::string& selection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -216,12 +223,14 @@ class MyChoice {
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const int& selection1() const;
+    const int& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const bsl::string& selection2() const;
+    const bsl::string& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection1" value,
     /// and return `false` otherwise.
@@ -286,6 +295,8 @@ namespace s_baltst {
 inline
 bool MyChoice::isEqualTo(const MyChoice& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef MyChoice Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -294,7 +305,8 @@ bool MyChoice::isEqualTo(const MyChoice& rhs) const
           case Class::SELECTION_ID_SELECTION2:
             return this->selection2() == rhs.selection2();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -321,6 +333,7 @@ MyChoice::~MyChoice()
 template <typename t_MANIPULATOR>
 int MyChoice::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case MyChoice::SELECTION_ID_SELECTION1:
         return manipulator(&d_selection1.object(),
@@ -337,6 +350,7 @@ int MyChoice::manipulateSelection(t_MANIPULATOR& manipulator)
 inline
 int& MyChoice::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -344,6 +358,7 @@ int& MyChoice::selection1()
 inline
 bsl::string& MyChoice::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -358,6 +373,7 @@ int MyChoice::selectionId() const
 template <typename t_ACCESSOR>
 int MyChoice::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION1:
         return accessor(d_selection1.object(),
@@ -374,6 +390,7 @@ int MyChoice::accessSelection(t_ACCESSOR& accessor) const
 inline
 const int& MyChoice::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -381,6 +398,7 @@ const int& MyChoice::selection1() const
 inline
 const bsl::string& MyChoice::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }

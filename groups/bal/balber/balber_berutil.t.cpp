@@ -1962,6 +1962,7 @@ bool TestUtil::bytesDecodeToValue(bsl::ostream&  log,
                                   const TYPE&    value,
                                   int            numBytesConsumed)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bdlsb::FixedMemInStreamBuf valueInStreamBuf(buffer, bufferLength);
 
     TYPE valueOut;
@@ -2036,6 +2037,7 @@ bool TestUtil::valueEncodesToBytes(
 template <class SIMPLE_TYPE>
 void Case27Tester::operator()(int LINE1, const SIMPLE_TYPE& VALUE) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&VALUE);
     static const struct {
         int  d_line;
         int  d_precision;   // datetime fractional second precision
@@ -2216,9 +2218,11 @@ unsigned char RandomInputIterator::generateValue(int *seed)
 bool RandomInputIterator::areEqual(const RandomInputIterator& lhs,
                                    const RandomInputIterator& rhs)
 {
-    BSLS_ASSERT(lhs.d_seed  == rhs.d_seed  ? lhs.d_value == rhs.d_value
+    BSLS_ASSERT_NONCONVEYOR(
+                        lhs.d_seed  == rhs.d_seed  ? lhs.d_value == rhs.d_value
                                            : true);
-    BSLS_ASSERT(lhs.d_value != rhs.d_value ? lhs.d_seed != rhs.d_seed
+    BSLS_ASSERT_NONCONVEYOR(
+                          lhs.d_value != rhs.d_value ? lhs.d_seed != rhs.d_seed
                                            : true);
 
     return lhs.d_seed == rhs.d_seed;
@@ -2424,23 +2428,23 @@ void BasicRandomValueLoader<INPUT_ITERATOR>::operator()(float *value)
     switch (*d_iterator++ % k_NUM_VALUE_CATEGORIES) {
       case e_NEGATIVE_INFINITY: {
         *value = -bsl::numeric_limits<float>::infinity();
-        BSLS_ASSERT(bdlb::Float::isInfinite(*value));
-        BSLS_ASSERT(1 == bdlb::Float::signBit(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isInfinite(*value));
+        BSLS_ASSERT_NONCONVEYOR(1 == bdlb::Float::signBit(*value));
       } break;
       case e_NEGATIVE_ZERO: {
         *value = 0.f * -1.f;
-        BSLS_ASSERT(bdlb::Float::isZero(*value));
-        BSLS_ASSERT(1 == bdlb::Float::signBit(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isZero(*value));
+        BSLS_ASSERT_NONCONVEYOR(1 == bdlb::Float::signBit(*value));
       } break;
       case e_POSITIVE_ZERO: {
         *value = 0.f;
-        BSLS_ASSERT(bdlb::Float::isZero(*value));
-        BSLS_ASSERT(0 == bdlb::Float::signBit(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isZero(*value));
+        BSLS_ASSERT_NONCONVEYOR(0 == bdlb::Float::signBit(*value));
       } break;
       case e_POSITIVE_INFINITY: {
         *value = bsl::numeric_limits<float>::infinity();
-        BSLS_ASSERT(bdlb::Float::isInfinite(*value));
-        BSLS_ASSERT(0 == bdlb::Float::signBit(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isInfinite(*value));
+        BSLS_ASSERT_NONCONVEYOR(0 == bdlb::Float::signBit(*value));
       } break;
       case e_SNAN: {
         BSLMF_ASSERT(bsl::numeric_limits<float>::has_signaling_NaN);
@@ -2452,7 +2456,7 @@ void BasicRandomValueLoader<INPUT_ITERATOR>::operator()(float *value)
       case e_QNAN: {
         BSLMF_ASSERT(bsl::numeric_limits<float>::has_quiet_NaN);
         *value = bsl::numeric_limits<float>::quiet_NaN();
-        BSLS_ASSERT(bdlb::Float::isQuietNan(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isQuietNan(*value));
       } break;
       case e_SUBNORMAL: {
         static const float minSubnormal = 1.4012984E-45f;
@@ -2462,7 +2466,7 @@ void BasicRandomValueLoader<INPUT_ITERATOR>::operator()(float *value)
         mantissa %= 1 << 22;
 
         *value = static_cast<float>(mantissa) * minSubnormal;
-        BSLS_ASSERT(bdlb::Float::isSubnormal(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isSubnormal(*value));
       } break;
       case e_NORMAL: {
         int mantissa;
@@ -2488,7 +2492,7 @@ void BasicRandomValueLoader<INPUT_ITERATOR>::operator()(float *value)
 
         *value = bsl::ldexp(floatMantissa, integerExponent);
 
-        BSLS_ASSERT(bdlb::Float::isNormal(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isNormal(*value));
       } break;
     }
 }
@@ -2512,23 +2516,23 @@ void BasicRandomValueLoader<INPUT_ITERATOR>::operator()(double *value)
     switch (*d_iterator++ % k_NUM_VALUE_CATEGORIES) {
       case e_NEGATIVE_INFINITY: {
         *value = -bsl::numeric_limits<double>::infinity();
-        BSLS_ASSERT(bdlb::Float::isInfinite(*value));
-        BSLS_ASSERT(1 == bdlb::Float::signBit(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isInfinite(*value));
+        BSLS_ASSERT_NONCONVEYOR(1 == bdlb::Float::signBit(*value));
       } break;
       case e_NEGATIVE_ZERO: {
         *value = 0.0 * -1.0;
-        BSLS_ASSERT(bdlb::Float::isZero(*value));
-        BSLS_ASSERT(1 == bdlb::Float::signBit(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isZero(*value));
+        BSLS_ASSERT_NONCONVEYOR(1 == bdlb::Float::signBit(*value));
       } break;
       case e_POSITIVE_ZERO: {
         *value = 0.0;
-        BSLS_ASSERT(bdlb::Float::isZero(*value));
-        BSLS_ASSERT(0 == bdlb::Float::signBit(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isZero(*value));
+        BSLS_ASSERT_NONCONVEYOR(0 == bdlb::Float::signBit(*value));
       } break;
       case e_POSITIVE_INFINITY: {
         *value = bsl::numeric_limits<double>::infinity();
-        BSLS_ASSERT(bdlb::Float::isInfinite(*value));
-        BSLS_ASSERT(0 == bdlb::Float::signBit(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isInfinite(*value));
+        BSLS_ASSERT_NONCONVEYOR(0 == bdlb::Float::signBit(*value));
       } break;
       case e_SNAN: {
         BSLMF_ASSERT(bsl::numeric_limits<double>::has_signaling_NaN);
@@ -2540,7 +2544,7 @@ void BasicRandomValueLoader<INPUT_ITERATOR>::operator()(double *value)
       case e_QNAN: {
         BSLMF_ASSERT(bsl::numeric_limits<double>::has_quiet_NaN);
         *value = bsl::numeric_limits<double>::quiet_NaN();
-        BSLS_ASSERT(bdlb::Float::isQuietNan(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isQuietNan(*value));
       } break;
       case e_SUBNORMAL: {
         static const double minSubnormal = 4.950656458412E-324;
@@ -2550,7 +2554,7 @@ void BasicRandomValueLoader<INPUT_ITERATOR>::operator()(double *value)
         mantissa %= 1ll << 52;
 
         *value = static_cast<double>(mantissa) * minSubnormal;
-        BSLS_ASSERT(bdlb::Float::isSubnormal(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isSubnormal(*value));
       } break;
       case e_NORMAL: {
         bsls::Types::Int64 mantissa;
@@ -2576,7 +2580,7 @@ void BasicRandomValueLoader<INPUT_ITERATOR>::operator()(double *value)
 
         *value = bsl::ldexp(doubleMantissa, integerExponent);
 
-        BSLS_ASSERT(bdlb::Float::isNormal(*value));
+        BSLS_ASSERT_NONCONVEYOR(bdlb::Float::isNormal(*value));
       } break;
     }
 }
@@ -2702,6 +2706,7 @@ void loadRandomValue(bsl::string *value, LOADER& loader)
 template <class LOADER>
 void loadRandomValue(bdlt::Date *value, LOADER& loader)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     enum {
         k_MAX_SERIAL_DATE = 3652059
     };
@@ -2709,7 +2714,8 @@ void loadRandomValue(bdlt::Date *value, LOADER& loader)
     const int serialDate = RandomValueUtil::generateInInterval(
         loader, 1, static_cast<int>(k_MAX_SERIAL_DATE));
 
-    BSLS_ASSERT(bdlt::ProlepticDateImpUtil::isValidSerial(serialDate));
+    BSLS_ASSERT_NONCONVEYOR(
+                        bdlt::ProlepticDateImpUtil::isValidSerial(serialDate));
 
     int year;
     int month;
@@ -2722,6 +2728,7 @@ void loadRandomValue(bdlt::Date *value, LOADER& loader)
 template <class LOADER>
 void loadRandomValue(bdlt::DateTz *value, LOADER& loader)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     enum {
         k_MIN_TIMEZONE_OFFSET = -1439,
         k_MAX_TIMEZONE_OFFSET =  1439
@@ -2735,7 +2742,7 @@ void loadRandomValue(bdlt::DateTz *value, LOADER& loader)
     bdlt::Date localDate;
     RandomValueUtil::load(&localDate, loader);
 
-    BSLS_ASSERT(bdlt::DateTz::isValid(localDate, offset));
+    BSLS_ASSERT_NONCONVEYOR(bdlt::DateTz::isValid(localDate, offset));
 
     value->setDateTz(localDate, offset);
 }
@@ -2743,13 +2750,14 @@ void loadRandomValue(bdlt::DateTz *value, LOADER& loader)
 template <class LOADER>
 void loadRandomValue(bdlt::Datetime *value, LOADER& loader)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     bdlt::Date date;
     RandomValueUtil::load(&date, loader);
 
     bdlt::Time time;
     RandomValueUtil::load(&time, loader);
 
-    BSLS_ASSERT(bdlt::Datetime::isValid(date.year(),
+    BSLS_ASSERT_NONCONVEYOR(bdlt::Datetime::isValid(date.year(),
                                         date.month(),
                                         date.day(),
                                         time.hour(),
@@ -2764,6 +2772,7 @@ void loadRandomValue(bdlt::Datetime *value, LOADER& loader)
 template <class LOADER>
 void loadRandomValue(bdlt::DatetimeTz *value, LOADER& loader)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     enum {
         k_MIN_TIMEZONE_OFFSET = -1439,
         k_MAX_TIMEZONE_OFFSET =  1439
@@ -2777,7 +2786,7 @@ void loadRandomValue(bdlt::DatetimeTz *value, LOADER& loader)
     bdlt::Datetime localDatetime;
     RandomValueUtil::load(&localDatetime, loader);
 
-    BSLS_ASSERT(bdlt::DatetimeTz::isValid(localDatetime, offset));
+    BSLS_ASSERT_NONCONVEYOR(bdlt::DatetimeTz::isValid(localDatetime, offset));
 
     value->setDatetimeTz(localDatetime, offset);
 }
@@ -2785,6 +2794,7 @@ void loadRandomValue(bdlt::DatetimeTz *value, LOADER& loader)
 template <class LOADER>
 void loadRandomValue(bdlt::Time *value, LOADER& loader)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     typedef bdlt::TimeUnitRatio Ratio;
 
     const bsls::Types::Uint64 numMicroseconds =
@@ -2814,7 +2824,7 @@ void loadRandomValue(bdlt::Time *value, LOADER& loader)
 
     const unsigned microsecond = millisecondRemainder;
 
-    BSLS_ASSERT(
+    BSLS_ASSERT_NONCONVEYOR(
           bdlt::Time::isValid(hour, minute, second, millisecond, microsecond));
 
     value->setTime(hour, minute, second, millisecond, microsecond);
@@ -2823,6 +2833,7 @@ void loadRandomValue(bdlt::Time *value, LOADER& loader)
 template <class LOADER>
 void loadRandomValue(bdlt::TimeTz *value, LOADER& loader)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     enum {
         k_MIN_TIMEZONE_OFFSET = -1439,
         k_MAX_TIMEZONE_OFFSET =  1439
@@ -2836,7 +2847,7 @@ void loadRandomValue(bdlt::TimeTz *value, LOADER& loader)
     bdlt::Time time;
     RandomValueUtil::load(&time, loader);
 
-    BSLS_ASSERT(bdlt::TimeTz::isValid(time, offset));
+    BSLS_ASSERT_NONCONVEYOR(bdlt::TimeTz::isValid(time, offset));
 
     value->setTimeTz(time, offset);
 }
@@ -2871,7 +2882,7 @@ void ByteArrayUtil::setTheUintAt(unsigned char *begin,
                                  bsl::size_t    index,
                                  unsigned int   value)
 {
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
     BSLS_ASSERT(static_cast<bsl::size_t>((end - begin) /
                                          sizeof(unsigned int)) > index);
 
@@ -2890,7 +2901,7 @@ void ByteArrayUtil::setTheUint64At(unsigned char       *begin,
                                    bsl::size_t          index,
                                    bsls::Types::Uint64  value)
 {
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
     BSLS_ASSERT(static_cast<bsl::size_t>((end - begin) /
                                          sizeof(bsls::Types::Uint64)) > index);
 
@@ -2912,7 +2923,7 @@ unsigned int ByteArrayUtil::theUintAt(const unsigned char *begin,
                                       const unsigned char *end,
                                       bsl::size_t          index)
 {
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
     BSLS_ASSERT(static_cast<bsl::size_t>((end - begin) /
                                          sizeof(unsigned int)) > index);
 
@@ -3110,8 +3121,8 @@ Md5Block::Md5Block(const Md5Block& original)
 : d_bytes()
 , d_numBytes(original.d_numBytes)
 {
-    BSLS_ASSERT(0 <= original.d_numBytes);
-    BSLS_ASSERT(k_CAPACITY >= original.d_numBytes);
+    BSLS_ASSERT_NONCONVEYOR(0 <= original.d_numBytes);
+    BSLS_ASSERT_NONCONVEYOR(k_CAPACITY >= original.d_numBytes);
 
     bsl::copy(original.d_bytes,
               original.d_bytes + original.d_numBytes,
@@ -3121,8 +3132,9 @@ Md5Block::Md5Block(const Md5Block& original)
 // MANIPULATORS
 Md5Block& Md5Block::operator=(const Md5Block& original)
 {
-    BSLS_ASSERT(0 <= original.d_numBytes);
-    BSLS_ASSERT(k_CAPACITY >= original.d_numBytes);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(0 <= original.d_numBytes);
+    BSLS_ASSERT_NONCONVEYOR(k_CAPACITY >= original.d_numBytes);
 
     bsl::copy(original.d_bytes,
               original.d_bytes + original.d_numBytes,
@@ -3135,6 +3147,7 @@ Md5Block& Md5Block::operator=(const Md5Block& original)
 
 unsigned char &Md5Block::operator[](bsl::size_t index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_numBytes > index);
 
     return d_bytes[index];
@@ -3163,6 +3176,7 @@ void Md5Block::clear()
 
 void Md5Block::resize(bsl::size_t newSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(k_CAPACITY >= newSize);
 
     unsigned char *const clearBegin =
@@ -3178,6 +3192,7 @@ void Md5Block::resize(bsl::size_t newSize)
 // ACCESSORS
 const unsigned char& Md5Block::operator[](bsl::size_t index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_numBytes > index);
 
     return d_bytes[index];
@@ -3233,7 +3248,7 @@ bool operator!=(const Md5Block& lhs, const Md5Block& rhs)
 // CLASS METHODS
 void Md5BlockUtil::appendUint64(Md5Block *block, bsls::Types::Uint64 value)
 {
-    BSLS_ASSERT(block->size() <=
+    BSLS_ASSERT_NONCONVEYOR(block->size() <=
                 Md5Block::k_CAPACITY - sizeof(bsls::Types::Uint64));
 
     block->resize(block->size() + sizeof(bsls::Types::Uint64));
@@ -3403,7 +3418,7 @@ Md5BlockInputRange::Md5BlockInputRange(const unsigned char *begin,
 , d_end(end + (Md5Block::k_CAPACITY - ((end - begin) % Md5Block::k_CAPACITY)),
         end)
 {
-    BSLS_ASSERT(begin <= end);
+    BSLS_ASSERT_NONCONVEYOR(begin <= end);
 }
 
 // ACCESSORS
@@ -3526,13 +3541,13 @@ void Md5StateUtil::append(Md5State *state, const Md5Block& block)
     Md5BlockUtil::concatenate(&block0, &block1);
 
     if (!block0.full()) {
-        BSLS_ASSERT(block1.empty());
+        BSLS_ASSERT_NONCONVEYOR(block1.empty());
 
         state->setBlock(block0);
         return;                                                       // RETURN
     }
 
-    BSLS_ASSERT(block0.full());
+    BSLS_ASSERT_NONCONVEYOR(block0.full());
     state->setFingerprint(digest(state->fingerprint(), block0));
     state->setBlock(block1);
     state->setNumBlocksConsumed(state->numBlocksConsumed() + 1);
@@ -3563,22 +3578,22 @@ void Md5StateUtil::appendPaddingAndLength(Md5State *state)
     bsls::Types::Uint64  numBlocksToConsume = 1;
 
     if (!paddedBlock1.empty()) {
-        BSLS_ASSERT(Md5Block::k_CAPACITY == paddedBlock0.size());
-        BSLS_ASSERT(k_PADDED_SIZE == paddedBlock1.size());
+        BSLS_ASSERT_NONCONVEYOR(Md5Block::k_CAPACITY == paddedBlock0.size());
+        BSLS_ASSERT_NONCONVEYOR(k_PADDED_SIZE == paddedBlock1.size());
 
         digest(&fingerprint, paddedBlock0);
         finalBlockPtr      = &paddedBlock1;
         numBlocksToConsume = 2;
     }
 
-    BSLS_ASSERT(k_PADDED_SIZE == finalBlockPtr->size());
+    BSLS_ASSERT_NONCONVEYOR(k_PADDED_SIZE == finalBlockPtr->size());
 
     const bsls::Types::Uint64 numBitsConsumed =
             8 * (state->numBlocksConsumed() * Md5Block::k_CAPACITY +
                  state->block().size());
     Md5BlockUtil::appendUint64(finalBlockPtr, numBitsConsumed);
 
-    BSLS_ASSERT(Md5Block::k_CAPACITY == finalBlockPtr->size());
+    BSLS_ASSERT_NONCONVEYOR(Md5Block::k_CAPACITY == finalBlockPtr->size());
 
     digest(&fingerprint, *finalBlockPtr);
 
@@ -3590,7 +3605,7 @@ void Md5StateUtil::appendPaddingAndLength(Md5State *state)
 
 void Md5StateUtil::digest(Md5Fingerprint *fingerprint, const Md5Block& block)
 {
-    BSLS_ASSERT(block.full());
+    BSLS_ASSERT_NONCONVEYOR(block.full());
 
     unsigned int a = fingerprint->theUintAt(0);
     unsigned int b = fingerprint->theUintAt(1);
@@ -5205,6 +5220,7 @@ void checksumAppend(CHECKSUM_ALGORITHM&      checksum,
       default: {
         BSLS_ASSERT(0 == "Unreachable");
         return;                                                       // RETURN
+      BSLS_ASSERT_CONVEYOR_OBJECT(&value);
       } break;
     }
 
@@ -5217,26 +5233,32 @@ void checksumAppend(CHECKSUM_ALGORITHM&      checksum,
 template <class CHECKSUM_ALGORITHM>
 void checksumAppend(CHECKSUM_ALGORITHM& checksum, const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     checksum(value.data(), static_cast<int>(value.size()));
 }
 
 template <class CHECKSUM_ALGORITHM>
 void checksumAppend(CHECKSUM_ALGORITHM& checksum, const bdlt::Date& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     int year;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     int month;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     int day;
 
     value.getYearMonthDay(&year, &month, &day);
 
     checksumAppend(checksum, year);
     checksumAppend(checksum, month);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     checksumAppend(checksum, day);
 }
 
 template <class CHECKSUM_ALGORITHM>
 void checksumAppend(CHECKSUM_ALGORITHM& checksum, const bdlt::DateTz& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     checksumAppend(checksum, value.localDate());
     checksumAppend(checksum, value.offset());
 }
@@ -5244,6 +5266,7 @@ void checksumAppend(CHECKSUM_ALGORITHM& checksum, const bdlt::DateTz& value)
 template <class CHECKSUM_ALGORITHM>
 void checksumAppend(CHECKSUM_ALGORITHM& checksum, const bdlt::Datetime& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     checksumAppend(checksum, value.date());
     checksumAppend(checksum, value.time());
 }
@@ -5252,6 +5275,7 @@ template <class CHECKSUM_ALGORITHM>
 void checksumAppend(CHECKSUM_ALGORITHM&     checksum,
                     const bdlt::DatetimeTz& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     checksumAppend(checksum, value.localDatetime());
     checksumAppend(checksum, value.offset());
 }
@@ -5259,10 +5283,12 @@ void checksumAppend(CHECKSUM_ALGORITHM&     checksum,
 template <class CHECKSUM_ALGORITHM>
 void checksumAppend(CHECKSUM_ALGORITHM& checksum, const bdlt::Time& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     int hour;
     int minute;
     int second;
     int millisecond;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     int microsecond;
 
     value.getTime(&hour, &minute, &second, &millisecond, &microsecond);
@@ -5277,6 +5303,7 @@ void checksumAppend(CHECKSUM_ALGORITHM& checksum, const bdlt::Time& value)
 template <class CHECKSUM_ALGORITHM>
 void checksumAppend(CHECKSUM_ALGORITHM& checksum, const bdlt::TimeTz& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     checksumAppend(checksum, value.localTime());
     checksumAppend(checksum, value.offset());
 }
@@ -5285,6 +5312,7 @@ template <class CHECKSUM_ALGORITHM, class VALUE_1, class VALUE_2>
 void checksumAppend(CHECKSUM_ALGORITHM&                     checksum,
                     const bdlb::Variant2<VALUE_1, VALUE_2>& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int typeIndex = value.typeIndex();
     checksumAppend(checksum, typeIndex);
 

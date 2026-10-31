@@ -395,6 +395,7 @@ void ScalarData::addListData(Obj *formatter) const
 
 bsl::ostream& operator<<(bsl::ostream& os, const ScalarData& data)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
 using namespace bsl;  // automatically added by script
 
     switch(data.d_type) {
@@ -1013,7 +1014,7 @@ class Method {
     {
     }
 
-    Method(const Method& original)
+    Method(const Method& original) BSLS_ASSERT_CONVEYOR_TRUST_PRE(original)
     : d_protocol(original.d_protocol->clone())
     {
     }
@@ -1027,6 +1028,7 @@ class Method {
     // MANIPULATORS
     Method& operator=(const Method& original)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&original);
         d_protocol = bsl::shared_ptr<Protocol>(original.d_protocol->clone());
         return *this;
     }
@@ -1034,6 +1036,7 @@ class Method {
     // ACCESSORS
     void operator()(balxml::Formatter *formatter) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         if (d_protocol) {
             (*d_protocol)(formatter);
         }

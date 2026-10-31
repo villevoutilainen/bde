@@ -1329,6 +1329,7 @@ int TypesParserUtil_Imp::parseDefault(bdlt::Date                 *result,
                                       int                         inputLength,
                                       bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     return bdlt::Iso8601Util::parse(result, input, inputLength);
 }
 
@@ -1338,6 +1339,7 @@ int TypesParserUtil_Imp::parseDefault(bdlt::DateTz               *result,
                                       int                         inputLength,
                                       bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     return bdlt::Iso8601Util::parse(result, input, inputLength);
 }
 
@@ -1347,6 +1349,7 @@ int TypesParserUtil_Imp::parseDefault(bdlt::Datetime             *result,
                                       int                         inputLength,
                                       bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     return bdlt::Iso8601Util::parse(result, input, inputLength);
 }
 
@@ -1356,6 +1359,7 @@ int TypesParserUtil_Imp::parseDefault(bdlt::DatetimeTz           *result,
                                       int                         inputLength,
                                       bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     return bdlt::Iso8601Util::parse(result, input, inputLength);
 }
 
@@ -1365,6 +1369,7 @@ int TypesParserUtil_Imp::parseDefault(bdlt::Time                 *result,
                                       int                         inputLength,
                                       bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     return bdlt::Iso8601Util::parse(result, input, inputLength);
 }
 
@@ -1374,6 +1379,7 @@ int TypesParserUtil_Imp::parseDefault(bdlt::TimeTz               *result,
                                       int                         inputLength,
                                       bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     return bdlt::Iso8601Util::parse(result, input, inputLength);
 }
 
@@ -1383,6 +1389,7 @@ int TypesParserUtil_Imp::parseDefault(DateOrDateTz               *result,
                                       int                         inputLength,
                                       bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     return bdlt::Iso8601Util::parse(result, input, inputLength);
 }
 
@@ -1392,6 +1399,7 @@ int TypesParserUtil_Imp::parseDefault(TimeOrTimeTz               *result,
                                       int                         inputLength,
                                       bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     return bdlt::Iso8601Util::parse(result, input, inputLength);
 }
 
@@ -1401,6 +1409,7 @@ int TypesParserUtil_Imp::parseDefault(DatetimeOrDatetimeTz       *result,
                                       int                         inputLength,
                                       bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     return bdlt::Iso8601Util::parse(result, input, inputLength);
 }
 

@@ -262,7 +262,8 @@ class LocalTimeDescriptor {
     /// Return a `const` reference to the `description` attribute of this
     /// object.  Note that `description` is not canonical, and is intended
     /// for debugging only.
-    const bsl::string& description() const;
+    const bsl::string& description() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the `dstInEffectFlag` attribute of this object.
     /// Note that `true` implies Daylight-Saving Time (DST) is in effect.
@@ -380,7 +381,7 @@ LocalTimeDescriptor::LocalTimeDescriptor(
                 description.end(),
                 bslma::AllocatorUtil::adapt(allocator))
 {
-    BSLS_ASSERT(isValidUtcOffsetInSeconds(utcOffsetInSeconds));
+    BSLS_ASSERT_NONCONVEYOR(isValidUtcOffsetInSeconds(utcOffsetInSeconds));
 }
 
 inline
@@ -423,7 +424,7 @@ LocalTimeDescriptor::LocalTimeDescriptor(
 inline
 LocalTimeDescriptor::~LocalTimeDescriptor()
 {
-    BSLS_ASSERT(isValidUtcOffsetInSeconds(d_utcOffsetInSeconds));
+    BSLS_ASSERT_NONCONVEYOR(isValidUtcOffsetInSeconds(d_utcOffsetInSeconds));
 }
 
 // MANIPULATORS
@@ -472,7 +473,7 @@ void LocalTimeDescriptor::setDstInEffectFlag(bool value)
 inline
 void LocalTimeDescriptor::setUtcOffsetInSeconds(int value)
 {
-    BSLS_ASSERT(isValidUtcOffsetInSeconds(value));
+    BSLS_ASSERT_NONCONVEYOR(isValidUtcOffsetInSeconds(value));
 
     d_utcOffsetInSeconds = value;
 }
@@ -482,7 +483,7 @@ void LocalTimeDescriptor::setUtcOffsetInSeconds(int value)
 inline
 void LocalTimeDescriptor::swap(LocalTimeDescriptor& other)
 {
-    BSLS_ASSERT(get_allocator() == other.get_allocator());
+    BSLS_ASSERT_NONCONVEYOR(get_allocator() == other.get_allocator());
 
     bslalg::SwapUtil::swap(&d_description,        &other.d_description);
     bslalg::SwapUtil::swap(&d_dstInEffectFlag,    &other.d_dstInEffectFlag);
@@ -530,6 +531,8 @@ inline
 bool baltzo::operator==(const LocalTimeDescriptor& lhs,
                         const LocalTimeDescriptor& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.utcOffsetInSeconds() == rhs.utcOffsetInSeconds()
         && lhs.dstInEffectFlag()    == rhs.dstInEffectFlag()
         && lhs.description()        == rhs.description();
@@ -539,6 +542,8 @@ inline
 bool baltzo::operator!=(const LocalTimeDescriptor& lhs,
                         const LocalTimeDescriptor& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.utcOffsetInSeconds() != rhs.utcOffsetInSeconds()
         || lhs.dstInEffectFlag()    != rhs.dstInEffectFlag()
         || lhs.description()        != rhs.description();

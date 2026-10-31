@@ -85,6 +85,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmt_mutex.h>
 #include <bslmt_lockguard.h>
 
+#include <bsls_assert.h>
 #include <bsls_types.h>
 
 namespace BloombergLP {
@@ -182,7 +183,8 @@ class IntegerCollector {
 
     /// Return a reference to the non-modifiable `MetricId` object
     /// identifying the metric for which this object collects values.
-    const MetricId& metricId() const;
+    const MetricId& metricId() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Load into the specified `record` the id of the metric being
     /// collected, as well as the current count, total, minimum, and
@@ -236,6 +238,7 @@ void IntegerCollector::reset()
 inline
 void IntegerCollector::update(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     ++d_count;
     d_total += value;
@@ -249,6 +252,7 @@ void IntegerCollector::accumulateCountTotalMinMax(int count,
                                                   int min,
                                                   int max)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     d_count += count;
     d_total += total;

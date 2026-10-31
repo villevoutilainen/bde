@@ -31,6 +31,7 @@ namespace balb {
 // CLASS METHODS
 void FileCleanerUtil::removeFiles(const FileCleanerConfiguration& config)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&config);
     typedef bsl::multimap<bdlt::Datetime, bsl::string> RemoveMap;
     typedef bsl::vector<bsl::string>                   FileVec;
     typedef RemoveMap::const_iterator                  MCIter;
@@ -59,7 +60,7 @@ void FileCleanerUtil::removeFiles(const FileCleanerConfiguration& config)
             0 == bdls::FilesystemUtil::getLastModificationTime(
                                                              &modificationTime,
                                                              *it)) {
-            removeMap.emplace(modificationTime, *it);
+            removeMap.emplace(modificationTime, BSLS_ASSERT_CONVEYOR_REF(*it));
         }
     }
 

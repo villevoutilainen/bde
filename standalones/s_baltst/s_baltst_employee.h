@@ -167,14 +167,17 @@ class Employee {
 
     /// Return a reference to the modifiable "Name" attribute of this
     /// object.
-    bsl::string& name();
+    bsl::string& name()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "HomeAddress" attribute of this
     /// object.
-    s_baltst::Address& homeAddress();
+    s_baltst::Address& homeAddress()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Age" attribute of this object.
-    int& age();
+    int& age()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -223,11 +226,13 @@ class Employee {
 
     /// Return a reference offering non-modifiable access to the "Name"
     /// attribute of this object.
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the
     /// "HomeAddress" attribute of this object.
-    const s_baltst::Address& homeAddress() const;
+    const s_baltst::Address& homeAddress() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the "Age" attribute of this object.
     int age() const;
@@ -239,6 +244,8 @@ class Employee {
     /// have the same value if each respective attribute has the same value.
     friend bool operator==(const Employee& lhs, const Employee& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.name() == rhs.name() &&
                lhs.homeAddress() == rhs.homeAddress() &&
                lhs.age() == rhs.age();

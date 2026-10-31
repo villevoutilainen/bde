@@ -237,7 +237,8 @@ class StackTrace {
     /// Return a reference providing non-modifiable access to the
     /// stack-trace frame at the specified `index`.  The behavior is
     /// undefined unless `0 <= index < length()`.
-    const StackTraceFrame& operator[](int index) const;
+    const StackTraceFrame& operator[](int index) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the number of stack-trace frames contained in this object.
     int length() const;
@@ -339,8 +340,9 @@ StackTrace& StackTrace::operator=(const StackTrace& rhs)
 inline
 StackTraceFrame& StackTrace::operator[](int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(index >= 0);
-    BSLS_ASSERT(index < length());
+    BSLS_ASSERT_NONCONVEYOR(index < length());
 
     return d_frames[index];
 }
@@ -348,18 +350,22 @@ StackTraceFrame& StackTrace::operator[](int index)
 inline
 void StackTrace::append(const StackTraceFrame& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_frames.push_back(value);
 }
 
 inline
 void StackTrace::removeAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_frames.clear();
 }
 
 inline
 void StackTrace::resize(int newLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(newLength >= 0);
 
     d_frames.resize(newLength);
@@ -370,7 +376,7 @@ void StackTrace::swap(StackTrace& other)
 {
     // 'swap' is undefined for objects with non-equal allocators.
 
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
 
     d_frames.swap(other.d_frames);
 }
@@ -379,8 +385,9 @@ void StackTrace::swap(StackTrace& other)
 inline
 const StackTraceFrame& StackTrace::operator[](int index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(index >= 0);
-    BSLS_ASSERT(index < length());
+    BSLS_ASSERT_NONCONVEYOR(index < length());
 
     return d_frames[index];
 }
@@ -388,6 +395,7 @@ const StackTraceFrame& StackTrace::operator[](int index) const
 inline
 int StackTrace::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (int) d_frames.size();
 }
 
@@ -397,6 +405,8 @@ int StackTrace::length() const
 inline
 bool balst::operator==(const StackTrace& lhs, const StackTrace& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_frames == rhs.d_frames;
 }
 

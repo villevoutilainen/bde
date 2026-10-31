@@ -604,7 +604,9 @@ int main(int argc, char *argv[])
             }
 #undef IS_KNOWN
 
-            const char *libName = stackTrace[0].libraryFileName().c_str();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&stackTrace);
+            const char *libName = BSLS_ASSERT_CONVEYOR_REF(
+                                      stackTrace[0]).libraryFileName().c_str();
             bsl::string progName(u::nda());
             bdls::PathUtil::getBasename(&progName, argv[0]);
             const char *thisLib = progName.c_str();
@@ -612,20 +614,29 @@ int main(int argc, char *argv[])
 #define GOOD_LIBNAME(func, exp, match) \
             ASSERTV(#func, exp, ng(match), func(ng(exp), match));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&stackTrace);
             GOOD_LIBNAME(safeStrStr,
-                             stackTrace[0].libraryFileName().c_str(), thisLib);
+                     BSLS_ASSERT_CONVEYOR_REF(stackTrace[0]).libraryFileName()
+                                                           .c_str(), thisLib);
             GOOD_LIBNAME(safeCmp,
-                             stackTrace[1].libraryFileName().c_str(), libName);
+                     BSLS_ASSERT_CONVEYOR_REF(stackTrace[1]).libraryFileName()
+                                                           .c_str(), libName);
             GOOD_LIBNAME(safeCmp,
-                             stackTrace[2].libraryFileName().c_str(), libName);
+                     BSLS_ASSERT_CONVEYOR_REF(stackTrace[2]).libraryFileName()
+                                                           .c_str(), libName);
             GOOD_LIBNAME(safeCmp,
-                             stackTrace[3].libraryFileName().c_str(), libName);
+                     BSLS_ASSERT_CONVEYOR_REF(stackTrace[3]).libraryFileName()
+                                                           .c_str(), libName);
 #undef  GOOD_LIBNAME
 
             for (int i = 0; i < stackTrace.length(); ++i) {
-                const char *sym = stackTrace[i].symbolName().c_str();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&stackTrace);
+                const char *sym = BSLS_ASSERT_CONVEYOR_REF(
+                                           stackTrace[i]).symbolName().c_str();
 
-                const char *name = stackTrace[i].sourceFileName().c_str();
+                BSLS_ASSERT_CONVEYOR_OBJECT(&stackTrace);
+                const char *name = BSLS_ASSERT_CONVEYOR_REF(
+                                       stackTrace[i]).sourceFileName().c_str();
                 ASSERTV(i, name, !e_IS_DWARF || '/' == *name);
                 ASSERTV(i, name, !e_IS_DWARF ||
                      bdls::FilesystemUtil::exists(name) ||
@@ -670,9 +681,11 @@ int main(int argc, char *argv[])
 
 #undef  SM
 #define SM(ii, match) {                                                       \
-                const char *msn = stackTrace[ii].mangledSymbolName().c_str(); \
+                const char *msn = BSLS_ASSERT_CONVEYOR_REF(stackTrace[ii])    \
+                                               .mangledSymbolName().c_str();  \
                 ASSERTV(msn, match, safeStrStr(msn, match));                  \
-                const char *sn = stackTrace[ii].symbolName().c_str();         \
+                const char *sn = BSLS_ASSERT_CONVEYOR_REF(stackTrace[ii])     \
+                                                      .symbolName().c_str();  \
                 ASSERTV(sn, match, safeStrStr(sn, match));                    \
             }
 
@@ -689,7 +702,9 @@ int main(int argc, char *argv[])
 
             if (demangle) {
 #define SM(ii, match) {                                                       \
-                    const char *name = stackTrace[ii].symbolName().c_str();   \
+                    const char *name =                                        \
+                        BSLS_ASSERT_CONVEYOR_REF(stackTrace[ii]).symbolName() \
+                                                                   .c_str();  \
                     const char *sp = bsl::strchr(name, ' ');                  \
                     if (sp) {                                                 \
                         name = sp + 1;                                        \

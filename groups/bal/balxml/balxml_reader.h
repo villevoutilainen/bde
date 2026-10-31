@@ -758,6 +758,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bslma_managedptr.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_cstddef.h> // for size_t
 #include <bsl_functional.h>
 #include <bsl_ostream.h>

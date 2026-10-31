@@ -182,6 +182,7 @@ int readRawArray(bsl::vector<TYPE> *result,
                  bsl::istream&      stream,
                  int                numValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(result);
     BSLS_ASSERT(result->empty());
     BSLS_ASSERT(0 <= numValues);
@@ -225,6 +226,7 @@ static inline
 int readRawTz(bsl::string   *result,
               bsl::istream&  stream)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(result);
 
     char c;
@@ -248,6 +250,7 @@ template <class TYPE>
 static inline
 bool validIndex(const bsl::vector<TYPE>& vector, int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vector);
     return 0 <= index && (unsigned int) index < vector.size();
 }
 
@@ -375,6 +378,9 @@ int loadLocalTimeDescriptors(
                 const bsl::vector<RawLocalTimeType>&      localTimeDescriptors,
                 const bsl::vector<char>&                  abbreviationBuffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&localTimeDescriptors);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&abbreviationBuffer);
+    BSLS_ASSERT_CONVEYOR_OBJECT(descriptors);
 
     for (bsl::size_t i = 0; i < localTimeDescriptors.size(); ++i) {
         if (!validIndex(abbreviationBuffer,

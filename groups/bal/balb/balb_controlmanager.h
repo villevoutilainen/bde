@@ -87,6 +87,8 @@
 
 #include <bslmt_rwmutex.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_functional.h>
 #include <bsl_iosfwd.h>
 #include <bsl_map.h>
@@ -190,15 +192,18 @@ class ControlManager {
 
         /// Return a non-modifiable reference to the `callback` member of
         /// this object.
-        const ControlManager::ControlHandler& callback() const;
+        const ControlManager::ControlHandler& callback() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         /// Return a non-modifiable reference to the `arguments` member of
         /// this object.
-        const bsl::string& arguments() const;
+        const bsl::string& arguments() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         /// Return a non-modifiable reference to the `arguments` member of
         /// this object.
-        const bsl::string& description() const;
+        const bsl::string& description() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     };
 
     struct CaselessLessThan {

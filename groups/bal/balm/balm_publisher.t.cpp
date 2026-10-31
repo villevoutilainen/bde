@@ -139,6 +139,7 @@ struct PublisherTest : bsls::ProtocolTestImp<balm::Publisher> {
     // MANIPULATORS
     void SimpleStreamPublisher::publish(const balm::MetricSample& metricValues)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&metricValues);
         if (0 >= metricValues.numRecords()) {
             return;                                                   // RETURN
         }
@@ -146,12 +147,16 @@ struct PublisherTest : bsls::ProtocolTestImp<balm::Publisher> {
                  << metricValues.numRecords() << " Records" << bsl::endl;
 
         balm::MetricSample::const_iterator sIt = metricValues.begin();
+        BSLS_ASSERT_CONVEYOR_OBJECT(sIt);
         for (; sIt != metricValues.end(); ++sIt) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(sIt);
             d_stream << "\tElapsed Time: "
                      << sIt->elapsedTime().totalSecondsAsDouble()
                      << "s" << bsl::endl;
             balm::MetricSampleGroup::const_iterator gIt = sIt->begin();
+            BSLS_ASSERT_CONVEYOR_OBJECT(gIt);
             for (; gIt != sIt->end(); ++gIt) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(gIt);
                 d_stream << "\t" << gIt->metricId()
                          << " [count = " << gIt->count()
                          << ", total = " << gIt->total()
@@ -199,6 +204,7 @@ struct PublisherTest : bsls::ProtocolTestImp<balm::Publisher> {
         /// there was an error processing the event.
         int handleEvent(int eventId, const bsl::string& eventMessage)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&eventMessage);
             // Update the metrics with the size of the `eventMessage`.
             d_eventMessageSize.update(
                                      static_cast<double>(eventMessage.size()));
@@ -215,6 +221,7 @@ struct PublisherTest : bsls::ProtocolTestImp<balm::Publisher> {
 // ```
         void publishMetrics(balm::Publisher *publisher)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             bdlt::DatetimeTz now(bdlt::CurrentTime::utc(), 0);
             bdlt::DatetimeInterval dateInterval = now.utcDatetime() -
                                                  d_lastPublish.utcDatetime();

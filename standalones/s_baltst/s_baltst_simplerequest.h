@@ -162,11 +162,13 @@ class SimpleRequest {
 
     /// Return a reference to the modifiable "Data" attribute of this
     /// object.
-    bsl::string& data();
+    bsl::string& data()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "ResponseLength" attribute of
     /// this object.
-    int& responseLength();
+    int& responseLength()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -215,7 +217,8 @@ class SimpleRequest {
 
     /// Return a reference offering non-modifiable access to the "Data"
     /// attribute of this object.
-    const bsl::string& data() const;
+    const bsl::string& data() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the "ResponseLength" attribute of this object.
     int responseLength() const;
@@ -227,6 +230,8 @@ class SimpleRequest {
     /// have the same value if each respective attribute has the same value.
     friend bool operator==(const SimpleRequest& lhs, const SimpleRequest& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.data() == rhs.data() &&
                lhs.responseLength() == rhs.responseLength();
     }

@@ -406,7 +406,7 @@ Decoder::parse(Decoder_ElementContext *context)
     // Decoder_ElementContext::parseSubElement method.  That means the current
     // node is ELEMENT.
 
-    BSLS_ASSERT(d_reader->nodeType() ==
+    BSLS_ASSERT_NONCONVEYOR(d_reader->nodeType() ==
                    Reader::e_NODE_TYPE_ELEMENT);
 
     int numAttr = d_reader->numAttributes();
@@ -588,6 +588,7 @@ Decoder_NillableContext::~Decoder_NillableContext()
 
 int Decoder_NillableContext::startElement(Decoder *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { BAEXML_SUCCESS = 0 };
 
     BSLS_ASSERT(d_elementContext_p);
@@ -597,6 +598,7 @@ int Decoder_NillableContext::startElement(Decoder *)
 
 int Decoder_NillableContext::endElement(Decoder *decoder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { BAEXML_SUCCESS = 0 };
 
     BSLS_ASSERT(d_elementContext_p);
@@ -612,6 +614,7 @@ int Decoder_NillableContext::addCharacters(const char   *chars,
                                            bsl::size_t   length,
                                            Decoder      *decoder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_elementContext_p);
 
     if (d_isNil) {
@@ -627,6 +630,7 @@ int Decoder_NillableContext::parseAttribute(const char *name,
                                             size_t      lenValue,
                                             Decoder    *decoder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_elementContext_p);
 
     enum { BAEXML_SUCCESS = 0 };
@@ -648,6 +652,7 @@ int Decoder_NillableContext::parseAttribute(const char *name,
 int Decoder_NillableContext::parseSubElement(const char *elementName,
                                              Decoder    *decoder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_elementContext_p);
 
     if (d_isNil) {
@@ -663,6 +668,7 @@ int Decoder_NillableContext::parseSubElement(const char *elementName,
 void Decoder_NillableContext::setElementContext(
                                         Decoder_ElementContext *elementContext)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_elementContext_p = elementContext;
     BSLS_ASSERT(d_elementContext_p);
 }
@@ -671,6 +677,7 @@ void Decoder_NillableContext::setElementContext(
 
 bool Decoder_NillableContext::isNil() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(d_elementContext_p);
     return d_isNil;
 }

@@ -273,7 +273,8 @@ class BerDecoderOptions {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor` with
@@ -305,23 +306,28 @@ class BerDecoderOptions {
 
     /// Return a reference to the non-modifiable "MaxDepth" attribute of
     /// this object.
-    const int& maxDepth() const;
+    const int& maxDepth() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "SkipUnknownElements"
     /// attribute of this object.
-    const bool& skipUnknownElements() const;
+    const bool& skipUnknownElements() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "TraceLevel" attribute of
     /// this object.
-    const int& traceLevel() const;
+    const int& traceLevel() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "MaxSequenceSize" attribute
     /// of this object.
-    const int& maxSequenceSize() const;
+    const int& maxSequenceSize() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "DefaultEmptyStrings"
     /// attribute of this object.
-    const bool& defaultEmptyStrings() const;
+    const bool& defaultEmptyStrings() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -714,6 +720,8 @@ inline
 bool balber::operator==(const BerDecoderOptions& lhs,
                         const BerDecoderOptions& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.maxDepth()            == rhs.maxDepth()
          && lhs.skipUnknownElements() == rhs.skipUnknownElements()
          && lhs.traceLevel()          == rhs.traceLevel()
@@ -725,6 +733,8 @@ inline
 bool balber::operator!=(const BerDecoderOptions& lhs,
                         const BerDecoderOptions& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.maxDepth()            != rhs.maxDepth()
          || lhs.skipUnknownElements() != rhs.skipUnknownElements()
          || lhs.traceLevel()          != rhs.traceLevel()

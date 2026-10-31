@@ -370,6 +370,8 @@ void doEraseTest(int argc, char **argv)
 bool checkOutput(const bsl::string&               str,
                  const bsl::vector<const char *>& matches)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&matches);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     const int ts = testStatus;
 
     if (e_PLAT_WIN && !e_DEBUG_ON) {
@@ -981,7 +983,8 @@ void recurseAndPrintStack(int *depth)
         recurseAndPrintStack(depth);
     }
     else {
-        balst::StackTracePrintUtil::printStackTrace(*out_p);
+        balst::StackTracePrintUtil::printStackTrace(
+                                             BSLS_ASSERT_CONVEYOR_REF(*out_p));
     }
 
     ++*depth;   // Prevent compiler from optimizing tail recursion as a

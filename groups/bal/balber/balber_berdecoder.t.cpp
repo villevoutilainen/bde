@@ -376,6 +376,7 @@ void verifyDateTypesLengthAnomalies(bsl::size_t             MAX_LEN,
                                     const DATE_TYPE&        EXPECTED,
                                     const bsl::string_view& encoded)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&EXPECTED);
     const bsl::size_t LEN_POS = encoded.length() - ISOSTR_LEN - 1;
 
     balber::BerDecoder decoder;
@@ -474,6 +475,7 @@ void verifyTimeTypesLengthAnomalies(bsl::size_t             MAX_LEN,
                                     const TIME_TYPE&        EXPECTED,
                                     const bsl::string_view& encoded)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&EXPECTED);
     const bsl::size_t LEN_POS = encoded.length() - ISOSTR_LEN - 1;
 
     balber::BerDecoder decoder;
@@ -675,20 +677,26 @@ class MyChoiceWithDefaultValues {
     /// Set the value of this object to be a "Selection0" value.  Optionally
     /// specify the `value` of the "Selection0".  If `value` is not
     /// specified, the default "Selection0" value is used.
-    int& makeSelection0();
-    int& makeSelection0(int value);
+    int& makeSelection0()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeSelection0(int value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    bsl::string& makeSelection1();
-    bsl::string& makeSelection1(const bsl::string& value);
+    bsl::string& makeSelection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& makeSelection1(const bsl::string& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    MyEnumeration::Value& makeSelection2();
-    MyEnumeration::Value& makeSelection2(MyEnumeration::Value value);
+    MyEnumeration::Value& makeSelection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    MyEnumeration::Value& makeSelection2(MyEnumeration::Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -701,17 +709,20 @@ class MyChoiceWithDefaultValues {
     /// Return a reference to the modifiable "Selection0" selection of this
     /// object if "Selection0" is the current selection.  The behavior is
     /// undefined unless "Selection0" is the selection of this object.
-    int& selection0();
+    int& selection0()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
     /// undefined unless "Selection1" is the selection of this object.
-    bsl::string& selection1();
+    bsl::string& selection1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Selection2" selection of this
     /// object if "Selection2" is the current selection.  The behavior is
     /// undefined unless "Selection2" is the selection of this object.
-    MyEnumeration::Value& selection2();
+    MyEnumeration::Value& selection2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -744,17 +755,20 @@ class MyChoiceWithDefaultValues {
     /// Return a reference to the non-modifiable "Selection0" selection of
     /// this object if "Selection0" is the current selection.  The behavior
     /// is undefined unless "Selection0" is the selection of this object.
-    const int& selection0() const;
+    const int& selection0() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
     /// is undefined unless "Selection1" is the selection of this object.
-    const bsl::string& selection1() const;
+    const bsl::string& selection1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Selection2" selection of
     /// this object if "Selection2" is the current selection.  The behavior
     /// is undefined unless "Selection2" is the selection of this object.
-    const MyEnumeration::Value& selection2() const;
+    const MyEnumeration::Value& selection2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Selection0" value,
     /// and return `false` otherwise.
@@ -830,6 +844,7 @@ MyChoiceWithDefaultValues::~MyChoiceWithDefaultValues()
 template <class MANIPULATOR>
 int MyChoiceWithDefaultValues::manipulateSelection(MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case MyChoiceWithDefaultValues::SELECTION_ID_SELECTION0:
         return manipulator(&d_selection0.object(),                    // RETURN
@@ -850,6 +865,7 @@ int MyChoiceWithDefaultValues::manipulateSelection(MANIPULATOR& manipulator)
 inline
 int& MyChoiceWithDefaultValues::selection0()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION0 == d_selectionId);
     return d_selection0.object();
 }
@@ -857,6 +873,7 @@ int& MyChoiceWithDefaultValues::selection0()
 inline
 bsl::string& MyChoiceWithDefaultValues::selection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -864,6 +881,7 @@ bsl::string& MyChoiceWithDefaultValues::selection1()
 inline
 MyEnumeration::Value& MyChoiceWithDefaultValues::selection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -878,6 +896,7 @@ int MyChoiceWithDefaultValues::selectionId() const
 template <class ACCESSOR>
 int MyChoiceWithDefaultValues::accessSelection(ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION0:
         return accessor(d_selection0.object(),                        // RETURN
@@ -897,6 +916,7 @@ int MyChoiceWithDefaultValues::accessSelection(ACCESSOR& accessor) const
 inline
 const int& MyChoiceWithDefaultValues::selection0() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION0 == d_selectionId);
     return d_selection0.object();
 }
@@ -904,6 +924,7 @@ const int& MyChoiceWithDefaultValues::selection0() const
 inline
 const bsl::string& MyChoiceWithDefaultValues::selection1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION1 == d_selectionId);
     return d_selection1.object();
 }
@@ -911,6 +932,7 @@ const bsl::string& MyChoiceWithDefaultValues::selection1() const
 inline
 const MyEnumeration::Value& MyChoiceWithDefaultValues::selection2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION2 == d_selectionId);
     return d_selection2.object();
 }
@@ -1038,6 +1060,7 @@ MyChoiceWithDefaultValues::MyChoiceWithDefaultValues(
 MyChoiceWithDefaultValues&
 MyChoiceWithDefaultValues::operator=(const MyChoiceWithDefaultValues& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION0: {
@@ -1050,7 +1073,8 @@ MyChoiceWithDefaultValues::operator=(const MyChoiceWithDefaultValues& rhs)
             makeSelection2(rhs.d_selection2.object());
           } break;
           default:
-            BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
+            BSLS_ASSERT_NONCONVEYOR(
+                                  SELECTION_ID_UNDEFINED == rhs.d_selectionId);
             reset();
         }
     }
@@ -1060,6 +1084,7 @@ MyChoiceWithDefaultValues::operator=(const MyChoiceWithDefaultValues& rhs)
 
 void MyChoiceWithDefaultValues::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION0: {
         // no destruction required
@@ -1081,6 +1106,7 @@ void MyChoiceWithDefaultValues::reset()
 
 int MyChoiceWithDefaultValues::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION0: {
         makeSelection0();
@@ -1227,6 +1253,7 @@ MyChoiceWithDefaultValues::print(bsl::ostream& stream,
 
 const char *MyChoiceWithDefaultValues::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION0:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SELECTION0].name();//RETURN
@@ -1244,6 +1271,8 @@ inline
 bool operator==(const MyChoiceWithDefaultValues& lhs,
                 const MyChoiceWithDefaultValues& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.selectionId() != rhs.selectionId()) {
         return false;                                                 // RETURN
     }
@@ -1386,15 +1415,18 @@ class MySequenceWithDefaultValues {
 
     /// Return a reference to the modifiable "Attribute0" attribute of this
     /// object.
-    int& attribute0();
+    int& attribute0()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bsl::string& attribute1();
+    bsl::string& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    MyEnumeration::Value& attribute2();
+    MyEnumeration::Value& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1447,7 +1479,8 @@ class MySequenceWithDefaultValues {
 
     /// Return a reference to the non-modifiable "Attribute1" attribute of
     /// this object.
-    const bsl::string& attribute1() const;
+    const bsl::string& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute2" attribute of
     /// this object.
@@ -1796,6 +1829,8 @@ inline
 bool operator==(const MySequenceWithDefaultValues& lhs,
                 const MySequenceWithDefaultValues& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.attribute0() == rhs.attribute0()
         && lhs.attribute1() == rhs.attribute1()
         && lhs.attribute2() == rhs.attribute2();
@@ -1894,7 +1929,8 @@ struct IsEnumeration<test::Enumeration1> : public bsl::true_type {
         EmployeeRecord(const bsl::string& name, int age, float salary);
 
         // ACCESSORS
-        const bsl::string& name()   const;
+        const bsl::string& name()   const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         int                age()    const;
         float              salary() const;
     };
@@ -2269,6 +2305,7 @@ static void usageExample()
 // First, we create an employee record object having typical values:
 // ```
     usage::EmployeeRecord bob("Bob", 56, 1234.00);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&bob);
     ASSERT("Bob"   == bob.name());
     ASSERT(  56    == bob.age());
     ASSERT(1234.00 == bob.salary());
@@ -2299,6 +2336,8 @@ static void usageExample()
 // Finally, we confirm that the object defined by the BER encoding has the
 // same value as the original object.
 // ```
+    BSLS_ASSERT_CONVEYOR_OBJECT(&bob);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     ASSERT(bob.name()   == obj.name());
     ASSERT(bob.age()    == obj.age());
     ASSERT(bob.salary() == obj.salary());
@@ -3666,10 +3705,14 @@ int main(int argc, char *argv[])
         {
             test::RawData rawData;
             rawData.charvec() = testData;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawData);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawData);
             bsl::copy(testData.begin(),testData.end(),
                                        bsl::back_inserter(rawData.ucharvec()));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawData);
             ASSERT( testData == rawData.charvec());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawData);
             ASSERT(utestData == rawData.ucharvec());
 
             balber::BerEncoderOptions encoderOptions;
@@ -3686,10 +3729,14 @@ int main(int argc, char *argv[])
             balber::BerDecoder         decoder(&decoderOptions);
             test::RawData              rawDataParsed;
             bdlsb::FixedMemInStreamBuf isb(osb.data(), osb.length());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             ASSERT(0 == decoder.decode(&isb, &rawDataParsed));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             ASSERT(  rawData == rawDataParsed);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             ASSERT( testData == rawDataParsed.charvec());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             ASSERT(utestData == rawDataParsed.ucharvec());
 
             {
@@ -3704,10 +3751,14 @@ int main(int argc, char *argv[])
         {
             test::RawDataUnformatted rawDataUf;
             rawDataUf.charvec() = testData;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataUf);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataUf);
             bsl::copy(testData.begin(),testData.end(),
                                      bsl::back_inserter(rawDataUf.ucharvec()));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataUf);
             ASSERT( testData == rawDataUf.charvec());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataUf);
             ASSERT(utestData == rawDataUf.ucharvec());
 
             balber::BerEncoderOptions encoderOptions;
@@ -3723,10 +3774,14 @@ int main(int argc, char *argv[])
             balber::BerDecoderOptions  decoderOptions;
             balber::BerDecoder         decoder(&decoderOptions);
             test::RawData              rawDataParsed;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             bdlsb::FixedMemInStreamBuf isb(osb.data(), osb.length());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             ASSERT(0 == decoder.decode(&isb, &rawDataParsed));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             ASSERT( testData == rawDataParsed.charvec());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             ASSERT(utestData == rawDataParsed.ucharvec());
 
             {
@@ -3740,10 +3795,14 @@ int main(int argc, char *argv[])
         if (verbose) cout << "\nTesting uchar->char with `RawDataSwitched`.\n";
         {
             test::RawDataSwitched rawDataSw;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataSw);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataSw);
             bsl::copy(testData.begin(),testData.end(),
                                      bsl::back_inserter(rawDataSw.ucharvec()));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataSw);
             ASSERT(0 == rawDataSw.charvec().size());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataSw);
             ASSERT(utestData == rawDataSw.ucharvec());
 
             balber::BerEncoderOptions encoderOptions;
@@ -3763,10 +3822,14 @@ int main(int argc, char *argv[])
             int rc = decoder.decode(&isb,&rawDataParsed);
             if (rc != 0) {
                 cerr << "Errors parsing:" << decoder.loggedMessages() << '\n';
+                BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
                 ASSERT(0 == rc);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             ASSERT(0 == rawDataParsed.ucharvec().size());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&rawDataParsed);
             ASSERT(testData == rawDataParsed.charvec());
 
             {
@@ -6382,9 +6445,14 @@ int main(int argc, char *argv[])
             }
 
             test::MySequenceWithArray valueIn;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("This");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("is");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("a");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("test.");
 
             ASSERT(valueOut != valueIn);
@@ -6409,9 +6477,14 @@ int main(int argc, char *argv[])
                 bsl::vector<char> nokalvaData = loadFromHex(NOKALVA_DATA);
 
                 test::MySequenceWithArray valueFromNokalva;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                 valueFromNokalva.attribute2().push_back("This");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                 valueFromNokalva.attribute2().push_back("is");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                 valueFromNokalva.attribute2().push_back("a");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                 valueFromNokalva.attribute2().push_back("test.");
 
                 ASSERT(valueOut != valueFromNokalva);
@@ -6426,9 +6499,12 @@ int main(int argc, char *argv[])
                     bdlsb::FixedMemInStreamBuf isb(&nokalvaData[0],
                                                    nokalvaData.size());
                     test::MySequenceWithArray value2;
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                     ASSERT(0 == decoder.decodeAny(&isb, &value2));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                     ASSERT(value2 == valueFromNokalva);
                 }
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
             }
 
             if (veryVerbose)
@@ -6439,9 +6515,14 @@ int main(int argc, char *argv[])
                 bsl::vector<char> nokalvaData = loadFromHex(NOKALVA_DATA);
 
                 test::MySequenceWithArray valueFromNokalva;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                 valueFromNokalva.attribute2().push_back("This");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                 valueFromNokalva.attribute2().push_back("is");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                 valueFromNokalva.attribute2().push_back("a");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                 valueFromNokalva.attribute2().push_back("test.");
 
                 ASSERT(valueOut != valueFromNokalva);
@@ -6487,9 +6568,14 @@ int main(int argc, char *argv[])
             }
 
             test::MySequenceWithArray valueIn;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("This");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("is");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("a");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("test.");
 
             ASSERT(valueOut != valueIn);
@@ -6500,7 +6586,9 @@ int main(int argc, char *argv[])
             ASSERT(valueOut == valueIn);
 
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 bdlsb::FixedMemInStreamBuf isb(osb.data(), osb.length());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 test::MySequenceWithArray value2;
                 ASSERT(0 == decoder.decodeAny(&isb, &value2));
                 ASSERT(value2 == valueIn);
@@ -6512,8 +6600,11 @@ int main(int argc, char *argv[])
             bdlsb::MemOutStreamBuf osb;
 
             test::MySequenceWithArray valueOut;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
             valueOut.attribute1() = 34;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
             valueOut.attribute2().push_back("Hello");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
             valueOut.attribute2().push_back("World!");
 
             ASSERT(0 == encoder.encode(&osb, valueOut));
@@ -6609,14 +6700,20 @@ int main(int argc, char *argv[])
             }
 
             test::MySequenceWithArray valueIn;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("This");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("is");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("a");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().push_back("test.");
 
             ASSERT(valueOut != valueIn);
             bdlsb::FixedMemInStreamBuf isb(osb.data(), osb.length());
             ASSERT(0 == decoder.decode(&isb, &valueIn));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
             printDiagnostic(decoder);
 
             ASSERT(valueOut == valueIn);
@@ -6629,8 +6726,11 @@ int main(int argc, char *argv[])
             bdlsb::MemOutStreamBuf osb;
 
             test::MySequenceWithArray valueOut;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
             valueOut.attribute1() = 34;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
             valueOut.attribute2().push_back("Hello");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
             valueOut.attribute2().push_back("World!");
 
             ASSERT(0 == encoderALH.encode(&osb, valueOut));
@@ -6732,9 +6832,13 @@ int main(int argc, char *argv[])
                 printDiagnostic(decoder);
 
                 ASSERT(valueOut == valueIn);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 ASSERT(6 == valueIn.attribute2().capacity());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 ASSERT(0 == decoder.numUnknownElementsSkipped());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
             }
+        BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
         }
 
         if (verbose) {
@@ -6744,18 +6848,32 @@ int main(int argc, char *argv[])
             bdlsb::MemOutStreamBuf osb;
 
             test::MySequenceWithThreeArrays valueOut;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute1().push_back("Hello");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute1().push_back("World!");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute1().push_back("alpha");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute1().push_back("beta");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute2().push_back(1);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute2().push_back(2);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute2().push_back(3);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute3().push_back(4.0);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute3().push_back(5.0);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute3().push_back(6.0);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute3().push_back(7.0);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                 valueOut.attribute3().push_back(8.0);
             }
 
@@ -6823,6 +6941,7 @@ int main(int argc, char *argv[])
 
             test::MySequenceWithNullable valueIn;
             valueIn.attribute1() = 356;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             valueIn.attribute2().makeValue("Hello");
 
             ASSERT(valueOut != valueIn);
@@ -6848,6 +6967,7 @@ int main(int argc, char *argv[])
 
                 test::MySequenceWithNullable valueFromNokalva;
                 valueFromNokalva.attribute1() = 356;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                 valueFromNokalva.attribute2().makeValue("Hello");
 
                 ASSERT(valueOut != valueFromNokalva);
@@ -6863,6 +6983,7 @@ int main(int argc, char *argv[])
                                                    nokalvaData.size());
                     test::MySequenceWithNullable value2;
                     ASSERT(0 == decoder.decodeAny(&isb, &value2));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                     ASSERT(value2 == valueFromNokalva);
                 }
             }
@@ -6876,6 +6997,7 @@ int main(int argc, char *argv[])
 
                 test::MySequenceWithNullable valueFromNokalva;
                 valueFromNokalva.attribute1() = 356;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&valueFromNokalva);
                 valueFromNokalva.attribute2().makeValue("Hello");
 
                 ASSERT(valueOut != valueFromNokalva);
@@ -6889,6 +7011,7 @@ int main(int argc, char *argv[])
                 {
                     bdlsb::FixedMemInStreamBuf isb(&nokalvaData[0],
                                                    nokalvaData.size());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
                     test::MySequenceWithNullable value2;
                     ASSERT(0 == decoder.decodeAny(&isb, &value2));
                     ASSERT(value2 == valueFromNokalva);
@@ -6902,6 +7025,7 @@ int main(int argc, char *argv[])
 
             test::MySequenceWithNullable valueOut;
             valueOut.attribute1() = 34;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueOut);
             valueOut.attribute2().makeValue("Hello");
 
             ASSERT(0 == encoder.encode(&osb, valueOut));
@@ -7553,9 +7677,12 @@ int main(int argc, char *argv[])
 
             ASSERT(valueOut != valueIn.toString());
             bdlsb::FixedMemInStreamBuf isb(osb.data(), osb.length());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             ASSERT(0 == decoder.decode(&isb, &valueIn));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             printDiagnostic(decoder);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&valueIn);
             ASSERT(valueOut == valueIn.toString());
         }
 
@@ -8537,12 +8664,16 @@ int main(int argc, char *argv[])
               test::BasicRecord basicRec;
               basicRec.i1() = 11;
               basicRec.i2() = 22;
+              BSLS_ASSERT_CONVEYOR_OBJECT(&basicRec);
               basicRec.dt() = bdlt::DatetimeTz(
                   bdlt::Datetime(bdlt::Date(2007, 9, 3),
                                 bdlt::Time(16, 30)), 0);
+              BSLS_ASSERT_CONVEYOR_OBJECT(&basicRec);
               basicRec.s() = "The quick brown fox jumped over the lazy dog.";
               request.makeBasic(basicRec);
+              BSLS_ASSERT_CONVEYOR_OBJECT(&basicRec);
               minOutputSize = 3 * sizeof(int) + basicRec.s().length();
+          BSLS_ASSERT_CONVEYOR_OBJECT(&basicRec);
           } break;
           case 'b': {
               cout << "bigRecord request with array size of "
@@ -8551,21 +8682,27 @@ int main(int argc, char *argv[])
               test::BasicRecord basicRec;
               basicRec.i1() = 11;
               basicRec.i2() = 22;
+              BSLS_ASSERT_CONVEYOR_OBJECT(&basicRec);
+              BSLS_ASSERT_CONVEYOR_OBJECT(&basicRec);
               basicRec.dt() = bdlt::DatetimeTz(
                   bdlt::Datetime(bdlt::Date(2007, 9, 3),
                                 bdlt::Time(16, 30)), 0);
               basicRec.s() = "The quick brown fox jumped over the lazy dog.";
+              BSLS_ASSERT_CONVEYOR_OBJECT(&basicRec);
               bsl::size_t minBasicRecSize =
                   minOutputSize = 3 * sizeof(int) + basicRec.s().length();
 
               test::BigRecord   bigRec;
+              BSLS_ASSERT_CONVEYOR_OBJECT(&bigRec);
               bigRec.name() = "This record is so big, it has its own gravity.";
 
               for (int i = 0; i < arraySize; ++i) {
+                  BSLS_ASSERT_CONVEYOR_OBJECT(&bigRec);
                   bigRec.array().push_back(basicRec);
               }
 
               request.makeBig(bigRec);
+              BSLS_ASSERT_CONVEYOR_OBJECT(&bigRec);
               minOutputSize =
                   bigRec.name().length() + arraySize * minBasicRecSize;
           } break;

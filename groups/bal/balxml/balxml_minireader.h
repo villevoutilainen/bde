@@ -280,6 +280,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslma_allocator.h>
 
+#include <bsls_assert.h>
 #include <bsls_keyword.h>
 
 #include <bsl_cstring.h>
@@ -424,8 +425,12 @@ class MiniReader :  public Reader {
     MiniReader& operator=(const MiniReader&);  // = delete;
 
     // PRIVATE MANIPULATORS
-    Node&       currentNode();
-    const Node& currentNode() const;
+    Node&       currentNode()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Node& currentNode() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     int setError(ErrorInfo::Severity error, const bsl::string &msg);
 
@@ -436,8 +441,10 @@ class MiniReader :  public Reader {
     // HIGH LEVEL PARSING PRIMITIVES
 
     void  preAdvance();
-    const bsl::string& findNamespace(const char *prefix) const;
-    const bsl::string& findNamespace(const bsl::string &prefix) const;
+    const bsl::string& findNamespace(const char *prefix) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& findNamespace(const bsl::string &prefix) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
     int   checkPrefixes();
 
     /// Push the `currentNode()`s data onto the `d_activeNodes` stack.

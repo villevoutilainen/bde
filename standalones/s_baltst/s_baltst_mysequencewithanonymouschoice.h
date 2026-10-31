@@ -159,14 +159,19 @@ class MySequenceWithAnonymousChoiceChoice {
     /// Set the value of this object to be a "MyChoice1" value.  Optionally
     /// specify the `value` of the "MyChoice1".  If `value` is not
     /// specified, the default "MyChoice1" value is used.
-    int& makeMyChoice1();
-    int& makeMyChoice1(int value);
+    int& makeMyChoice1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeMyChoice1(int value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    bsl::string& makeMyChoice2();
-    bsl::string& makeMyChoice2(const bsl::string& value);
+    bsl::string& makeMyChoice2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& makeMyChoice2(const bsl::string& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    bsl::string& makeMyChoice2(bsl::string&& value);
+    bsl::string& makeMyChoice2(bsl::string&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "MyChoice2" value.  Optionally
         // specify the 'value' of the "MyChoice2".  If 'value' is not
@@ -183,12 +188,14 @@ class MySequenceWithAnonymousChoiceChoice {
     /// Return a reference to the modifiable "MyChoice1" selection of this
     /// object if "MyChoice1" is the current selection.  The behavior is
     /// undefined unless "MyChoice1" is the selection of this object.
-    int& myChoice1();
+    int& myChoice1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "MyChoice2" selection of this
     /// object if "MyChoice2" is the current selection.  The behavior is
     /// undefined unless "MyChoice2" is the selection of this object.
-    bsl::string& myChoice2();
+    bsl::string& myChoice2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -221,12 +228,14 @@ class MySequenceWithAnonymousChoiceChoice {
     /// Return a reference to the non-modifiable "MyChoice1" selection of
     /// this object if "MyChoice1" is the current selection.  The behavior
     /// is undefined unless "MyChoice1" is the selection of this object.
-    const int& myChoice1() const;
+    const int& myChoice1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "MyChoice2" selection of
     /// this object if "MyChoice2" is the current selection.  The behavior
     /// is undefined unless "MyChoice2" is the selection of this object.
-    const bsl::string& myChoice2() const;
+    const bsl::string& myChoice2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "MyChoice1" value,
     /// and return `false` otherwise.
@@ -415,15 +424,18 @@ class MySequenceWithAnonymousChoice {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bdlb::NullableValue<int>& attribute1();
+    bdlb::NullableValue<int>& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    MySequenceWithAnonymousChoiceChoice& choice();
+    MySequenceWithAnonymousChoiceChoice& choice()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& attribute2();
+    bdlb::NullableValue<bsl::string>& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -472,15 +484,18 @@ class MySequenceWithAnonymousChoice {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bdlb::NullableValue<int>& attribute1() const;
+    const bdlb::NullableValue<int>& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Choice"
     /// attribute of this object.
-    const MySequenceWithAnonymousChoiceChoice& choice() const;
+    const MySequenceWithAnonymousChoiceChoice& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute2" attribute of this object.
-    const bdlb::NullableValue<bsl::string>& attribute2() const;
+    const bdlb::NullableValue<bsl::string>& attribute2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -490,6 +505,8 @@ class MySequenceWithAnonymousChoice {
     friend bool operator==(const MySequenceWithAnonymousChoice& lhs,
                            const MySequenceWithAnonymousChoice& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1() &&
                lhs.choice() == rhs.choice() &&
                lhs.attribute2() == rhs.attribute2();
@@ -535,6 +552,8 @@ namespace s_baltst {
 inline
 bool MySequenceWithAnonymousChoiceChoice::isEqualTo(const MySequenceWithAnonymousChoiceChoice& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef MySequenceWithAnonymousChoiceChoice Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -543,7 +562,8 @@ bool MySequenceWithAnonymousChoiceChoice::isEqualTo(const MySequenceWithAnonymou
           case Class::SELECTION_ID_MY_CHOICE2:
             return this->myChoice2() == rhs.myChoice2();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -570,6 +590,7 @@ MySequenceWithAnonymousChoiceChoice::~MySequenceWithAnonymousChoiceChoice()
 template <typename t_MANIPULATOR>
 int MySequenceWithAnonymousChoiceChoice::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case MySequenceWithAnonymousChoiceChoice::SELECTION_ID_MY_CHOICE1:
         return manipulator(&d_myChoice1.object(),
@@ -586,6 +607,7 @@ int MySequenceWithAnonymousChoiceChoice::manipulateSelection(t_MANIPULATOR& mani
 inline
 int& MySequenceWithAnonymousChoiceChoice::myChoice1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_MY_CHOICE1 == d_selectionId);
     return d_myChoice1.object();
 }
@@ -593,6 +615,7 @@ int& MySequenceWithAnonymousChoiceChoice::myChoice1()
 inline
 bsl::string& MySequenceWithAnonymousChoiceChoice::myChoice2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_MY_CHOICE2 == d_selectionId);
     return d_myChoice2.object();
 }
@@ -607,6 +630,7 @@ int MySequenceWithAnonymousChoiceChoice::selectionId() const
 template <typename t_ACCESSOR>
 int MySequenceWithAnonymousChoiceChoice::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_MY_CHOICE1:
         return accessor(d_myChoice1.object(),
@@ -623,6 +647,7 @@ int MySequenceWithAnonymousChoiceChoice::accessSelection(t_ACCESSOR& accessor) c
 inline
 const int& MySequenceWithAnonymousChoiceChoice::myChoice1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_MY_CHOICE1 == d_selectionId);
     return d_myChoice1.object();
 }
@@ -630,6 +655,7 @@ const int& MySequenceWithAnonymousChoiceChoice::myChoice1() const
 inline
 const bsl::string& MySequenceWithAnonymousChoiceChoice::myChoice2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_MY_CHOICE2 == d_selectionId);
     return d_myChoice2.object();
 }

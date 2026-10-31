@@ -515,6 +515,7 @@ struct ShipsCrew {
 // PRIVATE MANIPULATORS
 void ShipsCrew::addSailor(const bsl::string& name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!d_sailors.count(name.c_str())) {
         d_sailors.insert(copy(name));
     }
@@ -522,6 +523,7 @@ void ShipsCrew::addSailor(const bsl::string& name)
 
 const char *ShipsCrew::copy(const bsl::string& str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     char *result = (char *) d_allocator_p->allocate(str.length() + 1);
     bsl::strcpy(result, str.c_str());
     return result;
@@ -570,7 +572,7 @@ ShipsCrew::ShipsCrew(const char       *crewFileName,
 , d_allocator_p(bslma::Default::allocator(basicAllocator))
 {
     bsl::ifstream input(crewFileName);
-    BSLS_ASSERT(!input.eof() && !input.bad());
+    BSLS_ASSERT_NONCONVEYOR(!input.eof() && !input.bad());
 
     bsl::string line(d_allocator_p);
 
@@ -641,12 +643,14 @@ const char *ShipsCrew::firstMate()
 
 const char *ShipsCrew::firstSailor()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     NameSet::iterator it = d_sailors.begin();
     return d_sailors.end() == it ? 0 : *it;
 }
 
 const char *ShipsCrew::nextSailor(const char *currentSailor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(currentSailor);
     NameSet::iterator it = d_sailors.find(currentSailor);
     if (d_sailors.end() != it) {
@@ -965,6 +969,7 @@ struct Functor {
     // MANIPULATORS
     void freeOne(int index)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         ASSERT((unsigned int) index < d_alloced.size());
         int *block = d_alloced[index];
         d_allocator_p->deallocate(block);
@@ -977,6 +982,7 @@ struct Functor {
     /// start, there will be >= 4 blocks when we finish.
     void freeSome()
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         int sz = (int) d_alloced.size();
         int maxNumToFree = bsl::max(0, bsl::min(sz / 2, sz - 4));
         int r = bdlb::Random::generate15(&d_randNum);    // always positive
@@ -1012,6 +1018,7 @@ bslmt::Barrier    Functor::s_underwayBarrier(NUM_THREADS + 1);
 
 void Functor::allocOne()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int allocLength = 1 + (bdlb::Random::generate15(&d_randNum) & 0x7f);
 
     if (++d_numAllocations <= 10) {
@@ -1085,6 +1092,7 @@ void Functor::nest1()
 
 void Functor::operator()()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(0 == d_alloced.size());
 
     d_nestDepth = 0;
@@ -3508,6 +3516,7 @@ int main(int argc, char *argv[])
                 ta.setName("my_allocator");
                 ta.setOstream(&oss);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&ta);
                 const Obj::FailureHandler saveFail = ta.failureHandler();
                 ta.setFailureHandler(&Obj::failNoop);
                 ta.setFailureHandler(saveFail);

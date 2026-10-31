@@ -38,6 +38,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_ios.h>
 #include <bsl_ostream.h>
 #include <bsl_string_view.h>
@@ -273,7 +275,9 @@ class Formatter_PrettyImplState {
 
     /// Return a reference providing modifiable access to the
     /// `elementNesting` attribute of this object.
-    bsl::vector<WhitespaceType::Enum>& elementNesting();
+    bsl::vector<WhitespaceType::Enum>& elementNesting()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing modifiable access to the `id` attribute
     /// of this object.
@@ -295,30 +299,36 @@ class Formatter_PrettyImplState {
 
     /// Return a reference providing non-modifiable access to the `column`
     /// attribute of this object.
-    const int& column() const;
+    const int& column() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// `elementNesting` attribute of this object.
-    const bsl::vector<WhitespaceType::Enum>& elementNesting() const ;
+    const bsl::vector<WhitespaceType::Enum>& elementNesting() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the allocator associated with this object.
     allocator_type get_allocator() const;
 
     /// Return a reference providing non-modifiable access to the `id`
     /// attribute of this object.
-    const Id::Enum& id() const;
+    const Id::Enum& id() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// `indentLevel` attribute of this object.
-    const int& indentLevel() const;
+    const int& indentLevel() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// `spacesPerLevel` attribute of this object.
-    const int& spacesPerLevel() const;
+    const int& spacesPerLevel() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// `wrapColumn` attribute of this object.
-    const int& wrapColumn() const;
+    const int& wrapColumn() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                        // ==============================
@@ -446,7 +456,8 @@ struct Formatter_PrettyImplUtil {
                    const bsl::string_view&  name,
                    const VALUE_TYPE&        value,
                    int                      formattingMode = 0,
-                   const EncoderOptions&    encoderOptions = EncoderOptions());
+                   const EncoderOptions&    encoderOptions = EncoderOptions())
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Insert one or two newline characters into the specified `stream`
     /// stream such that a blank line results, depending on the specified
@@ -455,7 +466,8 @@ struct Formatter_PrettyImplUtil {
     /// otherwise two newlines are added.  If following a call to
     /// `openElement`, or `addAttribute`, add a closing `>` to the opened
     /// tag.
-    static bsl::ostream& addBlankLine(bsl::ostream& stream, State *state);
+    static bsl::ostream& addBlankLine(bsl::ostream& stream, State *state)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Write the specified `comment` into the specified `stream`, with
     /// formatting depending on the specified `state`, and update the
@@ -470,7 +482,8 @@ struct Formatter_PrettyImplUtil {
                                  bsl::ostream&            stream,
                                  State                   *state,
                                  const bsl::string_view&  comment,
-                                 bool                     forceNewline = true);
+                                 bool                     forceNewline = true)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Add the specified `value` as the data content to the specified
     /// `stream`, with formatting depending on the specified `state`, and
@@ -499,7 +512,8 @@ struct Formatter_PrettyImplUtil {
                      State                 *state,
                      const VALUE_TYPE&      value,
                      int                    formattingMode = 0,
-                     const EncoderOptions&  encoderOptions = EncoderOptions());
+                     const EncoderOptions&  encoderOptions = EncoderOptions())
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Add element of the specified `name` and the specified `value` as the
     /// data content to the specified `stream`, with formatting depending on
@@ -515,7 +529,8 @@ struct Formatter_PrettyImplUtil {
                    const bsl::string_view&  name,
                    const TYPE&              value,
                    int                      formattingMode = 0,
-                   const EncoderOptions&    encoderOptions = EncoderOptions());
+                   const EncoderOptions&    encoderOptions = EncoderOptions())
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Add XML header with optionally specified `encoding` to the specified
     /// `stream`, with formatting depending on the specified `state`, and
@@ -554,14 +569,16 @@ struct Formatter_PrettyImplUtil {
                      State                 *state,
                      const VALUE_TYPE&      value,
                      int                    formattingMode = 0,
-                     const EncoderOptions&  encoderOptions = EncoderOptions());
+                     const EncoderOptions&  encoderOptions = EncoderOptions())
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Insert a literal newline into the XML output of the specified
     /// `stream`, with formatting depending on the specified `state`, and
     /// update `state` accordingly.  Return the `stream`.  If following a
     /// call to `openElement`, or `addAttribute`, add a closing `>` to the
     /// opened tag.
-    static bsl::ostream& addNewline(bsl::ostream& stream, State *state);
+    static bsl::ostream& addNewline(bsl::ostream& stream, State *state)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Write the specified `comment` into the specified `stream`, with
     /// formatting depending on the specified `state`, and update the
@@ -601,7 +618,8 @@ struct Formatter_PrettyImplUtil {
     /// specified output `stream`, with formatting depending on the
     /// specified `state`, and update `state` accordingly.  Return the
     /// `stream`.
-    static bsl::ostream& flush(bsl::ostream& stream, State *state);
+    static bsl::ostream& flush(bsl::ostream& stream, State *state)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Open an element of the specified `name` at current indent level with
     /// the optionally specified whitespace constraint `whitespaceMode` for
@@ -881,6 +899,7 @@ bsl::ostream& Formatter_PrettyImplUtil::addListData(
 inline
 void Formatter_PrettyImplUtil::reset(State *state)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(state);
     state->column() = 0;
     state->id()     = StateId::e_AT_START;
     state->indentLevel() -= static_cast<int>(state->elementNesting().size());

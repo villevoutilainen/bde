@@ -661,31 +661,38 @@ class MySequenceWithArrays {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bsl::vector<int>& attribute1();
+    bsl::vector<int>& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bsl::vector<char>& attribute2();
+    bsl::vector<char>& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute3" attribute of this
     /// object.
-    bsl::vector<char>& attribute3();
+    bsl::vector<char>& attribute3()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute4" attribute of this
     /// object.
-    bsl::vector<char>& attribute4();
+    bsl::vector<char>& attribute4()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute5" attribute of this
     /// object.
-    bsl::vector<char>& attribute5();
+    bsl::vector<char>& attribute5()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute6" attribute of this
     /// object.
-    bsl::vector<char>& attribute6();
+    bsl::vector<char>& attribute6()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute7" attribute of this
     /// object.
-    bsl::vector<int>& attribute7();
+    bsl::vector<int>& attribute7()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -734,31 +741,38 @@ class MySequenceWithArrays {
 
     /// Return a reference to the non-modifiable "Attribute1" attribute of
     /// this object.
-    const bsl::vector<int>& attribute1() const;
+    const bsl::vector<int>& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute2" attribute of
     /// this object.
-    const bsl::vector<char>& attribute2() const;
+    const bsl::vector<char>& attribute2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute3" attribute of
     /// this object.
-    const bsl::vector<char>& attribute3() const;
+    const bsl::vector<char>& attribute3() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute4" attribute of
     /// this object.
-    const bsl::vector<char>& attribute4() const;
+    const bsl::vector<char>& attribute4() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute5" attribute of
     /// this object.
-    const bsl::vector<char>& attribute5() const;
+    const bsl::vector<char>& attribute5() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute6" attribute of
     /// this object.
-    const bsl::vector<char>& attribute6() const;
+    const bsl::vector<char>& attribute6() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Attribute7" attribute of
     /// this object.
-    const bsl::vector<int>& attribute7() const;
+    const bsl::vector<int>& attribute7() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -1180,6 +1194,8 @@ inline
 bool test::operator==(const test::MySequenceWithArrays& lhs,
                       const test::MySequenceWithArrays& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.attribute1() == rhs.attribute1()
          && lhs.attribute2() == rhs.attribute2()
          && lhs.attribute3() == rhs.attribute3()
@@ -1193,6 +1209,8 @@ inline
 bool test::operator!=(const test::MySequenceWithArrays& lhs,
                       const test::MySequenceWithArrays& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.attribute1() != rhs.attribute1()
          || lhs.attribute2() != rhs.attribute2()
          || lhs.attribute3() != rhs.attribute3()
@@ -1380,6 +1398,7 @@ bsl::ostream& MySequenceWithArrays::print(
     int           level,
     int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }
@@ -1602,15 +1621,18 @@ class Contractor {
 
     /// Return a reference to the modifiable "Name" attribute of this
     /// object.
-    bsl::string& name();
+    bsl::string& name()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "HomeAddress" attribute of
     /// this object.
-    Address& homeAddress();
+    Address& homeAddress()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "HourlyRate" attribute of this
     /// object.
-    bdldfp::Decimal64& hourlyRate();
+    bdldfp::Decimal64& hourlyRate()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1659,15 +1681,18 @@ class Contractor {
 
     /// Return a reference to the non-modifiable "Name" attribute of this
     /// object.
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "HomeAddress" attribute of
     /// this object.
-    const Address& homeAddress() const;
+    const Address& homeAddress() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "HourlyRate" attribute of
     /// this object.
-    const bdldfp::Decimal64& hourlyRate() const;
+    const bdldfp::Decimal64& hourlyRate() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -2019,6 +2044,8 @@ const bdlat_AttributeInfo *Contractor::lookupAttributeInfo(int id)
 inline
 bool operator==(const Contractor& lhs, const Contractor& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.name() == rhs.name()
          && lhs.homeAddress() == rhs.homeAddress()
          && lhs.hourlyRate() == rhs.hourlyRate();
@@ -2027,6 +2054,8 @@ bool operator==(const Contractor& lhs, const Contractor& rhs)
 inline
 bool operator!=(const Contractor& lhs, const Contractor& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.name() != rhs.name()
          || lhs.homeAddress() != rhs.homeAddress()
          || lhs.hourlyRate() != rhs.hourlyRate();
@@ -2055,6 +2084,7 @@ bsl::ostream& Contractor::print(
     int           level,
     int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }
@@ -2135,6 +2165,7 @@ namespace bsl {
 // FREE FUNCTIONS
 ostream& operator<<(ostream& stream, const vector<int>& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     stream << "(";
 
     typedef vector<int>::const_iterator ConstIterator;
@@ -2256,11 +2287,13 @@ class TestXmlElement {
     /// the XML format and return a reference to `stream`.
     bsl::ostream& print(bsl::ostream& stream) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         stream << "<" << d_name;
 
         for (Attributes::const_iterator it = d_attributes.begin();
              it != d_attributes.end();
              ++it) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             stream << " " << it->first << "='" << it->second << "'";
         }
 
@@ -2343,6 +2376,7 @@ struct TestXmlUtil {
 
     static Content generateContent(const TestXmlElement& element)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&element);
         bsl::vector<TestXmlElement> result;
         result.push_back(element);
         return generateContent(result);
@@ -2351,6 +2385,8 @@ struct TestXmlUtil {
     static Content generateContent(const TestXmlElement& element0,
                                    const TestXmlElement& element1)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&element0);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&element1);
         bsl::vector<TestXmlElement> result;
         result.push_back(element0);
         result.push_back(element1);
@@ -2704,6 +2740,7 @@ class TestCase14RowProtocolImp : public TestCase14RowProtocol {
 
     void runTest() const BSLS_KEYWORD_OVERRIDE
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         const int           LINE            = d_line;
         const Value&        VALUE           = d_value.object();
         const int           ENCODING_STATUS = d_encodingStatus;
@@ -3845,9 +3882,13 @@ R(L_,  s(na0,na1,n(i0),n(i1))   , t, t, x(S,x(A0,V0   ),x(A1,V1   )) )  // *
     // Encoding of array with nillable elements
     {
         s_baltst::SequenceWithNilOnly seq;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&seq);
         seq.v().push_back(1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&seq);
         seq.v().emplace_back();
+        BSLS_ASSERT_CONVEYOR_OBJECT(&seq);
         seq.v().push_back(3);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&seq);
         ASSERT(seq.v().size() == 3);
 
         const bsl::string EXPECTED_OUTPUT =
@@ -4675,8 +4716,11 @@ int main(int argc, char *argv[])
 
             TC::Contractor bob;
             bob.name()                 = "Bob";
+            BSLS_ASSERT_CONVEYOR_OBJECT(&bob);
             bob.homeAddress().street() = "Some Street";
+            BSLS_ASSERT_CONVEYOR_OBJECT(&bob);
             bob.homeAddress().city()   = "Some City";
+            BSLS_ASSERT_CONVEYOR_OBJECT(&bob);
             bob.homeAddress().state()  = "Some State";
             bob.hourlyRate()           = VALUE;
 
@@ -5617,12 +5661,15 @@ int main(int argc, char *argv[])
 
             // Each attribute except attribute `i` should be non-null:
             if (0 != i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                 mX.attribute1().makeValue(ATTRIBUTE1_VALUE);
             }
             if (1 != i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                 mX.attribute2().makeValue(ATTRIBUTE2_VALUE);
             }
             if (2 != i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                 mX.attribute3().makeValue(ATTRIBUTE3_VALUE);
             }
 
@@ -6043,12 +6090,15 @@ int main(int argc, char *argv[])
 
             // Each attribute except attribute `i` should be non-null:
             if (0 != i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                 mX.attribute1().makeValue(ATTRIBUTE1_VALUE);
             }
             if (1 != i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                 mX.attribute2().makeValue(ATTRIBUTE2_VALUE);
             }
             if (2 != i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                 mX.attribute3().makeValue(ATTRIBUTE3_VALUE);
             }
 
@@ -6735,12 +6785,15 @@ int main(int argc, char *argv[])
                 for (int j = 0; j < Type::NUM_ATTRIBUTES; ++j) {
                     if (j != i) {
                         if (0 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute1().makeValue(ATTRIBUTE1_VALUE);
                         }
                         else if (1 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute2().makeValue(ATTRIBUTE2_VALUE);
                         }
                         else if (2 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute3().makeValue(ATTRIBUTE3_VALUE);
                         }
                     }
@@ -6813,12 +6866,15 @@ int main(int argc, char *argv[])
                 for (int j = 0; j < Type::NUM_ATTRIBUTES; ++j) {
                     if (j != i) {
                         if (0 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute1().makeValue(ATTRIBUTE1_VALUE);
                         }
                         else if (1 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute2().makeValue(ATTRIBUTE2_VALUE);
                         }
                         else if (2 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute3().makeValue(ATTRIBUTE3_VALUE);
                         }
                     }
@@ -6869,37 +6925,63 @@ int main(int argc, char *argv[])
 
             Type mX;  const Type& X = mX;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute1().push_back(123);  // int repetition
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute1().push_back(456);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute1().push_back(927);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute2().push_back('a');  // base64
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute2().push_back('b');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute2().push_back('c');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute2().push_back('d');
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute3().push_back('a');  // hex
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute3().push_back('b');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute3().push_back('c');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute3().push_back('d');
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute4().push_back('a');  // text
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute4().push_back('b');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute4().push_back('c');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute4().push_back('d');
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute5().push_back('a');  // byte repetition
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute5().push_back('b');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute5().push_back('c');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute5().push_back('d');
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute6().push_back('a');  // byte list
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute6().push_back('b');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute6().push_back('c');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute6().push_back('d');
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute7().push_back(123);  // int list
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute7().push_back(456);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute7().push_back(927);
 
             const char EXPECTED_RESULT[]
@@ -6936,13 +7018,19 @@ int main(int argc, char *argv[])
                          EXPECTED_RESULT == result.str());
 
             result.str("");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             encoder.encode(result, X);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             LOOP2_ASSERT(EXPECTED_RESULT,   result.str(),
                          EXPECTED_RESULT == result.str());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             bsl::ostringstream oss2;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             ASSERT(encoder.encodeAnyToStream(oss2, X) == 0);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             ASSERT(oss2.str() == result.str());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
         }
 
         if (verbose) cout << "\nUsing `MySequenceWithArrays` with COMPACT."
@@ -6952,37 +7040,63 @@ int main(int argc, char *argv[])
 
             Type mX;  const Type& X = mX;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute1().push_back(123);  // int repetition
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute1().push_back(456);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute1().push_back(927);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute2().push_back('a');  // base64
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute2().push_back('b');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute2().push_back('c');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute2().push_back('d');
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute3().push_back('a');  // hex
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute3().push_back('b');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute3().push_back('c');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute3().push_back('d');
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute4().push_back('a');  // text
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute4().push_back('b');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute4().push_back('c');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute4().push_back('d');
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute5().push_back('a');  // byte repetition
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute5().push_back('b');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute5().push_back('c');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute5().push_back('d');
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute6().push_back('a');  // byte list
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute6().push_back('b');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute6().push_back('c');
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute6().push_back('d');
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute7().push_back(123);  // int list
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute7().push_back(456);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.attribute7().push_back(927);
 
             const char EXPECTED_RESULT[]=

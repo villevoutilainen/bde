@@ -216,6 +216,7 @@ PrefixStack::~PrefixStack()
 inline
 void PrefixStack::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_numPrefixes = 0;
     d_prefixes.clear();
 }
@@ -223,6 +224,7 @@ void PrefixStack::reset()
 inline
 void PrefixStack::restoreToSize(int size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(size <= d_numPrefixes);
     d_numPrefixes = size;
 }
@@ -243,6 +245,7 @@ int PrefixStack::numPrefixes() const
 inline
 const char *PrefixStack::namespacePrefixByIndex(int index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     index = (index < 0 ? d_numPrefixes + index : index);
     BSLS_ASSERT(0 <= index && index < d_numPrefixes);
     return d_prefixes[index].first.c_str();
@@ -251,6 +254,7 @@ const char *PrefixStack::namespacePrefixByIndex(int index) const
 inline
 int PrefixStack::namespaceIdByIndex(int index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     index = (index < 0 ? d_numPrefixes + index : index);
     BSLS_ASSERT(0 <= index && index < d_numPrefixes);
     return d_prefixes[index].second;

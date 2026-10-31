@@ -54,6 +54,7 @@ BSLS_IDENT("$Id: $")
 #include <bslma_allocator.h>
 #include <bslma_usesbslmaallocator.h>
 
+#include <bsls_assert.h>
 #include <bsls_types.h> // 'bsls::Types::Int64'
 
 #include <bsl_iosfwd.h>
@@ -197,7 +198,8 @@ class OccurrenceInfo {
     // ACCESSORS
 
     /// Return a `const` reference to the default value of this object.
-    const OptionValue& defaultValue() const;
+    const OptionValue& defaultValue() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if this object has a default value, and `false`
     /// otherwise.

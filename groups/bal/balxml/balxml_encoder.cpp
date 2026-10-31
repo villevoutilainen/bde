@@ -179,11 +179,12 @@ void Encoder_OptionsCompatibilityUtil::getFormatterOptions(
                                 EncoderOptions        *formatterOptions,
                                 const EncoderOptions&  encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&encoderOptions);
     BSLS_ASSERT_OPT(formatterIndentLevel);
     BSLS_ASSERT_OPT(formatterSpacesPerLevel);
     BSLS_ASSERT_OPT(formatterWrapColumn);
     BSLS_ASSERT_OPT(formatterOptions);
-    BSLS_ASSERT_OPT(EncoderOptions() == *formatterOptions);
+    BSLS_ASSERT_OPT_NONCONVEYOR(EncoderOptions() == *formatterOptions);
 
     BSLMF_ASSERT(16 == EncoderOptions::NUM_ATTRIBUTES);
 
@@ -308,6 +309,7 @@ int Encoder_EncodeObject::executeImp(const bsl::vector<char>&  object,
                                      bool                      ,
                                      bdlat_TypeCategory::Array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (formattingMode & bdlat_FormattingMode::e_LIST) {
         return executeArrayListImp(object, tag);                      // RETURN
     }
@@ -318,6 +320,7 @@ int Encoder_EncodeObject::executeImp(const bsl::vector<char>&  object,
       case bdlat_FormattingMode::e_HEX: {
         d_context_p->openElement(tag);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_context_p);
         TypesPrintUtil::print(d_context_p->rawOutputStream(),
                                      object,
                                      formattingMode,

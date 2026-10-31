@@ -225,7 +225,7 @@ const char *TestEnumeration<E0, E1, E2>::className() const
 template <class E0, class E1, class E2>
 void TestEnumeration<E0, E1, E2>::toInt(int *result) const
 {
-    BSLS_ASSERT(d_value == Enumerator0::intValue() ||
+    BSLS_ASSERT_NONCONVEYOR(d_value == Enumerator0::intValue() ||
                 (k_HAS_ENUMERATOR_1 && d_value == Enumerator1::intValue()) ||
                 (k_HAS_ENUMERATOR_2 && d_value == Enumerator2::intValue()));
 
@@ -235,7 +235,7 @@ void TestEnumeration<E0, E1, E2>::toInt(int *result) const
 template <class E0, class E1, class E2>
 void TestEnumeration<E0, E1, E2>::toString(bsl::string *result) const
 {
-    BSLS_ASSERT(d_value == Enumerator0::intValue() ||
+    BSLS_ASSERT_NONCONVEYOR(d_value == Enumerator0::intValue() ||
                 (k_HAS_ENUMERATOR_1 && d_value == Enumerator1::intValue()) ||
                 (k_HAS_ENUMERATOR_2 && d_value == Enumerator2::intValue()));
 

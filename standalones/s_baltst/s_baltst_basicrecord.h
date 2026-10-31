@@ -173,16 +173,20 @@ class BasicRecord {
                             int           nameLength);
 
     /// Return a reference to the modifiable "I1" attribute of this object.
-    int& i1();
+    int& i1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "I2" attribute of this object.
-    int& i2();
+    int& i2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Dt" attribute of this object.
-    bdlt::DatetimeTz& dt();
+    bdlt::DatetimeTz& dt()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "S" attribute of this object.
-    bsl::string& s();
+    bsl::string& s()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -237,11 +241,13 @@ class BasicRecord {
 
     /// Return a reference offering non-modifiable access to the "Dt"
     /// attribute of this object.
-    const bdlt::DatetimeTz& dt() const;
+    const bdlt::DatetimeTz& dt() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "S"
     /// attribute of this object.
-    const bsl::string& s() const;
+    const bsl::string& s() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -290,6 +296,8 @@ namespace s_baltst {
 inline
 bool BasicRecord::isEqualTo(const BasicRecord& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->i1() == rhs.i1() &&
            this->i2() == rhs.i2() &&
            this->dt() == rhs.dt() &&

@@ -205,6 +205,7 @@ void Resolver_DwarfReader::Section::reset(Offset offset,
 // PRIVATE MANIPULATORS
 int Resolver_DwarfReader::reload(bsl::size_t numBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     static const char rn[] = { "Reader::reload:" };    (void) rn;
 
     u_ASSERT_BAIL(static_cast<Offset>(numBytes) <= d_endOffset - offset());

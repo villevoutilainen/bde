@@ -1104,10 +1104,12 @@ class FrameRec {
         // Return the 'address' field from this object.
 
 #ifdef u_DWARF
-    const bsl::string& compileUnitDir() const;
+    const bsl::string& compileUnitDir() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return the compile unit directory name.
 
-    const bsl::string& compileUnitFileName() const;
+    const bsl::string& compileUnitFileName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return the compile unit file name.
 
     u::Offset compileUnitOffset() const;
@@ -1117,7 +1119,8 @@ class FrameRec {
         // Return the line number offset field.
 #endif
 
-    balst::StackTraceFrame& frame() const;
+    balst::StackTraceFrame& frame() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the modifiable 'frame' referenced by this
         // object.  Note that though this is a 'const' method, modifiable
         // access to the frame is provided.
@@ -1428,6 +1431,7 @@ int cleanupString(bsl::string *str, bslma::Allocator *alloc)
     // "*str" does not represent an acceptable full path for a source file, and
     // a non-zero value otherwise.
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(str);
     static const char rn[] = { "u::cleanupString:" };
 
     const size_t npos = bsl::string::npos;
@@ -2732,14 +2736,19 @@ int u::Resolver::HiddenRec::dwarfReadDebugInfo()
                                                      " compilation unit\n", rn,
                                                    prev->index(), it->index());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             if (!it->frame().isSourceFileNameKnown()) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(prev);
+                BSLS_ASSERT_CONVEYOR_OBJECT(it);
                 // This is the name of the file that was compiled, which might
                 // not be the right file.  If reading line number information
                 // is successful, it will be overwritten by the right file.
 
                 it->frame().setSourceFileName(prev->frame().sourceFileName());
             }
+            BSLS_ASSERT_CONVEYOR_OBJECT(prev);
             it->setCompileUnitDir(            prev->compileUnitDir());
+            BSLS_ASSERT_CONVEYOR_OBJECT(prev);
             it->setCompileUnitFileName(       prev->compileUnitFileName());
             it->setLineNumberOffset(          prev->lineNumberOffset());
             continue;
@@ -2760,6 +2769,7 @@ int u::Resolver::HiddenRec::dwarfReadDebugInfo()
 
 int u::Resolver::HiddenRec::dwarfReadDebugInfoFrameRec(u::FrameRec *frameRec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(frameRec);
     static const char rn[] = { "HR::dwDebugInfoFrameRec:" };
     (void) rn;
 
@@ -3010,6 +3020,8 @@ int u::Resolver::HiddenRec::dwarfReadDebugLine()
     const u::FrameRecVecIt end = d_frameRecsEnd;
     for (u::FrameRecVecIt it = d_frameRecsBegin, prev = end; it < end;
                                                              prev = it, ++it) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(prev);
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         // Because the 'u::FrameRec's are sorted by address, those referring to
         // the same address are going to be adjacent.
 
@@ -3017,10 +3029,14 @@ int u::Resolver::HiddenRec::dwarfReadDebugLine()
             u_TRACES && u_zprintf("%s recursion: frames %d and %d are from"
                                             " the same compilation unit\n", rn,
                                                    prev->index(), it->index());
+            BSLS_ASSERT_CONVEYOR_OBJECT(prev);
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             // Recursion on the stack -- file name, line # info will be
             // identical.
 
             it->frame().setSourceFileName(prev->frame().sourceFileName());
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
+            BSLS_ASSERT_CONVEYOR_OBJECT(prev);
             it->frame().setLineNumber(    prev->frame().lineNumber());
             continue;
         }
@@ -3207,6 +3223,7 @@ int u::Resolver::HiddenRec::dwarfReadDebugLineFrameRec(u::FrameRec *frameRec)
                                                  // cmd, in which case
                                                  // 'fileIdx' will be -1.
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(frameRec);
     u::UintPtr   addressToMatch =
                      reinterpret_cast<u::UintPtr>(frameRec->frame().address());
     u::UintPtr   address = 0, prevAddress = 0;
@@ -3536,6 +3553,7 @@ int u::Resolver::HiddenRec::dwarfReadDebugLineFrameRec(u::FrameRec *frameRec)
                         definedFile.insert(0, dirPaths[definedDirIndex]);
                     }
                     (void) u::cleanupString(&definedFile, d_allocator_p);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(frameRec);
                     frameRec->frame().setSourceFileName(definedFile);
                 }
                 else {
@@ -3599,6 +3617,10 @@ int u::Resolver::HiddenRec::dwarfReadFileNames(
                                     const u::FrameRec&        frameRec,
                                     int                       lineDwarfVersion)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&frameRec);
+    BSLS_ASSERT_CONVEYOR_OBJECT(dirPaths);
+    BSLS_ASSERT_CONVEYOR_OBJECT(fileNames);
+    BSLS_ASSERT_CONVEYOR_OBJECT(dirIndexes);
     static const char rn[] = { "HR::dwReadFileNames:" };
     (void) rn;
 
@@ -3994,6 +4016,7 @@ int u::Resolver::loadSymbols(int matched)
                             continue;
                         }
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(it);
                         balst::StackTraceFrame& frame = it->frame();
 
                         frame.setOffsetFromSymbol(
@@ -4068,6 +4091,8 @@ int u::Resolver::processLoadedImage(const char *libraryFileName,
     // Also note that it assumes that both scratch buffers are available for
     // writing.
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d_hidden);
     static const char rn[] = { "Resolver::processLoadedImage" };    (void) rn;
 
     BSLS_ASSERT(!textSegPtr || !baseAddress);
@@ -4282,6 +4307,8 @@ int u::Resolver::resolveSegment(void       *segmentBaseAddress,
                                 u::UintPtr  segmentSize,
                                 const char *libraryFileName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d_hidden);
     const char rn[] = { "Resolver::resolveSegment" };
     int rc;
 
@@ -4302,6 +4329,7 @@ int u::Resolver::resolveSegment(void       *segmentBaseAddress,
                                                              0,
                                                              0,
                                                              &d_hbpAlloc));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&d_hidden);
     d_hidden.d_frameRecsEnd   = bsl::lower_bound(d_hidden.d_frameRecs.begin(),
                                                  d_hidden.d_frameRecs.end(),
                                                  u::FrameRec(se,
@@ -4312,7 +4340,7 @@ int u::Resolver::resolveSegment(void       *segmentBaseAddress,
     int matched = static_cast<int>(
                           d_hidden.d_frameRecsEnd - d_hidden.d_frameRecsBegin);
     BSLS_ASSERT(0 <= matched);
-    BSLS_ASSERT(matched <= d_stackTrace_p->length());
+    BSLS_ASSERT_NONCONVEYOR(matched <= d_stackTrace_p->length());
 
     u_TRACES && u_zprintf("%s lfn=%s\nba=%p sp=%p se=%p matched=%d\n",
                      rn, libraryFileName, segmentBaseAddress, sp, se, matched);
@@ -4332,6 +4360,7 @@ int u::Resolver::resolveSegment(void       *segmentBaseAddress,
     u::FrameRecVecIt it, end  = d_hidden.d_frameRecsEnd;
     for (it = d_hidden.d_frameRecsBegin; it < end; ++it) {
         u_TRACES && u_zprintf("%s address %p MATCH\n", rn, it->address());
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         it->frame().setLibraryFileName(0 == cleanupRc ? libName.c_str()
                                                       : libraryFileName);
     }
@@ -4586,6 +4615,7 @@ int u::Resolver::resolveSegment(void       *segmentBaseAddress,
 void u::Resolver::setFrameSymbolName(balst::StackTraceFrame *frame,
                                      const Span&             scratchSpan) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(frame);
 #if !defined(BSLS_PLATFORM_OS_SOLARIS)                                        \
  || defined(BSLS_PLATFORM_CMP_GNU) || defined(BSLS_PLATFORM_CMP_CLANG)
     // Linux or Sun g++

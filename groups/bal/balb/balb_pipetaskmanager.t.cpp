@@ -232,12 +232,14 @@ void sleep2shutdown(Obj *obj)
 /// Append to the specified `vec` an element having the value `1`.
 void vec1cb(const bsl::string_view& , bsl::istream& , bsl::vector<int> *vec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(vec);
     vec->push_back(1);
 }
 
 /// Append to the specified `vec` an element having the value `2`.
 void vec2cb(const bsl::string_view& , bsl::istream&, bsl::vector<int> *vec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(vec);
     vec->push_back(2);
 }
 
@@ -652,6 +654,7 @@ int main(int argc, char *argv[])
             bslma::TestAllocator& noa = (&da == &oa) ? sa : da;
 
             ASSERTV(CONFIG, &oa == X.allocator());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(CONFIG, &ca == X.controlManager().allocator());
 
             ASSERTV(CONFIG, 1 ==  oa.numBlocksTotal()); // `PipeControlChannel`
@@ -925,9 +928,11 @@ int main(int argc, char *argv[])
                 ASSERT_EQ(0, mX.start(PIPE));
 
                 if (veryVeryVerbose) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     Q(Verify that 'PIPE' is used in the actual pipe name)
                 }
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERT_NE(bsl::string::npos, X.pipeName().find(lcpn));
 
                 ASSERT_NE(0, mX.start(PIPE));
@@ -1136,6 +1141,7 @@ int main(int argc, char *argv[])
             bslma::TestAllocator& noa = (&da == &oa) ? sa : da;
 
             ASSERTV(CONFIG, &oa == X.allocator());                      // TEST
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(CONFIG, &oa == X.controlManager().allocator());     // TEST
 
             ASSERTV(CONFIG, 2 ==  oa.numBlocksTotal());
@@ -1156,6 +1162,7 @@ int main(int argc, char *argv[])
                                                + 1; // appended    '\n'
             ASSERT(PREAMBLE_MSGSIZE <= bsl::string().capacity());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             X.controlManager().printUsage(oss, PREAMBLE);
             ASSERT(IS_EMPTY == oss.str());
 

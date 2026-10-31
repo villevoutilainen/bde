@@ -308,13 +308,17 @@ class Formatter_StreamHolder {
 
     /// Return the address that provides modifiable access to this object's
     /// held `bsl::ostream`.
-    bsl::ostream *stream();
+    bsl::ostream *stream()
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     // ACCESSORS
 
     /// Return the address that provides non-modifiable access to this
     /// object's held `bsl::ostream`.
-    const bsl::ostream *stream() const;
+    const bsl::ostream *stream() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 };
 
                            // =====================
@@ -396,7 +400,8 @@ class Formatter_State {
     /// Return a reference providing non-modifiable access to the `compact`
     /// selection of this object.  The behavior is undefined unless the
     /// current selection of this object is `compact`.
-    const Compact& compact() const;
+    const Compact& compact() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `Mode::e_COMPACT` if the current selection of this object is
     /// `compact`, and return `Mode::e_PRETTY` otherwise.
@@ -405,7 +410,8 @@ class Formatter_State {
     /// Return a reference providing non-modifiable access to the `pretty`
     /// selection of this object.  The behavior is undefined unless the
     /// current selection of this object is `pretty`.
-    const Pretty& pretty() const;
+    const Pretty& pretty() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // FRIENDS
     friend class balxml::Formatter;
@@ -716,7 +722,8 @@ class Formatter {
     // ACCESSORS
 
     /// Return the encoder options being used.
-    const EncoderOptions& encoderOptions() const;
+    const EncoderOptions& encoderOptions() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the current level of indentation.
     int indentLevel() const;
@@ -782,6 +789,7 @@ const bsl::ostream *Formatter_StreamHolder::stream() const
 inline
 Formatter_CompactImplState& Formatter_State::compact()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(Mode::e_COMPACT == d_mode);
 
     return d_compact.object();
@@ -790,6 +798,7 @@ Formatter_CompactImplState& Formatter_State::compact()
 inline
 Formatter_PrettyImplState& Formatter_State::pretty()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(Mode::e_PRETTY == d_mode);
 
     return d_pretty.object();
@@ -799,6 +808,7 @@ Formatter_PrettyImplState& Formatter_State::pretty()
 inline
 const Formatter_CompactImplState& Formatter_State::compact() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(Mode::e_COMPACT == d_mode);
 
     return d_compact.object();
@@ -807,12 +817,14 @@ const Formatter_CompactImplState& Formatter_State::compact() const
 inline
 Formatter_Mode::Enum Formatter_State::mode() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_mode;
 }
 
 inline
 const Formatter_PrettyImplState& Formatter_State::pretty() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(Mode::e_PRETTY == d_mode);
 
     return d_pretty.object();
@@ -852,6 +864,9 @@ void Formatter::addAttribute(const bsl::string_view& name,
                              const TYPE&             value,
                              int                     formattingMode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     switch (d_state.mode()) {
       case Mode::e_COMPACT: {
         CompactUtil::addAttribute(*d_streamHolder.stream(),
@@ -875,6 +890,7 @@ void Formatter::addAttribute(const bsl::string_view& name,
 inline
 void Formatter::addBlankLine()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_state.mode()) {
       case Mode::e_COMPACT: {
         CompactUtil::addBlankLine(*d_streamHolder.stream(),
@@ -889,6 +905,8 @@ void Formatter::addBlankLine()
 template <class TYPE>
 void Formatter::addData(const TYPE& value, int formattingMode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     switch (d_state.mode()) {
       case Mode::e_COMPACT: {
         CompactUtil::addData(*d_streamHolder.stream(),
@@ -912,6 +930,9 @@ void Formatter::addElementAndData(const bsl::string_view& name,
                                   const TYPE&             value,
                                   int                     formattingMode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     switch (d_state.mode()) {
       case Mode::e_COMPACT: {
         CompactUtil::addElementAndData(*d_streamHolder.stream(),
@@ -935,6 +956,8 @@ void Formatter::addElementAndData(const bsl::string_view& name,
 template <class TYPE>
 void Formatter::addListData(const TYPE& value, int formattingMode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     switch (d_state.mode()) {
       case Mode::e_COMPACT: {
         CompactUtil::addListData(*d_streamHolder.stream(),
@@ -956,6 +979,7 @@ void Formatter::addListData(const TYPE& value, int formattingMode)
 inline
 void Formatter::addNewline()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_state.mode()) {
       case Mode::e_COMPACT: {
         CompactUtil::addNewline(*d_streamHolder.stream(), &d_state.compact());
@@ -969,6 +993,7 @@ void Formatter::addNewline()
 inline
 void Formatter::flush()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_state.mode()) {
       case Mode::e_COMPACT: {
         CompactUtil::flush(*d_streamHolder.stream(), &d_state.compact());
@@ -982,6 +1007,7 @@ void Formatter::flush()
 inline
 bsl::ostream& Formatter::rawOutputStream()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_state.mode()) {
       case Mode::e_COMPACT: {
         CompactUtil::flush(*d_streamHolder.stream(), &d_state.compact());
@@ -1004,6 +1030,7 @@ const EncoderOptions& Formatter::encoderOptions() const
 inline
 int Formatter::indentLevel() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int result = 0;
 
     switch (d_state.mode()) {
@@ -1021,6 +1048,7 @@ int Formatter::indentLevel() const
 inline
 int Formatter::outputColumn() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int result = 0;
 
     switch (d_state.mode()) {
@@ -1038,6 +1066,7 @@ int Formatter::outputColumn() const
 inline
 int Formatter::spacesPerLevel() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int result = 0;
 
     switch (d_state.mode()) {
@@ -1061,6 +1090,7 @@ int Formatter::status() const
 inline
 int Formatter::wrapColumn() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int result = 0;
 
     switch (d_state.mode()) {

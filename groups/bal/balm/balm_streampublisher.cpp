@@ -82,6 +82,7 @@ void formatValue(bsl::ostream&                 stream,
                  balm::PublicationType::Value  publicationType,
                  const balm::MetricFormatSpec *formatSpec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     switch (publicationType) {
       case balm::PublicationType::e_UNSPECIFIED: {
         BSLS_ASSERT_UNREACHABLE("Invalid publication type: `e_UNSPECIFIED`");
@@ -115,6 +116,7 @@ void publishRecord(bsl::ostream&             stream,
                    const balm::MetricRecord& record,
                    double                    elapsedTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     balm::PublicationType::Value publicationType =
                    record.metricId().description()->preferredPublicationType();
     bsl::shared_ptr<const balm::MetricFormat> format =
@@ -179,6 +181,7 @@ StreamPublisher::~StreamPublisher()
 // MANIPULATORS
 void StreamPublisher::publish(const MetricSample& metricValues)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricValues);
     if (metricValues.numRecords() > 0) {
         d_stream << metricValues.timeStamp() << " "
                  << metricValues.numRecords() << " Records" << bsl::endl;
@@ -186,9 +189,11 @@ void StreamPublisher::publish(const MetricSample& metricValues)
         MetricSample::const_iterator gIt = metricValues.begin();
         MetricSample::const_iterator prev = gIt;
         for (; gIt != metricValues.end(); ++gIt) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(gIt);
             const double elapsedTime =
                                      gIt->elapsedTime().totalSecondsAsDouble();
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(prev);
             if (gIt == prev || gIt->elapsedTime() != prev->elapsedTime()) {
                 d_stream << "\tElapsed Time: " << elapsedTime << "s"
                          << bsl::endl;

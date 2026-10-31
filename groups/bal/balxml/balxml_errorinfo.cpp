@@ -77,6 +77,8 @@ void ErrorInfo::setError(Severity                severity,
 
 bool balxml::operator==(const ErrorInfo& lhs, const ErrorInfo& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return (lhs.severity() == rhs.severity() &&
             lhs.lineNumber() == rhs.lineNumber() &&
             lhs.columnNumber() == rhs.columnNumber() &&
@@ -87,6 +89,7 @@ bool balxml::operator==(const ErrorInfo& lhs, const ErrorInfo& rhs)
 bsl::ostream& balxml::operator<<(bsl::ostream&    stream,
                                  const ErrorInfo& errInfo)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&errInfo);
     const char *severityStr;
 
     switch (errInfo.severity()) {

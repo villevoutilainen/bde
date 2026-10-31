@@ -94,6 +94,7 @@ BSLS_IDENT("$Id: $")
 #include <bslmt_lockguard.h>
 #include <bslmt_mutex.h>
 
+#include <bsls_assert.h>
 #include <bsls_keyword.h>
 
 namespace BloombergLP {
@@ -192,11 +193,13 @@ class BdlmMetricsAdapter : public bdlm::MetricsAdapter {
 
     /// Return the namespace attribute value to be used as the default value
     /// for `MetricDescriptor` instances.
-    const bsl::string& defaultMetricNamespace() const;
+    const bsl::string& defaultMetricNamespace() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a string to be used as the default prefix for a
     /// `MetricDescriptor` object identifier attribute value.
-    const bsl::string& defaultObjectIdentifierPrefix() const;
+    const bsl::string& defaultObjectIdentifierPrefix() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 

@@ -221,7 +221,7 @@ bool Option::isArray() const
 
 const char *Option::longTag() const
 {
-    BSLS_ASSERT(argType() != OptionInfo::e_NON_OPTION);
+    BSLS_ASSERT_NONCONVEYOR(argType() != OptionInfo::e_NON_OPTION);
 
     const char *tagString = d_optionInfo.object().d_tag.c_str();
     return '|' == tagString[1] ? tagString + 2 : tagString;
@@ -239,7 +239,7 @@ const OccurrenceInfo& Option::occurrenceInfo() const
 
 char Option::shortTag() const
 {
-    BSLS_ASSERT(argType() != OptionInfo::e_NON_OPTION);
+    BSLS_ASSERT_NONCONVEYOR(argType() != OptionInfo::e_NON_OPTION);
 
     const char *tagString = d_optionInfo.object().d_tag.c_str();
     return '|' == tagString[1] ? *tagString : 0;
@@ -378,6 +378,7 @@ bsl::ostream& Option::print(bsl::ostream& stream,
                             int           level,
                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= spacesPerLevel);
 
     if (stream.bad()) {

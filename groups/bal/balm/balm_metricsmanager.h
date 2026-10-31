@@ -387,6 +387,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmt_rwmutex.h>
 
+#include <bsls_assert.h>
 #include <bsls_timeinterval.h>
 
 #include <bslma_allocator.h>
@@ -896,11 +897,13 @@ class MetricsManager {
 
     /// Return a reference to the non-modifiable repository of collectors
     /// managed by this object.
-    const CollectorRepository& collectorRepository() const;
+    const CollectorRepository& collectorRepository() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable registry of metrics managed
     /// by this object.
-    const MetricRegistry& metricRegistry() const;
+    const MetricRegistry& metricRegistry() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // ============================================================================

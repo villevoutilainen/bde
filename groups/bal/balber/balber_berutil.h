@@ -4443,6 +4443,7 @@ inline
 int BerUtil_StringImpUtil::putStringValue(bsl::streambuf     *streamBuf,
                                           const bsl::string&  value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return putRawStringValue(
         streamBuf, value.data(), static_cast<int>(value.length()));
 }
@@ -4479,6 +4480,7 @@ int BerUtil_Iso8601ImpUtil::getValue(TYPE           *value,
                                      bsl::streambuf *streamBuf,
                                      int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     if (length <= 0) {
         return -1;                                                    // RETURN
     }
@@ -4516,6 +4518,7 @@ int BerUtil_Iso8601ImpUtil::putValue(bsl::streambuf          *streamBuf,
                                      const TYPE&              value,
                                      const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     char                           buf[bdlt::Iso8601Util::k_MAX_STRLEN];
     bdlt::Iso8601UtilConfiguration config;
     int                            datetimeFractionalSecondPrecision =
@@ -4537,6 +4540,7 @@ bool BerUtil_ExtendedBinaryEncodingUtil::useExtendedBinaryEncoding(
                                               const bdlt::Time&        value,
                                               const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (!options) {
         // If encoding options are not specified, by default the ISO8601 format
         // is used.
@@ -4574,6 +4578,7 @@ bool BerUtil_ExtendedBinaryEncodingUtil::useExtendedBinaryEncoding(
                                               const bdlt::TimeTz&      value,
                                               const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return useExtendedBinaryEncoding(value.localTime(), options);
 }
 
@@ -4582,6 +4587,7 @@ bool BerUtil_ExtendedBinaryEncodingUtil::useExtendedBinaryEncoding(
                                               const bdlt::Datetime&    value,
                                               const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return useExtendedBinaryEncoding(value.time(), options);
 }
 
@@ -4590,6 +4596,7 @@ bool BerUtil_ExtendedBinaryEncodingUtil::useExtendedBinaryEncoding(
                                               const bdlt::DatetimeTz&  value,
                                               const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return useExtendedBinaryEncoding(value.localDatetime().time(), options);
 }
 
@@ -4630,7 +4637,8 @@ void BerUtil_DateAndTimeHeader::makeExtendedBinaryWithoutTimezone()
 inline
 void BerUtil_DateAndTimeHeader::makeExtendedBinaryWithTimezone(int offset)
 {
-    BSLS_ASSERT(TimezoneUtil::isValidTimezoneOffsetInMinutes(offset));
+    BSLS_ASSERT_NONCONVEYOR(
+                         TimezoneUtil::isValidTimezoneOffsetInMinutes(offset));
 
     d_type                    = Type::e_EXTENDED_BINARY_WITH_TIMEZONE;
     d_timezoneOffsetInMinutes = offset;
@@ -4738,7 +4746,7 @@ inline
 void BerUtil_DateAndTimeHeaderImpUtil::detectType(Type::Value   *type,
                                                   unsigned char  firstByte)
 {
-    BSLS_ASSERT_OPT(!isReserved(firstByte));
+    BSLS_ASSERT_OPT_NONCONVEYOR(!isReserved(firstByte));
 
     const bool bit0 = firstByte & 0x80;
     const bool bit3 = firstByte & 0x10;
@@ -4811,7 +4819,7 @@ int BerUtil_DateAndTimeHeaderImpUtil::getValue(Header        *value,
                                                unsigned char  headerByte0,
                                                unsigned char  headerByte1)
 {
-    BSLS_ASSERT_OPT(!isReserved(headerByte0));
+    BSLS_ASSERT_OPT_NONCONVEYOR(!isReserved(headerByte0));
 
     Type::Value type;
     detectType(&type, headerByte0);
@@ -4885,7 +4893,7 @@ int BerUtil_DateAndTimeHeaderImpUtil::putExtendedBinaryWithTimezoneValue(
                                        bsl::streambuf *streamBuf,
                                        int             timezoneOffsetInMinutes)
 {
-    BSLS_ASSERT(
+    BSLS_ASSERT_NONCONVEYOR(
         TimezoneUtil::isValidTimezoneOffsetInMinutes(timezoneOffsetInMinutes));
 
     const unsigned short offsetWord =
@@ -4981,6 +4989,7 @@ BerUtil_DateTzEncoding::Value BerUtil_DateImpUtil::selectDateTzEncoding(
                                               const bdlt::DateTz&      value,
                                               const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (options && options->encodeDateAndTimeTypesAsBinary() &&
         0 == value.offset()) {
         return DateTzEncoding::e_COMPACT_BINARY_DATE;                 // RETURN
@@ -5035,6 +5044,7 @@ int BerUtil_DateImpUtil::getIso8601DateValue(DateOrDateTz   *value,
                                              bsl::streambuf *streamBuf,
                                              int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::Date>();
     return getIso8601DateValue(&value->the<bdlt::Date>(), streamBuf, length);
 }
@@ -5044,6 +5054,7 @@ int BerUtil_DateImpUtil::getIso8601DateTzValue(DateOrDateTz   *value,
                                                bsl::streambuf *streamBuf,
                                                int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::DateTz>();
     return getIso8601DateTzValue(
         &value->the<bdlt::DateTz>(), streamBuf, length);
@@ -5054,6 +5065,7 @@ int BerUtil_DateImpUtil::getCompactBinaryDateValue(DateOrDateTz   *value,
                                                    bsl::streambuf *streamBuf,
                                                    int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::Date>();
     return getCompactBinaryDateValue(
         &value->the<bdlt::Date>(), streamBuf, length);
@@ -5064,6 +5076,7 @@ int BerUtil_DateImpUtil::getCompactBinaryDateTzValue(DateOrDateTz   *value,
                                                      bsl::streambuf *streamBuf,
                                                      int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::DateTz>();
     return getCompactBinaryDateTzValue(
         &value->the<bdlt::DateTz>(), streamBuf, length);
@@ -5127,6 +5140,7 @@ void BerUtil_DateImpUtil::dateToDaysSinceEpoch(
                                             bsls::Types::Int64 *daysSinceEpoch,
                                             const bdlt::Date&   date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     const int serialDate = bdlt::ProlepticDateImpUtil::ymdToSerial(
         date.year(), date.month(), date.day());
 
@@ -5138,6 +5152,7 @@ int BerUtil_DateImpUtil::daysSinceEpochToDate(
                                             bdlt::Date         *date,
                                             bsls::Types::Int64  daysSinceEpoch)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(date);
     const bsls::Types::Int64 serialDate =
         daysSinceEpoch + k_COMPACT_BINARY_DATE_EPOCH;
 
@@ -5272,6 +5287,7 @@ BerUtil_TimeTzEncoding::Value BerUtil_TimeImpUtil::selectTimeTzEncoding(
                                               const bdlt::TimeTz&      value,
                                               const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (ExtendedBinaryEncodingUtil::useExtendedBinaryEncoding(value,
                                                               options)) {
         return TimeTzEncoding::e_EXTENDED_BINARY_TIMETZ;              // RETURN
@@ -5344,6 +5360,7 @@ int BerUtil_TimeImpUtil::getIso8601TimeValue(TimeOrTimeTz   *value,
                                              bsl::streambuf *streamBuf,
                                              int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::Time>();
     return getIso8601TimeValue(&value->the<bdlt::Time>(), streamBuf, length);
 }
@@ -5353,6 +5370,7 @@ int BerUtil_TimeImpUtil::getIso8601TimeTzValue(TimeOrTimeTz   *value,
                                                bsl::streambuf *streamBuf,
                                                int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::TimeTz>();
     return getIso8601TimeTzValue(
         &value->the<bdlt::TimeTz>(), streamBuf, length);
@@ -5363,6 +5381,7 @@ int BerUtil_TimeImpUtil::getCompactBinaryTimeValue(TimeOrTimeTz   *value,
                                                    bsl::streambuf *streamBuf,
                                                    int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::Time>();
     return getCompactBinaryTimeValue(
         &value->the<bdlt::Time>(), streamBuf, length);
@@ -5373,6 +5392,7 @@ int BerUtil_TimeImpUtil::getCompactBinaryTimeTzValue(TimeOrTimeTz   *value,
                                                      bsl::streambuf *streamBuf,
                                                      int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::TimeTz>();
     return getCompactBinaryTimeTzValue(
         &value->the<bdlt::TimeTz>(), streamBuf, length);
@@ -5383,6 +5403,7 @@ int BerUtil_TimeImpUtil::getExtendedBinaryTimeValue(TimeOrTimeTz   *value,
                                                     bsl::streambuf *streamBuf,
                                                     int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::Time>();
     return getExtendedBinaryTimeValue(
         &value->the<bdlt::Time>(), streamBuf, length);
@@ -5394,6 +5415,7 @@ int BerUtil_TimeImpUtil::getExtendedBinaryTimeTzValue(
                                                      bsl::streambuf *streamBuf,
                                                      int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::TimeTz>();
     return getExtendedBinaryTimeTzValue(
         &value->the<bdlt::TimeTz>(), streamBuf, length);
@@ -5408,6 +5430,7 @@ void BerUtil_TimeImpUtil::timeToMillisecondsSinceMidnight(
                                   int               *millisecondsSinceMidnight,
                                   const bdlt::Time&  time)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     const bdlt::Time defaultTime;
     *millisecondsSinceMidnight =
         static_cast<int>((time - defaultTime).totalMilliseconds());
@@ -5418,6 +5441,7 @@ void BerUtil_TimeImpUtil::timeToMicrosecondsSinceMidnight(
                                  bsls::Types::Int64 *millisecondsSinceMidnight,
                                  const bdlt::Time&   time)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     typedef bdlt::TimeUnitRatio Ratio;
     typedef bsls::Types::Int64  Int64;
 
@@ -5435,6 +5459,7 @@ int BerUtil_TimeImpUtil::millisecondsSinceMidnightToTime(
                                          bdlt::Time *time,
                                          int         millisecondsSinceMidnight)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(time);
     typedef bdlt::TimeUnitRatio Ratio;
 
     static const int k_MIN_NUM_MILLISECONDS = 0;
@@ -5475,6 +5500,7 @@ int BerUtil_TimeImpUtil::microsecondsSinceMidnightToTime(
                                  bdlt::Time         *time,
                                  bsls::Types::Int64  microsecondsSinceMidnight)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(time);
     typedef bdlt::TimeUnitRatio Ratio;
 
     static const bsls::Types::Int64 k_MIN_NUM_MICROSECONDS = 0;
@@ -5829,6 +5855,7 @@ BerUtil_DatetimeImpUtil::selectDatetimeTzEncoding(
                                        const bdlt::DatetimeTz&  value,
                                        const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (ExtendedBinaryEncodingUtil::useExtendedBinaryEncoding(value,
                                                               options)) {
         return DatetimeTzEncoding::e_EXTENDED_BINARY_DATETIMETZ;      // RETURN
@@ -5906,6 +5933,7 @@ int BerUtil_DatetimeImpUtil::getIso8601DatetimeValue(
                                                bsl::streambuf       *streamBuf,
                                                int                   length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::Datetime>();
     return getIso8601DatetimeValue(
         &value->the<bdlt::Datetime>(), streamBuf, length);
@@ -5917,6 +5945,7 @@ int BerUtil_DatetimeImpUtil::getIso8601DatetimeTzValue(
                                                bsl::streambuf       *streamBuf,
                                                int                   length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::DatetimeTz>();
     return getIso8601DatetimeTzValue(
         &value->the<bdlt::DatetimeTz>(), streamBuf, length);
@@ -5928,6 +5957,7 @@ int BerUtil_DatetimeImpUtil::getCompactBinaryDatetimeValue(
                                                bsl::streambuf       *streamBuf,
                                                int                   length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::Datetime>();
     return getCompactBinaryDatetimeValue(
         &value->the<bdlt::Datetime>(), streamBuf, length);
@@ -5939,6 +5969,7 @@ int BerUtil_DatetimeImpUtil::getCompactBinaryDatetimeTzValue(
                                                bsl::streambuf       *streamBuf,
                                                int                   length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::DatetimeTz>();
     return getCompactBinaryDatetimeTzValue(
         &value->the<bdlt::DatetimeTz>(), streamBuf, length);
@@ -5950,6 +5981,7 @@ int BerUtil_DatetimeImpUtil::getExtendedBinaryDatetimeValue(
                                                bsl::streambuf       *streamBuf,
                                                int                   length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::Datetime>();
     return getExtendedBinaryDatetimeValue(
         &value->the<bdlt::Datetime>(), streamBuf, length);
@@ -5961,6 +5993,7 @@ int BerUtil_DatetimeImpUtil::getExtendedBinaryDatetimeTzValue(
                                                bsl::streambuf       *streamBuf,
                                                int                   length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     value->createInPlace<bdlt::DatetimeTz>();
     return getExtendedBinaryDatetimeTzValue(
         &value->the<bdlt::DatetimeTz>(), streamBuf, length);
@@ -5976,6 +6009,7 @@ int BerUtil_DatetimeImpUtil::putDatetimeValue(
                                             const bdlt::Datetime&    value,
                                             const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const bdlt::Time& time = value.time();
     bdlt::Date        date = value.date();
 
@@ -6067,6 +6101,7 @@ int BerUtil_DatetimeImpUtil::putDatetimeTzValue(
                                             const bdlt::DatetimeTz&  value,
                                             const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     // Applications can create invalid 'bdlt::DatetimeTz' objects in optimized
     // build modes.  As this function assumes that 'value' is valid, it is
     // possible to encode an invalid 'bdlt::DatetimeTz' without returning an

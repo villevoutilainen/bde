@@ -96,6 +96,8 @@ BSLS_IDENT("$Id: balm_metricid.h,v 1.4 2008/04/16 20:00:49 hversche Exp $")
 #include <bslmf_istriviallycopyable.h>
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_iosfwd.h>
 
 namespace BloombergLP {
@@ -173,7 +175,8 @@ class MetricId {
     /// identifying the category with which this metric id is associated.
     /// The behavior is undefined unless `isValid()` is `true`.  Note that
     /// this method is logically equivalent to `description()->category()`.
-    const Category *category() const;
+    const Category *category() const
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
     /// Return the address of the non-modifiable name for the category with
     /// which this metric id is associated.  The behavior is undefined
@@ -189,7 +192,8 @@ class MetricId {
     /// Print this metric id to the specified output `stream` in some
     /// single-line human-readable form, and return a reference to the
     /// modifiable `stream`.
-    bsl::ostream& print(bsl::ostream& stream) const;
+    bsl::ostream& print(bsl::ostream& stream) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // ============================================================================
@@ -272,12 +276,14 @@ bool MetricId::isValid() const
 inline
 const Category *MetricId::category() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_description_p);
     return d_description_p->category();
 }
 
 inline
 const char *MetricId::categoryName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_description_p);
     return d_description_p->category()->name();
 }
 
@@ -310,6 +316,8 @@ bool balm::operator<(const MetricId& lhs, const MetricId& rhs)
 inline
 bsl::ostream& balm::operator<<(bsl::ostream& stream, const MetricId& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return rhs.print(stream);
 }
 

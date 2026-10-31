@@ -111,6 +111,8 @@ BSLS_IDENT("$Id: $")
 #include <bslma_allocator.h>
 #include <bslma_defaultallocatorguard.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_iosfwd.h>
 #include <bsl_sstream.h>
 #include <bsl_string.h>
@@ -147,7 +149,8 @@ struct StackTracePrintUtil {
                                  bsl::ostream& stream,
                                  int           maxFrames = -1,
                                  bool          demanglingPreferredFlag = true,
-                                 int           additionalIgnoreFrames = 0);
+                                 int           additionalIgnoreFrames = 0)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Log a message using `BSLS_LOG` consisting of "About to throw
     /// <exceptionName>.  <message>" followed by a stack trace.  This

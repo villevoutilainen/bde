@@ -283,7 +283,8 @@ class LocalTimePeriod {
 
     /// Return a reference providing non-modifiable access to the
     /// `descriptor` attribute of this object.
-    const LocalTimeDescriptor& descriptor() const;
+    const LocalTimeDescriptor& descriptor() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the allocator used by this object to supply memory.  Note that
     /// if no allocator was supplied at construction the default allocator in
@@ -292,11 +293,13 @@ class LocalTimePeriod {
 
     /// Return a reference providing non-modifiable access to the `utcEndTime`
     /// attribute of this object.
-    const bdlt::Datetime& utcEndTime() const;
+    const bdlt::Datetime& utcEndTime() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// `utcStartTime` attribute of this object.
-    const bdlt::Datetime& utcStartTime() const;
+    const bdlt::Datetime& utcStartTime() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                         // Aspects
 
@@ -361,6 +364,8 @@ bool LocalTimePeriod::isValidUtcStartAndEndTime(
                                             const bdlt::Datetime& utcStartTime,
                                             const bdlt::Datetime& utcEndTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utcEndTime);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utcStartTime);
     bdlt::Datetime defaultObj;
     return utcStartTime == utcEndTime
         || (utcStartTime != defaultObj && utcEndTime != defaultObj
@@ -393,7 +398,8 @@ LocalTimePeriod::LocalTimePeriod(const LocalTimeDescriptor& descriptor,
 , d_utcStartTime(utcStartTime)
 , d_utcEndTime(utcEndTime)
 {
-    BSLS_ASSERT(isValidUtcStartAndEndTime(d_utcStartTime, d_utcEndTime));
+    BSLS_ASSERT_NONCONVEYOR(
+                      isValidUtcStartAndEndTime(d_utcStartTime, d_utcEndTime));
 }
 
 inline
@@ -429,7 +435,8 @@ LocalTimePeriod::LocalTimePeriod(bslmf::MovableRef<LocalTimePeriod> original,
 inline
 LocalTimePeriod::~LocalTimePeriod()
 {
-    BSLS_ASSERT(isValidUtcStartAndEndTime(d_utcStartTime, d_utcEndTime));
+    BSLS_ASSERT_NONCONVEYOR(
+                      isValidUtcStartAndEndTime(d_utcStartTime, d_utcEndTime));
 }
 
 // MANIPULATORS
@@ -467,7 +474,8 @@ inline
 void LocalTimePeriod::setUtcStartAndEndTime(const bdlt::Datetime& utcStartTime,
                                             const bdlt::Datetime& utcEndTime)
 {
-    BSLS_ASSERT(isValidUtcStartAndEndTime(utcStartTime, utcEndTime));
+    BSLS_ASSERT_NONCONVEYOR(
+                          isValidUtcStartAndEndTime(utcStartTime, utcEndTime));
 
     d_utcStartTime = utcStartTime;
     d_utcEndTime   = utcEndTime;
@@ -478,7 +486,7 @@ void LocalTimePeriod::swap(LocalTimePeriod& other)
 {
     // 'swap' is undefined for objects with non-equal allocators.
 
-    BSLS_ASSERT(get_allocator() == other.get_allocator());
+    BSLS_ASSERT_NONCONVEYOR(get_allocator() == other.get_allocator());
 
     bslalg::SwapUtil::swap(&d_descriptor,   &other.d_descriptor);
     bslalg::SwapUtil::swap(&d_utcStartTime, &other.d_utcStartTime);
@@ -501,6 +509,7 @@ const LocalTimeDescriptor& LocalTimePeriod::descriptor() const
 inline
 LocalTimePeriod::allocator_type LocalTimePeriod::get_allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_descriptor.description().get_allocator();
 }
 
@@ -522,6 +531,8 @@ const bdlt::Datetime& LocalTimePeriod::utcStartTime() const
 inline
 bool baltzo::operator==(const LocalTimePeriod& lhs, const LocalTimePeriod& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.descriptor()   == rhs.descriptor()
         && lhs.utcStartTime() == rhs.utcStartTime()
         && lhs.utcEndTime()   == rhs.utcEndTime();
@@ -530,6 +541,8 @@ bool baltzo::operator==(const LocalTimePeriod& lhs, const LocalTimePeriod& rhs)
 inline
 bool baltzo::operator!=(const LocalTimePeriod& lhs, const LocalTimePeriod& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.descriptor()   != rhs.descriptor()
         || lhs.utcStartTime() != rhs.utcStartTime()
         || lhs.utcEndTime()   != rhs.utcEndTime();

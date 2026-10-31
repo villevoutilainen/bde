@@ -150,6 +150,8 @@ BSLS_IDENT("$Id: balm_metricrecord.h,v 1.8 2008/04/16 20:00:49 hversche Exp $")
 #include <bslmf_istriviallycopyable.h>
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_iosfwd.h>
 
 namespace BloombergLP {
@@ -238,45 +240,55 @@ class MetricRecord {
 
     /// Return a reference to the modifiable `count` attribute representing
     /// the number of individually recorded values.
-    int& count();
+    int& count()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable `total` attribute representing
     /// the sum of the individually recorded values.
-    double& total();
+    double& total()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable `max` attribute representing
     /// the maximum of the individually recorded values.
-    double& max();
+    double& max()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable `min` attribute representing
     /// the minimum of the individually recorded values.
-    double& min();
+    double& min()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
     /// Return a reference to the non-modifiable `metricId` attribute
     /// representing the identifier for the metric being recorded.
-    const MetricId& metricId() const;
+    const MetricId& metricId() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable `count` attribute
     /// representing the number of individually recorded values.
-    const int& count() const;
+    const int& count() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable `total` attribute
     /// representing the sum of the individually recorded values.
-    const double& total() const;
+    const double& total() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable `max` attribute
     /// representing the maximum of the individually recorded values.
-    const double& max() const;
+    const double& max() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable `min` attribute
     /// representing the minimum of the individually recorded values.
-    const double& min() const;
+    const double& min() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Write a description of this record to the specified `stream` and
     /// return a reference to the modifiable `stream`.
-    bsl::ostream& print(bsl::ostream& stream) const;
+    bsl::ostream& print(bsl::ostream& stream) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // ============================================================================
@@ -417,6 +429,8 @@ const double& MetricRecord::min() const
 inline
 bool balm::operator==(const MetricRecord& lhs, const MetricRecord& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.metricId() == rhs.metricId()
         && lhs.count()    == rhs.count()
         && lhs.total()    == rhs.total()
@@ -434,6 +448,8 @@ inline
 bsl::ostream& balm::operator<<(bsl::ostream&       stream,
                                const MetricRecord& record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&record);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return record.print(stream);
 }
 

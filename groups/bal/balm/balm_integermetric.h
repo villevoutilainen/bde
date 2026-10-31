@@ -182,6 +182,7 @@ BSLS_IDENT("$Id: $")
 #include <balm_metricsmanager.h>
 #include <balm_publicationtype.h>
 
+#include <bsls_assert.h>
 #include <bsls_atomic.h>
 
 namespace BloombergLP {
@@ -445,6 +446,8 @@ IntegerMetric::IntegerMetric(const char     *category,
                              MetricsManager *manager)
 : d_collector_p(lookupCollector(category, name, manager))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_collector_p);
     d_isEnabled_p = (d_collector_p
                   ? &d_collector_p->metricId().category()->isEnabledRaw() : 0);
 }
@@ -454,6 +457,8 @@ IntegerMetric::IntegerMetric(const MetricId&  metricId,
                              MetricsManager  *manager)
 : d_collector_p(lookupCollector(metricId, manager))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_collector_p);
     d_isEnabled_p = (d_collector_p
                   ? &d_collector_p->metricId().category()->isEnabledRaw() : 0);
 }
@@ -462,6 +467,8 @@ inline
 IntegerMetric::IntegerMetric(IntegerCollector *collector)
 : d_collector_p(collector)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_collector_p);
     d_isEnabled_p = &d_collector_p->metricId().category()->isEnabledRaw();
 }
 
@@ -510,12 +517,15 @@ IntegerCollector *IntegerMetric::collector()
 inline
 const IntegerCollector *IntegerMetric::collector() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_collector_p;
 }
 
 inline
 MetricId IntegerMetric::metricId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_collector_p);
     return d_collector_p ? d_collector_p->metricId() : MetricId();
 }
 

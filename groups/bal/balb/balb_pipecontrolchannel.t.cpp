@@ -244,6 +244,7 @@ namespace {
         // PRIVATE MANIPULATORS
         void onMessage(const bslstl::StringRef& message)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             if ("EXIT" != message) {
                 d_messages.push_back(message);
             }
@@ -286,12 +287,14 @@ namespace {
         // ACCESSORS
         bsl::size_t numMessages() const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
             return d_messages.size();
         }
 
         const bsl::string& message(int index) const
         {
-            return d_messages[index];
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
+            return BSLS_ASSERT_CONVEYOR_REF(d_messages[index]);
         }
     };
 // ```
@@ -773,12 +776,21 @@ int main(int argc, char *argv[])
         server.stop();  // block until shutdown
 
         // Finally, let's ensure the server received all messages sent, where
+        BSLS_ASSERT_CONVEYOR_OBJECT(&server);
         // a message is considered to end on a newline.  Note that
+        BSLS_ASSERT_CONVEYOR_OBJECT(&server);
         // `ControlServer` does not store the "EXIT" message.
+        BSLS_ASSERT_CONVEYOR_OBJECT(&server);
         ASSERT(3 == server.numMessages());
-        ASSERT(bsl::string("Hello,") == server.message(0));
-        ASSERT(bsl::string("world")  == server.message(1));
-        ASSERT(bsl::string("!")      == server.message(2));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&server);
+        ASSERT(bsl::string("Hello,")
+               == BSLS_ASSERT_CONVEYOR_REF(server.message(0)));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&server);
+        ASSERT(bsl::string("world")
+               == BSLS_ASSERT_CONVEYOR_REF(server.message(1)));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&server);
+        ASSERT(bsl::string("!")
+               == BSLS_ASSERT_CONVEYOR_REF(server.message(2)));
       } break;
       case 14: {
         // --------------------------------------------------------------------
@@ -1483,11 +1495,16 @@ int main(int argc, char *argv[])
             rc = bdls::PipeUtil::send(pipeName, "EXIT\n");
             ASSERT(0 == rc);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&server);
             server.stop();  // blocks until shutdown
 
             ASSERT(2 == server.numMessages());
-            ASSERT(bsl::string(MSG0) == server.message(0));
-            ASSERT(bsl::string(MSG1) == server.message(1));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&server);
+            ASSERT(bsl::string(MSG0)
+                   == BSLS_ASSERT_CONVEYOR_REF(server.message(0)));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&server);
+            ASSERT(bsl::string(MSG1)
+                   == BSLS_ASSERT_CONVEYOR_REF(server.message(1)));
         }
 #endif
       } break;
@@ -1558,8 +1575,10 @@ int main(int argc, char *argv[])
 // Finally, let's ensure the server received each control message sent.
 // ```
     ASSERT(2 == server.numMessages());
-    ASSERT(bsl::string(MSG0) == server.message(0));
-    ASSERT(bsl::string(MSG1) == server.message(1));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&server);
+    ASSERT(bsl::string(MSG0) == BSLS_ASSERT_CONVEYOR_REF(server.message(0)));
+    BSLS_ASSERT_CONVEYOR_OBJECT(&server);
+    ASSERT(bsl::string(MSG1) == BSLS_ASSERT_CONVEYOR_REF(server.message(1)));
 // ```
 
 #endif
@@ -1967,25 +1986,31 @@ int main(int argc, char *argv[])
 
             balb::PipeControlChannel channel(&noop, &ta);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&channel);
             rc = channel.start(pipeName1);
             ASSERT(0 == rc);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&channel);
             ASSERT(pipeName1 == channel.pipeName());
 
             channel.shutdown();
             channel.stop();
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&channel);
             rc = channel.start(pipeName2);
             ASSERT(0 == rc);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&channel);
             ASSERT(pipeName2 == channel.pipeName());
 
             channel.shutdown();
             channel.stop();
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&channel);
             rc = channel.start(pipeName2);
             ASSERT(0 == rc);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&channel);
             ASSERT(pipeName2 == channel.pipeName());
 
             channel.shutdown();
@@ -2024,9 +2049,11 @@ int main(int argc, char *argv[])
 
             ASSERT(&ta == Channel.allocator());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&channel);
             int rc = channel.start(pipeName);
             ASSERT(0 == rc);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&channel);
             ASSERT(pipeName == channel.pipeName());
 
             channel.shutdown();

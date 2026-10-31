@@ -139,6 +139,8 @@ bool within(double value, Units scale, double expectedS, double windowMs)
 /// ordered by their the `metricId` method.
 bool recordLess(const balm::MetricRecord& lhs, const balm::MetricRecord& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
 
     return lhs.metricId() < rhs.metricId();
 }
@@ -224,26 +226,30 @@ class TestPublisher : public balm::Publisher {
     /// groups as the published sample, but the returned sample does not
     /// refer to the same addresses in memory: so the returned sample is
     /// equivalent but *not* *equal* to the published sample.
-    const balm::MetricSample& lastSample() const;
+    const balm::MetricSample& lastSample() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable sequence of records
     /// containing the values of the records in the last sample passed to
     /// the `publish` method in *sorted* order, or an empty vector if the
     /// `publish` method has not been called since this object was created
     /// or last reset.
-    const bsl::vector<balm::MetricRecord>& lastRecords() const;
+    const bsl::vector<balm::MetricRecord>& lastRecords() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable elapsed time value of the
     /// last sample passed to the `publish` method.  The behavior is
     /// undefined unless the `publish` method has invoked since this object
     /// was created or last reset.
-    const bsl::set<bsls::TimeInterval>& lastElapsedTimes() const;
+    const bsl::set<bsls::TimeInterval>& lastElapsedTimes() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable time stamp of the
     /// last sample passed to the `publish` method.  The behavior is
     /// undefined unless the `publish` method has invoked since this object
     /// was created or last reset.
-    const bdlt::DatetimeTz& lastTimeStamp() const;
+    const bdlt::DatetimeTz& lastTimeStamp() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the index into `lastRecords()` of the specified `id`, or -1
     /// if there is no record with `id` in `lastRecords()`.
@@ -280,6 +286,8 @@ TestPublisher::~TestPublisher()
 // MANIPULATORS
 void TestPublisher::publish(const balm::MetricSample& sample)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
     d_numInvocations++;
 
     d_sample.removeAllRecords();
@@ -298,10 +306,14 @@ void TestPublisher::publish(const balm::MetricSample& sample)
     balm::MetricSample::const_iterator sIt = sample.begin();
     for (; sIt != sample.end(); ++sIt) {
         balm::MetricSampleGroup::const_iterator gIt = sIt->begin();
-        BSLS_ASSERT(gIt != sIt->end());
+        BSLS_ASSERT_CONVEYOR_OBJECT(gIt);
+        BSLS_ASSERT_NONCONVEYOR(gIt != sIt->end());
         d_recordBuffer.push_back(*gIt);
+        BSLS_ASSERT_CONVEYOR_OBJECT(sIt);
         balm::MetricRecord *head = &d_recordBuffer.back();
+        BSLS_ASSERT_CONVEYOR_OBJECT(sIt);
         for (++gIt; gIt != sIt->end(); ++gIt) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(gIt);
             d_recordBuffer.push_back(*gIt);
         }
         d_sample.appendGroup(head, sIt->numRecords(), sIt->elapsedTime());
@@ -313,6 +325,7 @@ void TestPublisher::publish(const balm::MetricSample& sample)
 
 void TestPublisher::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_numInvocations = 0;
     d_sample.removeAllRecords();
     d_recordBuffer.clear();
@@ -343,6 +356,7 @@ const bsl::set<bsls::TimeInterval>& TestPublisher::lastElapsedTimes() const
 inline
 const bdlt::DatetimeTz& TestPublisher::lastTimeStamp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sample.timeStamp();
 }
 
@@ -355,6 +369,7 @@ const bsl::vector<balm::MetricRecord>& TestPublisher::lastRecords() const
 inline
 int TestPublisher::indexOf(const balm::MetricId& id) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     balm::MetricRecord searchRecord(id);
     bsl::vector<balm::MetricRecord>::const_iterator it =
                                    bsl::lower_bound(d_sortedRecords.begin(),
@@ -363,6 +378,7 @@ int TestPublisher::indexOf(const balm::MetricId& id) const
     if (it == d_sortedRecords.end()) {
         return -1;                                                    // RETURN
     }
+    BSLS_ASSERT_CONVEYOR_OBJECT(it);
     return (it->metricId() == id)
           ? static_cast<int>(it - d_sortedRecords.begin())
           : -1;
@@ -897,6 +913,7 @@ int main(int argc, char *argv[])
             {
                 Obj mX(collector);  const Obj& MX = mX;
                 ASSERT(MX.isActive());
+                BSLS_ASSERT_CONVEYOR_OBJECT(collector);
                 ASSERT(balm::MetricRecord(collector->metricId()) ==
                        recordValue(collector));
 
@@ -910,6 +927,7 @@ int main(int argc, char *argv[])
             ASSERT(1.0 > record.min());
             ASSERT(1.0 > record.max());
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(collector);
         }
         {
             if (veryVerbose) cout << "\tTest with disabled category" << endl;
@@ -917,9 +935,11 @@ int main(int argc, char *argv[])
             MetricsManager manager(Z);
             balm::Collector *collector =
                    manager.collectorRepository().getDefaultCollector("A", "A");
+            BSLS_ASSERT_CONVEYOR_OBJECT(collector);
             const Category *CATEGORY = collector->metricId().category();
 
             // Test category always disabled
+            BSLS_ASSERT_CONVEYOR_OBJECT(collector);
             manager.setCategoryEnabled(CATEGORY, false);
             {
                 Obj mX(collector);  const Obj& MX = mX;
@@ -933,6 +953,7 @@ int main(int argc, char *argv[])
             // Test category always disabled only at construction
             manager.setCategoryEnabled(CATEGORY, false);
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(collector);
                 Obj mX(collector);  const Obj& MX = mX;
                 ASSERT(!MX.isActive());
                 ASSERT(balm::MetricRecord(collector->metricId()) ==
@@ -946,6 +967,7 @@ int main(int argc, char *argv[])
             // Test category always disabled only at destruction
             manager.setCategoryEnabled(CATEGORY, true);
             {
+                BSLS_ASSERT_CONVEYOR_OBJECT(collector);
                 Obj mX(collector);  const Obj& MX = mX;
                 ASSERT(MX.isActive());
                 ASSERT(balm::MetricRecord(collector->metricId()) ==
@@ -996,7 +1018,9 @@ int main(int argc, char *argv[])
 
             ASSERT(0 == tp1.invocations());
             ASSERT(0 == tp2.invocations());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
             ASSERT(0 == tp1.lastRecords().size());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
             ASSERT(0 == tp2.lastRecords().size());
 
             bsl::vector<balm::MetricRecord>               allRecords(Z);
@@ -1019,6 +1043,7 @@ int main(int argc, char *argv[])
                                                         VALUES[i].d_timeStamp);
                 bdlt::DatetimeTz TIME_STAMP(bdlt::Datetime(dt), 0);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                 sample.setTimeStamp(TIME_STAMP);
                 sample.appendGroup(records.data(),
                                    static_cast<int>(records.size()),
@@ -1026,6 +1051,7 @@ int main(int argc, char *argv[])
 
                 tp2.reset();
                 ASSERT(0 == tp2.invocations());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                 ASSERT(0 == tp2.lastRecords().size());
 
                 balm::Publisher *p1_p = &tp1;
@@ -1035,47 +1061,67 @@ int main(int argc, char *argv[])
                 p2_p->publish(sample);
 
                 ASSERT(i + 1 == tp1.invocations());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                 ASSERT(1     == tp2.invocations());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                 ASSERT(i + 1 == tp1.lastSample().numGroups());
                 ASSERT(i + 1 == tp2.lastSample().numGroups());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                 ASSERT(sample.numRecords() == tp1.lastSample().numRecords());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                 ASSERT(sample.numRecords() == tp2.lastSample().numRecords());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                 ASSERT(sample.numRecords() ==
                                    static_cast<int>(tp1.lastRecords().size()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                 ASSERT(sample.numRecords() ==
                                    static_cast<int>(tp2.lastRecords().size()));
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                 ASSERT(TIME_STAMP == tp1.lastTimeStamp());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                 ASSERT(TIME_STAMP == tp2.lastTimeStamp());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                 ASSERT(i + 1 ==
                               static_cast<int>(tp1.lastElapsedTimes().size()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                 ASSERT(i + 1 ==
                               static_cast<int>(tp2.lastElapsedTimes().size()));
 
                 for (int j = 0; j < sample.numGroups(); ++j) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                     ASSERT(sample.sampleGroup(j).elapsedTime() ==
                            tp1.lastSample().sampleGroup(j).elapsedTime());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                     ASSERT(sample.sampleGroup(j).elapsedTime() ==
                            tp2.lastSample().sampleGroup(j).elapsedTime());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                     ASSERT(sample.sampleGroup(j).numRecords() ==
                            tp1.lastSample().sampleGroup(j).numRecords());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                     ASSERT(sample.sampleGroup(j).numRecords() ==
                            tp2.lastSample().sampleGroup(j).numRecords());
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                     ASSERT(tp1.lastElapsedTimes().end() !=
                            tp1.lastElapsedTimes().find(
                                sample.sampleGroup(j).elapsedTime()));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                     ASSERT(tp2.lastElapsedTimes().end() !=
                            tp2.lastElapsedTimes().find(
                                sample.sampleGroup(j).elapsedTime()));
 
                     for (int k=0; k<sample.sampleGroup(j).numRecords(); ++k) {
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                         ASSERT(sample.sampleGroup(j).records()[k] ==
                                tp1.lastSample().sampleGroup(j).records()[k]);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                         ASSERT(sample.sampleGroup(j).records()[k] ==
                                tp1.lastSample().sampleGroup(j).records()[k]);
                     }
@@ -1083,13 +1129,17 @@ int main(int argc, char *argv[])
 
                 bsl::sort(allRecords.begin(), allRecords.end(), recordLess);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                 ASSERT(allRecords == tp1.lastRecords());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                 ASSERT(allRecords == tp2.lastRecords());
 
                 bsl::vector<balm::MetricRecord>::const_iterator it =
                                                            allRecords.begin();
                 for (; it != allRecords.end(); ++it) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(it);
                     ASSERT(tp1.contains(it->metricId()));
+                    BSLS_ASSERT_CONVEYOR_OBJECT(it);
                     ASSERT(tp2.contains(it->metricId()));
                 }
                 ASSERT(!tp1.contains(registry.getId("Bad", "Bad")));
@@ -1202,17 +1252,27 @@ int main(int argc, char *argv[])
                 ASSERT(MX.isActive());
                 ASSERT(MY.isActive());
                 ASSERT(MZ.isActive());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             }
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             manager.publishAll();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             ASSERT(1 == publisher.invocations());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             ASSERT(3 == publisher.lastRecords().size());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             ASSERT(publisher.contains(registry.getId("A", "A")));
             ASSERT(publisher.contains(registry.getId("B", "B")));
             ASSERT(publisher.contains(registry.getId("C", "C")));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             for (bsl::size_t i = 0; i < publisher.lastRecords().size(); ++i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
                 ASSERT(1   == publisher.lastRecords()[i].count());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
                 ASSERT(1.0 > publisher.lastRecords()[i].total());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
                 ASSERT(1.0 > publisher.lastRecords()[i].min());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
                 ASSERT(1.0 > publisher.lastRecords()[i].max());
             }
         }
@@ -1234,20 +1294,31 @@ int main(int argc, char *argv[])
                 Obj mZ(&metric);
 
                 const Obj& MY = mY;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
                 const Obj& MZ = mZ;
 
                 ASSERT(MY.isActive());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
                 ASSERT(MZ.isActive());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             }
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             manager.publishAll();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             ASSERT(1 == publisher.invocations());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             ASSERT(2 == publisher.lastRecords().size());
             ASSERT(publisher.contains(registry.getId("A", "A")));
             ASSERT(publisher.contains(registry.getId("B", "B")));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
             for (bsl::size_t i = 0; i < publisher.lastRecords().size(); ++i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
                 ASSERT(1   == publisher.lastRecords()[i].count());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
                 ASSERT(1.0 > publisher.lastRecords()[i].total());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
                 ASSERT(1.0 > publisher.lastRecords()[i].min());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&publisher);
                 ASSERT(1.0 > publisher.lastRecords()[i].max());
             }
             balm::DefaultMetricsManager::destroy();

@@ -308,6 +308,7 @@ bool problem()
 /// return type, otherwise leave it unmodified.
 void stripReturnType(bsl::string *dst, const bsl::string& symbol)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(dst);
     const bsl::size_t npos = bsl::string::npos;
 
     *dst = symbol;
@@ -445,6 +446,8 @@ void doEraseTest(int argc, char **argv)
 void checkOutput(const bsl::string&               str,
                  const bsl::vector<const char *>& matches)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&matches);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     bslma::TestAllocator localAllocator;
     bdlma::SequentialAllocator sa(&localAllocator);
 
@@ -485,6 +488,7 @@ const char *nullGuard(const char *string)
 static
 void testStackTrace(const balst::StackTrace& st)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&st);
     LOOP_ASSERT(st.length(), st.length() > 0);
 
     bool reachedMain = false, pastMain = false;   // The trace above, at, and
@@ -492,18 +496,21 @@ void testStackTrace(const balst::StackTrace& st)
                                                   // different properties.
 
     for (int i = 0; i < st.length(); ++i) {
-        const Frame& frame = st[i];
+        const Frame& frame = BSLS_ASSERT_CONVEYOR_REF(st[i]);
 
         ASSERTV(i, st.length(), frame.address());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
         ASSERT((PLAT_WIN && !DEBUG_ON) || frame.libraryFileName().c_str());
 
         // The very last symbol might be weird on some platforms, so tolerate
         // that.
 
         if (i == st.length() - 1) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
             continue;
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
         if (npos != frame.symbolName().find("main")) {
             reachedMain = true;
         }
@@ -588,6 +595,7 @@ void pushVec(bsl::vector<Data> *dst,
              const char        *mangledSearch,
              const char        *baseName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(dst);
     Data data;
 
     data.d_line          = line;
@@ -657,6 +665,7 @@ void pushVec(bsl::vector<Data> *dst,
 static
 void expandPath(bsl::string *result, const char *basename)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     ASSERT(basename);
     const char *underscore = bsl::strchr(basename, '_');
     ASSERT(underscore);    ASSERT(3 < underscore - basename);
@@ -762,12 +771,14 @@ void stackTop()
         }
 
         int numStackTop                          = 0;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&st);
         int numRecurseABunchOfTimes              = 0;
         int numBALST_STACKTRACEUTIL_TEST_CASE_11 = 0;
         int numMain                              = 0;
 
         for (int i = 0; i < st.length(); ++i) {
-            const char *sym = st[i].symbolName().c_str();
+            const char *sym = BSLS_ASSERT_CONVEYOR_REF(
+                                                   st[i]).symbolName().c_str();
 
             numStackTop += !!bsl::strstr(sym, "stackTop");
             numRecurseABunchOfTimes +=
@@ -915,19 +926,21 @@ void topOfTheStack(void *, void *, void *, int numRecurses)
     const int         len  = st.length();
     const bsl::size_t npos = bsl::string::npos;
 
-    ASSERTV(st[0].symbolName(),
-                 0 == len || npos != st[0].symbolName().find("topOfTheStack"));
+    ASSERTV(BSLS_ASSERT_CONVEYOR_REF(st[0]).symbolName(),
+                 0 == len || npos != BSLS_ASSERT_CONVEYOR_REF(
+                                    st[0]).symbolName().find("topOfTheStack"));
 
     int tots = 0;
     int rabo = 0;
     int lffs = 0;
     int tc10 = 0;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&st);
     int ns2  = 0;
     int ns3  = 0;
     int ns4  = 0;
 
     for (int i = 0; i < len; ++i) {
-        const bsl::string& s = st[i].symbolName();
+        const bsl::string& s = BSLS_ASSERT_CONVEYOR_REF(st[i]).symbolName();
 
         if (npos != s.find("topOfTheStack")) {
             ++tots;
@@ -992,16 +1005,20 @@ void case_8_top()
 
             for (int i = 0; i < st.length(); ++i) {
                 const balst::StackTraceFrame& frame = st[i];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
                 const char *lnBegin = frame.libraryFileName().c_str();
                 const char *ln = lnBegin + bsl::strlen(lnBegin);
                 while (ln > lnBegin && '/' != ln[-1] && '\\' != ln[-1]) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
                     --ln;
                 }
                 if (bsl::strstr(lnBegin, "lib")) {
                     ln = lnBegin;
                 }
+                BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
                 const char *snBegin = frame.sourceFileName().c_str();
                 const char *sn = snBegin + bsl::strlen(snBegin);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
                 while (sn > snBegin && '/' != sn[-1] && '\\' != sn[-1]) {
                     --sn;
                 }
@@ -1186,6 +1203,7 @@ void case_07_top()
     for (int i = 0; i < st.length(); ++i) {
         const balst::StackTraceFrame& frame = st[i];
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
         size_t mangled = frame.mangledSymbolName().length();
         if (mangled > maxMangled) {
             maxMangled = mangled;
@@ -1245,24 +1263,28 @@ void case_5_top(bool demangle, bool useTestAllocator)
         if (DEBUG_ON || !PLAT_WIN) {
             // check that the names are right
 
-            bool dot = '.' == *st[0].symbolName().c_str();
+            bool dot = '.' == *BSLS_ASSERT_CONVEYOR_REF(
+                                                   st[0]).symbolName().c_str();
 
             const char *match = ".case_5_top";
             match += !dot;
             int len = (int) bsl::strlen(match);
             bsl::string symbolName(&ta);
-            stripReturnType(&symbolName, st[0].symbolName());
+            stripReturnType(&symbolName,
+                            BSLS_ASSERT_CONVEYOR_REF(st[0]).symbolName());
             const char *sn = symbolName.c_str();
             LOOP3_ASSERT(sn, match, len,
                                    !demangle || !bsl::strncmp(sn, match, len));
             LOOP2_ASSERT(sn, match,              bsl::strstr( sn, match));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&st);
             if ((!FORMAT_ELF || FORMAT_DWARF) && !FORMAT_DLADDR && DEBUG_ON) {
                 // `case_5_top` is global -- elf can't find source file names
                 // for globals
 
                 const char *sfnMatch = "balst_stacktraceutil.t.cpp";
-                const char *sfn = st[0].sourceFileName().c_str();
+                const char *sfn = BSLS_ASSERT_CONVEYOR_REF(
+                                               st[0]).sourceFileName().c_str();
                 sfn = nullGuard(sfn);
 
                 int sfnMatchLen = (int) bsl::strlen(sfnMatch);
@@ -1274,12 +1296,14 @@ void case_5_top(bool demangle, bool useTestAllocator)
 
             match = ".case_5_bottom";
             match += !dot;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&st);
             len = (int) bsl::strlen(match);
 
             bool finished = false;
             int recursersFound = 0;
             for (int i = 1; i < st.length(); ++i) {
-                stripReturnType(&symbolName, st[i].symbolName());
+                stripReturnType(&symbolName,
+                                BSLS_ASSERT_CONVEYOR_REF(st[i]).symbolName());
                 sn = symbolName.c_str();
                 if (!sn || !*sn) {
                     ASSERT(sn && *sn);
@@ -1338,12 +1362,14 @@ void case_5_top(bool demangle, bool useTestAllocator)
                     ASSERTV(i, sn, match, len, !bsl::strncmp(sn, match, len));
                 }
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&st);
                 recursersFound += isMatch;
 
                 if (! sfnMatch) {
                     sfnMatch = "balst_stacktraceutil.t.cpp";
                 }
-                const char *sfn = st[i].sourceFileName().c_str();
+                const char *sfn = BSLS_ASSERT_CONVEYOR_REF(
+                                               st[i]).sourceFileName().c_str();
 
                 if (!(FORMAT_ELF && !FORMAT_DWARF &&
                                             (!isMatch || e_STATIC_DISABLED)) &&
@@ -1719,16 +1745,19 @@ int top(bslma::Allocator *alloc)
                                                       addresses + ignoreFrames,
                                                       na);
             ASSERT(!rc);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&st);
             LOOP_ASSERT(st.length(), st.length() == na);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&st);
             int ii = 0;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&st);
             const char *sn;
-            sn = st[ii].symbolName().c_str();
+            sn = BSLS_ASSERT_CONVEYOR_REF(st[ii]).symbolName().c_str();
             ASSERTV(sn, ignoreFrames, bsl::strstr(sn, "top"));
-            sn = st[++ii].symbolName().c_str();
+            sn = BSLS_ASSERT_CONVEYOR_REF(st[++ii]).symbolName().c_str();
             LOOP_ASSERT(sn, bsl::strstr(sn, "bottom"));
-            sn = st[++ii].symbolName().c_str();
+            sn = BSLS_ASSERT_CONVEYOR_REF(st[++ii]).symbolName().c_str();
             LOOP_ASSERT(sn, bsl::strstr(sn, "main"));
 
             LOOP_ASSERT(st, !problem());
@@ -1741,16 +1770,19 @@ int top(bslma::Allocator *alloc)
         ASSERT(!rc);
 
         if (!PLAT_WIN || DEBUG_ON) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&st);
             LOOP_ASSERT(st.length(), 3 == st.length());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&st);
             int ii = 0;
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&st);
             const char *sn;
-            sn = st[ii].symbolName().c_str();
+            sn = BSLS_ASSERT_CONVEYOR_REF(st[ii]).symbolName().c_str();
             LOOP_ASSERT(sn, bsl::strstr(sn, "top"));
-            sn = st[++ii].symbolName().c_str();
+            sn = BSLS_ASSERT_CONVEYOR_REF(st[++ii]).symbolName().c_str();
             ASSERTV(sn, bsl::strstr(sn, "bottom"));
-            sn = st[++ii].symbolName().c_str();
+            sn = BSLS_ASSERT_CONVEYOR_REF(st[++ii]).symbolName().c_str();
             LOOP_ASSERT(sn, bsl::strstr(sn, "main"));
         }
 
@@ -1931,6 +1963,7 @@ void bottom(bslma::Allocator *alloc)
         for (int i = 0; i < stackTrace.length(); ++i) {
             const balst::StackTraceFrame& frame = stackTrace[i];
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
             const char *symbol = frame.isSymbolNameKnown()
                                ? frame.symbolName().c_str()
                                : "--unknown__";
@@ -2236,6 +2269,7 @@ int main(int argc, char *argv[])
 
             const balst::StackTraceFrame& topFrame = st[0];
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&topFrame);
             ASSERT( topFrame.isAddressKnown());
 
             if (!PLAT_WIN || DEBUG_ON) {
@@ -2384,21 +2418,27 @@ int main(int argc, char *argv[])
                 expName.resize(pos);
             }
 
-            BSLS_ASSERT(npos != expName.find("BloombergLP"));
+            BSLS_ASSERT_NONCONVEYOR(npos != expName.find("BloombergLP"));
             BSLS_ASSERT(!expName.empty());
             BSLS_ASSERT(baseName);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
             ASSERTV(LINE, expName, (passed.d_symbolPresent =
                                                  !frame.symbolName().empty()));
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
             // Search for char delimiting between return value and func name.
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
             bsl::size_t pos = frame.symbolName().rfind('(');
             pos = frame.symbolName().find_last_of(" *&", pos);
             pos = npos == pos ? 0 : pos + 1;
-            BSLS_ASSERT(pos <= frame.symbolName().length());
+            BSLS_ASSERT_NONCONVEYOR(pos <= frame.symbolName().length());
 
             const char *name = &frame.symbolName()[pos];
+            BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
             ASSERTV(LINE, expName, name, (passed.d_symbolGood =
                                          0 == bsl::strncmp(expName.c_str(),
                                                            name,
@@ -2415,6 +2455,7 @@ int main(int argc, char *argv[])
             if (DEBUG_ON && (!FORMAT_ELF || FORMAT_DWARF) && !FORMAT_DLADDR) {
                 ASSERTV(LINE, expName, (passed.d_sourceFileName =
                                                frame.isSourceFileNameKnown()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
                 if (frame.isSourceFileNameKnown()) {
                     ASSERTV(LINE, frame.sourceFileName(), baseName,
                                        (passed.d_sourceFileName &=
@@ -2427,6 +2468,7 @@ int main(int argc, char *argv[])
                                       : '/' == frame.sourceFileName()[0];
 
                     TC::expandPath(&path, baseName);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
                     ASSERTV(LINE, frame.sourceFileName(), path,
                                                              passed.d_fullPath,
                                        (passed.d_sourceFileName &=
@@ -2468,9 +2510,11 @@ int main(int argc, char *argv[])
 
             for (unsigned ii = 0; ii < v.size(); ++ii) {
                 const balst::StackTraceFrame& frame  = st[ii];
+                BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
                 const TC::Passed&             passed = v[ii].d_passed;
 
                 const char slash = static_cast<char>(PLAT_WIN ? '\\' : '/');
+                BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
                 bsl::size_t b = frame.sourceFileName().rfind(slash);
                 b = npos == b ? 0 : b;
                 const char *foundBaseName = frame.sourceFileName().c_str() +
@@ -2755,6 +2799,7 @@ int main(int argc, char *argv[])
             IntPtr offset = frame.offsetFromSymbol();
 
             if (!PLAT_WIN || DEBUG_ON) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
                 LOOP2_ASSERT(i, frame.symbolName(),
                                       npos != frame.symbolName().find("main"));
 

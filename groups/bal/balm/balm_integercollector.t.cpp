@@ -146,8 +146,11 @@ void ConcurrencyTest::execute()
 
     Obj *mX = d_collector_p; const Obj *MX = mX;
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(MX);
     balm::MetricRecord empty(MX->metricId());
+    BSLS_ASSERT_CONVEYOR_OBJECT(MX);
     balm::MetricRecord r1(MX->metricId(), 1, 2, 3, 5);
+    BSLS_ASSERT_CONVEYOR_OBJECT(MX);
     balm::MetricRecord r2(MX->metricId(), 7, 8, 9, 10);
 
     // Test simultaneous set and loads, verify values are set/loaded
@@ -494,8 +497,10 @@ int main(int argc, char *argv[])
 
                 count += VALUES[idx].d_count;
                 total += VALUES[idx].d_total;
-                min   =  bsl::min(VALUES[idx].d_min, min);
-                max   =  bsl::max(VALUES[idx].d_max, max);
+                min   =  bsl::min(BSLS_ASSERT_CONVEYOR_REF(VALUES[idx]).d_min,
+                                  min);
+                max   =  bsl::max(BSLS_ASSERT_CONVEYOR_REF(VALUES[idx]).d_max,
+                                  max);
 
                 mX.accumulateCountTotalMinMax(VALUES[idx].d_count,
                                               VALUES[idx].d_total,
@@ -637,8 +642,10 @@ int main(int argc, char *argv[])
                 mX.update(UPDATES[INDEX]);
 
                 total += UPDATES[INDEX];
-                min   = bsl::min(min, UPDATES[INDEX]);
-                max   = bsl::max(max, UPDATES[INDEX]);
+                min   = bsl::min(min,
+                                 BSLS_ASSERT_CONVEYOR_REF(UPDATES[INDEX]));
+                max   = bsl::max(max,
+                                 BSLS_ASSERT_CONVEYOR_REF(UPDATES[INDEX]));
 
                 MX.load(&r1);
                 ASSERT(METRIC == r1.metricId().description());

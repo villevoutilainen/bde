@@ -526,7 +526,8 @@ class OptionValue {
     /// `OptionType::TypeToEnum<TYPE>::value == type()`, and
     /// `false == isNull()`.
     template <class TYPE>
-    TYPE& the();
+    TYPE& the()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Aspects
 
@@ -556,7 +557,8 @@ class OptionValue {
     /// `OptionType::typeToEnum<TYPE>::value == type()`, and
     /// `false == isNull()`.
     template <class TYPE>
-    const TYPE& the() const;
+    const TYPE& the() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the type of this command-line-option value.  The type
     /// `OptionType::e_VOID` represents the unset state.
@@ -803,7 +805,8 @@ template <class TYPE>
 inline
 void OptionValue::set(const TYPE& value)
 {
-    BSLS_ASSERT(d_value.is<TYPE>() ||
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_value.is<TYPE>() ||
                 (d_value.is<OptionValue_NullOf>() &&
                  d_value.the<OptionValue_NullOf>().isType(value)));
 
@@ -813,7 +816,8 @@ void OptionValue::set(const TYPE& value)
 inline
 void OptionValue::setNull()
 {
-    BSLS_ASSERT(!d_value.isUnset());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(!d_value.isUnset());
 
     if (d_value.is<OptionValue_NullOf>()) { // Already null.
         return;                                                       // RETURN
@@ -834,7 +838,8 @@ template <class TYPE>
 inline
 TYPE& OptionValue::the()
 {
-    BSLS_ASSERT(d_value.is<TYPE>());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_value.is<TYPE>());
 
     return d_value.the<TYPE>();
 }
@@ -844,7 +849,7 @@ TYPE& OptionValue::the()
 inline
 void OptionValue::swap(OptionValue& other)
 {
-    BSLS_ASSERT(allocator() == other.allocator());
+    BSLS_ASSERT_NONCONVEYOR(allocator() == other.allocator());
 
     d_value.swap(other.d_value);
 }
@@ -859,7 +864,7 @@ bool OptionValue::hasNonVoidType() const
 inline
 bool OptionValue::isNull() const
 {
-    BSLS_ASSERT(!d_value.isUnset());
+    BSLS_ASSERT_NONCONVEYOR(!d_value.isUnset());
 
     return d_value.is<OptionValue_NullOf>();
 }
@@ -868,7 +873,8 @@ template <class TYPE>
 inline
 const TYPE& OptionValue::the() const
 {
-    BSLS_ASSERT(d_value.is<TYPE>());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_value.is<TYPE>());
 
     return d_value.the<TYPE>();
 }

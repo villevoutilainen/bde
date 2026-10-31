@@ -329,7 +329,8 @@ struct Messages {
         EmployeeRecord(const bsl::string& name, int age, float salary);
 
         // ACCESSORS
-        const bsl::string& name()   const;
+        const bsl::string& name()   const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         int                age()    const;
         float              salary() const;
     };
@@ -704,6 +705,7 @@ static void usageExample()
 // First, we create an employee record object having typical values:
 // ```
     usage::EmployeeRecord bob("Bob", 56, 1234.00);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&bob);
     ASSERT("Bob"   == bob.name());
     ASSERT(  56    == bob.age());
     ASSERT(1234.00 == bob.salary());
@@ -2519,7 +2521,9 @@ int main(int argc, char *argv[])
 
             test::MySequenceWithArray value;
             value.attribute1() = 34;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
             value.attribute2().push_back("Hello");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
             value.attribute2().push_back("World!");
 
             ASSERT(0 == encoder1.encode(&osb1, value));
@@ -2589,6 +2593,7 @@ int main(int argc, char *argv[])
 
                 test::MySequenceWithArray VALUE;
                 VALUE.attribute1() = 23;
+                BSLS_ASSERT_CONVEYOR_OBJECT(&VALUE);
                 VALUE.attribute2().resize(SIZE);
 
                 bdlsb::MemOutStreamBuf osb;
@@ -2728,7 +2733,9 @@ int main(int argc, char *argv[])
 
             test::MySequenceWithArray value;
             value.attribute1() = 34;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
             value.attribute2().push_back("Hello");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
             value.attribute2().push_back("World!");
 
             ASSERT(0 == encoder1.encode(&osb1, value));
@@ -3133,7 +3140,9 @@ int main(int argc, char *argv[])
 
             test::MySequenceWithArray value;
             value.attribute1() = 34;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
             value.attribute2().push_back("Hello");
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
             value.attribute2().push_back("World!");
 
             ASSERT(0 == encoder.encode(&osb, value));
@@ -3192,6 +3201,7 @@ int main(int argc, char *argv[])
 
             test::MySequenceWithNullable value;
             value.attribute1() = 34;
+            BSLS_ASSERT_CONVEYOR_OBJECT(&value);
             value.attribute2().makeValue("Hello");
 
             ASSERT(0 == encoder.encode(&osb, value));
@@ -4130,6 +4140,7 @@ int main(int argc, char *argv[])
                                 bdlt::Time(16, 30)), 0);
               basicRec.s() = "The quick brown fox jumped over the lazy dog.";
               request.makeBasic(basicRec);
+              BSLS_ASSERT_CONVEYOR_OBJECT(&basicRec);
               minOutputSize = 3 * sizeof(int) + basicRec.s().length();
           } break;
           case 'b': {
@@ -4143,6 +4154,7 @@ int main(int argc, char *argv[])
                   bdlt::Datetime(bdlt::Date(2007, 9, 3),
                                 bdlt::Time(16, 30)), 0);
               basicRec.s() = "The quick brown fox jumped over the lazy dog.";
+              BSLS_ASSERT_CONVEYOR_OBJECT(&basicRec);
               bsl::size_t minBasicRecSize =
                   minOutputSize = 3 * sizeof(int) + basicRec.s().length();
 
@@ -4150,10 +4162,12 @@ int main(int argc, char *argv[])
               bigRec.name() = "This record is so big, it has its own gravity.";
 
               for (int i = 0; i < arraySize; ++i) {
+                  BSLS_ASSERT_CONVEYOR_OBJECT(&bigRec);
                   bigRec.array().push_back(basicRec);
               }
 
               request.makeBig(bigRec);
+              BSLS_ASSERT_CONVEYOR_OBJECT(&bigRec);
               minOutputSize =
                   bigRec.name().length() + arraySize * minBasicRecSize;
           } break;

@@ -74,6 +74,7 @@ PrefixStack::PrefixStack(const PrefixStack&  original,
 int PrefixStack::pushPrefix(const bsl::string_view& prefix,
                             const bsl::string_view& namespaceUri)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int nsId = d_namespaceRegistry->lookupOrRegister(namespaceUri);
 
     // if nsId is -1, this means namespaceUri is empty we can interpret this as
@@ -109,6 +110,7 @@ int PrefixStack::popPrefixes(int count)
 int
 PrefixStack::lookupNamespaceId(const bsl::string_view& prefix) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Prefix registry is typically small, so linear search is appropriate.
     PrefixVector::const_iterator i = d_prefixes.begin() + d_numPrefixes;
     while (i != d_prefixes.begin()) {
@@ -124,6 +126,7 @@ PrefixStack::lookupNamespaceId(const bsl::string_view& prefix) const
 const char *
 PrefixStack::lookupNamespacePrefix(const bsl::string_view& prefix) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     PrefixVector::const_iterator i = d_prefixes.begin() + d_numPrefixes;
     while (i != d_prefixes.begin()) {
         --i;
@@ -150,6 +153,7 @@ PrefixStack::lookupNamespaceUri(int nsId) const
 
 const char *PrefixStack::namespaceUriByIndex(int index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     index = (index < 0 ? d_numPrefixes + index : index);
     BSLS_ASSERT(0 <= index && index < d_numPrefixes);
     return d_namespaceRegistry->lookup(d_prefixes[index].second);
@@ -158,11 +162,13 @@ const char *PrefixStack::namespaceUriByIndex(int index) const
 void
 PrefixStack::print(bsl::ostream& stream, bool fullNames) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     PrefixVector::const_iterator it1(d_prefixes.begin());
     PrefixVector::const_iterator it2(it1 + d_numPrefixes);
 
     for(int i=0; it1 != it2; ++it1, ++i)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(it1);
         stream << it1->first << " => " << it1->second;
         if (fullNames) {
             stream << " (" << lookupNamespaceUri(it1->second) << ')';

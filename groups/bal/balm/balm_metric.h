@@ -175,6 +175,7 @@ BSLS_IDENT("$Id: balm_metric.h,v 1.7 2008/04/17 21:22:34 hversche Exp $")
 #include <balm_metricsmanager.h>
 #include <balm_publicationtype.h>
 
+#include <bsls_assert.h>
 #include <bsls_atomic.h>
 
 namespace BloombergLP {
@@ -431,8 +432,12 @@ Metric::Metric(const char     *category,
                MetricsManager *manager)
 : d_collector_p(lookupCollector(category, name, manager))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_collector_p);
     d_isEnabled_p = (d_collector_p
-                  ? &d_collector_p->metricId().category()->isEnabledRaw() : 0);
+                  ? &BSLS_ASSERT_CONVEYOR_REF(*d_collector_p).metricId()
+                                              .category()->isEnabledRaw()
+                  : 0);
 }
 
 inline
@@ -440,14 +445,20 @@ Metric::Metric(const MetricId&  metricId,
                MetricsManager  *manager)
 : d_collector_p(lookupCollector(metricId, manager))
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_collector_p);
     d_isEnabled_p = (d_collector_p
-                  ? &d_collector_p->metricId().category()->isEnabledRaw() : 0);
+                  ? &BSLS_ASSERT_CONVEYOR_REF(*d_collector_p).metricId()
+                                              .category()->isEnabledRaw()
+                  : 0);
 }
 
 inline
 Metric::Metric(Collector *collector)
 : d_collector_p(collector)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_collector_p);
     d_isEnabled_p = &d_collector_p->metricId().category()->isEnabledRaw();
 }
 
@@ -496,13 +507,17 @@ Collector *Metric::collector()
 inline
 const Collector *Metric::collector() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_collector_p;
 }
 
 inline
 MetricId Metric::metricId() const
 {
-    return d_collector_p ? d_collector_p->metricId() : MetricId();
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    return d_collector_p
+         ? BSLS_ASSERT_CONVEYOR_REF(*d_collector_p).metricId()
+         : MetricId();
 }
 
 inline

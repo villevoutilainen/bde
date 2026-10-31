@@ -406,6 +406,7 @@ void BasicSchemaUtil_ImplUtil::doRemoveAnnotations(AnnotationElement *)
 template <class ELEMENT_TYPE>
 void BasicSchemaUtil_ImplUtil::doRemoveAnnotations(ELEMENT_TYPE *element)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(element);
     BasicSchemaUtil_AlgorithmUtil::eraseToEnd(
         &element->choice(),
         BasicSchemaUtil_ImplUtil::doRemoveAnnotations(
@@ -447,6 +448,8 @@ template <class PARENT_TYPE>
 void BasicSchemaUtil_ImplUtil::append(PARENT_TYPE               *parent,
                                       const ComplexTypeElement&  element)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&element);
+    BSLS_ASSERT_CONVEYOR_OBJECT(parent);
     parent->choice().emplace_back();
     parent->choice().back().makeComplexType(element);
 }
@@ -455,6 +458,8 @@ template <class PARENT_TYPE>
 void BasicSchemaUtil_ImplUtil::append(PARENT_TYPE    *parent,
                                       const Element&  element)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&element);
+    BSLS_ASSERT_CONVEYOR_OBJECT(parent);
     parent->choice().emplace_back();
     parent->choice().back().makeElement(element);
 }
@@ -463,6 +468,8 @@ template <class PARENT_TYPE>
 void BasicSchemaUtil_ImplUtil::append(PARENT_TYPE               *parent,
                                       const EnumerationElement&  element)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&element);
+    BSLS_ASSERT_CONVEYOR_OBJECT(parent);
     parent->choice().emplace_back();
     parent->choice().back().makeEnumeration(element);
 }
@@ -471,6 +478,8 @@ template <class PARENT_TYPE>
 void BasicSchemaUtil_ImplUtil::append(PARENT_TYPE               *parent,
                                       const RestrictionElement&  element)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&element);
+    BSLS_ASSERT_CONVEYOR_OBJECT(parent);
     parent->choice().emplace_back();
     parent->choice().back().makeRestriction(element);
 }
@@ -479,6 +488,8 @@ template <class PARENT_TYPE>
 void BasicSchemaUtil_ImplUtil::append(PARENT_TYPE            *parent,
                                       const SequenceElement&  element)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&element);
+    BSLS_ASSERT_CONVEYOR_OBJECT(parent);
     parent->choice().emplace_back();
     parent->choice().back().makeSequence(element);
 }
@@ -487,6 +498,8 @@ template <class PARENT_TYPE>
 void BasicSchemaUtil_ImplUtil::append(PARENT_TYPE              *parent,
                                       const SimpleTypeElement&  element)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&element);
+    BSLS_ASSERT_CONVEYOR_OBJECT(parent);
     parent->choice().emplace_back();
     parent->choice().back().makeSimpleType(element);
 }
@@ -577,6 +590,7 @@ void BasicSchemaUtil_AlgorithmUtil::eraseToEnd(
                               SEQUENCE_CONTAINER                    *container,
                               typename SEQUENCE_CONTAINER::iterator  position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(container);
     container->erase(position, container->end());
 }
 

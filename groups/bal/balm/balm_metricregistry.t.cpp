@@ -637,7 +637,8 @@ int main(int argc, char *argv[])
                 for (int i = 0; i < NUM_METRICS; ++i) {
                     balm::MetricId id = mX.getId(METRICS[i].d_category,
                                                 METRICS[i].d_name);
-                    id.description()->printDescription(bsl::cout);
+                    BSLS_ASSERT_CONVEYOR_REF(*id.description())
+                                                  .printDescription(bsl::cout);
                     bsl::cout << bsl::endl;
                 }
             }
@@ -706,7 +707,8 @@ int main(int argc, char *argv[])
                 for (int i = 0; i < NUM_METRICS; ++i) {
                     balm::MetricId id = mX.getId(METRICS[i].d_category,
                                                 METRICS[i].d_name);
-                    id.description()->printDescription(bsl::cout);
+                    BSLS_ASSERT_CONVEYOR_REF(*id.description())
+                                                  .printDescription(bsl::cout);
                     bsl::cout << bsl::endl;
                 }
             }

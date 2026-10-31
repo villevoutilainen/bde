@@ -456,7 +456,8 @@ class PerformanceMonitor {
 
         /// Return the user-supplied description of the process identified
         /// by the result of the `pid()` function.
-        const bsl::string& description() const;
+        const bsl::string& description() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         /// Return the number of seconds (in wall time) that have elapsed
         /// since the startup the process identified by the result of the
@@ -464,7 +465,8 @@ class PerformanceMonitor {
         double elapsedTime() const;
 
         /// Return the startup time in Coordinated Universal Time.
-        const bdlt::Datetime& startupTime() const;
+        const bdlt::Datetime& startupTime() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
         /// Print all collected statistics to the specified `os` stream.
         void print(bsl::ostream& os) const;
@@ -552,7 +554,9 @@ class PerformanceMonitor {
 
         /// Return a reference to the non-modifiable value type of this
         /// iterator.
-        pointer operator->() const;
+        pointer operator->() const
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
+                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
 
         /// Return `true` if the specified `rhs` iterator points to the
         /// same instance of the iterator's value type as "this" iterator,
@@ -764,6 +768,7 @@ inline
 PerformanceMonitor::ConstIterator::reference
 PerformanceMonitor::ConstIterator::operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(d_mapGuard_p);
     return *d_it->second.first;
 }
@@ -772,6 +777,7 @@ inline
 PerformanceMonitor::ConstIterator::pointer
 PerformanceMonitor::ConstIterator::operator->() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(d_mapGuard_p);
     return d_it->second.first.get();
 }
@@ -781,6 +787,7 @@ inline
 PerformanceMonitor::ConstIterator&
 PerformanceMonitor::ConstIterator::operator++()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(d_mapGuard_p);
     ++d_it;
     return *this;
@@ -876,6 +883,7 @@ inline
 PerformanceMonitor::ConstIterator
 PerformanceMonitor::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_mapGuard);
     return ConstIterator(d_pidMap.begin(), &d_mapGuard);
 }
@@ -884,6 +892,7 @@ inline
 PerformanceMonitor::ConstIterator
 PerformanceMonitor::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_mapGuard);
     return ConstIterator(d_pidMap.end(), &d_mapGuard);
 }
@@ -892,6 +901,7 @@ inline
 PerformanceMonitor::ConstIterator
 PerformanceMonitor::find(int pid) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == pid) {
         pid = bdls::ProcessUtil::getProcessId();
     }
@@ -904,6 +914,7 @@ inline
 int
 PerformanceMonitor::numRegisteredPids() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_mapGuard);
     return static_cast<int>(d_pidMap.size());
 }

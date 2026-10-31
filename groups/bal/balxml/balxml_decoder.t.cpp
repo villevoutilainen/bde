@@ -266,6 +266,7 @@ void aSsErT(bool condition, const char *message, int line)
 template <class T>
 void printValue(bsl::ostream& out, const T& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bdlb::PrintMethods::print(out, value, 0, -1);
 }
 
@@ -597,6 +598,8 @@ int test;
 
 bool compareEqual(const bsl::string& lhs, const bsl::string& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     LOOP2_ASSERT(lhs.size(), rhs.size(), lhs.size() == rhs.size());
     const bsl::size_t LEN  = lhs.size();
     int               line = 1;
@@ -904,6 +907,8 @@ struct TestSequence2 {
 
 bool operator==(const TestSequence2& lhs, const TestSequence2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_element1 == rhs.d_element1
         && lhs.d_element2 == rhs.d_element2;
 }
@@ -1336,6 +1341,8 @@ struct TestChoice2 {
 
 bool operator==(const TestChoice2& lhs, const TestChoice2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.d_choice != rhs.d_choice) {
         return 0;                                                     // RETURN
     }
@@ -1526,7 +1533,8 @@ class TestVectorElemType {
 
     /// Return a reference to the non-modifiable call sequence string for
     /// this element.
-    const bsl::string& callSequence() const;
+    const bsl::string& callSequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1546,6 +1554,8 @@ bsl::ostream& operator<<(bsl::ostream& stream, const TestVectorElemType& rhs);
 
 void TestVectorElemType::addCall(const bsl::string& call)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&call);
     d_callSequence.append(call);
 }
 
@@ -1560,11 +1570,14 @@ const bsl::string& TestVectorElemType::callSequence() const
 
 bool operator==(const TestVectorElemType& lhs, const TestVectorElemType& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.callSequence() == rhs.callSequence();
 }
 
 bsl::ostream& operator<<(bsl::ostream& stream, const TestVectorElemType& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     printValue(stream, rhs.callSequence());
     return stream;
 }
@@ -1590,6 +1603,8 @@ struct TestSequenceWithVector {
 bool operator==(const TestSequenceWithVector& lhs,
                 const TestSequenceWithVector& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_vector == rhs.d_vector;
 }
 
@@ -1808,6 +1823,7 @@ TestContext::~TestContext()
 
 int TestContext::startElement(balxml::Decoder *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(!d_isInsideElement);
 
     d_callSequence << d_elementName << ":startElement(...)";
@@ -1823,6 +1839,7 @@ int TestContext::startElement(balxml::Decoder *)
 
 int TestContext::endElement(balxml::Decoder *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(d_isInsideElement);
 
     d_callSequence << d_elementName << ":endElement(...)";
@@ -1840,6 +1857,7 @@ int TestContext::addCharacters(const char      *chars,
                                size_t           length,
                                balxml::Decoder *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(d_isInsideElement);
 
     bsl::string strChars(chars, length);
@@ -1859,6 +1877,7 @@ int TestContext::parseAttribute(const char      *name,
                                 size_t           lenValue,
                                 balxml::Decoder *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(d_isInsideElement);
 
     bsl::string strVal (value, lenValue);
@@ -1873,6 +1892,7 @@ int TestContext::parseAttribute(const char      *name,
 int TestContext::parseSubElement(const char      *elementName,
                                  balxml::Decoder *decoder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(d_isInsideElement);
 
     d_callSequence << d_elementName << ":parseSubElement("
@@ -2184,6 +2204,7 @@ namespace bsl {
 // FREE FUNCTIONS
 ostream& operator<<(ostream& stream, const vector<int>& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     stream << "(";
 
     typedef vector<int>::const_iterator ConstIterator;
@@ -2305,11 +2326,13 @@ class TestXmlElement {
     /// the XML format and return a reference to `stream`.
     bsl::ostream& print(bsl::ostream& stream) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         stream << "<" << d_name;
 
         for (Attributes::const_iterator it = d_attributes.begin();
              it != d_attributes.end();
              ++it) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(it);
             stream << " " << it->first << "='" << it->second << "'";
         }
 
@@ -2394,6 +2417,7 @@ struct TestXmlUtil {
 
     static Content generateContent(const TestXmlElement& element)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&element);
         bsl::vector<TestXmlElement> result;
         result.push_back(element);
         return generateContent(result);
@@ -2402,6 +2426,8 @@ struct TestXmlUtil {
     static Content generateContent(const TestXmlElement& element0,
                                    const TestXmlElement& element1)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&element0);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&element1);
         bsl::vector<TestXmlElement> result;
         result.push_back(element0);
         result.push_back(element1);
@@ -3059,6 +3085,7 @@ int findLoc(int                *line,
             const bsl::string&  pattern,
             bsl::size_t         offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&pattern);
     if (pattern.length() < offset) {
         return -1;                                                    // RETURN
     }
@@ -3103,6 +3130,7 @@ bsl::string utf8Dump(const char *utf8)
 void writeStringToFile(const char         *fileName,
                        const bsl::string&  str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     typedef bdls::FilesystemUtil FUtil;
 
     while (true) {
@@ -3561,6 +3589,8 @@ void validAndInvalidUtf8Test(Mode mode, bool exhaustive = false)
             int rc = decoder.decode(&object);
             ASSERT(0 == rc);
             ASSERT(0 == reader.errorInfo());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&object);
             ASSERT(expData == object.data());
         }
     }
@@ -3694,6 +3724,7 @@ void validAndInvalidUtf8Test(Mode mode, bool exhaustive = false)
             }
 
             const char *errTypeMsg = Utf8Util::toAscii(ERR_TYPE);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&errorInfo);
             ASSERTV(LINE, badPos, errorInfo.message(), errTypeMsg,
                     bsl::string::npos != errorInfo.message().find(errTypeMsg));
 
@@ -4734,6 +4765,7 @@ int main(int argc, char *argv[])
                               bdlat_CustomizedTypeFunctions::convertToBaseType(
                                   object.element());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&data);
                 ASSERTV(LINE, RESULT, RESULT_DATA == data);
             }
         }
@@ -4797,6 +4829,7 @@ int main(int argc, char *argv[])
                               bdlat_CustomizedTypeFunctions::convertToBaseType(
                                   object.element());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&data);
                 ASSERTV(LINE, RESULT, RESULT_DATA == data);
             }
         }
@@ -14998,19 +15031,27 @@ int main(int argc, char *argv[])
 
             EXPECTED_RESULT[tj].attribute1() = 34;
             EXPECTED_RESULT[tj].choice().makeMyChoice1(67);
-            EXPECTED_RESULT[tj++].attribute2() = "Hello";
+            BSLS_ASSERT_CONVEYOR_OBJECT(&EXPECTED_RESULT);
+            BSLS_ASSERT_CONVEYOR_REF(
+                                 EXPECTED_RESULT[tj++]).attribute2() = "Hello";
 
             EXPECTED_RESULT[tj].attribute1() = 34;
             EXPECTED_RESULT[tj].choice().makeMyChoice1(67);
-            EXPECTED_RESULT[tj++].attribute2() = "Hello";
+            BSLS_ASSERT_CONVEYOR_OBJECT(&EXPECTED_RESULT);
+            BSLS_ASSERT_CONVEYOR_REF(
+                                 EXPECTED_RESULT[tj++]).attribute2() = "Hello";
 
             EXPECTED_RESULT[tj].attribute1() = 34;
             EXPECTED_RESULT[tj].choice().makeMyChoice2("World!");
-            EXPECTED_RESULT[tj++].attribute2() = "Hello";
+            BSLS_ASSERT_CONVEYOR_OBJECT(&EXPECTED_RESULT);
+            BSLS_ASSERT_CONVEYOR_REF(
+                                 EXPECTED_RESULT[tj++]).attribute2() = "Hello";
 
             EXPECTED_RESULT[tj].attribute1() = 34;
             EXPECTED_RESULT[tj].choice().makeMyChoice2("  World! ");
-            EXPECTED_RESULT[tj++].attribute2() = "Hello";
+            BSLS_ASSERT_CONVEYOR_OBJECT(&EXPECTED_RESULT);
+            BSLS_ASSERT_CONVEYOR_REF(
+                                 EXPECTED_RESULT[tj++]).attribute2() = "Hello";
 
             ASSERT(NUM_INPUT == tj);
 
@@ -16325,12 +16366,18 @@ int main(int argc, char *argv[])
                 for (int j = 0; j < Type::NUM_ATTRIBUTES; ++j) {
                     if (j != i) {
                         if (0 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute1().makeValue(ATTRIBUTE1_VALUE);
                         }
                         else if (1 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute2().makeValue(ATTRIBUTE2_VALUE);
                         }
                         else if (2 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute3().makeValue(ATTRIBUTE3_VALUE);
                         }
                     }
@@ -16413,12 +16460,18 @@ int main(int argc, char *argv[])
                 for (int j = 0; j < Type::NUM_ATTRIBUTES; ++j) {
                     if (j != i) {
                         if (0 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute1().makeValue(ATTRIBUTE1_VALUE);
                         }
                         else if (1 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute2().makeValue(ATTRIBUTE2_VALUE);
                         }
                         else if (2 == j) {
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                             mX.attribute3().makeValue(ATTRIBUTE3_VALUE);
                         }
                     }

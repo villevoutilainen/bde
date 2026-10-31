@@ -19,6 +19,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmf_isconvertible.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_ostream.h>
 
 namespace BloombergLP {
@@ -77,9 +79,11 @@ class TestCustomizedType {
     // ACCESSORS
     const char *className() const;
 
-    const BaseType& convertToBaseType() const;
+    const BaseType& convertToBaseType() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    const Value& value() const;
+    const Value& value() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE FUNCTIONS
@@ -271,6 +275,7 @@ bsl::ostream& operator<<(
                        bsl::ostream&                                    stream,
                        const TestCustomizedType<VALUE_TYPE, BASE_TYPE>& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return stream << "[" << object.className() << " value " << object.value()
                   << "]";
 }
@@ -311,6 +316,7 @@ template <class VALUE_TYPE, class BASE_TYPE>
 const BASE_TYPE& bdlat_customizedTypeConvertToBaseType(
                        const TestCustomizedType<VALUE_TYPE, BASE_TYPE>& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return object.convertToBaseType();
 }
 

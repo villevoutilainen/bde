@@ -984,53 +984,70 @@ int main(int argc, const char *argv[])
             int ii = 0;
 
             ASSERTV(ii, specTable[ii].d_tag         == bsl::string());
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string());
-            ASSERTV(ii, specTable[ii].d_description == bsl::string());
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string());
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description
+                    == bsl::string());
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo());
             ASSERTV(ii, specTable[ii].d_defaultInfo == OccurrenceInfo());
 
             ++ii;
 
-            ASSERTV(ii, specTable[ii].d_tag         == tagString);
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string());
-            ASSERTV(ii, specTable[ii].d_description == bsl::string());
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_tag
+                    == tagString);
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string());
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description
+                    == bsl::string());
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo());
             ASSERTV(ii, specTable[ii].d_defaultInfo == OccurrenceInfo());
 
             ++ii;
 
-            ASSERTV(ii, specTable[ii].d_tag         ==
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_tag         ==
                                                      bsl::string("s|longTag"));
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string());
-            ASSERTV(ii, specTable[ii].d_description == bsl::string());
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string());
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description
+                    == bsl::string());
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo());
             ASSERTV(ii, specTable[ii].d_defaultInfo == OccurrenceInfo());
 
             ++ii;
 
-            ASSERTV(ii, specTable[ii].d_tag         ==
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_tag         ==
                                                      bsl::string("s|longTag"));
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string("name"));
-            ASSERTV(ii, specTable[ii].d_description == bsl::string());
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string("name"));
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description
+                    == bsl::string());
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo());
             ASSERTV(ii, specTable[ii].d_defaultInfo == OccurrenceInfo());
 
             ++ii;
 
-            ASSERTV(ii, specTable[ii].d_tag         ==
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_tag         ==
                                                      bsl::string("s|longTag"));
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string("name"));
-            ASSERTV(ii, specTable[ii].d_description ==
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string("name"));
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description ==
                                                    bsl::string("description"));
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo());
             ASSERTV(ii, specTable[ii].d_defaultInfo == OccurrenceInfo());
 
             ++ii;
 
-            ASSERTV(ii, specTable[ii].d_tag         ==
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_tag         ==
                                                      bsl::string("s|longTag"));
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string("name"));
-            ASSERTV(ii, specTable[ii].d_description ==
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string("name"));
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description ==
                                                    bsl::string("description"));
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo(&linkedFlag));
             ASSERTV(ii, specTable[ii].d_defaultInfo == OccurrenceInfo());
@@ -1038,10 +1055,13 @@ int main(int argc, const char *argv[])
 #if U_TAKE_CURLY_BRACE_TO_DEFAULT_CTOR
             ++ii;
 
-            ASSERTV(ii, specTable[ii].d_tag         ==
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_tag         ==
                                                      bsl::string("s|longTag"));
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string("name"));
-            ASSERTV(ii, specTable[ii].d_description ==
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string("name"));
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description ==
                                                    bsl::string("description"));
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo());
             ASSERTV(ii, specTable[ii].d_defaultInfo == OccurrenceInfo());
@@ -1049,10 +1069,13 @@ int main(int argc, const char *argv[])
 
             ++ii;
 
-            ASSERTV(ii, specTable[ii].d_tag         ==
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_tag         ==
                                                      bsl::string("s|longTag"));
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string("name"));
-            ASSERTV(ii, specTable[ii].d_description ==
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string("name"));
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description ==
                                                    bsl::string("description"));
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo(&linkedFlag));
             ASSERTV(ii, specTable[ii].d_defaultInfo ==
@@ -1061,10 +1084,13 @@ int main(int argc, const char *argv[])
 #if U_TAKE_CURLY_BRACE_TO_DEFAULT_CTOR
             ++ii;
 
-            ASSERTV(ii, specTable[ii].d_tag         ==
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_tag         ==
                                                      bsl::string("s|longTag"));
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string("name"));
-            ASSERTV(ii, specTable[ii].d_description ==
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string("name"));
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description ==
                                                    bsl::string("description"));
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo(&linkedFlag));
             ASSERTV(ii, specTable[ii].d_defaultInfo == OccurrenceInfo());
@@ -1072,10 +1098,13 @@ int main(int argc, const char *argv[])
 
             ++ii;
 
-            ASSERTV(ii, specTable[ii].d_tag         ==
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_tag         ==
                                                      bsl::string("s|longTag"));
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string("name"));
-            ASSERTV(ii, specTable[ii].d_description ==
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string("name"));
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description ==
                                                    bsl::string("description"));
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo(&linkedFlag));
             ASSERTV(ii, specTable[ii].d_defaultInfo == OccurrenceInfo(
@@ -1083,15 +1112,20 @@ int main(int argc, const char *argv[])
 
             ++ii;
 
-            ASSERTV(ii, specTable[ii].d_tag         ==
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_tag         ==
                                                      bsl::string("s|longTag"));
-            ASSERTV(ii, specTable[ii].d_name        == bsl::string("name"));
-            ASSERTV(ii, specTable[ii].d_description ==
+            ASSERTV(ii, BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_name
+                    == bsl::string("name"));
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii]).d_description ==
                                                    bsl::string("description"));
             ASSERTV(ii, specTable[ii].d_typeInfo    == TypeInfo(&linkedFlag));
             ASSERTV(ii, specTable[ii].d_defaultInfo == OccurrenceInfo(
                                                                 defaultValue));
-            ASSERTV(ii, specTable[ii].d_environmentVariableName
+            ASSERTV(ii,
+                    BSLS_ASSERT_CONVEYOR_REF(specTable[ii])
+                                                     .d_environmentVariableName
                                               ==  bsl::string("envVarName"));
 
             ASSERTV(ii, ii + 1 == k_NUM_SPEC_TABLE);

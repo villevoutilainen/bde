@@ -31,8 +31,8 @@ namespace balm {
 // CLASS METHODS
 MetricsManager *DefaultMetricsManager::create(bslma::Allocator *basicAllocator)
 {
-    BSLS_ASSERT(0 == s_singleton_p);
-    BSLS_ASSERT(0 == s_allocator_p);
+    BSLS_ASSERT_NONCONVEYOR(0 == s_singleton_p);
+    BSLS_ASSERT_NONCONVEYOR(0 == s_allocator_p);
 
     s_allocator_p = bslma::Default::globalAllocator(basicAllocator);
     s_singleton_p = new (*s_allocator_p) MetricsManager(s_allocator_p);
@@ -55,8 +55,8 @@ MetricsManager *DefaultMetricsManager::create(bsl::ostream&     stream,
 
 void DefaultMetricsManager::destroy()
 {
-    BSLS_ASSERT(0 != s_singleton_p);
-    BSLS_ASSERT(0 != s_allocator_p);
+    BSLS_ASSERT_NONCONVEYOR(0 != s_singleton_p);
+    BSLS_ASSERT_NONCONVEYOR(0 != s_allocator_p);
 
     MetricsManager *singleton = s_singleton_p;
     bslma::Allocator    *allocator = s_allocator_p;

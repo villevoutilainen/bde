@@ -93,7 +93,8 @@ struct MyEnumerationWithFallback {
     /// Write to the specified `stream` the string representation of
     /// the specified enumeration `value`.  Return a reference to
     /// the modifiable `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -101,6 +102,7 @@ struct MyEnumerationWithFallback {
     /// return a reference to the modifiable `stream`.
     friend bsl::ostream& operator<<(bsl::ostream& stream, Value rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
         return MyEnumerationWithFallback::print(stream, rhs);
     }
 };
@@ -126,6 +128,7 @@ namespace s_baltst {
 inline
 int MyEnumerationWithFallback::fromString(Value *result, const bsl::string& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return fromString(result, string.c_str(), static_cast<int>(string.length()));
 }
 

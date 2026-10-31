@@ -471,13 +471,15 @@ class TestPublisher : public balm::Publisher {
     /// method contained more than one unique time interval.  The behavior
     /// is undefined unless the `publish` method has invoked since this
     /// object was created or last reset.
-    const bsls::TimeInterval& lastElapsedTime() const;
+    const bsls::TimeInterval& lastElapsedTime() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable time stamp of the last
     /// sample passed to the `publish` method.  The behavior is undefined
     /// unless the `publish` method has invoked since this object was
     /// created or last reset.
-    const bdlt::DatetimeTz& lastTimeStamp() const;
+    const bdlt::DatetimeTz& lastTimeStamp() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Print a formatted string describing the "unique" invocations on this
     /// publisher to the specified `stream` at the (absolute value of) the
@@ -516,6 +518,8 @@ bool TestPublisher::InvocationIdLess::operator()(
                              const bsl::set<const balm::Category *>& lhs,
                              const bsl::set<const balm::Category *>& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.size() < rhs.size()) {
         return true;                                                  // RETURN
     }
@@ -553,7 +557,9 @@ TestPublisher::~TestPublisher()
 // MANIPULATORS
 void TestPublisher::publish(const balm::MetricSample& sample)
 {
-    BSLS_ASSERT(0 != sample.numRecords());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
+    BSLS_ASSERT_NONCONVEYOR(0 != sample.numRecords());
 
     d_elapsedTimes.clear();
     for (int i = 0; i < sample.numGroups(); ++i) {
@@ -567,10 +573,12 @@ void TestPublisher::publish(const balm::MetricSample& sample)
     for (; sIt != sample.end(); ++sIt) {
         balm::MetricSampleGroup::const_iterator gIt = sIt->begin();
         for (; gIt != sIt->end(); ++gIt) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(gIt);
             categories.insert(gIt->metricId().category());
         }
     }
-    InvocationSummary& invocation = d_invocations[categories];
+    InvocationSummary& invocation = BSLS_ASSERT_CONVEYOR_REF(
+                                                    d_invocations[categories]);
     invocation.d_timeStamp   = sample.timeStamp();
     invocation.d_elapsedTime = *d_elapsedTimes.begin();
     invocation.d_numInvocations++;
@@ -579,6 +587,7 @@ void TestPublisher::publish(const balm::MetricSample& sample)
 inline
 void TestPublisher::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_numInvocations = 0;
     d_invocations.clear();
     d_elapsedTimes.clear();
@@ -594,6 +603,7 @@ int TestPublisher::invocations() const
 inline
 int TestPublisher::uniqueInvocations() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_invocations.size());
 }
 
@@ -601,6 +611,8 @@ inline
 const TestPublisher::InvocationSummary *TestPublisher::findInvocation(
                      const bsl::set<const balm::Category *>& categories) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&categories);
     InvocationMap::const_iterator it = d_invocations.find(categories);
     if (it == d_invocations.end()) {
         return 0;                                                     // RETURN
@@ -620,6 +632,7 @@ const TestPublisher::InvocationSummary *TestPublisher::findInvocation(
 inline
 const bsls::TimeInterval& TestPublisher::lastElapsedTime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ASSERT(1 == d_elapsedTimes.size());
     return *d_elapsedTimes.begin();
 }
@@ -634,6 +647,7 @@ bsl::ostream& TestPublisher::print(bsl::ostream&   stream,
                                    int             level,
                                    int             spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     char SEP = (level <= 0) ? ' ' : '\n';
     bdlb::Print::indent(stream, level, spacesPerLevel);
     stream << "[" << SEP;
@@ -794,6 +808,7 @@ bsl::ostream& operator<<(bsl::ostream& stream, const Action& action)
 bsl::ostream& operator<<(bsl::ostream&              stream,
                          const bsl::vector<Action>& actions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&actions);
     bsl::vector<Action>::const_iterator it = actions.begin();
     stream << "[ ";
     for (; it != actions.end(); ++it) {
@@ -1103,6 +1118,8 @@ inline bsls::TimeInterval invalidInterval()
 int countUniqueIntervals(const CategoryScheduleOracle& scheduleOracle,
                          const bsls::TimeInterval&      defaultInterval)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&defaultInterval);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&scheduleOracle);
     bsl::set<bsls::TimeInterval> intervals;
     if (defaultInterval != invalidInterval()) {
         intervals.insert(defaultInterval);
@@ -1123,6 +1140,8 @@ template <class SCHEDULE>
 bool equalSchedule(const CategoryScheduleOracle& oracle,
                    const SCHEDULE&               schedule)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&oracle);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&schedule);
     BSLMF_ASSERT(IsVector<SCHEDULE>::value);
 
     typedef typename SCHEDULE::value_type  PairType;
@@ -1141,8 +1160,11 @@ bool equalSchedule(const CategoryScheduleOracle& oracle,
 
     typename SCHEDULE::const_iterator it = schedule.begin();
     for (; it != schedule.end(); ++it) {
-        CategoryScheduleOracle::const_iterator fIt = oracle.find(it->first);
-        if (fIt == oracle.end() || (it->second != fIt->second)) {
+        CategoryScheduleOracle::const_iterator fIt =
+                                 oracle.find(BSLS_ASSERT_CONVEYOR_REF(
+                                                                   it->first));
+        if (fIt == oracle.end()
+         || (BSLS_ASSERT_CONVEYOR_REF(it->second) != fIt->second)) {
             return false;                                             // RETURN
         }
     }
@@ -1220,6 +1242,7 @@ void gg(bsl::vector<Action>   *actions,
         balm::MetricRegistry&  registry,
         const char            *specification)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(actions);
     const char *c = specification;
     while (*c) {
         if (0 == *(c + 1)) {
@@ -1313,6 +1336,7 @@ void gg(bsl::vector<Action>   *actions,
     // MANIPULATORS
     void SimpleStreamPublisher::publish(const balm::MetricSample& metricValues)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&metricValues);
         if (metricValues.numRecords() > 0) {
             d_stream << metricValues.timeStamp() << " "
                      << metricValues.numRecords() << " Records" << bsl::endl;
@@ -1320,14 +1344,18 @@ void gg(bsl::vector<Action>   *actions,
             balm::MetricSample::const_iterator sIt = metricValues.begin();
             balm::MetricSample::const_iterator prev = sIt;
             for (; sIt != metricValues.end(); ++sIt) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(prev);
+                BSLS_ASSERT_CONVEYOR_OBJECT(sIt);
                 if (sIt == metricValues.begin() ||
                     sIt->elapsedTime() != prev->elapsedTime()) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(sIt);
                     d_stream << "\tElapsed Time: "
                              << sIt->elapsedTime().totalSecondsAsDouble()
                              << "s" << bsl::endl;
                 }
                 balm::MetricSampleGroup::const_iterator gIt = sIt->begin();
                 for (; gIt != sIt->end(); ++gIt) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(gIt);
                     d_stream << "\t" << gIt->metricId()
                              << " [count = " << gIt->count()
                              << ", total = " << gIt->total()
@@ -2786,7 +2814,9 @@ int main(int argc, char *argv[])
                 int length = 0;
                 for (; *c; ++c, ++length) {
                     bsl::string category(1, *c, Z);
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp);
                     categories.insert(reg.getCategory(category.c_str()));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp);
                 }
                 int key = SET_SPEC[0] - 'A' + 1;
                 int expCount = key;
@@ -2800,10 +2830,14 @@ int main(int argc, char *argv[])
 
                 ASSERT(0              != invocation);
                 ASSERT(expCount       == invocation->d_numInvocations);
+                BSLS_ASSERT_CONVEYOR_OBJECT(invocation);
                 ASSERT(expTimeStamp   == invocation->d_timeStamp);
+                BSLS_ASSERT_CONVEYOR_OBJECT(invocation);
                 ASSERT(expElapsedTime == invocation->d_elapsedTime);
             }
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp);
             ASSERT(expTimeStamp   == tp.lastTimeStamp());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp);
             ASSERT(expElapsedTime == tp.lastElapsedTime());
             ASSERT(expTotalCount  == tp.invocations());
             ASSERT(NUM_SETS       == tp.uniqueInvocations());
@@ -3253,6 +3287,8 @@ int main(int argc, char *argv[])
 
             ASSERTV(tp1.invocations(), WAIT_COUNT <= tp1.invocations());
             ASSERTV(tp2.invocations(), WAIT_COUNT <= tp2.invocations());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp3);
             ASSERTV(tp3.invocations(), WAIT_COUNT <= tp3.invocations());
             ASSERTV(tp4.invocations(), 0 == tp4.invocations());
 
@@ -3263,6 +3299,7 @@ int main(int argc, char *argv[])
             ASSERTV(tp1.invocations(), tp2.invocations(),
                     tp1.invocations() >= ratioBtoA * tp2.invocations() - 1);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
             // These should be equal because they should be invoked by the same
             // clock.
             ASSERTV(tp2.invocations(), tp3.invocations(),
@@ -3270,30 +3307,42 @@ int main(int argc, char *argv[])
 
             // Verify publisher 2 and 3 were invoked by the same call to
             // metrics manager publisher.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp3);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp3);
             ASSERT(tp2.lastTimeStamp() == tp3.lastTimeStamp());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
             if (veryVeryVerbose) {
                 P(tp1.lastElapsedTime());
                 P(tp2.lastElapsedTime());
                 P(tp3.lastElapsedTime());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&tp3);
                 P(tp1.lastTimeStamp());
                 P(tp2.lastTimeStamp());
                 P(tp3.lastTimeStamp());
             }
 
             bsls::TimeInterval ZERO, ELAPSED(stopwatch.elapsedTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
             ASSERTV(tp1.lastElapsedTime(), ZERO <= tp1.lastElapsedTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
             ASSERTV(tp1.lastElapsedTime(), ELAPSED,
                     tp1.lastElapsedTime() <= ELAPSED);
 
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
             ASSERTV(tp2.lastElapsedTime(), ZERO <= tp2.lastElapsedTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
             ASSERTV(tp2.lastElapsedTime(), ELAPSED,
                     tp2.lastElapsedTime() <= ELAPSED);
 
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp3);
             ASSERTV(tp3.lastElapsedTime(), ZERO <= tp3.lastElapsedTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&tp3);
             ASSERTV(tp3.lastElapsedTime(), ELAPSED,
                     tp3.lastElapsedTime() <= ELAPSED);
         }

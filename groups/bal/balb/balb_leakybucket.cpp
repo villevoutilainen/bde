@@ -28,11 +28,14 @@ bsls::Types::Uint64 calculateNumberOfUnitsToDrain(
                     const bsls::TimeInterval& timeInterval)
 
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeInterval);
     const bsls::Types::Uint64 k_NANOUNITS_PER_UNIT = 1000000000;
 
-    BSLS_ASSERT(static_cast<bsls::Types::Uint64>(timeInterval.seconds()) <=
+    BSLS_ASSERT_NONCONVEYOR(
+                    static_cast<bsls::Types::Uint64>(timeInterval.seconds()) <=
                                                        ULLONG_MAX / drainRate);
     BSLS_ASSERT(0 != fractionalUnitDrainedInNanoUnits);
+    BSLS_ASSERT_CONVEYOR_OBJECT(fractionalUnitDrainedInNanoUnits);
     BSLS_ASSERT(*fractionalUnitDrainedInNanoUnits < k_NANOUNITS_PER_UNIT);
 
     bsls::Types::Uint64 units  = drainRate * timeInterval.seconds();
@@ -66,7 +69,8 @@ bsls::Types::Uint64 LeakyBucket::calculateCapacity(
                                           bsls::Types::Uint64       drainRate,
                                           const bsls::TimeInterval& timeWindow)
 {
-    BSLS_ASSERT(1 == drainRate ||
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeWindow);
+    BSLS_ASSERT_NONCONVEYOR(1 == drainRate ||
                 timeWindow <= LeakyBucket::calculateDrainTime(ULLONG_MAX,
                                                               drainRate,
                                                               false));
@@ -137,6 +141,7 @@ LeakyBucket::LeakyBucket(bsls::Types::Uint64       drainRate,
 , d_statSubmittedUnitsAtLastUpdate(0)
 , d_statisticsCollectionStartTime(currentTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&currentTime);
     BSLS_ASSERT_OPT(0 < d_drainRate);
     BSLS_ASSERT_OPT(0 < d_capacity);
     BSLS_ASSERT(LLONG_MIN != currentTime.seconds());
@@ -228,6 +233,8 @@ void LeakyBucket::setRateAndCapacity(bsls::Types::Uint64 newRate,
 
 void LeakyBucket::updateState(const bsls::TimeInterval& currentTime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&currentTime);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(LLONG_MIN != currentTime.seconds());
 
     bsls::TimeInterval delta = currentTime - d_lastUpdateTime;

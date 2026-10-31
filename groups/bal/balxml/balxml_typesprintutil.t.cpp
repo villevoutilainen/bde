@@ -364,7 +364,8 @@ class CustomizedInt {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `int`.
-    const int& toInt() const;
+    const int& toInt() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -448,6 +449,7 @@ bsl::ostream& CustomizedInt::print(bsl::ostream& stream,
                                    int           level,
                                    int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 

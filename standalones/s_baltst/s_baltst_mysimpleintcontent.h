@@ -167,15 +167,18 @@ class MySimpleIntContent {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bdlb::NullableValue<bool>& attribute1();
+    bdlb::NullableValue<bool>& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& attribute2();
+    bdlb::NullableValue<bsl::string>& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "TheContent" attribute of this
     /// object.
-    int& theContent();
+    int& theContent()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -224,11 +227,13 @@ class MySimpleIntContent {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bdlb::NullableValue<bool>& attribute1() const;
+    const bdlb::NullableValue<bool>& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute2" attribute of this object.
-    const bdlb::NullableValue<bsl::string>& attribute2() const;
+    const bdlb::NullableValue<bsl::string>& attribute2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the "TheContent" attribute of this object.
     int theContent() const;
@@ -241,6 +246,8 @@ class MySimpleIntContent {
     friend bool operator==(const MySimpleIntContent& lhs,
                            const MySimpleIntContent& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1() &&
                lhs.attribute2() == rhs.attribute2() &&
                lhs.theContent() == rhs.theContent();

@@ -312,6 +312,7 @@ bsl::ostream& operator<<(bsl::ostream&               stream,
 /// otherwise.
 bool hasDemangling(const bsl::string& st)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&st);
     const bsl::size_t posColons = st.find("::");
     const bool ret = npos != posColons;
     const bsl::size_t posPlus   = st.find('+');
@@ -336,6 +337,7 @@ int recurseAndStackTrace(bsl::ostream&               printerStream,
                          const ConfigurationOptions& options,
                          int                         callDepth)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utilStream);
     const int  numDefaults = options.d_numDefaults;
     const int  maxFrames   = options.d_maxFrames;
     const bool demangle    = options.d_demanglingPreferredFlag;
@@ -405,6 +407,7 @@ int recurseAndStackTrace(bsl::ostream&               printerStream,
 /// The behavior is undefined unless `str` contains at least 2 '\n's.
 bsl::string skipFirstFrame(const bsl::string& str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     bsl::size_t pos = str.find('\n');
     if (npos == pos) {
         return bsl::string();                                         // RETURN

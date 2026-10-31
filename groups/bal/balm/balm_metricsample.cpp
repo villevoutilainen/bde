@@ -71,6 +71,7 @@ bsl::ostream& MetricSample::print(bsl::ostream& stream,
                                   int           level,
                                   int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const char *NL = (spacesPerLevel > 0) ? "\n" : " ";
 
     bdlb::Print::indent(stream, level, spacesPerLevel);

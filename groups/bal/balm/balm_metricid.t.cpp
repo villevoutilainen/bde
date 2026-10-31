@@ -386,7 +386,9 @@ int main(int argc, char *argv[])
         const int NUM_VALUES = sizeof VALUES / sizeof *VALUES;
         for (int i = 0; i < NUM_VALUES; ++i) {
             Obj x(VALUES[i].d_description); const Obj& X = x;
-            const Category *CAT_X = VALUES[i].d_description->category();
+            const Desc *DESC_X = VALUES[i].d_description;
+            BSLS_ASSERT_CONVEYOR_OBJECT(DESC_X);
+            const Category *CAT_X = DESC_X->category();
 
             ASSERT(CAT_X         == X.category());
             ASSERT(CAT_X->name() == X.categoryName());

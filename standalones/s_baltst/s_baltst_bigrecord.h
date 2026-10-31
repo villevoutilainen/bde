@@ -167,11 +167,13 @@ class BigRecord {
 
     /// Return a reference to the modifiable "Name" attribute of this
     /// object.
-    bsl::string& name();
+    bsl::string& name()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Array" attribute of this
     /// object.
-    bsl::vector<s_baltst::BasicRecord>& array();
+    bsl::vector<s_baltst::BasicRecord>& array()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -220,11 +222,13 @@ class BigRecord {
 
     /// Return a reference offering non-modifiable access to the "Name"
     /// attribute of this object.
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Array"
     /// attribute of this object.
-    const bsl::vector<s_baltst::BasicRecord>& array() const;
+    const bsl::vector<s_baltst::BasicRecord>& array() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -233,6 +237,8 @@ class BigRecord {
     /// have the same value if each respective attribute has the same value.
     friend bool operator==(const BigRecord& lhs, const BigRecord& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.name() == rhs.name() &&
                lhs.array() == rhs.array();
     }

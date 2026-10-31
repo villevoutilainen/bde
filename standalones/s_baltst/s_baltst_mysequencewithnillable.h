@@ -180,15 +180,18 @@ class MySequenceWithNillable {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    int& attribute1();
+    int& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "MyNillable" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& myNillable();
+    bdlb::NullableValue<bsl::string>& myNillable()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bsl::string& attribute2();
+    bsl::string& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -240,11 +243,13 @@ class MySequenceWithNillable {
 
     /// Return a reference offering non-modifiable access to the
     /// "MyNillable" attribute of this object.
-    const bdlb::NullableValue<bsl::string>& myNillable() const;
+    const bdlb::NullableValue<bsl::string>& myNillable() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute2" attribute of this object.
-    const bsl::string& attribute2() const;
+    const bsl::string& attribute2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -254,6 +259,8 @@ class MySequenceWithNillable {
     friend bool operator==(const MySequenceWithNillable& lhs,
                            const MySequenceWithNillable& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1() &&
                lhs.myNillable() == rhs.myNillable() &&
                lhs.attribute2() == rhs.attribute2();
@@ -411,7 +418,8 @@ class MySequenceWithNillableBase64Binary {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::vector<char> >& attribute1();
+    bdlb::NullableValue<bsl::vector<char> >& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -460,7 +468,8 @@ class MySequenceWithNillableBase64Binary {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bdlb::NullableValue<bsl::vector<char> >& attribute1() const;
+    const bdlb::NullableValue<bsl::vector<char> >& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -470,6 +479,8 @@ class MySequenceWithNillableBase64Binary {
     friend bool operator==(const MySequenceWithNillableBase64Binary& lhs,
                            const MySequenceWithNillableBase64Binary& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 
@@ -626,7 +637,8 @@ class MySequenceWithNillableHexBinary {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::vector<char> >& attribute1();
+    bdlb::NullableValue<bsl::vector<char> >& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -675,7 +687,8 @@ class MySequenceWithNillableHexBinary {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bdlb::NullableValue<bsl::vector<char> >& attribute1() const;
+    const bdlb::NullableValue<bsl::vector<char> >& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -685,6 +698,8 @@ class MySequenceWithNillableHexBinary {
     friend bool operator==(const MySequenceWithNillableHexBinary& lhs,
                            const MySequenceWithNillableHexBinary& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 
@@ -841,7 +856,8 @@ class MySequenceWithNillableIntArray {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<int> >& attribute1();
+    bsl::vector<bdlb::NullableValue<int> >& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -890,7 +906,8 @@ class MySequenceWithNillableIntArray {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bsl::vector<bdlb::NullableValue<int> >& attribute1() const;
+    const bsl::vector<bdlb::NullableValue<int> >& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -900,6 +917,8 @@ class MySequenceWithNillableIntArray {
     friend bool operator==(const MySequenceWithNillableIntArray& lhs,
                            const MySequenceWithNillableIntArray& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 
@@ -1017,7 +1036,8 @@ class MySequenceWithNillableIntSequenceArraySequence {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    int& attribute1();
+    int& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1233,7 +1253,8 @@ class MySequenceWithNillableStringArray {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<bsl::string> >& attribute1();
+    bsl::vector<bdlb::NullableValue<bsl::string> >& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1282,7 +1303,8 @@ class MySequenceWithNillableStringArray {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bsl::vector<bdlb::NullableValue<bsl::string> >& attribute1() const;
+    const bsl::vector<bdlb::NullableValue<bsl::string> >& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -1292,6 +1314,8 @@ class MySequenceWithNillableStringArray {
     friend bool operator==(const MySequenceWithNillableStringArray& lhs,
                            const MySequenceWithNillableStringArray& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 
@@ -1452,7 +1476,8 @@ class MySequenceWithNillableStringSequenceArraySequence {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bsl::string& attribute1();
+    bsl::string& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1501,7 +1526,8 @@ class MySequenceWithNillableStringSequenceArraySequence {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bsl::string& attribute1() const;
+    const bsl::string& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -1512,6 +1538,8 @@ class MySequenceWithNillableStringSequenceArraySequence {
                   const MySequenceWithNillableStringSequenceArraySequence& lhs,
                   const MySequenceWithNillableStringSequenceArraySequence& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 
@@ -1669,7 +1697,8 @@ class MySequenceWithNillableIntList {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<int> >& attribute1();
+    bsl::vector<bdlb::NullableValue<int> >& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1718,7 +1747,8 @@ class MySequenceWithNillableIntList {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bsl::vector<bdlb::NullableValue<int> >& attribute1() const;
+    const bsl::vector<bdlb::NullableValue<int> >& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -1728,6 +1758,8 @@ class MySequenceWithNillableIntList {
     friend bool operator==(const MySequenceWithNillableIntList& lhs,
                            const MySequenceWithNillableIntList& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 
@@ -1885,7 +1917,8 @@ class MySequenceWithNillableIntSequenceArray {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<MySequenceWithNillableIntSequenceArraySequence> >& attribute1();
+    bsl::vector<bdlb::NullableValue<MySequenceWithNillableIntSequenceArraySequence> >& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1934,7 +1967,8 @@ class MySequenceWithNillableIntSequenceArray {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bsl::vector<bdlb::NullableValue<MySequenceWithNillableIntSequenceArraySequence> >& attribute1() const;
+    const bsl::vector<bdlb::NullableValue<MySequenceWithNillableIntSequenceArraySequence> >& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -1944,6 +1978,8 @@ class MySequenceWithNillableIntSequenceArray {
     friend bool operator==(const MySequenceWithNillableIntSequenceArray& lhs,
                            const MySequenceWithNillableIntSequenceArray& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 
@@ -2100,7 +2136,8 @@ class MySequenceWithNillableStringList {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<bsl::string> >& attribute1();
+    bsl::vector<bdlb::NullableValue<bsl::string> >& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2149,7 +2186,8 @@ class MySequenceWithNillableStringList {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bsl::vector<bdlb::NullableValue<bsl::string> >& attribute1() const;
+    const bsl::vector<bdlb::NullableValue<bsl::string> >& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -2159,6 +2197,8 @@ class MySequenceWithNillableStringList {
     friend bool operator==(const MySequenceWithNillableStringList& lhs,
                            const MySequenceWithNillableStringList& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 
@@ -2316,7 +2356,8 @@ class MySequenceWithNillableStringSequenceArray {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<MySequenceWithNillableStringSequenceArraySequence> >& attribute1();
+    bsl::vector<bdlb::NullableValue<MySequenceWithNillableStringSequenceArraySequence> >& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2365,7 +2406,8 @@ class MySequenceWithNillableStringSequenceArray {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bsl::vector<bdlb::NullableValue<MySequenceWithNillableStringSequenceArraySequence> >& attribute1() const;
+    const bsl::vector<bdlb::NullableValue<MySequenceWithNillableStringSequenceArraySequence> >& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -2376,6 +2418,8 @@ class MySequenceWithNillableStringSequenceArray {
                           const MySequenceWithNillableStringSequenceArray& lhs,
                           const MySequenceWithNillableStringSequenceArray& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 

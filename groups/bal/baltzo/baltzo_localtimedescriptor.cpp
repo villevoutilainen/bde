@@ -40,6 +40,7 @@ bsl::ostream& LocalTimeDescriptor::print(bsl::ostream& stream,
 bsl::ostream& baltzo::operator<<(bsl::ostream&              stream,
                                  const LocalTimeDescriptor& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     bslim::Printer printer(&stream, 0, -1);
     printer.start();
     printer.printValue(object.utcOffsetInSeconds());

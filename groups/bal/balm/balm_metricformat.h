@@ -118,6 +118,8 @@ BSLS_IDENT("$Id: balm_metricformat.h,v 1.8 2008/04/16 20:00:49 hversche Exp $")
 
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_iosfwd.h>
 #include <bsl_vector.h>
 #include <bsl_cstring.h>       // for 'bsl::strcmp'
@@ -494,6 +496,8 @@ inline
 void MetricFormat::setFormatSpec(PublicationType::Value  publicationType,
                                  const MetricFormatSpec& formatSpec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&formatSpec);
     if (d_formatSpecs.empty()) {
         d_formatSpecs.resize(PublicationType::k_LENGTH);
     }
@@ -503,6 +507,7 @@ void MetricFormat::setFormatSpec(PublicationType::Value  publicationType,
 inline
 void MetricFormat::clearFormatSpecs()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_formatSpecs.clear();
 }
 
@@ -511,6 +516,7 @@ inline
 const MetricFormatSpec *MetricFormat::formatSpec(
                                   PublicationType::Value publicationType) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_formatSpecs.empty()) {
         return 0;                                                     // RETURN
     }
@@ -525,6 +531,8 @@ inline
 bool balm::operator==(const MetricFormat& lhs,
                       const MetricFormat& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_formatSpecs == rhs.d_formatSpecs;
 }
 

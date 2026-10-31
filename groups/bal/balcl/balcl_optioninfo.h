@@ -33,6 +33,7 @@ BSLS_IDENT("$Id: $")
 #include <balcl_typeinfo.h>
 #include <balcl_occurrenceinfo.h>
 
+#include <bsls_assert.h>
 #include <bsls_compilerfeatures.h>
 
 #include <bsl_iosfwd.h>
@@ -232,6 +233,8 @@ bsl::ostream& operator<<(bsl::ostream& stream, const OptionInfo& rhs);
 inline
 bool balcl::operator==(const OptionInfo& lhs, const OptionInfo& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_tag                      == rhs.d_tag
         && lhs.d_name                     == rhs.d_name
         && lhs.d_description              == rhs.d_description
@@ -243,6 +246,8 @@ bool balcl::operator==(const OptionInfo& lhs, const OptionInfo& rhs)
 inline
 bool balcl::operator!=(const OptionInfo& lhs, const OptionInfo& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_tag                      != rhs.d_tag
         || lhs.d_name                     != rhs.d_name
         || lhs.d_description              != rhs.d_description

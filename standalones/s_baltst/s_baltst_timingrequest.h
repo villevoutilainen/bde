@@ -159,31 +159,40 @@ class TimingRequest {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    s_baltst::Sqrt& makeSqrt();
-    s_baltst::Sqrt& makeSqrt(const s_baltst::Sqrt& value);
+    s_baltst::Sqrt& makeSqrt()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::Sqrt& makeSqrt(const s_baltst::Sqrt& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::Sqrt& makeSqrt(s_baltst::Sqrt&& value);
+    s_baltst::Sqrt& makeSqrt(s_baltst::Sqrt&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Sqrt" value.  Optionally
         // specify the 'value' of the "Sqrt".  If 'value' is not specified, the
         // default "Sqrt" value is used.
 
-    s_baltst::BasicRecord& makeBasic();
-    s_baltst::BasicRecord& makeBasic(const s_baltst::BasicRecord& value);
+    s_baltst::BasicRecord& makeBasic()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::BasicRecord& makeBasic(const s_baltst::BasicRecord& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::BasicRecord& makeBasic(s_baltst::BasicRecord&& value);
+    s_baltst::BasicRecord& makeBasic(s_baltst::BasicRecord&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Basic" value.  Optionally
         // specify the 'value' of the "Basic".  If 'value' is not specified,
         // the default "Basic" value is used.
 
-    s_baltst::BigRecord& makeBig();
-    s_baltst::BigRecord& makeBig(const s_baltst::BigRecord& value);
+    s_baltst::BigRecord& makeBig()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::BigRecord& makeBig(const s_baltst::BigRecord& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::BigRecord& makeBig(s_baltst::BigRecord&& value);
+    s_baltst::BigRecord& makeBig(s_baltst::BigRecord&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "Big" value.  Optionally
         // specify the 'value' of the "Big".  If 'value' is not specified, the
@@ -200,17 +209,20 @@ class TimingRequest {
     /// Return a reference to the modifiable "Sqrt" selection of this object
     /// if "Sqrt" is the current selection.  The behavior is undefined
     /// unless "Sqrt" is the selection of this object.
-    s_baltst::Sqrt& sqrt();
+    s_baltst::Sqrt& sqrt()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Basic" selection of this
     /// object if "Basic" is the current selection.  The behavior is
     /// undefined unless "Basic" is the selection of this object.
-    s_baltst::BasicRecord& basic();
+    s_baltst::BasicRecord& basic()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Big" selection of this object
     /// if "Big" is the current selection.  The behavior is undefined unless
     /// "Big" is the selection of this object.
-    s_baltst::BigRecord& big();
+    s_baltst::BigRecord& big()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -243,17 +255,20 @@ class TimingRequest {
     /// Return a reference to the non-modifiable "Sqrt" selection of this
     /// object if "Sqrt" is the current selection.  The behavior is
     /// undefined unless "Sqrt" is the selection of this object.
-    const s_baltst::Sqrt& sqrt() const;
+    const s_baltst::Sqrt& sqrt() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Basic" selection of this
     /// object if "Basic" is the current selection.  The behavior is
     /// undefined unless "Basic" is the selection of this object.
-    const s_baltst::BasicRecord& basic() const;
+    const s_baltst::BasicRecord& basic() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Big" selection of this
     /// object if "Big" is the current selection.  The behavior is undefined
     /// unless "Big" is the selection of this object.
-    const s_baltst::BigRecord& big() const;
+    const s_baltst::BigRecord& big() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "Sqrt" value, and
     /// return `false` otherwise.
@@ -323,6 +338,8 @@ namespace s_baltst {
 inline
 bool TimingRequest::isEqualTo(const TimingRequest& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef TimingRequest Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -333,7 +350,8 @@ bool TimingRequest::isEqualTo(const TimingRequest& rhs) const
           case Class::SELECTION_ID_BIG:
             return this->big() == rhs.big();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -360,6 +378,7 @@ TimingRequest::~TimingRequest()
 template <typename t_MANIPULATOR>
 int TimingRequest::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case TimingRequest::SELECTION_ID_SQRT:
         return manipulator(&d_sqrt.object(),
@@ -379,6 +398,7 @@ int TimingRequest::manipulateSelection(t_MANIPULATOR& manipulator)
 inline
 s_baltst::Sqrt& TimingRequest::sqrt()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SQRT == d_selectionId);
     return d_sqrt.object();
 }
@@ -386,6 +406,7 @@ s_baltst::Sqrt& TimingRequest::sqrt()
 inline
 s_baltst::BasicRecord& TimingRequest::basic()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_BASIC == d_selectionId);
     return d_basic.object();
 }
@@ -393,6 +414,7 @@ s_baltst::BasicRecord& TimingRequest::basic()
 inline
 s_baltst::BigRecord& TimingRequest::big()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_BIG == d_selectionId);
     return d_big.object();
 }
@@ -407,6 +429,7 @@ int TimingRequest::selectionId() const
 template <typename t_ACCESSOR>
 int TimingRequest::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SQRT:
         return accessor(d_sqrt.object(),
@@ -426,6 +449,7 @@ int TimingRequest::accessSelection(t_ACCESSOR& accessor) const
 inline
 const s_baltst::Sqrt& TimingRequest::sqrt() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SQRT == d_selectionId);
     return d_sqrt.object();
 }
@@ -433,6 +457,7 @@ const s_baltst::Sqrt& TimingRequest::sqrt() const
 inline
 const s_baltst::BasicRecord& TimingRequest::basic() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_BASIC == d_selectionId);
     return d_basic.object();
 }
@@ -440,6 +465,7 @@ const s_baltst::BasicRecord& TimingRequest::basic() const
 inline
 const s_baltst::BigRecord& TimingRequest::big() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_BIG == d_selectionId);
     return d_big.object();
 }

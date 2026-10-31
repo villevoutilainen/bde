@@ -118,7 +118,8 @@ class MySequenceWithPrecisionDecimalAttribute {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bdlb::NullableValue<bdldfp::Decimal64>& attribute1();
+    bdlb::NullableValue<bdldfp::Decimal64>& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -167,7 +168,8 @@ class MySequenceWithPrecisionDecimalAttribute {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bdlb::NullableValue<bdldfp::Decimal64>& attribute1() const;
+    const bdlb::NullableValue<bdldfp::Decimal64>& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -177,6 +179,8 @@ class MySequenceWithPrecisionDecimalAttribute {
     friend bool operator==(const MySequenceWithPrecisionDecimalAttribute& lhs,
                            const MySequenceWithPrecisionDecimalAttribute& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 

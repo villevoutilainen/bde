@@ -116,7 +116,8 @@ class MySequenceWithDecimalAttribute {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    bdlb::NullableValue<double>& attribute1();
+    bdlb::NullableValue<double>& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -165,7 +166,8 @@ class MySequenceWithDecimalAttribute {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute1" attribute of this object.
-    const bdlb::NullableValue<double>& attribute1() const;
+    const bdlb::NullableValue<double>& attribute1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -175,6 +177,8 @@ class MySequenceWithDecimalAttribute {
     friend bool operator==(const MySequenceWithDecimalAttribute& lhs,
                            const MySequenceWithDecimalAttribute& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1();
     }
 

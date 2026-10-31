@@ -197,6 +197,7 @@ void MetricConcurrencyTest::execute()
 
     Obj& mX = *d_metric; const Obj& MX = mX;
     Collector       *collector = mX.collector();
+    BSLS_ASSERT_CONVEYOR_OBJECT(collector);
     const Category  *CATEGORY  = collector->metricId().category();
     collector->reset();
 
@@ -214,6 +215,7 @@ void MetricConcurrencyTest::execute()
         ASSERT(MX.isActive());
         ASSERT(collector             == mX.collector());
         ASSERT(collector             == MX.collector());
+        BSLS_ASSERT_CONVEYOR_OBJECT(collector);
         ASSERT(collector->metricId() == MX.metricId());
     }
 
@@ -248,6 +250,7 @@ void MetricConcurrencyTest::execute()
         MX.isActive();
         ASSERT(collector             == mX.collector());
         ASSERT(collector             == MX.collector());
+        BSLS_ASSERT_CONVEYOR_OBJECT(collector);
         ASSERT(collector->metricId() == MX.metricId());
     }
 
@@ -318,6 +321,7 @@ void MetricConcurrencyTest::runTest()
         /// if there was an error handling the event.
         int handleEvent(int eventId, const bsl::string& eventMessage)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&eventMessage);
             (void)eventId;
 
             int returnCode = 0;
@@ -594,6 +598,7 @@ int main(int argc, char *argv[])
             for (int i = 0; i < NUM_IDS; ++i) {
                 balm::Collector *col =
                                repository.getDefaultCollector(IDS[i], IDS[i]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(col);
                 balm::Collector  expValue(col->metricId());
 
                 balm::Metric mX(col);
@@ -624,6 +629,7 @@ int main(int argc, char *argv[])
 
                 balm::Collector *col =
                                repository.getDefaultCollector(IDS[i], IDS[i]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(col);
                 balm::Collector  expValue(col->metricId());
                 const Category *CATEGORY = col->metricId().category();
 
@@ -696,6 +702,7 @@ int main(int argc, char *argv[])
             for (int i = 0; i < NUM_IDS; ++i) {
                 balm::Collector *col =
                                repository.getDefaultCollector(IDS[i], IDS[i]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(col);
                 balm::Collector  expValue(col->metricId());
 
                 balm::Metric mX(col);
@@ -719,6 +726,7 @@ int main(int argc, char *argv[])
 
                 balm::Collector *col =
                              repository.getDefaultCollector(IDS[i], IDS[i]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(col);
                 balm::Collector  expValue(col->metricId());
                 const Category *CATEGORY = col->metricId().category();
 
@@ -781,6 +789,7 @@ int main(int argc, char *argv[])
             for (int i = 0; i < NUM_IDS; ++i) {
                 balm::Collector *col =
                                repository.getDefaultCollector(IDS[i], IDS[i]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(col);
                 balm::Collector  expValue(col->metricId());
 
                 balm::Metric mX(col);
@@ -804,6 +813,7 @@ int main(int argc, char *argv[])
 
                 balm::Collector *col =
                               repository.getDefaultCollector(IDS[i], IDS[i]);
+                BSLS_ASSERT_CONVEYOR_OBJECT(col);
                 balm::Collector  expValue(col->metricId());
                 const Category *CATEGORY = col->metricId().category();
 
@@ -1140,6 +1150,8 @@ int main(int argc, char *argv[])
             balm::Collector *A_COL = repository.getDefaultCollector("A", "A");
             balm::Collector *B_COL = repository.getDefaultCollector("B", "B");
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(B_COL);
+            BSLS_ASSERT_CONVEYOR_OBJECT(A_COL);
             const Id A_ID = A_COL->metricId();
             const Id B_ID = B_COL->metricId();
 

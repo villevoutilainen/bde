@@ -153,21 +153,30 @@ class Request {
     /// selection is not found).
     int makeSelection(const char *name, int nameLength);
 
-    s_baltst::SimpleRequest& makeSimpleRequest();
-    s_baltst::SimpleRequest& makeSimpleRequest(const s_baltst::SimpleRequest& value);
+    s_baltst::SimpleRequest& makeSimpleRequest()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::SimpleRequest& makeSimpleRequest(
+                                          const s_baltst::SimpleRequest& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::SimpleRequest& makeSimpleRequest(s_baltst::SimpleRequest&& value);
+    s_baltst::SimpleRequest& makeSimpleRequest(s_baltst::SimpleRequest&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "SimpleRequest" value.
         // Optionally specify the 'value' of the "SimpleRequest".  If 'value'
         // is not specified, the default "SimpleRequest" value is used.
 
-    s_baltst::FeatureTestMessage& makeFeatureRequest();
-    s_baltst::FeatureTestMessage& makeFeatureRequest(const s_baltst::FeatureTestMessage& value);
+    s_baltst::FeatureTestMessage& makeFeatureRequest()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    s_baltst::FeatureTestMessage& makeFeatureRequest(
+                                     const s_baltst::FeatureTestMessage& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES) \
  && defined(BSLS_COMPILERFEATURES_SUPPORT_NOEXCEPT)
-    s_baltst::FeatureTestMessage& makeFeatureRequest(s_baltst::FeatureTestMessage&& value);
+    s_baltst::FeatureTestMessage& makeFeatureRequest(
+                                          s_baltst::FeatureTestMessage&& value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 #endif
         // Set the value of this object to be a "FeatureRequest" value.
         // Optionally specify the 'value' of the "FeatureRequest".  If 'value'
@@ -185,13 +194,15 @@ class Request {
     /// this object if "SimpleRequest" is the current selection.  The
     /// behavior is undefined unless "SimpleRequest" is the selection of
     /// this object.
-    s_baltst::SimpleRequest& simpleRequest();
+    s_baltst::SimpleRequest& simpleRequest()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "FeatureRequest" selection of
     /// this object if "FeatureRequest" is the current selection.  The
     /// behavior is undefined unless "FeatureRequest" is the selection of
     /// this object.
-    s_baltst::FeatureTestMessage& featureRequest();
+    s_baltst::FeatureTestMessage& featureRequest()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -225,13 +236,15 @@ class Request {
     /// of this object if "SimpleRequest" is the current selection.  The
     /// behavior is undefined unless "SimpleRequest" is the selection of
     /// this object.
-    const s_baltst::SimpleRequest& simpleRequest() const;
+    const s_baltst::SimpleRequest& simpleRequest() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "FeatureRequest" selection
     /// of this object if "FeatureRequest" is the current selection.  The
     /// behavior is undefined unless "FeatureRequest" is the selection of
     /// this object.
-    const s_baltst::FeatureTestMessage& featureRequest() const;
+    const s_baltst::FeatureTestMessage& featureRequest() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this object is a "SimpleRequest"
     /// value, and return `false` otherwise.
@@ -296,6 +309,8 @@ namespace s_baltst {
 inline
 bool Request::isEqualTo(const Request& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef Request Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -304,7 +319,8 @@ bool Request::isEqualTo(const Request& rhs) const
           case Class::SELECTION_ID_FEATURE_REQUEST:
             return this->featureRequest() == rhs.featureRequest();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -331,6 +347,7 @@ Request::~Request()
 template <typename t_MANIPULATOR>
 int Request::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case Request::SELECTION_ID_SIMPLE_REQUEST:
         return manipulator(&d_simpleRequest.object(),
@@ -347,6 +364,7 @@ int Request::manipulateSelection(t_MANIPULATOR& manipulator)
 inline
 s_baltst::SimpleRequest& Request::simpleRequest()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SIMPLE_REQUEST == d_selectionId);
     return d_simpleRequest.object();
 }
@@ -354,6 +372,7 @@ s_baltst::SimpleRequest& Request::simpleRequest()
 inline
 s_baltst::FeatureTestMessage& Request::featureRequest()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_FEATURE_REQUEST == d_selectionId);
     return d_featureRequest.object();
 }
@@ -368,6 +387,7 @@ int Request::selectionId() const
 template <typename t_ACCESSOR>
 int Request::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SIMPLE_REQUEST:
         return accessor(d_simpleRequest.object(),
@@ -384,6 +404,7 @@ int Request::accessSelection(t_ACCESSOR& accessor) const
 inline
 const s_baltst::SimpleRequest& Request::simpleRequest() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SIMPLE_REQUEST == d_selectionId);
     return d_simpleRequest.object();
 }
@@ -391,6 +412,7 @@ const s_baltst::SimpleRequest& Request::simpleRequest() const
 inline
 const s_baltst::FeatureTestMessage& Request::featureRequest() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_FEATURE_REQUEST == d_selectionId);
     return d_featureRequest.object();
 }

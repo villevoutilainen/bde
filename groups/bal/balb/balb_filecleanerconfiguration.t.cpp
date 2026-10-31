@@ -395,6 +395,7 @@ int main(int argc, char *argv[])
 // ```
 // Now, we verify the options are configured correctly:
 // ```
+    BSLS_ASSERT_CONVEYOR_OBJECT(&config);
     ASSERT("/var/log/myApp/log*" == config.filePattern());
     ASSERT(bsls::TimeInterval(60*60*24) == config.maxFileAge());
     ASSERT(4       == config.minNumFiles());
@@ -655,8 +656,10 @@ int main(int argc, char *argv[])
 
                         ASSERTV(LINE1, LINE2, sam.isInUseSame());
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                         ASSERTV(LINE1, LINE2,
                                 &oa == X.filePattern().get_allocator());
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
                         ASSERTV(LINE1, LINE2,
                                 &scratch == Z.filePattern().get_allocator());
 
@@ -902,6 +905,7 @@ int main(int argc, char *argv[])
 
                     // Verify the expected attributes values.
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     ASSERTV(LINE, FILE_PATTERN  == X.filePattern());
                     ASSERTV(LINE, INTERVAL      == X.maxFileAge());
                     ASSERTV(LINE, MIN_NUM_FILES == X.minNumFiles());
@@ -1008,6 +1012,7 @@ int main(int argc, char *argv[])
                 // Create control object w.
                 Obj mW;  const Obj& W = gg(&mW, SPEC);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&W);
                 ASSERTV(SPEC, bslma::Default::defaultAllocator()
                                            == W.filePattern().get_allocator());
 
@@ -1015,6 +1020,7 @@ int main(int argc, char *argv[])
 
                 Obj mX(&oa);  const Obj& X = gg(&mX, SPEC);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(SPEC, &oa == X.filePattern().get_allocator());
 
                 if (veryVerbose) { cout << "\t\tDynamic Obj: "; P(X); }
@@ -1351,6 +1357,7 @@ int main(int argc, char *argv[])
 
             // Verify the expected attributes values.
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(LINE, FILE_PATTERN  == X.filePattern());
             ASSERTV(LINE, INTERVAL      == X.maxFileAge());
             ASSERTV(LINE, MINFILES      == X.minNumFiles());
@@ -1625,6 +1632,7 @@ int main(int argc, char *argv[])
 
             // Verify object value.
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERTV(CONFIG, "" == X.filePattern());
             ASSERTV(CONFIG, bsls::TimeInterval() == X.maxFileAge());
             ASSERTV(CONFIG, 0 == X.minNumFiles());
@@ -1681,11 +1689,13 @@ int main(int argc, char *argv[])
 
                 // Verify object value.
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(LINE, "" == X.filePattern());
                 ASSERTV(LINE, bsls::TimeInterval() == X.maxFileAge());
                 ASSERTV(LINE, 0 == X.minNumFiles());
 
                 mX.setFilePattern(PATTERN);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(LINE, X.filePattern(), PATTERN == X.filePattern());
 
                 mX.setMaxFileAge(MAXAGE);
@@ -1721,6 +1731,7 @@ int main(int argc, char *argv[])
 
         Obj config("/var/log/myApp/log*", bsls::TimeInterval(60), 4);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&config);
         ASSERT("/var/log/myApp/log*" == config.filePattern());
         ASSERT(bsls::TimeInterval(60) == config.maxFileAge());
         ASSERT(4 == config.minNumFiles());

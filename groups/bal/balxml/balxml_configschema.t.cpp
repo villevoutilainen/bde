@@ -156,6 +156,7 @@ struct TestUtil {
 // CLASS METHODS
 void TestUtil::loadExpectedSchema(s_baltst::BasicSchema *schema)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(schema);
     schema->package() = "balxml";
     schema->elementFormDefault() = "qualified";
 
@@ -174,6 +175,7 @@ void TestUtil::loadExpectedSchema(s_baltst::BasicSchema *schema)
 
 void TestUtil::loadEncodingStyle(SimpleTypeElement *encodingStyle)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(encodingStyle);
     encodingStyle->name() = "EncodingStyle";
     encodingStyle->preserveEnumOrder() = "1";
 
@@ -188,6 +190,7 @@ void TestUtil::loadEncodingStyle(SimpleTypeElement *encodingStyle)
 
 void TestUtil::loadEncoderOptions(ComplexTypeElement *encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(encoderOptions);
     encoderOptions->name() = "EncoderOptions";
 
     SequenceElement sequence;
@@ -379,6 +382,7 @@ void TestUtil::loadEncoderOptions(ComplexTypeElement *encoderOptions)
 
 void TestUtil::loadDecoderOptions(ComplexTypeElement *decoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(decoderOptions);
     decoderOptions->name() = "DecoderOptions";
 
     SequenceElement sequence;

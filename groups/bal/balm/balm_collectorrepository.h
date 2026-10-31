@@ -117,6 +117,7 @@ BSLS_IDENT("$Id: $")
 #include <bsl_memory.h>
 #include <bsl_vector.h>
 
+#include <bsls_assert.h>
 #include <bsls_libraryfeatures.h>
 
 #include <vector>                   // 'std::vector', 'std::pmr::vector'
@@ -361,7 +362,8 @@ class CollectorRepository {
 
     /// Return a reference to the non-modifiable registry of metrics used by
     /// this collector repository.
-    const MetricRegistry& registry() const;
+    const MetricRegistry& registry() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // ============================================================================

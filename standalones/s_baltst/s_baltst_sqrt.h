@@ -114,7 +114,8 @@ class Sqrt {
 
     /// Return a reference to the modifiable "Value" attribute of this
     /// object.
-    double& value();
+    double& value()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 

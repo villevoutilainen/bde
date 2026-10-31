@@ -2345,6 +2345,7 @@ template <class TYPE>
 int Decoder_ChoiceContext<TYPE>::parseSubElement(const char *elementName,
                                                  Decoder    *decoder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_FAILURE = -1 };
 
     const int lenName = static_cast<int>(bsl::strlen(elementName));
@@ -2553,6 +2554,7 @@ int Decoder_SequenceContext<TYPE>::addCharacters(const char   *chars,
                                                  bsl::size_t   length,
                                                  Decoder      *decoder)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     BSLS_REVIEW(0 != length);
@@ -2746,8 +2748,10 @@ template <class TYPE>
 inline
 int Decoder_UTF8Context<TYPE>::startElement(Decoder *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0 };
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
     d_object_p->clear();
 
     return k_SUCCESS;
@@ -2768,8 +2772,10 @@ Decoder_UTF8Context<TYPE>::addCharacters(const char   *chars,
                                          bsl::size_t   length,
                                          Decoder      *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0 };
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_object_p);
     d_object_p->insert(d_object_p->end(), chars, chars + length);
 
     return k_SUCCESS;
@@ -2819,10 +2825,12 @@ template <class TYPE, class INFO_TYPE>
 int Decoder_PrepareSequenceContext::operator()(const TYPE&,
                                                const INFO_TYPE& info)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0 };
 
     if (info.formattingMode() & bdlat_FormattingMode::e_SIMPLE_CONTENT) {
         BSLS_ASSERT_SAFE(d_simpleContentId_p->isNull());
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_simpleContentId_p);
         d_simpleContentId_p->makeValue(info.id());
     }
 

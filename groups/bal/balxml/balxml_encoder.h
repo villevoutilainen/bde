@@ -416,7 +416,8 @@ class Encoder_Context {
     bsl::ostream& rawOutputStream();
 
     // ACCESSORS
-    const EncoderOptions& encoderOptions() const;
+    const EncoderOptions& encoderOptions() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     int status() const;
 };
@@ -707,12 +708,14 @@ class Encoder_SequenceFirstPass {
     // ACCESSORS
 
     /// Return true if a sub-element is found, and false otherwise.
-    const bool& hasSubElements() const;
+    const bool& hasSubElements() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a null value if there is no element with `IS_SIMPLE_CONTENT`
     /// flag, or a non-null value with the integer `id` of the element
     /// otherwise.
-    const bdlb::NullableValue<int>& simpleContentId() const;
+    const bdlb::NullableValue<int>& simpleContentId() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
                       // ================================
@@ -1083,6 +1086,7 @@ bsl::ostream& Encoder::encode(bsl::ostream& stream, const TYPE& object)
 template <class TYPE>
 int Encoder::encode(Formatter& formatter, const TYPE& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_severity = ErrorInfo::e_NO_ERROR;
     if (d_logStream != 0) {
         d_logStream->reset();
@@ -1090,6 +1094,7 @@ int Encoder::encode(Formatter& formatter, const TYPE& object)
 
     Encoder_Context context(&formatter,this);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_options);
     if (d_options->outputXMLHeader()) {
         formatter.addHeader();
     }
@@ -1295,10 +1300,12 @@ int Encoder_EncodeObject::executeImp(
                               bool                              isMultiple,
                               bdlat_TypeCategory::NullableValue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0 };
 
     if (bdlat_NullableValueFunctions::isNull(object)) {
         if (formattingMode & bdlat_FormattingMode::e_NILLABLE) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_context_p);
             if ((!d_context_p->encoderOptions().objectNamespace().empty() &&
                  d_context_p->encoderOptions().outputXSIAlias()) ||
                 isMultiple) {
@@ -1384,8 +1391,10 @@ template <class TYPE>
 int Encoder_EncodeObject::executeArrayListImp(const TYPE&              object,
                                               const bsl::string_view&  tag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_context_p->openElement(tag);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_context_p);
     TypesPrintUtil::printList(d_context_p->rawOutputStream(),
                               object,
                               &d_context_p->encoderOptions());
@@ -1558,6 +1567,8 @@ int Encoder_EncodeValue::executeImp(const TYPE&  object,
                                     int          formattingMode,
                                     ANY_CATEGORY)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_context_p);
     TypesPrintUtil::print(d_context_p->rawOutputStream(),
                           object,
                           formattingMode,
@@ -1679,7 +1690,7 @@ Encoder_SequenceFirstPass::Encoder_SequenceFirstPass(Encoder_Context *context)
 , d_hasSubElements(false)
 {
     BSLS_ASSERT(d_context_p);
-    BSLS_ASSERT(d_simpleContentId.isNull());
+    BSLS_ASSERT_NONCONVEYOR(d_simpleContentId.isNull());
 
     // {DRQS 153551134<GO>}: gcc can occasionally mis-diagnose
     // 'd_simpleContentId' as uninitialized.  This workaround avoids that
@@ -1695,6 +1706,7 @@ template <class TYPE, class INFO_TYPE>
 int Encoder_SequenceFirstPass::operator()(const TYPE&      object,
                                           const INFO_TYPE& info)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0 };
 
     int  formattingMode  = info.formattingMode();
@@ -1705,7 +1717,7 @@ int Encoder_SequenceFirstPass::operator()(const TYPE&      object,
     if (isSimpleContent) {
         BSLS_ASSERT(!isAttribute);
         BSLS_ASSERT(!d_hasSubElements);
-        BSLS_ASSERT(d_simpleContentId.isNull());
+        BSLS_ASSERT_NONCONVEYOR(d_simpleContentId.isNull());
 
         d_simpleContentId.makeValue(info.id());
     }
@@ -1715,7 +1727,7 @@ int Encoder_SequenceFirstPass::operator()(const TYPE&      object,
         return addAttribute(object, name, formattingMode);            // RETURN
     }
     else {
-        BSLS_ASSERT(d_simpleContentId.isNull());
+        BSLS_ASSERT_NONCONVEYOR(d_simpleContentId.isNull());
 
         d_hasSubElements = true;
     }

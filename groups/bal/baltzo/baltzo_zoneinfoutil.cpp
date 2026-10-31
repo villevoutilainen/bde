@@ -34,15 +34,17 @@ int ZoneinfoUtil::convertUtcToLocalTime(
                            const bdlt::Datetime&              utcTime,
                            const Zoneinfo&                    timeZone)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(resultTime);
     BSLS_ASSERT(resultTime);
     BSLS_ASSERT(resultTransition);
-    BSLS_ASSERT(isWellFormed(timeZone));
+    BSLS_ASSERT_NONCONVEYOR(isWellFormed(timeZone));
 
     Zoneinfo::TransitionConstIterator it =
                                     timeZone.findTransitionForUtcTime(utcTime);
-    BSLS_ASSERT(it != timeZone.endTransitions());
+    BSLS_ASSERT_NONCONVEYOR(it != timeZone.endTransitions());
 
     *resultTransition = it;
+    BSLS_ASSERT_CONVEYOR_OBJECT(it);
     const int offset = it->descriptor().utcOffsetInSeconds();
     const int offsetInMinutes = offset / 60;
 
@@ -64,11 +66,12 @@ void ZoneinfoUtil::loadRelevantTransitions(
                      const bdlt::Datetime&              localTime,
                      const Zoneinfo&                    timeZone)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&localTime);
     BSLS_ASSERT(firstResultTransition);
     BSLS_ASSERT(secondResultTransition);
     BSLS_ASSERT(firstResultTransition != secondResultTransition);
     BSLS_ASSERT(resultValidity);
-    BSLS_ASSERT(isWellFormed(timeZone));
+    BSLS_ASSERT_NONCONVEYOR(isWellFormed(timeZone));
 
     // Implementation Note:  This operations begins by using 'localTime' as an
     // initial approximation for its corresponding UTC time (this approximation
@@ -146,9 +149,10 @@ void ZoneinfoUtil::loadRelevantTransitions(
     // The following assert is to ensure changes to the behavior of
     // 'utcToLocalTime' are caught.
 
-    BSLS_ASSERT(currentTransition != timeZone.endTransitions());
+    BSLS_ASSERT_NONCONVEYOR(currentTransition != timeZone.endTransitions());
 
     bdlt::EpochUtil::TimeT64 currentTimeT = currentTransition->utcTime();
+    BSLS_ASSERT_CONVEYOR_OBJECT(currentTransition);
     const int currentOffset =
                          currentTransition->descriptor().utcOffsetInSeconds();
 
@@ -159,6 +163,7 @@ void ZoneinfoUtil::loadRelevantTransitions(
         TransitionConstIter prevTransition = currentTransition;
         --prevTransition;
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(prevTransition);
         const int prevOffset =
                              prevTransition->descriptor().utcOffsetInSeconds();
 
@@ -198,6 +203,7 @@ void ZoneinfoUtil::loadRelevantTransitions(
         // T2 and T2' (in the figure above).
 
         bdlt::EpochUtil::TimeT64 nextTimeT = nextTransition->utcTime();
+        BSLS_ASSERT_CONVEYOR_OBJECT(nextTransition);
         const int nextOffset =
                             nextTransition->descriptor().utcOffsetInSeconds();
 
@@ -240,6 +246,7 @@ void ZoneinfoUtil::loadRelevantTransitions(
 
 bool ZoneinfoUtil::isWellFormed(const Zoneinfo& timeZone)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeZone);
     // This method tests the logical inverse of each constraint indicated in
     // the component documentation, and returns 'false' if any constraint is
     // not satisfied.
@@ -272,8 +279,9 @@ bool ZoneinfoUtil::isWellFormed(const Zoneinfo& timeZone)
     // times overlaps with the range of invalid or ambiguous local times
     // introduced by subsequent transition (if any).
 
-    BSLS_ASSERT(0 < timeZone.numTransitions());
+    BSLS_ASSERT_NONCONVEYOR(0 < timeZone.numTransitions());
     Zoneinfo::TransitionConstIterator it = timeZone.beginTransitions();
+    BSLS_ASSERT_CONVEYOR_OBJECT(it);
     int previousOffset = it->descriptor().utcOffsetInSeconds();
 
     // Create a representation of local time immediately before and after the
@@ -285,6 +293,7 @@ bool ZoneinfoUtil::isWellFormed(const Zoneinfo& timeZone)
     bdlt::EpochUtil::TimeT64 postPreviousTransition = prePreviousTransition;
     ++it;
     while (it != timeZone.endTransitions()) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         int currentOffset = it->descriptor().utcOffsetInSeconds();
         bdlt::EpochUtil::TimeT64 utc = it->utcTime();
 

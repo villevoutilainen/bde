@@ -299,6 +299,7 @@ void PipeControlChannel::destroyNamedPipe()
 
 int PipeControlChannel::readNamedPipe()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (dispatchLeftoverMessage()) {
         return 0;                                                     // RETURN
     }
@@ -583,7 +584,8 @@ PipeControlChannel::PipeControlChannel(const ControlCallback&  callback,
 , d_isPipeOpen(false)
 , d_mutex()
 {
-    BSLS_ASSERT(bdls::FilePermissions::isValidBaseBits(permissions));
+    BSLS_ASSERT_NONCONVEYOR(
+                          bdls::FilePermissions::isValidBaseBits(permissions));
 
 #ifdef BSLS_PLATFORM_OS_WINDOWS
     d_impl.d_windows.d_handle = INVALID_HANDLE_VALUE;
@@ -602,8 +604,9 @@ PipeControlChannel::~PipeControlChannel()
 // MANIPULATORS
 void PipeControlChannel::setPermissions(int permissions)
 {
-    BSLS_ASSERT(e_STOPPED == d_backgroundState);
-    BSLS_ASSERT(bdls::FilePermissions::isValidBaseBits(permissions));
+    BSLS_ASSERT_NONCONVEYOR(e_STOPPED == d_backgroundState);
+    BSLS_ASSERT_NONCONVEYOR(
+                          bdls::FilePermissions::isValidBaseBits(permissions));
 
     d_permissions = permissions;
 }
@@ -728,6 +731,7 @@ void PipeControlChannel::shutdown()
 void PipeControlChannel::dispatchMessageUpTo(
                                        const bsl::vector<char>::iterator& iter)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslstl::StringRef stringRef(&(*d_buffer.begin()),
                                 static_cast<int>(iter - d_buffer.begin()));
     BSLS_LOG_TRACE("Assembled complete message '%s'",
@@ -741,6 +745,7 @@ void PipeControlChannel::dispatchMessageUpTo(
 
 bool PipeControlChannel::dispatchLeftoverMessage()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_buffer.size() != 0) {
         const bsl::vector<char>::iterator it = bsl::find(d_buffer.begin(),
                                                          d_buffer.end(),

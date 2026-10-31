@@ -68,6 +68,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
 #include <bsls_objectbuffer.h>
 
 #include <bsl_iosfwd.h>  // 'bsl::ostream'
@@ -159,10 +160,12 @@ class Option {
     OptionInfo::ArgType argType() const;
 
     /// Return the description of this option.
-    const bsl::string& description() const;
+    const bsl::string& description() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the environment variable name of this option.
-    const bsl::string& environmentVariableName() const;
+    const bsl::string& environmentVariableName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return `true` if the value of this option is of array type, and `false`
     /// otherwise.
@@ -175,12 +178,14 @@ class Option {
     const char *longTag() const;
 
     /// Return the name of this option.
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a `const` reference to the occurrence info for this option
     /// (i.e., whether the option is required, optional, or hidden, and its
     /// default value, if any).
-    const OccurrenceInfo& occurrenceInfo() const;
+    const OccurrenceInfo& occurrenceInfo() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the single character used to identify this option on a command
     /// line preceded with a single `-`, or 0 if this option only has a long
@@ -190,12 +195,14 @@ class Option {
 
     /// Return the tag string provided to this object at construction.  Note
     /// that this string is empty if this is a non-option argument.
-    const bsl::string& tagString() const;
+    const bsl::string& tagString() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a `const` reference to the type info for this option (i.e., the
     /// type of the option, whether the option is linked to a variable, and
     /// whether it has a constraint).
-    const TypeInfo& typeInfo() const;
+    const TypeInfo& typeInfo() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                                   // Validators
 

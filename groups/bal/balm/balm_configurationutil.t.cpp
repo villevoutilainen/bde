@@ -192,11 +192,14 @@ typedef balm::MetricDescription::UserDataKey Key;
 // We now use the user data key to lookup the address of the threshold value.
 // If this address is 0, no threshold is specified for the metric.
 // ```
+                BSLS_ASSERT_CONVEYOR_OBJECT(gIt);
                 const balm::MetricDescription& description =
                                                 *gIt->metricId().description();
                 const unsigned int *thresholdPtr =
                     (const unsigned int *)description.userData(d_thresholdKey);
+                BSLS_ASSERT_CONVEYOR_OBJECT(gIt);
                 if (thresholdPtr && gIt->total() > *thresholdPtr) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(gIt);
                     bsl::cout << "WARNING: " << gIt->metricId()
                               << " = "       << gIt->total()
                               << bsl::endl;
@@ -894,6 +897,7 @@ int main(int argc, char *argv[])
                                            SPEC1));
 
             // Verify the current format value.
+            BSLS_ASSERT_CONVEYOR_OBJECT(MGR);
             ASSERT(SPEC1 ==
                    *MGR->metricRegistry().findId(IDS[0], IDS[0]).
                        description()->format()->formatSpec(
@@ -958,6 +962,7 @@ int main(int argc, char *argv[])
                     ASSERT(0 == Obj::setFormat(
                                IDS[j], IDS[j], *FORMATS[i]));
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(MGR);
                     ASSERT(*FORMATS[i] ==
                            *MGR->metricRegistry().findId(IDS[j], IDS[j]).
                                     description()->format());
@@ -1030,6 +1035,7 @@ int main(int argc, char *argv[])
                     ASSERT(0 == Obj::setPreferredPublicationType(
                                IDS[j], IDS[j],(Type::Value)i));
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(MGR);
                     ASSERT((Type::Value)i ==
                            MGR->metricRegistry().findId(IDS[j], IDS[j]).
                                     description()->preferredPublicationType());

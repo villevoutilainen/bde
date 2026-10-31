@@ -469,6 +469,7 @@ BSLS_IDENT("$Id: $")
 
 #include <bslma_allocator.h>
 
+#include <bsls_assert.h>
 #include <bsls_atomic.h>
 #include <bsls_keyword.h>
 
@@ -698,7 +699,8 @@ class StackTraceTestAllocator : public bdlma::ManagedAllocator {
 
     /// Return a reference to the function that will be called when a
     /// failure is observed.
-    const FailureHandler& failureHandler() const;
+    const FailureHandler& failureHandler() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the number of allocations from this object that have occurred
     /// since creation.  Note that this does not count allocations of 0

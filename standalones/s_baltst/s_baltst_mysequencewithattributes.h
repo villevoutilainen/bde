@@ -174,19 +174,23 @@ class MySequenceWithAttributes {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    int& attribute1();
+    int& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& attribute2();
+    bdlb::NullableValue<bsl::string>& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    bdlb::NullableValue<int>& element1();
+    bdlb::NullableValue<int>& element1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& element2();
+    bdlb::NullableValue<bsl::string>& element2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -238,15 +242,18 @@ class MySequenceWithAttributes {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute2" attribute of this object.
-    const bdlb::NullableValue<bsl::string>& attribute2() const;
+    const bdlb::NullableValue<bsl::string>& attribute2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element1"
     /// attribute of this object.
-    const bdlb::NullableValue<int>& element1() const;
+    const bdlb::NullableValue<int>& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Element2"
     /// attribute of this object.
-    const bdlb::NullableValue<bsl::string>& element2() const;
+    const bdlb::NullableValue<bsl::string>& element2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -297,6 +304,8 @@ namespace s_baltst {
 inline
 bool MySequenceWithAttributes::isEqualTo(const MySequenceWithAttributes& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->attribute1() == rhs.attribute1() &&
            this->attribute2() == rhs.attribute2() &&
            this->element1() == rhs.element1() &&

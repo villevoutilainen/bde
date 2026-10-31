@@ -80,6 +80,7 @@ template <class CCHAR_VECTOR>
 inline
 void loadDefaultZoneinfoDataLocationsImp(CCHAR_VECTOR *locations)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(locations);
     BSLS_ASSERT(locations);
 
     BSLMF_ASSERT(u::IsCCharVector<CCHAR_VECTOR>::value);

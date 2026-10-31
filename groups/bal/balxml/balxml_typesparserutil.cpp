@@ -665,6 +665,7 @@ int TypesParserUtil_Imp::parseText(bsl::vector<char>         *result,
                                    int                        inputLength,
                                    bdlat_TypeCategory::Array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     enum { BAEXML_SUCCESS = 0 };
 
     result->assign(input, input + inputLength);

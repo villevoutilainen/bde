@@ -24,8 +24,8 @@ void Formatter_PrettyImplUtil::addAttributeImpl(
                                                const bsl::string_view&  name,
                                                const bsl::string_view&  value)
 {
-    BSLS_ASSERT(StateId::e_IN_TAG == state->id());
-    BSLS_ASSERT(0 != name.length());
+    BSLS_ASSERT_NONCONVEYOR(StateId::e_IN_TAG == state->id());
+    BSLS_ASSERT_NONCONVEYOR(0 != name.length());
 
     // 4 accounts for ' ', '=', '"', '"'
     const int attrLen = static_cast<int>(name.length() + value.length()) + 4;
@@ -120,7 +120,9 @@ void Formatter_PrettyImplUtil::addDataImpl(bsl::ostream&            stream,
                                            State                   *state,
                                            const bsl::string_view&  value)
 {
-    BSLS_ASSERT(StateId::e_FIRST_DATA_BETWEEN_TAGS == state->id() ||
+    BSLS_ASSERT_CONVEYOR_OBJECT(state);
+    BSLS_ASSERT_NONCONVEYOR(
+                           StateId::e_FIRST_DATA_BETWEEN_TAGS == state->id() ||
                 StateId::e_FIRST_DATA_AT_LINE_BETWEEN_TAGS == state->id() ||
                 StateId::e_TRAILING_DATA_BETWEEN_TAGS == state->id() ||
                 StateId::e_IN_TAG == state->id());
@@ -173,7 +175,9 @@ void Formatter_PrettyImplUtil::addListDataImpl(bsl::ostream&            stream,
                                                State                   *state,
                                                const bsl::string_view&  value)
 {
-    BSLS_ASSERT(StateId::e_FIRST_DATA_BETWEEN_TAGS == state->id() ||
+    BSLS_ASSERT_CONVEYOR_OBJECT(state);
+    BSLS_ASSERT_NONCONVEYOR(
+                           StateId::e_FIRST_DATA_BETWEEN_TAGS == state->id() ||
                 StateId::e_FIRST_DATA_AT_LINE_BETWEEN_TAGS == state->id() ||
                 StateId::e_TRAILING_DATA_BETWEEN_TAGS == state->id() ||
                 StateId::e_IN_TAG == state->id());
@@ -318,7 +322,7 @@ bsl::ostream& Formatter_PrettyImplUtil::addHeader(
                                              State                   *state,
                                              const bsl::string_view&  encoding)
 {
-    BSLS_ASSERT(StateId::e_AT_START == state->id());
+    BSLS_ASSERT_NONCONVEYOR(StateId::e_AT_START == state->id());
 
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
@@ -404,11 +408,13 @@ bsl::ostream& Formatter_PrettyImplUtil::closeElement(
                                                State                   *state,
                                                const bsl::string_view&  name)
 {
-    BSLS_ASSERT(StateId::e_FIRST_DATA_BETWEEN_TAGS == state->id() ||
+    BSLS_ASSERT_CONVEYOR_OBJECT(state);
+    BSLS_ASSERT_NONCONVEYOR(
+                           StateId::e_FIRST_DATA_BETWEEN_TAGS == state->id() ||
                 StateId::e_FIRST_DATA_AT_LINE_BETWEEN_TAGS == state->id() ||
                 StateId::e_TRAILING_DATA_BETWEEN_TAGS == state->id() ||
                 StateId::e_IN_TAG == state->id());
-    BSLS_ASSERT(!state->elementNesting().empty());
+    BSLS_ASSERT_NONCONVEYOR(!state->elementNesting().empty());
 
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
@@ -490,6 +496,7 @@ bsl::ostream& Formatter_PrettyImplUtil::openElement(
                                        const bsl::string_view&  name,
                                        WhitespaceType::Enum     whitespaceMode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(state);
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
 

@@ -156,7 +156,8 @@ class SequenceWithNilOnly {
         // returned from the invocation of 'manipulator' if 'name' identifies
         // an attribute of this class, and -1 otherwise.
 
-    bsl::vector<bdlb::NullableValue<int> >& v();
+    bsl::vector<bdlb::NullableValue<int> >& v()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the modifiable "V" attribute of this object.
 
     // ACCESSORS
@@ -203,7 +204,8 @@ class SequenceWithNilOnly {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const bsl::vector<bdlb::NullableValue<int> >& v() const;
+    const bsl::vector<bdlb::NullableValue<int> >& v() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "V"
         // attribute of this object.
 
@@ -214,6 +216,8 @@ class SequenceWithNilOnly {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.v() == rhs.v();
     }
 

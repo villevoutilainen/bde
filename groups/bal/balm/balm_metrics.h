@@ -755,8 +755,10 @@ BSLS_IDENT("$Id: $")
      Helper::logEmptyName(CATEGORY,Helper::e_TYPE_CATEGORY,__FILE__,__LINE__);\
      Helper::logEmptyName(METRIC, Helper::e_TYPE_METRIC, __FILE__, __LINE__); \
        Helper::initCollector(&collector1, CATEGORY, METRIC);                  \
-       Helper::setPublicationType(Helper::collector(&collector1)->metricId(), \
-                                  PREFERRED_TYPE);                            \
+       Helper::setPublicationType(                                            \
+                 BSLS_ASSERT_CONVEYOR_REF(*Helper::collector(&collector1))    \
+                                                                .metricId(),  \
+                 PREFERRED_TYPE);                                             \
        Helper::initializeCategoryHolder(&holder, CATEGORY);                   \
      }                                                                        \
    }                                                                          \
@@ -772,7 +774,8 @@ BSLS_IDENT("$Id: $")
              balm::DefaultMetricsManager::instance()->collectorRepository();  \
         balm::Collector *collector = repository.getDefaultCollector(          \
                                                         (CATEGORY), (METRIC));\
-        if (collector->metricId().category()->enabled()) {                    \
+        if (BSLS_ASSERT_CONVEYOR_REF(*collector).metricId().category()        \
+                                                              ->enabled()) {  \
             collector->update((VALUE));                                       \
         }                                                                     \
     }                                                                         \
@@ -1019,7 +1022,9 @@ do {                                                                          \
      Helper::logEmptyName(METRIC, Helper::e_TYPE_METRIC, __FILE__, __LINE__); \
        Helper::initIntegerCollector(&collector1, CATEGORY, METRIC);           \
        Helper::setPublicationType(                                            \
-                      Helper::integerCollector(&collector1)->metricId(),      \
+                      BSLS_ASSERT_CONVEYOR_REF(                               \
+                                  *Helper::integerCollector(&collector1))     \
+                                                                .metricId(),  \
                       PREFERRED_TYPE);                                        \
        Helper::initializeCategoryHolder(&holder, CATEGORY);                   \
      }                                                                        \
@@ -1036,7 +1041,8 @@ do {                                                                          \
              balm::DefaultMetricsManager::instance()->collectorRepository();  \
         balm::IntegerCollector *collector =                                   \
                repository.getDefaultIntegerCollector((CATEGORY), (METRIC));   \
-        if (collector->metricId().category()->enabled()) {                    \
+        if (BSLS_ASSERT_CONVEYOR_REF(*collector).metricId().category()        \
+                                                              ->enabled()) {  \
             collector->update((VALUE));                                       \
         }                                                                     \
     }                                                                         \

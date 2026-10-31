@@ -164,11 +164,13 @@ class MySequenceWithArray {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    int& attribute1();
+    int& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    bsl::vector<bsl::string>& attribute2();
+    bsl::vector<bsl::string>& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -220,7 +222,8 @@ class MySequenceWithArray {
 
     /// Return a reference offering non-modifiable access to the
     /// "Attribute2" attribute of this object.
-    const bsl::vector<bsl::string>& attribute2() const;
+    const bsl::vector<bsl::string>& attribute2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -230,6 +233,8 @@ class MySequenceWithArray {
     friend bool operator==(const MySequenceWithArray& lhs,
                            const MySequenceWithArray& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute1() == rhs.attribute1() &&
                lhs.attribute2() == rhs.attribute2();
     }

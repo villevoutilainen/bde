@@ -307,7 +307,8 @@ class StackTraceFrame {
     /// Return a reference providing non-modifiable access to the
     /// `libraryFileName` attribute of this object.  Note the empty string
     /// indicates that the `libraryFileName` is "unknown".
-    const bsl::string& libraryFileName() const;
+    const bsl::string& libraryFileName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the `lineNumber` attribute of this object.  Note
     /// that -1 indicates that `lineNumber` is "unknown".
@@ -316,7 +317,8 @@ class StackTraceFrame {
     /// Return a reference providing non-modifiable access to the
     /// `mangledSymbolName` attribute of this object.  Note that the empty
     /// string indicates that `mangledSymbolName` is "unknown".
-    const bsl::string& mangledSymbolName() const;
+    const bsl::string& mangledSymbolName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the value of the `offsetFromSymbol` attribute of this object.
     /// Note that `(bsl::size_t)-1` indicates that `lineNumber` is not
@@ -326,12 +328,14 @@ class StackTraceFrame {
     /// Return a reference providing non-modifiable access to the
     /// `sourceFileName` attribute of this object.  Note that the empty
     /// string indicates that `sourceFileName` is "unknown".
-    const bsl::string& sourceFileName() const;
+    const bsl::string& sourceFileName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference providing non-modifiable access to the
     /// `symbolName` attribute of this object.  Note that the empty string
     /// indicates that `symbolName` is "unknown".
-    const bsl::string& symbolName() const;
+    const bsl::string& symbolName() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
                         // Predicates
 
@@ -464,11 +468,11 @@ StackTraceFrame::StackTraceFrame(const void              *address,
                    basicAllocator)
 , d_symbolName(symbolName.begin(), symbolName.end(), basicAllocator)
 {
-    BSLS_ASSERT(0 != libraryFileName.data());
+    BSLS_ASSERT_NONCONVEYOR(0 != libraryFileName.data());
     BSLS_ASSERT(-1 <= lineNumber);
-    BSLS_ASSERT(0 != mangledSymbolName.data());
-    BSLS_ASSERT(0 != sourceFileName.data());
-    BSLS_ASSERT(0 != symbolName.data());
+    BSLS_ASSERT_NONCONVEYOR(0 != mangledSymbolName.data());
+    BSLS_ASSERT_NONCONVEYOR(0 != sourceFileName.data());
+    BSLS_ASSERT_NONCONVEYOR(0 != symbolName.data());
 }
 
 inline
@@ -512,7 +516,7 @@ void StackTraceFrame::setAddress(const void *value)
 inline
 void StackTraceFrame::setLibraryFileName(const bsl::string_view& value)
 {
-    BSLS_ASSERT(0 != value.data());
+    BSLS_ASSERT_NONCONVEYOR(0 != value.data());
 
     d_libraryFileName.assign(value.begin(), value.end());
 }
@@ -528,7 +532,7 @@ void StackTraceFrame::setLineNumber(int value)
 inline
 void StackTraceFrame::setMangledSymbolName(const bsl::string_view& value)
 {
-    BSLS_ASSERT(0 != value.data());
+    BSLS_ASSERT_NONCONVEYOR(0 != value.data());
 
     d_mangledSymbolName.assign(value.begin(), value.end());
 }
@@ -542,7 +546,7 @@ void StackTraceFrame::setOffsetFromSymbol(bsl::size_t value)
 inline
 void StackTraceFrame::setSourceFileName(const bsl::string_view& value)
 {
-    BSLS_ASSERT(0 != value.data());
+    BSLS_ASSERT_NONCONVEYOR(0 != value.data());
 
     d_sourceFileName.assign(value.begin(), value.end());
 }
@@ -550,7 +554,7 @@ void StackTraceFrame::setSourceFileName(const bsl::string_view& value)
 inline
 void StackTraceFrame::setSymbolName(const bsl::string_view& value)
 {
-    BSLS_ASSERT(0 != value.data());
+    BSLS_ASSERT_NONCONVEYOR(0 != value.data());
 
     d_symbolName.assign(value.begin(), value.end());
 }
@@ -608,6 +612,7 @@ bool StackTraceFrame::isAddressKnown() const
 inline
 bool StackTraceFrame::isLibraryFileNameKnown() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return !d_libraryFileName.empty();
 }
 
@@ -620,6 +625,7 @@ bool StackTraceFrame::isLineNumberKnown() const
 inline
 bool StackTraceFrame::isMangledSymbolNameKnown() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return !d_mangledSymbolName.empty();
 }
 
@@ -632,12 +638,14 @@ bool StackTraceFrame::isOffsetFromSymbolKnown() const
 inline
 bool StackTraceFrame::isSourceFileNameKnown() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return !d_sourceFileName.empty();
 }
 
 inline
 bool StackTraceFrame::isSymbolNameKnown() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return !d_symbolName.empty();
 }
 
@@ -655,6 +663,8 @@ bslma::Allocator *StackTraceFrame::allocator() const
 inline
 bool balst::operator==(const StackTraceFrame& lhs, const StackTraceFrame& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.address()           == rhs.address()
         && lhs.libraryFileName()   == rhs.libraryFileName()
         && lhs.lineNumber()        == rhs.lineNumber()
@@ -667,6 +677,8 @@ bool balst::operator==(const StackTraceFrame& lhs, const StackTraceFrame& rhs)
 inline
 bool balst::operator!=(const StackTraceFrame& lhs, const StackTraceFrame& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.address()           != rhs.address()
         || lhs.libraryFileName()   != rhs.libraryFileName()
         || lhs.lineNumber()        != rhs.lineNumber()

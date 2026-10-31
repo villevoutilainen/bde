@@ -109,13 +109,15 @@ int Utf8ReaderWrapper::doOpen(const char *url, const char *encoding)
 
 void Utf8ReaderWrapper::reportUtf8Error(int utf8Rc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(utf8Rc < 0);
 
     // So probably the held reader thinks it hit EOF somewhere it wasn't
     // expecting, resulting in an XML syntax error.  So we want to concatenate
     // our UTF-8 error message to the held reader's complaint.
 
-    const bsl::string& heldMsg = heldReader()->errorInfo().message();
+    const bsl::string& heldMsg =
+                 BSLS_ASSERT_CONVEYOR_REF(heldReader()->errorInfo()).message();
     bsl::string msg;
     msg.reserve(heldMsg.length() + 256);
 
@@ -267,6 +269,7 @@ int Utf8ReaderWrapper::advanceToNextNode()
 // ACCESSORS
 bslma::Allocator *Utf8ReaderWrapper::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_errorInfo.source().get_allocator().mechanism();
 }
 

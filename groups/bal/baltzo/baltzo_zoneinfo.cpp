@@ -27,9 +27,11 @@ bool containsDescriptor(
                     const bsl::vector<baltzo::ZoneinfoTransition>& transitions,
                     const baltzo::LocalTimeDescriptor&             descriptor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&transitions);
     baltzo::Zoneinfo::TransitionConstIterator it  = transitions.begin();
     baltzo::Zoneinfo::TransitionConstIterator end = transitions.end();
     for (; it != end; ++it) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         if (descriptor == it->descriptor()) {
             return true;                                              // RETURN
         }
@@ -101,6 +103,7 @@ ZoneinfoTransition::print(bsl::ostream& stream,
 bsl::ostream& baltzo::operator<<(bsl::ostream&             stream,
                                  const ZoneinfoTransition& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     stream << "[ ";
 
     bdlt::Datetime utcDatetime;
@@ -128,6 +131,8 @@ namespace baltzo {
 bool Zoneinfo::DescriptorLess::operator()(const LocalTimeDescriptor& lhs,
                                           const LocalTimeDescriptor& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.utcOffsetInSeconds() != rhs.utcOffsetInSeconds()) {
         return lhs.utcOffsetInSeconds() < rhs.utcOffsetInSeconds();   // RETURN
     }
@@ -151,11 +156,13 @@ Zoneinfo::Zoneinfo(const Zoneinfo& original, const allocator_type &allocator)
 , d_posixExtendedRangeDescription(original.d_posixExtendedRangeDescription,
                                   allocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     d_transitions.reserve(original.d_transitions.size());
 
     TransitionConstIterator it  = original.d_transitions.begin();
     TransitionConstIterator end = original.d_transitions.end();
     for (; it != end; ++it) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         addTransition(it->utcTime(), it->descriptor());
     }
 }
@@ -191,6 +198,7 @@ Zoneinfo::Zoneinfo(bslmf::MovableRef<Zoneinfo> original,
     TransitionConstIterator it  = origRef.d_transitions.begin();
     TransitionConstIterator end = origRef.d_transitions.end();
     for (; it != end; ++it) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         addTransition(it->utcTime(), it->descriptor());
     }
 }
@@ -221,6 +229,8 @@ Zoneinfo& Zoneinfo::operator=(bslmf::MovableRef<Zoneinfo> rhs)
 void Zoneinfo::addTransition(bdlt::EpochUtil::TimeT64   utcTime,
                              const LocalTimeDescriptor& descriptor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&descriptor);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::vector<ZoneinfoTransition>::iterator TransitionIterator;
 
     // Insert the description in the set and get back an iterator pointing to
@@ -242,13 +252,14 @@ void Zoneinfo::addTransition(bdlt::EpochUtil::TimeT64   utcTime,
 
     if (it != d_transitions.end()
      && it->utcTime() == newTransition.utcTime()) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         // Replace the existing transition with a new descriptor.  Once the
         // descriptor is replaced, if there are no more references to the
         // previous descriptor in 'd_transitions', then remove the descriptor
         // from 'd_descriptors'.
 
         DescriptorSet::iterator descIt = d_descriptors.find(it->descriptor());
-        BSLS_ASSERT(descIt != d_descriptors.end());
+        BSLS_ASSERT_NONCONVEYOR(descIt != d_descriptors.end());
 
         *it = newTransition;
         if (!containsDescriptor(d_transitions, *descIt)) {
@@ -266,8 +277,10 @@ void Zoneinfo::addTransition(bdlt::EpochUtil::TimeT64   utcTime,
 Zoneinfo::TransitionConstIterator
 Zoneinfo::findTransitionForUtcTime(const bdlt::Datetime& utcTime) const
 {
-    BSLS_ASSERT(numTransitions() > 0);
-    BSLS_ASSERT(d_transitions.front().utcTime() <=
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utcTime);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(numTransitions() > 0);
+    BSLS_ASSERT_NONCONVEYOR(d_transitions.front().utcTime() <=
                                    bdlt::EpochUtil::convertToTimeT64(utcTime));
 
     LocalTimeDescriptor dummyDescriptor;
@@ -292,6 +305,7 @@ bsl::ostream& Zoneinfo::print(bsl::ostream& stream,
                               int           level,
                               int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }
@@ -348,6 +362,7 @@ bsl::ostream& Zoneinfo::print(bsl::ostream& stream,
 // FREE OPERATORS
 bsl::ostream& baltzo::operator<<(bsl::ostream& stream, const Zoneinfo& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     stream << "[ \"" << object.identifier() << "\" "
            <<   "\"" << object.posixExtendedRangeDescription() << "\" [";
 

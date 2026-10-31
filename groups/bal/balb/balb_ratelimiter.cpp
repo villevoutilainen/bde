@@ -54,6 +54,7 @@ namespace {
 bool supportsExactly(bsls::Types::Uint64       limit,
                      const bsls::TimeInterval& window)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&window);
     // Aside from checking that the capacity calculated from 'window' and
     // 'limit' can back out the same 'window' value, we also include checks on
     // the parameters that the functions called do as assertions, so that this
@@ -96,17 +97,19 @@ void RateLimiter::setRateLimits(bsls::Types::Uint64       sustainedRateLimit,
                                 bsls::Types::Uint64       peakRateLimit,
                                 const bsls::TimeInterval& peakRateWindow)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&peakRateWindow);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&sustainedRateWindow);
     BSLS_ASSERT(sustainedRateLimit > 0);
     BSLS_ASSERT(peakRateLimit > 0);
 
-    BSLS_ASSERT(sustainedRateWindow > bsls::TimeInterval(0));
-    BSLS_ASSERT(peakRateWindow > bsls::TimeInterval(0));
+    BSLS_ASSERT_NONCONVEYOR(sustainedRateWindow > bsls::TimeInterval(0));
+    BSLS_ASSERT_NONCONVEYOR(peakRateWindow > bsls::TimeInterval(0));
 
-    BSLS_ASSERT(peakRateLimit == 1 ||
+    BSLS_ASSERT_NONCONVEYOR(peakRateLimit == 1 ||
                 peakRateWindow <= LeakyBucket::calculateDrainTime(
                                       ULLONG_MAX, peakRateLimit, true));
 
-    BSLS_ASSERT(sustainedRateLimit == 1 ||
+    BSLS_ASSERT_NONCONVEYOR(sustainedRateLimit == 1 ||
                 sustainedRateWindow <=
                     LeakyBucket::calculateDrainTime(
                         ULLONG_MAX, sustainedRateLimit, true));

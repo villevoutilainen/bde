@@ -455,7 +455,7 @@ void StackTraceTestAllocator::deallocate(void *address)
                                                           d_traceBufferLength);
 
     d_numBlocksInUse.addRelaxed(-1);
-    BSLS_ASSERT(d_numBlocksInUse >= 0);
+    BSLS_ASSERT_NONCONVEYOR(d_numBlocksInUse >= 0);
 }
 
 void StackTraceTestAllocator::release()
@@ -485,7 +485,7 @@ void StackTraceTestAllocator::release()
 
     d_blocks = 0;
 
-    BSLS_ASSERT(numBlocks == d_numBlocksInUse);
+    BSLS_ASSERT_NONCONVEYOR(numBlocks == d_numBlocksInUse);
     d_numBlocksInUse.storeRelaxed(0);
 }
 
@@ -608,7 +608,7 @@ void StackTraceTestAllocator::reportBlocksInUse(bsl::ostream *ostream) const
 
         ++numBlocksInUse;
     }
-    BSLS_ASSERT(d_numBlocksInUse == numBlocksInUse);
+    BSLS_ASSERT_NONCONVEYOR(d_numBlocksInUse == numBlocksInUse);
 
     *ostream << "Block(s) allocated from "
              << stackTraceVecMap.size() << " trace(s).\n";

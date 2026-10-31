@@ -162,11 +162,13 @@ class RawDataUnformatted {
 
     /// Return a reference to the modifiable "Charvec" attribute of this
     /// object.
-    bsl::vector<char>& charvec();
+    bsl::vector<char>& charvec()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Ucharvec" attribute of this
     /// object.
-    bsl::vector<unsigned char>& ucharvec();
+    bsl::vector<unsigned char>& ucharvec()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -215,11 +217,13 @@ class RawDataUnformatted {
 
     /// Return a reference offering non-modifiable access to the "Charvec"
     /// attribute of this object.
-    const bsl::vector<char>& charvec() const;
+    const bsl::vector<char>& charvec() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference offering non-modifiable access to the "Ucharvec"
     /// attribute of this object.
-    const bsl::vector<unsigned char>& ucharvec() const;
+    const bsl::vector<unsigned char>& ucharvec() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -229,6 +233,8 @@ class RawDataUnformatted {
     friend bool operator==(const RawDataUnformatted& lhs,
                            const RawDataUnformatted& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.charvec() == rhs.charvec() &&
                lhs.ucharvec() == rhs.ucharvec();
     }

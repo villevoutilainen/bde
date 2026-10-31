@@ -19,6 +19,7 @@ void BdlmMetricsAdapter::metricCb(bsl::vector<MetricRecord> *records,
                                   MetricId                   id,
                                   const Callback&            callback)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(records);
     (void)resetFlag;
 
     bdlm::Metric value;
@@ -45,6 +46,7 @@ BdlmMetricsAdapter::registerCollectionCallback(
                                 const bdlm::MetricDescriptor& metricDescriptor,
                                 const Callback&               callback)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bdlm::MetricDescriptor md(metricDescriptor);
     if (md.metricNamespace() ==
            bdlm::MetricDescriptor::k_USE_METRICS_ADAPTER_NAMESPACE_SELECTION) {

@@ -116,7 +116,8 @@ class MySequenceWithCustomizedBase64Binary {
 
     /// Return a reference to the modifiable "Element" attribute of this
     /// object.
-    s_baltst::CustomizedBase64Binary& element();
+    s_baltst::CustomizedBase64Binary& element()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -165,7 +166,8 @@ class MySequenceWithCustomizedBase64Binary {
 
     /// Return a reference offering non-modifiable access to the "Element"
     /// attribute of this object.
-    const s_baltst::CustomizedBase64Binary& element() const;
+    const s_baltst::CustomizedBase64Binary& element() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // HIDDEN FRIENDS
 
@@ -175,6 +177,8 @@ class MySequenceWithCustomizedBase64Binary {
     friend bool operator==(const MySequenceWithCustomizedBase64Binary& lhs,
                            const MySequenceWithCustomizedBase64Binary& rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.element() == rhs.element();
     }
 

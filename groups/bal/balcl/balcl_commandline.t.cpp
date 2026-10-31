@@ -910,6 +910,7 @@ int generateArgument(bsl::string       *argString,
                      const OptionInfo&  optionInfo,
                      int                seed = 0)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(argString);
     const OccurrenceInfo& occurrenceInfo = optionInfo.d_defaultInfo;
     Option                option(optionInfo);
 
@@ -961,42 +962,58 @@ int generateArgument(bsl::string       *argString,
             *argString = optionFlag + separator + "08:06:04";
           } break;
           case Ot::e_CHAR_ARRAY: {
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString  = optionFlag + separator + "a";
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString += ' ';
             *argString += optionFlag + separator + "z";
           } break;
           case Ot::e_INT_ARRAY: {
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString  = optionFlag + separator + "123654";
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString += ' ';
             *argString += optionFlag + separator + "654321";
           } break;
           case Ot::e_INT64_ARRAY: {
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString  = optionFlag + separator + "987654321";
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString += ' ';
             *argString += optionFlag + separator + "192837465";
           } break;
           case Ot::e_DOUBLE_ARRAY: {
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString  = optionFlag + separator + "0.376739501953125";
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString += ' ';
             *argString += optionFlag + separator + "0.623260498046875";
           } break;
           case Ot::e_STRING_ARRAY: {
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString  = optionFlag + separator + "someString";
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString += ' ';
             *argString += optionFlag + separator + "someOtherString";
           } break;
           case Ot::e_DATETIME_ARRAY: {
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString  = optionFlag + separator + "2008-07-22T04:06:08";
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString += ' ';
             *argString += optionFlag + separator + "2006-05-11T02:04:06";
           } break;
           case Ot::e_DATE_ARRAY: {
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString  = optionFlag + separator + "2007-08-22";
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString += ' ';
             *argString += optionFlag + separator + "2005-06-11";
           } break;
           case Ot::e_TIME_ARRAY: {
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString  = optionFlag + separator + "08:06:04";
+            BSLS_ASSERT_CONVEYOR_OBJECT(argString);
             *argString += ' ';
             *argString += optionFlag + separator + "02:04:06";
           } break;
@@ -1175,7 +1192,7 @@ void setLinkedVariable(TypeInfo *typeInfo,
                                                                               \
       if (isOptionalLinkedVariable) {                                         \
         BSLS_ASSERT(Ot::e_BOOL != type);                                      \
-        BSLS_ASSERT(false      == Ot::isArrayType(type));                     \
+        BSLS_ASSERT_NONCONVEYOR(false      == Ot::isArrayType(type));         \
                                                                               \
         typedef bsl::optional<LinkType> OptLinkType;                          \
                                                                               \
@@ -1342,7 +1359,7 @@ void setOptionValue(OptionValue *dst, const void *src, ElemType type)
     BSLS_ASSERT(dst);
     BSLS_ASSERT(src);
     BSLS_ASSERT(Ot::e_VOID  != type);
-    BSLS_ASSERT(dst->type() == type);
+    BSLS_ASSERT_NONCONVEYOR(dst->type() == type);
 
 #define CASE(ENUM)                                                            \
       case ENUM: {                                                            \
@@ -1562,6 +1579,8 @@ int generateTestData(bsl::vector<OptionInfo>  *options,
                      bsl::vector<bsl::string> *arguments,
                      int                      *numBaseOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(options);
+    BSLS_ASSERT_CONVEYOR_OBJECT(arguments);
     ASSERT(options);
     ASSERT(arguments);
     ASSERT(numBaseOptions);
@@ -1796,6 +1815,9 @@ void generateParseInput(bsl::string                     *argString,
                         int                              i,
                         int                              numOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(argStrings);
+    BSLS_ASSERT_CONVEYOR_OBJECT(argPtrs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&arguments);
     ASSERT(argString)
     ASSERT(argStrings)
     ASSERT(argPtrs)
@@ -1812,12 +1834,12 @@ void generateParseInput(bsl::string                     *argString,
     for (int j = 0; j < n; ++j) {
         int index = i + j * numOptions;
 
-        if (!arguments[index].empty()) {
+        if (!BSLS_ASSERT_CONVEYOR_REF(arguments[index]).empty()) {
             const int   MAX_ARGC = 16;
             const char *argv[MAX_ARGC];
 
             int argc = -1;
-            argStrings->push_back(arguments[index]);
+            argStrings->push_back(BSLS_ASSERT_CONVEYOR_REF(arguments[index]));
             ASSERT(0 == parseCommandLine(&(argStrings->back()[0]),
                                          argc,
                                          argv,
@@ -1849,6 +1871,7 @@ void normalizeIndentation(bsl::string        *output,
                           int                 level,
                           int                 spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(output);
     BSLS_ASSERT(output);
     BSLS_ASSERT(output->empty());
     BSLS_ASSERT(0 <= level);
@@ -2047,6 +2070,7 @@ namespace BALCL_COMMANDLINE_USAGE_EXAMPLE_1 {
 // ```
         ASSERT(cmdLine.theBool("isReverse")       == reverse);
         ASSERT(cmdLine.theString("outputFile")    == outputFile);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&cmdLine);
         ASSERT(cmdLine.theStringArray("fileList") == files);
 // ```
 // The next accessors we'll discuss are `isSpecified` and `numSpecified`.
@@ -2083,12 +2107,17 @@ int LINE;
 /// example 2 are as expected.
 void checkExample3(const balcl::CommandLine& cmdLine)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&cmdLine);
     ASSERTV(LINE, cmdLine.theBool("isReverse"));
     const bsl::vector<bsl::string>& sa = cmdLine.theStringArray("fileList");
+    BSLS_ASSERT_CONVEYOR_OBJECT(&sa);
     ASSERTV(LINE, 3 == sa.size());
-    ASSERTV(LINE, sa[0] == "inputFile1");
-    ASSERTV(LINE, sa[1] == "inputFile2");
-    ASSERTV(LINE, sa[2] == "inputFile3");
+    BSLS_ASSERT_CONVEYOR_OBJECT(&sa);
+    ASSERTV(LINE, BSLS_ASSERT_CONVEYOR_REF(sa[0]) == "inputFile1");
+    BSLS_ASSERT_CONVEYOR_OBJECT(&sa);
+    ASSERTV(LINE, BSLS_ASSERT_CONVEYOR_REF(sa[1]) == "inputFile2");
+    BSLS_ASSERT_CONVEYOR_OBJECT(&sa);
+    ASSERTV(LINE, BSLS_ASSERT_CONVEYOR_REF(sa[2]) == "inputFile3");
 }
 
 //
@@ -2226,6 +2255,7 @@ const char                               *expFileName;
 
 void checkExample5(const balcl::CommandLine& cmdLine, int rc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&cmdLine);
     if (expMessage) {
         ASSERTV(LINE, bsl::string::npos != parseOss.view().find(expMessage));
 
@@ -2244,8 +2274,10 @@ void checkExample5(const balcl::CommandLine& cmdLine, int rc)
 
     const bsl::vector<bsl::string>& fileList =
                                             cmdLine.theStringArray("fileList");
+    BSLS_ASSERT_CONVEYOR_OBJECT(&fileList);
     ASSERTV(LINE, fileList.size() == 1);
-    ASSERTV(LINE, fileList[0] == expFileName);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&fileList);
+    ASSERTV(LINE, BSLS_ASSERT_CONVEYOR_REF(fileList[0]) == expFileName);
 }
 
 //
@@ -2268,6 +2300,7 @@ void checkExample5(const balcl::CommandLine& cmdLine, int rc)
 // ```
     bool isValidFileName(const bsl::string *fileName, bsl::ostream& stream)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(fileName);
         if (!bdls::FilesystemUtil::isRegularFile(*fileName, true)) {
             stream << "Invalid file: " << *fileName << bsl::endl;
 
@@ -6868,8 +6901,10 @@ int main(int argc, const char *argv[])
 
                     if (!Z.isSpecified(name)) {  // ACTION
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&OI);
                         ++countIsNotSpecified;
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&OI);
                         ASSERT(true  == SH.value(j).isNull());  // ACTION
                         ASSERT(false == OH.value(j).isNull());  // ACTION
 
@@ -6882,6 +6917,22 @@ int main(int argc, const char *argv[])
                                                                         namS));
                                                                       // ACTION
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&OH);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&OH);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&OH);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&OH);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&OH);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&OH);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&OH);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&OH);
 #define CASE(ENUM, ALIAS)                                                     \
     case ENUM: {                                                              \
       ASSERT(value##ALIAS ==  Z.the##ALIAS(name));                            \

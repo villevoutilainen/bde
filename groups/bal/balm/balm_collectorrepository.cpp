@@ -39,6 +39,8 @@ struct IsVector {
 inline
 void combine(balm::MetricRecord *record, const balm::MetricRecord& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(record);
     record->metricId() = value.metricId();
     record->count()   += value.count();
     record->total()   += value.total();
@@ -194,6 +196,7 @@ template <class COLLECTOR>
 bsl::shared_ptr<COLLECTOR>
 CollectorRepository_Collectors<COLLECTOR>::addCollector()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Collector collectorPtr(
                 new (*d_allocator_p) COLLECTOR(d_defaultCollector.metricId()),
                 d_allocator_p);
@@ -215,6 +218,7 @@ void
 CollectorRepository_Collectors<COLLECTOR>::collectAndReset(
                                                           MetricRecord *record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_defaultCollector.loadAndReset(record);
     typename CollectorSet::iterator it = d_addedCollectors.begin();
     for (; it != d_addedCollectors.end(); ++it) {
@@ -228,6 +232,7 @@ template <class COLLECTOR>
 void
 CollectorRepository_Collectors<COLLECTOR>::collect(MetricRecord *record)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_defaultCollector.load(record);
     typename CollectorSet::iterator it = d_addedCollectors.begin();
     for (; it != d_addedCollectors.end(); ++it) {
@@ -244,6 +249,8 @@ int
 CollectorRepository_Collectors<COLLECTOR>::getAddedCollectors(
                                                       VECTOR *collectors) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(collectors);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     collectors->reserve(collectors->size() + d_addedCollectors.size());
     typename CollectorSet::const_iterator it = d_addedCollectors.begin();
     for (; it != d_addedCollectors.end(); ++it) {
@@ -257,6 +264,7 @@ inline
 const MetricId&
 CollectorRepository_Collectors<COLLECTOR>::metricId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_defaultCollector.metricId();
 }
 
@@ -436,6 +444,8 @@ inline
 void CollectorRepository::collectAndResetImp(VECTOR         *records,
                                              const Category *category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(records);
     BSLMF_ASSERT((u::IsVector<VECTOR, balm::MetricRecord>::value));
 
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_rwMutex);
@@ -463,6 +473,8 @@ inline
 void CollectorRepository::collectImp(VECTOR         *records,
                                      const Category *category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(records);
     BSLMF_ASSERT((u::IsVector<VECTOR, balm::MetricRecord>::value));
 
     // PRIVATE TYPES
@@ -489,12 +501,14 @@ void CollectorRepository::collectImp(VECTOR         *records,
 CollectorRepository::MetricCollectors&
 CollectorRepository::getMetricCollectors(const MetricId& metricId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricId);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Collectors::iterator cIt = d_collectors.find(metricId);
     if (cIt == d_collectors.end()) {
         // This metric is not in the map; create a new 'MetricCollectors' for
         // the 'metric' and add it to both 'd_collectors' and 'd_categories'.
 
-        BSLS_ASSERT(metricId.isValid());
+        BSLS_ASSERT_NONCONVEYOR(metricId.isValid());
         const Category *category = metricId.category();
 
         MetricCollectorsSPtr collectorsPtr(
@@ -559,6 +573,8 @@ void CollectorRepository::collect(std::pmr::vector<MetricRecord> *records,
 
 Collector *CollectorRepository::getDefaultCollector(const MetricId& metricId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricId);
     // First, obtain a read-lock, and test if the 'MetricCollectors' object
     // for 'metricId' already exists.
     {
@@ -578,6 +594,8 @@ Collector *CollectorRepository::getDefaultCollector(const MetricId& metricId)
 IntegerCollector *CollectorRepository::getDefaultIntegerCollector(
                                                       const MetricId& metricId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricId);
     // First, obtain a read-lock, and test if the 'MetricCollectors' object
     // for 'metricId' already exists.
     {
@@ -613,6 +631,8 @@ int CollectorRepository::getAddedCollectors(
                bsl::vector<bsl::shared_ptr<IntegerCollector> >  *intCollectors,
                const MetricId&                                   metricId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricId);
     int numFound = 0;
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_rwMutex);
     Collectors::iterator cIt = d_collectors.find(metricId);
@@ -629,6 +649,8 @@ int CollectorRepository::getAddedCollectors(
                std::vector<bsl::shared_ptr<IntegerCollector> >  *intCollectors,
                const MetricId&                                   metricId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricId);
     int numFound = 0;
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_rwMutex);
     Collectors::iterator cIt = d_collectors.find(metricId);
@@ -646,6 +668,8 @@ int CollectorRepository::getAddedCollectors(
           std::pmr::vector<bsl::shared_ptr<IntegerCollector> >  *intCollectors,
           const MetricId&                                        metricId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&metricId);
     int numFound = 0;
     bslmt::ReadLockGuard<bslmt::RWMutex> guard(&d_rwMutex);
     Collectors::iterator cIt = d_collectors.find(metricId);

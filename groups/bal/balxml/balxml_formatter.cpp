@@ -159,6 +159,7 @@ Formatter::Formatter(bsl::ostream&          output,
 // MANIPULATORS
 void Formatter::addComment(const bsl::string_view& comment, bool forceNewline)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&comment);
     switch (d_state.mode()) {
       case Mode::e_COMPACT: {
         CompactUtil::addComment(*d_streamHolder.stream(),

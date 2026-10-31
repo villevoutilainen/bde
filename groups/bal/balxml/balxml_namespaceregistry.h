@@ -121,6 +121,8 @@ BSLS_IDENT("$Id: $")
 
 #include <bslmf_nestedtraitdeclaration.h>
 
+#include <bsls_assert.h>
+
 #include <bsl_string.h>
 #include <bsl_vector.h>
 #include <bsl_iosfwd.h>
@@ -313,6 +315,7 @@ NamespaceRegistry::operator=(const NamespaceRegistry& rhs)
 inline
 void NamespaceRegistry::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_namespaces.clear();
 }
 }  // close package namespace
@@ -322,6 +325,8 @@ inline
 bool balxml::operator==(const NamespaceRegistry& lhs,
                         const NamespaceRegistry& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_namespaces == rhs.d_namespaces;
 }
 

@@ -946,12 +946,15 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_BOOL: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::Bool() == obj.the<Ot::Bool>();                 // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::Bool>::s_value == obj.the<Ot::Bool>();  // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::Bool>::s_value == obj.the<Ot::Bool>();  // RETURN
           } break;
         }
@@ -959,12 +962,15 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_CHAR: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::Char() == obj.the<Ot::Char>();                 // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::Char>::s_value == obj.the<Ot::Char>();  // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::Char>::s_value == obj.the<Ot::Char>();  // RETURN
           } break;
         }
@@ -972,12 +978,15 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_INT: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::Int() == obj.the<Ot::Int>();                   // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::Int>::s_value == obj.the<Ot::Int>();    // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::Int>::s_value == obj.the<Ot::Int>();    // RETURN
           } break;
         }
@@ -985,12 +994,15 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_INT64: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::Int64() == obj.the<Ot::Int64>();               // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::Int64>::s_value == obj.the<Ot::Int64>();// RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::Int64>::s_value == obj.the<Ot::Int64>();// RETURN
           } break;
         }
@@ -998,13 +1010,16 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_DOUBLE: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::Double() == obj.the<Ot::Double>();             // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::Double>::s_value == obj.the<Ot::Double>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::Double>::s_value == obj.the<Ot::Double>();
                                                                       // RETURN
           } break;
@@ -1013,13 +1028,16 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_STRING: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::String() == obj.the<Ot::String>();             // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::String>::s_value == obj.the<Ot::String>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::String>::s_value == obj.the<Ot::String>();
                                                                       // RETURN
           } break;
@@ -1028,13 +1046,16 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_DATETIME: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::Datetime() == obj.the<Ot::Datetime>();         // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::Datetime>::s_value == obj.the<Ot::Datetime>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::Datetime>::s_value == obj.the<Ot::Datetime>();
                                                                       // RETURN
           } break;
@@ -1043,12 +1064,15 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_DATE: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::Date() == obj.the<Ot::Date>();                 // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::Date>::s_value == obj.the<Ot::Date>();  // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::Date>::s_value == obj.the<Ot::Date>();  // RETURN
           } break;
         }
@@ -1056,12 +1080,15 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_TIME: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::Time() == obj.the<Ot::Time>();                 // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::Time>::s_value == obj.the<Ot::Time>();  // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::Time>::s_value == obj.the<Ot::Time>();  // RETURN
           } break;
         }
@@ -1069,13 +1096,16 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_CHAR_ARRAY: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::CharArray() == obj.the<Ot::CharArray>();       // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::CharArray>::s_value == obj.the<Ot::CharArray>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::CharArray>::s_value == obj.the<Ot::CharArray>();
                                                                       // RETURN
           } break;
@@ -1084,13 +1114,16 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_INT_ARRAY: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::IntArray() == obj.the<Ot::IntArray>();         // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::IntArray>::s_value == obj.the<Ot::IntArray>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::IntArray>::s_value == obj.the<Ot::IntArray>();
                                                                       // RETURN
           } break;
@@ -1099,14 +1132,17 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_INT64_ARRAY: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::Int64Array() == obj.the<Ot::Int64Array>();     // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::Int64Array>::s_value ==
                                                      obj.the<Ot::Int64Array>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::Int64Array>::s_value ==
                                                      obj.the<Ot::Int64Array>();
                                                                       // RETURN
@@ -1116,14 +1152,17 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_DOUBLE_ARRAY: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::DoubleArray() == obj.the<Ot::DoubleArray>();   // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::DoubleArray>::s_value ==
                                                     obj.the<Ot::DoubleArray>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::DoubleArray>::s_value ==
                                                     obj.the<Ot::DoubleArray>();
                                                                       // RETURN
@@ -1133,14 +1172,17 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_STRING_ARRAY: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::StringArray() == obj.the<Ot::StringArray>();   // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::StringArray>::s_value ==
                                                     obj.the<Ot::StringArray>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::StringArray>::s_value ==
                                                     obj.the<Ot::StringArray>();
                                                                       // RETURN
@@ -1150,15 +1192,18 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_DATETIME_ARRAY: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::DatetimeArray() == obj.the<Ot::DatetimeArray>();
                                                                       // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::DatetimeArray>::s_value
                                                == obj.the<Ot::DatetimeArray>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::DatetimeArray>::s_value ==
                                                   obj.the<Ot::DatetimeArray>();
                                                                       // RETURN
@@ -1168,13 +1213,16 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_DATE_ARRAY: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::DateArray() == obj.the<Ot::DateArray>();       // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::DateArray>::s_value == obj.the<Ot::DateArray>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::DateArray>::s_value == obj.the<Ot::DateArray>();
                                                                       // RETURN
           } break;
@@ -1183,13 +1231,16 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
       case Ot::e_TIME_ARRAY: {
         switch (cfg) {
           case 'D': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return Ot::TimeArray() == obj.the<Ot::TimeArray>();       // RETURN
           } break;
           case 'A': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueA<Ot::TimeArray>::s_value == obj.the<Ot::TimeArray>();
                                                                       // RETURN
           } break;
           case 'B': {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
             return ValueB<Ot::TimeArray>::s_value == obj.the<Ot::TimeArray>();
                                                                       // RETURN
           } break;
@@ -1206,7 +1257,7 @@ bool hasValueDAB(const Obj& obj, char cfg, int offset = 0)
 /// `ENUM` matches `obj.type()`.
 bslma::Allocator *getContainedAllocator(const Obj& obj)
 {
-    BSLS_ASSERT(Ot::e_VOID     != obj.type()
+    BSLS_ASSERT_NONCONVEYOR(Ot::e_VOID     != obj.type()
              && Ot::e_BOOL     != obj.type()
              && Ot::e_CHAR     != obj.type()
              && Ot::e_INT      != obj.type()
@@ -1245,31 +1296,40 @@ bslma::Allocator *getContainedAllocator(const Obj& obj)
         BSLS_ASSERT_INVOKE_NORETURN("!Reached");
       } break;
       case Ot::e_STRING: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return obj.the<Ot::String>().get_allocator().mechanism();     // RETURN
       } break;
       case Ot::e_CHAR_ARRAY: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return obj.the<Ot::CharArray>().get_allocator().mechanism();  // RETURN
       } break;
       case Ot::e_INT_ARRAY: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return obj.the<Ot::IntArray>().get_allocator().mechanism();   // RETURN
       } break;
       case Ot::e_INT64_ARRAY: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return obj.the<Ot::Int64Array>().get_allocator().mechanism(); // RETURN
       } break;
       case Ot::e_DOUBLE_ARRAY: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return obj.the<Ot::DoubleArray>().get_allocator().mechanism();// RETURN
       } break;
       case Ot::e_STRING_ARRAY: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return obj.the<Ot::StringArray>().get_allocator().mechanism();// RETURN
       } break;
       case Ot::e_DATETIME_ARRAY: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return obj.the<Ot::DatetimeArray>().get_allocator().mechanism();
                                                                       // RETURN
       } break;
       case Ot::e_DATE_ARRAY: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return obj.the<Ot::DateArray>().get_allocator().mechanism();  // RETURN
       } break;
       case Ot::e_TIME_ARRAY: {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return obj.the<Ot::TimeArray>().get_allocator().mechanism();  // RETURN
       } break;
     }
@@ -2046,6 +2106,7 @@ enum { NUM_OPTIONS = 1 }; // any non-zero value
 // set a default value, the current directory:
 // ```
             if (0 == bsl::strcmp("outputDir", name)) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&value);
                 setOutputDir(value.isNull()
                              ? "."
                              : value.the<bsl::string>().c_str());
@@ -2055,6 +2116,7 @@ enum { NUM_OPTIONS = 1 }; // any non-zero value
 // we set a default value, '1':
 // ```
             if (0 == bsl::strcmp("verbosityLevel", name)) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&value);
                 setVerbosityLevel(value.isNull()
                                   ? 1
                                   : value.the<int>());

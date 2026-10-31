@@ -222,6 +222,7 @@ bool veryVeryVeryVerbose;
             return 1;                                                 // RETURN
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(it);
         *result = it->descriptor();
         return 0;
     }

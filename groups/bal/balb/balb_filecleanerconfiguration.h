@@ -202,7 +202,8 @@ class FileCleanerConfiguration {
 
     /// Return a `const` reference to the file pattern attribute of this
     /// object.
-    const bsl::string& filePattern() const;
+    const bsl::string& filePattern() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the maximum file age attribute of this object.
     bsls::TimeInterval maxFileAge() const;
@@ -337,6 +338,7 @@ void FileCleanerConfiguration::setMaxFileAge(const bsls::TimeInterval& maxAge)
 inline
 void FileCleanerConfiguration::setMinNumFiles(int minNumFiles)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_OPT(0 <= minNumFiles);
     BSLS_ASSERT_OPT(minNumFiles <= d_maxNumFiles);
 
@@ -346,6 +348,7 @@ void FileCleanerConfiguration::setMinNumFiles(int minNumFiles)
 inline
 void FileCleanerConfiguration::setMaxNumFiles(int maxNumFiles)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_OPT(d_minNumFiles <= maxNumFiles);
 
     d_maxNumFiles = maxNumFiles;
@@ -383,6 +386,8 @@ inline
 bool balb::operator==(const balb::FileCleanerConfiguration& lhs,
                       const balb::FileCleanerConfiguration& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_filePattern == rhs.d_filePattern
         && lhs.d_maxFileAge  == rhs.d_maxFileAge
         && lhs.d_minNumFiles == rhs.d_minNumFiles

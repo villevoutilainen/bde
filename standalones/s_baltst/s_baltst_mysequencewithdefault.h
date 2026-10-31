@@ -119,11 +119,13 @@ class MySequenceWithDefault {
 
     /// Return a reference to the modifiable "Attribute1" attribute of this
     /// object.
-    int& attribute1();
+    int& attribute1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Attribute2" attribute of this
     /// object.
-    int& attribute2();
+    int& attribute2()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 

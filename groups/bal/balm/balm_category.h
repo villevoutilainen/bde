@@ -82,6 +82,7 @@ BSLS_IDENT("$Id: balm_category.h,v 1.4 2008/04/16 20:00:49 hversche Exp $")
 
 #include <balscm_version.h>
 
+#include <bsls_assert.h>
 #include <bsls_atomic.h>
 #include <bsls_libraryfeatures.h>
 
@@ -173,11 +174,13 @@ class Category {
     /// avoiding indirection through abstracted interfaces, albeit at some
     /// risk of object-lifetime violations.  The returned reference must not
     /// be allowed to outlive this category object.
-    const bsls::AtomicInt& isEnabledRaw() const;
+    const bsls::AtomicInt& isEnabledRaw() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Print this category to the specified output `stream` in some human
     /// readable form, and return the modifiable `stream`.
-    bsl::ostream& print(bsl::ostream& stream) const;
+    bsl::ostream& print(bsl::ostream& stream) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // ============================================================================
@@ -362,6 +365,8 @@ CategoryHolder *CategoryHolder::next() const
 inline
 bsl::ostream& balm::operator<<(bsl::ostream& stream, const Category& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.print(stream);
 }
 

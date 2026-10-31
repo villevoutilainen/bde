@@ -1122,14 +1122,32 @@ int main(int argc, char *argv[])
             }
 
             ASSERT(XIt->pid()         == XS.pid()        );
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
             ASSERT(XIt->description() == XS.description());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
             ASSERT(XIt->startupTime() == XS.startupTime());
             ASSERT(XIt->elapsedTime() == XS.elapsedTime());
 
             // Verify that origin object is left unaffected.
 
             ASSERT(orig.d_pid          == XIt->pid()        );
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
             ASSERT(orig.d_description  == XIt->description());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
             ASSERT(orig.d_startTimeUtc == XIt->startupTime());
             ASSERT(orig.d_elapsedTime  == XIt->elapsedTime());
 
@@ -1139,7 +1157,23 @@ int main(int argc, char *argv[])
             mX.collect();
 
             ASSERT(XIt->pid()         == XS.pid()          );
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
             ASSERT(XIt->description() == XS.description()  );
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
             ASSERT(XIt->startupTime() == XS.startupTime()  );
 
             ASSERT(orig.d_elapsedTime != XIt->elapsedTime());
@@ -1158,7 +1192,9 @@ int main(int argc, char *argv[])
             }
 
             ASSERT(orig.d_pid          == XS.pid()        );
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
             ASSERT(orig.d_description  == XS.description());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&XS);
             ASSERT(orig.d_startTimeUtc == XS.startupTime());
             ASSERT(orig.d_elapsedTime  == XS.elapsedTime());
         }

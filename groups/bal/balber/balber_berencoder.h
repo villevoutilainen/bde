@@ -745,6 +745,7 @@ bsl::ostream& BerEncoder::logStream()
 template <typename TYPE>
 int BerEncoder::encode(bsl::streambuf *streamBuf, const TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(!d_streamBuf);
 
     d_streamBuf = streamBuf;

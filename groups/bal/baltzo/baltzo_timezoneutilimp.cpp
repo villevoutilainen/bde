@@ -41,6 +41,7 @@ int lookupTimeZone(const baltzo::Zoneinfo **timeZone,
                    const char              *timeZoneId,
                    baltzo::ZoneinfoCache   *cache)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(timeZone);
     BSLS_ASSERT(timeZone);
     BSLS_ASSERT(timeZoneId);
     BSLS_ASSERT(cache);
@@ -71,8 +72,8 @@ baltzo::Zoneinfo::TransitionConstIterator findTransitionWithDstFlag(
                      const baltzo::Zoneinfo::TransitionConstIterator& start,
                      const baltzo::Zoneinfo&                          timeZone)
 {
-    BSLS_ASSERT(timeZone.endTransitions() != start);
-    BSLS_ASSERT(timeZone.numTransitions() != 0);
+    BSLS_ASSERT_NONCONVEYOR(timeZone.endTransitions() != start);
+    BSLS_ASSERT_NONCONVEYOR(timeZone.numTransitions() != 0);
 
     // Access one after.
 
@@ -80,7 +81,8 @@ baltzo::Zoneinfo::TransitionConstIterator findTransitionWithDstFlag(
 
     probeIterator++;
     if (timeZone.endTransitions() != probeIterator
-        && probeIterator->descriptor().dstInEffectFlag() == dstFlag) {
+        && BSLS_ASSERT_CONVEYOR_REF(*probeIterator).descriptor()
+                                         .dstInEffectFlag() == dstFlag) {
         return probeIterator;                                         // RETURN
     }
 
@@ -91,6 +93,7 @@ baltzo::Zoneinfo::TransitionConstIterator findTransitionWithDstFlag(
         if (timeZone.beginTransitions() != probeIterator) {
             probeIterator--;
         }
+        BSLS_ASSERT_CONVEYOR_OBJECT(probeIterator);
         if (probeIterator->descriptor().dstInEffectFlag() == dstFlag) {
             return probeIterator;                                     // RETURN
         }
@@ -102,6 +105,7 @@ baltzo::Zoneinfo::TransitionConstIterator findTransitionWithDstFlag(
                                                      timeZone.endTransitions();
     do {
         --backIterator;
+        BSLS_ASSERT_CONVEYOR_OBJECT(backIterator);
         const baltzo::LocalTimeDescriptor& desc = backIterator->descriptor();
         if (dstFlag == desc.dstInEffectFlag()) {
             return backIterator;                                      // RETURN
@@ -120,6 +124,7 @@ void selectUtcOffset(
                const baltzo::Zoneinfo&                           timeZone,
                bool                                              selectDstFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeZone);
     // Load into the specified 'utcOffsetSec', a UTC offset defined by a
     // local-time descriptor in the specified 'timeZone' whose daylight-saving
     // time (DST) property matches the one indicated by the specified
@@ -140,10 +145,14 @@ void selectUtcOffset(
 
     BSLS_ASSERT(utcOffsetSec);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter2);
     if (iter2 != iter1
         && selectDstFlag == iter2->descriptor().dstInEffectFlag()
         && selectDstFlag == iter1->descriptor().dstInEffectFlag()) {
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(iter2);
+        BSLS_ASSERT_CONVEYOR_OBJECT(iter1);
         // If 'iter1' and 'iter2' are different transitions and both match
         // 'selectDstFlag', then there is an ambiguous selection.
 
@@ -155,6 +164,7 @@ void selectUtcOffset(
                       iter2->descriptor().description().c_str(),
                       timeZone.identifier().c_str());
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(iter2);
         // The daylight-saving time property of 'iter2' matches the specified
         // 'dstPolicy'.
 
@@ -162,12 +172,16 @@ void selectUtcOffset(
         return;                                                       // RETURN
     }
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter1);
     if (selectDstFlag == iter1->descriptor().dstInEffectFlag()) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(iter1);
         *utcOffsetSec = iter1->descriptor().utcOffsetInSeconds();
         return;                                                       // RETURN
     }
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter2);
     if (selectDstFlag == iter2->descriptor().dstInEffectFlag()) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(iter2);
         // The daylight-saving time property of 'iter2' matches the specified
         // 'dstPolicy'.
 
@@ -181,10 +195,13 @@ void selectUtcOffset(
                      findTransitionWithDstFlag(selectDstFlag, iter2, timeZone);
 
     if (timeZone.endTransitions() != candidateTransition) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(candidateTransition);
         *utcOffsetSec = candidateTransition->descriptor().utcOffsetInSeconds();
         return;                                                       // RETURN
     }
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter2);
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter1);
     // The supplied 'dstPolicy' makes no sense, select the latter of the two
     // possible values.
 
@@ -196,6 +213,7 @@ void selectUtcOffset(
                   iter2->descriptor().description().c_str(),
                   timeZone.identifier().c_str());
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter2);
     *utcOffsetSec = iter2->descriptor().utcOffsetInSeconds();
 }
 
@@ -294,10 +312,11 @@ void TimeZoneUtilImp::resolveLocalTime(
                              DstPolicy::Enum                    dstPolicy,
                              const Zoneinfo&                    timeZone)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(result);
     BSLS_ASSERT(resultValidity);
     BSLS_ASSERT(transitionIter);
-    BSLS_ASSERT(ZoneinfoUtil::isWellFormed(timeZone));
+    BSLS_ASSERT_NONCONVEYOR(ZoneinfoUtil::isWellFormed(timeZone));
 
     typedef LocalTimeValidity Validity;
 
@@ -312,7 +331,9 @@ void TimeZoneUtilImp::resolveLocalTime(
                                                  localTime,
                                                  timeZone);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter1);
     const int utcOffset1 = iter1->descriptor().utcOffsetInSeconds();
+    BSLS_ASSERT_CONVEYOR_OBJECT(iter2);
     const int utcOffset2 = iter2->descriptor().utcOffsetInSeconds();
 
     // Next resolve the UTC offset for 'localTime' based on 'dstPolicy' and
@@ -367,7 +388,8 @@ void TimeZoneUtilImp::resolveLocalTime(
     // time value for 'resolvedUtcTime' may be different than 'localTime'.
 
     const int resultOffsetInMinutes =
-                     (*transitionIter)->descriptor().utcOffsetInSeconds() / 60;
+               BSLS_ASSERT_CONVEYOR_REF(**transitionIter).descriptor()
+                                                    .utcOffsetInSeconds() / 60;
 
     bdlt::Datetime resultTime = resolvedUtcTime;
     resultTime.addMinutes(resultOffsetInMinutes);
@@ -380,8 +402,8 @@ void TimeZoneUtilImp::createLocalTimePeriod(
                           const Zoneinfo&                           timeZone)
 {
     BSLS_ASSERT(result);
-    BSLS_ASSERT(transition != timeZone.endTransitions());
-    BSLS_ASSERT(ZoneinfoUtil::isWellFormed(timeZone));
+    BSLS_ASSERT_NONCONVEYOR(transition != timeZone.endTransitions());
+    BSLS_ASSERT_NONCONVEYOR(ZoneinfoUtil::isWellFormed(timeZone));
 
     // The transition times in 'timeZone' are guaranteed to be in the range
     // representable by 'bdlt::Datetime'.
@@ -400,6 +422,7 @@ void TimeZoneUtilImp::createLocalTimePeriod(
         bdlt::EpochUtil::convertFromTimeT64(&utcEndTime, next->utcTime());
     }
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(transition);
     result->setDescriptor(transition->descriptor());
     result->setUtcStartAndEndTime(utcStartTime, utcEndTime);
 }

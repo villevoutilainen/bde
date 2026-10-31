@@ -1117,7 +1117,8 @@ int BerUtil_StringImpUtil::putChars(bsl::streambuf *streamBuf,
 
     const int numLoops     = numChars / k_LOCAL_BUFFER_SIZE;
     const int numRemaining = numChars % k_LOCAL_BUFFER_SIZE;
-    BSLS_ASSERT(numLoops * k_LOCAL_BUFFER_SIZE + numRemaining == numChars);
+    BSLS_ASSERT_NONCONVEYOR(
+                    numLoops * k_LOCAL_BUFFER_SIZE + numRemaining == numChars);
 
     char buffer[k_LOCAL_BUFFER_SIZE];
     bsl::memset(buffer, value, numChars);
@@ -1143,6 +1144,8 @@ int BerUtil_StringImpUtil::getStringValue(bsl::string              *value,
                                           int                       length,
                                           const BerDecoderOptions&  options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&options);
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     if (0 == length) {
         if (options.defaultEmptyStrings() && !value->empty()) {
             u::warnOnce();
@@ -1334,7 +1337,7 @@ int BerUtil_TimezoneOffsetImpUtil::putTimezoneOffsetInMinutes(
                                                      bsl::streambuf *streamBuf,
                                                      int             value)
 {
-    BSLS_ASSERT(isValidTimezoneOffsetInMinutes(value));
+    BSLS_ASSERT_NONCONVEYOR(isValidTimezoneOffsetInMinutes(value));
 
     const char buffer[2] = {static_cast<char>((value & 0xFF00) >> 8),
                             static_cast<char>((value & 0x00FF) >> 0)};
@@ -1416,6 +1419,7 @@ int BerUtil_DateImpUtil::getCompactBinaryDateValue(bdlt::DateTz   *value,
                                                    bsl::streambuf *streamBuf,
                                                    int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     bdlt::Date localDate;
     if (0 != getCompactBinaryDateValue(&localDate, streamBuf, length)) {
         return -1;                                                    // RETURN
@@ -1432,6 +1436,7 @@ int BerUtil_DateImpUtil::getCompactBinaryDateTzValue(bdlt::DateTz   *value,
                                                      bsl::streambuf *streamBuf,
                                                      int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     int timezoneOffsetInMinutes = 0;
     if (length >= k_MIN_COMPACT_BINARY_DATETZ_LENGTH) {
         if (0 != TimezoneUtil::getTimezoneOffsetInMinutesIfValid(
@@ -1466,6 +1471,7 @@ int BerUtil_DateImpUtil::putCompactBinaryDateValue(
                                             const bdlt::DateTz&      value,
                                             const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BSLS_ASSERT_SAFE(0 == value.offset());
 
     return putCompactBinaryDateValue(streamBuf, value.localDate(), options);
@@ -1476,6 +1482,7 @@ int BerUtil_DateImpUtil::putCompactBinaryDateTzValue(
                                             const bdlt::DateTz&      value,
                                             const BerEncoderOptions *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const bdlt::Date& date   = value.localDate();
     const int         offset = value.offset();
 
@@ -1640,6 +1647,7 @@ int BerUtil_DateImpUtil::putDateTzValue(bsl::streambuf          *streamBuf,
                                         const bdlt::DateTz&      value,
                                         const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     // Applications can create invalid 'bdlt::DateTz' objects in optimized
     // build modes.  As this function assumes that 'value' is valid, it is
     // possible to encode an invalid 'bdlt::DateTz' without returning an error.
@@ -1771,6 +1779,7 @@ int BerUtil_TimeImpUtil::getCompactBinaryTimeValue(bdlt::TimeTz   *value,
                                                    bsl::streambuf *streamBuf,
                                                    int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     bdlt::Time localTime;
     if (0 != getCompactBinaryTimeValue(&localTime, streamBuf, length)) {
         return -1;                                                    // RETURN
@@ -1787,6 +1796,7 @@ int BerUtil_TimeImpUtil::getCompactBinaryTimeTzValue(bdlt::TimeTz   *value,
                                                      bsl::streambuf *streamBuf,
                                                      int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     int timezoneOffsetInMinutes = 0;
     if (length >= k_MIN_COMPACT_BINARY_TIMETZ_LENGTH) {
         typedef BerUtil_TimezoneOffsetImpUtil TimezoneUtil;
@@ -1813,6 +1823,7 @@ int BerUtil_TimeImpUtil::getExtendedBinaryTimeTzValue(
                                                      bsl::streambuf *streamBuf,
                                                      int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     if (k_EXTENDED_BINARY_TIMETZ_LENGTH != length) {
         return -1;                                                    // RETURN
     }
@@ -1847,7 +1858,8 @@ int BerUtil_TimeImpUtil::putCompactBinaryTimeValue(
                                             const bdlt::TimeTz&      value,
                                             const BerEncoderOptions *options)
 {
-    BSLS_ASSERT(0 == value.offset());
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_NONCONVEYOR(0 == value.offset());
 
     const bdlt::Time& time = value.localTime();
 
@@ -1859,6 +1871,7 @@ int BerUtil_TimeImpUtil::putCompactBinaryTimeTzValue(
                                             const bdlt::TimeTz&      value,
                                             const BerEncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const bdlt::Time& time   = value.localTime();
     const int         offset = value.offset();
 
@@ -1910,6 +1923,7 @@ int BerUtil_TimeImpUtil::putExtendedBinaryTimeTzValue(
                                             const bdlt::TimeTz&      value,
                                             const BerEncoderOptions *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (0 !=
         LengthUtil::putLength(streamBuf, k_EXTENDED_BINARY_TIMETZ_LENGTH)) {
         return -1;                                                    // RETURN
@@ -1942,6 +1956,7 @@ void BerUtil_DatetimeImpUtil::datetimeToMillisecondsSinceEpoch(
                               bsls::Types::Int64    *millisecondsSinceEpoch,
                               const bdlt::Datetime&  value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bsls::Types::Int64 daysSinceEpoch;
     DateUtil::dateToDaysSinceEpoch(&daysSinceEpoch, value.date());
 
@@ -1959,6 +1974,7 @@ int BerUtil_DatetimeImpUtil::millisecondsSinceEpochToDatetime(
                                     bdlt::Datetime     *value,
                                     bsls::Types::Int64  millisecondsSinceEpoch)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     typedef bdlt::TimeUnitRatio Ratio;
 
     bsls::Types::Int64 daysSinceEpoch =
@@ -2062,6 +2078,7 @@ int BerUtil_DatetimeImpUtil::getExtendedBinaryDatetimeValue(
                                                      bsl::streambuf *streamBuf,
                                                      int             length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     if (k_EXTENDED_BINARY_DATETIME_LENGTH != length) {
         return -1;                                                    // RETURN
     }
@@ -2184,6 +2201,7 @@ int BerUtil_DatetimeImpUtil::putExtendedBinaryDatetimeValue(
                                             const bdlt::Datetime&    value,
                                             const BerEncoderOptions *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (0 !=
         LengthUtil::putLength(streamBuf, k_EXTENDED_BINARY_DATETIME_LENGTH)) {
         return -1;                                                    // RETURN
@@ -2226,6 +2244,7 @@ int BerUtil_DatetimeImpUtil::getCompactBinaryDatetimeValue(
                                                    bsl::streambuf   *streamBuf,
                                                    int               length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(length < k_MIN_COMPACT_BINARY_DATETIMETZ_LENGTH);
 
     enum { k_TIMEZONE_OFFSET = 0 };
@@ -2244,6 +2263,7 @@ int BerUtil_DatetimeImpUtil::getCompactBinaryDatetimeTzValue(
                                                    bsl::streambuf   *streamBuf,
                                                    int               length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(length >= k_MIN_COMPACT_BINARY_DATETIMETZ_LENGTH);
 
     int timezoneOffsetInMinutes = 0;
@@ -2269,6 +2289,7 @@ int BerUtil_DatetimeImpUtil::getExtendedBinaryDatetimeTzValue(
                                                    bsl::streambuf   *streamBuf,
                                                    int               length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     if (k_EXTENDED_BINARY_DATETIMETZ_LENGTH != length) {
         return -1;                                                    // RETURN
     }
@@ -2389,6 +2410,7 @@ int BerUtil_DatetimeImpUtil::putExtendedBinaryDatetimeTzValue(
                                             const bdlt::DatetimeTz&  value,
                                             const BerEncoderOptions *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (0 != LengthUtil::putLength(streamBuf,
                                    k_EXTENDED_BINARY_DATETIMETZ_LENGTH)) {
         return -1;                                                    // RETURN

@@ -98,7 +98,8 @@ struct MyEnumerationUnpreservedWithFallback {
     /// Write to the specified `stream` the string representation of
     /// the specified enumeration `value`.  Return a reference to
     /// the modifiable `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -231,7 +232,8 @@ class MyEnumerationUnpreservedWithFallbackRecord {
 
     /// Return a reference to the modifiable "Value" attribute of this
     /// object.
-    MyEnumerationUnpreservedWithFallback::Value& value();
+    MyEnumerationUnpreservedWithFallback::Value& value()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 

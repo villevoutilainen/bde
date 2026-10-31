@@ -174,6 +174,7 @@ int StackTraceUtil::loadStackTraceFromStack(
 bsl::ostream& StackTraceUtil::printFormatted(bsl::ostream&     stream,
                                              const StackTrace& stackTrace)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stackTrace);
     for (int i = 0; i < stackTrace.length(); ++i) {
         stream << '(' << i << "): ";
         printFormatted(stream, stackTrace[i]);
@@ -187,6 +188,7 @@ bsl::ostream& StackTraceUtil::printFormatted(
                                         bsl::ostream&          stream,
                                         const StackTraceFrame& stackTraceFrame)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stackTraceFrame);
     enum { LIBRARY_NAME_LIMIT = 40 };   // Library file names longer than this
                                         // are just printed as the basename,
                                         // otherwise the full path is printed.
