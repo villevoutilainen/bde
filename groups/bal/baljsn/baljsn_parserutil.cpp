@@ -141,6 +141,7 @@ const bsls::Types::Uint64 UINT64_MAX_VALUE_LAST_DIGIT = 5;
 int base64Decode(bsl::vector<char>       *value,
                  const bsl::string_view&  base64String)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
 
     value->clear();

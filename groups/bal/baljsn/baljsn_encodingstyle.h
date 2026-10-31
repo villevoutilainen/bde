@@ -85,7 +85,8 @@ struct EncodingStyle {
     /// Write to the specified `stream` the string representation of
     /// the specified enumeration `value`.  Return a reference to
     /// the modifiable `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -136,6 +137,7 @@ bsl::ostream& baljsn::operator<<(
         bsl::ostream& stream,
         baljsn::EncodingStyle::Value rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return baljsn::EncodingStyle::print(stream, rhs);
 }
 

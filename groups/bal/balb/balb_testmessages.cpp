@@ -114,6 +114,7 @@ Choice4::Choice4(
 Choice4&
 Choice4::operator=(const Choice4& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
@@ -152,6 +153,7 @@ void Choice4::reset()
 
 int Choice4::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -492,6 +494,7 @@ SequenceWithAnonymityChoice1::SequenceWithAnonymityChoice1(
 SequenceWithAnonymityChoice1&
 SequenceWithAnonymityChoice1::operator=(const SequenceWithAnonymityChoice1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
@@ -530,6 +533,7 @@ void SequenceWithAnonymityChoice1::reset()
 
 int SequenceWithAnonymityChoice1::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION5: {
         makeSelection5();
@@ -1047,6 +1051,7 @@ Choice5::Choice5(
 Choice5&
 Choice5::operator=(const Choice5& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
@@ -1084,6 +1089,7 @@ void Choice5::reset()
 
 int Choice5::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -1980,6 +1986,7 @@ Choice3::Choice3(
 Choice3&
 Choice3::operator=(const Choice3& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
@@ -2029,6 +2036,7 @@ void Choice3::reset()
 
 int Choice3::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -2342,6 +2350,7 @@ SequenceWithAnonymityChoice::SequenceWithAnonymityChoice(
 SequenceWithAnonymityChoice&
 SequenceWithAnonymityChoice::operator=(const SequenceWithAnonymityChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
@@ -2391,6 +2400,7 @@ void SequenceWithAnonymityChoice::reset()
 
 int SequenceWithAnonymityChoice::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -2702,6 +2712,7 @@ Choice1::Choice1(
 Choice1&
 Choice1::operator=(const Choice1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
@@ -2712,10 +2723,10 @@ Choice1::operator=(const Choice1& rhs)
             makeSelection2(rhs.d_selection2.object());
           } break;
           case SELECTION_ID_SELECTION3: {
-            makeSelection3(*rhs.d_selection3);
+            makeSelection3(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection3));
           } break;
           case SELECTION_ID_SELECTION4: {
-            makeSelection4(*rhs.d_selection4);
+            makeSelection4(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection4));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
@@ -2751,6 +2762,7 @@ void Choice1::reset()
 
 int Choice1::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -3063,6 +3075,7 @@ Choice2::Choice2(
 Choice2&
 Choice2::operator=(const Choice2& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
@@ -3073,7 +3086,7 @@ Choice2::operator=(const Choice2& rhs)
             makeSelection2(rhs.d_selection2.object());
           } break;
           case SELECTION_ID_SELECTION3: {
-            makeSelection3(*rhs.d_selection3);
+            makeSelection3(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection3));
           } break;
           case SELECTION_ID_SELECTION4: {
             makeSelection4(rhs.d_selection4.object());
@@ -3113,6 +3126,7 @@ void Choice2::reset()
 
 int Choice2::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -4076,10 +4090,10 @@ SequenceWithAnonymityChoice2::operator=(const SequenceWithAnonymityChoice2& rhs)
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION7: {
-            makeSelection7(*rhs.d_selection7);
+            makeSelection7(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection7));
           } break;
           case SELECTION_ID_SELECTION8: {
-            makeSelection8(*rhs.d_selection8);
+            makeSelection8(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection8));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
@@ -4109,6 +4123,7 @@ void SequenceWithAnonymityChoice2::reset()
 
 int SequenceWithAnonymityChoice2::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION7: {
         makeSelection7();
@@ -4617,6 +4632,7 @@ FeatureTestMessage::FeatureTestMessage(
 FeatureTestMessage&
 FeatureTestMessage::operator=(const FeatureTestMessage& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
@@ -4630,7 +4646,7 @@ FeatureTestMessage::operator=(const FeatureTestMessage& rhs)
             makeSelection3(rhs.d_selection3.object());
           } break;
           case SELECTION_ID_SELECTION4: {
-            makeSelection4(*rhs.d_selection4);
+            makeSelection4(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection4));
           } break;
           case SELECTION_ID_SELECTION5: {
             makeSelection5(rhs.d_selection5.object());
@@ -4710,6 +4726,7 @@ void FeatureTestMessage::reset()
 
 int FeatureTestMessage::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SELECTION1: {
         makeSelection1();
@@ -5307,6 +5324,7 @@ void Request::reset()
 
 int Request::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_SIMPLE_REQUEST: {
         makeSimpleRequest();
@@ -5558,6 +5576,7 @@ void Response::reset()
 
 int Response::makeSelection(int selectionId)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (selectionId) {
       case SELECTION_ID_RESPONSE_DATA: {
         makeResponseData();

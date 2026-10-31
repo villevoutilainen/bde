@@ -275,15 +275,18 @@ class EncoderTestAddress {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const bsl::string& street() const;
+    const bsl::string& street() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Street"
         // attribute of this object.
 
-    const bsl::string& city() const;
+    const bsl::string& city() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "City"
         // attribute of this object.
 
-    const bsl::string& state() const;
+    const bsl::string& state() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "State"
         // attribute of this object.
 
@@ -294,6 +297,8 @@ class EncoderTestAddress {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.street() == rhs.street() &&
                lhs.city() == rhs.city() &&
                lhs.state() == rhs.state();
@@ -480,7 +485,8 @@ class EncoderTestChoiceWithAllCategoriesChoice {
         // structure.  Return the value returned from the invocation of
         // 'accessor' if this object has a defined selection, and -1 otherwise.
 
-    const int& selection0() const;
+    const int& selection0() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the non-modifiable "Selection0" selection of
         // this object if "Selection0" is the current selection.  The behavior
         // is undefined unless "Selection0" is the selection of this object.
@@ -648,7 +654,8 @@ class EncoderTestChoiceWithAllCategoriesCustomizedType {
         // operation has no effect.  Note that a trailing newline is provided
         // in multiline mode only.
 
-    const bsl::string& toString() const;
+    const bsl::string& toString() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Convert this value to 'bsl::string'.
 
     // PUBLIC CLASS METHODS
@@ -666,6 +673,8 @@ class EncoderTestChoiceWithAllCategoriesCustomizedType {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.d_value == rhs.d_value;
     }
 
@@ -677,6 +686,8 @@ class EncoderTestChoiceWithAllCategoriesCustomizedType {
         // objects do not have the same value if one or more respective
         // attributes differ in values.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.d_value != rhs.d_value;
     }
 
@@ -759,7 +770,8 @@ struct EncoderTestChoiceWithAllCategoriesEnumeration {
         // no effect on 'result' otherwise (i.e., 'number' does not match any
         // enumerator).
 
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Write to the specified 'stream' the string representation of
         // the specified enumeration 'value'.  Return a reference to
         // the modifiable 'stream'.
@@ -769,6 +781,7 @@ struct EncoderTestChoiceWithAllCategoriesEnumeration {
         // Format the specified 'rhs' to the specified output 'stream' and
         // return a reference to the modifiable 'stream'.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
         return EncoderTestChoiceWithAllCategoriesEnumeration::print(stream, rhs);
     }
 };
@@ -1268,7 +1281,8 @@ class EncoderTestSequenceWithAllCategoriesChoice {
         // structure.  Return the value returned from the invocation of
         // 'accessor' if this object has a defined selection, and -1 otherwise.
 
-    const int& selection0() const;
+    const int& selection0() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the non-modifiable "Selection0" selection of
         // this object if "Selection0" is the current selection.  The behavior
         // is undefined unless "Selection0" is the selection of this object.
@@ -1438,7 +1452,8 @@ class EncoderTestSequenceWithAllCategoriesCustomizedType {
         // operation has no effect.  Note that a trailing newline is provided
         // in multiline mode only.
 
-    const bsl::string& toString() const;
+    const bsl::string& toString() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Convert this value to 'bsl::string'.
 
     // PUBLIC CLASS METHODS
@@ -1456,6 +1471,8 @@ class EncoderTestSequenceWithAllCategoriesCustomizedType {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.d_value == rhs.d_value;
     }
 
@@ -1467,6 +1484,8 @@ class EncoderTestSequenceWithAllCategoriesCustomizedType {
         // objects do not have the same value if one or more respective
         // attributes differ in values.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.d_value != rhs.d_value;
     }
 
@@ -1549,7 +1568,8 @@ struct EncoderTestSequenceWithAllCategoriesEnumeration {
         // no effect on 'result' otherwise (i.e., 'number' does not match any
         // enumerator).
 
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Write to the specified 'stream' the string representation of
         // the specified enumeration 'value'.  Return a reference to
         // the modifiable 'stream'.
@@ -1559,6 +1579,7 @@ struct EncoderTestSequenceWithAllCategoriesEnumeration {
         // Format the specified 'rhs' to the specified output 'stream' and
         // return a reference to the modifiable 'stream'.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
         return EncoderTestSequenceWithAllCategoriesEnumeration::print(stream, rhs);
     }
 };
@@ -5377,33 +5398,39 @@ class EncoderTestChoiceWithAllCategories {
         // structure.  Return the value returned from the invocation of
         // 'accessor' if this object has a defined selection, and -1 otherwise.
 
-    const bsl::vector<char>& charArray() const;
+    const bsl::vector<char>& charArray() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the non-modifiable "CharArray" selection of
         // this object if "CharArray" is the current selection.  The behavior
         // is undefined unless "CharArray" is the selection of this object.
 
-    const EncoderTestChoiceWithAllCategoriesChoice& choice() const;
+    const EncoderTestChoiceWithAllCategoriesChoice& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the non-modifiable "Choice" selection of this
         // object if "Choice" is the current selection.  The behavior is
         // undefined unless "Choice" is the selection of this object.
 
-    const EncoderTestChoiceWithAllCategoriesCustomizedType& customizedType() const;
+    const EncoderTestChoiceWithAllCategoriesCustomizedType& customizedType() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the non-modifiable "CustomizedType" selection
         // of this object if "CustomizedType" is the current selection.  The
         // behavior is undefined unless "CustomizedType" is the selection of
         // this object.
 
-    const EncoderTestChoiceWithAllCategoriesEnumeration::Value& enumeration() const;
+    const EncoderTestChoiceWithAllCategoriesEnumeration::Value& enumeration() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the non-modifiable "Enumeration" selection of
         // this object if "Enumeration" is the current selection.  The behavior
         // is undefined unless "Enumeration" is the selection of this object.
 
-    const EncoderTestChoiceWithAllCategoriesSequence& sequence() const;
+    const EncoderTestChoiceWithAllCategoriesSequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the non-modifiable "Sequence" selection of
         // this object if "Sequence" is the current selection.  The behavior is
         // undefined unless "Sequence" is the selection of this object.
 
-    const int& simple() const;
+    const int& simple() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the non-modifiable "Simple" selection of this
         // object if "Simple" is the current selection.  The behavior is
         // undefined unless "Simple" is the selection of this object.
@@ -5639,7 +5666,8 @@ class EncoderTestDegenerateChoice1 {
         // structure.  Return the value returned from the invocation of
         // 'accessor' if this object has a defined selection, and -1 otherwise.
 
-    const EncoderTestDegenerateChoice1Sequence& sequence() const;
+    const EncoderTestDegenerateChoice1Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference to the non-modifiable "Sequence" selection of
         // this object if "Sequence" is the current selection.  The behavior is
         // undefined unless "Sequence" is the selection of this object.
@@ -5889,11 +5917,13 @@ class EncoderTestEmployee {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Name"
         // attribute of this object.
 
-    const EncoderTestAddress& homeAddress() const;
+    const EncoderTestAddress& homeAddress() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the
         // "HomeAddress" attribute of this object.
 
@@ -5907,6 +5937,8 @@ class EncoderTestEmployee {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.name() == rhs.name() &&
                lhs.homeAddress() == rhs.homeAddress() &&
                lhs.age() == rhs.age();
@@ -6181,34 +6213,41 @@ class EncoderTestSequenceWithAllCategories {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const bsl::vector<char>& charArray() const;
+    const bsl::vector<char>& charArray() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "CharArray"
         // attribute of this object.
 
-    const bsl::string& aString() const;
+    const bsl::string& aString() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "AString"
         // attribute of this object.
 
-    const bsl::vector<int>& array() const;
+    const bsl::vector<int>& array() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Array"
         // attribute of this object.
 
-    const EncoderTestSequenceWithAllCategoriesChoice& choice() const;
+    const EncoderTestSequenceWithAllCategoriesChoice& choice() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Choice"
         // attribute of this object.
 
-    const EncoderTestSequenceWithAllCategoriesCustomizedType& customizedType() const;
+    const EncoderTestSequenceWithAllCategoriesCustomizedType& customizedType() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the
         // "CustomizedType" attribute of this object.
 
     EncoderTestSequenceWithAllCategoriesEnumeration::Value enumeration() const;
         // Return the value of the "Enumeration" attribute of this object.
 
-    const bdlb::NullableValue<int>& nullableValue() const;
+    const bdlb::NullableValue<int>& nullableValue() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the
         // "NullableValue" attribute of this object.
 
-    const EncoderTestSequenceWithAllCategoriesSequence& sequence() const;
+    const EncoderTestSequenceWithAllCategoriesSequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -6390,7 +6429,8 @@ class EncoderTestSequenceWithUntagged1 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged1Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged1Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -6401,6 +6441,8 @@ class EncoderTestSequenceWithUntagged1 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.sequence() == rhs.sequence();
     }
 
@@ -6588,7 +6630,8 @@ class EncoderTestSequenceWithUntagged10 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged10Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged10Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -6605,6 +6648,8 @@ class EncoderTestSequenceWithUntagged10 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.sequence() == rhs.sequence() &&
                lhs.attribute0() == rhs.attribute0() &&
                lhs.attribute1() == rhs.attribute1();
@@ -6796,11 +6841,13 @@ class EncoderTestSequenceWithUntagged11 {
     int attribute0() const;
         // Return the value of the "Attribute0" attribute of this object.
 
-    const EncoderTestSequenceWithUntagged11Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged11Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
-    const EncoderTestSequenceWithUntagged11Sequence1& sequence1() const;
+    const EncoderTestSequenceWithUntagged11Sequence1& sequence1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence1"
         // attribute of this object.
 
@@ -6811,6 +6858,8 @@ class EncoderTestSequenceWithUntagged11 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute0() == rhs.attribute0() &&
                lhs.sequence() == rhs.sequence() &&
                lhs.sequence1() == rhs.sequence1();
@@ -7002,7 +7051,8 @@ class EncoderTestSequenceWithUntagged12 {
     int attribute0() const;
         // Return the value of the "Attribute0" attribute of this object.
 
-    const EncoderTestSequenceWithUntagged12Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged12Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -7016,6 +7066,8 @@ class EncoderTestSequenceWithUntagged12 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute0() == rhs.attribute0() &&
                lhs.sequence() == rhs.sequence() &&
                lhs.attribute1() == rhs.attribute1();
@@ -7210,7 +7262,8 @@ class EncoderTestSequenceWithUntagged13 {
     int attribute1() const;
         // Return the value of the "Attribute1" attribute of this object.
 
-    const EncoderTestSequenceWithUntagged13Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged13Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -7221,6 +7274,8 @@ class EncoderTestSequenceWithUntagged13 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute0() == rhs.attribute0() &&
                lhs.attribute1() == rhs.attribute1() &&
                lhs.sequence() == rhs.sequence();
@@ -7398,11 +7453,13 @@ class EncoderTestSequenceWithUntagged3 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged3Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged3Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
-    const EncoderTestSequenceWithUntagged3Sequence1& sequence1() const;
+    const EncoderTestSequenceWithUntagged3Sequence1& sequence1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence1"
         // attribute of this object.
 
@@ -7413,6 +7470,8 @@ class EncoderTestSequenceWithUntagged3 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.sequence() == rhs.sequence() &&
                lhs.sequence1() == rhs.sequence1();
     }
@@ -7591,7 +7650,8 @@ class EncoderTestSequenceWithUntagged4 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged4Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged4Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -7605,6 +7665,8 @@ class EncoderTestSequenceWithUntagged4 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.sequence() == rhs.sequence() &&
                lhs.attribute0() == rhs.attribute0();
     }
@@ -7786,7 +7848,8 @@ class EncoderTestSequenceWithUntagged5 {
     int attribute0() const;
         // Return the value of the "Attribute0" attribute of this object.
 
-    const EncoderTestSequenceWithUntagged5Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged5Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -7797,6 +7860,8 @@ class EncoderTestSequenceWithUntagged5 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.attribute0() == rhs.attribute0() &&
                lhs.sequence() == rhs.sequence();
     }
@@ -7986,15 +8051,18 @@ class EncoderTestSequenceWithUntagged7 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged7Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged7Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
-    const EncoderTestSequenceWithUntagged7Sequence1& sequence1() const;
+    const EncoderTestSequenceWithUntagged7Sequence1& sequence1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence1"
         // attribute of this object.
 
-    const EncoderTestSequenceWithUntagged7Sequence2& sequence2() const;
+    const EncoderTestSequenceWithUntagged7Sequence2& sequence2() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence2"
         // attribute of this object.
 
@@ -8005,6 +8073,8 @@ class EncoderTestSequenceWithUntagged7 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.sequence() == rhs.sequence() &&
                lhs.sequence1() == rhs.sequence1() &&
                lhs.sequence2() == rhs.sequence2();
@@ -8193,11 +8263,13 @@ class EncoderTestSequenceWithUntagged8 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged8Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged8Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
-    const EncoderTestSequenceWithUntagged8Sequence1& sequence1() const;
+    const EncoderTestSequenceWithUntagged8Sequence1& sequence1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence1"
         // attribute of this object.
 
@@ -8211,6 +8283,8 @@ class EncoderTestSequenceWithUntagged8 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.sequence() == rhs.sequence() &&
                lhs.sequence1() == rhs.sequence1() &&
                lhs.attribute0() == rhs.attribute0();
@@ -8399,14 +8473,16 @@ class EncoderTestSequenceWithUntagged9 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged9Sequence& sequence() const;
+    const EncoderTestSequenceWithUntagged9Sequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
     int attribute0() const;
         // Return the value of the "Attribute0" attribute of this object.
 
-    const EncoderTestSequenceWithUntagged9Sequence1& sequence1() const;
+    const EncoderTestSequenceWithUntagged9Sequence1& sequence1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Return a reference offering non-modifiable access to the "Sequence1"
         // attribute of this object.
 
@@ -8417,6 +8493,8 @@ class EncoderTestSequenceWithUntagged9 {
         // have the same value, and 'false' otherwise.  Two attribute objects
         // have the same value if each respective attribute has the same value.
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.sequence() == rhs.sequence() &&
                lhs.attribute0() == rhs.attribute0() &&
                lhs.sequence1() == rhs.sequence1();
@@ -8661,13 +8739,16 @@ void EncoderTestChoiceWithAllCategoriesChoice::hashAppendImpl(t_HASH_ALGORITHM& 
 inline
 bool EncoderTestChoiceWithAllCategoriesChoice::isEqualTo(const EncoderTestChoiceWithAllCategoriesChoice& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef EncoderTestChoiceWithAllCategoriesChoice Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
           case Class::SELECTION_ID_SELECTION0:
             return this->selection0() == rhs.selection0();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -8693,6 +8774,7 @@ EncoderTestChoiceWithAllCategoriesChoice::~EncoderTestChoiceWithAllCategoriesCho
 template <typename t_MANIPULATOR>
 int EncoderTestChoiceWithAllCategoriesChoice::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case EncoderTestChoiceWithAllCategoriesChoice::SELECTION_ID_SELECTION0:
         return manipulator(&d_selection0.object(),
@@ -8706,6 +8788,7 @@ int EncoderTestChoiceWithAllCategoriesChoice::manipulateSelection(t_MANIPULATOR&
 inline
 int& EncoderTestChoiceWithAllCategoriesChoice::selection0()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION0 == d_selectionId);
     return d_selection0.object();
 }
@@ -8720,6 +8803,7 @@ int EncoderTestChoiceWithAllCategoriesChoice::selectionId() const
 template <typename t_ACCESSOR>
 int EncoderTestChoiceWithAllCategoriesChoice::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION0:
         return accessor(d_selection0.object(),
@@ -8780,7 +8864,7 @@ inline
 EncoderTestChoiceWithAllCategoriesCustomizedType::EncoderTestChoiceWithAllCategoriesCustomizedType(const bsl::string& value, bslma::Allocator *basicAllocator)
 : d_value(value, basicAllocator)
 {
-    BSLS_ASSERT(checkRestrictions(value) == 0);
+    BSLS_ASSERT_NONCONVEYOR(checkRestrictions(value) == 0);
 }
 
 inline
@@ -8819,6 +8903,7 @@ bsl::ostream& EncoderTestChoiceWithAllCategoriesCustomizedType::print(bsl::ostre
                                  int           level,
                                  int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 
@@ -8838,6 +8923,7 @@ const bsl::string& EncoderTestChoiceWithAllCategoriesCustomizedType::toString() 
 inline
 int EncoderTestChoiceWithAllCategoriesEnumeration::fromString(Value *result, const bsl::string& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return fromString(result, string.c_str(), static_cast<int>(string.length()));
 }
 
@@ -9064,13 +9150,16 @@ void EncoderTestSequenceWithAllCategoriesChoice::hashAppendImpl(t_HASH_ALGORITHM
 inline
 bool EncoderTestSequenceWithAllCategoriesChoice::isEqualTo(const EncoderTestSequenceWithAllCategoriesChoice& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef EncoderTestSequenceWithAllCategoriesChoice Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
           case Class::SELECTION_ID_SELECTION0:
             return this->selection0() == rhs.selection0();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -9096,6 +9185,7 @@ EncoderTestSequenceWithAllCategoriesChoice::~EncoderTestSequenceWithAllCategorie
 template <typename t_MANIPULATOR>
 int EncoderTestSequenceWithAllCategoriesChoice::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case EncoderTestSequenceWithAllCategoriesChoice::SELECTION_ID_SELECTION0:
         return manipulator(&d_selection0.object(),
@@ -9109,6 +9199,7 @@ int EncoderTestSequenceWithAllCategoriesChoice::manipulateSelection(t_MANIPULATO
 inline
 int& EncoderTestSequenceWithAllCategoriesChoice::selection0()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SELECTION0 == d_selectionId);
     return d_selection0.object();
 }
@@ -9123,6 +9214,7 @@ int EncoderTestSequenceWithAllCategoriesChoice::selectionId() const
 template <typename t_ACCESSOR>
 int EncoderTestSequenceWithAllCategoriesChoice::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION0:
         return accessor(d_selection0.object(),
@@ -9183,7 +9275,7 @@ inline
 EncoderTestSequenceWithAllCategoriesCustomizedType::EncoderTestSequenceWithAllCategoriesCustomizedType(const bsl::string& value, bslma::Allocator *basicAllocator)
 : d_value(value, basicAllocator)
 {
-    BSLS_ASSERT(checkRestrictions(value) == 0);
+    BSLS_ASSERT_NONCONVEYOR(checkRestrictions(value) == 0);
 }
 
 inline
@@ -9222,6 +9314,7 @@ bsl::ostream& EncoderTestSequenceWithAllCategoriesCustomizedType::print(bsl::ost
                                  int           level,
                                  int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bdlb::PrintMethods::print(stream, d_value, level, spacesPerLevel);
 }
 
@@ -9241,6 +9334,7 @@ const bsl::string& EncoderTestSequenceWithAllCategoriesCustomizedType::toString(
 inline
 int EncoderTestSequenceWithAllCategoriesEnumeration::fromString(Value *result, const bsl::string& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return fromString(result, string.c_str(), static_cast<int>(string.length()));
 }
 
@@ -11280,6 +11374,8 @@ void EncoderTestChoiceWithAllCategories::hashAppendImpl(t_HASH_ALGORITHM& hashAl
 inline
 bool EncoderTestChoiceWithAllCategories::isEqualTo(const EncoderTestChoiceWithAllCategories& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef EncoderTestChoiceWithAllCategories Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
@@ -11296,7 +11392,8 @@ bool EncoderTestChoiceWithAllCategories::isEqualTo(const EncoderTestChoiceWithAl
           case Class::SELECTION_ID_SIMPLE:
             return this->simple() == rhs.simple();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -11323,6 +11420,7 @@ EncoderTestChoiceWithAllCategories::~EncoderTestChoiceWithAllCategories()
 template <typename t_MANIPULATOR>
 int EncoderTestChoiceWithAllCategories::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case EncoderTestChoiceWithAllCategories::SELECTION_ID_CHAR_ARRAY:
         return manipulator(&d_charArray.object(),
@@ -11351,6 +11449,7 @@ int EncoderTestChoiceWithAllCategories::manipulateSelection(t_MANIPULATOR& manip
 inline
 bsl::vector<char>& EncoderTestChoiceWithAllCategories::charArray()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_CHAR_ARRAY == d_selectionId);
     return d_charArray.object();
 }
@@ -11358,6 +11457,7 @@ bsl::vector<char>& EncoderTestChoiceWithAllCategories::charArray()
 inline
 EncoderTestChoiceWithAllCategoriesChoice& EncoderTestChoiceWithAllCategories::choice()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_CHOICE == d_selectionId);
     return d_choice.object();
 }
@@ -11365,6 +11465,7 @@ EncoderTestChoiceWithAllCategoriesChoice& EncoderTestChoiceWithAllCategories::ch
 inline
 EncoderTestChoiceWithAllCategoriesCustomizedType& EncoderTestChoiceWithAllCategories::customizedType()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_CUSTOMIZED_TYPE == d_selectionId);
     return d_customizedType.object();
 }
@@ -11372,6 +11473,7 @@ EncoderTestChoiceWithAllCategoriesCustomizedType& EncoderTestChoiceWithAllCatego
 inline
 EncoderTestChoiceWithAllCategoriesEnumeration::Value& EncoderTestChoiceWithAllCategories::enumeration()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_ENUMERATION == d_selectionId);
     return d_enumeration.object();
 }
@@ -11379,6 +11481,7 @@ EncoderTestChoiceWithAllCategoriesEnumeration::Value& EncoderTestChoiceWithAllCa
 inline
 EncoderTestChoiceWithAllCategoriesSequence& EncoderTestChoiceWithAllCategories::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SEQUENCE == d_selectionId);
     return d_sequence.object();
 }
@@ -11386,6 +11489,7 @@ EncoderTestChoiceWithAllCategoriesSequence& EncoderTestChoiceWithAllCategories::
 inline
 int& EncoderTestChoiceWithAllCategories::simple()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SIMPLE == d_selectionId);
     return d_simple.object();
 }
@@ -11400,6 +11504,7 @@ int EncoderTestChoiceWithAllCategories::selectionId() const
 template <typename t_ACCESSOR>
 int EncoderTestChoiceWithAllCategories::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHAR_ARRAY:
         return accessor(d_charArray.object(),
@@ -11534,13 +11639,16 @@ void EncoderTestDegenerateChoice1::hashAppendImpl(t_HASH_ALGORITHM& hashAlgorith
 inline
 bool EncoderTestDegenerateChoice1::isEqualTo(const EncoderTestDegenerateChoice1& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef EncoderTestDegenerateChoice1 Class;
     if (this->selectionId() == rhs.selectionId()) {
         switch (rhs.selectionId()) {
           case Class::SELECTION_ID_SEQUENCE:
             return this->sequence() == rhs.sequence();
           default:
-            BSLS_ASSERT(Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
+            BSLS_ASSERT_NONCONVEYOR(
+                           Class::SELECTION_ID_UNDEFINED == rhs.selectionId());
             return true;
         }
     }
@@ -11566,6 +11674,7 @@ EncoderTestDegenerateChoice1::~EncoderTestDegenerateChoice1()
 template <typename t_MANIPULATOR>
 int EncoderTestDegenerateChoice1::manipulateSelection(t_MANIPULATOR& manipulator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case EncoderTestDegenerateChoice1::SELECTION_ID_SEQUENCE:
         return manipulator(&d_sequence.object(),
@@ -11579,6 +11688,7 @@ int EncoderTestDegenerateChoice1::manipulateSelection(t_MANIPULATOR& manipulator
 inline
 EncoderTestDegenerateChoice1Sequence& EncoderTestDegenerateChoice1::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(SELECTION_ID_SEQUENCE == d_selectionId);
     return d_sequence.object();
 }
@@ -11593,6 +11703,7 @@ int EncoderTestDegenerateChoice1::selectionId() const
 template <typename t_ACCESSOR>
 int EncoderTestDegenerateChoice1::accessSelection(t_ACCESSOR& accessor) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SEQUENCE:
         return accessor(d_sequence.object(),
@@ -11821,6 +11932,8 @@ void EncoderTestSequenceWithAllCategories::hashAppendImpl(t_HASH_ALGORITHM& hash
 inline
 bool EncoderTestSequenceWithAllCategories::isEqualTo(const EncoderTestSequenceWithAllCategories& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->charArray() == rhs.charArray() &&
            this->aString() == rhs.aString() &&
            this->array() == rhs.array() &&

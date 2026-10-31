@@ -237,6 +237,8 @@ bool equal(const bdlsb::MemOutStreamBuf& osb1,
 /// specified `lhs` and `rhs` strings.
 void printStringDifferences(const bsl::string& lhs, const bsl::string& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     const bsl::size_t len1 = lhs.size();
     const bsl::size_t len2 = rhs.size();
     P(len1) P(len2)
@@ -258,6 +260,7 @@ void printStringDifferences(const bsl::string& lhs, const bsl::string& rhs)
 void constructFeatureTestMessage(
                             bsl::vector<s_baltst::FeatureTestMessage> *objects)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(objects);
     balxml::MiniReader reader;
     balxml::DecoderOptions options;
     balxml::ErrorInfo e;

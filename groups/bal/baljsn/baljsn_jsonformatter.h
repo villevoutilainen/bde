@@ -539,6 +539,7 @@ int JsonFormatter_Util::setTemporalValueToJson(bdljsn::Json         *json,
                                                const TYPE&           value,
                                                const EncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BSLS_ASSERT_SAFE(json);
 
     bdlt::Iso8601UtilConfiguration config;
@@ -592,6 +593,7 @@ int JsonFormatter_Util::valueAsJson(bdljsn::Json         *json,
                                     BSLA_MAYBE_UNUSED
                                     const EncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BSLS_ASSERT_SAFE(json);
     if (bdlde::Utf8Util::isValid(value.data(), value.length())) {
         *json = value;
@@ -725,7 +727,7 @@ JsonFormatter::JsonFormatter(bdljsn::Json          *json,
 , d_stack(bslma::AllocatorUtil::adapt(allocator))
 {
     BSLS_ASSERT(json);
-    BSLS_ASSERT(json->isNull());
+    BSLS_ASSERT_NONCONVEYOR(json->isNull());
 
     d_stack.push(bsl::make_pair(json, State::e_AT_START));
 }
@@ -735,7 +737,8 @@ JsonFormatter::JsonFormatter(bdljsn::Json          *json,
 template <class TYPE>
 int JsonFormatter::putValue(const TYPE& value, const EncoderOptions *options)
 {
-    BSLS_ASSERT_OPT(0 < d_stack.size());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_OPT_NONCONVEYOR(0 < d_stack.size());
 
     bdljsn::Json& top   = *d_stack.top().first;
     State::Enum   state =  d_stack.top().second;

@@ -68,6 +68,7 @@ const char *JsonFormatter_State::toAscii(JsonFormatter_State::Enum value)
 
 void JsonFormatter::dumpStack()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_stack.empty()) {
         return;                                                       // RETURN
     }
@@ -106,6 +107,7 @@ void JsonFormatter::dumpStack()
 // MANIPULATORS
 void JsonFormatter::openObject()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 < d_stack.size());
     bdljsn::Json& top   = *d_stack.top().first;
     State::Enum   state =  d_stack.top().second;
@@ -139,6 +141,7 @@ void JsonFormatter::openObject()
 
 void JsonFormatter::closeObject()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 < d_stack.size());
 
     State::Enum state = d_stack.top().second;
@@ -155,6 +158,7 @@ void JsonFormatter::closeObject()
 
 void JsonFormatter::openArray(BSLA_MAYBE_UNUSED bool formatAsEmptyArrayFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 < d_stack.size());
     bdljsn::Json& top   = *d_stack.top().first;
     State::Enum   state =  d_stack.top().second;
@@ -188,6 +192,7 @@ void JsonFormatter::openArray(BSLA_MAYBE_UNUSED bool formatAsEmptyArrayFlag)
 
 void JsonFormatter::closeArray(BSLA_MAYBE_UNUSED bool formatAsEmptyArrayFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0                 <  d_stack.size());
     BSLS_ASSERT_SAFE(State::e_IN_ARRAY == d_stack.top().second);
 
@@ -196,6 +201,7 @@ void JsonFormatter::closeArray(BSLA_MAYBE_UNUSED bool formatAsEmptyArrayFlag)
 
 int JsonFormatter::openMember(const bsl::string_view& name)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!bdlde::Utf8Util::isValid(name)) {
         return -1;
     }
@@ -224,6 +230,7 @@ int JsonFormatter::openMember(const bsl::string_view& name)
 
 void JsonFormatter::closeMember()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 < d_stack.size());
 
     State::Enum state = d_stack.top().second;
@@ -248,7 +255,8 @@ void JsonFormatter::closeMember()
 
 int JsonFormatter::putNullValue()
 {
-    BSLS_ASSERT_OPT(0 < d_stack.size());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_OPT_NONCONVEYOR(0 < d_stack.size());
     bdljsn::Json& top   = *d_stack.top().first;
     State::Enum   state =  d_stack.top().second;
 

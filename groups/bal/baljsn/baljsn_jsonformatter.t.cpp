@@ -262,6 +262,7 @@ template <class TYPE>
 bool AreEqualUtil<JsonType>::areEqualTemporalValues(const Json& json,
                                                     const TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     ASSERTV(JT::e_STRING,   json.type(),
             JT::e_STRING == json.type());
 
@@ -328,6 +329,7 @@ bool AreEqualUtil<JT::e_STRING>::areEqual(const Json& json,
                                           const TYPE& value,
                                           int         )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     ASSERTV(JT::e_STRING,   json.type(),
             JT::e_STRING == json.type());
     return json.theString() == value;
@@ -410,6 +412,7 @@ bool AreEqualUtil<JT::e_STRING>::areEqual<bdlt::TimeTz>(
                                       const bdlt::TimeTz& value,
                                       int                 roundoffMicroseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bdlt::Time   adjustedTime(value.localTime());
     adjustedTime.addMicroseconds(roundoffMicroseconds);
     bdlt::TimeTz adjustedValue(adjustedTime, value.offset());
@@ -423,6 +426,7 @@ bool AreEqualUtil<JT::e_STRING>::areEqual<bdlt::DatetimeTz>(
                                   const bdlt::DatetimeTz& value,
                                   int                     roundoffMicroseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bdlt::DatetimeTz adjustedValue(value.localDatetime().addMicroseconds(
                                                          roundoffMicroseconds),
                                    value.offset());

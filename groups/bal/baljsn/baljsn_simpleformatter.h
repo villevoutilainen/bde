@@ -637,7 +637,7 @@ bool SimpleFormatter::usePrettyStyle() const
 inline
 void SimpleFormatter::addMemberName(const bsl::string_view& name)
 {
-    BSLS_ASSERT(isNameNeeded());
+    BSLS_ASSERT_NONCONVEYOR(isNameNeeded());
 
     printComma();
     followWithComma(false);
@@ -650,7 +650,7 @@ void SimpleFormatter::addMemberName(const bsl::string_view& name)
 inline
 void SimpleFormatter::addNullValue()
 {
-    BSLS_ASSERT(!isNameNeeded());
+    BSLS_ASSERT_NONCONVEYOR(!isNameNeeded());
 
     bool needIndent = usePrettyStyle() && !d_memberNameSupplied;
 
@@ -667,7 +667,7 @@ void SimpleFormatter::addNullValue()
 inline
 void SimpleFormatter::addNullValue(const bsl::string_view& name)
 {
-    BSLS_ASSERT(isNameNeeded());
+    BSLS_ASSERT_NONCONVEYOR(isNameNeeded());
 
     printComma();
     followWithComma(true);
@@ -680,7 +680,7 @@ void SimpleFormatter::addNullValue(const bsl::string_view& name)
 template <class TYPE>
 int SimpleFormatter::addValue(const TYPE& value)
 {
-    BSLS_ASSERT(!isNameNeeded());
+    BSLS_ASSERT_NONCONVEYOR(!isNameNeeded());
 
     bool needIndent = usePrettyStyle() && !d_memberNameSupplied;
 
@@ -698,7 +698,7 @@ int SimpleFormatter::addValue(const TYPE& value)
 template <class TYPE>
 int SimpleFormatter::addValue(const bsl::string_view& name, const TYPE& value)
 {
-    BSLS_ASSERT(isNameNeeded());
+    BSLS_ASSERT_NONCONVEYOR(isNameNeeded());
 
     printComma();
     followWithComma(true);
@@ -713,13 +713,15 @@ int SimpleFormatter::addValue(const bsl::string_view& name, const TYPE& value)
 inline
 bool SimpleFormatter::isCompleteJSON() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_started && (1 == d_callSequence.length());
 }
 
 inline
 bool SimpleFormatter::isFormattingArray() const
 {
-    BSLS_ASSERT(d_callSequence.length() >= 1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_callSequence.length() >= 1);
 
     return d_callSequence.length() > 1 &&
            d_callSequence[d_callSequence.length() - 1];
@@ -728,7 +730,8 @@ bool SimpleFormatter::isFormattingArray() const
 inline
 bool SimpleFormatter::isFormattingObject() const
 {
-    BSLS_ASSERT(d_callSequence.length() >= 1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_callSequence.length() >= 1);
 
     return d_callSequence.length() > 1 &&
            !d_callSequence[d_callSequence.length() - 1];
@@ -745,6 +748,7 @@ bool SimpleFormatter::isNameNeeded() const
 inline
 bslma::Allocator *SimpleFormatter::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_callSequence.allocator();
 }
 

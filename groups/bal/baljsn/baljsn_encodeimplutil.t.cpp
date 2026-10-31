@@ -334,7 +334,9 @@ int main(int argc, char *argv[])
                 ASSERTV(result, EXP, result == EXP);
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.element4().makeValue();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.element5().makeValue(3.14);
             {
                 // `element4` is an unselected Choice.  Ensure encode sequence
@@ -346,6 +348,7 @@ int main(int argc, char *argv[])
                 ASSERTV("" != lss.str());
             }
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
             mX.element4().value().makeSelection1(99);
             {
                 bsl::ostringstream oss;

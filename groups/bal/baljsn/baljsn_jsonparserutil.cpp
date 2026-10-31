@@ -14,6 +14,7 @@ using namespace BloombergLP;
 int base64Decode(bsl::vector<char>       *value,
                  const bsl::string_view&  base64String)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
 
     value->clear();
@@ -58,7 +59,7 @@ int JsonParserUtil::getValue(bsl::vector<char>   *value,
                              const bdljsn::Json&  data)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(data.isString());
+    BSLS_ASSERT_NONCONVEYOR(data.isString());
 
     int rc = u::base64Decode(value, data.theString());
 

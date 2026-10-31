@@ -538,6 +538,7 @@ int Decoder::decodeImp(TYPE *value, int mode, bdlat_TypeCategory::DynamicType)
 template <class TYPE>
 int Decoder::decodeImp(TYPE *value, int mode, bdlat_TypeCategory::Sequence)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (bdlat_FormattingMode::e_UNTAGGED & mode) {
         // This is an anonymous element.  Do not read anything and instead
         // decode into the corresponding sub-element.
@@ -1289,6 +1290,8 @@ int Decoder_DecodeImpProxy::operator()(TYPE         *object,
 template <class TYPE, class INFO>
 inline
 int Decoder_RequiredAttrsVisitor::operator()(TYPE *value, const INFO& info) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_requiredAttributes_p);
     switch(bdlat_TypeCategoryFunctions::select(*value))
     {
       case bdlat_TypeCategory::e_NULLABLE_VALUE_CATEGORY:

@@ -379,6 +379,7 @@ template <class TYPE>
 int ParserUtil::getDateAndTimeValue(TYPE                    *value,
                                     const bsl::string_view&  data)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     enum { k_STRING_LENGTH_WITH_QUOTES = 2 };
 
     if (data.length()  < k_STRING_LENGTH_WITH_QUOTES

@@ -389,6 +389,7 @@ int JsonConverter::decodeImp(TYPE                         *value,
                              int                           mode,
                              bdlat_TypeCategory::Sequence  )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (bdlat_FormattingMode::e_UNTAGGED & mode) {
         // This is an anonymous element.  Do not read anything and instead
         // decode into the corresponding sub-element.
@@ -800,6 +801,7 @@ int JsonConverter::decodeImp(bsl::vector<char>         *value,
                              int                        ,
                              bdlat_TypeCategory::Array  )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     if (Tokenizer::e_ELEMENT_VALUE != d_tokenizer.tokenType()) {
         d_logStream << "Could not decode vector<char> "
                     << "expected as an element value\n";

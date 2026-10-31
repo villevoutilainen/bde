@@ -274,7 +274,8 @@ struct Colors {
     /// Write to the specified `stream` the string representation of
     /// the specified enumeration `value`.  Return a reference to
     /// the modifiable `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -395,11 +396,13 @@ class Palette {
 
     /// Return a reference to the modifiable "Color" attribute of this
     /// object.
-    Colors::Value& color();
+    Colors::Value& color()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Colors" attribute of this
     /// object.
-    bsl::vector<Colors::Value>& colors();
+    bsl::vector<Colors::Value>& colors()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -452,7 +455,8 @@ class Palette {
 
     /// Return a reference to the non-modifiable "Colors" attribute of this
     /// object.
-    const bsl::vector<Colors::Value>& colors() const;
+    const bsl::vector<Colors::Value>& colors() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -495,6 +499,7 @@ namespace s_baltst {
 inline
 int Colors::fromString(Value *result, const bsl::string& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return fromString(result,
                       string.c_str(),
                       static_cast<int>(string.length()));
@@ -652,6 +657,7 @@ bsl::ostream& test::operator<<(
         bsl::ostream& stream,
         test::Colors::Value rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return test::Colors::print(stream, rhs);
 }
 
@@ -660,6 +666,8 @@ bool test::operator==(
         const test::Palette& lhs,
         const test::Palette& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.color()  == rhs.color()
          && lhs.colors() == rhs.colors();
 }
@@ -669,6 +677,8 @@ bool test::operator!=(
         const test::Palette& lhs,
         const test::Palette& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.color()  != rhs.color()
          || lhs.colors() != rhs.colors();
 }
@@ -902,6 +912,7 @@ bsl::ostream& Palette::print(
 void constructFeatureTestMessage(
                                 bsl::vector<balb::FeatureTestMessage> *objects)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(objects);
     balxml::MiniReader     reader;
     balxml::DecoderOptions options; options.setSkipUnknownElements(true);
     balxml::ErrorInfo      e;
@@ -947,7 +958,9 @@ extern "C" void *threadFunction(void *data)
     for (int ti = 0; ti < DTMU::k_NUM_MESSAGES; ++ti) {
         const int          LINE = ti;
         const bsl::string& PRETTY = DTMU::s_TEST_MESSAGES[ti].d_prettyJSON_p;
-        const balb::FeatureTestMessage& EXP = testObjects[ti];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&testObjects);
+        const balb::FeatureTestMessage& EXP = BSLS_ASSERT_CONVEYOR_REF(
+                                                              testObjects[ti]);
 
         if (veryVerbose) {
             P(ti);    P(LINE);    P(PRETTY);
@@ -985,7 +998,9 @@ extern "C" void *threadFunction(void *data)
     for (int ti = 0; ti < DTMU::k_NUM_MESSAGES; ++ti) {
         const int          LINE    = ti;
         const bsl::string& COMPACT = DTMU::s_TEST_MESSAGES[ti].d_compactJSON_p;
-        const balb::FeatureTestMessage& EXP = testObjects[ti];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&testObjects);
+        const balb::FeatureTestMessage& EXP = BSLS_ASSERT_CONVEYOR_REF(
+                                                              testObjects[ti]);
 
         if (veryVerbose) {
             P(ti);    P(LINE);    P(COMPACT);
@@ -1071,7 +1086,8 @@ struct Color {
     /// Write to the specified `stream` the string representation of the
     /// specified enumeration `value`.  Return a reference to the modifiable
     /// `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1191,10 +1207,12 @@ class FullName {
 
     /// Return a reference to the modifiable "Name" attribute of this
     /// object.
-    bsl::string& name();
+    bsl::string& name()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Ids" attribute of this object.
-    bsl::vector<int>& ids();
+    bsl::vector<int>& ids()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1228,11 +1246,13 @@ class FullName {
 
     /// Return a reference to the non-modifiable "Name" attribute of this
     /// object.
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Ids" attribute of this
     /// object.
-    const bsl::vector<int>& ids() const;
+    const bsl::vector<int>& ids() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1372,25 +1392,31 @@ class Employee {
 
     /// Return a reference to the modifiable "Name" attribute of this
     /// object.
-    bsl::string& name();
+    bsl::string& name()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Age" attribute of this object.
-    int& age();
+    int& age()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Ids" attribute of this object.
-    bsl::vector<int>& ids();
+    bsl::vector<int>& ids()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Fullname" attribute of this
     /// object.
-    FullName& fullname();
+    FullName& fullname()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "CarColor" attribute of this
     /// object.
-    Color::Value& carColor();
+    Color::Value& carColor()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Friends" attribute of this
     /// object.
-    bsl::vector<FullName>& friends();
+    bsl::vector<FullName>& friends()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1424,7 +1450,8 @@ class Employee {
 
     /// Return a reference to the non-modifiable "Name" attribute of this
     /// object.
-    const bsl::string& name() const;
+    const bsl::string& name() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Age" attribute of this
     /// object.
@@ -1432,11 +1459,13 @@ class Employee {
 
     /// Return a reference to the non-modifiable "Ids" attribute of this
     /// object.
-    const bsl::vector<int>& ids() const;
+    const bsl::vector<int>& ids() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "Fullname" attribute of
     /// this object.
-    const FullName& fullname() const;
+    const FullName& fullname() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the non-modifiable "CarColor" attribute of
     /// this object.
@@ -1444,7 +1473,8 @@ class Employee {
 
     /// Return a reference to the non-modifiable "Friends" attribute of this
     /// object.
-    const bsl::vector<FullName>& friends() const;
+    const bsl::vector<FullName>& friends() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1482,6 +1512,7 @@ namespace case4 {
 inline
 int Color::fromString(Value *result, const bsl::string& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return fromString(result,
                       string.c_str(),
                       static_cast<int>(string.length()));
@@ -1907,6 +1938,8 @@ const bsl::vector<FullName>& Employee::friends() const
 inline
 bool case4::operator==(const case4::FullName& lhs, const case4::FullName& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.name() == rhs.name()
          && lhs.ids() == rhs.ids();
 }
@@ -1914,6 +1947,8 @@ bool case4::operator==(const case4::FullName& lhs, const case4::FullName& rhs)
 inline
 bool case4::operator!=(const case4::FullName& lhs, const case4::FullName& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.name() != rhs.name()
          || lhs.ids() != rhs.ids();
 }
@@ -1921,6 +1956,8 @@ bool case4::operator!=(const case4::FullName& lhs, const case4::FullName& rhs)
 inline
 bool case4::operator==(const case4::Employee& lhs, const case4::Employee& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.name() == rhs.name()
          && lhs.age() == rhs.age()
          && lhs.ids() == rhs.ids()
@@ -1932,6 +1969,8 @@ bool case4::operator==(const case4::Employee& lhs, const case4::Employee& rhs)
 inline
 bool case4::operator!=(const case4::Employee& lhs, const case4::Employee& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.name() != rhs.name()
          || lhs.age() != rhs.age()
          || lhs.ids() != rhs.ids()
@@ -2333,7 +2372,8 @@ class HexBinaryCustomizedType {
     void reset();
 
     /// Return the array encapsulated by this object.
-    bsl::vector<char>& array();
+    bsl::vector<char>& array()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2353,10 +2393,15 @@ class HexBinaryCustomizedType {
                         int           spacesPerLevel = 4) const;
 
     /// Return the array encapsulated by this object.
-    const bsl::vector<char>& array() const;
+    const bsl::vector<char>& array() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return the array encapsulated by this object.
-    const bsl::vector<char>& toVector() const { return array(); };
+    const bsl::vector<char>& toVector() const
+    {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        return array();
+    };
 };
 
 // FREE OPERATORS
@@ -2452,6 +2497,7 @@ int HexBinaryCustomizedType::fromVector(const bsl::vector<char>& value)
 inline
 void HexBinaryCustomizedType::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.clear();
 }
 
@@ -2467,6 +2513,7 @@ bsl::ostream& HexBinaryCustomizedType::print(
                                             int,
                                             int) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_value.empty()) {
         stream << "";
     }
@@ -2474,7 +2521,8 @@ bsl::ostream& HexBinaryCustomizedType::print(
         stream << 'x'
                << '\''
                << bdlb::PrintStringSingleLineHexDumper(
-                                 &d_value[0], static_cast<int>(d_value.size()))
+                              &BSLS_ASSERT_CONVEYOR_REF(d_value[0]),
+                              static_cast<int>(d_value.size()))
                << '\'';
     }
     return stream;
@@ -2491,15 +2539,23 @@ inline
 bool operator==(const HexBinaryCustomizedType& lhs,
                 const HexBinaryCustomizedType& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     const bsl::vector<char>& lhsArray = lhs.array();
     const bsl::vector<char>& rhsArray = rhs.array();
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhsArray);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhsArray);
     if (lhsArray.size() != rhsArray.size()) {
         return false;                                                 // RETURN
     }
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhsArray);
     for (size_t i = 0; i < lhsArray.size(); ++i) {
-        if (lhsArray[i] != rhsArray[i]) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhsArray);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhsArray);
+        if (BSLS_ASSERT_CONVEYOR_REF(lhsArray[i])
+            != BSLS_ASSERT_CONVEYOR_REF(rhsArray[i])) {
             return false;                                             // RETURN
         }
     }
@@ -2621,7 +2677,8 @@ class HexBinarySequence {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    HexBinaryCustomizedType& element1();
+    HexBinaryCustomizedType& element1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -2670,7 +2727,8 @@ class HexBinarySequence {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    const HexBinaryCustomizedType& element1() const;
+    const HexBinaryCustomizedType& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -2817,6 +2875,8 @@ const HexBinaryCustomizedType& HexBinarySequence::element1() const
 inline
 bool operator==(const HexBinarySequence& lhs, const HexBinarySequence& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.element1() == rhs.element1();
 }
 
@@ -2915,6 +2975,7 @@ bsl::ostream& HexBinarySequence::print(bsl::ostream& stream,
                                        int           level,
                                        int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }
@@ -3114,6 +3175,7 @@ struct TestUtil {
                                           bool                    IS_VALID,
                                           const VALUE_TYPE&       VALUE)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&VALUE);
         typedef baljsn::Decoder Obj;
         Obj mX;
 
@@ -6775,13 +6837,26 @@ int main(int argc, char *argv[])
             ASSERTV(rc, 0 == rc);
             const bsl::vector<test::Colors::Value>& V = obj.colors();
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             ASSERTV(6  == V.size());
-            ASSERTV(string(S1) == string(test::Colors::toString(V[0])));
-            ASSERTV(string(S1) == string(test::Colors::toString(V[1])));
-            ASSERTV(string(S2) == string(test::Colors::toString(V[2])));
-            ASSERTV(string(S3) == string(test::Colors::toString(V[3])));
-            ASSERTV(string(S4) == string(test::Colors::toString(V[4])));
-            ASSERTV(string(S5) == string(test::Colors::toString(V[5])));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S1) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[0]))));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S1) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[1]))));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S2) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[2]))));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S3) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[3]))));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S4) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[4]))));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S5) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[5]))));
 
             if (veryVerbose) {
                 P(decoder.loggedMessages());

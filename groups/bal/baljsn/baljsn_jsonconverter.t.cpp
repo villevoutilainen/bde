@@ -325,6 +325,7 @@ namespace u {
 void constructFeatureTestMessage(
                             bsl::vector<s_baltst::FeatureTestMessage> *objects)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(objects);
     balxml::MiniReader     reader;
     balxml::DecoderOptions options;
     balxml::ErrorInfo      e;
@@ -494,6 +495,7 @@ struct TestUtil {
     static void assertEncodedValueIsEqual(int               LINE,
                                           const VALUE_TYPE& VALUE)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&VALUE);
         if (g_veryVeryVerbose) {
             P(LINE);
         }
@@ -713,7 +715,8 @@ class EmptySequenceExampleSequence {
 
     // MANIPULATORS
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version);
+    STREAM& bdexStreamIn(STREAM& stream, int version)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class MANIPULATOR>
     int manipulateAttribute(MANIPULATOR& manipulator, int id);
@@ -734,7 +737,8 @@ class EmptySequenceExampleSequence {
                         int           spacesPerLevel = 4) const;
 
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class ACCESSOR>
     int accessAttribute(ACCESSOR& accessor, int id) const;
@@ -800,7 +804,8 @@ class EmptySequenceExample {
     EmptySequenceExample& operator=(const EmptySequenceExample& rhs);
 
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version);
+    STREAM& bdexStreamIn(STREAM& stream, int version)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     template <class MANIPULATOR>
     int manipulateAttribute(MANIPULATOR& manipulator, int id);
@@ -816,9 +821,11 @@ class EmptySequenceExample {
     BSLA_MAYBE_UNUSED
     void reset();
 
-    EmptySequenceExampleSequence& sequence();
+    EmptySequenceExampleSequence& sequence()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    int& simpleValue();
+    int& simpleValue()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
     template <class ACCESSOR>
@@ -833,14 +840,16 @@ class EmptySequenceExample {
     int accessAttributes(ACCESSOR& accessor) const;
 
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     BSLA_MAYBE_UNUSED
     bsl::ostream& print(bsl::ostream& stream,
                         int           level          = 0,
                         int           spacesPerLevel = 4) const;
 
-    const EmptySequenceExampleSequence& sequence() const;
+    const EmptySequenceExampleSequence& sequence() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     int simpleValue() const;
 };
@@ -921,7 +930,8 @@ class HexBinaryCustomizedType {
     void reset();
 
     /// Return the array encapsulated by this object.
-    bsl::vector<char>& array();
+    bsl::vector<char>& array()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -940,9 +950,11 @@ class HexBinaryCustomizedType {
                         int           spacesPerLevel = 4) const;
 
     /// Return the array encapsulated by this object.
-    const bsl::vector<char>& array() const;
+    const bsl::vector<char>& array() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
-    const bsl::vector<char>& toVector() const;
+    const bsl::vector<char>& toVector() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
         // Needed per `bdlat_customizedtypefunctions.h`.
 };
 
@@ -1039,6 +1051,7 @@ int HexBinaryCustomizedType::fromVector(const bsl::vector<char>& value)
 inline
 void HexBinaryCustomizedType::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_value.clear();
 }
 
@@ -1053,6 +1066,7 @@ bsl::ostream& HexBinaryCustomizedType::print(bsl::ostream& stream,
                                              int           ,
                                              int           ) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_value.empty()) {
         stream << "";
     }
@@ -1060,7 +1074,8 @@ bsl::ostream& HexBinaryCustomizedType::print(bsl::ostream& stream,
         stream << 'x'
                << '\''
                << bdlb::PrintStringSingleLineHexDumper(
-                                 &d_value[0], static_cast<int>(d_value.size()))
+                              &BSLS_ASSERT_CONVEYOR_REF(d_value[0]),
+                              static_cast<int>(d_value.size()))
                << '\'';
     }
     return stream;
@@ -1083,15 +1098,23 @@ inline
 bool operator==(const HexBinaryCustomizedType& lhs,
                 const HexBinaryCustomizedType& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     const bsl::vector<char>& lhsArray = lhs.array();
     const bsl::vector<char>& rhsArray = rhs.array();
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhsArray);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhsArray);
     if (lhsArray.size() != rhsArray.size()) {
         return false;                                                 // RETURN
     }
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhsArray);
     for (size_t i = 0; i < lhsArray.size(); ++i) {
-        if (lhsArray[i] != rhsArray[i]) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhsArray);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhsArray);
+        if (BSLS_ASSERT_CONVEYOR_REF(lhsArray[i])
+            != BSLS_ASSERT_CONVEYOR_REF(rhsArray[i])) {
             return false;                                             // RETURN
         }
     }
@@ -1202,7 +1225,8 @@ class HexBinarySequence {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    HexBinaryCustomizedType& element1();
+    HexBinaryCustomizedType& element1()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1249,7 +1273,8 @@ class HexBinarySequence {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    const HexBinaryCustomizedType& element1() const;
+    const HexBinaryCustomizedType& element1() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
 };
 
@@ -1395,6 +1420,8 @@ const HexBinaryCustomizedType& HexBinarySequence::element1() const
 inline
 bool operator==(const HexBinarySequence& lhs, const HexBinarySequence& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.element1() == rhs.element1();
 }
 
@@ -1493,6 +1520,7 @@ bsl::ostream& HexBinarySequence::print(bsl::ostream& stream,
                                        int           level,
                                        int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }
@@ -1600,7 +1628,8 @@ struct Colors {
     /// Write to the specified `stream` the string representation of the
     /// specified enumeration `value`.  Return a reference to the modifiable
     /// `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value);
+    static bsl::ostream& print(bsl::ostream& stream, Value value)
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1718,10 +1747,12 @@ class Palette {
                             int           nameLength);
 
     /// Return a reference to the modifiable "Color" attribute of this object.
-    Colors::Value& color();
+    Colors::Value& color()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Return a reference to the modifiable "Colors" attribute of this object.
-    bsl::vector<Colors::Value>& colors();
+    bsl::vector<Colors::Value>& colors()
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
 
@@ -1772,7 +1803,8 @@ class Palette {
 
     /// Return a reference to the non-modifiable "Colors" attribute of this
     /// object.
-    const bsl::vector<Colors::Value>& colors() const;
+    const bsl::vector<Colors::Value>& colors() const
+                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 };
 
 // FREE OPERATORS
@@ -1814,6 +1846,7 @@ namespace s_baltst {
 inline
 int Colors::fromString(Value *result, const bsl::string& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return fromString(result,
                       string.c_str(),
                       static_cast<int>(string.length()));
@@ -1972,6 +2005,7 @@ bsl::ostream& test::operator<<(
         bsl::ostream& stream,
         test::Colors::Value rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return test::Colors::print(stream, rhs);
 }
 
@@ -1980,6 +2014,8 @@ bool test::operator==(
         const test::Palette& lhs,
         const test::Palette& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.color() == rhs.color()
          && lhs.colors() == rhs.colors();
 }
@@ -1989,6 +2025,8 @@ bool test::operator!=(
         const test::Palette& lhs,
         const test::Palette& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return  lhs.color() != rhs.color()
          || lhs.colors() != rhs.colors();
 }
@@ -2834,20 +2872,32 @@ int main(int argc, char *argv[])
         if (veryVerbose) {
             P(sequence3);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
             P(sequence3.element1().size());    // empty (array)
+            BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
             P(sequence3.element2().size());    // empty (array)
+            BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
             P(sequence3.element6().size());    // empty (array)
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
             P(sequence3.element3().isNull());  // null  (nullablevalue)
+            BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
             P(sequence3.element4().isNull());  // null  (nullablevalue)
+            BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
             P(sequence3.element5().isNull());  // null  (nullablevalue)
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
         ASSERT(0    == sequence3.element1().size());   // empty (array)
+        BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
         ASSERT(0    == sequence3.element2().size());   // empty (array)
+        BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
         ASSERT(true == sequence3.element3().isNull()); // null  (nullablevalue)
+        BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
         ASSERT(true == sequence3.element4().isNull()); // null  (nullablevalue)
+        BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
         ASSERT(true == sequence3.element5().isNull()); // null  (nullablevalue)
+        BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
         ASSERT(0    == sequence3.element6().size());   // empty (array)
 
         const ToJsonOptions   TO_JSON_OPTIONS_DEFAULT;
@@ -4720,12 +4770,23 @@ int main(int argc, char *argv[])
             ASSERTV(rc, 0 == rc);
             const bsl::vector<test::Colors::Value>& V = palette.colors();
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             ASSERTV(5  == V.size());
-            ASSERTV(string(S1) == string(test::Colors::toString(V[0])));
-            ASSERTV(string(S2) == string(test::Colors::toString(V[1])));
-            ASSERTV(string(S3) == string(test::Colors::toString(V[2])));
-            ASSERTV(string(S4) == string(test::Colors::toString(V[3])));
-            ASSERTV(string(S5) == string(test::Colors::toString(V[4])));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S1) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[0]))));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S2) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[1]))));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S3) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[2]))));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S4) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[3]))));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
+            ASSERTV(string(S5) == string(test::Colors::toString(
+                                             BSLS_ASSERT_CONVEYOR_REF(V[4]))));
 
             if (veryVerbose) {
                 P(decoder.loggedMessages());

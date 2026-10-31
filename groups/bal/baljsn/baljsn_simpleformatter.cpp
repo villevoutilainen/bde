@@ -68,7 +68,8 @@ SimpleFormatter::~SimpleFormatter()
 // MANIPULATORS
 void SimpleFormatter::closeArray(ArrayFormattingStyle formattingStyle)
 {
-    BSLS_ASSERT(isFormattingArray());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(isFormattingArray());
     BSLS_ASSERT_SAFE(!isFormattingObject());
 
     if (usePrettyStyle() && e_REGULAR_ARRAY_FORMAT == formattingStyle) {
@@ -91,7 +92,8 @@ void SimpleFormatter::closeArray(ArrayFormattingStyle formattingStyle)
 
 void SimpleFormatter::closeObject()
 {
-    BSLS_ASSERT(isNameNeeded());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(isNameNeeded());
     BSLS_ASSERT_SAFE(!isFormattingArray());
     if (usePrettyStyle()) {
         --d_indentLevel;
@@ -113,7 +115,8 @@ void SimpleFormatter::closeObject()
 
 void SimpleFormatter::openArray(ArrayFormattingStyle formattingStyle)
 {
-    BSLS_ASSERT(!isNameNeeded());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(!isNameNeeded());
 
     bool needIndent = usePrettyStyle() && !d_memberNameSupplied;
 
@@ -139,7 +142,8 @@ void SimpleFormatter::openArray(ArrayFormattingStyle formattingStyle)
 void SimpleFormatter::openArray(const bsl::string_view& name,
                                 ArrayFormattingStyle    formattingStyle)
 {
-    BSLS_ASSERT(isNameNeeded());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(isNameNeeded());
 
     printComma();
     followWithComma(false);
@@ -160,7 +164,8 @@ void SimpleFormatter::openArray(const bsl::string_view& name,
 
 void SimpleFormatter::openObject()
 {
-    BSLS_ASSERT(!isNameNeeded());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(!isNameNeeded());
 
     bool needIndent = usePrettyStyle() && !d_memberNameSupplied;
 
@@ -185,7 +190,8 @@ void SimpleFormatter::openObject()
 
 void SimpleFormatter::openObject(const bsl::string_view& name)
 {
-    BSLS_ASSERT(isNameNeeded());
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(isNameNeeded());
 
     printComma();
     followWithComma(false);

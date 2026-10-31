@@ -192,7 +192,7 @@ inline
 int JsonParserUtil::getValue(bool *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isBoolean());
+    BSLS_ASSERT_NONCONVEYOR(json.isBoolean());
 
     *value = json.theBoolean();
 
@@ -203,7 +203,7 @@ inline
 int JsonParserUtil::getValue(char *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber());
 
     bsl::string_view data = json.theNumber().value();
 
@@ -214,7 +214,7 @@ inline
 int JsonParserUtil::getValue(unsigned char *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber());
 
     bsl::string_view data = json.theNumber().value();
 
@@ -225,7 +225,7 @@ inline
 int JsonParserUtil::getValue(signed char *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber());
 
     bsl::string_view data = json.theNumber().value();
 
@@ -236,7 +236,7 @@ inline
 int JsonParserUtil::getValue(short *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber());
 
     bsl::string_view data = json.theNumber().value();
 
@@ -247,7 +247,7 @@ inline
 int JsonParserUtil::getValue(unsigned short *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber());
 
     bsl::string_view data = json.theNumber().value();
 
@@ -258,7 +258,7 @@ inline
 int JsonParserUtil::getValue(int *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber());
 
     bsl::string_view data = json.theNumber().value();
 
@@ -269,7 +269,7 @@ inline
 int JsonParserUtil::getValue(unsigned int *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber());
 
     bsl::string_view data = json.theNumber().value();
 
@@ -281,7 +281,7 @@ int JsonParserUtil::getValue(bsls::Types::Int64  *value,
                              const bdljsn::Json&  json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber());
 
     bsl::string_view data = json.theNumber().value();
 
@@ -293,7 +293,7 @@ int JsonParserUtil::getValue(bsls::Types::Uint64 *value,
                              const bdljsn::Json&  json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber());
 
     bsl::string_view data = json.theNumber().value();
 
@@ -305,7 +305,7 @@ inline
 int JsonParserUtil::getValue(float *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber() || json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber() || json.isString());
 
     double    tmp;
     const int rc = getValue(&tmp, json);
@@ -319,7 +319,7 @@ inline
 int JsonParserUtil::getValue(double *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber() || json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber() || json.isString());
 
            if (json.isNumber()) {
                 bsl::string_view data = json.theNumber().value();
@@ -353,7 +353,7 @@ int JsonParserUtil::getValue(bdldfp::Decimal64   *value,
                              const bdljsn::Json&  json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isNumber() || json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isNumber() || json.isString());
 
     bsl::string_view data = json. isNumber()
                           ? json.theNumber().value()
@@ -366,7 +366,7 @@ inline
 int JsonParserUtil::getValue(bsl::string *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     value->assign(json.theString());  // Note: The 'Json' string already had
                                       // delimiting double quotes stripped
@@ -379,7 +379,7 @@ inline
 int JsonParserUtil::getValue(std::string *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     value->assign(json.theString());
 
@@ -391,7 +391,7 @@ inline
 int JsonParserUtil::getValue(std::pmr::string *value, const bdljsn::Json& json)
 {
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     value->assign(json.theString());
 
@@ -402,8 +402,9 @@ int JsonParserUtil::getValue(std::pmr::string *value, const bdljsn::Json& json)
 inline
 int JsonParserUtil::getValue(bdlt::Date *value, const bdljsn::Json& json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     bsl::string_view data = json.theString();
 
@@ -415,8 +416,9 @@ int JsonParserUtil::getValue(bdlt::Date *value, const bdljsn::Json& json)
 inline
 int JsonParserUtil::getValue(bdlt::Datetime *value, const bdljsn::Json& json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     bsl::string_view data = json.theString();
 
@@ -428,8 +430,9 @@ int JsonParserUtil::getValue(bdlt::Datetime *value, const bdljsn::Json& json)
 inline
 int JsonParserUtil::getValue(bdlt::DatetimeTz *value, const bdljsn::Json& json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     bsl::string_view data = json.theString();
 
@@ -442,8 +445,9 @@ int JsonParserUtil::getValue(bdlt::DatetimeTz *value, const bdljsn::Json& json)
 inline
 int JsonParserUtil::getValue(bdlt::DateTz *value, const bdljsn::Json& json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     bsl::string_view data = json.theString();
 
@@ -455,8 +459,9 @@ int JsonParserUtil::getValue(bdlt::DateTz *value, const bdljsn::Json& json)
 inline
 int JsonParserUtil::getValue(bdlt::Time *value, const bdljsn::Json& json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     bsl::string_view data = json.theString();
 
@@ -468,8 +473,9 @@ int JsonParserUtil::getValue(bdlt::Time *value, const bdljsn::Json& json)
 inline
 int JsonParserUtil::getValue(bdlt::TimeTz *value, const bdljsn::Json& json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     bsl::string_view data = json.theString();
 
@@ -482,8 +488,9 @@ inline
 int JsonParserUtil::getValue(ParserUtil::DateOrDateTz *value,
                              const bdljsn::Json&       json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     bsl::string_view data = json.theString();
 
@@ -496,8 +503,9 @@ inline
 int JsonParserUtil::getValue(ParserUtil::TimeOrTimeTz *value,
                              const bdljsn::Json&       json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     bsl::string_view data = json.theString();
 
@@ -510,8 +518,9 @@ inline
 int JsonParserUtil::getValue(ParserUtil::DatetimeOrDatetimeTz *value,
                              const bdljsn::Json&               json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(value);
     BSLS_ASSERT(value);
-    BSLS_ASSERT(json.isString());
+    BSLS_ASSERT_NONCONVEYOR(json.isString());
 
     bsl::string_view data = json.theString();
 

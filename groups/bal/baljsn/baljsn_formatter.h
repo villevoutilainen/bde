@@ -369,7 +369,8 @@ void Formatter::indent()
 inline
 bool Formatter::isArrayElement() const
 {
-    BSLS_ASSERT(d_callSequence.length() >= 1);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_NONCONVEYOR(d_callSequence.length() >= 1);
 
     return d_callSequence[d_callSequence.length() - 1];
 }
@@ -398,6 +399,7 @@ int Formatter::putValue(const TYPE& value, const EncoderOptions *options)
 inline
 int Formatter::nestingDepth() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // The call sequence contains a "dummy" initial element, so subtract one
     // from the length.
     return static_cast<int>(d_callSequence.length()) - 1;

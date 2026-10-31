@@ -174,6 +174,7 @@ bsl::ostream& EncoderTestAddress::print(bsl::ostream& stream,
                                         int           level,
                                         int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("street", this->street());
@@ -269,6 +270,7 @@ EncoderTestChoiceWithAllCategoriesChoice::EncoderTestChoiceWithAllCategoriesChoi
 EncoderTestChoiceWithAllCategoriesChoice&
 EncoderTestChoiceWithAllCategoriesChoice::operator=(const EncoderTestChoiceWithAllCategoriesChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION0: {
@@ -288,6 +290,7 @@ EncoderTestChoiceWithAllCategoriesChoice::operator=(const EncoderTestChoiceWithA
 EncoderTestChoiceWithAllCategoriesChoice&
 EncoderTestChoiceWithAllCategoriesChoice::operator=(EncoderTestChoiceWithAllCategoriesChoice&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION0: {
@@ -305,6 +308,7 @@ EncoderTestChoiceWithAllCategoriesChoice::operator=(EncoderTestChoiceWithAllCate
 
 void EncoderTestChoiceWithAllCategoriesChoice::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION0: {
         // no destruction required
@@ -395,6 +399,7 @@ bsl::ostream& EncoderTestChoiceWithAllCategoriesChoice::print(
 
 const char *EncoderTestChoiceWithAllCategoriesChoice::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION0:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SELECTION0].name();
@@ -412,6 +417,7 @@ const char *EncoderTestChoiceWithAllCategoriesChoice::selectionName() const
 
 int EncoderTestChoiceWithAllCategoriesCustomizedType::checkRestrictions(const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const char                *invalid = 0;
     const bsls::Types::IntPtr  valueLength =
         bdlde::Utf8Util::numCodePointsIfValid(
@@ -720,6 +726,7 @@ EncoderTestSequenceWithAllCategoriesChoice::EncoderTestSequenceWithAllCategories
 EncoderTestSequenceWithAllCategoriesChoice&
 EncoderTestSequenceWithAllCategoriesChoice::operator=(const EncoderTestSequenceWithAllCategoriesChoice& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION0: {
@@ -739,6 +746,7 @@ EncoderTestSequenceWithAllCategoriesChoice::operator=(const EncoderTestSequenceW
 EncoderTestSequenceWithAllCategoriesChoice&
 EncoderTestSequenceWithAllCategoriesChoice::operator=(EncoderTestSequenceWithAllCategoriesChoice&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION0: {
@@ -756,6 +764,7 @@ EncoderTestSequenceWithAllCategoriesChoice::operator=(EncoderTestSequenceWithAll
 
 void EncoderTestSequenceWithAllCategoriesChoice::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION0: {
         // no destruction required
@@ -846,6 +855,7 @@ bsl::ostream& EncoderTestSequenceWithAllCategoriesChoice::print(
 
 const char *EncoderTestSequenceWithAllCategoriesChoice::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SELECTION0:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SELECTION0].name();
@@ -863,6 +873,7 @@ const char *EncoderTestSequenceWithAllCategoriesChoice::selectionName() const
 
 int EncoderTestSequenceWithAllCategoriesCustomizedType::checkRestrictions(const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const char                *invalid = 0;
     const bsls::Types::IntPtr  valueLength =
         bdlde::Utf8Util::numCodePointsIfValid(
@@ -2388,6 +2399,7 @@ EncoderTestChoiceWithAllCategories::EncoderTestChoiceWithAllCategories(
 EncoderTestChoiceWithAllCategories&
 EncoderTestChoiceWithAllCategories::operator=(const EncoderTestChoiceWithAllCategories& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_CHAR_ARRAY: {
@@ -2422,6 +2434,7 @@ EncoderTestChoiceWithAllCategories::operator=(const EncoderTestChoiceWithAllCate
 EncoderTestChoiceWithAllCategories&
 EncoderTestChoiceWithAllCategories::operator=(EncoderTestChoiceWithAllCategories&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_CHAR_ARRAY: {
@@ -2454,6 +2467,7 @@ EncoderTestChoiceWithAllCategories::operator=(EncoderTestChoiceWithAllCategories
 
 void EncoderTestChoiceWithAllCategories::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHAR_ARRAY: {
         typedef bsl::vector<char> Type;
@@ -2819,6 +2833,7 @@ bsl::ostream& EncoderTestChoiceWithAllCategories::print(
 
 const char *EncoderTestChoiceWithAllCategories::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_CHAR_ARRAY:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_CHAR_ARRAY].name();
@@ -2923,6 +2938,7 @@ EncoderTestDegenerateChoice1::EncoderTestDegenerateChoice1(EncoderTestDegenerate
 EncoderTestDegenerateChoice1&
 EncoderTestDegenerateChoice1::operator=(const EncoderTestDegenerateChoice1& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SEQUENCE: {
@@ -2942,6 +2958,7 @@ EncoderTestDegenerateChoice1::operator=(const EncoderTestDegenerateChoice1& rhs)
 EncoderTestDegenerateChoice1&
 EncoderTestDegenerateChoice1::operator=(EncoderTestDegenerateChoice1&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SEQUENCE: {
@@ -2959,6 +2976,7 @@ EncoderTestDegenerateChoice1::operator=(EncoderTestDegenerateChoice1&& rhs)
 
 void EncoderTestDegenerateChoice1::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SEQUENCE: {
         d_sequence.object().~EncoderTestDegenerateChoice1Sequence();
@@ -3067,6 +3085,7 @@ bsl::ostream& EncoderTestDegenerateChoice1::print(
 
 const char *EncoderTestDegenerateChoice1::selectionName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     switch (d_selectionId) {
       case SELECTION_ID_SEQUENCE:
         return SELECTION_INFO_ARRAY[SELECTION_INDEX_SEQUENCE].name();
@@ -3223,6 +3242,7 @@ bsl::ostream& EncoderTestEmployee::print(bsl::ostream& stream,
                                          int           level,
                                          int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("name", this->name());
@@ -3480,6 +3500,7 @@ bsl::ostream& EncoderTestSequenceWithAllCategories::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     {
@@ -3575,6 +3596,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged1::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("sequence", this->sequence());
@@ -3676,6 +3698,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged10::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("sequence", this->sequence());
@@ -3780,6 +3803,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged11::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute0", this->attribute0());
@@ -3883,6 +3907,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged12::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute0", this->attribute0());
@@ -3986,6 +4011,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged13::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute0", this->attribute0());
@@ -4079,6 +4105,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged3::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("sequence", this->sequence());
@@ -4170,6 +4197,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged4::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("sequence", this->sequence());
@@ -4261,6 +4289,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged5::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("attribute0", this->attribute0());
@@ -4365,6 +4394,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged7::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("sequence", this->sequence());
@@ -4469,6 +4499,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged8::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("sequence", this->sequence());
@@ -4573,6 +4604,7 @@ bsl::ostream& EncoderTestSequenceWithUntagged9::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("sequence", this->sequence());

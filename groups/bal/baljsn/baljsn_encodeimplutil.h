@@ -1073,6 +1073,7 @@ int EncodeImplUtil<FORMATTER>::encodeCharArray(
                                       const bsl::vector<char>&  value,
                                       const EncoderOptions&     encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bsl::string          base64String;
     bdlde::Base64Encoder encoder(0);
     base64String.resize(

@@ -71,6 +71,7 @@ Formatter::Formatter(bsl::ostream&     stream,
 // MANIPULATORS
 void Formatter::openObject()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_usePrettyStyle && isArrayElement()) {
         indent();
     }
@@ -86,12 +87,13 @@ void Formatter::openObject()
 
 void Formatter::closeObject()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_usePrettyStyle) {
         --d_indentLevel;
         d_outputStream << '\n';
         indent();
 
-        BSLS_ASSERT(false == isArrayElement());
+        BSLS_ASSERT_NONCONVEYOR(false == isArrayElement());
         d_callSequence.remove(d_callSequence.length() - 1);
     }
 
@@ -100,6 +102,7 @@ void Formatter::closeObject()
 
 void Formatter::openArray(bool formatAsEmptyArrayFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_usePrettyStyle &&
         (1 == d_callSequence.length() || isArrayElement())) {
         indent();
@@ -116,12 +119,13 @@ void Formatter::openArray(bool formatAsEmptyArrayFlag)
 
 void Formatter::closeArray(bool formatAsEmptyArrayFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_usePrettyStyle && !formatAsEmptyArrayFlag) {
         --d_indentLevel;
         d_outputStream << '\n';
         indent();
 
-        BSLS_ASSERT(true == isArrayElement());
+        BSLS_ASSERT_NONCONVEYOR(true == isArrayElement());
         d_callSequence.remove(d_callSequence.length() - 1);
     }
 

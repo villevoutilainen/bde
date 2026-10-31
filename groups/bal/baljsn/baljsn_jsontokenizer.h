@@ -562,7 +562,7 @@ JsonTokenizer::JsonTokenizer(const bdljsn::Json    *json,
 , d_visitor(this)
 {
     BSLS_ASSERT(json);
-    BSLS_ASSERT(json->isArray() || json->isObject());
+    BSLS_ASSERT_NONCONVEYOR(json->isArray() || json->isObject());
 
     Context context;
     context.d_json_p = json;
@@ -578,6 +578,7 @@ JsonTokenizer::JsonTokenizer(const bdljsn::Json    *json,
 inline
 int JsonTokenizer::getNextToken()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_contextStack.empty()) {
         return -1;
     }
@@ -592,6 +593,7 @@ int JsonTokenizer::getNextToken()
 inline
 JsonTokenizer::TokenType JsonTokenizer::tokenType() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(!d_tokenList.empty());
 
     return d_tokenList.front().d_tokenType;
@@ -600,9 +602,10 @@ JsonTokenizer::TokenType JsonTokenizer::tokenType() const
 inline
 int JsonTokenizer::value(bsl::string_view *data) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(data);
-    BSLS_ASSERT(!d_tokenList.empty());
-    BSLS_ASSERT(e_ELEMENT_NAME == d_tokenList.front().d_tokenType);
+    BSLS_ASSERT_NONCONVEYOR(!d_tokenList.empty());
+    BSLS_ASSERT_NONCONVEYOR(e_ELEMENT_NAME == d_tokenList.front().d_tokenType);
 
     *data = d_tokenList.front().d_tokenValue.the<ElementName>();
     return 0;
@@ -611,9 +614,11 @@ int JsonTokenizer::value(bsl::string_view *data) const
 inline
 int JsonTokenizer::value(const bdljsn::Json **data) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(data);
     BSLS_ASSERT_SAFE(!d_tokenList.empty());
-    BSLS_ASSERT(e_ELEMENT_VALUE == d_tokenList.front().d_tokenType);
+    BSLS_ASSERT_NONCONVEYOR(
+                           e_ELEMENT_VALUE == d_tokenList.front().d_tokenType);
 
     *data = d_tokenList.front().d_tokenValue.the<ElementValue>();;
     return 0;

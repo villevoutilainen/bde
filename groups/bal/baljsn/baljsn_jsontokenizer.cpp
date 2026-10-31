@@ -24,6 +24,7 @@ namespace baljsn {
 
 void JsonTokenizer_Visitor::operator()(const bdljsn::JsonArray& array) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_tokenizer_p);
     BSLS_ASSERT_SAFE(0 < d_tokenizer_p->d_contextStack.size());
 
     JsonTokenizer::Context& context = d_tokenizer_p->d_contextStack.top();
@@ -87,6 +88,7 @@ void JsonTokenizer_Visitor::operator()(const bdljsn::JsonArray& array) const
 
 void JsonTokenizer_Visitor::operator()(const bdljsn::JsonObject& object) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(d_tokenizer_p);
     BSLS_ASSERT_SAFE(0 < d_tokenizer_p->d_contextStack.size());
 
     JT::Context&        context = d_tokenizer_p->d_contextStack.top();
@@ -175,6 +177,7 @@ const JsonTokenizer::Token
 // PRIVATE ACCESSORS
 void JsonTokenizer::printTokens() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef TokenList::const_iterator ConstItr;
 
     int i = 0;
@@ -243,6 +246,7 @@ JsonTokenizer::~JsonTokenizer()
 // MANIPULATORS
 int JsonTokenizer::advanceToNextToken()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 < d_tokenList.size());
 
     d_tokenList.pop_front();
@@ -265,8 +269,9 @@ int JsonTokenizer::advanceToNextToken()
 
 int JsonTokenizer::reset(const bdljsn::Json *json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(json);
-    BSLS_ASSERT(json->isArray() || json->isObject());
+    BSLS_ASSERT_NONCONVEYOR(json->isArray() || json->isObject());
 
     // Erase existing state
     d_tokenList.clear();

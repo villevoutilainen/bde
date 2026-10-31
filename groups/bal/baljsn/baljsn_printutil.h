@@ -296,6 +296,7 @@ int PrintUtil::printDateAndTime(bsl::ostream&         stream,
                                 const TYPE&           value,
                                 const EncoderOptions *options)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     char                           buffer[bdlt::Iso8601Util::k_MAX_STRLEN + 1];
     bdlt::Iso8601UtilConfiguration config;
 
@@ -567,6 +568,7 @@ int PrintUtil::printValue(bsl::ostream&                  stream,
                           const bdlt::DatetimeInterval&  value,
                           const EncoderOptions          *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     stream << '"' << value << '"';
     return 0;
 }
