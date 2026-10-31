@@ -1024,8 +1024,8 @@ inline
 CompactedArray_RemoveAllProctor<TYPE>::~CompactedArray_RemoveAllProctor()
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(d_array_p);
     if (d_array_p) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(d_array_p);
         d_array_p->removeAll();
     }
 }

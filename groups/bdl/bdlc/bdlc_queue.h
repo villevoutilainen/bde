@@ -1786,12 +1786,12 @@ template <class T>
 void Queue<T>::removeAll(bsl::vector<T> *buffer)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     d_front = (d_front + 1) % d_size;
 
     // TBD efficiency
 
     if (buffer) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
         while (d_back != d_front) {
             buffer->push_back(BSLS_ASSERT_CONVEYOR_REF(d_array_p[d_front]));
             d_array_p[d_front].~T();

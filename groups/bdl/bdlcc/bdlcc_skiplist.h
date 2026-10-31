@@ -2335,7 +2335,6 @@ template<class KEY, class DATA>
 template<class VECTOR>
 int SkipList<KEY, DATA>::removeAllMaybeUnlock(VECTOR *removed, bool unlock)
 {
-    BSLS_ASSERT_CONVEYOR_OBJECT(removed);
     typedef typename VECTOR::value_type ValueType;
 
     BSLMF_ASSERT((IsVector<VECTOR, ValueType>::value));
@@ -2369,6 +2368,7 @@ int SkipList<KEY, DATA>::removeAllMaybeUnlock(VECTOR *removed, bool unlock)
     }
 
     if (removed) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(removed);
         const FactoryType factory(this);
 
         // 'oldSize' must be a signed type to be compared to the subtraction

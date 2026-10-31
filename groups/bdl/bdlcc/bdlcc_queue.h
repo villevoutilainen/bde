@@ -799,13 +799,13 @@ template <class VECTOR>
 void Queue<TYPE>::removeAllImp(VECTOR *buffer)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
     bool wasFull = d_highWaterMark > 0 && d_queue.length() >= d_highWaterMark;
 
     if (buffer) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
         for (int ii = 0, len = d_queue.length(); ii < len; ++ii) {
             buffer->push_back(bslmf::MovableRefUtil::move(d_queue[ii]));
         }
@@ -826,7 +826,6 @@ template <class VECTOR>
 void Queue<TYPE>::tryPopFrontImp(int maxNumItems, VECTOR *buffer)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     int numSignal = 0;
@@ -838,6 +837,7 @@ void Queue<TYPE>::tryPopFrontImp(int maxNumItems, VECTOR *buffer)
 
         for (; d_queue.length() > 0 && maxNumItems > 0; --maxNumItems) {
             if (buffer) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
                 buffer->push_back(
                                  bslmf::MovableRefUtil::move(d_queue.front()));
             }
@@ -860,7 +860,6 @@ template <class VECTOR>
 void Queue<TYPE>::tryPopBackImp(int maxNumItems, VECTOR *buffer)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     int numSignal = 0;
@@ -872,6 +871,7 @@ void Queue<TYPE>::tryPopBackImp(int maxNumItems, VECTOR *buffer)
 
         for (; d_queue.length() > 0 && maxNumItems > 0; --maxNumItems) {
             if (buffer) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
                 buffer->push_back(bslmf::MovableRefUtil::move(d_queue.back()));
             }
             d_queue.popBack();

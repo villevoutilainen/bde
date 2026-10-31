@@ -1278,7 +1278,6 @@ void TimeQueue<DATA>::popLEImp(const bsls::TimeInterval&  time,
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&time);
-    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
@@ -1293,6 +1292,7 @@ void TimeQueue<DATA>::popLEImp(const bsls::TimeInterval&  time,
 
         do {
             if (buffer) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
                 buffer->push_back(TimeQueueItem<DATA>(it->first,
                                                       node->d_data.object(),
                                                       node->d_index,
@@ -1333,7 +1333,6 @@ void TimeQueue<DATA>::popLEImp(const bsls::TimeInterval&  time,
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&time);
-    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLS_ASSERT(0 <= maxTimers);
 
     BSLMF_ASSERT(IsVector<VECTOR>::value);
@@ -1351,6 +1350,7 @@ void TimeQueue<DATA>::popLEImp(const bsls::TimeInterval&  time,
 
         do {
             if (buffer) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
                 buffer->push_back(TimeQueueItem<DATA>(
                                                          it->first,
                                                          node->d_data.object(),
@@ -1826,7 +1826,6 @@ template <class DATA>
 void TimeQueue<DATA>::removeAll(bsl::vector<TimeQueueItem<DATA> > *removedItems)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(removedItems);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
     MapIter it = d_map.begin();
 
@@ -1838,6 +1837,7 @@ void TimeQueue<DATA>::removeAll(bsl::vector<TimeQueueItem<DATA> > *removedItems)
 
         do {
             if (removedItems) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(removedItems);
                 removedItems->push_back(TimeQueueItem<DATA>(
                                                          it->first,
                                                          node->d_data.object(),
@@ -1870,7 +1870,6 @@ void TimeQueue<DATA>::removeIf(
                            bsl::vector<TimeQueueItem<DATA> >       *removedItems)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(removedItems);
     bslmt::LockGuard<bslmt::Mutex> lock(&d_mutex);
 
     MapIter  it           = d_map.begin();
@@ -1893,6 +1892,7 @@ void TimeQueue<DATA>::removeIf(
             if (predicate(node->d_data.object())) {
                 // The predicate is `true`, this element should be erased.
                 if (removedItems) {
+                    BSLS_ASSERT_CONVEYOR_OBJECT(removedItems);
                     removedItems->push_back(TimeQueueItem<DATA>(
                                                          it->first,
                                                          node->d_data.object(),

@@ -1815,7 +1815,6 @@ inline
 void Deque<TYPE>::removeAllImp(VECTOR *buffer)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     Proctor proctor(this);
@@ -1823,6 +1822,7 @@ void Deque<TYPE>::removeAllImp(VECTOR *buffer)
     VectorThrowGuard<VECTOR> tg(buffer);
 
     if (buffer) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
         const size_type size = d_monoDeque.size();
         buffer->reserve(buffer->size() + size);
 
@@ -1843,7 +1843,6 @@ void Deque<TYPE>::tryPopBackImp(typename Deque<TYPE>::size_type  maxNumItems,
                                 VECTOR                          *buffer)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     Proctor proctor(this);
@@ -1856,6 +1855,7 @@ void Deque<TYPE>::tryPopBackImp(typename Deque<TYPE>::size_type  maxNumItems,
     const size_type toMove = bsl::min(size, maxNumItems);
 
     if (buffer) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
         buffer->reserve(buffer->size() + toMove);
 
         const size_type lastMovedIdx = size - toMove;
@@ -1876,7 +1876,6 @@ void Deque<TYPE>::tryPopFrontImp(typename Deque<TYPE>::size_type  maxNumItems,
                                  VECTOR                          *buffer)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     BSLMF_ASSERT(IsVector<VECTOR>::value);
 
     typedef typename MonoDeque::iterator Iterator;
@@ -1892,6 +1891,7 @@ void Deque<TYPE>::tryPopFrontImp(typename Deque<TYPE>::size_type  maxNumItems,
     const Iterator  endRange   = beginRange + toMove;
 
     if (buffer) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
         buffer->reserve(buffer->size() + toMove);
 
         for (size_type ii = 0; ii < toMove; ++ii) {

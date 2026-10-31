@@ -48,8 +48,8 @@ class Timetable_ResetProctor {
     ~Timetable_ResetProctor()
     {
         BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(d_timetable_p);
         if (d_timetable_p) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(d_timetable_p);
             d_timetable_p->reset();
         }
     }

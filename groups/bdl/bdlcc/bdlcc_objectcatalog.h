@@ -706,7 +706,6 @@ template <class VECTOR>
 void ObjectCatalog<TYPE>::removeAllImp(VECTOR *buffer)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
     static const bool isVector =
                             bsl::is_same<bsl::vector<TYPE>, VECTOR>::value
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR
@@ -724,6 +723,7 @@ void ObjectCatalog<TYPE>::removeAllImp(VECTOR *buffer)
             TYPE *value = getNodeValue(*it);
 
             if (buffer) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(buffer);
                 buffer->push_back(bslmf::MovableRefUtil::move(*value));
             }
             value->~TYPE();

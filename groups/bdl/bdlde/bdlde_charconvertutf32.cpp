@@ -1635,7 +1635,6 @@ int utf32ToUtf8StringImpl(
                      BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(dstString);
-    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     typedef Utf32ToUtf8Translator<NoopCapacity,
                                   Utf32ZeroBasedEnd,
                                   NoopSwapper> NoSwapTranslator;
@@ -1661,6 +1660,7 @@ int utf32ToUtf8StringImpl(
     if (!numCodePointsWritten) {
         numCodePointsWritten = &localNumCodePointsWritten;
     }
+    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     char *begin = &(*dstString)[0];
     int   ret = BloombergLP::bdlde::ByteOrder::e_HOST == byteOrder
                 ? NoSwapTranslator::translate(begin,
@@ -1705,7 +1705,6 @@ int utf32ToUtf8StringImpl(
                      BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(dstString);
-    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     typedef Utf32ToUtf8Translator<NoopCapacity,
                                   Utf32PtrBasedEnd,
                                   NoopSwapper> NoSwapTranslator;
@@ -1731,6 +1730,7 @@ int utf32ToUtf8StringImpl(
     if (!numCodePointsWritten) {
         numCodePointsWritten = &localNumCodePointsWritten;
     }
+    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     char *begin = &(*dstString)[0];
     int   ret = BloombergLP::bdlde::ByteOrder::e_HOST == byteOrder
                 ? NoSwapTranslator::translate(begin,
@@ -1774,7 +1774,6 @@ int utf32ToUtf8VectorImpl(
                      BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(dstVector);
-    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     typedef Utf32ToUtf8Translator<NoopCapacity,
                                   Utf32ZeroBasedEnd,
                                   NoopSwapper> NoSwapTranslator;
@@ -1798,6 +1797,7 @@ int utf32ToUtf8VectorImpl(
     if (!numCodePointsWritten) {
         numCodePointsWritten = &localNumCodePointsWritten;
     }
+    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     char *begin = &dstVector->front();
     int   ret   = BloombergLP::bdlde::ByteOrder::e_HOST == byteOrder
                   ? NoSwapTranslator::translate(begin,
@@ -1838,7 +1838,6 @@ int utf32ToUtf8VectorImpl(
                      BloombergLP::bdlde::ByteOrder::Enum  byteOrder)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(dstVector);
-    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     typedef Utf32ToUtf8Translator<NoopCapacity,
                                   Utf32PtrBasedEnd,
                                   NoopSwapper> NoSwapTranslator;
@@ -1863,6 +1862,7 @@ int utf32ToUtf8VectorImpl(
     if (!numCodePointsWritten) {
         numCodePointsWritten = &localNumCodePointsWritten;
     }
+    BSLS_ASSERT_CONVEYOR_OBJECT(numCodePointsWritten);
     char *begin = &dstVector->front();
     int   ret   = BloombergLP::bdlde::ByteOrder::e_HOST == byteOrder
                   ? NoSwapTranslator::translate(begin,
