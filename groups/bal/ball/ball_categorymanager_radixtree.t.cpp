@@ -2443,16 +2443,20 @@ int main(int argc, char *argv[])
             ASSERT(mY.size() == 2);
             AllocAwareTree::OptValueRef result = mY.find("key1");
             BSLS_ASSERT_CONVEYOR_OBJECT(&result);
-            ASSERT(result && result->get().first() == "first1");
+            ASSERT(result && BSLS_ASSERT_CONVEYOR_REF(BSLS_ASSERT_CONVEYOR_REF(
+                                          *result).get()).first() == "first1");
             BSLS_ASSERT_CONVEYOR_OBJECT(&result);
-            ASSERT(result && result->get().second() == "second1");
+            ASSERT(result && BSLS_ASSERT_CONVEYOR_REF(BSLS_ASSERT_CONVEYOR_REF(
+                                        *result).get()).second() == "second1");
             ASSERT(result && result->get().allocator() == &ta);
 
             result = mY.find("key2");
             BSLS_ASSERT_CONVEYOR_OBJECT(&result);
-            ASSERT(result && result->get().first() == "first2");
+            ASSERT(result && BSLS_ASSERT_CONVEYOR_REF(BSLS_ASSERT_CONVEYOR_REF(
+                                          *result).get()).first() == "first2");
             BSLS_ASSERT_CONVEYOR_OBJECT(&result);
-            ASSERT(result && result->get().second() == "second2");
+            ASSERT(result && BSLS_ASSERT_CONVEYOR_REF(BSLS_ASSERT_CONVEYOR_REF(
+                                        *result).get()).second() == "second2");
             ASSERT(result && result->get().allocator() == &ta);
 
             // Verify original is unchanged
@@ -3246,9 +3250,11 @@ int main(int argc, char *argv[])
                 mX.emplace("key1", "first", "second");
             ASSERT(result.first);
             BSLS_ASSERT_CONVEYOR_OBJECT(&result);
-            ASSERT(result.second.get().first() == "first");
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(result.second.get()).first()
+                   == "first");
             BSLS_ASSERT_CONVEYOR_OBJECT(&result);
-            ASSERT(result.second.get().second() == "second");
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(result.second.get()).second()
+                   == "second");
             ASSERT(result.second.get().allocator() == &ta);
             ASSERT(mX.size() == 1);
 
@@ -3256,25 +3262,31 @@ int main(int argc, char *argv[])
             result = mX.emplace("key2", "alpha", "beta");
             ASSERT(result.first);
             BSLS_ASSERT_CONVEYOR_OBJECT(&result);
-            ASSERT(result.second.get().first() == "alpha");
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(result.second.get()).first()
+                   == "alpha");
             BSLS_ASSERT_CONVEYOR_OBJECT(&result);
-            ASSERT(result.second.get().second() == "beta");
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(result.second.get()).second()
+                   == "beta");
             ASSERT(result.second.get().allocator() == &ta);
             ASSERT(mX.size() == 2);
 
             // Verify find returns correct values
             AllocAwareTree::OptValueRef found = mX.find("key1");
             BSLS_ASSERT_CONVEYOR_OBJECT(&found);
-            ASSERT(found && found->get().first() == "first");
+            ASSERT(found && BSLS_ASSERT_CONVEYOR_REF(BSLS_ASSERT_CONVEYOR_REF(
+                                            *found).get()).first() == "first");
             BSLS_ASSERT_CONVEYOR_OBJECT(&found);
-            ASSERT(found && found->get().second() == "second");
+            ASSERT(found && BSLS_ASSERT_CONVEYOR_REF(BSLS_ASSERT_CONVEYOR_REF(
+                                          *found).get()).second() == "second");
             ASSERT(found && found->get().allocator() == &ta);
 
             found = mX.find("key2");
             BSLS_ASSERT_CONVEYOR_OBJECT(&found);
-            ASSERT(found && found->get().first() == "alpha");
+            ASSERT(found && BSLS_ASSERT_CONVEYOR_REF(BSLS_ASSERT_CONVEYOR_REF(
+                                            *found).get()).first() == "alpha");
             BSLS_ASSERT_CONVEYOR_OBJECT(&found);
-            ASSERT(found && found->get().second() == "beta");
+            ASSERT(found && BSLS_ASSERT_CONVEYOR_REF(BSLS_ASSERT_CONVEYOR_REF(
+                                            *found).get()).second() == "beta");
             ASSERT(found && found->get().allocator() == &ta);
 
             // Erase and verify

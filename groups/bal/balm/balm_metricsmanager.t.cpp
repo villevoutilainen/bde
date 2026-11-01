@@ -4237,14 +4237,22 @@ int main(int argc, char *argv[])
 
                 BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                 for (int j = 0; j < sample.numGroups(); ++j) {
-                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
-                    BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
-                    ASSERT(BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(j)).elapsedTime() ==
-                           tp1.lastSample().sampleGroup(j).elapsedTime());
-                    BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
-                    BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
-                    ASSERT(BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(j)).elapsedTime() ==
-                           tp2.lastSample().sampleGroup(j).elapsedTime());
+                    const balm::MetricSampleGroup& group1 =
+                        BSLS_ASSERT_CONVEYOR_REF(
+                            BSLS_ASSERT_CONVEYOR_REF(
+                                             tp1.lastSample()).sampleGroup(j));
+                    ASSERT(BSLS_ASSERT_CONVEYOR_REF(
+                               BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(
+                                                             j)).elapsedTime())
+                        == BSLS_ASSERT_CONVEYOR_REF(group1.elapsedTime()));
+                    const balm::MetricSampleGroup& group2 =
+                        BSLS_ASSERT_CONVEYOR_REF(
+                            BSLS_ASSERT_CONVEYOR_REF(
+                                             tp2.lastSample()).sampleGroup(j));
+                    ASSERT(BSLS_ASSERT_CONVEYOR_REF(
+                               BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(
+                                                             j)).elapsedTime())
+                        == BSLS_ASSERT_CONVEYOR_REF(group2.elapsedTime()));
 
                     BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                     ASSERT(sample.sampleGroup(j).numRecords() ==

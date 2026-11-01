@@ -427,11 +427,13 @@ int main(int argc, char *argv[])
          ASSERT(2                     == sample.numGroups());
          ASSERT(3                     == sample.numRecords());
          BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
-         ASSERT(bsls::TimeInterval(1) == BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(0)).elapsedTime());
+         ASSERT(bsls::TimeInterval(1) == BSLS_ASSERT_CONVEYOR_REF(
+               BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(0)).elapsedTime()));
          ASSERT(buffer1               == sample.sampleGroup(0).records());
          ASSERT(2                     == sample.sampleGroup(0).numRecords());
          BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
-         ASSERT(bsls::TimeInterval(2) == BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(1)).elapsedTime());
+         ASSERT(bsls::TimeInterval(2) == BSLS_ASSERT_CONVEYOR_REF(
+               BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(1)).elapsedTime()));
          ASSERT(buffer2.data()        == sample.sampleGroup(1).records());
          ASSERT(1                     == sample.sampleGroup(1).numRecords());
 // ```
@@ -1101,7 +1103,8 @@ int main(int argc, char *argv[])
             ASSERT(1                       == groups.size());
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
-            ASSERT(bsls::TimeInterval(5, 0) == groups[0].elapsedTime());
+            ASSERT(bsls::TimeInterval(5, 0) == BSLS_ASSERT_CONVEYOR_REF(
+                           BSLS_ASSERT_CONVEYOR_REF(groups[0]).elapsedTime()));
             ASSERT(4                       == groups[0].numRecords());
             ASSERT(BEGIN   <= groups[0].records() &&
                    END - 4 >= groups[0].records());
@@ -1116,13 +1119,15 @@ int main(int argc, char *argv[])
             ASSERT(2                       == groups.size());
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
-            ASSERT(bsls::TimeInterval(2, 0) == groups[0].elapsedTime());
+            ASSERT(bsls::TimeInterval(2, 0) == BSLS_ASSERT_CONVEYOR_REF(
+                           BSLS_ASSERT_CONVEYOR_REF(groups[0]).elapsedTime()));
             ASSERT(6                       == groups[0].numRecords());
             ASSERT(BEGIN   <= groups[0].records() &&
                    END - 6 >= groups[0].records());
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
-            ASSERT(bsls::TimeInterval(7, 0) == groups[1].elapsedTime());
+            ASSERT(bsls::TimeInterval(7, 0) == BSLS_ASSERT_CONVEYOR_REF(
+                           BSLS_ASSERT_CONVEYOR_REF(groups[1]).elapsedTime()));
             ASSERT(3                       == groups[1].numRecords());
             ASSERT(BEGIN   <= groups[1].records() &&
                    END - 3 >= groups[1].records());
@@ -1137,25 +1142,29 @@ int main(int argc, char *argv[])
             ASSERT(4                       == groups.size());
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
-            ASSERT(bsls::TimeInterval(2, 0) == groups[0].elapsedTime());
+            ASSERT(bsls::TimeInterval(2, 0) == BSLS_ASSERT_CONVEYOR_REF(
+                           BSLS_ASSERT_CONVEYOR_REF(groups[0]).elapsedTime()));
             ASSERT(3                       == groups[0].numRecords());
             ASSERT(BEGIN   <= groups[0].records() &&
                    END - 3 >= groups[0].records());
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
-            ASSERT(bsls::TimeInterval(3, 0) == groups[1].elapsedTime());
+            ASSERT(bsls::TimeInterval(3, 0) == BSLS_ASSERT_CONVEYOR_REF(
+                           BSLS_ASSERT_CONVEYOR_REF(groups[1]).elapsedTime()));
             ASSERT(4                       == groups[1].numRecords());
             ASSERT(BEGIN   <= groups[1].records() &&
                    END - 4 >= groups[1].records());
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
-            ASSERT(bsls::TimeInterval(6, 0) == groups[2].elapsedTime());
+            ASSERT(bsls::TimeInterval(6, 0) == BSLS_ASSERT_CONVEYOR_REF(
+                           BSLS_ASSERT_CONVEYOR_REF(groups[2]).elapsedTime()));
             ASSERT(7                       == groups[2].numRecords());
             ASSERT(BEGIN   <= groups[2].records() &&
                    END - 7 >= groups[2].records());
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
-            ASSERT(bsls::TimeInterval(1, 0) == groups[3].elapsedTime());
+            ASSERT(bsls::TimeInterval(1, 0) == BSLS_ASSERT_CONVEYOR_REF(
+                           BSLS_ASSERT_CONVEYOR_REF(groups[3]).elapsedTime()));
             ASSERT(1                       == groups[3].numRecords());
             ASSERT(BEGIN   <= groups[3].records() &&
                    END - 1 >= groups[3].records());
@@ -1670,10 +1679,12 @@ int main(int argc, char *argv[])
         ASSERT(2            == X1.numGroups());
         ASSERT(2            == X1.sampleGroup(0).numRecords());
         ASSERT(RV1.data()   == X1.sampleGroup(0).records());
-        ASSERT(interval1    == X1.sampleGroup(0).elapsedTime());
+        ASSERT(interval1    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X1.sampleGroup(0)).elapsedTime()));
         ASSERT(1            == X1.sampleGroup(1).numRecords());
         ASSERT(RV2.data()   == X1.sampleGroup(1).records());
-        ASSERT(interval2    == X1.sampleGroup(1).elapsedTime());
+        ASSERT(interval2    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X1.sampleGroup(1)).elapsedTime()));
 
         if (veryVerbose) cout <<
             "\tb. Try equality operators: x1 <op> x1." << endl;
@@ -1691,10 +1702,12 @@ int main(int argc, char *argv[])
         ASSERT(2            == X2.numGroups());
         ASSERT(2            == X2.sampleGroup(0).numRecords());
         ASSERT(RV1.data()   == X2.sampleGroup(0).records());
-        ASSERT(interval1    == X2.sampleGroup(0).elapsedTime());
+        ASSERT(interval1    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X2.sampleGroup(0)).elapsedTime()));
         ASSERT(1            == X2.sampleGroup(1).numRecords());
         ASSERT(RV2.data()   == X2.sampleGroup(1).records());
-        ASSERT(interval2    == X2.sampleGroup(1).elapsedTime());
+        ASSERT(interval2    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X2.sampleGroup(1)).elapsedTime()));
 
         if (veryVerbose) cout <<
             "\tb. Try equality operators: x2 <op> x1, x2." << endl;
@@ -1717,7 +1730,8 @@ int main(int argc, char *argv[])
         ASSERT(1            == X1.numGroups());
         ASSERT(1            == X1.sampleGroup(0).numRecords());
         ASSERT(RV3.data()   == X1.sampleGroup(0).records());
-        ASSERT(interval3    == X1.sampleGroup(0).elapsedTime());
+        ASSERT(interval3    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X1.sampleGroup(0)).elapsedTime()));
 
         if (veryVerbose) cout <<
             "\tb. Try equality operators: x1 <op> x1, x2." << endl;
@@ -1779,13 +1793,16 @@ int main(int argc, char *argv[])
         ASSERT(3            == X3.numGroups());
         ASSERT(1            == X3.sampleGroup(0).numRecords());
         ASSERT(RV3.data()   == X3.sampleGroup(0).records());
-        ASSERT(interval3    == X3.sampleGroup(0).elapsedTime());
+        ASSERT(interval3    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X3.sampleGroup(0)).elapsedTime()));
         ASSERT(1            == X3.sampleGroup(1).numRecords());
         ASSERT(RV2.data()   == X3.sampleGroup(1).records());
-        ASSERT(interval2    == X3.sampleGroup(1).elapsedTime());
+        ASSERT(interval2    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X3.sampleGroup(1)).elapsedTime()));
         ASSERT(2            == X3.sampleGroup(2).numRecords());
         ASSERT(RV1.data()   == X3.sampleGroup(2).records());
-        ASSERT(interval1    == X3.sampleGroup(2).elapsedTime());
+        ASSERT(interval1    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X3.sampleGroup(2)).elapsedTime()));
 
         if (veryVerbose) cout <<
             "\tb. Try equality operators: x3 <op> x1, x2, x3, x4." << endl;
@@ -1807,7 +1824,8 @@ int main(int argc, char *argv[])
         ASSERT(1            == X2.numGroups());
         ASSERT(1            == X2.sampleGroup(0).numRecords());
         ASSERT(RV3.data()   == X2.sampleGroup(0).records());
-        ASSERT(interval3    == X2.sampleGroup(0).elapsedTime());
+        ASSERT(interval3    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X2.sampleGroup(0)).elapsedTime()));
 
         if (veryVerbose) cout <<
             "\tb. Try equality operators: x2 <op> x1, x2, x3, x4." << endl;
@@ -1829,13 +1847,16 @@ int main(int argc, char *argv[])
         ASSERT(3            == X2.numGroups());
         ASSERT(1            == X2.sampleGroup(0).numRecords());
         ASSERT(RV3.data()   == X2.sampleGroup(0).records());
-        ASSERT(interval3    == X2.sampleGroup(0).elapsedTime());
+        ASSERT(interval3    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X2.sampleGroup(0)).elapsedTime()));
         ASSERT(1            == X2.sampleGroup(1).numRecords());
         ASSERT(RV2.data()   == X2.sampleGroup(1).records());
-        ASSERT(interval2    == X2.sampleGroup(1).elapsedTime());
+        ASSERT(interval2    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X2.sampleGroup(1)).elapsedTime()));
         ASSERT(2            == X2.sampleGroup(2).numRecords());
         ASSERT(RV1.data()   == X2.sampleGroup(2).records());
-        ASSERT(interval1    == X2.sampleGroup(2).elapsedTime());
+        ASSERT(interval1    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X2.sampleGroup(2)).elapsedTime()));
 
         if (veryVerbose) cout <<
             "\tb. Try equality operators: x2 <op> x1, x2, x3, x4." << endl;
@@ -1858,7 +1879,8 @@ int main(int argc, char *argv[])
         ASSERT(1            == X1.numGroups());
         ASSERT(1            == X1.sampleGroup(0).numRecords());
         ASSERT(RV3.data()   == X1.sampleGroup(0).records());
-        ASSERT(interval3    == X1.sampleGroup(0).elapsedTime());
+        ASSERT(interval3    == BSLS_ASSERT_CONVEYOR_REF(
+                   BSLS_ASSERT_CONVEYOR_REF(X1.sampleGroup(0)).elapsedTime()));
 
         if (veryVerbose) cout <<
             "\tb. Try equality operators: x1 <op> x1, x2, x3, x4." << endl;

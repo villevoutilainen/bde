@@ -5286,9 +5286,11 @@ int main(int argc, char *argv[])
             const FieldValues& V = R.customFields();
             ASSERT(2               == V.length());
             BSLS_ASSERT_CONVEYOR_OBJECT(&V);
-            ASSERT("UFString"      == V[0].theString());
+            ASSERT("UFString"
+                   == BSLS_ASSERT_CONVEYOR_REF(V[0]).theString());
             BSLS_ASSERT_CONVEYOR_OBJECT(&V);
-            ASSERT(1234            == V[1].theInt64());
+            ASSERT(1234
+                   == BSLS_ASSERT_CONVEYOR_REF(V[1]).theInt64());
         }
         // Install ScopedFields populator callbacks
         mX.registerAttributeCollector(&testAttributesCollector1,
@@ -5325,14 +5327,16 @@ int main(int argc, char *argv[])
             const FieldValues& V = R.customFields();
             ASSERT(2            == V.length());
             BSLS_ASSERT_CONVEYOR_OBJECT(&V);
-            ASSERT("UFString"   == V[0].theString());
+            ASSERT("UFString"   == BSLS_ASSERT_CONVEYOR_REF(V[0]).theString());
             BSLS_ASSERT_CONVEYOR_OBJECT(&V);
-            ASSERT(1234         == V[1].theInt64());
+            ASSERT(1234         == BSLS_ASSERT_CONVEYOR_REF(V[1]).theInt64());
 
             // Checking attributes added by collectors.
-            ASSERTV(2 == R.attributes().size());
-            ASSERTV(ball::Attribute("spanId", 1234) == R.attributes()[0]);
-            ASSERTV(ball::Attribute("dti.tDiff", "25ms") == R.attributes()[1]);
+            ASSERTV(2 == BSLS_ASSERT_CONVEYOR_REF(R.attributes()).size());
+            ASSERTV(ball::Attribute("spanId", 1234)
+                    == BSLS_ASSERT_CONVEYOR_REF(R.attributes())[0]);
+            ASSERTV(ball::Attribute("dti.tDiff", "25ms")
+                    == BSLS_ASSERT_CONVEYOR_REF(R.attributes())[1]);
         }
 
         {
@@ -5354,11 +5358,13 @@ int main(int argc, char *argv[])
 
                 // Scoped attributes are added in front of the attribute
                 // vector.
-                ASSERTV(3 == R.attributes().size());
-                ASSERTV(ball::Attribute("test", "value") == R.attributes()[0]);
-                ASSERTV(ball::Attribute("spanId", 1234)  == R.attributes()[1]);
+                ASSERTV(3 == BSLS_ASSERT_CONVEYOR_REF(R.attributes()).size());
+                ASSERTV(ball::Attribute("test", "value")
+                        == BSLS_ASSERT_CONVEYOR_REF(R.attributes())[0]);
+                ASSERTV(ball::Attribute("spanId", 1234)
+                        == BSLS_ASSERT_CONVEYOR_REF(R.attributes())[1]);
                 ASSERTV(ball::Attribute("dti.tDiff", "25ms")
-                                                         == R.attributes()[2]);
+                        == BSLS_ASSERT_CONVEYOR_REF(R.attributes())[2]);
             }
         }
 

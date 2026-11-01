@@ -992,12 +992,14 @@ bsl::ostream& MyChoice::print(bsl::ostream& stream,
         switch (d_selectionId) {
           case SELECTION_ID_SELECTION1: {
             stream << "Selection1 = ";
-            bdlb::PrintMethods::print(stream, d_selection1.object(),
+            bdlb::PrintMethods::print(stream, BSLS_ASSERT_CONVEYOR_REF(
+                                                        d_selection1.object()),
                                      -levelPlus1, spacesPerLevel);
           } break;
           case SELECTION_ID_SELECTION2: {
             stream << "Selection2 = ";
-            bdlb::PrintMethods::print(stream, d_selection2.object(),
+            bdlb::PrintMethods::print(stream, BSLS_ASSERT_CONVEYOR_REF(
+                                                        d_selection2.object()),
                                      -levelPlus1, spacesPerLevel);
           } break;
           default:
@@ -1014,12 +1016,14 @@ bsl::ostream& MyChoice::print(bsl::ostream& stream,
         switch (d_selectionId) {
           case SELECTION_ID_SELECTION1: {
             stream << "Selection1 = ";
-            bdlb::PrintMethods::print(stream, d_selection1.object(),
+            bdlb::PrintMethods::print(stream, BSLS_ASSERT_CONVEYOR_REF(
+                                                        d_selection1.object()),
                                      -levelPlus1, spacesPerLevel);
           } break;
           case SELECTION_ID_SELECTION2: {
             stream << "Selection2 = ";
-            bdlb::PrintMethods::print(stream, d_selection2.object(),
+            bdlb::PrintMethods::print(stream, BSLS_ASSERT_CONVEYOR_REF(
+                                                        d_selection2.object()),
                                      -levelPlus1, spacesPerLevel);
           } break;
           default:

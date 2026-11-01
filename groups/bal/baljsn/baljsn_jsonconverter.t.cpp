@@ -4230,9 +4230,10 @@ int main(int argc, char *argv[])
             sequenceWithAnonymity.choice ().makeSelection2();
             sequenceWithAnonymity.choice1().makeSelection5();
             s_baltst::Sequence4 sequence4;
-            BSLS_ASSERT_CONVEYOR_OBJECT(&sequenceWithAnonymity);
-            BSLS_ASSERT_CONVEYOR_REF(sequenceWithAnonymity.choice2()).makeValue().makeSelection7(
-                                                                    sequence4);
+            s_baltst::SequenceWithAnonymityChoice2& choice2 =
+                    BSLS_ASSERT_CONVEYOR_REF(BSLS_ASSERT_CONVEYOR_REF(
+                                sequenceWithAnonymity.choice2()).makeValue());
+            choice2.makeSelection7(sequence4);
 
             testSkipUnknownElements(L_, sequenceWithAnonymity);         // TEST
 

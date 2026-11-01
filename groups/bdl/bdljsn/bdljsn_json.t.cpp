@@ -7792,13 +7792,15 @@ int main(int argc, char *argv[])
         Json_Initializer ji2[] = { 2, 2L, 2LL };
         for (const auto& ji: ji2) {
             ASSERT(ji.get_storage().is<long long>());
-            ASSERT(2 == ji.get_storage().the<long long>());
+            ASSERT(2 == BSLS_ASSERT_CONVEYOR_REF(
+                                           ji.get_storage()).the<long long>());
         }
 
         Json_Initializer ji3[] = { 3U, 3UL, 3ULL };
         for (const auto& ji: ji3) {
             ASSERT(ji.get_storage().is<unsigned long long>());
-            ASSERT(3 == ji.get_storage().the<unsigned long long>());
+            ASSERT(3 == BSLS_ASSERT_CONVEYOR_REF(
+                                  ji.get_storage()).the<unsigned long long>());
         }
 
         Json_Initializer ji4(4.25f);
@@ -7814,7 +7816,8 @@ int main(int argc, char *argv[])
         Json_Initializer ji6[] = { "ABC", abcString, bsl::string_view("ABC") };
         for (const auto& ji: ji6) {
             ASSERT(ji.get_storage().is<bsl::string_view>());
-            ASSERT("ABC" == ji.get_storage().the<bsl::string_view>());
+            ASSERT("ABC" == BSLS_ASSERT_CONVEYOR_REF(
+                                    ji.get_storage()).the<bsl::string_view>());
         }
 
         Json_Initializer ji7 = { false, "DEF", 42 };

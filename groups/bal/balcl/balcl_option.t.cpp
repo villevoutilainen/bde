@@ -1814,7 +1814,7 @@ int parseOption(const char **endpos,
 OptionInfo::ArgType argType(const Obj& obj)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
-    if (obj.tagString().empty()) {
+    if (BSLS_ASSERT_CONVEYOR_REF(obj.tagString()).empty()) {
         return OptionInfo::e_NON_OPTION;                              // RETURN
     }
 
@@ -2062,7 +2062,8 @@ int main(int argc, const char *argv[])  {
 
             ASSERT(Ot::e_BOOL == X.typeInfo().type());
             BSLS_ASSERT_CONVEYOR_OBJECT(&X);
-            ASSERT(true       == X.tagString().empty());
+            ASSERT(true
+                   == BSLS_ASSERT_CONVEYOR_REF(X.tagString()).empty());
             ASSERT(false      == X.isTagValid(oss));
             ASSERT(false      == oss.str().empty());
         }
@@ -3357,7 +3358,7 @@ int main(int argc, const char *argv[])  {
                     bsl::ostringstream oss;
 
                     BSLS_ASSERT_CONVEYOR_OBJECT(&X);
-                    if (X.description().empty()) {
+                    if (BSLS_ASSERT_CONVEYOR_REF(X.description()).empty()) {
                         ASSERT(!X.isDescriptionValid(oss));
                         ASSERT(!oss.str().empty());
                     } else {
@@ -3368,7 +3369,7 @@ int main(int argc, const char *argv[])  {
 
                     oss.str(""); oss.clear();
 
-                    if (X.name().empty()) {
+                    if (BSLS_ASSERT_CONVEYOR_REF(X.name()).empty()) {
                         ASSERT(!X.isNameValid(oss));
                         ASSERT(!oss.str().empty());
                     } else {

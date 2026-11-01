@@ -4325,7 +4325,10 @@ int main(int argc, char *argv[])
             if (veryVerbose) {
                 P(JSON); P_(LINE); P(result);
             }
-            ASSERTV(LINE, JSON, result, !result.message().empty());
+            ASSERTV(LINE,
+                    JSON,
+                    result,
+                    !BSLS_ASSERT_CONVEYOR_REF(result.message()).empty());
             ASSERTV(LINE,
                     JSON,
                     result,

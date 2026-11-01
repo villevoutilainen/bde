@@ -792,7 +792,7 @@ TransformIterator<FUNCTOR, ITERATOR>&
 TransformIterator<FUNCTOR, ITERATOR>::operator++()
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    ++iterator();
+    ++BSLS_ASSERT_CONVEYOR_REF(iterator());
     return *this;
 }
 
@@ -802,7 +802,7 @@ TransformIterator<FUNCTOR, ITERATOR>&
 TransformIterator<FUNCTOR, ITERATOR>::operator--()
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    --iterator();
+    --BSLS_ASSERT_CONVEYOR_REF(iterator());
     return *this;
 }
 

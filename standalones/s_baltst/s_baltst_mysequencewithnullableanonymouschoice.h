@@ -155,7 +155,8 @@ class MySequenceWithNullableAnonymousChoiceChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template<class MANIPULATOR>
-    int manipulateSelection(MANIPULATOR& manipulator);
+    int manipulateSelection(MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "ChoiceA" selection of this
     /// object if "ChoiceA" is the current selection.  The behavior is
@@ -195,7 +196,8 @@ class MySequenceWithNullableAnonymousChoiceChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template<class ACCESSOR>
-    int accessSelection(ACCESSOR& accessor) const;
+    int accessSelection(ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "ChoiceA" selection of this
     /// object if "ChoiceA" is the current selection.  The behavior is

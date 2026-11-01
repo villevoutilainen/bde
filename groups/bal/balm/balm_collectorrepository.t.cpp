@@ -1273,9 +1273,11 @@ int main(int argc, char *argv[])
                 bsl::set<Col *>  colSet(Z);
                 bsl::set<ICol *> iColSet(Z);
                 BSLS_ASSERT_CONVEYOR_OBJECT(&cols);
-                colSet.insert(cols[id].begin(), cols[id].end());
+                colSet.insert(BSLS_ASSERT_CONVEYOR_REF(cols[id]).begin(),
+                              BSLS_ASSERT_CONVEYOR_REF(cols[id]).end());
                 BSLS_ASSERT_CONVEYOR_OBJECT(&iCols);
-                iColSet.insert(iCols[id].begin(), iCols[id].end());
+                iColSet.insert(BSLS_ASSERT_CONVEYOR_REF(iCols[id]).begin(),
+                               BSLS_ASSERT_CONVEYOR_REF(iCols[id]).end());
 
                 ASSERT(0 == colSet.count(col));
                 ASSERT(0 == iColSet.count(iCol));

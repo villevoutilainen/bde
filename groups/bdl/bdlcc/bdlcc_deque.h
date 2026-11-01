@@ -1754,7 +1754,7 @@ template <class VECTOR>
 inline
 Deque<TYPE>::VectorThrowGuard<VECTOR>::VectorThrowGuard(VECTOR *vector_p)
 : d_vector_p(vector_p)
-, d_vSize(vector_p ? vector_p->size() : 0)
+, d_vSize(vector_p ? BSLS_ASSERT_CONVEYOR_REF(*vector_p).size() : 0)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
@@ -1888,8 +1888,7 @@ void Deque<TYPE>::tryPopFrontImp(typename Deque<TYPE>::size_type  maxNumItems,
             buffer->push_back(bslmf::MovableRefUtil::move(d_monoDeque[ii]));
         }
     }
-    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
-    proctor->erase(beginRange, endRange);
+    BSLS_ASSERT_CONVEYOR_REF(*proctor).erase(beginRange, endRange);
 
     tg.release();
 

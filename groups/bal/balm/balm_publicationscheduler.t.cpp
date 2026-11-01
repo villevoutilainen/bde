@@ -2180,7 +2180,8 @@ int main(int argc, char *argv[])
                         ASSERT(found ==
                                MX.findCategorySchedule(&interval, CAT));
                         BSLS_ASSERT_CONVEYOR_OBJECT(&expSchedule);
-                        ASSERT((!found) || interval == expSchedule[CAT]);
+                        ASSERT((!found) || interval
+                               == BSLS_ASSERT_CONVEYOR_REF(expSchedule[CAT]));
                     }
 
                     // Verify the correct number of clocks in the underlying
@@ -2687,7 +2688,8 @@ int main(int argc, char *argv[])
                 bool found = intervalMap.find(CATEGORY) != intervalMap.end();
                 ASSERT(found == MX.findCategorySchedule(&interval, CATEGORY));
                 BSLS_ASSERT_CONVEYOR_OBJECT(&intervalMap);
-                ASSERT((!found) || (interval == intervalMap[CATEGORY]));
+                ASSERT((!found) || (interval == BSLS_ASSERT_CONVEYOR_REF(
+                                                      intervalMap[CATEGORY])));
             }
 
             // Verify the correct number of clocks in the underlying event

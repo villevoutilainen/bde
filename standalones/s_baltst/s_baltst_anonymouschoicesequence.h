@@ -317,7 +317,8 @@ class AnonChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template <typename t_MANIPULATOR>
-    int manipulateSelection(t_MANIPULATOR& manipulator);
+    int manipulateSelection(t_MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Sequence" selection of this
     /// object if "Sequence" is the current selection.  The behavior is
@@ -351,7 +352,8 @@ class AnonChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template <typename t_ACCESSOR>
-    int accessSelection(t_ACCESSOR& accessor) const;
+    int accessSelection(t_ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Sequence" selection of
     /// this object if "Sequence" is the current selection.  The behavior is

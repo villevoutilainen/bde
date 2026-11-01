@@ -1833,19 +1833,19 @@ int main(int argc, char *argv[])
         if (verbose) cout << "\n 1. Create an object x1 using VA." << endl;
         Obj mX1(VA);  const Obj& X1 = mX1;
         ASSERT(0 == bsl::strcmp(VA_NAME, X1.name()));
-        ASSERT(VA_VALUE == X1.value().the<int>());
+        ASSERT(VA_VALUE == BSLS_ASSERT_CONVEYOR_REF(X1.value()).the<int>());
 
         if (verbose) cout << "\n 2. Create an object x2 (copy from x1)."
                           << endl;
         Obj mX2(X1);  const Obj& X2 = mX2;
         ASSERT(0 == bsl::strcmp(VA_NAME, X2.name()));
-        ASSERT(VA_VALUE == X2.value().the<int>());
+        ASSERT(VA_VALUE == BSLS_ASSERT_CONVEYOR_REF(X2.value()).the<int>());
 
         if (verbose) cout << "\n 3. Set x1 to VB." << endl;
         mX1.setName(VB_NAME);
         mX1.setValue(Value(VB_VALUE));
         ASSERT(0 == bsl::strcmp(VB_NAME, X1.name()));
-        ASSERT(VB_VALUE == X1.value().the<int>());
+        ASSERT(VB_VALUE == BSLS_ASSERT_CONVEYOR_REF(X1.value()).the<int>());
         ASSERT(1 == (X1 == X1));        ASSERT(0 == (X1 != X1));
         ASSERT(0 == (X1 == X2));        ASSERT(1 == (X1 != X2));
 
@@ -1853,7 +1853,7 @@ int main(int argc, char *argv[])
         mX2.setName(VB_NAME);
         mX2.setValue(Value(VB_VALUE));
         ASSERT(0 == bsl::strcmp(VB_NAME, X2.name()));
-        ASSERT(VB_VALUE == X2.value().the<int>());
+        ASSERT(VB_VALUE == BSLS_ASSERT_CONVEYOR_REF(X2.value()).the<int>());
         ASSERT(1 == (X2 == X2));        ASSERT(0 == (X2 != X2));
         ASSERT(1 == (X1 == X2));        ASSERT(0 == (X1 != X2));
 
@@ -1861,7 +1861,8 @@ int main(int argc, char *argv[])
         mX2.setName(VC_NAME);
         mX2.setValue(Value(VC_VALUE));
         ASSERT(0 == bsl::strcmp(VC_NAME, X2.name()));
-        ASSERT(VC_VALUE == X2.value().the<long long>());
+        ASSERT(VC_VALUE
+               == BSLS_ASSERT_CONVEYOR_REF(X2.value()).the<long long>());
         ASSERT(1 == (X2 == X2));        ASSERT(0 == (X2 != X2));
         ASSERT(0 == (X1 == X2));        ASSERT(1 == (X1 != X2));
 
@@ -1869,7 +1870,7 @@ int main(int argc, char *argv[])
         mX1.setName(VA_NAME);
         mX1.setValue(Value(VA_VALUE));
         ASSERT(0 == bsl::strcmp(VA_NAME, X1.name()));
-        ASSERT(VA_VALUE == X1.value().the<int>());
+        ASSERT(VA_VALUE == BSLS_ASSERT_CONVEYOR_REF(X1.value()).the<int>());
         ASSERT(1 == (X1 == X1));        ASSERT(0 == (X1 != X1));
         ASSERT(0 == (X1 == X2));        ASSERT(1 == (X1 != X2));
 
@@ -1877,7 +1878,7 @@ int main(int argc, char *argv[])
                            << endl;
         Obj mX3(VD);  const Obj& X3 = mX3;
         ASSERT(0 == bsl::strcmp(VD_NAME, X3.name()));
-        ASSERT(VD_VALUE == X3.value().the<string>());
+        ASSERT(VD_VALUE == BSLS_ASSERT_CONVEYOR_REF(X3.value()).the<string>());
         ASSERT(1 == (X3 == X3));        ASSERT(0 == (X3 != X3));
         ASSERT(0 == (X3 == X1));        ASSERT(1 == (X3 != X1));
         ASSERT(0 == (X3 == X2));        ASSERT(1 == (X3 != X2));
@@ -1886,7 +1887,7 @@ int main(int argc, char *argv[])
                            << endl;
         Obj mX4(X1);  const Obj& X4 = mX4;
         ASSERT(0 == bsl::strcmp(VA_NAME, X4.name()));
-        ASSERT(VA_VALUE == X4.value().the<int>());
+        ASSERT(VA_VALUE == BSLS_ASSERT_CONVEYOR_REF(X4.value()).the<int>());
         ASSERT(1 == (X4 == X1));        ASSERT(0 == (X4 != X1));
         ASSERT(0 == (X4 == X2));        ASSERT(1 == (X4 != X2));
         ASSERT(0 == (X4 == X3));        ASSERT(1 == (X4 != X3));
@@ -1895,7 +1896,7 @@ int main(int argc, char *argv[])
         if (verbose) cout << "\n 9. Assign x2 = x1." << endl;
         mX2 = X1;
         ASSERT(0 == bsl::strcmp(VA_NAME, X2.name()));
-        ASSERT(VA_VALUE == X2.value().the<int>());
+        ASSERT(VA_VALUE == BSLS_ASSERT_CONVEYOR_REF(X2.value()).the<int>());
         ASSERT(1 == (X2 == X1));        ASSERT(0 == (X2 != X1));
         ASSERT(1 == (X2 == X2));        ASSERT(0 == (X2 != X2));
         ASSERT(0 == (X2 == X3));        ASSERT(1 == (X2 != X3));
@@ -1904,7 +1905,7 @@ int main(int argc, char *argv[])
         if (verbose) cout << "\n 10. Assign x2 = x3." << endl;
         mX2 = X3;
         ASSERT(0 == bsl::strcmp(VD_NAME, X2.name()));
-        ASSERT(VD_VALUE == X2.value().the<string>());
+        ASSERT(VD_VALUE == BSLS_ASSERT_CONVEYOR_REF(X2.value()).the<string>());
         ASSERT(0 == (X2 == X1));        ASSERT(1 == (X2 != X1));
         ASSERT(1 == (X2 == X2));        ASSERT(0 == (X2 != X2));
         ASSERT(1 == (X2 == X3));        ASSERT(0 == (X2 != X3));
@@ -1913,7 +1914,7 @@ int main(int argc, char *argv[])
         if (verbose) cout << "\n 11. Assign x1 = x1 (aliasing)." << endl;
         mX1 = X1;
         ASSERT(0 == bsl::strcmp(VA_NAME, X1.name()));
-        ASSERT(VA_VALUE == X1.value().the<int>());
+        ASSERT(VA_VALUE == BSLS_ASSERT_CONVEYOR_REF(X1.value()).the<int>());
         ASSERT(1 == (X1 == X1));        ASSERT(0 == (X1 != X1));
         ASSERT(0 == (X1 == X2));        ASSERT(1 == (X1 != X2));
         ASSERT(0 == (X1 == X3));        ASSERT(1 == (X1 != X3));

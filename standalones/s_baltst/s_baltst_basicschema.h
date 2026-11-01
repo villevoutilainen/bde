@@ -404,7 +404,8 @@ class BasicSchemaEnumerationElementChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template<class MANIPULATOR>
-    int manipulateSelection(MANIPULATOR& manipulator);
+    int manipulateSelection(MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
@@ -438,7 +439,8 @@ class BasicSchemaEnumerationElementChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template<class ACCESSOR>
-    int accessSelection(ACCESSOR& accessor) const;
+    int accessSelection(ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
@@ -870,7 +872,8 @@ class BasicSchemaRestrictionElementChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template<class MANIPULATOR>
-    int manipulateSelection(MANIPULATOR& manipulator);
+    int manipulateSelection(MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
@@ -910,7 +913,8 @@ class BasicSchemaRestrictionElementChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template<class ACCESSOR>
-    int accessSelection(ACCESSOR& accessor) const;
+    int accessSelection(ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
@@ -1351,7 +1355,8 @@ class BasicSchemaSimpleTypeElementChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template<class MANIPULATOR>
-    int manipulateSelection(MANIPULATOR& manipulator);
+    int manipulateSelection(MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
@@ -1391,7 +1396,8 @@ class BasicSchemaSimpleTypeElementChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template<class ACCESSOR>
-    int accessSelection(ACCESSOR& accessor) const;
+    int accessSelection(ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
@@ -2057,7 +2063,8 @@ class BasicSchemaChoiceElementChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template<class MANIPULATOR>
-    int manipulateSelection(MANIPULATOR& manipulator);
+    int manipulateSelection(MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
@@ -2097,7 +2104,8 @@ class BasicSchemaChoiceElementChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template<class ACCESSOR>
-    int accessSelection(ACCESSOR& accessor) const;
+    int accessSelection(ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
@@ -2555,7 +2563,8 @@ class BasicSchemaComplexTypeElementChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template<class MANIPULATOR>
-    int manipulateSelection(MANIPULATOR& manipulator);
+    int manipulateSelection(MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
@@ -2601,7 +2610,8 @@ class BasicSchemaComplexTypeElementChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template<class ACCESSOR>
-    int accessSelection(ACCESSOR& accessor) const;
+    int accessSelection(ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
@@ -3173,7 +3183,8 @@ class BasicSchemaElementChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template<class MANIPULATOR>
-    int manipulateSelection(MANIPULATOR& manipulator);
+    int manipulateSelection(MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
@@ -3219,7 +3230,8 @@ class BasicSchemaElementChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template<class ACCESSOR>
-    int accessSelection(ACCESSOR& accessor) const;
+    int accessSelection(ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
@@ -3655,7 +3667,8 @@ class BasicSchemaSequenceElementChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template<class MANIPULATOR>
-    int manipulateSelection(MANIPULATOR& manipulator);
+    int manipulateSelection(MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
@@ -3695,7 +3708,8 @@ class BasicSchemaSequenceElementChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template<class ACCESSOR>
-    int accessSelection(ACCESSOR& accessor) const;
+    int accessSelection(ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior
@@ -3926,7 +3940,8 @@ class BasicSchemaChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template<class MANIPULATOR>
-    int manipulateSelection(MANIPULATOR& manipulator);
+    int manipulateSelection(MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Annotation" selection of this
     /// object if "Annotation" is the current selection.  The behavior is
@@ -3972,7 +3987,8 @@ class BasicSchemaChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template<class ACCESSOR>
-    int accessSelection(ACCESSOR& accessor) const;
+    int accessSelection(ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Annotation" selection of
     /// this object if "Annotation" is the current selection.  The behavior

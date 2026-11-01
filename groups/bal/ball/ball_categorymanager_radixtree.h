@@ -1581,7 +1581,7 @@ inline
 void CategoryManager_RadixTree<t_VALUE>::clear()
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
-    d_root.children().clear();
+    BSLS_ASSERT_CONVEYOR_REF(d_root.children()).clear();
     d_root.value().reset();
     d_size = 0;
 }

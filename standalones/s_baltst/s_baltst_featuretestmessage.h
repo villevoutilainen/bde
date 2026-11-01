@@ -341,7 +341,8 @@ class FeatureTestMessage {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template <typename t_MANIPULATOR>
-    int manipulateSelection(t_MANIPULATOR& manipulator);
+    int manipulateSelection(t_MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
@@ -435,7 +436,8 @@ class FeatureTestMessage {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template <typename t_ACCESSOR>
-    int accessSelection(t_ACCESSOR& accessor) const;
+    int accessSelection(t_ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior

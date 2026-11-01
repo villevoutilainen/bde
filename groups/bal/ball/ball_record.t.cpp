@@ -1122,9 +1122,11 @@ int main(int argc, char *argv[])
                 } BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
 
                 BSLS_ASSERT_CONVEYOR_OBJECT(&X);
-                ASSERTV(CONFIG, 1 == X.attributes().size());
+                ASSERTV(CONFIG,
+                        1 == BSLS_ASSERT_CONVEYOR_REF(X.attributes()).size());
                 BSLS_ASSERT_CONVEYOR_OBJECT(&X);
-                ASSERTV(CONFIG, AA == X.attributes()[0]);
+                ASSERTV(CONFIG,
+                        AA == BSLS_ASSERT_CONVEYOR_REF(X.attributes())[0]);
 
                 BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, FD == X.fixedFields());
@@ -1135,11 +1137,14 @@ int main(int argc, char *argv[])
 
                 mX.addAttribute(AB);
                 BSLS_ASSERT_CONVEYOR_OBJECT(&X);
-                ASSERTV(CONFIG, 2 == X.attributes().size());
+                ASSERTV(CONFIG,
+                        2 == BSLS_ASSERT_CONVEYOR_REF(X.attributes()).size());
                 BSLS_ASSERT_CONVEYOR_OBJECT(&X);
-                ASSERTV(CONFIG, AA == X.attributes()[0]);
+                ASSERTV(CONFIG,
+                        AA == BSLS_ASSERT_CONVEYOR_REF(X.attributes())[0]);
                 BSLS_ASSERT_CONVEYOR_OBJECT(&X);
-                ASSERTV(CONFIG, AB == X.attributes()[1]);
+                ASSERTV(CONFIG,
+                        AB == BSLS_ASSERT_CONVEYOR_REF(X.attributes())[1]);
 
                 BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 ASSERTV(CONFIG, FD == X.fixedFields());

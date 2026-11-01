@@ -7822,7 +7822,7 @@ int main(int argc, char *argv[])
 
             nv.makeValue();  // default `StdOptInt`
             ASSERT(!nv.isNull());
-            ASSERT(!nv.value().has_value());
+            ASSERT(!BSLS_ASSERT_CONVEYOR_REF(nv.value()).has_value());
             oss << nv;   ASSERTV(oss.str(), "EMPTY" == oss.str());      // TEST
             oss.str(""); ASSERTV(oss.str(), ""      == oss.str());
 

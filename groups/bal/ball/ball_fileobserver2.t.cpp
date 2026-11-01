@@ -554,7 +554,7 @@ bsls::TimeInterval TestCurrentTimeCallback::load()
 void TestCurrentTimeCallback::setUtcDatetime(const bdlt::Datetime &utcTime)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(&utcTime);
-    ASSERT(bdlt::EpochUtil::epoch() <= utcTime);
+    ASSERT(BSLS_ASSERT_CONVEYOR_REF(bdlt::EpochUtil::epoch()) <= utcTime);
 
     int rc = bdlt::EpochUtil::convertToTimeInterval(&s_utcTime, utcTime);
     ASSERT(0 == rc);

@@ -151,7 +151,7 @@ char getAlpha()
 void fillAlpha(const BlobBuffer& blobBuffer)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(&blobBuffer);
-    char *dst    = &*blobBuffer.buffer();
+    char *dst    = &*BSLS_ASSERT_CONVEYOR_REF(blobBuffer.buffer());
     int   length = blobBuffer.size();
 
     getAlphaData = 0;
@@ -166,7 +166,7 @@ void fillAlpha(const BlobBuffer& blobBuffer)
 bool checkAlpha(const BlobBuffer& blobBuffer)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(&blobBuffer);
-    const char *src    = &*blobBuffer.buffer();
+    const char *src    = &*BSLS_ASSERT_CONVEYOR_REF(blobBuffer.buffer());
     const int   length = blobBuffer.size();
 
     getAlphaData = 0;
@@ -354,7 +354,8 @@ int main(int argc, char *argv[])
                 BSLS_ASSERT_CONVEYOR_OBJECT(&bBuf);
                 ASSERTV(blob.numDataBuffers(), blob.numBuffers(),
                                    blob.numDataBuffers() == blob.numBuffers());
-                char              *buf   = &*bBuf.buffer();
+                char              *buf   = &*BSLS_ASSERT_CONVEYOR_REF(
+                                                                bBuf.buffer());
 
                 buf[iChar] = static_cast<char>(c);
             }

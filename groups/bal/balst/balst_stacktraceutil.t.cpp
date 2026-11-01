@@ -1204,12 +1204,14 @@ void case_07_top()
         const balst::StackTraceFrame& frame = st[i];
 
         BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
-        size_t mangled = frame.mangledSymbolName().length();
+        size_t mangled = BSLS_ASSERT_CONVEYOR_REF(
+                                           frame.mangledSymbolName()).length();
         if (mangled > maxMangled) {
             maxMangled = mangled;
             maxMangledStr = frame.mangledSymbolName().c_str();
         }
-        maxDemangled = bsl::max(maxDemangled, frame.symbolName().length());
+        maxDemangled = bsl::max(maxDemangled, BSLS_ASSERT_CONVEYOR_REF(
+                                                 frame.symbolName()).length());
     }
 
     if (verbose) {
@@ -2424,8 +2426,10 @@ int main(int argc, char *argv[])
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
             BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
-            ASSERTV(LINE, expName, (passed.d_symbolPresent =
-                                                 !frame.symbolName().empty()));
+            ASSERTV(LINE,
+                    expName,
+                    (passed.d_symbolPresent =
+                       !BSLS_ASSERT_CONVEYOR_REF(frame.symbolName()).empty()));
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
             // Search for char delimiting between return value and func name.
@@ -2434,7 +2438,8 @@ int main(int argc, char *argv[])
             bsl::size_t pos = frame.symbolName().rfind('(');
             pos = frame.symbolName().find_last_of(" *&", pos);
             pos = npos == pos ? 0 : pos + 1;
-            BSLS_ASSERT_NONCONVEYOR(pos <= frame.symbolName().length());
+            BSLS_ASSERT_NONCONVEYOR(pos <= BSLS_ASSERT_CONVEYOR_REF(
+                                                 frame.symbolName()).length());
 
             const char *name = &frame.symbolName()[pos];
             BSLS_ASSERT_CONVEYOR_OBJECT(&frame);
@@ -2462,7 +2467,8 @@ int main(int argc, char *argv[])
                                npos != frame.sourceFileName().find(baseName)));
 
                     passed.d_fullPath = PLAT_WIN
-                                      ? 3 <= frame.sourceFileName().length()
+                                      ? 3 <= BSLS_ASSERT_CONVEYOR_REF(
+                                               frame.sourceFileName()).length()
                                           && ':'  == frame.sourceFileName()[1]
                                           && '\\' == frame.sourceFileName()[2]
                                       : '/' == frame.sourceFileName()[0];

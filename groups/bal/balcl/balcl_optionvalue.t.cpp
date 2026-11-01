@@ -3268,30 +3268,34 @@ int main(int argc, const char *argv[])  {
 
         const OptionType::Enum e_INT_ARRAY = OptionType::e_INT_ARRAY;
         ASSERT(e_INT_ARRAY == INT_ARR.type()                            );
-        ASSERT(          0 == INT_ARR.the<OptionType::IntArray>().size());
+        const OptionType::IntArray& intArray =
+                 BSLS_ASSERT_CONVEYOR_REF(INT_ARR.the<OptionType::IntArray>());
+        ASSERT(          0 == intArray.size());
 
         mIntArr.the<OptionType::IntArray>().push_back(1);
         mIntArr.the<OptionType::IntArray>().push_back(2);
         mIntArr.the<OptionType::IntArray>().push_back(3);
         mIntArr.the<OptionType::IntArray>().push_back(5);
         mIntArr.the<OptionType::IntArray>().push_back(8);
-        ASSERT(5 == INT_ARR.the<OptionType::IntArray>().size());
-        ASSERT(1 == INT_ARR.the<OptionType::IntArray>()[0]    );
-        ASSERT(3 == INT_ARR.the<OptionType::IntArray>()[2]    );
-        ASSERT(8 == INT_ARR.the<OptionType::IntArray>()[4]    );
+        ASSERT(5 == intArray.size());
+        ASSERT(1 == intArray[0]    );
+        ASSERT(3 == intArray[2]    );
+        ASSERT(8 == intArray[4]    );
 
         Obj mIntArr2(&oa);  const Obj& INT_ARR2 = mIntArr2;
         mIntArr2 = INT_ARR;
         ASSERT(INT_ARR2 == INT_ARR);
+        const OptionType::IntArray& intArray2 =
+                BSLS_ASSERT_CONVEYOR_REF(INT_ARR2.the<OptionType::IntArray>());
 
-        ASSERT(5 == INT_ARR2.the<OptionType::IntArray>().size());
-        ASSERT(8 == INT_ARR2.the<OptionType::IntArray>()[4]    );
+        ASSERT(5 == intArray2.size());
+        ASSERT(8 == intArray2[4]    );
 
         mIntArr2.the<OptionType::IntArray>().resize(4);
         ASSERT(INT_ARR2 != INT_ARR);
 
-        ASSERT(4 == INT_ARR2.the<OptionType::IntArray>().size());
-        ASSERT(5 == INT_ARR2.the<OptionType::IntArray>()[3]    );
+        ASSERT(4 == intArray2.size());
+        ASSERT(5 == intArray2[3]    );
       } break;
       default: {
         cerr << "WARNING: CASE `" << test << "' NOT FOUND." << endl;

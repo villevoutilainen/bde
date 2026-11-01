@@ -297,7 +297,8 @@ bsl::ostream& operator<<(bsl::ostream&             stream,
     BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     BSLS_ASSERT_CONVEYOR_OBJECT(&adapter);
     return bdlb::PrintMethods::print(stream,
-                                     adapter.object(),
+                                     BSLS_ASSERT_CONVEYOR_REF(
+                                                            adapter.object()),
                                      adapter.level(),
                                      adapter.spacesPerLevel());
 }

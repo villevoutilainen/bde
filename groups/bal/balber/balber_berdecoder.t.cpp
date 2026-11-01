@@ -1068,7 +1068,8 @@ MyChoiceWithDefaultValues::operator=(const MyChoiceWithDefaultValues& rhs)
             makeSelection0(rhs.d_selection0.object());
           } break;
           case SELECTION_ID_SELECTION1: {
-            makeSelection1(rhs.d_selection1.object());
+            makeSelection1(BSLS_ASSERT_CONVEYOR_REF(
+                                                   rhs.d_selection1.object()));
           } break;
           case SELECTION_ID_SELECTION2: {
             makeSelection2(rhs.d_selection2.object());

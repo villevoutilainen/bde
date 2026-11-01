@@ -715,6 +715,8 @@ int bdlat_ChoiceFunctions::bdlat_choiceManipulateSelection(
 {
     BSLMF_ASSERT((bslalg::HasTrait<TYPE, bdlat_TypeTraitBasicChoice>::value));
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&manipulator);
     return object->manipulateSelection(manipulator);
 }
 
@@ -726,6 +728,8 @@ int bdlat_ChoiceFunctions::bdlat_choiceAccessSelection(const TYPE& object,
 {
     BSLMF_ASSERT((bslalg::HasTrait<TYPE, bdlat_TypeTraitBasicChoice>::value));
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&accessor);
     return object.accessSelection(accessor);
 }
 

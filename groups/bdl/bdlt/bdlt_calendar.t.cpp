@@ -1184,7 +1184,9 @@ static void reviewCount(const bsls::ReviewViolation&)
                 return date;                                          // RETURN
             }
             BSLS_ASSERT_CONVEYOR_OBJECT(&date);
-            while (calendar.isNonBusinessDay(--date));
+            do {
+                --date;
+            } while (calendar.isNonBusinessDay(date));
             return date;
         }
    };

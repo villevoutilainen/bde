@@ -1990,40 +1990,44 @@ int main(int argc, char *argv[])
         }
         for (int ii = 0; ii < 100; ++ii) {
             BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
-            ASSERT((*mV)[ii] == 3 * ii);
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(*mV)[ii] == 3 * ii);
         }
         ASSERT(da.numAllocations() == 0);
 
         BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
-        bdlma::LocalBufferedObject<bsl::deque<int> > mD(mV->begin(),
-                                                        mV->end());
+        bdlma::LocalBufferedObject<bsl::deque<int> > mD(
+                                         BSLS_ASSERT_CONVEYOR_REF(*mV).begin(),
+                                         BSLS_ASSERT_CONVEYOR_REF(*mV).end());
         for (int ii = 0; ii < 100; ++ii) {
             BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
-            ASSERT((*mV)[ii] == mD->at(ii));
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(*mV)[ii] == mD->at(ii));
         }
         ASSERT(da.numAllocations() == 0);
 
         for (int ii = 0; ii < 100; ++ii) {
             BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
-            (*mV)[ii] *= 10;
+            BSLS_ASSERT_CONVEYOR_REF(*mV)[ii] *= 10;
         }
         for (int ii = 0; ii < 100; ++ii) {
             BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
-            ASSERT(30 * ii == (*mV)[ii]);
+            ASSERT(30 * ii == BSLS_ASSERT_CONVEYOR_REF(*mV)[ii]);
             BSLS_ASSERT_CONVEYOR_OBJECT(&mD);
             BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
-            ASSERT(10 * (*mD)[ii] == (*mV)[ii]);
+            ASSERT(10 * BSLS_ASSERT_CONVEYOR_REF(*mD)[ii]
+                   == BSLS_ASSERT_CONVEYOR_REF(*mV)[ii]);
         }
 
         BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
-        mD.emplace(mV->begin(), mV->end());
+        mD.emplace(BSLS_ASSERT_CONVEYOR_REF(*mV).begin(),
+                   BSLS_ASSERT_CONVEYOR_REF(*mV).end());
 
         for (int ii = 0; ii < 100; ++ii) {
             BSLS_ASSERT_CONVEYOR_OBJECT(&mD);
-            ASSERT(30 * ii == (*mD)[ii]);
+            ASSERT(30 * ii == BSLS_ASSERT_CONVEYOR_REF(*mD)[ii]);
             BSLS_ASSERT_CONVEYOR_OBJECT(&mD);
             BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
-            ASSERT((*mD)[ii] == (*mV)[ii]);
+            ASSERT(BSLS_ASSERT_CONVEYOR_REF(*mD)[ii]
+                   == BSLS_ASSERT_CONVEYOR_REF(*mV)[ii]);
         }
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
@@ -2058,7 +2062,8 @@ int main(int argc, char *argv[])
 
         for (int jj = 0; jj < 20; ++jj) {
             BSLS_ASSERT_CONVEYOR_OBJECT(&mV2);
-            mV2->insert(mV2->end(), mL->begin(), mL->end());
+            BSLS_ASSERT_CONVEYOR_REF(*mV2).insert(BSLS_ASSERT_CONVEYOR_REF(
+                                          *mV2).end(), mL->begin(), mL->end());
         }
 
         const Int64 afterStuff = ta.numAllocations();

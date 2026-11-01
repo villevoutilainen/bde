@@ -146,37 +146,40 @@ bool veryVeryVerbose;
                     return lhs.value().typeIndex() < rhs.value().typeIndex();
                                                                       // RETURN
                 }
+                const ball::Attribute::Value& lv =
+                                         BSLS_ASSERT_CONVEYOR_REF(lhs.value());
+                const ball::Attribute::Value& rv =
+                                         BSLS_ASSERT_CONVEYOR_REF(rhs.value());
                 switch (lhs.value().typeIndex()) {
                   case 0: // unset
                     return true;                                      // RETURN
                   case 1: // int
-                    return lhs.value().the<int>() < rhs.value().the<int>();
-                                                                      // RETURN
+                    return lv.the<int>() < rv.the<int>();             // RETURN
                   case 2: // long
-                    return lhs.value().the<long>()
-                         < rhs.value().the<long>();                   // RETURN
+                    return lv.the<long>() < rv.the<long>();           // RETURN
                   case 3: // long long
-                    return lhs.value().the<long long>()
-                         < rhs.value().the<long long>();              // RETURN
+                    return lv.the<long long>() < rv.the<long long>();
+                                                                      // RETURN
                   case 4: // unsigned int
-                    return lhs.value().the<unsigned int>()
-                         < rhs.value().the<unsigned int>();
+                    return lv.the<unsigned int>() < rv.the<unsigned int>();
                                                                       // RETURN
                   case 5: // unsigned long
-                    return lhs.value().the<unsigned long>()
-                         < rhs.value().the<unsigned long>();          // RETURN
+                    return lv.the<unsigned long>() < rv.the<unsigned long>();
+                                                                      // RETURN
                   case 6: // unsigned long long
-                    return lhs.value().the<unsigned long long>()
-                         < rhs.value().the<unsigned long long>();     // RETURN
+                    return lv.the<unsigned long long>()
+                         < rv.the<unsigned long long>();
+                                                                      // RETURN
                   case 7: // string
-                   return lhs.value().the<bsl::string>()
-                        < rhs.value().the<bsl::string>();             // RETURN
+                    return lv.the<bsl::string>() < rv.the<bsl::string>();
+                                                                      // RETURN
                   case 8: // unsigned long long
-                    return lhs.value().the<unsigned long long>()
-                         < rhs.value().the<unsigned long long>();     // RETURN
+                    return lv.the<unsigned long long>()
+                         < rv.the<unsigned long long>();
+                                                                      // RETURN
                   case 9: // Guid
-                    return lhs.value().the<bdlb::Guid>()
-                         < rhs.value().the<bdlb::Guid>();             // RETURN
+                    return lv.the<bdlb::Guid>() < rv.the<bdlb::Guid>();
+                                                                      // RETURN
                 }
                 BSLS_ASSERT_OPT_UNREACHABLE("Unknown `typeIndex`");
                 return false;

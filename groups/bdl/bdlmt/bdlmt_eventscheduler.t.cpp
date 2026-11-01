@@ -3441,14 +3441,14 @@ int main(int argc, char *argv[])
 
             ASSERT(scheduledTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime);
-            ASSERT(NOW <= scheduledTime.value());
+            ASSERT(NOW <= BSLS_ASSERT_CONVEYOR_REF(scheduledTime.value()));
 
             x.rescheduleEvent(handle, T2);
 
             scheduledTime = x.scheduledEventTime(handle);
             ASSERT(scheduledTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime);
-            ASSERT(NOW <= scheduledTime.value());
+            ASSERT(NOW <= BSLS_ASSERT_CONVEYOR_REF(scheduledTime.value()));
 
             x.cancelEvent(&handle);
 
@@ -3466,14 +3466,14 @@ int main(int argc, char *argv[])
 
             ASSERT(scheduledTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime);
-            ASSERT(NOW <= scheduledTime.value());
+            ASSERT(NOW <= BSLS_ASSERT_CONVEYOR_REF(scheduledTime.value()));
 
             x.rescheduleEvent(handle, T3);
 
             scheduledTime = x.scheduledEventTime(handle);
             ASSERT(scheduledTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime);
-            ASSERT(T3 == scheduledTime.value());
+            ASSERT(T3 == BSLS_ASSERT_CONVEYOR_REF(scheduledTime.value()));
 
             x.cancelEvent(&handle);
 
@@ -3491,14 +3491,14 @@ int main(int argc, char *argv[])
 
             ASSERT(scheduledTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime);
-            ASSERT(T3 == scheduledTime.value());
+            ASSERT(T3 == BSLS_ASSERT_CONVEYOR_REF(scheduledTime.value()));
 
             x.rescheduleEvent(handle, T1);
 
             scheduledTime = x.scheduledEventTime(handle);
             ASSERT(scheduledTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime);
-            ASSERT(NOW <= scheduledTime.value());
+            ASSERT(NOW <= BSLS_ASSERT_CONVEYOR_REF(scheduledTime.value()));
 
             x.cancelEvent(&handle);
 
@@ -3518,7 +3518,8 @@ int main(int argc, char *argv[])
 
             ASSERT(scheduledTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime);
-            ASSERT(NOW + INTERVAL <= scheduledTime.value());
+            ASSERT(NOW + INTERVAL <= BSLS_ASSERT_CONVEYOR_REF(
+                                                       scheduledTime.value()));
 
             x.cancelEvent(&handle);
 
@@ -3543,21 +3544,24 @@ int main(int argc, char *argv[])
 
             ASSERT(scheduledTime1.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime1);
-            ASSERT(TEVENT1 == scheduledTime1.value());
+            ASSERT(TEVENT1
+                   == BSLS_ASSERT_CONVEYOR_REF(scheduledTime1.value()));
 
             bsl::optional<bsls::TimeInterval> scheduledTime2 =
                                                  x.scheduledEventTime(handle2);
 
             ASSERT(scheduledTime2.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime2);
-            ASSERT(TEVENT2 == scheduledTime2.value());
+            ASSERT(TEVENT2
+                   == BSLS_ASSERT_CONVEYOR_REF(scheduledTime2.value()));
 
             bsl::optional<bsls::TimeInterval> scheduledTime3 =
                                                  x.scheduledEventTime(handle3);
 
             ASSERT(scheduledTime3.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime3);
-            ASSERT(TEVENT3 == scheduledTime3.value());
+            ASSERT(TEVENT3
+                   == BSLS_ASSERT_CONVEYOR_REF(scheduledTime3.value()));
         }
         {
             Obj x;
@@ -3579,14 +3583,14 @@ int main(int argc, char *argv[])
 
             ASSERT(scheduledTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime);
-            ASSERT(T3 == scheduledTime.value());
+            ASSERT(T3 == BSLS_ASSERT_CONVEYOR_REF(scheduledTime.value()));
 
             bsl::optional<bsls::TimeInterval> recurringTime =
                                          x.scheduledEventTime(recurringHandle);
 
             ASSERT(recurringTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&recurringTime);
-            ASSERT(T3 == recurringTime.value());
+            ASSERT(T3 == BSLS_ASSERT_CONVEYOR_REF(recurringTime.value()));
 
             // Sleep at least long enough to let events trigger
             microSleep(0, static_cast<int>((T3 - NOW).seconds() + 1));
@@ -3596,14 +3600,15 @@ int main(int argc, char *argv[])
 
             ASSERT(scheduledTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&scheduledTime);
-            ASSERT(T3 == scheduledTime.value());
+            ASSERT(T3 == BSLS_ASSERT_CONVEYOR_REF(scheduledTime.value()));
 
             // Recurring event returns updated value
             recurringTime = x.scheduledEventTime(recurringHandle);
 
             ASSERT(recurringTime.has_value());
             BSLS_ASSERT_CONVEYOR_OBJECT(&recurringTime);
-            ASSERT(T3 + LONG_INTERVAL >= recurringTime.value());
+            ASSERT(T3 + LONG_INTERVAL >= BSLS_ASSERT_CONVEYOR_REF(
+                                                       recurringTime.value()));
 
             x.stop();
         }

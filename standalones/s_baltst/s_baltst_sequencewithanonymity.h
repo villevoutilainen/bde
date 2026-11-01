@@ -190,7 +190,8 @@ class SequenceWithAnonymityChoice1 {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template <typename t_MANIPULATOR>
-    int manipulateSelection(t_MANIPULATOR& manipulator);
+    int manipulateSelection(t_MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Selection5" selection of this
     /// object if "Selection5" is the current selection.  The behavior is
@@ -230,7 +231,8 @@ class SequenceWithAnonymityChoice1 {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template <typename t_ACCESSOR>
-    int accessSelection(t_ACCESSOR& accessor) const;
+    int accessSelection(t_ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Selection5" selection of
     /// this object if "Selection5" is the current selection.  The behavior
@@ -475,7 +477,8 @@ class SequenceWithAnonymityChoice {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template <typename t_MANIPULATOR>
-    int manipulateSelection(t_MANIPULATOR& manipulator);
+    int manipulateSelection(t_MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Selection1" selection of this
     /// object if "Selection1" is the current selection.  The behavior is
@@ -527,7 +530,8 @@ class SequenceWithAnonymityChoice {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template <typename t_ACCESSOR>
-    int accessSelection(t_ACCESSOR& accessor) const;
+    int accessSelection(t_ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Selection1" selection of
     /// this object if "Selection1" is the current selection.  The behavior
@@ -765,7 +769,8 @@ class SequenceWithAnonymityChoice2 {
     /// invocation of `manipulator` if this object has a defined selection,
     /// and -1 otherwise.
     template <typename t_MANIPULATOR>
-    int manipulateSelection(t_MANIPULATOR& manipulator);
+    int manipulateSelection(t_MANIPULATOR& manipulator)
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the modifiable "Selection7" selection of this
     /// object if "Selection7" is the current selection.  The behavior is
@@ -805,7 +810,8 @@ class SequenceWithAnonymityChoice2 {
     /// structure.  Return the value returned from the invocation of
     /// `accessor` if this object has a defined selection, and -1 otherwise.
     template <typename t_ACCESSOR>
-    int accessSelection(t_ACCESSOR& accessor) const;
+    int accessSelection(t_ACCESSOR& accessor) const
+                                     BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return a reference to the non-modifiable "Selection7" selection of
     /// this object if "Selection7" is the current selection.  The behavior
