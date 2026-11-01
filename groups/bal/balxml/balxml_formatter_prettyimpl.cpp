@@ -267,6 +267,7 @@ void Formatter_PrettyImplUtil::addListDataImpl(bsl::ostream&            stream,
 bsl::ostream& Formatter_PrettyImplUtil::addBlankLine(bsl::ostream&  stream,
                                                      State         *state)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
 
@@ -300,6 +301,8 @@ bsl::ostream& Formatter_PrettyImplUtil::addComment(
                                          const bsl::string_view&  comment,
                                          bool                     forceNewline)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&comment);
     const bsl::string_view openMarker  = "<!-- ";
     const bsl::string_view closeMarker = " -->";
 
@@ -343,6 +346,7 @@ bsl::ostream& Formatter_PrettyImplUtil::addHeader(
 bsl::ostream& Formatter_PrettyImplUtil::addNewline(bsl::ostream&  stream,
                                                    State         *state)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
 
@@ -471,6 +475,7 @@ bsl::ostream& Formatter_PrettyImplUtil::closeElement(
 bsl::ostream& Formatter_PrettyImplUtil::flush(bsl::ostream&  stream,
                                               State         *state)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
 

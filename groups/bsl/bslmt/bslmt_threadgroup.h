@@ -123,8 +123,7 @@ class ThreadGroup {
 
     /// Add the specified `handle` to the `d_threads` container.  If an
     /// exception is thrown, `handle` will be released.
-    void addThread(const ThreadUtil::Handle& handle)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void addThread(const ThreadUtil::Handle& handle);
 
   private:
     // not implemented
@@ -153,11 +152,10 @@ class ThreadGroup {
     /// `void operator()()`.  Note that threads are always created joinable,
     /// regardless of the mode specified in `attributes`.
     template <class INVOKABLE>
-    int addThread(const INVOKABLE& functor) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addThread(const INVOKABLE& functor);
     template <class INVOKABLE>
     int addThread(const INVOKABLE&        functor,
-                  const ThreadAttributes& attributes)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                  const ThreadAttributes& attributes);
 
     /// Begin executing the specified invokable `functor` in the specified
     /// new `numThreads`, using the optionally specified thread
@@ -167,13 +165,11 @@ class ThreadGroup {
     /// `void operator()()`.  Note that threads are always created joinable,
     /// regardless of the mode specified in `attributes`.
     template <class INVOKABLE>
-    int addThreads(const INVOKABLE& functor, int numThreads)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addThreads(const INVOKABLE& functor, int numThreads);
     template <class INVOKABLE>
     int addThreads(const INVOKABLE&        functor,
                    int                     numThreads,
-                   const ThreadAttributes& attributes)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                   const ThreadAttributes& attributes);
 
     /// Block the calling thread until all threads started in this group
     /// have finished executing.
@@ -199,6 +195,8 @@ template<class INVOKABLE>
 inline
 int ThreadGroup::addThread(const INVOKABLE& functor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&functor);
     return addThread(functor, ThreadAttributes());
 }
 
@@ -206,6 +204,8 @@ template<class INVOKABLE>
 inline
 int ThreadGroup::addThreads(const INVOKABLE& functor, int numThreads)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&functor);
     return addThreads(functor, numThreads, ThreadAttributes());
 }
 
@@ -213,6 +213,9 @@ template<class INVOKABLE>
 int ThreadGroup::addThread(const INVOKABLE&        functor,
                            const ThreadAttributes& attributes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&functor);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
     ThreadUtil::Handle handle;
     int rc = 1;
     if (ThreadAttributes::e_CREATE_JOINABLE != attributes.detachedState()) {
@@ -243,6 +246,9 @@ int ThreadGroup::addThreads(const INVOKABLE&        functor,
                             int                     numThreads,
                             const ThreadAttributes& attributes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&functor);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
     BSLS_ASSERT(0 <= numThreads);
 
     int numAdded;

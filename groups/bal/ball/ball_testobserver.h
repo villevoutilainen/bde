@@ -288,15 +288,13 @@ class TestObserver : public Observer {
     /// test observer.  The behavior is undefined unless `publish` has been
     /// called at least once, and no other thread is manipulating this
     /// object concurrently (i.e., this function is *not* thread safe).
-    const Context& lastPublishedContext() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Context& lastPublishedContext() const;
 
     /// Return a reference to the record most recently published by this
     /// test observer.  The behavior is undefined unless `publish` has been
     /// called at least once, and no other thread is manipulating this
     /// object concurrently (i.e., this function is *not* thread safe).
-    const Record& lastPublishedRecord() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Record& lastPublishedRecord() const;
 
     /// Return the total number of records that this test observer has
     /// published.
@@ -378,6 +376,7 @@ int TestObserver::id() const
 inline
 const Context& TestObserver::lastPublishedContext() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     return d_context;
 }
@@ -385,6 +384,7 @@ const Context& TestObserver::lastPublishedContext() const
 inline
 const Record& TestObserver::lastPublishedRecord() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     return d_record;
 }

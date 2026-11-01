@@ -319,9 +319,7 @@ class Utf8ReaderWrapper : public Reader {
     int doOpen(const char *url, const char *encoding);
 
     /// Return a pointer providing modifiable access to the held `Reader`.
-    Reader *heldReader()
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    Reader *heldReader();
 
     /// Called when a UTF-8 error is encountered, to make `d_errorInfo` into
     /// a combination of `heldReader()->errorInfo()` and the nature of the
@@ -334,9 +332,7 @@ class Utf8ReaderWrapper : public Reader {
 
     /// Return a pointer providing non-modifiable access to the held
     /// `Reader`.
-    const Reader *heldReader() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    const Reader *heldReader() const;
 
   public:
     // CREATORS
@@ -644,6 +640,7 @@ class Utf8ReaderWrapper : public Reader {
 inline
 Reader *Utf8ReaderWrapper::heldReader()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_reader_p;
 }
 
@@ -651,6 +648,7 @@ Reader *Utf8ReaderWrapper::heldReader()
 inline
 const Reader *Utf8ReaderWrapper::heldReader() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_reader_p;
 }
 

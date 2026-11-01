@@ -1656,8 +1656,7 @@ class Log_Stream {
     /// Return the address of the modifiable log record held by this logging
     /// stream.  The address remains valid until this logging stream is
     /// destroyed.
-    Record *record()
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    Record *record();
 
     /// Return a reference to the modifiable stream held by this logging
     /// stream.  The reference remains valid until this logging stream is
@@ -1673,8 +1672,7 @@ class Log_Stream {
     /// Return the address of the non-modifiable log record held by this
     /// logging stream.  The address remains valid until this logging stream
     /// is destroyed.
-    const Record *record() const
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    const Record *record() const;
 
     /// Return the severity held by this logging stream.
     int severity() const;

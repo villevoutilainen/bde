@@ -198,8 +198,7 @@ class OccurrenceInfo {
     // ACCESSORS
 
     /// Return a `const` reference to the default value of this object.
-    const OptionValue& defaultValue() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const OptionValue& defaultValue() const;
 
     /// Return `true` if this object has a default value, and `false`
     /// otherwise.

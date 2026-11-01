@@ -386,18 +386,15 @@ class EncoderOptions {
 
     /// Return a reference offering non-modifiable access to the
     /// "ObjectNamespace" attribute of this object.
-    const bsl::string& objectNamespace() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& objectNamespace() const;
 
     /// Return a reference offering non-modifiable access to the
     /// "SchemaLocation" attribute of this object.
-    const bsl::string& schemaLocation() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& schemaLocation() const;
 
     /// Return a reference offering non-modifiable access to the "Tag"
     /// attribute of this object.
-    const bsl::string& tag() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& tag() const;
 
     /// Return the value of the "FormattingMode" attribute of this object.
     int formattingMode() const;
@@ -414,18 +411,15 @@ class EncoderOptions {
 
     /// Return a reference offering non-modifiable access to the
     /// "MaxDecimalTotalDigits" attribute of this object.
-    const bdlb::NullableValue<int>& maxDecimalTotalDigits() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<int>& maxDecimalTotalDigits() const;
 
     /// Return a reference offering non-modifiable access to the
     /// "MaxDecimalFractionDigits" attribute of this object.
-    const bdlb::NullableValue<int>& maxDecimalFractionDigits() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<int>& maxDecimalFractionDigits() const;
 
     /// Return a reference offering non-modifiable access to the
     /// "SignificantDoubleDigits" attribute of this object.
-    const bdlb::NullableValue<int>& significantDoubleDigits() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<int>& significantDoubleDigits() const;
 
     /// Return the value of the "EncodingStyle" attribute of this object.
     EncodingStyle::Value encodingStyle() const;
@@ -915,18 +909,21 @@ int EncoderOptions::accessAttribute(
 inline
 const bsl::string& EncoderOptions::objectNamespace() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_objectNamespace;
 }
 
 inline
 const bsl::string& EncoderOptions::schemaLocation() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_schemaLocation;
 }
 
 inline
 const bsl::string& EncoderOptions::tag() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_tag;
 }
 
@@ -957,18 +954,21 @@ int EncoderOptions::wrapColumn() const
 inline
 const bdlb::NullableValue<int>& EncoderOptions::maxDecimalTotalDigits() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_maxDecimalTotalDigits;
 }
 
 inline
 const bdlb::NullableValue<int>& EncoderOptions::maxDecimalFractionDigits() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_maxDecimalFractionDigits;
 }
 
 inline
 const bdlb::NullableValue<int>& EncoderOptions::significantDoubleDigits() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_significantDoubleDigits;
 }
 

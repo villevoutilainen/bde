@@ -211,9 +211,7 @@ struct DatetimeUtil {
     /// to succeed with the `result` "rolling over" into the zeroth second
     /// of next minute.  Note that time zones are irrelevant for this
     /// conversion.
-    static int convertFromTm(Datetime *result, const bsl::tm& timeStruct)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(timeStruct);
+    static int convertFromTm(Datetime *result, const bsl::tm& timeStruct);
 
     /// Return or load into the specified `result` the value of the
     /// specified `datetime` expressed as a `bsl::tm`.  Each field in the
@@ -221,11 +219,8 @@ struct DatetimeUtil {
     /// `-1` to indicate that no information on daylight saving time is
     /// available.  A time value of 24:00:00:00 will be converted to
     /// 0:00:00.  Note that time zones are irrelevant for this conversion.
-    static bsl::tm convertToTm(                 const Datetime& datetime)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(datetime);
-    static void    convertToTm(bsl::tm *result, const Datetime& datetime)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(datetime);
+    static bsl::tm convertToTm(                 const Datetime& datetime);
+    static void    convertToTm(bsl::tm *result, const Datetime& datetime);
 
     /// Return an `optional` having a `Datetime` with the specified `year`,
     /// `month`, `day`, `hour`, `minute`, `second`, and the optionally
@@ -254,6 +249,8 @@ inline
 int DatetimeUtil::convertFromTm(Datetime       *result,
                                 const bsl::tm&  timeStruct)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeStruct);
     BSLS_ASSERT(result);
 
     bool isLeapSecond = false;
@@ -285,6 +282,7 @@ int DatetimeUtil::convertFromTm(Datetime       *result,
 inline
 bsl::tm DatetimeUtil::convertToTm(const Datetime& datetime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&datetime);
 
     // 'struct tm' may contain non POSIX standard fields (e.g., on Linux/OSX),
     // which we want to 0 initialize.
@@ -313,6 +311,8 @@ bsl::tm DatetimeUtil::convertToTm(const Datetime& datetime)
 inline
 void DatetimeUtil::convertToTm(bsl::tm *result, const Datetime& datetime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&datetime);
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(result);
 
     *result = convertToTm(datetime);

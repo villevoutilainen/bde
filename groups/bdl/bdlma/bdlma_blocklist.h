@@ -243,23 +243,22 @@ class BlockList {
     /// `size` (in bytes).  If `size` is 0, no memory is allocated and 0 is
     /// returned.  The returned memory is guaranteed to be maximally
     /// aligned.
-    void *allocate(bsls::Types::size_type size)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type size);
 
     /// Return the memory at the specified `address` back to the associated
     /// allocator.  If `address` is 0, this function has no effect.  The
     /// behavior is undefined unless `address` was allocated by this object,
     /// and has not already been deallocated.
-    void deallocate(void *address) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address);
 
     /// Deallocate all memory blocks currently managed by this object,
     /// returning it to its default-constructed state.
-    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void release();
 
                                   // Aspects
 
     /// Return the allocator used by this object to allocate memory.
-    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bslma::Allocator *allocator() const;
 };
 
 // ============================================================================
@@ -284,6 +283,7 @@ BlockList::BlockList(bslma::Allocator *basicAllocator)
 inline
 bslma::Allocator *BlockList::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_allocator_p;
 }
 

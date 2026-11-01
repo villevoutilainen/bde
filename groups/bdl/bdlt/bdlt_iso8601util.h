@@ -771,48 +771,37 @@ struct Iso8601Util {
     /// this component (counting a null terminator, if any).
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
-                        const bsls::TimeInterval&        object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const bsls::TimeInterval&        object);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
                         const bsls::TimeInterval&        object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
-                        const Date&                      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Date&                      object);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
                         const Date&                      object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
-                        const Time&                      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Time&                      object);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
                         const Time&                      object,
                         const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
     BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
-                        const Datetime&                  object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Datetime&                  object);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
                         const Datetime&                  object,
                         const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
     BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
-                        const DateTz&                    object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DateTz&                    object);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
                         const DateTz&                    object,
@@ -821,8 +810,7 @@ struct Iso8601Util {
     BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
-                        const TimeTz&                    object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const TimeTz&                    object);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
                         const TimeTz&                    object,
@@ -831,8 +819,7 @@ struct Iso8601Util {
     BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
-                        const DatetimeTz&                object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DatetimeTz&                object);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
                         const DatetimeTz&                object,
@@ -841,8 +828,7 @@ struct Iso8601Util {
     BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
-                        const DateOrDateTz&              object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DateOrDateTz&              object);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
                         const DateOrDateTz&              object,
@@ -851,8 +837,7 @@ struct Iso8601Util {
     BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
-                        const TimeOrTimeTz&              object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const TimeOrTimeTz&              object);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
                         const TimeOrTimeTz&              object,
@@ -861,8 +846,7 @@ struct Iso8601Util {
     BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
-                        const DatetimeOrDatetimeTz&      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DatetimeOrDatetimeTz&      object);
     static int generate(char                            *buffer,
                         ssize_t                          bufferLength,
                         const DatetimeOrDatetimeTz&      object,
@@ -871,205 +855,105 @@ struct Iso8601Util {
     BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
 
     static int generate(bsl::string                     *string,
-                        const bsls::TimeInterval&        object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const bsls::TimeInterval&        object);
     static int generate(bsl::string                     *string,
                         const bsls::TimeInterval&        object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(bsl::string                     *string,
-                        const Date&                      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Date&                      object);
     static int generate(bsl::string                     *string,
                         const Date&                      object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(bsl::string                     *string,
-                        const Time&                      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Time&                      object);
     static int generate(bsl::string                     *string,
                         const Time&                      object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(bsl::string                     *string,
-                        const Datetime&                  object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Datetime&                  object);
     static int generate(bsl::string                     *string,
                         const Datetime&                  object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(bsl::string                     *string,
-                        const DateTz&                    object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DateTz&                    object);
     static int generate(bsl::string                     *string,
                         const DateTz&                    object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(bsl::string                     *string,
-                        const TimeTz&                    object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const TimeTz&                    object);
     static int generate(bsl::string                     *string,
                         const TimeTz&                    object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(bsl::string                     *string,
-                        const DatetimeTz&                object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DatetimeTz&                object);
     static int generate(bsl::string                     *string,
                         const DatetimeTz&                object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(bsl::string                     *string,
-                        const DateOrDateTz&              object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DateOrDateTz&              object);
     static int generate(bsl::string                     *string,
                         const DateOrDateTz&              object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(bsl::string                     *string,
-                        const TimeOrTimeTz&              object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const TimeOrTimeTz&              object);
     static int generate(bsl::string                     *string,
                         const TimeOrTimeTz&              object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(bsl::string                     *string,
-                        const DatetimeOrDatetimeTz&      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DatetimeOrDatetimeTz&      object);
     static int generate(bsl::string                     *string,
                         const DatetimeOrDatetimeTz&      object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::string                     *string,
-                        const bsls::TimeInterval&        object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const bsls::TimeInterval&        object);
     static int generate(std::string                     *string,
                         const bsls::TimeInterval&        object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::string                     *string,
-                        const Date&                      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Date&                      object);
     static int generate(std::string                     *string,
                         const Date&                      object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::string                     *string,
-                        const Time&                      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Time&                      object);
     static int generate(std::string                     *string,
                         const Time&                      object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::string                     *string,
-                        const Datetime&                  object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Datetime&                  object);
     static int generate(std::string                     *string,
                         const Datetime&                  object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::string                     *string,
-                        const DateTz&                    object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DateTz&                    object);
     static int generate(std::string                     *string,
                         const DateTz&                    object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::string                     *string,
-                        const TimeTz&                    object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const TimeTz&                    object);
     static int generate(std::string                     *string,
                         const TimeTz&                    object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::string                     *string,
-                        const DatetimeTz&                object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DatetimeTz&                object);
     static int generate(std::string                     *string,
                         const DatetimeTz&                object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::string                     *string,
-                        const DateOrDateTz&              object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DateOrDateTz&              object);
     static int generate(std::string                     *string,
                         const DateOrDateTz&              object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::string                     *string,
-                        const TimeOrTimeTz&              object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const TimeOrTimeTz&              object);
     static int generate(std::string                     *string,
                         const TimeOrTimeTz&              object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::string                     *string,
-                        const DatetimeOrDatetimeTz&      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DatetimeOrDatetimeTz&      object);
     static int generate(std::string                     *string,
                         const DatetimeOrDatetimeTz&      object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
     /// Load the ISO 8601 representation of the specified `object` into the
@@ -1081,105 +965,55 @@ struct Iso8601Util {
     /// the number of characters in the formatted string.  The previous
     /// contents of `string` (if any) are discarded.
     static int generate(std::pmr::string                *string,
-                        const bsls::TimeInterval&        object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const bsls::TimeInterval&        object);
     static int generate(std::pmr::string                *string,
                         const bsls::TimeInterval&        object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::pmr::string                *string,
-                        const Date&                      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Date&                      object);
     static int generate(std::pmr::string                *string,
                         const Date&                      object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::pmr::string                *string,
-                        const Time&                      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Time&                      object);
     static int generate(std::pmr::string                *string,
                         const Time&                      object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::pmr::string                *string,
-                        const Datetime&                  object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const Datetime&                  object);
     static int generate(std::pmr::string                *string,
                         const Datetime&                  object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::pmr::string                *string,
-                        const DateTz&                    object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DateTz&                    object);
     static int generate(std::pmr::string                *string,
                         const DateTz&                    object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::pmr::string                *string,
-                        const TimeTz&                    object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const TimeTz&                    object);
     static int generate(std::pmr::string                *string,
                         const TimeTz&                    object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::pmr::string                *string,
-                        const DatetimeTz&                object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DatetimeTz&                object);
     static int generate(std::pmr::string                *string,
                         const DatetimeTz&                object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::pmr::string                *string,
-                        const DateOrDateTz&              object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DateOrDateTz&              object);
     static int generate(std::pmr::string                *string,
                         const DateOrDateTz&              object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::pmr::string                *string,
-                        const TimeOrTimeTz&              object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const TimeOrTimeTz&              object);
     static int generate(std::pmr::string                *string,
                         const TimeOrTimeTz&              object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
     static int generate(std::pmr::string                *string,
-                        const DatetimeOrDatetimeTz&      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        const DatetimeOrDatetimeTz&      object);
     static int generate(std::pmr::string                *string,
                         const DatetimeOrDatetimeTz&      object,
-                        const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                        const GenerateConfiguration&     configuration);
 #endif
 
     /// Write the ISO 8601 representation of the specified `object` to the
@@ -1190,124 +1024,74 @@ struct Iso8601Util {
     /// a reference to `stream`.  Note that `stream` is not null terminated.
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
-                                const bsls::TimeInterval&       object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                const bsls::TimeInterval&       object);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
                                 const bsls::TimeInterval&       object,
-                                const GenerateConfiguration&    configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                                const GenerateConfiguration&    configuration);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
-                                const Date&                     object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                const Date&                     object);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
                                 const Date&                     object,
-                                const GenerateConfiguration&    configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                                const GenerateConfiguration&    configuration);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
-                                const Time&                     object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                const Time&                     object);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
                                 const Time&                     object,
-                                const GenerateConfiguration&    configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                                const GenerateConfiguration&    configuration);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
-                                const Datetime&                 object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                const Datetime&                 object);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
                                 const Datetime&                 object,
-                                const GenerateConfiguration&    configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                                const GenerateConfiguration&    configuration);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
-                                const DateTz&                   object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                const DateTz&                   object);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
                                 const DateTz&                   object,
-                                const GenerateConfiguration&    configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                                const GenerateConfiguration&    configuration);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
-                                const TimeTz&                   object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                const TimeTz&                   object);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
                                 const TimeTz&                   object,
-                                const GenerateConfiguration&    configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                                const GenerateConfiguration&    configuration);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
-                                const DatetimeTz&               object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                const DatetimeTz&               object);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
                                 const DatetimeTz&               object,
-                                const GenerateConfiguration&    configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                                const GenerateConfiguration&    configuration);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
-                                const DateOrDateTz&             object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                const DateOrDateTz&             object);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
                                 const DateOrDateTz&             object,
-                                const GenerateConfiguration&    configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                                const GenerateConfiguration&    configuration);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
-                                const TimeOrTimeTz&             object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                const TimeOrTimeTz&             object);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
                                 const TimeOrTimeTz&             object,
-                                const GenerateConfiguration&    configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                                const GenerateConfiguration&    configuration);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
-                                const DatetimeOrDatetimeTz&     object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                const DatetimeOrDatetimeTz&     object);
     static bsl::ostream& generate(
                                 bsl::ostream&                   stream,
                                 const DatetimeOrDatetimeTz&     object,
-                                const GenerateConfiguration&    configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                                const GenerateConfiguration&    configuration);
 
     /// Write the ISO 8601 representation of the specified `object` to the
     /// specified `buffer`.  Optionally specify a `configuration` to affect
@@ -1320,85 +1104,55 @@ struct Iso8601Util {
     /// is large enough to hold any string generated by this component
     /// (counting a null terminator, if any).
     static int generateRaw(char                            *buffer,
-                           const bsls::TimeInterval&        object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           const bsls::TimeInterval&        object);
     static int generateRaw(char                            *buffer,
                            const bsls::TimeInterval&        object,
-                           const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                           const GenerateConfiguration&     configuration);
     static int generateRaw(char                            *buffer,
-                           const Date&                      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           const Date&                      object);
     static int generateRaw(char                            *buffer,
                            const Date&                      object,
-                           const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                           const GenerateConfiguration&     configuration);
     static int generateRaw(char                            *buffer,
-                           const Time&                      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           const Time&                      object);
     static int generateRaw(char                            *buffer,
                            const Time&                      object,
-                           const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                           const GenerateConfiguration&     configuration);
     static int generateRaw(char                            *buffer,
-                           const Datetime&                  object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           const Datetime&                  object);
     static int generateRaw(char                            *buffer,
                            const Datetime&                  object,
-                           const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                           const GenerateConfiguration&     configuration);
     static int generateRaw(char                            *buffer,
-                           const DateTz&                    object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           const DateTz&                    object);
     static int generateRaw(char                            *buffer,
                            const DateTz&                    object,
-                           const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                           const GenerateConfiguration&     configuration);
     static int generateRaw(char                            *buffer,
-                           const TimeTz&                    object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           const TimeTz&                    object);
     static int generateRaw(char                            *buffer,
                            const TimeTz&                    object,
-                           const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                           const GenerateConfiguration&     configuration);
     static int generateRaw(char                            *buffer,
-                           const DatetimeTz&                object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           const DatetimeTz&                object);
     static int generateRaw(char                            *buffer,
                            const DatetimeTz&                object,
-                           const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                           const GenerateConfiguration&     configuration);
     static int generateRaw(char                            *buffer,
-                           const DateOrDateTz&              object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           const DateOrDateTz&              object);
     static int generateRaw(char                            *buffer,
                            const DateOrDateTz&              object,
-                           const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                           const GenerateConfiguration&     configuration);
     static int generateRaw(char                            *buffer,
-                           const TimeOrTimeTz&              object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           const TimeOrTimeTz&              object);
     static int generateRaw(char                            *buffer,
                            const TimeOrTimeTz&              object,
-                           const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                           const GenerateConfiguration&     configuration);
     static int generateRaw(char                            *buffer,
-                           const DatetimeOrDatetimeTz&      object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           const DatetimeOrDatetimeTz&      object);
     static int generateRaw(char                            *buffer,
                            const DatetimeOrDatetimeTz&      object,
-                           const GenerateConfiguration&     configuration)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(configuration);
+                           const GenerateConfiguration&     configuration);
 
     /// Parse the specified initial `length` characters of the specified ISO
     /// 8601 `string` as a `bsls::TimeInterval` value, and load the value
@@ -1419,8 +1173,7 @@ struct Iso8601Util {
     /// unless `0 <= length`.
     static int parse(bsls::TimeInterval *result,
                      const char         *string,
-                     ssize_t             length)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                     ssize_t             length);
 
     /// Parse the specified initial `length` characters of the specified ISO
     /// 8601 `string` as a `Date` value, and load the value into the
@@ -1439,8 +1192,7 @@ struct Iso8601Util {
     static int parse(Date               *result,
                      const char         *string,
                      ssize_t             length,
-                     ParseConfiguration  configuration = ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                     ParseConfiguration  configuration = ParseConfiguration());
 
     /// Parse the specified initial `length` characters of the specified ISO
     /// 8601 `string` as a `Time` value, and load the value into the
@@ -1468,8 +1220,7 @@ struct Iso8601Util {
     static int parse(Time               *result,
                      const char         *string,
                      ssize_t             length,
-                     ParseConfiguration  configuration = ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                     ParseConfiguration  configuration = ParseConfiguration());
 
     /// Parse the specified initial `length` characters of the specified ISO
     /// 8601 `string` as a `Datetime` value, and load the value into the
@@ -1497,8 +1248,7 @@ struct Iso8601Util {
     static int parse(Datetime           *result,
                      const char         *string,
                      ssize_t             length,
-                     ParseConfiguration  configuration = ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                     ParseConfiguration  configuration = ParseConfiguration());
 
     /// Parse the specified initial `length` characters of the specified ISO
     /// 8601 `string` as a `DateTz` value, and load the value into the
@@ -1517,8 +1267,7 @@ struct Iso8601Util {
     static int parse(DateTz             *result,
                      const char         *string,
                      ssize_t             length,
-                     ParseConfiguration  configuration = ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                     ParseConfiguration  configuration = ParseConfiguration());
 
     /// Parse the specified initial `length` characters of the specified ISO
     /// 8601 `string` as a `TimeTz` value, and load the value into the
@@ -1544,8 +1293,7 @@ struct Iso8601Util {
     static int parse(TimeTz             *result,
                      const char         *string,
                      ssize_t             length,
-                     ParseConfiguration  configuration = ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                     ParseConfiguration  configuration = ParseConfiguration());
 
     /// Parse the specified initial `length` characters of the specified ISO
     /// 8601 `string` as a `DatetimeTz` value, and load the value into the
@@ -1571,8 +1319,7 @@ struct Iso8601Util {
     static int parse(DatetimeTz         *result,
                      const char         *string,
                      ssize_t             length,
-                     ParseConfiguration  configuration = ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                     ParseConfiguration  configuration = ParseConfiguration());
 
     /// Parse the specified initial `length` characters of the specified ISO
     /// 8601 `string` as a `Date` or `DateTz` value, depending on the
@@ -1593,8 +1340,7 @@ struct Iso8601Util {
     static int parse(DateOrDateTz       *result,
                      const char         *string,
                      ssize_t             length,
-                     ParseConfiguration  configuration = ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                     ParseConfiguration  configuration = ParseConfiguration());
 
     /// Parse the specified initial `length` characters of the specified ISO
     /// 8601 `string` as a `Time` or `TimeTz` value, depending on the
@@ -1622,8 +1368,7 @@ struct Iso8601Util {
     static int parse(TimeOrTimeTz       *result,
                      const char         *string,
                      ssize_t             length,
-                     ParseConfiguration  configuration = ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                     ParseConfiguration  configuration = ParseConfiguration());
 
     /// Parse the specified initial `length` characters of the specified ISO
     /// 8601 `string` as a `Datetime` or  `DatetimeTz` value, depending on
@@ -1652,8 +1397,7 @@ struct Iso8601Util {
                      const char           *string,
                      ssize_t               length,
                      ParseConfiguration    configuration =
-                                                         ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                                                         ParseConfiguration());
 
     /// Parse the specified ISO 8601 `string` as a `bsls::TimeInterval`
     /// value, and load the value into the specified `result`.  Return 0 on
@@ -1673,7 +1417,6 @@ struct Iso8601Util {
     /// behavior is undefined unless `0 <= length`.
     static int parse(bsls::TimeInterval      *result,
                      const bsl::string_view&  string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified ISO 8601 `string` as a `Date` value, and load
@@ -1694,7 +1437,6 @@ struct Iso8601Util {
                      const bsl::string_view&  string,
                      ParseConfiguration       configuration =
                                                          ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified ISO 8601 `string` as a `Time` value, and load
@@ -1725,7 +1467,6 @@ struct Iso8601Util {
                      const bsl::string_view&  string,
                      ParseConfiguration       configuration =
                                                          ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified ISO 8601 `string` as a `Datetime` value, and
@@ -1756,7 +1497,6 @@ struct Iso8601Util {
                      const bsl::string_view&  string,
                      ParseConfiguration       configuration =
                                                          ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified ISO 8601 `string` as a `DateTz` value, and load
@@ -1777,7 +1517,6 @@ struct Iso8601Util {
                      const bsl::string_view&  string,
                      ParseConfiguration       configuration =
                                                          ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified ISO 8601 `string` as a `TimeTz` value, and load
@@ -1806,7 +1545,6 @@ struct Iso8601Util {
                      const bsl::string_view&  string,
                      ParseConfiguration       configuration =
                                                          ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified ISO 8601 `string` as a `DatetimeTz` value, and
@@ -1835,7 +1573,6 @@ struct Iso8601Util {
                      const bsl::string_view&  string,
                      ParseConfiguration       configuration =
                                                          ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified ISO 8601 `string` as a `Date` or `DateTz` value,
@@ -1857,7 +1594,6 @@ struct Iso8601Util {
                      const bsl::string_view&  string,
                      ParseConfiguration       configuration =
                                                          ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified ISO 8601 `string` as a `Time` or `TimeTz` value,
@@ -1887,7 +1623,6 @@ struct Iso8601Util {
                      const bsl::string_view&  string,
                      ParseConfiguration       configuration =
                                                          ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified ISO 8601 `string` as a `Datetime` or
@@ -1918,7 +1653,6 @@ struct Iso8601Util {
                      const bsl::string_view&  string,
                      ParseConfiguration       configuration =
                                                          ParseConfiguration())
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
@@ -1955,8 +1689,7 @@ struct Iso8601Util {
     BDLT_ISO8601UTIL_DEPRECATE_PARSERELAXED
     static int parseRelaxed(Datetime   *result,
                             const char *string,
-                            ssize_t     length)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                            ssize_t     length);
 
     /// Parse the specified initial `length` characters of the specified
     /// "relaxed" ISO 8601 `string` as a `DatetimeTz` value, and load the
@@ -1987,8 +1720,7 @@ struct Iso8601Util {
     BDLT_ISO8601UTIL_DEPRECATE_PARSERELAXED
     static int parseRelaxed(DatetimeTz *result,
                             const char *string,
-                            ssize_t     length)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                            ssize_t     length);
 
     /// Parse the specified initial `length` characters of the specified
     /// "relaxed" ISO 8601 `string` as a `Datetime` or `DatetimeTz` value,
@@ -2021,8 +1753,7 @@ struct Iso8601Util {
     BDLT_ISO8601UTIL_DEPRECATE_PARSERELAXED
     static int parseRelaxed(DatetimeOrDatetimeTz *result,
                             const char           *string,
-                            ssize_t               length)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+                            ssize_t               length);
 
     /// Parse the specified "relaxed" ISO 8601 `string` as a `Datetime`
     /// value, and load the value into the specified `result`.  Return 0 on
@@ -2054,7 +1785,6 @@ struct Iso8601Util {
     /// instead.
     BDLT_ISO8601UTIL_DEPRECATE_PARSERELAXED
     static int parseRelaxed(Datetime *result, const bsl::string_view& string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified "relaxed" ISO 8601 `string` as a `DatetimeTz`
@@ -2086,7 +1816,6 @@ struct Iso8601Util {
     BDLT_ISO8601UTIL_DEPRECATE_PARSERELAXED
     static int parseRelaxed(DatetimeTz              *result,
                             const bsl::string_view&  string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Parse the specified "relaxed" ISO 8601 `string` as a `Datetime` or
@@ -2120,7 +1849,6 @@ struct Iso8601Util {
     BDLT_ISO8601UTIL_DEPRECATE_PARSERELAXED
     static int parseRelaxed(DatetimeOrDatetimeTz    *result,
                             const bsl::string_view&  string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
     BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// @DEPRECATED: Use the overloads taking the `bufferLength` argument
@@ -2128,33 +1856,27 @@ struct Iso8601Util {
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE_ORDER
     static int generate(char              *buffer,
                         const Date&        object,
-                        ssize_t            bufferLength)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        ssize_t            bufferLength);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE_ORDER
     static int generate(char              *buffer,
                         const Time&        object,
-                        ssize_t            bufferLength)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        ssize_t            bufferLength);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE_ORDER
     static int generate(char              *buffer,
                         const Datetime&    object,
-                        ssize_t            bufferLength)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        ssize_t            bufferLength);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE_ORDER
     static int generate(char              *buffer,
                         const DateTz&      object,
-                        ssize_t            bufferLength)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        ssize_t            bufferLength);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE_ORDER
     static int generate(char              *buffer,
                         const TimeTz&      object,
-                        ssize_t            bufferLength)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        ssize_t            bufferLength);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE_ORDER
     static int generate(char              *buffer,
                         const DatetimeTz&  object,
-                        ssize_t            bufferLength)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        ssize_t            bufferLength);
 
     /// @DEPRECATED: Use the overloads taking an `Iso8601UtilConfiguration`
     /// object instead.
@@ -2162,59 +1884,47 @@ struct Iso8601Util {
     static int generate(char              *buffer,
                         const DateTz&      object,
                         ssize_t            bufferLength,
-                        bool               useZAbbreviationForUtc)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        bool               useZAbbreviationForUtc);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE
     static int generate(char              *buffer,
                         const TimeTz&      object,
                         ssize_t            bufferLength,
-                        bool               useZAbbreviationForUtc)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        bool               useZAbbreviationForUtc);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE
     static int generate(char              *buffer,
                         const DatetimeTz&  object,
                         ssize_t            bufferLength,
-                        bool               useZAbbreviationForUtc)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                        bool               useZAbbreviationForUtc);
 
     /// @DEPRECATED: Use the overloads taking an `Iso8601UtilConfiguration`
     /// object instead.
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE
     static bsl::ostream& generate(bsl::ostream&     stream,
                                   const DateTz&     object,
-                                  bool              useZAbbreviationForUtc)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                  bool              useZAbbreviationForUtc);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE
     static bsl::ostream& generate(bsl::ostream&     stream,
                                   const TimeTz&     object,
-                                  bool              useZAbbreviationForUtc)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                  bool              useZAbbreviationForUtc);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATE
     static bsl::ostream& generate(bsl::ostream&     stream,
                                   const DatetimeTz& object,
-                                  bool              useZAbbreviationForUtc)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                  bool              useZAbbreviationForUtc);
 
     /// @DEPRECATED: Use the overloads taking an `Iso8601UtilConfiguration`
     /// object instead.
     BDLT_ISO8601UTIL_DEPRECATE_GENERATERAW
     static int generateRaw(char              *buffer,
                            const DateTz&      object,
-                           bool               useZAbbreviationForUtc)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           bool               useZAbbreviationForUtc);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATERAW
     static int generateRaw(char              *buffer,
                            const TimeTz&      object,
-                           bool               useZAbbreviationForUtc)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           bool               useZAbbreviationForUtc);
     BDLT_ISO8601UTIL_DEPRECATE_GENERATERAW
     static int generateRaw(char              *buffer,
                            const DatetimeTz&  object,
-                           bool               useZAbbreviationForUtc)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                           bool               useZAbbreviationForUtc);
 
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED
 };
@@ -2240,6 +1950,7 @@ int Iso8601Util::generate(char                     *buffer,
                           ssize_t                   bufferLength,
                           const bsls::TimeInterval& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
     BSLS_ASSERT_SAFE(0 <= bufferLength);
 
@@ -2254,6 +1965,7 @@ int Iso8601Util::generate(char        *buffer,
                           ssize_t      bufferLength,
                           const Date&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
     BSLS_ASSERT_SAFE(0 <= bufferLength);
 
@@ -2268,6 +1980,7 @@ int Iso8601Util::generate(char        *buffer,
                           ssize_t      bufferLength,
                           const Time&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
     BSLS_ASSERT_SAFE(0 <= bufferLength);
 
@@ -2283,6 +1996,7 @@ Iso8601Util::generate(char            *buffer,
                       ssize_t          bufferLength,
                       const Datetime&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
     BSLS_ASSERT_SAFE(0 <= bufferLength);
 
@@ -2297,6 +2011,7 @@ int Iso8601Util::generate(char          *buffer,
                           ssize_t        bufferLength,
                           const DateTz&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
     BSLS_ASSERT_SAFE(0 <= bufferLength);
 
@@ -2311,6 +2026,7 @@ int Iso8601Util::generate(char          *buffer,
                           ssize_t        bufferLength,
                           const TimeTz&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
     BSLS_ASSERT_SAFE(0 <= bufferLength);
 
@@ -2326,6 +2042,7 @@ Iso8601Util::generate(char              *buffer,
                       ssize_t            bufferLength,
                       const DatetimeTz&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
     BSLS_ASSERT_SAFE(0 <= bufferLength);
 
@@ -2340,6 +2057,7 @@ int Iso8601Util::generate(char                *buffer,
                           ssize_t              bufferLength,
                           const DateOrDateTz&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
     BSLS_ASSERT_SAFE(0 <= bufferLength);
 
@@ -2354,6 +2072,7 @@ int Iso8601Util::generate(char                *buffer,
                           ssize_t              bufferLength,
                           const TimeOrTimeTz&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
     BSLS_ASSERT_SAFE(0 <= bufferLength);
 
@@ -2368,6 +2087,7 @@ int Iso8601Util::generate(char                        *buffer,
                           ssize_t                      bufferLength,
                           const DatetimeOrDatetimeTz&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
     BSLS_ASSERT_SAFE(0 <= bufferLength);
 
@@ -2381,54 +2101,72 @@ inline
 int Iso8601Util::generate(bsl::string              *string,
                           const bsls::TimeInterval& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(bsl::string *string, const Date& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(bsl::string *string, const Time& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(bsl::string *string, const Datetime& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(bsl::string *string, const DateTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(bsl::string *string, const TimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(bsl::string *string, const DatetimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(bsl::string *string, const DateOrDateTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(bsl::string *string, const TimeOrTimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
@@ -2436,6 +2174,8 @@ inline
 int Iso8601Util::generate(bsl::string                 *string,
                           const DatetimeOrDatetimeTz&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
@@ -2443,54 +2183,72 @@ inline
 int Iso8601Util::generate(std::string              *string,
                           const bsls::TimeInterval& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::string *string, const Date& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::string *string, const Time& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::string *string, const Datetime& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::string *string, const DateTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::string *string, const TimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::string *string, const DatetimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::string *string, const DateOrDateTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::string *string, const TimeOrTimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
@@ -2498,6 +2256,8 @@ inline
 int Iso8601Util::generate(std::string                 *string,
                           const DatetimeOrDatetimeTz&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
@@ -2506,54 +2266,72 @@ inline
 int Iso8601Util::generate(std::pmr::string         *string,
                           const bsls::TimeInterval& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::pmr::string *string, const Date& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::pmr::string *string, const Time& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::pmr::string *string, const Datetime& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::pmr::string *string, const DateTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::pmr::string *string, const TimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::pmr::string *string, const DatetimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::pmr::string *string, const DateOrDateTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
 inline
 int Iso8601Util::generate(std::pmr::string *string, const TimeOrTimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 
@@ -2561,6 +2339,8 @@ inline
 int Iso8601Util::generate(std::pmr::string            *string,
                           const DatetimeOrDatetimeTz&  object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     return generate(string, object, defaultConfiguration());
 }
 #endif
@@ -2569,6 +2349,8 @@ inline
 bsl::ostream& Iso8601Util::generate(bsl::ostream&             stream,
                                     const bsls::TimeInterval& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return generate(stream,
                     object,
                     defaultConfiguration());
@@ -2580,6 +2362,9 @@ bsl::ostream& Iso8601Util::generate(
                                  const bsls::TimeInterval&       object,
                                  const GenerateConfiguration&    configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     char buffer[k_TIMEINTERVAL_STRLEN + 1];
 
     const int len = generate(buffer,
@@ -2594,6 +2379,8 @@ bsl::ostream& Iso8601Util::generate(
 inline
 bsl::ostream& Iso8601Util::generate(bsl::ostream& stream, const Date& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return generate(stream,
                     object,
                     defaultConfiguration());
@@ -2605,6 +2392,9 @@ bsl::ostream& Iso8601Util::generate(
                                  const Date&                     object,
                                  const GenerateConfiguration&    configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     char buffer[k_DATE_STRLEN + 1];
 
     const int len = generate(buffer, k_DATE_STRLEN, object, configuration);
@@ -2616,6 +2406,8 @@ bsl::ostream& Iso8601Util::generate(
 inline
 bsl::ostream& Iso8601Util::generate(bsl::ostream& stream, const Time& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return generate(stream,
                     object,
                     defaultConfiguration());
@@ -2627,6 +2419,9 @@ bsl::ostream& Iso8601Util::generate(
                                  const Time&                     object,
                                  const GenerateConfiguration&    configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     char buffer[k_TIME_STRLEN + 1];
 
     const int len = generate(buffer, k_TIME_STRLEN, object, configuration);
@@ -2639,6 +2434,8 @@ inline
 bsl::ostream&
 Iso8601Util::generate(bsl::ostream& stream, const Datetime& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return generate(stream,
                     object,
                     defaultConfiguration());
@@ -2650,6 +2447,9 @@ bsl::ostream& Iso8601Util::generate(
                                  const Datetime&                 object,
                                  const GenerateConfiguration&    configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     char buffer[k_DATETIME_STRLEN + 1];
 
     const int len = generate(buffer, k_DATETIME_STRLEN, object, configuration);
@@ -2661,6 +2461,8 @@ bsl::ostream& Iso8601Util::generate(
 inline
 bsl::ostream& Iso8601Util::generate(bsl::ostream& stream, const DateTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return generate(stream,
                     object,
                     defaultConfiguration());
@@ -2672,6 +2474,9 @@ bsl::ostream& Iso8601Util::generate(
                                  const DateTz&                   object,
                                  const GenerateConfiguration&    configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     char buffer[k_DATETZ_STRLEN + 1];
 
     const int len = generate(buffer, k_DATETZ_STRLEN, object, configuration);
@@ -2683,6 +2488,8 @@ bsl::ostream& Iso8601Util::generate(
 inline
 bsl::ostream& Iso8601Util::generate(bsl::ostream& stream, const TimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return generate(stream,
                     object,
                     defaultConfiguration());
@@ -2694,6 +2501,9 @@ bsl::ostream& Iso8601Util::generate(
                                  const TimeTz&                   object,
                                  const GenerateConfiguration&    configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     char buffer[k_TIMETZ_STRLEN + 1];
 
     const int len = generate(buffer, k_TIMETZ_STRLEN, object, configuration);
@@ -2706,6 +2516,8 @@ inline
 bsl::ostream&
 Iso8601Util::generate(bsl::ostream& stream, const DatetimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return generate(stream,
                     object,
                     defaultConfiguration());
@@ -2717,6 +2529,9 @@ bsl::ostream& Iso8601Util::generate(
                                  const DatetimeTz&               object,
                                  const GenerateConfiguration&    configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     char buffer[k_DATETIMETZ_STRLEN + 1];
 
     const int len = generate(buffer,
@@ -2732,6 +2547,8 @@ inline
 bsl::ostream&
 Iso8601Util::generate(bsl::ostream& stream, const DateOrDateTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return generate(stream,
                     object,
                     defaultConfiguration());
@@ -2743,6 +2560,9 @@ bsl::ostream& Iso8601Util::generate(
                                  const DateOrDateTz&             object,
                                  const GenerateConfiguration&    configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     char buffer[k_DATETZ_STRLEN + 1];
 
     const int len = generate(buffer,
@@ -2758,6 +2578,8 @@ inline
 bsl::ostream&
 Iso8601Util::generate(bsl::ostream& stream, const TimeOrTimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return generate(stream,
                     object,
                     defaultConfiguration());
@@ -2769,6 +2591,9 @@ bsl::ostream& Iso8601Util::generate(
                                  const TimeOrTimeTz&             object,
                                  const GenerateConfiguration&    configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     char buffer[k_TIMETZ_STRLEN + 1];
 
     const int len = generate(buffer,
@@ -2784,6 +2609,8 @@ inline
 bsl::ostream&
 Iso8601Util::generate(bsl::ostream& stream, const DatetimeOrDatetimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return generate(stream,
                     object,
                     defaultConfiguration());
@@ -2795,6 +2622,9 @@ bsl::ostream& Iso8601Util::generate(
                                  const DatetimeOrDatetimeTz&     object,
                                  const GenerateConfiguration&    configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     char buffer[k_DATETIMETZ_STRLEN + 1];
 
     const int len = generate(buffer,
@@ -2809,6 +2639,7 @@ bsl::ostream& Iso8601Util::generate(
 inline
 int Iso8601Util::generateRaw(char *buffer, const bsls::TimeInterval& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
 
     return generateRaw(buffer,
@@ -2819,6 +2650,7 @@ int Iso8601Util::generateRaw(char *buffer, const bsls::TimeInterval& object)
 inline
 int Iso8601Util::generateRaw(char *buffer, const Date& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
 
     return generateRaw(buffer,
@@ -2829,6 +2661,7 @@ int Iso8601Util::generateRaw(char *buffer, const Date& object)
 inline
 int Iso8601Util::generateRaw(char *buffer, const Time& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
 
     return generateRaw(buffer,
@@ -2839,6 +2672,7 @@ int Iso8601Util::generateRaw(char *buffer, const Time& object)
 inline
 int Iso8601Util::generateRaw(char *buffer, const Datetime& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
 
     return generateRaw(buffer,
@@ -2849,6 +2683,7 @@ int Iso8601Util::generateRaw(char *buffer, const Datetime& object)
 inline
 int Iso8601Util::generateRaw(char *buffer, const DateTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
 
     return generateRaw(buffer,
@@ -2859,6 +2694,7 @@ int Iso8601Util::generateRaw(char *buffer, const DateTz& object)
 inline
 int Iso8601Util::generateRaw(char *buffer, const TimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
 
     return generateRaw(buffer,
@@ -2869,6 +2705,7 @@ int Iso8601Util::generateRaw(char *buffer, const TimeTz& object)
 inline
 int Iso8601Util::generateRaw(char *buffer, const DatetimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
 
     return generateRaw(buffer,
@@ -2879,6 +2716,7 @@ int Iso8601Util::generateRaw(char *buffer, const DatetimeTz& object)
 inline
 int Iso8601Util::generateRaw(char *buffer, const DateOrDateTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
 
     return generateRaw(buffer,
@@ -2889,6 +2727,7 @@ int Iso8601Util::generateRaw(char *buffer, const DateOrDateTz& object)
 inline
 int Iso8601Util::generateRaw(char *buffer, const TimeOrTimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
 
     return generateRaw(buffer,
@@ -2899,6 +2738,7 @@ int Iso8601Util::generateRaw(char *buffer, const TimeOrTimeTz& object)
 inline
 int Iso8601Util::generateRaw(char *buffer, const DatetimeOrDatetimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_SAFE(buffer);
 
     return generateRaw(buffer,
@@ -2910,6 +2750,7 @@ inline
 int Iso8601Util::parse(bsls::TimeInterval      *result,
                        const bsl::string_view&  string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parse(result, string.data(), string.length());
@@ -2920,6 +2761,7 @@ int Iso8601Util::parse(Date                    *result,
                        const bsl::string_view&  string,
                        ParseConfiguration       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parse(result, string.data(), string.length(), configuration);
@@ -2930,6 +2772,7 @@ int Iso8601Util::parse(Time                    *result,
                        const bsl::string_view&  string,
                        ParseConfiguration       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parse(result, string.data(), string.length(), configuration);
@@ -2940,6 +2783,7 @@ int Iso8601Util::parse(Datetime                *result,
                        const bsl::string_view&  string,
                        ParseConfiguration       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parse(result, string.data(), string.length(), configuration);
@@ -2950,6 +2794,7 @@ int Iso8601Util::parse(DateTz                  *result,
                        const bsl::string_view&  string,
                        ParseConfiguration       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parse(result, string.data(), string.length(), configuration);
@@ -2960,6 +2805,7 @@ int Iso8601Util::parse(TimeTz                  *result,
                        const bsl::string_view&  string,
                        ParseConfiguration       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parse(result, string.data(), string.length(), configuration);
@@ -2970,6 +2816,7 @@ int Iso8601Util::parse(DatetimeTz              *result,
                        const bsl::string_view&  string,
                        ParseConfiguration       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parse(result, string.data(), string.length(), configuration);
@@ -2980,6 +2827,7 @@ int Iso8601Util::parse(DateOrDateTz            *result,
                        const bsl::string_view&  string,
                        ParseConfiguration       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parse(result, string.data(), string.length(), configuration);
@@ -2990,6 +2838,7 @@ int Iso8601Util::parse(TimeOrTimeTz            *result,
                        const bsl::string_view&  string,
                        ParseConfiguration       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parse(result, string.data(), string.length(), configuration);
@@ -3000,6 +2849,7 @@ int Iso8601Util::parse(DatetimeOrDatetimeTz    *result,
                        const bsl::string_view&  string,
                        ParseConfiguration       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parse(result, string.data(), string.length(), configuration);
@@ -3010,6 +2860,7 @@ int Iso8601Util::parse(DatetimeOrDatetimeTz    *result,
 inline
 int Iso8601Util::parseRelaxed(Datetime *result, const bsl::string_view& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parseRelaxed(result,
@@ -3021,6 +2872,7 @@ inline
 int Iso8601Util::parseRelaxed(DatetimeTz              *result,
                               const bsl::string_view&  string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parseRelaxed(result,
@@ -3032,6 +2884,7 @@ inline
 int Iso8601Util::parseRelaxed(DatetimeOrDatetimeTz    *result,
                               const bsl::string_view&  string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT_SAFE(string.data());
 
     return parseRelaxed(result,
@@ -3044,6 +2897,7 @@ int Iso8601Util::generate(char        *buffer,
                           const Date&  object,
                           ssize_t      bufferLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return generate(buffer, bufferLength, object);
 }
 
@@ -3052,6 +2906,7 @@ int Iso8601Util::generate(char        *buffer,
                           const Time&  object,
                           ssize_t      bufferLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return generate(buffer, bufferLength, object);
 }
 
@@ -3060,6 +2915,7 @@ int Iso8601Util::generate(char            *buffer,
                           const Datetime&  object,
                           ssize_t          bufferLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return generate(buffer, bufferLength, object);
 }
 
@@ -3068,6 +2924,7 @@ int Iso8601Util::generate(char          *buffer,
                           const DateTz&  object,
                           ssize_t        bufferLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return generate(buffer, bufferLength, object);
 }
 
@@ -3076,6 +2933,7 @@ int Iso8601Util::generate(char          *buffer,
                           const TimeTz&  object,
                           ssize_t        bufferLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return generate(buffer, bufferLength, object);
 }
 
@@ -3084,6 +2942,7 @@ int Iso8601Util::generate(char              *buffer,
                           const DatetimeTz&  object,
                           ssize_t            bufferLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return generate(buffer, bufferLength, object);
 }
 
@@ -3093,6 +2952,7 @@ int Iso8601Util::generate(char          *buffer,
                           ssize_t        bufferLength,
                           bool           useZAbbreviationForUtc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     Iso8601UtilConfiguration configuration = defaultConfiguration();
     configuration.setUseZAbbreviationForUtc(useZAbbreviationForUtc);
 
@@ -3105,6 +2965,7 @@ int Iso8601Util::generate(char          *buffer,
                           ssize_t        bufferLength,
                           bool           useZAbbreviationForUtc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     Iso8601UtilConfiguration configuration = defaultConfiguration();
     configuration.setUseZAbbreviationForUtc(useZAbbreviationForUtc);
 
@@ -3117,6 +2978,7 @@ int Iso8601Util::generate(char              *buffer,
                           ssize_t            bufferLength,
                           bool               useZAbbreviationForUtc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     Iso8601UtilConfiguration configuration = defaultConfiguration();
     configuration.setUseZAbbreviationForUtc(useZAbbreviationForUtc);
 
@@ -3128,6 +2990,8 @@ bsl::ostream& Iso8601Util::generate(bsl::ostream& stream,
                                     const DateTz& object,
                                     bool          useZAbbreviationForUtc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     Iso8601UtilConfiguration configuration = defaultConfiguration();
     configuration.setUseZAbbreviationForUtc(useZAbbreviationForUtc);
 
@@ -3139,6 +3003,8 @@ bsl::ostream& Iso8601Util::generate(bsl::ostream& stream,
                                     const TimeTz& object,
                                     bool          useZAbbreviationForUtc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     Iso8601UtilConfiguration configuration = defaultConfiguration();
     configuration.setUseZAbbreviationForUtc(useZAbbreviationForUtc);
 
@@ -3150,6 +3016,8 @@ bsl::ostream& Iso8601Util::generate(bsl::ostream&     stream,
                                     const DatetimeTz& object,
                                     bool              useZAbbreviationForUtc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     Iso8601UtilConfiguration configuration = defaultConfiguration();
     configuration.setUseZAbbreviationForUtc(useZAbbreviationForUtc);
 
@@ -3161,6 +3029,7 @@ int Iso8601Util::generateRaw(char          *buffer,
                              const DateTz&  object,
                              bool           useZAbbreviationForUtc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     Iso8601UtilConfiguration configuration = defaultConfiguration();
     configuration.setUseZAbbreviationForUtc(useZAbbreviationForUtc);
 
@@ -3172,6 +3041,7 @@ int Iso8601Util::generateRaw(char          *buffer,
                              const TimeTz&  object,
                              bool           useZAbbreviationForUtc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     Iso8601UtilConfiguration configuration = defaultConfiguration();
     configuration.setUseZAbbreviationForUtc(useZAbbreviationForUtc);
 
@@ -3183,6 +3053,7 @@ int Iso8601Util::generateRaw(char              *buffer,
                              const DatetimeTz&  object,
                              bool               useZAbbreviationForUtc)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     Iso8601UtilConfiguration configuration = defaultConfiguration();
     configuration.setUseZAbbreviationForUtc(useZAbbreviationForUtc);
 

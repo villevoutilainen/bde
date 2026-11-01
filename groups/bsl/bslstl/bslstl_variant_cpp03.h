@@ -186827,6 +186827,8 @@ template <class t_HEAD>
 inline
 void variant<t_HEAD, BSLS_COMPILERFEATURES_FILLT(18)>::swap(variant& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!valueless_by_exception()) {
         if (index() == other.index()) {
             BloombergLP::bslstl::Variant_SwapVisitor<variant> swapper(this);
@@ -189019,6 +189021,8 @@ template <class t_HEAD, class... t_TAIL>
 inline
 void variant<t_HEAD, t_TAIL...>::swap(variant& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!valueless_by_exception()) {
         if (index() == other.index()) {
             BloombergLP::bslstl::Variant_SwapVisitor<variant> swapper(this);
@@ -189094,6 +189098,7 @@ template <size_t t_INDEX, class t_HEAD, class... t_TAIL>
 const typename variant_alternative<t_INDEX, variant<t_HEAD, t_TAIL...> >::type&
 get(const variant<t_HEAD, t_TAIL...>& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((t_INDEX < variant_size<variant<t_HEAD, t_TAIL...> >::value));
 
     typedef typename bsl::variant<t_HEAD, t_TAIL...>                  Variant;
@@ -189121,6 +189126,7 @@ const typename variant_alternative<t_INDEX,
                                    variant<t_HEAD, t_TAIL...> >::type&&
 get(const variant<t_HEAD, t_TAIL...>&& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((t_INDEX < variant_size<variant<t_HEAD, t_TAIL...> >::value));
 
     typedef typename bsl::variant<t_HEAD, t_TAIL...>                  Variant;
@@ -189137,6 +189143,7 @@ template <size_t t_INDEX, class t_VARIANT>
 typename Variant_GetIndexReturnType<t_INDEX, t_VARIANT>::type
 get(t_VARIANT& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((t_INDEX < variant_size<t_VARIANT>::value));
 
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
@@ -189151,6 +189158,7 @@ typename Variant_GetIndexReturnType<
     BloombergLP::bslmf::MovableRef<t_VARIANT> >::type
 get(BloombergLP::bslmf::MovableRef<t_VARIANT> obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     typedef BloombergLP::bslmf::MovableRefUtil   MoveUtil;
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
     typedef typename bsl::variant_alternative<t_INDEX, t_VARIANT>::type Ret;
@@ -189166,6 +189174,7 @@ get(BloombergLP::bslmf::MovableRef<t_VARIANT> obj)
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
 t_TYPE& get(variant<t_HEAD, t_TAIL...>& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL...> >::value));
@@ -189179,6 +189188,7 @@ t_TYPE& get(variant<t_HEAD, t_TAIL...>& obj)
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
 const t_TYPE& get(const variant<t_HEAD, t_TAIL...>& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL...> >::value));
@@ -189193,6 +189203,7 @@ const t_TYPE& get(const variant<t_HEAD, t_TAIL...>& obj)
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
 t_TYPE&& get(variant<t_HEAD, t_TAIL...>&& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     static_assert(
         BloombergLP::bslstl::
             Variant_HasUniqueType<t_TYPE, variant<t_HEAD, t_TAIL...> >::value,
@@ -189208,6 +189219,7 @@ t_TYPE&& get(variant<t_HEAD, t_TAIL...>&& obj)
 template <class t_TYPE, class t_HEAD, class... t_TAIL>
 const t_TYPE&& get(const variant<t_HEAD, t_TAIL...>&& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     static_assert(
         BloombergLP::bslstl::
             Variant_HasUniqueType<t_TYPE, variant<t_HEAD, t_TAIL...> >::value,
@@ -189228,6 +189240,7 @@ template <class t_TYPE, class t_VARIANT>
 typename Variant_GetTypeReturnType<t_TYPE&, t_VARIANT>::type
 get(t_VARIANT& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((
         BloombergLP::bslstl::Variant_HasUniqueType<t_TYPE, t_VARIANT>::value));
 
@@ -189241,6 +189254,7 @@ template <class t_TYPE, class t_VARIANT>
 typename Variant_GetTypeReturnType<const t_TYPE&, t_VARIANT>::type
 get(const t_VARIANT& obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((
         BloombergLP::bslstl::Variant_HasUniqueType<t_TYPE, t_VARIANT>::value));
 
@@ -189255,6 +189269,7 @@ typename Variant_GetTypeReturnType<BloombergLP::bslmf::MovableRef<t_TYPE>,
                                    t_VARIANT>::type
 get(BloombergLP::bslmf::MovableRef<t_VARIANT> obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((
         BloombergLP::bslstl::Variant_HasUniqueType<t_TYPE, t_VARIANT>::value));
 
@@ -190026,6 +190041,7 @@ template <class t_TYPE, class t_HEAD>
 bool holds_alternative(
                    const variant<t_HEAD>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD> >::value));
@@ -190039,6 +190055,7 @@ template <class t_TYPE, class t_HEAD, class t_TAIL_01>
 bool holds_alternative(
                    const variant<t_HEAD, t_TAIL_01>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01> >::value));
@@ -190054,6 +190071,7 @@ bool holds_alternative(
                    const variant<t_HEAD, t_TAIL_01,
                                          t_TAIL_02>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190073,6 +190091,7 @@ bool holds_alternative(
                                          t_TAIL_02,
                                          t_TAIL_03>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190096,6 +190115,7 @@ bool holds_alternative(
                                          t_TAIL_03,
                                          t_TAIL_04>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190123,6 +190143,7 @@ bool holds_alternative(
                                          t_TAIL_04,
                                          t_TAIL_05>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190154,6 +190175,7 @@ bool holds_alternative(
                                          t_TAIL_05,
                                          t_TAIL_06>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190189,6 +190211,7 @@ bool holds_alternative(
                                          t_TAIL_06,
                                          t_TAIL_07>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190228,6 +190251,7 @@ bool holds_alternative(
                                          t_TAIL_07,
                                          t_TAIL_08>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190271,6 +190295,7 @@ bool holds_alternative(
                                          t_TAIL_08,
                                          t_TAIL_09>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190318,6 +190343,7 @@ bool holds_alternative(
                                          t_TAIL_09,
                                          t_TAIL_10>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190369,6 +190395,7 @@ bool holds_alternative(
                                          t_TAIL_10,
                                          t_TAIL_11>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190424,6 +190451,7 @@ bool holds_alternative(
                                          t_TAIL_11,
                                          t_TAIL_12>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190483,6 +190511,7 @@ bool holds_alternative(
                                          t_TAIL_12,
                                          t_TAIL_13>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190546,6 +190575,7 @@ bool holds_alternative(
                                          t_TAIL_13,
                                          t_TAIL_14>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190613,6 +190643,7 @@ bool holds_alternative(
                                          t_TAIL_14,
                                          t_TAIL_15>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190684,6 +190715,7 @@ bool holds_alternative(
                                          t_TAIL_15,
                                          t_TAIL_16>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190759,6 +190791,7 @@ bool holds_alternative(
                                          t_TAIL_16,
                                          t_TAIL_17>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190838,6 +190871,7 @@ bool holds_alternative(
                                          t_TAIL_17,
                                          t_TAIL_18>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL_01,
@@ -190886,6 +190920,8 @@ template <class t_HEAD>
 void swap(bsl::variant<t_HEAD>& lhs,
           bsl::variant<t_HEAD>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -190901,6 +190937,8 @@ template <class t_HEAD, class t_TAIL_01>
 void swap(bsl::variant<t_HEAD, t_TAIL_01>& lhs,
           bsl::variant<t_HEAD, t_TAIL_01>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -190919,6 +190957,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
           bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_02>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -190941,6 +190981,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_02,
                                t_TAIL_03>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -190967,6 +191009,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_03,
                                t_TAIL_04>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -190997,6 +191041,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_04,
                                t_TAIL_05>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191031,6 +191077,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_05,
                                t_TAIL_06>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191069,6 +191117,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_06,
                                t_TAIL_07>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191111,6 +191161,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_07,
                                t_TAIL_08>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191157,6 +191209,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_08,
                                t_TAIL_09>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191207,6 +191261,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_09,
                                t_TAIL_10>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191261,6 +191317,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_10,
                                t_TAIL_11>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191319,6 +191377,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_11,
                                t_TAIL_12>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191381,6 +191441,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_12,
                                t_TAIL_13>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191447,6 +191509,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_13,
                                t_TAIL_14>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191517,6 +191581,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_14,
                                t_TAIL_15>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191591,6 +191657,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_15,
                                t_TAIL_16>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191669,6 +191737,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_16,
                                t_TAIL_17>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191751,6 +191821,8 @@ void swap(bsl::variant<t_HEAD, t_TAIL_01,
                                t_TAIL_17,
                                t_TAIL_18>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -191784,6 +191856,8 @@ template <class t_HEAD>
 bool operator==(const variant<t_HEAD>& lhs,
                 const variant<t_HEAD>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -191801,6 +191875,8 @@ template <class t_HEAD, class t_TAIL_01>
 bool operator==(const variant<t_HEAD, t_TAIL_01>& lhs,
                 const variant<t_HEAD, t_TAIL_01>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -191821,6 +191897,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                 const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_02>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -191844,6 +191922,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_02,
                                       t_TAIL_03>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -191870,6 +191950,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_03,
                                       t_TAIL_04>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -191899,6 +191981,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_04,
                                       t_TAIL_05>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -191931,6 +192015,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_05,
                                       t_TAIL_06>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -191966,6 +192052,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_06,
                                       t_TAIL_07>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192004,6 +192092,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_07,
                                       t_TAIL_08>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192045,6 +192135,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_08,
                                       t_TAIL_09>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192089,6 +192181,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_09,
                                       t_TAIL_10>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192136,6 +192230,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_10,
                                       t_TAIL_11>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192186,6 +192282,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_11,
                                       t_TAIL_12>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192239,6 +192337,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_12,
                                       t_TAIL_13>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192295,6 +192395,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_13,
                                       t_TAIL_14>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192354,6 +192456,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_14,
                                       t_TAIL_15>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192416,6 +192520,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_15,
                                       t_TAIL_16>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192481,6 +192587,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_16,
                                       t_TAIL_17>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192549,6 +192657,8 @@ bool operator==(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_17,
                                       t_TAIL_18>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192567,6 +192677,8 @@ template <class t_HEAD>
 bool operator!=(const variant<t_HEAD>& lhs,
                 const variant<t_HEAD>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192584,6 +192696,8 @@ template <class t_HEAD, class t_TAIL_01>
 bool operator!=(const variant<t_HEAD, t_TAIL_01>& lhs,
                 const variant<t_HEAD, t_TAIL_01>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192604,6 +192718,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                 const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_02>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192627,6 +192743,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_02,
                                       t_TAIL_03>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192653,6 +192771,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_03,
                                       t_TAIL_04>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192682,6 +192802,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_04,
                                       t_TAIL_05>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192714,6 +192836,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_05,
                                       t_TAIL_06>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192749,6 +192873,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_06,
                                       t_TAIL_07>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192787,6 +192913,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_07,
                                       t_TAIL_08>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192828,6 +192956,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_08,
                                       t_TAIL_09>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192872,6 +193002,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_09,
                                       t_TAIL_10>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192919,6 +193051,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_10,
                                       t_TAIL_11>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -192969,6 +193103,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_11,
                                       t_TAIL_12>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -193022,6 +193158,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_12,
                                       t_TAIL_13>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -193078,6 +193216,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_13,
                                       t_TAIL_14>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -193137,6 +193277,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_14,
                                       t_TAIL_15>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -193199,6 +193341,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_15,
                                       t_TAIL_16>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -193264,6 +193408,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_16,
                                       t_TAIL_17>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -193332,6 +193478,8 @@ bool operator!=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_17,
                                       t_TAIL_18>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -193350,6 +193498,8 @@ template <class t_HEAD>
 bool operator<(const variant<t_HEAD>& lhs,
                const variant<t_HEAD>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193370,6 +193520,8 @@ template <class t_HEAD, class t_TAIL_01>
 bool operator<(const variant<t_HEAD, t_TAIL_01>& lhs,
                const variant<t_HEAD, t_TAIL_01>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193393,6 +193545,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_02>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193419,6 +193573,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_02,
                                      t_TAIL_03>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193448,6 +193604,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_03,
                                      t_TAIL_04>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193480,6 +193638,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_04,
                                      t_TAIL_05>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193515,6 +193675,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_05,
                                      t_TAIL_06>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193553,6 +193715,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_06,
                                      t_TAIL_07>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193594,6 +193758,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_07,
                                      t_TAIL_08>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193638,6 +193804,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_08,
                                      t_TAIL_09>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193685,6 +193853,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_09,
                                      t_TAIL_10>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193735,6 +193905,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_10,
                                      t_TAIL_11>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193788,6 +193960,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_11,
                                      t_TAIL_12>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193844,6 +194018,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_12,
                                      t_TAIL_13>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193903,6 +194079,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_13,
                                      t_TAIL_14>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -193965,6 +194143,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_14,
                                      t_TAIL_15>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -194030,6 +194210,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_15,
                                      t_TAIL_16>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -194098,6 +194280,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_16,
                                      t_TAIL_17>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -194169,6 +194353,8 @@ bool operator<(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_17,
                                      t_TAIL_18>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -194190,6 +194376,8 @@ template <class t_HEAD>
 bool operator>(const variant<t_HEAD>& lhs,
                const variant<t_HEAD>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194210,6 +194398,8 @@ template <class t_HEAD, class t_TAIL_01>
 bool operator>(const variant<t_HEAD, t_TAIL_01>& lhs,
                const variant<t_HEAD, t_TAIL_01>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194233,6 +194423,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_02>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194259,6 +194451,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_02,
                                      t_TAIL_03>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194288,6 +194482,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_03,
                                      t_TAIL_04>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194320,6 +194516,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_04,
                                      t_TAIL_05>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194355,6 +194553,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_05,
                                      t_TAIL_06>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194393,6 +194593,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_06,
                                      t_TAIL_07>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194434,6 +194636,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_07,
                                      t_TAIL_08>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194478,6 +194682,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_08,
                                      t_TAIL_09>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194525,6 +194731,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_09,
                                      t_TAIL_10>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194575,6 +194783,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_10,
                                      t_TAIL_11>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194628,6 +194838,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_11,
                                      t_TAIL_12>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194684,6 +194896,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_12,
                                      t_TAIL_13>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194743,6 +194957,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_13,
                                      t_TAIL_14>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194805,6 +195021,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_14,
                                      t_TAIL_15>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194870,6 +195088,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_15,
                                      t_TAIL_16>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -194938,6 +195158,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_16,
                                      t_TAIL_17>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195009,6 +195231,8 @@ bool operator>(const variant<t_HEAD, t_TAIL_01,
                                      t_TAIL_17,
                                      t_TAIL_18>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195030,6 +195254,8 @@ template <class t_HEAD>
 bool operator<=(const variant<t_HEAD>& lhs,
                 const variant<t_HEAD>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195050,6 +195276,8 @@ template <class t_HEAD, class t_TAIL_01>
 bool operator<=(const variant<t_HEAD, t_TAIL_01>& lhs,
                 const variant<t_HEAD, t_TAIL_01>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195073,6 +195301,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                 const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_02>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195099,6 +195329,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_02,
                                       t_TAIL_03>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195128,6 +195360,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_03,
                                       t_TAIL_04>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195160,6 +195394,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_04,
                                       t_TAIL_05>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195195,6 +195431,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_05,
                                       t_TAIL_06>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195233,6 +195471,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_06,
                                       t_TAIL_07>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195274,6 +195514,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_07,
                                       t_TAIL_08>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195318,6 +195560,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_08,
                                       t_TAIL_09>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195365,6 +195609,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_09,
                                       t_TAIL_10>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195415,6 +195661,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_10,
                                       t_TAIL_11>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195468,6 +195716,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_11,
                                       t_TAIL_12>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195524,6 +195774,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_12,
                                       t_TAIL_13>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195583,6 +195835,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_13,
                                       t_TAIL_14>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195645,6 +195899,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_14,
                                       t_TAIL_15>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195710,6 +195966,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_15,
                                       t_TAIL_16>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195778,6 +196036,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_16,
                                       t_TAIL_17>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195849,6 +196109,8 @@ bool operator<=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_17,
                                       t_TAIL_18>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -195870,6 +196132,8 @@ template <class t_HEAD>
 bool operator>=(const variant<t_HEAD>& lhs,
                 const variant<t_HEAD>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -195891,6 +196155,8 @@ template <class t_HEAD, class t_TAIL_01>
 bool operator>=(const variant<t_HEAD, t_TAIL_01>& lhs,
                 const variant<t_HEAD, t_TAIL_01>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -195915,6 +196181,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                 const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_02>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -195942,6 +196210,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_02,
                                       t_TAIL_03>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -195972,6 +196242,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_03,
                                       t_TAIL_04>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196005,6 +196277,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_04,
                                       t_TAIL_05>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196041,6 +196315,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_05,
                                       t_TAIL_06>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196080,6 +196356,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_06,
                                       t_TAIL_07>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196122,6 +196400,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_07,
                                       t_TAIL_08>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196167,6 +196447,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_08,
                                       t_TAIL_09>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196215,6 +196497,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_09,
                                       t_TAIL_10>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196266,6 +196550,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_10,
                                       t_TAIL_11>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196320,6 +196606,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_11,
                                       t_TAIL_12>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196377,6 +196665,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_12,
                                       t_TAIL_13>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196437,6 +196727,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_13,
                                       t_TAIL_14>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196500,6 +196792,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_14,
                                       t_TAIL_15>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196566,6 +196860,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_15,
                                       t_TAIL_16>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196635,6 +196931,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_16,
                                       t_TAIL_17>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196707,6 +197005,8 @@ bool operator>=(const variant<t_HEAD, t_TAIL_01,
                                       t_TAIL_17,
                                       t_TAIL_18>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -196733,6 +197033,8 @@ constexpr std::common_comparison_category_t<
     >
 operator<=>(const variant<>& lhs, const variant<>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         >;
 
@@ -196771,6 +197073,8 @@ constexpr std::common_comparison_category_t<
     std::compare_three_way_result_t<t_ALTS_01>>
 operator<=>(const variant<t_ALTS_01>& lhs, const variant<t_ALTS_01>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>>;
 
@@ -196814,6 +197118,8 @@ operator<=>(const variant<t_ALTS_01,
                           t_ALTS_02>& lhs, const variant<t_ALTS_01,
                                                          t_ALTS_02>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>>;
@@ -196863,6 +197169,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_02,
                                                          t_ALTS_03>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -196918,6 +197226,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_03,
                                                          t_ALTS_04>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -196979,6 +197289,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_04,
                                                          t_ALTS_05>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -197046,6 +197358,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_05,
                                                          t_ALTS_06>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -197119,6 +197433,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_06,
                                                          t_ALTS_07>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -197198,6 +197514,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_07,
                                                          t_ALTS_08>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -197283,6 +197601,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_08,
                                                          t_ALTS_09>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -197374,6 +197694,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_09,
                                                          t_ALTS_10>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -197471,6 +197793,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_10,
                                                          t_ALTS_11>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -197574,6 +197898,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_11,
                                                          t_ALTS_12>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -197683,6 +198009,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_12,
                                                          t_ALTS_13>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -197798,6 +198126,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_13,
                                                          t_ALTS_14>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -197919,6 +198249,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_14,
                                                          t_ALTS_15>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -198046,6 +198378,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_15,
                                                          t_ALTS_16>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -198179,6 +198513,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_16,
                                                          t_ALTS_17>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -198318,6 +198654,8 @@ operator<=>(const variant<t_ALTS_01,
                                                          t_ALTS_17,
                                                          t_ALTS_18>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS_01>,
         std::compare_three_way_result_t<t_ALTS_02>,
@@ -198388,6 +198726,7 @@ template <class t_TYPE, class t_HEAD, class... t_TAIL>
 bool holds_alternative(
                    const variant<t_HEAD, t_TAIL...>& obj) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT((BloombergLP::bslstl::Variant_HasUniqueType<
                   t_TYPE,
                   variant<t_HEAD, t_TAIL...> >::value));
@@ -198399,6 +198738,8 @@ template <class t_HEAD, class... t_TAIL>
 void swap(bsl::variant<t_HEAD, t_TAIL...>& lhs,
           bsl::variant<t_HEAD, t_TAIL...>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BloombergLP::bslstl::variant_swapImpl(
         bsl::integral_constant<
             bool,
@@ -198412,6 +198753,8 @@ template <class t_HEAD, class... t_TAIL>
 bool operator==(const variant<t_HEAD, t_TAIL...>& lhs,
                 const variant<t_HEAD, t_TAIL...>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -198427,6 +198770,8 @@ template <class t_HEAD, class... t_TAIL>
 bool operator!=(const variant<t_HEAD, t_TAIL...>& lhs,
                 const variant<t_HEAD, t_TAIL...>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.index() != rhs.index()) {
@@ -198442,6 +198787,8 @@ template <class t_HEAD, class... t_TAIL>
 bool operator<(const variant<t_HEAD, t_TAIL...>& lhs,
                const variant<t_HEAD, t_TAIL...>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -198460,6 +198807,8 @@ template <class t_HEAD, class... t_TAIL>
 bool operator>(const variant<t_HEAD, t_TAIL...>& lhs,
                const variant<t_HEAD, t_TAIL...>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -198478,6 +198827,8 @@ template <class t_HEAD, class... t_TAIL>
 bool operator<=(const variant<t_HEAD, t_TAIL...>& lhs,
                 const variant<t_HEAD, t_TAIL...>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (lhs.valueless_by_exception()) {
@@ -198496,6 +198847,8 @@ template <class t_HEAD, class... t_TAIL>
 bool operator>=(const variant<t_HEAD, t_TAIL...>& lhs,
                 const variant<t_HEAD, t_TAIL...>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef BloombergLP::bslstl::Variant_ImpUtil ImpUtil;
 
     if (rhs.valueless_by_exception()) {
@@ -198520,6 +198873,8 @@ constexpr std::common_comparison_category_t<
     std::compare_three_way_result_t<t_ALTS>...>
 operator<=>(const variant<t_ALTS...>& lhs, const variant<t_ALTS...>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     using RET = std::common_comparison_category_t<
         std::compare_three_way_result_t<t_ALTS>...>;
 

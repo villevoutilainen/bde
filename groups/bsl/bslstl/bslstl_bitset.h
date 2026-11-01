@@ -436,7 +436,7 @@ class bitset :
                   std::basic_string<CHAR_TYPE, TRAITS, ALLOCATOR>::npos,
      CHAR_TYPE zeroChar = CHAR_TYPE('0'),
      CHAR_TYPE oneChar  = CHAR_TYPE('1'))
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
+                                            BSLS_ASSERT_CONVEYOR_TRUST_PRE(str);
 #else
     template <class CHAR_TYPE, class TRAITS, class ALLOCATOR>
     explicit
@@ -445,7 +445,7 @@ class bitset :
            bsl::string::size_type n        = bsl::string::npos,
            CHAR_TYPE              zeroChar = CHAR_TYPE('0'),
            CHAR_TYPE              oneChar  = CHAR_TYPE('1'))
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
+                                            BSLS_ASSERT_CONVEYOR_TRUST_PRE(str);
 #endif
 
     /// Create a bitset with its first `M` bit positions corresponding to 0
@@ -466,7 +466,7 @@ class bitset :
                          bsl::basic_string<CHAR_TYPE, TRAITS, ALLOCATOR>::npos,
       CHAR_TYPE zeroChar = CHAR_TYPE('0'),
       CHAR_TYPE oneChar  = CHAR_TYPE('1'))
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
+                                            BSLS_ASSERT_CONVEYOR_TRUST_PRE(str);
 #else
     template <class CHAR_TYPE, class TRAITS, class ALLOCATOR>
     explicit bitset(const bsl::basic_string<CHAR_TYPE, TRAITS, ALLOCATOR>& str,
@@ -474,7 +474,7 @@ class bitset :
                     bsl::string::size_type n        = bsl::string::npos,
                     CHAR_TYPE              zeroChar = CHAR_TYPE('0'),
                     CHAR_TYPE              oneChar  = CHAR_TYPE('1'))
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
+                                            BSLS_ASSERT_CONVEYOR_TRUST_PRE(str);
 #endif
 
     // MANIPULATORS
@@ -1319,6 +1319,7 @@ template <class CHAR_TYPE, class TRAITS, std::size_t N>
 std::basic_istream<CHAR_TYPE, TRAITS>&
 operator>>(std::basic_istream<CHAR_TYPE, TRAITS>& is, bitset<N>& x)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&is);
     typedef typename TRAITS::int_type int_type;
 
     basic_string<CHAR_TYPE, TRAITS, allocator<CHAR_TYPE> > tmp;
@@ -1363,6 +1364,7 @@ inline
 std::basic_ostream<CHAR_TYPE, TRAITS>&
 operator<<(std::basic_ostream<CHAR_TYPE, TRAITS>& os, const bitset<N>& x)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&os);
     basic_string<CHAR_TYPE, TRAITS, allocator<CHAR_TYPE> > tmp (
              x.template to_string<CHAR_TYPE, TRAITS, allocator<CHAR_TYPE> >());
     return os << tmp;

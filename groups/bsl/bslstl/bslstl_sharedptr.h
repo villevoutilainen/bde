@@ -2473,7 +2473,7 @@ class shared_ptr {
     /// reference to the shared object, calling the associated deleter to
     /// destroy the shared object if this shared pointer is the last shared
     /// reference.
-    void reset() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reset() BSLS_KEYWORD_NOEXCEPT;
 
     /// Modify this shared pointer to manage the modifiable object of the
     /// (template parameter) type `COMPATIBLE_TYPE` at the specified `ptr`
@@ -2496,7 +2496,7 @@ class shared_ptr {
     template <class COMPATIBLE_TYPE>
     typename
       enable_if<is_convertible<COMPATIBLE_TYPE *, ELEMENT_TYPE *>::value>::type
-    reset(COMPATIBLE_TYPE *ptr) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reset(COMPATIBLE_TYPE *ptr);
 
     /// Modify this shared pointer to manage the modifiable object of the
     /// (template parameter) type `COMPATIBLE_TYPE` at the specified `ptr`
@@ -2540,8 +2540,7 @@ class shared_ptr {
     template <class COMPATIBLE_TYPE, class DELETER>
     typename
       enable_if<is_convertible<COMPATIBLE_TYPE *, ELEMENT_TYPE *>::value>::type
-    reset(COMPATIBLE_TYPE *ptr, DELETER deleter)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reset(COMPATIBLE_TYPE *ptr, DELETER deleter);
 
 
     /// Modify this shared pointer to manage the modifiable object of the
@@ -2587,7 +2586,7 @@ class shared_ptr {
       enable_if<is_convertible<COMPATIBLE_TYPE *, ELEMENT_TYPE *>::value>::type
     reset(COMPATIBLE_TYPE *ptr,
           DELETER          deleter,
-          ALLOCATOR        basicAllocator) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+          ALLOCATOR        basicAllocator);
 
     /// Modify this shared pointer to manage the same modifiable object (if
     /// any) as the specified `source` shared pointer to the (template
@@ -2611,8 +2610,7 @@ class shared_ptr {
     /// Standard `shared_ptr` interface, which does not provide an alias
     /// overload for the `reset` function.
     template <class ANY_TYPE>
-    void reset(const shared_ptr<ANY_TYPE>& source, ELEMENT_TYPE *ptr)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reset(const shared_ptr<ANY_TYPE>& source, ELEMENT_TYPE *ptr);
 
     /// Efficiently exchange the states of this shared pointer and the
     /// specified `other` shared pointer such that each will refer to the
@@ -2633,7 +2631,7 @@ class shared_ptr {
     /// shared) object, then release the shared reference to that shared
     /// object, and destroy it using its associated deleter if this shared
     /// pointer held the last shared reference to that object.
-    void createInplace() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void createInplace();
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES // $var-args=14
 
@@ -2655,8 +2653,7 @@ class shared_ptr {
     /// `shared_ptr` created using the standard `allocate_shared` function.
     template <class... ARGS>
     void createInplace(BloombergLP::bslma::Allocator *basicAllocator,
-                       ARGS&&...                      args)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                       ARGS&&...                      args);
 #endif
 
     /// Modify this shared pointer to manage the same modifiable object (if
@@ -2686,8 +2683,7 @@ class shared_ptr {
     /// @DEPRECATED: Use `reset` instead.
     template <class ANY_TYPE>
     void loadAlias(const shared_ptr<ANY_TYPE>&  source,
-                   ELEMENT_TYPE                *object)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                   ELEMENT_TYPE                *object);
 
     /// Return the pair consisting of the addresses of the modifiable
     /// `ELEMENT_TYPE` object referred to, and the representation shared by,
@@ -2706,8 +2702,7 @@ class shared_ptr {
     /// Note that this function returns a pair of null pointers if this
     /// shared pointer is empty.
     pair<element_type *, BloombergLP::bslma::SharedPtrRep *> release()
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
     // DEPRECATED BDE LEGACY MANIPULATORS
@@ -2720,7 +2715,7 @@ class shared_ptr {
     /// `reset()`.
     ///
     /// @DEPRECATED: Use `reset` instead.
-    void clear() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void clear() BSLS_KEYWORD_NOEXCEPT;
 
     /// Modify this shared pointer to manage the modifiable object of the
     /// (template parameter) type `COMPATIBLE_TYPE` at the specified `ptr`
@@ -2745,7 +2740,7 @@ class shared_ptr {
     ///
     /// @DEPRECATED: Use `reset` instead.
     template <class COMPATIBLE_TYPE>
-    void load(COMPATIBLE_TYPE *ptr) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void load(COMPATIBLE_TYPE *ptr);
 
     /// Modify this shared pointer to manage the modifiable object of the
     /// (template parameter) type `COMPATIBLE_TYPE` at the specified `ptr`
@@ -2776,8 +2771,7 @@ class shared_ptr {
     /// @DEPRECATED: Use `reset` instead.
     template <class COMPATIBLE_TYPE>
     void load(COMPATIBLE_TYPE               *ptr,
-              BloombergLP::bslma::Allocator *basicAllocator)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+              BloombergLP::bslma::Allocator *basicAllocator);
 
     /// Modify this shared pointer to manage the modifiable object of the
     /// (template parameter) type `COMPATIBLE_TYPE` at the specified `ptr`
@@ -2823,8 +2817,7 @@ class shared_ptr {
     template <class COMPATIBLE_TYPE, class DELETER>
     void load(COMPATIBLE_TYPE               *ptr,
               const DELETER&                 deleter,
-              BloombergLP::bslma::Allocator *basicAllocator)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+              BloombergLP::bslma::Allocator *basicAllocator);
 
 #endif // BDE_OMIT_INTERNAL_DEPRECATED
 
@@ -2836,8 +2829,7 @@ class shared_ptr {
     /// shared pointer to be used within a conditional context (e.g., within
     /// an `if` or `while` statement), but does *not* allow shared pointers
     /// to unrelated types to be compared (e.g., via `<` or `>`).
-    operator BoolType() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    operator BoolType() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reference providing modifiable access to the object
     /// referred to by this shared pointer.  The behavior is undefined
@@ -2852,15 +2844,12 @@ class shared_ptr {
     /// not refer to an object.  Note that applying this operator
     /// conventionally (e.g., to invoke a method) to an shared pointer that
     /// does not refer to an object will result in undefined behavior.
-    ELEMENT_TYPE *operator->() const BSLS_KEYWORD_NOEXCEPT
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    ELEMENT_TYPE *operator->() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the address providing modifiable access to the object
     /// referred to by this shared pointer, or 0 if this shared pointer does
     /// not refer to an object.
-    element_type *get() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    element_type *get() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reference providing modifiable access to the object at the
     /// specified `index` offset in the object referred to by this shared
@@ -2878,9 +2867,7 @@ class shared_ptr {
 
     template<class ANY_TYPE>
     bool owner_before(const shared_ptr<ANY_TYPE>& other) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if the address of the
     /// `BloombergLP::bslma::SharedPtrRep` object used by this shared
@@ -2891,15 +2878,11 @@ class shared_ptr {
     /// otherwise.
     template<class ANY_TYPE>
     bool owner_before(const weak_ptr<ANY_TYPE>& other) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     template<class ANY_TYPE>
     bool owner_equal(const shared_ptr<ANY_TYPE>& other) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if the address of the
     /// `BloombergLP::bslma::SharedPtrRep` object used by this shared
@@ -2908,9 +2891,7 @@ class shared_ptr {
     /// `other` shared pointer, and `false` otherwise.
     template<class ANY_TYPE>
     bool owner_equal(const weak_ptr<ANY_TYPE>& other) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an unspecified value such that, for any object `x` where
     /// `owner_equal(x)` is true, `owner_hash() == x.owner_hash()` is true.
@@ -2918,8 +2899,7 @@ class shared_ptr {
     /// `BloombergLP::bslma::SharedPtrRep` object used by this object.
     /// Note also that for two empty smart pointers `x` and `y`,
     /// `x.owner_hash() == y.owner_hash()` is true.
-    size_t owner_hash() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_t owner_hash() const BSLS_KEYWORD_NOEXCEPT;
 
     BSLS_DEPRECATE_FEATURE("bsl",
                            "deprecated_cpp17_standard_library_features",
@@ -2935,8 +2915,7 @@ class shared_ptr {
     /// @DEPRECATED: This function is deprecated in C++17 because its
     /// correctness is not guaranteed since the value returned by the used
     /// `use_count` function is approximate.
-    bool unique() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool unique() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a "snapshot" of the number of shared pointers (including this
     /// one) that share ownership of the object managed by this shared
@@ -2946,8 +2925,7 @@ class shared_ptr {
     /// different thread may be copied or destroyed, or a weak pointer may
     /// be locked in the case that 1 is returned (that would otherwise
     /// indicate unique ownership).
-    long use_count() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    long use_count() const BSLS_KEYWORD_NOEXCEPT;
 
     // ADDITIONAL BSL ACCESSORS
 
@@ -2958,14 +2936,12 @@ class shared_ptr {
     /// for the shared object.  Note that if this `shared_ptr` is reference-
     /// counting a null pointer, the empty `bslma::ManagedPtr` returned will
     /// not participate in that shared ownership.
-    BloombergLP::bslma::ManagedPtr<ELEMENT_TYPE> managedPtr() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BloombergLP::bslma::ManagedPtr<ELEMENT_TYPE> managedPtr() const;
 
     /// Return the address providing modifiable access to the
     /// `BloombergLP::bslma::SharedPtrRep` object used by this shared
     /// pointer, or 0 if this shared pointer is empty.
-    BloombergLP::bslma::SharedPtrRep *rep() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BloombergLP::bslma::SharedPtrRep *rep() const BSLS_KEYWORD_NOEXCEPT;
 
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
     // DEPRECATED BDE LEGACY ACCESSORS
@@ -2977,8 +2953,7 @@ class shared_ptr {
     /// for the same reasons.
     ///
     /// @DEPRECATED: Use `use_count` instead.
-    int numReferences() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int numReferences() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the address providing modifiable access to the object
     /// referred to by this shared pointer, or 0 if this shared pointer does
@@ -2986,8 +2961,7 @@ class shared_ptr {
     /// the same as `get`.
     ///
     /// @DEPRECATED: Use `get` instead.
-    element_type *ptr() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    element_type *ptr() const BSLS_KEYWORD_NOEXCEPT;
 #endif // BDE_OMIT_INTERNAL_DEPRECATED
 };
 
@@ -3059,8 +3033,7 @@ shared_ptr(BloombergLP::bslma::ManagedPtr<ELEMENT_TYPE>, ALLOC *)
 /// due to aliasing.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const shared_ptr<LHS_TYPE>& lhs,
-                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 
@@ -3070,8 +3043,7 @@ bool operator==(const shared_ptr<LHS_TYPE>& lhs,
 template<class LHS_TYPE, class RHS_TYPE>
 strong_ordering operator<=>(const shared_ptr<LHS_TYPE>& lhs,
                             const shared_ptr<RHS_TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 #else
 
@@ -3084,8 +3056,7 @@ strong_ordering operator<=>(const shared_ptr<LHS_TYPE>& lhs,
 /// due to aliasing.
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const shared_ptr<LHS_TYPE>& lhs,
-                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the address of the object that the specified `lhs`
 /// shared pointer refers to is ordered before the address of the object
@@ -3094,8 +3065,7 @@ bool operator!=(const shared_ptr<LHS_TYPE>& lhs,
 /// pointer type of `LHS_TYPE *` and `RHS_TYPE *`, and `false` otherwise.
 template<class LHS_TYPE, class RHS_TYPE>
 bool operator<(const shared_ptr<LHS_TYPE>& lhs,
-               const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+               const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the address of the object that the specified `lhs`
 /// shared pointer refers to is ordered after the address of the object
@@ -3104,8 +3074,7 @@ bool operator<(const shared_ptr<LHS_TYPE>& lhs,
 /// pointer type of `LHS_TYPE *` and `RHS_TYPE *`, and `false` otherwise.
 template<class LHS_TYPE, class RHS_TYPE>
 bool operator>(const shared_ptr<LHS_TYPE>& lhs,
-               const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+               const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `lhs` shared pointer refers to the same
 /// object as the specified `rhs` shared pointer, or if the address of the
@@ -3115,8 +3084,7 @@ bool operator>(const shared_ptr<LHS_TYPE>& lhs,
 // of `LHS_TYPE *` and `RHS_TYPE *`, and `false` otherwise.
 template<class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const shared_ptr<LHS_TYPE>& lhs,
-                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `lhs` shared pointer refers to the same
 /// object as the specified `rhs` shared pointer, or if the address of the
@@ -3126,8 +3094,7 @@ bool operator<=(const shared_ptr<LHS_TYPE>& lhs,
 /// `LHS_TYPE *` and `RHS_TYPE *`, and `false` otherwise.
 template<class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const shared_ptr<LHS_TYPE>& lhs,
-                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
 
 #endif  // BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 
@@ -3135,8 +3102,7 @@ bool operator>=(const shared_ptr<LHS_TYPE>& lhs,
 /// object, and `false` otherwise.
 template <class LHS_TYPE>
 bool operator==(const shared_ptr<LHS_TYPE>& lhs,
-                nullptr_t) BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+                nullptr_t) BSLS_KEYWORD_NOEXCEPT;
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 
@@ -3145,8 +3111,7 @@ bool operator==(const shared_ptr<LHS_TYPE>& lhs,
 /// comparison.
 template<class TYPE>
 strong_ordering operator<=>(const shared_ptr<TYPE>& ptr,
-                            nullptr_t) BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(ptr);
+                            nullptr_t) BSLS_KEYWORD_NOEXCEPT;
 
 #else
 
@@ -3154,22 +3119,19 @@ strong_ordering operator<=>(const shared_ptr<TYPE>& ptr,
 /// object, and `false` otherwise.
 template <class RHS_TYPE>
 bool operator==(nullptr_t,
-                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `lhs` shared pointer refers to an object,
 /// and `false` otherwise.
 template <class LHS_TYPE>
 bool operator!=(const shared_ptr<LHS_TYPE>& lhs,
-                nullptr_t) BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+                nullptr_t) BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `rhs` shared pointer refers to an object,
 /// and `false` otherwise.
 template <class RHS_TYPE>
 bool operator!=(nullptr_t,
-                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the address of the object referred to by the specified
 /// `lhs` shared pointer is ordered before the null-pointer value under the
@@ -3177,8 +3139,7 @@ bool operator!=(nullptr_t,
 /// otherwise.
 template <class LHS_TYPE>
 bool operator<(const shared_ptr<LHS_TYPE>& lhs, nullptr_t)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the address of the object referred to by the specified
 /// `rhs` shared pointer is ordered after the null-pointer value under the
@@ -3186,8 +3147,7 @@ bool operator<(const shared_ptr<LHS_TYPE>& lhs, nullptr_t)
 /// otherwise.
 template <class RHS_TYPE>
 bool operator<(nullptr_t, const shared_ptr<RHS_TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `lhs` shared pointer does not refer to an
 /// object, or if the address of the object referred to by `lhs` is ordered
@@ -3195,8 +3155,7 @@ bool operator<(nullptr_t, const shared_ptr<RHS_TYPE>& rhs)
 /// `std::less<LHS_TYPE *>`, and `false` otherwise.
 template <class LHS_TYPE>
 bool operator<=(const shared_ptr<LHS_TYPE>& lhs,
-                nullptr_t) BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+                nullptr_t) BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `rhs` shared pointer does not refer to an
 /// object, or if the address of the object referred to by `rhs` is ordered
@@ -3204,8 +3163,7 @@ bool operator<=(const shared_ptr<LHS_TYPE>& lhs,
 /// `std::less<RHS_TYPE *>`, and `false` otherwise.
 template <class RHS_TYPE>
 bool operator<=(nullptr_t,
-                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the address of the object referred to by the specified
 /// `lhs` shared pointer is ordered after the null-pointer value under the
@@ -3213,8 +3171,7 @@ bool operator<=(nullptr_t,
 /// otherwise.
 template <class LHS_TYPE>
 bool operator>(const shared_ptr<LHS_TYPE>& lhs, nullptr_t)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the address of the object referred to by the specified
 /// `rhs` shared pointer is ordered before the null-pointer value under the
@@ -3222,8 +3179,7 @@ bool operator>(const shared_ptr<LHS_TYPE>& lhs, nullptr_t)
 /// otherwise.
 template <class RHS_TYPE>
 bool operator>(nullptr_t, const shared_ptr<RHS_TYPE>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `lhs` shared pointer does not refer to an
 /// object, or if the address of the object referred to by `lhs` is ordered
@@ -3231,8 +3187,7 @@ bool operator>(nullptr_t, const shared_ptr<RHS_TYPE>& rhs)
 /// `std::less<LHS_TYPE *>`, and `false` otherwise.
 template <class LHS_TYPE>
 bool operator>=(const shared_ptr<LHS_TYPE>& lhs,
-                nullptr_t) BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+                nullptr_t) BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `rhs` shared pointer does not refer to an
 /// object, or if the address of the object referred to by `rhs` is ordered
@@ -3240,8 +3195,7 @@ bool operator>=(const shared_ptr<LHS_TYPE>& lhs,
 /// `std::less<RHS_TYPE *>`, and `false` otherwise.
 template <class RHS_TYPE>
 bool operator>=(nullptr_t,
-                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT;
 
 #endif  // BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 
@@ -3251,9 +3205,7 @@ bool operator>=(nullptr_t,
 template<class CHAR_TYPE, class CHAR_TRAITS, class ELEMENT_TYPE>
 std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>&
 operator<<(std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>& stream,
-           const shared_ptr<ELEMENT_TYPE>&             rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+           const shared_ptr<ELEMENT_TYPE>&             rhs);
 
 // ASPECTS
 
@@ -3261,8 +3213,7 @@ operator<<(std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>& stream,
 /// shared pointer to the specified `hashAlg` hashing algorithm of (template
 /// parameter) type `HASHALG`.
 template <class HASHALG, class ELEMENT_TYPE>
-void hashAppend(HASHALG& hashAlg, const shared_ptr<ELEMENT_TYPE>& input)
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(input);
+void hashAppend(HASHALG& hashAlg, const shared_ptr<ELEMENT_TYPE>& input);
 
 /// Efficiently exchange the states of the specified `a` and `b` shared
 /// pointers such that each will refer to the object formerly referred to by
@@ -3278,8 +3229,7 @@ void swap(shared_ptr<ELEMENT_TYPE>& a, shared_ptr<ELEMENT_TYPE>& b)
 /// if the (template parameter) type `DELETER` is the type of the deleter
 /// installed in `p`, and a null pointer value otherwise.
 template<class DELETER, class ELEMENT_TYPE>
-DELETER *get_deleter(const shared_ptr<ELEMENT_TYPE>& p) BSLS_KEYWORD_NOEXCEPT
-                                              BSLS_ASSERT_CONVEYOR_REQUIRES(p);
+DELETER *get_deleter(const shared_ptr<ELEMENT_TYPE>& p) BSLS_KEYWORD_NOEXCEPT;
 
 // STANDARD CAST FUNCTIONS
 
@@ -3291,8 +3241,7 @@ DELETER *get_deleter(const shared_ptr<ELEMENT_TYPE>& p) BSLS_KEYWORD_NOEXCEPT
 /// indicating the error.
 template<class TO_TYPE, class FROM_TYPE>
 shared_ptr<TO_TYPE> const_pointer_cast(const shared_ptr<FROM_TYPE>& source)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(source);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return a `shared_ptr<TO_TYPE>` object sharing ownership of the same
 /// object as the specified `source` shared pointer to the (template
@@ -3302,8 +3251,7 @@ shared_ptr<TO_TYPE> const_pointer_cast(const shared_ptr<FROM_TYPE>& source)
 /// object is returned.
 template<class TO_TYPE, class FROM_TYPE>
 shared_ptr<TO_TYPE> dynamic_pointer_cast(const shared_ptr<FROM_TYPE>& source)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(source);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return a `shared_ptr<TO_TYPE>` object sharing ownership of the same
 /// object as the specified `source` shared pointer to the (template
@@ -3313,8 +3261,7 @@ shared_ptr<TO_TYPE> dynamic_pointer_cast(const shared_ptr<FROM_TYPE>& source)
 /// emitted indicating the error.
 template<class TO_TYPE, class FROM_TYPE>
 shared_ptr<TO_TYPE> static_pointer_cast(const shared_ptr<FROM_TYPE>& source)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(source);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return a `shared_ptr<TO_TYPE>` object sharing ownership of the same
 /// object as the specified `source` shared pointer to the (template
@@ -3324,8 +3271,7 @@ shared_ptr<TO_TYPE> static_pointer_cast(const shared_ptr<FROM_TYPE>& source)
 /// will be emitted indicating the error.
 template<class TO_TYPE, class FROM_TYPE>
 shared_ptr<TO_TYPE> reinterpret_pointer_cast(
-                    const shared_ptr<FROM_TYPE>& source) BSLS_KEYWORD_NOEXCEPT
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(source);
+                    const shared_ptr<FROM_TYPE>& source) BSLS_KEYWORD_NOEXCEPT;
 
 
 // STANDARD FACTORY FUNCTIONS
@@ -3757,7 +3703,7 @@ class weak_ptr {
     template <class COMPATIBLE_TYPE
               BSLSTL_SHAREDPTR_DECLARE_IF_COMPATIBLE>
     weak_ptr(const shared_ptr<COMPATIBLE_TYPE>& other) BSLS_KEYWORD_NOEXCEPT
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(other);
                                                                     // IMPLICIT
     template <class COMPATIBLE_TYPE
               BSLSTL_SHAREDPTR_DECLARE_IF_COMPATIBLE>
@@ -3834,7 +3780,7 @@ class weak_ptr {
     /// Reset this weak pointer to the empty state.  If this weak pointer
     /// manages a (possibly shared) object, then decrement the number of
     /// weak references to that object.
-    void reset() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reset() BSLS_KEYWORD_NOEXCEPT;
 
     /// Efficiently exchange the states of this weak pointer and the
     /// specified `other` weak pointer such that each will refer to the
@@ -3847,20 +3793,16 @@ class weak_ptr {
     /// Return `true` if this weak pointer is in the empty state or the
     /// object that it originally referenced has been destroyed, and `false`
     /// otherwise.
-    bool expired() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool expired() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a shared pointer to the object referred to by this weak
     /// pointer if `false == expired()`, and a shared pointer in the empty
     /// state otherwise.
-    shared_ptr<ELEMENT_TYPE> lock() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    shared_ptr<ELEMENT_TYPE> lock() const BSLS_KEYWORD_NOEXCEPT;
 
     template <class ANY_TYPE>
     bool owner_before(const shared_ptr<ANY_TYPE>& other) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if the address of the
     /// `BloombergLP::bslma::SharedPtrRep` object used by this weak pointer
@@ -3871,15 +3813,11 @@ class weak_ptr {
     /// otherwise.
     template <class ANY_TYPE>
     bool owner_before(const weak_ptr<ANY_TYPE>& other) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     template<class ANY_TYPE>
     bool owner_equal(const shared_ptr<ANY_TYPE>& other) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if the address of the
     /// `BloombergLP::bslma::SharedPtrRep` object used by this shared
@@ -3888,9 +3826,7 @@ class weak_ptr {
     /// `other` shared pointer, and `false` otherwise.
     template<class ANY_TYPE>
     bool owner_equal(const weak_ptr<ANY_TYPE>& other) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an unspecified value such that, for any object `x` where
     /// `owner_equal(x)` is true, `owner_hash() == x.owner_hash()` is true.
@@ -3898,14 +3834,12 @@ class weak_ptr {
     /// `BloombergLP::bslma::SharedPtrRep` object used by this object.
     /// Note also that for two empty smart pointers `x` and `y`,
     /// `x.owner_hash() == y.owner_hash()` is true.
-    size_t owner_hash() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_t owner_hash() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the address providing modifiable access to the
     /// `BloombergLP::bslma::SharedPtrRep` object held by this weak pointer,
     /// or 0 if this weak pointer is in the empty state.
-    BloombergLP::bslma::SharedPtrRep *rep() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BloombergLP::bslma::SharedPtrRep *rep() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a "snapshot" of the current number of shared pointers that
     /// share ownership of the object referred to by this weak pointer, or 0
@@ -3915,8 +3849,7 @@ class weak_ptr {
     /// copied or destroyed, or another weak pointer may be locked in the
     /// case that 1 is returned (that would otherwise indicate unique
     /// ownership).
-    long use_count() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    long use_count() const BSLS_KEYWORD_NOEXCEPT;
 
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
     // DEPRECATED BDE LEGACY ACCESSORS
@@ -3926,8 +3859,7 @@ class weak_ptr {
     /// pointer (if any) if `false == expired()`, and a shared pointer in
     /// the empty state otherwise.  Note that the behavior of this method is
     /// the same as that of `lock`.
-    shared_ptr<ELEMENT_TYPE> acquireSharedPtr() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    shared_ptr<ELEMENT_TYPE> acquireSharedPtr() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a "snapshot" of the current number of shared pointers that
     /// share ownership of the object referred to by this weak pointer, or 0
@@ -3936,8 +3868,7 @@ class weak_ptr {
     /// may be unreliable in multi-threaded code for the same reasons.
     ///
     /// @DEPRECATED: Use `use_count` instead.
-    int numReferences() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int numReferences() const BSLS_KEYWORD_NOEXCEPT;
 #endif // BDE_OMIT_INTERNAL_DEPRECATED
 };
 
@@ -4017,16 +3948,14 @@ class enable_shared_from_this {
     /// managing this object.  If multiple groups of `shared_ptr`s are
     /// managing this object, the returned `shared_ptr` will share ownership
     /// with the group that first managed this object.
-    bsl::shared_ptr<ELEMENT_TYPE> shared_from_this()
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::shared_ptr<ELEMENT_TYPE> shared_from_this();
 
     /// Return a `weak_ptr` holding a weak reference to this managed object
     /// if this object is currently managed by `shared_ptr`, and return an
     /// expired `weak_ptr` otherwise.  If multiple groups of `shared_ptr`s
     /// are managing this object, the returned `weak_ptr` will hold a weak
     /// reference to the group that first managed this object.
-    bsl::weak_ptr<ELEMENT_TYPE> weak_from_this() BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::weak_ptr<ELEMENT_TYPE> weak_from_this() BSLS_KEYWORD_NOEXCEPT;
 
     // ACCESSORS
 
@@ -4036,8 +3965,7 @@ class enable_shared_from_this {
     /// currently managing this object.  If multiple groups of `shared_ptr`s
     /// are managing this object, the returned `shared_ptr` will share
     /// ownership with the group that first managed this object.
-    bsl::shared_ptr<const ELEMENT_TYPE> shared_from_this() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::shared_ptr<const ELEMENT_TYPE> shared_from_this() const;
 
 
     /// Return a `weak_ptr` holding a weak reference (with only `const`
@@ -4047,8 +3975,7 @@ class enable_shared_from_this {
     /// returned `weak_ptr` will hold a weak reference to the group that
     /// first managed this object.
     bsl::weak_ptr<const ELEMENT_TYPE> weak_from_this() const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                         BSLS_KEYWORD_NOEXCEPT;
 };
 
 // ASPECTS
@@ -4106,9 +4033,7 @@ struct SharedPtrUtil {
     template <class TARGET, class SOURCE>
     static
     void constCast(bsl::shared_ptr<TARGET>        *target,
-                   const bsl::shared_ptr<SOURCE>&  source)
-                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(source);
+                   const bsl::shared_ptr<SOURCE>&  source);
 
     /// Return a `bsl::shared_ptr<TARGET>` object sharing ownership of the
     /// same object as the specified `source` shared pointer to the
@@ -4119,8 +4044,7 @@ struct SharedPtrUtil {
     template <class TARGET, class SOURCE>
     static
     bsl::shared_ptr<TARGET> constCast(const bsl::shared_ptr<SOURCE>& source)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(source);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Load into the specified `target` an aliased shared pointer sharing
     /// ownership of the object managed by the specified `source` shared
@@ -4136,9 +4060,7 @@ struct SharedPtrUtil {
     template <class TARGET, class SOURCE>
     static
     void dynamicCast(bsl::shared_ptr<TARGET>        *target,
-                     const bsl::shared_ptr<SOURCE>&  source)
-                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(source);
+                     const bsl::shared_ptr<SOURCE>&  source);
 
     /// Return a `bsl::shared_ptr<TARGET>` object sharing ownership of the
     /// same object as the specified `source` shared pointer to the
@@ -4151,8 +4073,7 @@ struct SharedPtrUtil {
     template <class TARGET, class SOURCE>
     static
     bsl::shared_ptr<TARGET> dynamicCast(const bsl::shared_ptr<SOURCE>& source)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(source);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Load into the specified `target` an aliased shared pointer sharing
     /// ownership of the object managed by the specified `source` shared
@@ -4166,9 +4087,7 @@ struct SharedPtrUtil {
     template <class TARGET, class SOURCE>
     static
     void staticCast(bsl::shared_ptr<TARGET>        *target,
-                    const bsl::shared_ptr<SOURCE>&  source)
-                                      BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(target)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(source);
+                    const bsl::shared_ptr<SOURCE>&  source);
 
     /// Return a `bsl::shared_ptr<TARGET>` object sharing ownership of the
     /// same object as the specified `source` shared pointer to the
@@ -4179,8 +4098,7 @@ struct SharedPtrUtil {
     template <class TARGET, class SOURCE>
     static
     bsl::shared_ptr<TARGET> staticCast(const bsl::shared_ptr<SOURCE>& source)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(source);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 };
 
                         // ==========================
@@ -4655,6 +4573,7 @@ inline
 shared_ptr<ELEMENT_TYPE>
 enable_shared_from_this<ELEMENT_TYPE>::shared_from_this()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return shared_ptr<ELEMENT_TYPE>(d_weakThis);
 }
 
@@ -4663,6 +4582,7 @@ inline
 shared_ptr<const ELEMENT_TYPE>
 enable_shared_from_this<ELEMENT_TYPE>::shared_from_this() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return shared_ptr<const ELEMENT_TYPE>(d_weakThis);
 }
 
@@ -4671,6 +4591,7 @@ inline
 weak_ptr<ELEMENT_TYPE>
 enable_shared_from_this<ELEMENT_TYPE>::weak_from_this() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_weakThis;
 }
 
@@ -4680,6 +4601,7 @@ weak_ptr<const ELEMENT_TYPE>
 enable_shared_from_this<ELEMENT_TYPE>::weak_from_this() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_weakThis;
 }
 
@@ -5340,6 +5262,7 @@ template <class ELEMENT_TYPE>
 inline
 void shared_ptr<ELEMENT_TYPE>::reset() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslma::SharedPtrRep *rep = d_rep_p;
 
     // Clear 'd_rep_p' first so that a self-referencing shared pointer's
@@ -5360,6 +5283,7 @@ typename
       enable_if<is_convertible<COMPATIBLE_TYPE *, ELEMENT_TYPE *>::value>::type
 shared_ptr<ELEMENT_TYPE>::reset(COMPATIBLE_TYPE *ptr)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     SelfType(ptr).swap(*this);
 }
 
@@ -5371,6 +5295,7 @@ typename
 shared_ptr<ELEMENT_TYPE>::reset(COMPATIBLE_TYPE *ptr,
                                 DELETER          deleter)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     SelfType(ptr, deleter).swap(*this);
 }
 
@@ -5383,6 +5308,7 @@ shared_ptr<ELEMENT_TYPE>::reset(COMPATIBLE_TYPE *ptr,
                                 DELETER          deleter,
                                 ALLOCATOR        basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     SelfType(ptr, deleter, basicAllocator).swap(*this);
 }
 
@@ -5392,6 +5318,8 @@ inline
 void shared_ptr<ELEMENT_TYPE>::reset(const shared_ptr<ANY_TYPE>&  source,
                                      ELEMENT_TYPE                *ptr)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     // Optimize for the (expected) common case where aliases are managing the
     // same data structure.
 
@@ -5430,6 +5358,7 @@ template<class ELEMENT_TYPE>
 void
 shared_ptr<ELEMENT_TYPE>::createInplace()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef BloombergLP::bslma::SharedPtrInplaceRep<ELEMENT_TYPE> Rep;
 
     BloombergLP::bslma::Allocator *basicAllocator =
@@ -5447,6 +5376,7 @@ shared_ptr<ELEMENT_TYPE>::createInplace(
                                  BloombergLP::bslma::Allocator *basicAllocator,
                                  ARGS&&...                      args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef BloombergLP::bslma::SharedPtrInplaceRep<ELEMENT_TYPE> Rep;
 
     basicAllocator = BloombergLP::bslma::Default::allocator(basicAllocator);
@@ -5462,6 +5392,8 @@ void
 shared_ptr<ELEMENT_TYPE>::loadAlias(const shared_ptr<ANY_TYPE>&  source,
                                     ELEMENT_TYPE                *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     if (source.d_rep_p == d_rep_p && object) {
         d_ptr_p = object;
     }
@@ -5474,6 +5406,7 @@ template <class ELEMENT_TYPE>
 pair<typename shared_ptr<ELEMENT_TYPE>::element_type *, BloombergLP::bslma::SharedPtrRep *>
 shared_ptr<ELEMENT_TYPE>::release() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     pair<element_type *, BloombergLP::bslma::SharedPtrRep *> ret(d_ptr_p,
                                                                  d_rep_p);
     d_ptr_p = 0;
@@ -5487,6 +5420,7 @@ template <class ELEMENT_TYPE>
 inline
 void shared_ptr<ELEMENT_TYPE>::clear() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
 }
 
@@ -5495,6 +5429,7 @@ template <class COMPATIBLE_TYPE>
 inline
 void shared_ptr<ELEMENT_TYPE>::load(COMPATIBLE_TYPE *ptr)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     SelfType(ptr).swap(*this);
 }
 
@@ -5505,6 +5440,7 @@ void
 shared_ptr<ELEMENT_TYPE>::load(COMPATIBLE_TYPE               *ptr,
                                BloombergLP::bslma::Allocator *basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     SelfType(ptr, basicAllocator).swap(*this);
 }
 
@@ -5516,6 +5452,8 @@ shared_ptr<ELEMENT_TYPE>::load(COMPATIBLE_TYPE               *ptr,
                                const DELETER&                 deleter,
                                BloombergLP::bslma::Allocator *basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&deleter);
     SelfType(ptr, deleter, basicAllocator).swap(*this);
 }
 #endif // BDE_OMIT_INTERNAL_DEPRECATED
@@ -5530,6 +5468,7 @@ shared_ptr<ELEMENT_TYPE>::operator typename shared_ptr::BoolType() const
 shared_ptr<ELEMENT_TYPE>::operator BoolType() const BSLS_KEYWORD_NOEXCEPT
 #endif
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return BloombergLP::bsls::UnspecifiedBool<shared_ptr>::makeValue(d_ptr_p);
 }
 
@@ -5548,6 +5487,7 @@ inline
 ELEMENT_TYPE *shared_ptr<ELEMENT_TYPE>::operator->() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_ptr_p;
 }
 
@@ -5556,6 +5496,7 @@ inline
 typename shared_ptr<ELEMENT_TYPE>::element_type *
 shared_ptr<ELEMENT_TYPE>::get() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_ptr_p;
 }
 
@@ -5575,6 +5516,8 @@ inline
 bool shared_ptr<ELEMENT_TYPE>::owner_before(const shared_ptr<ANY_TYPE>& other)
                                                     const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     return std::less<BloombergLP::bslma::SharedPtrRep *>()(rep(), other.rep());
 }
 
@@ -5585,6 +5528,8 @@ bool
 shared_ptr<ELEMENT_TYPE>::owner_before(const weak_ptr<ANY_TYPE>& other) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     return std::less<BloombergLP::bslma::SharedPtrRep *>()(rep(), other.rep());
 }
 
@@ -5594,6 +5539,8 @@ inline
 bool shared_ptr<ELEMENT_TYPE>::owner_equal(const shared_ptr<ANY_TYPE>& other)
                                                     const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     return rep() == other.rep();
 }
 
@@ -5604,6 +5551,8 @@ bool
 shared_ptr<ELEMENT_TYPE>::owner_equal(const weak_ptr<ANY_TYPE>& other) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     return rep() == other.rep();
 }
 
@@ -5612,6 +5561,7 @@ inline
 size_t
 shared_ptr<ELEMENT_TYPE>::owner_hash() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return hash<BloombergLP::bslma::SharedPtrRep *>()(rep());
 }
 
@@ -5619,6 +5569,7 @@ template <class ELEMENT_TYPE>
 inline
 bool shared_ptr<ELEMENT_TYPE>::unique() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 1 == use_count();
 }
 
@@ -5626,6 +5577,7 @@ template <class ELEMENT_TYPE>
 inline
 long shared_ptr<ELEMENT_TYPE>::use_count() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_rep_p ? d_rep_p->numReferences() : 0;
 }
 
@@ -5634,6 +5586,7 @@ template <class ELEMENT_TYPE>
 BloombergLP::bslma::ManagedPtr<ELEMENT_TYPE>
 shared_ptr<ELEMENT_TYPE>::managedPtr() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_rep_p && d_ptr_p) {
         d_rep_p->acquireRef();
         return BloombergLP::bslma::ManagedPtr<ELEMENT_TYPE>(d_ptr_p,
@@ -5653,6 +5606,7 @@ inline
 BloombergLP::bslma::SharedPtrRep *shared_ptr<ELEMENT_TYPE>::rep() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_rep_p;
 }
 
@@ -5662,6 +5616,7 @@ template <class ELEMENT_TYPE>
 inline
 int shared_ptr<ELEMENT_TYPE>::numReferences() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_rep_p ? d_rep_p->numReferences() : 0;
 }
 
@@ -5670,6 +5625,7 @@ inline
 typename shared_ptr<ELEMENT_TYPE>::element_type *
 shared_ptr<ELEMENT_TYPE>::ptr() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_ptr_p;
 }
 #endif // BDE_OMIT_INTERNAL_DEPRECATED
@@ -5886,6 +5842,7 @@ template <class ELEMENT_TYPE>
 inline
 void weak_ptr<ELEMENT_TYPE>::reset() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_rep_p) {
         d_rep_p->releaseWeakRef();
     }
@@ -5919,6 +5876,7 @@ template <class ELEMENT_TYPE>
 inline
 bool weak_ptr<ELEMENT_TYPE>::expired() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return !(d_rep_p && d_rep_p->numReferences());
 }
 
@@ -5926,6 +5884,7 @@ template <class ELEMENT_TYPE>
 shared_ptr<ELEMENT_TYPE> weak_ptr<ELEMENT_TYPE>::lock() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_rep_p && d_rep_p->tryAcquireRef()) {
         return shared_ptr<ELEMENT_TYPE>(
                     d_ptr_p,
@@ -5943,6 +5902,8 @@ bool
 weak_ptr<ELEMENT_TYPE>::owner_before(const shared_ptr<ANY_TYPE>& other) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     return std::less<BloombergLP::bslma::SharedPtrRep *>()(d_rep_p,
                                                            other.rep());
 }
@@ -5954,6 +5915,8 @@ bool
 weak_ptr<ELEMENT_TYPE>::owner_before(const weak_ptr<ANY_TYPE>& other) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     return std::less<BloombergLP::bslma::SharedPtrRep *>()(d_rep_p,
                                                            other.d_rep_p);
 }
@@ -5965,6 +5928,8 @@ bool
 weak_ptr<ELEMENT_TYPE>::owner_equal(const shared_ptr<ANY_TYPE>& other)
                                                     const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     return rep() == other.rep();
 }
 
@@ -5975,6 +5940,8 @@ bool
 weak_ptr<ELEMENT_TYPE>::owner_equal(const weak_ptr<ANY_TYPE>& other) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     return rep() == other.rep();
 }
 
@@ -5983,6 +5950,7 @@ inline
 size_t
 weak_ptr<ELEMENT_TYPE>::owner_hash() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return hash<BloombergLP::bslma::SharedPtrRep *>()(rep());
 }
 
@@ -5991,6 +5959,7 @@ inline
 BloombergLP::bslma::SharedPtrRep *weak_ptr<ELEMENT_TYPE>::rep() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_rep_p;
 }
 
@@ -5998,6 +5967,7 @@ template <class ELEMENT_TYPE>
 inline
 long weak_ptr<ELEMENT_TYPE>::use_count() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_rep_p ? d_rep_p->numReferences() : 0;
 }
 
@@ -6008,6 +5978,7 @@ inline
 shared_ptr<ELEMENT_TYPE> weak_ptr<ELEMENT_TYPE>::acquireSharedPtr() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return lock();
 }
 
@@ -6015,6 +5986,7 @@ template <class ELEMENT_TYPE>
 inline
 int weak_ptr<ELEMENT_TYPE>::numReferences() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_rep_p ? d_rep_p->numReferences() : 0;
 }
 #endif // BDE_OMIT_INTERNAL_DEPRECATED
@@ -6064,6 +6036,8 @@ inline
 void SharedPtrUtil::constCast(bsl::shared_ptr<TARGET>        *target,
                               const bsl::shared_ptr<SOURCE>&  source)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(target);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     BSLS_ASSERT(0 != target);
 
     target->reset(source, const_cast<TARGET *>(source.get()));
@@ -6075,6 +6049,7 @@ bsl::shared_ptr<TARGET>
 SharedPtrUtil::constCast(const bsl::shared_ptr<SOURCE>& source)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     return bsl::shared_ptr<TARGET>(source,
                                    const_cast<TARGET *>(source.get()));
 }
@@ -6084,6 +6059,8 @@ inline
 void SharedPtrUtil::dynamicCast(bsl::shared_ptr<TARGET>        *target,
                                 const bsl::shared_ptr<SOURCE>&  source)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(target);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     BSLS_ASSERT(0 != target);
 
     if (TARGET *castPtr = dynamic_cast<TARGET *>(source.get())) {
@@ -6100,6 +6077,7 @@ bsl::shared_ptr<TARGET>
 SharedPtrUtil::dynamicCast(const bsl::shared_ptr<SOURCE>& source)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     if (TARGET *castPtr = dynamic_cast<TARGET *>(source.get())) {
         return bsl::shared_ptr<TARGET>(source, castPtr);              // RETURN
     }
@@ -6112,6 +6090,8 @@ inline
 void SharedPtrUtil::staticCast(bsl::shared_ptr<TARGET>        *target,
                                const bsl::shared_ptr<SOURCE>&  source)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(target);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     BSLS_ASSERT(0 != target);
 
     target->reset(source, static_cast<TARGET *>(source.get()));
@@ -6123,6 +6103,7 @@ bsl::shared_ptr<TARGET>
 SharedPtrUtil::staticCast(const bsl::shared_ptr<SOURCE>& source)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     return bsl::shared_ptr<TARGET>(source,
                                    static_cast<TARGET *>(source.get()));
 }
@@ -6197,6 +6178,8 @@ inline
 bool bsl::operator==(const shared_ptr<LHS_TYPE>& lhs,
                      const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.get() == rhs.get();
 }
 
@@ -6220,6 +6203,8 @@ inline
 bool bsl::operator!=(const shared_ptr<LHS_TYPE>& lhs,
                      const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -6236,6 +6221,8 @@ inline
 bool bsl::operator>(const shared_ptr<LHS_TYPE>& lhs,
                     const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs < lhs;
 }
 
@@ -6252,6 +6239,8 @@ inline
 bool bsl::operator>=(const shared_ptr<LHS_TYPE>& lhs,
                      const shared_ptr<RHS_TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs < rhs);
 }
 
@@ -6262,6 +6251,7 @@ inline
 bool bsl::operator==(const shared_ptr<LHS_TYPE>& lhs, bsl::nullptr_t)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return !lhs;
 }
 
@@ -6283,6 +6273,7 @@ inline
 bool bsl::operator==(bsl::nullptr_t, const shared_ptr<RHS_TYPE>& rhs)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !rhs;
 }
 
@@ -6291,6 +6282,7 @@ inline
 bool bsl::operator!=(const shared_ptr<LHS_TYPE>& lhs, bsl::nullptr_t)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return static_cast<bool>(lhs);
 }
 
@@ -6299,6 +6291,7 @@ inline
 bool bsl::operator!=(bsl::nullptr_t, const shared_ptr<RHS_TYPE>& rhs)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return static_cast<bool>(rhs);
 }
 
@@ -6339,6 +6332,7 @@ inline
 bool bsl::operator>(const shared_ptr<LHS_TYPE>& lhs, bsl::nullptr_t)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return std::less<LHS_TYPE *>()(0, lhs.get());
 }
 
@@ -6347,6 +6341,7 @@ inline
 bool bsl::operator>(bsl::nullptr_t, const shared_ptr<RHS_TYPE>& rhs)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return std::less<RHS_TYPE *>()(rhs.get(), 0);
 }
 
@@ -6355,6 +6350,7 @@ inline
 bool bsl::operator>=(const shared_ptr<LHS_TYPE>& lhs, bsl::nullptr_t)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return !std::less<LHS_TYPE *>()(lhs.get(), 0);
 }
 
@@ -6363,6 +6359,7 @@ inline
 bool bsl::operator>=(bsl::nullptr_t, const shared_ptr<RHS_TYPE>& rhs)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !std::less<RHS_TYPE *>()(0, rhs.get());
 }
 
@@ -6382,6 +6379,8 @@ template <class HASHALG, class ELEMENT_TYPE>
 inline
 void bsl::hashAppend(HASHALG& hashAlg, const shared_ptr<ELEMENT_TYPE>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     hashAppend(hashAlg, input.get());
 }
 
@@ -6407,6 +6406,7 @@ inline
 DELETER *bsl::get_deleter(const shared_ptr<ELEMENT_TYPE>& p)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&p);
     BloombergLP::bslma::SharedPtrRep *rep = p.rep();
     return rep ? static_cast<DELETER *>(rep->getDeleter(typeid(DELETER))) : 0;
 }
@@ -6418,6 +6418,7 @@ bsl::shared_ptr<TO_TYPE>
 bsl::const_pointer_cast(const shared_ptr<FROM_TYPE>& source)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     return shared_ptr<TO_TYPE>(source, const_cast<TO_TYPE *>(source.get()));
 }
 
@@ -6427,6 +6428,7 @@ bsl::shared_ptr<TO_TYPE>
 bsl::dynamic_pointer_cast(const shared_ptr<FROM_TYPE>& source)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     if (TO_TYPE *castPtr = dynamic_cast<TO_TYPE *>(source.get())) {
         return shared_ptr<TO_TYPE>(source, castPtr);                  // RETURN
     }
@@ -6440,6 +6442,7 @@ bsl::shared_ptr<TO_TYPE>
 bsl::static_pointer_cast(const shared_ptr<FROM_TYPE>& source)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     return shared_ptr<TO_TYPE>(source, static_cast<TO_TYPE *>(source.get()));
 }
 
@@ -6449,6 +6452,7 @@ bsl::shared_ptr<TO_TYPE>
 bsl::reinterpret_pointer_cast(const shared_ptr<FROM_TYPE>& source)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&source);
     return shared_ptr<TO_TYPE>(source,
                                reinterpret_cast<TO_TYPE *>(source.get()));
 }

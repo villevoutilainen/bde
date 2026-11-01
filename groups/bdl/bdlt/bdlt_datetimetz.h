@@ -347,8 +347,7 @@ class DatetimeTz {
     /// time zone offset of this object to the `localDatetime` and `offset`
     /// values respectively and return 0, leave this object unmodified and
     /// return a non-zero value otherwise.
-    int setDatetimeTzIfValid(const Datetime& localDatetime, int offset)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setDatetimeTzIfValid(const Datetime& localDatetime, int offset);
 
                                   // Aspects
 
@@ -363,34 +362,33 @@ class DatetimeTz {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     // ACCESSORS
 
     /// Return a `DateTz` object having the value of the local date and
     /// offset represented by this object.
-    DateTz dateTz() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    DateTz dateTz() const;
 
     /// Return a `Datetime` object having the value of the local datetime
     /// represented by this object.  Note that the `Datetime` value returned
     /// is the current value stored in this object and may be different from
     /// the local datetime of the system.
-    Datetime localDatetime() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    Datetime localDatetime() const;
 
     /// Return the time zone offset of this `DatetimeTz` object.  Note that
     /// the offset is in minutes from UTC.
-    int offset() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int offset() const;
 
     /// Return a `TimeTz` object having the value of the local time and
     /// offset represented by this object.
-    TimeTz timeTz() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    TimeTz timeTz() const;
 
     /// Return a `Datetime` object having the value of the UTC datetime
     /// represented by this object.  Note that if `0 != offset()`, the
     /// returned value is equal to `localDatetime()` minus `offset()`
     /// minutes, and `localDatetime()` otherwise.
-    Datetime utcDatetime() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    Datetime utcDatetime() const;
 
                                   // Aspects
 
@@ -403,9 +401,7 @@ class DatetimeTz {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Write the value of this object to the specified output `stream` in a
     /// human-readable format, and return a reference to `stream`.
@@ -421,9 +417,7 @@ class DatetimeTz {
     /// is not fully specified, and can change without notice.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        int           spacesPerLevel = 4) const;
 
 #ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
 
@@ -435,7 +429,7 @@ class DatetimeTz {
     /// minutes, and `localDatetime()` otherwise.
     ///
     /// @DEPRECATED: replaced by `utcDatetime.`
-    Datetime gmtDatetime() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    Datetime gmtDatetime() const;
 
     /// Return the most current BDEX streaming version number supported by
     /// this class.
@@ -450,8 +444,7 @@ class DatetimeTz {
     /// return a non-zero value otherwise.
     ///
     /// @DEPRECATED: replaced by `setDatetimeTzIfValid`.
-    int validateAndSetDatetimeTz(const Datetime& localDatetime, int offset)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int validateAndSetDatetimeTz(const Datetime& localDatetime, int offset);
 
 #endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
@@ -463,15 +456,13 @@ class DatetimeTz {
 /// the same value, and `false` otherwise.  Two `DatetimeTz` objects have
 /// the same value if they have the same local datetime value and the same
 /// time zone offset value.
-bool operator==(const DatetimeTz& lhs, const DatetimeTz& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator==(const DatetimeTz& lhs, const DatetimeTz& rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` `DatetimeTz` objects do
 /// not have the same value, and `false` otherwise.  Two `DatetimeTz`
 /// objects do not have the same value if they do not have the same local
 /// datetime value or the same time zone offset value.
-bool operator!=(const DatetimeTz& lhs, const DatetimeTz& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator!=(const DatetimeTz& lhs, const DatetimeTz& rhs);
 
 /// Write the value of the specified `rhs` object to the specified output
 /// `stream` in a single-line format, and return a reference providing
@@ -480,8 +471,7 @@ bool operator!=(const DatetimeTz& lhs, const DatetimeTz& rhs)
 /// fully specified and can change without notice.  Also note that this
 /// method has the same behavior as `object.print(stream, 0, -1)`, but with
 /// the attribute names elided.
-bsl::ostream& operator<<(bsl::ostream& stream, const DatetimeTz& rhs)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bsl::ostream& operator<<(bsl::ostream& stream, const DatetimeTz& rhs);
 
 // FREE FUNCTIONS
 
@@ -491,9 +481,7 @@ bsl::ostream& operator<<(bsl::ostream& stream, const DatetimeTz& rhs)
 /// objects which represent the same UTC time but have different offsets
 /// will not (necessarily) hash to the same value.
 template <class HASHALG>
-void hashAppend(HASHALG& hashAlg, const DatetimeTz& object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+void hashAppend(HASHALG& hashAlg, const DatetimeTz& object);
 
 // ============================================================================
 //                             INLINE DEFINITIONS
@@ -583,6 +571,8 @@ void DatetimeTz::setDatetimeTz(const Datetime& localDatetime, int offset)
 inline
 int DatetimeTz::setDatetimeTzIfValid(const Datetime& localDatetime, int offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&localDatetime);
     if (isValid(localDatetime, offset)) {
         setDatetimeTz(localDatetime, offset);
         return 0;                                                     // RETURN
@@ -595,6 +585,8 @@ int DatetimeTz::setDatetimeTzIfValid(const Datetime& localDatetime, int offset)
 template <class STREAM>
 STREAM& DatetimeTz::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 2:
@@ -629,18 +621,21 @@ STREAM& DatetimeTz::bdexStreamIn(STREAM& stream, int version)
 inline
 DateTz DatetimeTz::dateTz() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return DateTz(d_localDatetime.date(), d_offset);
 }
 
 inline
 Datetime DatetimeTz::localDatetime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_localDatetime;
 }
 
 inline
 int DatetimeTz::offset() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_offset;
 }
 
@@ -654,6 +649,7 @@ TimeTz DatetimeTz::timeTz() const
 inline
 Datetime DatetimeTz::utcDatetime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Datetime utc(d_localDatetime);
     if (d_offset) {
         utc.addMinutes(-d_offset);
@@ -666,6 +662,8 @@ Datetime DatetimeTz::utcDatetime() const
 template <class STREAM>
 STREAM& DatetimeTz::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 2:
@@ -688,6 +686,7 @@ STREAM& DatetimeTz::bdexStreamOut(STREAM& stream, int version) const
 inline
 Datetime DatetimeTz::gmtDatetime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return utcDatetime();
 }
 
@@ -701,6 +700,7 @@ inline
 int DatetimeTz::validateAndSetDatetimeTz(const Datetime& localDatetime,
                                          int             offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&localDatetime);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return setDatetimeTzIfValid(localDatetime, offset);
 }
@@ -713,6 +713,8 @@ int DatetimeTz::validateAndSetDatetimeTz(const Datetime& localDatetime,
 inline
 bool bdlt::operator==(const DatetimeTz& lhs, const DatetimeTz& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.localDatetime() == rhs.localDatetime()
         && lhs.offset()        == rhs.offset();
 }
@@ -720,6 +722,8 @@ bool bdlt::operator==(const DatetimeTz& lhs, const DatetimeTz& rhs)
 inline
 bool bdlt::operator!=(const DatetimeTz& lhs, const DatetimeTz& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -734,6 +738,8 @@ template <class HASHALG>
 inline
 void bdlt::hashAppend(HASHALG& hashAlg, const DatetimeTz& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlg, object.localDatetime());
     hashAppend(hashAlg, object.offset());

@@ -477,8 +477,7 @@ class BlobBuffer {
 
     /// Return a reference to the shared pointer to the modifiable buffer
     /// represented by this object.
-    bsl::shared_ptr<char>& buffer() BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::shared_ptr<char>& buffer();
 
     /// Set the size of this blob buffer to the specified `size`.  The
     /// behavior is undefined unless `0 <= size` and the capacity of the
@@ -499,9 +498,7 @@ class BlobBuffer {
 
     /// Return a reference to the non-modifiable shared pointer to the
     /// buffer represented by this object.
-    const bsl::shared_ptr<char>& buffer() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::shared_ptr<char>& buffer() const;
 
     /// Return the address of the modifiable buffer represented by this
     /// object.
@@ -1042,6 +1039,7 @@ BlobBuffer::~BlobBuffer()
 inline
 bsl::shared_ptr<char>& BlobBuffer::buffer()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_buffer;
 }
 
@@ -1057,6 +1055,7 @@ void BlobBuffer::setSize(int size)
 inline
 const bsl::shared_ptr<char>& BlobBuffer::buffer() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_buffer;
 }
 

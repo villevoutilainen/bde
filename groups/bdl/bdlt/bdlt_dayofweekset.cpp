@@ -56,6 +56,7 @@ DayOfWeekSet_Iter::DayOfWeekSet_Iter(int data, int index)
 // MANIPULATORS
 DayOfWeekSet_Iter& DayOfWeekSet_Iter::operator++()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (d_index < 8) {
         ++d_index;
         if ((1 << d_index) & d_data) {
@@ -68,6 +69,7 @@ DayOfWeekSet_Iter& DayOfWeekSet_Iter::operator++()
 
 DayOfWeekSet_Iter& DayOfWeekSet_Iter::operator--()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (d_index > 0) {
         --d_index;
         if ((1 << d_index) & d_data) {
@@ -87,6 +89,8 @@ bsl::ostream& DayOfWeekSet::print(bsl::ostream& stream,
                                   int           level,
                                   int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }

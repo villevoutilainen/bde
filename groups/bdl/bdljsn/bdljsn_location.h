@@ -310,6 +310,8 @@ template <class HASHALG>
 inline
 void bdljsn::hashAppend(HASHALG& hashAlg, const Location& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlg, object.d_offset);
 }

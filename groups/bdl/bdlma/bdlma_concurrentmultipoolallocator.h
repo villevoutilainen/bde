@@ -425,8 +425,7 @@ class ConcurrentMultipoolAllocator : public bdlma::ManagedAllocator {
     /// specified `size` (in bytes) before the pool replenishes.  If `size`
     /// is 0, this method has no effect.  The behavior is undefined unless
     /// `size <= maxPooledBlockSize()` and `0 <= numObjects`.
-    void reserveCapacity(bsls::Types::size_type size, int numObjects)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reserveCapacity(bsls::Types::size_type size, int numObjects);
 
                                 // Virtual Functions
 
@@ -436,24 +435,22 @@ class ConcurrentMultipoolAllocator : public bdlma::ManagedAllocator {
     /// `size > maxPooledBlockSize()`, the memory allocation is managed
     /// directly by the underlying allocator, but will not be pooled .  The
     /// behavior is undefined unless `0 <= size`.
-    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE;
 
     /// Relinquish the memory block at the specified `address` back to this
     /// allocator for reuse.  If `address` is 0, this method has no effect.
     /// The behavior is undefined unless `address` was allocated by this
     /// allocator, and has not already been deallocated.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
 
     /// Relinquish all memory currently allocated through this multipool
     /// allocator.
-    void release() BSLS_KEYWORD_OVERRIDE BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void release() BSLS_KEYWORD_OVERRIDE;
 
     // ACCESSORS
 
     /// Return the number of pools managed by this multipool allocator.
-    int numPools() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int numPools() const;
 
     /// Return the maximum size of memory blocks that are pooled by this
     /// multipool object.  Note that the maximum value is defined as:
@@ -462,8 +459,7 @@ class ConcurrentMultipoolAllocator : public bdlma::ManagedAllocator {
     /// ```
     /// where `numPools` is either specified at construction, or an
     /// implementation-defined value.
-    bsls::Types::size_type maxPooledBlockSize() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::size_type maxPooledBlockSize() const;
 };
 
 // ============================================================================
@@ -574,6 +570,7 @@ void ConcurrentMultipoolAllocator::reserveCapacity(
                                              bsls::Types::size_type size,
                                              int                    numObjects)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_multipool.reserveCapacity(size, numObjects);
 }
 
@@ -581,12 +578,14 @@ void ConcurrentMultipoolAllocator::reserveCapacity(
 inline
 int ConcurrentMultipoolAllocator::numPools() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_multipool.numPools();
 }
 
 inline
 bsls::Types::size_type ConcurrentMultipoolAllocator::maxPooledBlockSize() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_multipool.maxPooledBlockSize();
 }
 

@@ -124,8 +124,7 @@ struct IntervalConversionUtil {
     /// Return as a `bsls::TimeInterval` the value of the specified
     /// `interval`.
     static bsls::TimeInterval convertToTimeInterval(
-                                            const DatetimeInterval&  interval)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(interval);
+                                            const DatetimeInterval&  interval);
 };
 
 // ============================================================================
@@ -172,6 +171,7 @@ inline
 bsls::TimeInterval IntervalConversionUtil::convertToTimeInterval(
                                               const DatetimeInterval& interval)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&interval);
     return bsls::TimeInterval(interval.totalSeconds(),
                               Ratio::k_NANOSECONDS_PER_MILLISECOND_32 *
                                                       interval.milliseconds() +

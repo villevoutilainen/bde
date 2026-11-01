@@ -1758,8 +1758,7 @@ pair(std::pair<T1, T2>, ALLOC *) -> pair<T1, T2>;
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator==(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator==(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 
 #if !defined(BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON)
 /// Return true if the specified `lhs` and `rhs` pair objects do not have
@@ -1769,8 +1768,7 @@ bool operator==(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator!=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator!=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 #endif
 
 #if defined(BSLALG_SYNTHTHREEWAYUTIL_AVAILABLE)
@@ -1783,8 +1781,7 @@ constexpr
 std::common_comparison_category_t<
     BloombergLP::bslalg::SynthThreeWayUtil::Result<T1>,
     BloombergLP::bslalg::SynthThreeWayUtil::Result<T2>
-> operator<=>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+> operator<=>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 
 #else
 
@@ -1798,8 +1795,7 @@ std::common_comparison_category_t<
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator<(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator<(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 
 /// Return true if the specified `lhs` has a value greater than the
 /// specified `rhs` and false otherwise.  `lhs` has a value greater than
@@ -1808,8 +1804,7 @@ bool operator<(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 
 /// Return true if the specified `lhs` has a value less than or equal to the
 /// specified `rhs` and false otherwise.  `lhs` has a value less than or
@@ -1818,8 +1813,7 @@ bool operator>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator<=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator<=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 
 /// Return true if the specified `lhs` has a value greater than or equal to
 /// the specified `rhs` and false otherwise.  `lhs` has a value greater than
@@ -1828,8 +1822,7 @@ bool operator<=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 template <class T1, class T2>
 inline
 BSLS_KEYWORD_CONSTEXPR
-bool operator>=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator>=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs);
 
 #endif  // BSLALG_SYNTHTHREEWAYUTIL_AVAILABLE
 
@@ -1999,7 +1992,7 @@ namespace bsl {
 /// is either 0 or 1.
 template<std::size_t INDEX, class T1, class T2>
 typename std::tuple_element<INDEX, bsl::pair<T1, T2> >::type&
-get(bsl::pair<T1, T2>& p) noexcept BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+get(bsl::pair<T1, T2>& p) noexcept;
 
 /// Return a reference providing non-modifiable access to the element of the
 /// specified `p`, having the ordinal number specified by the (template
@@ -2007,8 +2000,7 @@ get(bsl::pair<T1, T2>& p) noexcept BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 /// is either 0 or 1.
 template<std::size_t INDEX, class T1, class T2>
 const typename std::tuple_element<INDEX, bsl::pair<T1, T2> >::type&
-get(const bsl::pair<T1, T2>& p) noexcept
-    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+get(const bsl::pair<T1, T2>& p) noexcept;
 
 /// Return a rvalue reference providing modifiable access to the element of
 /// the specified `p`, having the ordinal number specified by the (template
@@ -2016,39 +2008,35 @@ get(const bsl::pair<T1, T2>& p) noexcept
 /// is either 0 or 1.
 template<std::size_t INDEX, class T1, class T2>
 typename std::tuple_element<INDEX, bsl::pair<T1, T2> >::type&&
-get(bsl::pair<T1, T2>&& p) noexcept BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+get(bsl::pair<T1, T2>&& p) noexcept;
 
 /// Return a reference providing modifiable access to the element of the
 /// specified `p`, having the (template parameter) `TYPE`.  This function
 /// will not compile unless the types `T1` and `T2` are different and the
 /// `TYPE` is the same as either `T1` or `T2`.
 template<class TYPE, class T1, class T2>
-TYPE& get(bsl::pair<T1, T2>& p) noexcept
-    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+TYPE& get(bsl::pair<T1, T2>& p) noexcept;
 
 /// Return a reference providing non-modifiable access to the element of the
 /// specified `p`, having the (template parameter) `TYPE`.  This function
 /// will not compile unless the types `T1` and `T2` are different and the
 /// `TYPE` is the same as either `T1` or `T2`.
 template<class TYPE, class T1, class T2>
-const TYPE& get(const bsl::pair<T1, T2>& p) noexcept
-    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+const TYPE& get(const bsl::pair<T1, T2>& p) noexcept;
 
 /// Return a rvalue reference providing modifiable access to the element of
 /// the specified `p`, having the (template parameter) `TYPE`.  This
 /// function will not compile unless the types `T1` and `T2` are different
 /// and the `TYPE` is the same as either `T1` or `T2`.
 template<class TYPE, class T1, class T2>
-TYPE&& get(bsl::pair<T1, T2>&& p) noexcept
-    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+TYPE&& get(bsl::pair<T1, T2>&& p) noexcept;
 
 /// Return a rvalue reference providing non-modifiable access to the element
 /// of the specified `p`, having the (template parameter) `TYPE`.  This
 /// function will not compile unless the types `T1` and `T2` are different
 /// and the `TYPE` is the same as either `T1` or `T2`.
 template<class TYPE, class T1, class T2>
-const TYPE&& get(const bsl::pair<T1, T2>&& p) noexcept
-    BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+const TYPE&& get(const bsl::pair<T1, T2>&& p) noexcept;
 
 }  // close bsl namespace
 
@@ -3196,6 +3184,8 @@ inline
 BSLS_KEYWORD_CONSTEXPR
 bool operator==(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.first == rhs.first && lhs.second == rhs.second;
 }
 
@@ -3205,6 +3195,8 @@ inline
 BSLS_KEYWORD_CONSTEXPR
 bool operator!=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return ! (lhs == rhs);
 }
 #endif
@@ -3231,6 +3223,8 @@ inline
 BSLS_KEYWORD_CONSTEXPR
 bool operator<(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return (lhs.first < rhs.first ? true  :
             rhs.first < lhs.first ? false :
             lhs.second < rhs.second);
@@ -3241,6 +3235,8 @@ inline
 BSLS_KEYWORD_CONSTEXPR
 bool operator>(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs < lhs;
 }
 
@@ -3249,6 +3245,8 @@ inline
 BSLS_KEYWORD_CONSTEXPR
 bool operator<=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return ! (rhs < lhs);
 }
 
@@ -3257,6 +3255,8 @@ inline
 BSLS_KEYWORD_CONSTEXPR
 bool operator>=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return ! (lhs < rhs);
 }
 
@@ -3375,6 +3375,7 @@ inline
 typename std::tuple_element<INDEX, bsl::pair<T1, T2> >::type&
 bsl::get(bsl::pair<T1, T2>& p) noexcept
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&p);
     return BloombergLP::bslstl::Pair_GetImpUtil<INDEX, T1, T2>::getPairElement(
                                                                             p);
 }
@@ -3384,6 +3385,7 @@ inline
 const typename std::tuple_element<INDEX, bsl::pair<T1, T2> >::type&
 bsl::get(const bsl::pair<T1, T2>& p) noexcept
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&p);
     return BloombergLP::bslstl::Pair_GetImpUtil<INDEX, T1, T2>::getPairElement(
                                                                             p);
 }
@@ -3393,6 +3395,7 @@ inline
 typename std::tuple_element<INDEX, bsl::pair<T1, T2> >::type&&
 bsl::get(bsl::pair<T1, T2>&& p) noexcept
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&p);
     return BloombergLP::bslstl::Pair_GetImpUtil<INDEX, T1, T2>::getPairElement(
                                                                  std::move(p));
 }
@@ -3401,6 +3404,7 @@ template<class TYPE, class T1, class T2>
 inline
 TYPE& bsl::get(bsl::pair<T1, T2>& p) noexcept
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&p);
     return BloombergLP::bslstl::Pair_GetImpUtil<
         BloombergLP::bslstl::Pair_IndexOfType<TYPE, T1, T2>::value, T1, T2>
                                                            ::getPairElement(p);
@@ -3410,6 +3414,7 @@ template<class TYPE, class T1, class T2>
 inline
 const TYPE& bsl::get(const bsl::pair<T1, T2>& p) noexcept
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&p);
     return BloombergLP::bslstl::Pair_GetImpUtil<
         BloombergLP::bslstl::Pair_IndexOfType<TYPE, T1, T2>::value, T1, T2>
                                                            ::getPairElement(p);
@@ -3419,6 +3424,7 @@ template<class TYPE, class T1, class T2>
 inline
 TYPE&& bsl::get(bsl::pair<T1, T2>&& p) noexcept
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&p);
     return BloombergLP::bslstl::Pair_GetImpUtil<
         BloombergLP::bslstl::Pair_IndexOfType<TYPE, T1, T2>::value, T1, T2>
             ::getPairElement(std::move(p));
@@ -3428,6 +3434,7 @@ template<class TYPE, class T1, class T2>
 inline
 const TYPE&& bsl::get(const bsl::pair<T1, T2>&& p) noexcept
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&p);
     return BloombergLP::bslstl::Pair_GetImpUtil<
         BloombergLP::bslstl::Pair_IndexOfType<TYPE, T1, T2>::value, T1, T2>
             ::getPairElement(std::move(p));

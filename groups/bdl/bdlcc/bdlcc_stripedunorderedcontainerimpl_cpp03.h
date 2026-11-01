@@ -2733,6 +2733,7 @@ template <class KEY, class VALUE>
 inline
 VALUE& StripedUnorderedContainerImpl_Node<KEY, VALUE>::value()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.object();
 }
 
@@ -2741,6 +2742,7 @@ template <class KEY, class VALUE>
 inline
 const KEY& StripedUnorderedContainerImpl_Node<KEY, VALUE>::key() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_key.object();
 }
 
@@ -2756,6 +2758,7 @@ template <class KEY, class VALUE>
 inline
 const VALUE& StripedUnorderedContainerImpl_Node<KEY, VALUE>::value() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.object();
 }
 

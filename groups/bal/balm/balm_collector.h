@@ -173,8 +173,7 @@ class Collector {
 
     /// Return a reference to the non-modifiable `MetricId` object
     /// identifying the metric for which this object collects values.
-    const MetricId& metricId() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const MetricId& metricId() const;
 
     /// Load into the specified `record` the id of the metric being
     /// collected, as well as the current count, total, minimum, and
@@ -267,6 +266,7 @@ void Collector::setCountTotalMinMax(int    count,
 inline
 const MetricId& Collector::metricId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_record.metricId();
 }
 

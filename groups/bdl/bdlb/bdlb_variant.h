@@ -1777,8 +1777,7 @@ class VariantImp : public VariantImp_Traits<TYPES>::BaseType {
     /// template arguments was chosen so that `TYPE` must always be
     /// specified.
     template <class TYPE, class... ARGS>
-    TYPE& createInPlace(ARGS&&... arguments)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    TYPE& createInPlace(ARGS&&... arguments);
 #endif
 
     /// Destroy the current value held by this variant (if any), and reset
@@ -7381,6 +7380,7 @@ template <class TYPE, class... ARGS>
 inline
 TYPE& VariantImp<TYPES>::createInPlace(ARGS&&... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 

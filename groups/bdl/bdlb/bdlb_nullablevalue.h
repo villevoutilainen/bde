@@ -531,23 +531,19 @@ class NullableValue : public bsl::optional<TYPE> {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Assign to this object the specified `value` (of `BDE_OTHER_TYPE`)
     /// converted to `TYPE`, and return a reference providing modifiable
     /// access to the underlying `TYPE` object.  Note that this method will
     /// fail to compile if `TYPE` and `BDE_OTHER_TYPE` are not compatible.
     template <class BDE_OTHER_TYPE>
-    TYPE& makeValue(BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) value)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    TYPE& makeValue(BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) value);
 
     /// Assign to this object the default value for `TYPE`, and return a
     /// reference providing modifiable access to the underlying `TYPE`
     /// object.
-    TYPE& makeValue() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    TYPE& makeValue();
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES // $var-args=10
 
@@ -565,25 +561,20 @@ class NullableValue : public bsl::optional<TYPE> {
     /// compiler.  Note that if the constructor of `TYPE` throws an
     /// exception this object is left in the null state.
     template <class... ARGS>
-    TYPE& makeValueInplace(ARGS&&... args)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    TYPE& makeValueInplace(ARGS&&... args);
 #endif
 
     /// Return a reference providing modifiable access to the underlying
     /// `TYPE` object.  The behavior is undefined unless this object is
     /// non-null.
-    TYPE& value()
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    TYPE& value();
 
     // ACCESSORS
 
     /// Return an address providing non-modifiable access to the underlying
     /// object of a (template parameter) `TYPE` if this object is non-null,
     /// and the specified `address` otherwise.
-    const TYPE *addressOr(const TYPE *address) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const TYPE *addressOr(const TYPE *address) const;
 
     /// Write the value of this object, using the specified `version`
     /// format, to the specified output `stream`, and return a reference to
@@ -594,12 +585,10 @@ class NullableValue : public bsl::optional<TYPE> {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Return `true` if this object is null, and `false` otherwise.
-    bool isNull() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool isNull() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the maximum valid BDEX format version, as indicated by the
     /// specified `versionSelector`, to be passed to the `bdexStreamOut`
@@ -610,15 +599,14 @@ class NullableValue : public bsl::optional<TYPE> {
     /// unexternalizer.  See the `bslx` package-level documentation for more
     /// information on BDEX streaming of value-semantic types and
     /// containers.
-    int maxSupportedBdexVersion(int versionSelector) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int maxSupportedBdexVersion(int versionSelector) const;
 
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
     /// Return the most current BDEX streaming version number supported by
     /// this class.  (See the `bslx` package-level documentation for more
     /// information on BDEX streaming of value-semantic types and
     /// containers.)
-    int maxSupportedBdexVersion() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int maxSupportedBdexVersion() const;
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED
 
     /// Format this object to the specified output `stream` at the (absolute
@@ -632,21 +620,18 @@ class NullableValue : public bsl::optional<TYPE> {
     /// not valid on entry, this operation has no effect.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level          = 0,
-                        int           spacesPerLevel = 4) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        int           spacesPerLevel = 4) const;
 
     /// Return a reference providing non-modifiable access to the underlying
     /// object of a (template parameter) `TYPE`.  The behavior is undefined
     /// unless this object is non-null.
-    const TYPE& value() const
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& value() const;
 
     /// Return the value of the underlying object of a (template parameter)
     /// `TYPE` if this object is non-null, and the specified `value`
     /// otherwise.  Note that this method returns *by* *value*, so may be
     /// inefficient in some contexts.
-    TYPE valueOr(const TYPE& value) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    TYPE valueOr(const TYPE& value) const;
 
     /// Return an address providing non-modifiable access to the underlying
     /// object of a (template parameter) `TYPE` if this object is non-null,
@@ -656,13 +641,12 @@ class NullableValue : public bsl::optional<TYPE> {
     #if BSLS_DEPRECATE_IS_ACTIVE(BDL, 3, 5)
     BSLS_DEPRECATE
     #endif
-    const TYPE *valueOr(const TYPE *value) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const TYPE *valueOr(const TYPE *value) const;
 
     /// Return an address providing non-modifiable access to the underlying
     /// object of a (template parameter) `TYPE` if this object is non-null,
     /// and 0 otherwise.
-    const TYPE *valueOrNull() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const TYPE *valueOrNull() const;
 
 };
 
@@ -678,47 +662,52 @@ bool operator==(const NullableValue<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs == *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const NullableValue<LHS_TYPE>& lhs,
                 const bsl::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs == *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const bsl::optional<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs == *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #ifdef BSLSTL_OPTIONAL_USES_STD_ALIASES
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const NullableValue<LHS_TYPE>& lhs,
                 const std::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs == *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const std::optional<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs == *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #endif  // BSLSTL_OPTIONAL_USES_STD_ALIASES
 
 /// Return `true` if the specified `lhs` and `rhs` nullable objects do not
@@ -732,47 +721,52 @@ bool operator!=(const NullableValue<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs != *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const bsl::optional<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs != *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const NullableValue<LHS_TYPE>& lhs,
                 const bsl::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs != *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #ifdef BSLSTL_OPTIONAL_USES_STD_ALIASES
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const std::optional<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs != *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const NullableValue<LHS_TYPE>& lhs,
                 const std::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs != *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #endif  // BSLSTL_OPTIONAL_USES_STD_ALIASES
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
@@ -786,17 +780,15 @@ bool operator!=(const NullableValue<LHS_TYPE>& lhs,
                 const RHS_TYPE&                rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
-    requires { { *lhs != rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { *lhs != rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator!=(const LHS_TYPE&                lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<LHS_TYPE>) &&
-    requires { { lhs != *rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { lhs != *rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 
 /// Return `true` if the specified `lhs` and `rhs` objects have the same
 /// value, and `false` otherwise.  A nullable object and a value of some
@@ -809,17 +801,15 @@ bool operator==(const NullableValue<LHS_TYPE>& lhs,
                 const RHS_TYPE&                rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
-    requires { { *lhs == rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { *lhs == rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator==(const LHS_TYPE&                lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<LHS_TYPE>) &&
-    requires { { lhs == *rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { lhs == *rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 
 
 /// Return `true` if the specified `lhs` nullable object is ordered before
@@ -833,47 +823,52 @@ bool operator<(const NullableValue<LHS_TYPE>& lhs,
                const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs < *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const bsl::optional<LHS_TYPE>& lhs,
                const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs < *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const NullableValue<LHS_TYPE>& lhs,
                const bsl::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs < *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #ifdef BSLSTL_OPTIONAL_USES_STD_ALIASES
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const std::optional<LHS_TYPE>& lhs,
                const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs < *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<(const NullableValue<LHS_TYPE>& lhs,
                const std::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs < *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #endif  // BSLSTL_OPTIONAL_USES_STD_ALIASES
 
 /// Return `true` if the specified `lhs` nullable object is ordered before
@@ -884,9 +879,8 @@ bool operator<(const NullableValue<LHS_TYPE>& lhs,
                const RHS_TYPE&                rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
-    requires { { *lhs < rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { *lhs < rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 
 /// Return `true` if the specified `lhs` is ordered before the specified
 /// `rhs` nullable object, and `false` otherwise.  `lhs` is ordered before
@@ -896,9 +890,8 @@ bool operator<(const LHS_TYPE&                lhs,
                const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<LHS_TYPE>) &&
-    requires { { lhs < *rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { lhs < *rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
 /// the specified `rhs` nullable object, and `false` otherwise.  `lhs` is
@@ -912,47 +905,52 @@ bool operator>(const NullableValue<LHS_TYPE>& lhs,
                const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs > *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const bsl::optional<LHS_TYPE>& lhs,
                const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs > *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const NullableValue<LHS_TYPE>& lhs,
                const bsl::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs > *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #ifdef BSLSTL_OPTIONAL_USES_STD_ALIASES
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const std::optional<LHS_TYPE>& lhs,
                const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs > *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>(const NullableValue<LHS_TYPE>& lhs,
                const std::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs > *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #endif  // BSLSTL_OPTIONAL_USES_STD_ALIASES
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
@@ -963,9 +961,8 @@ bool operator>(const NullableValue<LHS_TYPE>& lhs,
                const RHS_TYPE&                rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
-    requires { { *lhs > rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { *lhs > rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 
 /// Return `true` if the specified `lhs` is ordered after the specified
 /// `rhs` nullable object, and `false` otherwise.  `lhs` is ordered after
@@ -975,9 +972,8 @@ bool operator>(const LHS_TYPE&                lhs,
                const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<LHS_TYPE>) &&
-    requires { { lhs > *rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { lhs > *rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 
 /// Return `true` if the specified `lhs` nullable object is ordered before
 /// the specified `rhs` nullable object or `lhs` and `rhs` have the same
@@ -990,47 +986,52 @@ bool operator<=(const NullableValue<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs <= *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const bsl::optional<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs <= *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const NullableValue<LHS_TYPE>& lhs,
                 const bsl::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs <= *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #ifdef BSLSTL_OPTIONAL_USES_STD_ALIASES
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const std::optional<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs <= *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator<=(const NullableValue<LHS_TYPE>& lhs,
                 const std::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs <= *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #endif  // BSLSTL_OPTIONAL_USES_STD_ALIASES
 
 /// Return `true` if the specified `lhs` nullable object is ordered before
@@ -1041,9 +1042,8 @@ bool operator<=(const NullableValue<LHS_TYPE>& lhs,
                 const RHS_TYPE&                rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
-    requires { { *lhs <= rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { *lhs <= rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 
 /// Return `true` if the specified `lhs` is ordered before the specified
 /// `rhs` nullable object or `lhs` and `rhs` have the same value, and
@@ -1053,9 +1053,8 @@ bool operator<=(const LHS_TYPE&                lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<LHS_TYPE>) &&
-    requires { { lhs <= *rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { lhs <= *rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
 /// the specified `rhs` nullable object or `lhs` and `rhs` have the same
@@ -1068,47 +1067,52 @@ bool operator>=(const NullableValue<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs >= *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const bsl::optional<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs >= *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const NullableValue<LHS_TYPE>& lhs,
                 const bsl::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs >= *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #ifdef BSLSTL_OPTIONAL_USES_STD_ALIASES
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const std::optional<LHS_TYPE>& lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs >= *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 template <class LHS_TYPE, class RHS_TYPE>
 bool operator>=(const NullableValue<LHS_TYPE>& lhs,
                 const std::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs >= *rhs } -> NullableValue_ConvertibleToBool;
     }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+#endif;
 #endif  // BSLSTL_OPTIONAL_USES_STD_ALIASES
 
 /// Return `true` if the specified `lhs` nullable object is ordered after
@@ -1119,9 +1123,8 @@ bool operator>=(const NullableValue<LHS_TYPE>& lhs,
                 const RHS_TYPE&                rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
-    requires { { *lhs >= rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { *lhs >= rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 
 /// Return `true` if the specified `lhs` is ordered after the specified
 /// `rhs` nullable object or `lhs` and `rhs` have the same value, and
@@ -1131,9 +1134,8 @@ bool operator>=(const LHS_TYPE&                lhs,
                 const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<LHS_TYPE>) &&
-    requires { { lhs >= *rhs } -> NullableValue_ConvertibleToBool; }
-#endif
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { lhs >= *rhs } -> NullableValue_ConvertibleToBool; }
+#endif;
 
 #if defined BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON &&             \
     defined BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
@@ -1148,37 +1150,31 @@ bool operator>=(const LHS_TYPE&                lhs,
 template <class LHS_TYPE, bsl::three_way_comparable_with<LHS_TYPE> RHS_TYPE>
 constexpr std::compare_three_way_result_t<LHS_TYPE, RHS_TYPE> operator<=>(
                                            const NullableValue<LHS_TYPE>& lhs,
-                                           const NullableValue<RHS_TYPE>& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                           const NullableValue<RHS_TYPE>& rhs);
 template <class LHS_TYPE, bsl::three_way_comparable_with<LHS_TYPE> RHS_TYPE>
 constexpr std::compare_three_way_result_t<LHS_TYPE, RHS_TYPE> operator<=>(
                                            const NullableValue<LHS_TYPE>& lhs,
-                                           const bsl::optional<RHS_TYPE>& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                           const bsl::optional<RHS_TYPE>& rhs);
 template <class LHS_TYPE, bsl::three_way_comparable_with<LHS_TYPE> RHS_TYPE>
 constexpr std::compare_three_way_result_t<LHS_TYPE, RHS_TYPE> operator<=>(
                                            const NullableValue<LHS_TYPE>& lhs,
-                                           const std::optional<RHS_TYPE>& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                           const std::optional<RHS_TYPE>& rhs);
 template <class LHS_TYPE, bsl::three_way_comparable_with<LHS_TYPE> RHS_TYPE>
 constexpr std::compare_three_way_result_t<LHS_TYPE, RHS_TYPE> operator<=>(
                                            const std::optional<LHS_TYPE>& lhs,
-                                           const NullableValue<RHS_TYPE>& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                           const NullableValue<RHS_TYPE>& rhs);
 template <class LHS_TYPE, class RHS_TYPE>
     requires(!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
               bsl::three_way_comparable_with<LHS_TYPE, RHS_TYPE>
 constexpr std::compare_three_way_result_t<LHS_TYPE, RHS_TYPE>
-    operator<=>(const NullableValue<LHS_TYPE>& lhs, const RHS_TYPE& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    operator<=>(const NullableValue<LHS_TYPE>& lhs, const RHS_TYPE& rhs);
 
 /// Perform a three-way comparison of the specified `value` and one of type
 /// `bsl::nullopt_t`; return the result of that comparison.
 template <class TYPE>
 constexpr std::strong_ordering
     operator<=>(const NullableValue<TYPE>& value,
-                const bsl::nullopt_t&         ) BSLS_KEYWORD_NOEXCEPT
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+                const bsl::nullopt_t&         ) BSLS_KEYWORD_NOEXCEPT;
 
 #endif // SUPPORT_THREE_WAY_COMPARISON && HAS_CPP20_CONCEPTS
 
@@ -1186,8 +1182,7 @@ constexpr std::strong_ordering
 template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR
 bool operator==(const NullableValue<TYPE>& value, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 #ifndef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 
@@ -1195,21 +1190,18 @@ bool operator==(const NullableValue<TYPE>& value, const bsl::nullopt_t&)
 template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR
 bool operator==(const bsl::nullopt_t&,const NullableValue<TYPE>& value)
-                                                         BSLS_KEYWORD_NOEXCEPT
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `value` is not null, and `false`
 /// otherwise.
 template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR
 bool operator!=(const NullableValue<TYPE>& value, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR
 bool operator!=(const bsl::nullopt_t&,const NullableValue<TYPE>& value)
-                                                         BSLS_KEYWORD_NOEXCEPT
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 #  ifndef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
 
@@ -1226,16 +1218,14 @@ bool operator<(const NullableValue<TYPE>&, const bsl::nullopt_t&)
 template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR
 bool operator<(const bsl::nullopt_t&,const NullableValue<TYPE>& value)
-                                                         BSLS_KEYWORD_NOEXCEPT
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `value` is not null, and `false`
 /// otherwise.
 template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR
 bool operator>(const NullableValue<TYPE>& value, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 // Return `false`.  Note that `bdlb::nullOpt` never orders after a
 // `NullableValue`.
@@ -1248,8 +1238,7 @@ bool operator>(const bsl::nullopt_t&,const NullableValue<TYPE>&)
 template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR
 bool operator<=(const NullableValue<TYPE>& value, const bsl::nullopt_t&)
-                                                         BSLS_KEYWORD_NOEXCEPT
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true`.
 template <class TYPE>
@@ -1267,8 +1256,7 @@ bool operator>=(const NullableValue<TYPE>&, const bsl::nullopt_t&)
 template <class TYPE>
 BSLS_KEYWORD_CONSTEXPR
 bool operator>=(const bsl::nullopt_t&,const NullableValue<TYPE>& value)
-                                                         BSLS_KEYWORD_NOEXCEPT
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 #  endif // !BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
 #endif // !BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
@@ -1283,9 +1271,7 @@ bool operator>=(const bsl::nullopt_t&,const NullableValue<TYPE>& value)
 /// ```
 template <class TYPE>
 bsl::ostream& operator<<(bsl::ostream&              stream,
-                         const NullableValue<TYPE>& object)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                         const NullableValue<TYPE>& object);
 
 // FREE FUNCTIONS
 
@@ -1294,9 +1280,7 @@ bsl::ostream& operator<<(bsl::ostream&              stream,
 /// type `HASHALG`.  If `input` contains a value, additionally pass that
 /// value to `hashAlg`.
 template <class HASHALG, class TYPE>
-void hashAppend(HASHALG& hashAlg, const NullableValue<TYPE>& input)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(input);
+void hashAppend(HASHALG& hashAlg, const NullableValue<TYPE>& input);
 
 /// Exchange the values of the specified `rhs` and `lhs` objects.  This
 /// function provides the no-throw exception-safety guarantee if the
@@ -1307,13 +1291,11 @@ void hashAppend(HASHALG& hashAlg, const NullableValue<TYPE>& input)
 template <class TYPE>
 typename bsl::enable_if<BloombergLP::bslma::UsesBslmaAllocator<TYPE>::value,
                         void>::type
-swap(NullableValue<TYPE>& lhs, NullableValue<TYPE>& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+swap(NullableValue<TYPE>& lhs, NullableValue<TYPE>& rhs);
 template <class TYPE>
 typename bsl::enable_if<!BloombergLP::bslma::UsesBslmaAllocator<TYPE>::value,
                         void>::type
-swap(NullableValue<TYPE>& lhs, NullableValue<TYPE>& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+swap(NullableValue<TYPE>& lhs, NullableValue<TYPE>& rhs);
 
 // ============================================================================
 //                           INLINE DEFINITIONS
@@ -1720,6 +1702,7 @@ template <class TYPE>
 template <class STREAM>
 STREAM& NullableValue<TYPE>::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     using bslx::InStreamFunctions::bdexStreamIn;
 
@@ -1745,6 +1728,7 @@ inline
 TYPE& NullableValue<TYPE>::makeValue(
                        BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(BDE_OTHER_TYPE, value));
 }
 
@@ -1752,6 +1736,7 @@ template <class TYPE>
 inline
 TYPE& NullableValue<TYPE>::makeValue()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace();
 }
 
@@ -1761,6 +1746,7 @@ template <class... ARGS>
 inline
 TYPE& NullableValue<TYPE>::makeValueInplace(ARGS&&... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS, args)...);
 }
 #endif
@@ -1769,6 +1755,7 @@ template <class TYPE>
 inline
 TYPE& NullableValue<TYPE>::value()
 {
+BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
     BSLS_REVIEW_OPT(this->has_value());
 
@@ -1782,6 +1769,7 @@ template <class TYPE>
 inline
 const TYPE *NullableValue<TYPE>::addressOr(const TYPE *address) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->has_value() ? this-> operator->() : address;
 }
 
@@ -1789,6 +1777,8 @@ template <class TYPE>
 template <class STREAM>
 STREAM& NullableValue<TYPE>::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     using bslx::OutStreamFunctions::bdexStreamOut;
 
     const bool isNull = !this->has_value();
@@ -1806,6 +1796,7 @@ template <class TYPE>
 inline
 bool NullableValue<TYPE>::isNull() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return !this->has_value();
 }
 
@@ -1813,6 +1804,7 @@ template <class TYPE>
 inline
 int NullableValue<TYPE>::maxSupportedBdexVersion(int versionSelector) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     using bslx::VersionFunctions::maxSupportedBdexVersion;
 
     // We need to call the 'bslx::VersionFunctions' helper function, because we
@@ -1828,6 +1820,7 @@ template <class TYPE>
 inline
 int NullableValue<TYPE>::maxSupportedBdexVersion() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     using bslx::VersionFunctions::maxSupportedBdexVersion;
 
     // We need to call the 'bslx::VersionFunctions' helper function, because we
@@ -1843,6 +1836,8 @@ bsl::ostream& NullableValue<TYPE>::print(bsl::ostream& stream,
                                          int           level,
                                          int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (!this->has_value()) {
         return bdlb::PrintMethods::print(stream,
                                          "NULL",
@@ -1858,6 +1853,7 @@ template <class TYPE>
 inline
 const TYPE& NullableValue<TYPE>::value() const
 {
+BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED
     BSLS_REVIEW_OPT(this->has_value());
 
@@ -1871,6 +1867,8 @@ template <class TYPE>
 inline
 TYPE NullableValue<TYPE>::valueOr(const TYPE& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return this->value_or(value);
 }
 
@@ -1878,6 +1876,8 @@ template <class TYPE>
 inline
 const TYPE *NullableValue<TYPE>::valueOr(const TYPE *value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return this->has_value() ? this-> operator->() : value;
 }
 
@@ -1898,6 +1898,8 @@ bool bdlb::operator==(const NullableValue<LHS_TYPE>& lhs,
                       const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs == *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -1913,6 +1915,8 @@ bool bdlb::operator==(const NullableValue<LHS_TYPE>& lhs,
                       const bsl::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs == *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -1926,6 +1930,8 @@ bool bdlb::operator==(const bsl::optional<LHS_TYPE>& lhs,
                       const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs == *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -1940,6 +1946,8 @@ bool bdlb::operator==(const NullableValue<LHS_TYPE>& lhs,
                       const std::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs == *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -1953,6 +1961,8 @@ bool bdlb::operator==(const std::optional<LHS_TYPE>& lhs,
                       const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs == *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -1967,6 +1977,8 @@ bool bdlb::operator!=(const NullableValue<LHS_TYPE>& lhs,
                       const NullableValue<RHS_TYPE>& rhs)
  #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs != *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -1981,6 +1993,8 @@ bool bdlb::operator!=(const bsl::optional<LHS_TYPE>& lhs,
                       const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs != *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -1994,6 +2008,8 @@ bool bdlb::operator!=(const NullableValue<LHS_TYPE>& lhs,
                       const bsl::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs != *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2008,6 +2024,8 @@ bool bdlb::operator!=(const std::optional<LHS_TYPE>& lhs,
                       const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs != *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2021,6 +2039,8 @@ bool bdlb::operator!=(const NullableValue<LHS_TYPE>& lhs,
                       const std::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs != *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2034,7 +2054,7 @@ inline
 bool bdlb::operator==(const NullableValue<LHS_TYPE>& lhs, const RHS_TYPE& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
-    requires { { *lhs == rhs } -> NullableValue_ConvertibleToBool; }
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { *lhs == rhs } -> NullableValue_ConvertibleToBool; }
 #endif
 {
     return static_cast<const bsl::optional<LHS_TYPE>&>(lhs) == rhs;
@@ -2045,7 +2065,7 @@ inline
 bool bdlb::operator==(const LHS_TYPE& lhs, const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<LHS_TYPE>) &&
-    requires { { lhs == *rhs } -> NullableValue_ConvertibleToBool; }
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { lhs == *rhs } -> NullableValue_ConvertibleToBool; }
 #endif
 {
     return lhs == static_cast<const bsl::optional<RHS_TYPE>&>(rhs);
@@ -2056,7 +2076,7 @@ inline
 bool bdlb::operator!=(const NullableValue<LHS_TYPE>& lhs, const RHS_TYPE& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
-    requires { { *lhs != rhs } -> NullableValue_ConvertibleToBool; }
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { *lhs != rhs } -> NullableValue_ConvertibleToBool; }
 #endif
 {
     return static_cast<const bsl::optional<LHS_TYPE>&>(lhs) != rhs;
@@ -2067,7 +2087,7 @@ inline
 bool bdlb::operator!=(const LHS_TYPE& lhs, const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<LHS_TYPE>) &&
-    requires { { lhs != *rhs } -> NullableValue_ConvertibleToBool; }
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { lhs != *rhs } -> NullableValue_ConvertibleToBool; }
 #endif
 {
     return lhs != static_cast<const bsl::optional<RHS_TYPE>&>(rhs);
@@ -2169,6 +2189,8 @@ bool bdlb::operator>(const NullableValue<LHS_TYPE>& lhs,
                      const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs > *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2183,6 +2205,8 @@ bool bdlb::operator>(const bsl::optional<LHS_TYPE>& lhs,
                      const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs > *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2196,6 +2220,8 @@ bool bdlb::operator>(const NullableValue<LHS_TYPE>& lhs,
                      const bsl::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs > *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2210,6 +2236,8 @@ bool bdlb::operator>(const std::optional<LHS_TYPE>& lhs,
                      const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs > *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2223,6 +2251,8 @@ bool bdlb::operator>(const NullableValue<LHS_TYPE>& lhs,
                      const std::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs > *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2237,7 +2267,7 @@ bool bdlb::operator>(const NullableValue<LHS_TYPE>& lhs,
                      const RHS_TYPE&                rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
-    requires { { *lhs > rhs } -> NullableValue_ConvertibleToBool; }
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { *lhs > rhs } -> NullableValue_ConvertibleToBool; }
 #endif
 {
     return static_cast<const bsl::optional<LHS_TYPE>&>(lhs) > rhs;
@@ -2249,7 +2279,7 @@ bool bdlb::operator>(const LHS_TYPE&                lhs,
                      const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<LHS_TYPE>) &&
-    requires { { lhs > *rhs } -> NullableValue_ConvertibleToBool; }
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { lhs > *rhs } -> NullableValue_ConvertibleToBool; }
 #endif
 {
     return lhs > static_cast<const bsl::optional<RHS_TYPE>&>(rhs);
@@ -2354,6 +2384,8 @@ bool bdlb::operator>=(const NullableValue<LHS_TYPE>& lhs,
                       const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs >= *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2368,6 +2400,8 @@ bool bdlb::operator>=(const bsl::optional<LHS_TYPE>& lhs,
                       const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs >= *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2381,6 +2415,8 @@ bool bdlb::operator>=(const NullableValue<LHS_TYPE>& lhs,
                       const bsl::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs >= *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2395,6 +2431,8 @@ bool bdlb::operator>=(const std::optional<LHS_TYPE>& lhs,
                       const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs >= *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2408,6 +2446,8 @@ bool bdlb::operator>=(const NullableValue<LHS_TYPE>& lhs,
                       const std::optional<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires requires {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         { *lhs >= *rhs } -> NullableValue_ConvertibleToBool;
     }
 #endif
@@ -2422,7 +2462,7 @@ bool bdlb::operator>=(const NullableValue<LHS_TYPE>& lhs,
                       const RHS_TYPE&                rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<RHS_TYPE>) &&
-    requires { { *lhs >= rhs } -> NullableValue_ConvertibleToBool; }
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { *lhs >= rhs } -> NullableValue_ConvertibleToBool; }
 #endif
 {
     return static_cast<const bsl::optional<LHS_TYPE>&>(lhs) >= rhs;
@@ -2434,7 +2474,7 @@ bool bdlb::operator>=(const LHS_TYPE&                lhs,
                       const NullableValue<RHS_TYPE>& rhs)
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS
     requires (!NullableValue_DerivedFromOptional<LHS_TYPE>) &&
-    requires { { lhs >= *rhs } -> NullableValue_ConvertibleToBool; }
+    requires { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); { lhs >= *rhs } -> NullableValue_ConvertibleToBool; }
 #endif
 {
     return lhs >= static_cast<const bsl::optional<RHS_TYPE>&>(rhs);
@@ -2501,6 +2541,7 @@ inline BSLS_KEYWORD_CONSTEXPR
 bool bdlb::operator==(const NullableValue<TYPE>& value, const bsl::nullopt_t&)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return !value.has_value();
 }
 
@@ -2511,6 +2552,7 @@ inline BSLS_KEYWORD_CONSTEXPR
 bool bdlb::operator==(const bsl::nullopt_t&, const NullableValue<TYPE>& value)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return !value.has_value();
 }
 
@@ -2519,6 +2561,7 @@ inline BSLS_KEYWORD_CONSTEXPR
 bool bdlb::operator!=(const NullableValue<TYPE>& value, const bsl::nullopt_t&)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return value.has_value();
 }
 
@@ -2527,6 +2570,7 @@ inline BSLS_KEYWORD_CONSTEXPR
 bool bdlb::operator!=(const bsl::nullopt_t&, const NullableValue<TYPE>& value)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return value.has_value();
 }
 
@@ -2553,6 +2597,7 @@ inline BSLS_KEYWORD_CONSTEXPR
 bool bdlb::operator>(const NullableValue<TYPE>& value, const bsl::nullopt_t&)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return value.has_value();
 }
 
@@ -2593,6 +2638,7 @@ inline BSLS_KEYWORD_CONSTEXPR
 bool bdlb::operator>=(const bsl::nullopt_t&, const NullableValue<TYPE>& value)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return !value.has_value();
 }
 
@@ -2611,6 +2657,8 @@ bsl::ostream& bdlb::operator<<(bsl::ostream&              stream,
 template <class HASHALG, class TYPE>
 void bdlb::hashAppend(HASHALG& hashAlg, const NullableValue<TYPE>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     if (!input.isNull()) {
         hashAppend(hashAlg, true);
         hashAppend(hashAlg, input.value());
@@ -2626,6 +2674,8 @@ typename bsl::enable_if<BloombergLP::bslma::UsesBslmaAllocator<TYPE>::value,
                         void>::type
 bdlb::swap(NullableValue<TYPE>& lhs, NullableValue<TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     swap(static_cast<bsl::optional<TYPE>&>(lhs),
          static_cast<bsl::optional<TYPE>&>(rhs));
 }
@@ -2636,6 +2686,8 @@ typename bsl::enable_if<!BloombergLP::bslma::UsesBslmaAllocator<TYPE>::value,
                         void>::type
 bdlb::swap(NullableValue<TYPE>& lhs, NullableValue<TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     lhs.swap(rhs);
 }
 

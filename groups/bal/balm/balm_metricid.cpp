@@ -21,6 +21,8 @@ BSLMF_ASSERT(bslmf::IsTriviallyCopyableCheck<MetricId>::value);
 // ACCESSORS
 bsl::ostream& MetricId::print(bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (0 == d_description_p) {
         stream << "INVALID_ID";
     }

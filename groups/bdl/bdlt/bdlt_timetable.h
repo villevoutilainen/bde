@@ -215,11 +215,10 @@ class TimetableTransition {
     // ACCESSORS
 
     /// Return the datetime of this transition.
-    const Datetime& datetime() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Datetime& datetime() const;
 
     /// Return the code of this transition.
-    int code() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int code() const;
 
                              // Aspects
 
@@ -235,9 +234,7 @@ class TimetableTransition {
     /// effect.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        int           spacesPerLevel = 4) const;
 };
 
 // FREE OPERATORS
@@ -246,16 +243,14 @@ class TimetableTransition {
 /// have the same value, and `false` otherwise.  Two timetable transitions
 /// have the same value if they have the same datetime and code.
 bool operator==(const TimetableTransition& lhs,
-                const TimetableTransition& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const TimetableTransition& rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` timetable transitions do
 /// not have the same value, and `false` otherwise.  Two timetable
 /// transitions do not have the same value if they do not have the same
 /// datetime or the same code.
 bool operator!=(const TimetableTransition& lhs,
-                const TimetableTransition& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const TimetableTransition& rhs);
 
 /// Return `true` if the specified `lhs` has a value less than the specified
 /// `rhs`, and `false` otherwise.  Timetable transition `lhs` has a value
@@ -263,22 +258,19 @@ bool operator!=(const TimetableTransition& lhs,
 /// `lhs.datetime() < rhs.datetime()`, or `lhs.datetime() == rhs.datetime()`
 /// and `lhs.code() < rhs.code()`.
 bool operator<(const TimetableTransition& lhs,
-               const TimetableTransition& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+               const TimetableTransition& rhs);
 
 /// Return `true` if the specified `lhs` has a value less than the specified
 /// `rhs`, and `false` otherwise.  Timetable transition `lhs` has a value
 /// less than datetime `rhs` if `lhs.datetime() < rhs`.  The behavior is
 /// undefined unless `24 > rhs.hour()`.
-bool operator<(const TimetableTransition& lhs, const Datetime& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator<(const TimetableTransition& lhs, const Datetime& rhs);
 
 /// Return `true` if the specified `lhs` has a value less than the specified
 /// `rhs`, and `false` otherwise.  Datetime `lhs` has a value less than
 /// timetable transition `rhs` if `lhs < rhs.datetime()`.  The behavior is
 /// undefined unless `24 > lhs.hour()`.
-bool operator<(const Datetime& lhs, const TimetableTransition& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator<(const Datetime& lhs, const TimetableTransition& rhs);
 
 // HASH SPECIALIZATIONS
 
@@ -286,9 +278,7 @@ bool operator<(const Datetime& lhs, const TimetableTransition& rhs)
 /// integrates with the `bslh` modular hashing system and effectively
 /// provides a `bsl::hash` specialization for `TimetableTransition`.
 template <class HASHALG>
-void hashAppend(HASHALG& hashAlg, const TimetableTransition& object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+void hashAppend(HASHALG& hashAlg, const TimetableTransition& object);
 
                       // =============================
                       // class TimetableTransition_Ref
@@ -388,11 +378,10 @@ class Timetable_CompactableTransition {
     // ACCESSORS
 
     /// Return the time of this compactable transition.
-    const Time& time() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Time& time() const;
 
     /// Return the code of this compactable transition.
-    int code() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int code() const;
 
                              // Aspects
 
@@ -408,9 +397,7 @@ class Timetable_CompactableTransition {
     /// effect.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        int           spacesPerLevel = 4) const;
 };
 
 // FREE OPERATORS
@@ -419,40 +406,35 @@ class Timetable_CompactableTransition {
 /// have the same value, and `false` otherwise.  Two compactable transitions
 /// have the same value if they have the same time and code.
 bool operator==(const Timetable_CompactableTransition& lhs,
-                const Timetable_CompactableTransition& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const Timetable_CompactableTransition& rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` compactable transitions
 /// do not have the same value, and `false` otherwise.  Two compactable
 /// transitions do not have the same value if they do not have the same time
 /// or the same code.
 bool operator!=(const Timetable_CompactableTransition& lhs,
-                const Timetable_CompactableTransition& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const Timetable_CompactableTransition& rhs);
 
 /// Return `true` if the specified `lhs` has a value less than the specified
 /// `rhs`, and `false` otherwise.  Compactable transition `lhs` has a value
 /// less than compactable transition `rhs` if `lhs.time() < rhs.time()`, or
 /// `lhs.time() == rhs.time()` and `lhs.code() < rhs.code()`.
 bool operator<(const Timetable_CompactableTransition& lhs,
-               const Timetable_CompactableTransition& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+               const Timetable_CompactableTransition& rhs);
 
 /// Return `true` if the specified `lhs` has a value less than the specified
 /// `rhs`, and `false` otherwise.  Compactable transition `lhs` has a value
 /// less than time `rhs` if `lhs.time() < rhs`.  The behavior is undefined
 /// unless `24 > rhs.hour()`.
 bool operator<(const Timetable_CompactableTransition& lhs,
-               const Time&                            rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+               const Time&                            rhs);
 
 /// Return `true` if the specified `lhs` has a value less than the specified
 /// `rhs`, and `false` otherwise.  Time `lhs` has a value less than
 /// compactable transition `rhs` if `lhs < rhs.time()`.  The behavior is
 /// undefined unless `24 > lhs.hour()`.
 bool operator<(const Time&                            lhs,
-               const Timetable_CompactableTransition& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+               const Timetable_CompactableTransition& rhs);
 
 // HASH SPECIALIZATIONS
 
@@ -462,9 +444,7 @@ bool operator<(const Time&                            lhs,
 /// `Timetable_CompactableTransition`.
 template <class HASHALG>
 void hashAppend(HASHALG&                               hashAlg,
-                const Timetable_CompactableTransition& object)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                const Timetable_CompactableTransition& object);
 
                            // ===================
                            // class Timetable_Day
@@ -492,20 +472,12 @@ class Timetable_Day {
     // FRIENDS
     friend class Timetable_ConstIterator;
 
-    friend bool operator==(const Timetable_Day& lhs, const Timetable_Day& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
-    friend bool operator!=(const Timetable_Day& lhs, const Timetable_Day& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
-    friend bool operator<(const Timetable_Day& lhs, const Timetable_Day& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator==(const Timetable_Day& lhs, const Timetable_Day& rhs);
+    friend bool operator!=(const Timetable_Day& lhs, const Timetable_Day& rhs);
+    friend bool operator<(const Timetable_Day& lhs, const Timetable_Day& rhs);
 
     template <class HASHALG>
-    friend void hashAppend(HASHALG& hashAlg, const Timetable_Day& object)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    friend void hashAppend(HASHALG& hashAlg, const Timetable_Day& object);
 
   public:
     // CONSTANTS
@@ -549,14 +521,13 @@ class Timetable_Day {
     /// this operation, and `false` otherwise.  The behavior is undefined
     /// unless `24 > time.hour()` and
     /// `0 <= code || k_UNSET_TRANSITION_CODE == code`.
-    bool addTransition(const Time& time, int code)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool addTransition(const Time& time, int code);
 
     /// Remove all transitions from this daily timetable.  Return `true` if
     /// the value returned by `finalTransitionCode()` prior to this
     /// operation is not equal to the value returned by
     /// `finalTransitionCode()` after this operation, and `false` otherwise.
-    bool removeAllTransitions() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool removeAllTransitions();
 
     /// If a transition occurs at the specified `time`, remove the
     /// transition from this daily timetable.  Otherwise, return without
@@ -565,7 +536,7 @@ class Timetable_Day {
     /// the value returned by `finalTransitionCode()` after this operation,
     /// and `false` otherwise.  The behavior is undefined unless
     /// `24 > time.hour()`.
-    bool removeTransition(const Time& time) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool removeTransition(const Time& time);
 
     /// Set the transition code in effect prior to the start of this daily
     /// timetable to the specified `code`.  Return `true` if the value
@@ -573,29 +544,28 @@ class Timetable_Day {
     /// equal to the value returned by `finalTransitionCode()` after this
     /// operation, and `false` otherwise.  The behavior is undefined unless
     /// `0 <= code || k_UNSET_TRANSITION_CODE == code`.
-    bool setInitialTransitionCode(int code) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool setInitialTransitionCode(int code);
 
     // ACCESSORS
 
     /// Return the transition code that is in effect at the end of this
     /// daily timetable.  Note that if this daily timetable has no
     /// transitions, `initialTransitionCode()` is returned.
-    int finalTransitionCode() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int finalTransitionCode() const;
 
     /// Return the transition code in effect prior to the start of this
     /// daily timetable.
-    int initialTransitionCode() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int initialTransitionCode() const;
 
     /// Return the number of transitions in this daily timetable.
-    bsl::size_t size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::size_t size() const;
 
     /// Return the transition code associated with the latest transition
     /// that occurs on or before the specified `time` in this daily
     /// timetable.  If this daily timetable has no such transition, return
     /// `initialTransitionCode()`.  The behavior is undefined unless
     /// `24 > time.hour()`.
-    int transitionCodeInEffect(const Time& time) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int transitionCodeInEffect(const Time& time) const;
 };
 
 // FREE OPERATORS
@@ -659,17 +629,11 @@ class Timetable {
     // FRIENDS
     friend class Timetable_ConstIterator;
 
-    friend bool operator==(const Timetable& lhs, const Timetable& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
-    friend bool operator!=(const Timetable& lhs, const Timetable& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator==(const Timetable& lhs, const Timetable& rhs);
+    friend bool operator!=(const Timetable& lhs, const Timetable& rhs);
 
     template <class HASHALG>
-    friend void hashAppend(HASHALG& hashAlg, const Timetable& object)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    friend void hashAppend(HASHALG& hashAlg, const Timetable& object);
 
   public:
     // CONSTANTS
@@ -730,8 +694,7 @@ class Timetable {
     /// undefined unless `24 > time.hour()`, `date` is within the valid
     /// range of this timetable, and
     /// `0 <= code || k_UNSET_TRANSITION_CODE == code`.
-    void addTransition(const Date& date, const Time& time, int code)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void addTransition(const Date& date, const Time& time, int code);
 
     /// Add a transition to this timetable at the specified `datetime`
     /// having the specified `code`.  If `datetime` is already a transition
@@ -741,8 +704,7 @@ class Timetable {
     /// unless `24 > datetime.hour()`, `datetime.date()` is within the valid
     /// range of this timetable, and
     /// `0 <= code || k_UNSET_TRANSITION_CODE == code`.
-    void addTransition(const Datetime& datetime, int code)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void addTransition(const Datetime& datetime, int code);
 
     /// Add transitions to this timetable that occur at the specified
     /// `time`, having the specified `code`, on all dates that are of the
@@ -759,12 +721,11 @@ class Timetable {
                         const Time&            time,
                         int                    code,
                         const Date&            firstDate,
-                        const Date&            lastDate)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        const Date&            lastDate);
 
     /// Remove all transitions from this timetable.  The removal of a
     /// transition invalidates all iterators.
-    void removeAllTransitions() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void removeAllTransitions();
 
     /// If a transition occurs on the specified `date` at the specified
     /// `time`, remove the transition from this timetable.  Otherwise,
@@ -772,23 +733,20 @@ class Timetable {
     /// transition invalidates all iterators.  The behavior is undefined
     /// unless `24 > time.hour()` and `date` is within the valid range of
     /// this timetable.
-    void removeTransition(const Date& date, const Time& time)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void removeTransition(const Date& date, const Time& time);
 
     /// If a transition occurs at the specified `datetime`, remove the
     /// transition from this timetable.  Otherwise, return without modifying
     /// this timetable.  The removal of a transition invalidates all
     /// iterators.  The behavior is undefined unless `24 > datetime.hour()`
     /// and `datetime.date()` is within the valid range of this timetable.
-    void removeTransition(const Datetime& datetime)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void removeTransition(const Datetime& datetime);
 
     /// Remove all transitions from this timetable that occur on the
     /// specified `date`.  The removal of a transition invalidates all
     /// iterators.  The behavior is undefined unless `date` is within the
     /// valid range of this timetable.
-    void removeTransitions(const Date& date)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void removeTransitions(const Date& date);
 
     /// Remove all transitions from this timetable that occur at the
     /// specified `time` on all dates that are of the specified `dayOfWeek`
@@ -800,17 +758,16 @@ class Timetable {
     void removeTransitions(const DayOfWeek::Enum& dayOfWeek,
                            const Time&            time,
                            const Date&            firstDate,
-                           const Date&            lastDate)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                           const Date&            lastDate);
 
     /// Reset this timetable to the default constructed (empty) state.  All
     /// associated iterators are invalidated.
-    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reset();
 
     /// Set the transition code in effect at the start of this timetable to
     /// the specified `code`.  The behavior is undefined unless
     /// `0 <= code || k_UNSET_TRANSITION_CODE == code`.
-    void setInitialTransitionCode(int code) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setInitialTransitionCode(int code);
 
     /// Set the range of this timetable using the specified `firstDate` and
     /// `lastDate` as, respectively, the first date and the last date of the
@@ -818,8 +775,7 @@ class Timetable {
     /// are outside of the new range are removed.  The removal of a
     /// transition invalidates all iterators.  The behavior is undefined
     /// unless `firstDate <= lastDate`.
-    void setValidRange(const Date& firstDate, const Date& lastDate)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setValidRange(const Date& firstDate, const Date& lastDate);
 
                                   // Aspects
 
@@ -835,39 +791,37 @@ class Timetable {
     /// timetable, or the past-the-end iterator if this timetable is empty.
     /// The iterator remains valid as long as this timetable exists, and the
     /// number of transitions within this timetable does not change.
-    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator begin() const;
 
     /// Return the past-the-end iterator for this timetable.  The iterator
     /// remains valid as long as this timetable exists, and the number of
     /// transitions within this timetable does not change.
-    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator end() const;
 
     /// Return a `const` reference to the earliest date in the valid range
     /// of this timetable.  The behavior is undefined if this timetable does
     /// not have a valid range (i.e., it is in the default constructed
     /// (empty) state).
-    const Date& firstDate() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Date& firstDate() const;
 
     /// Return the transition code that is in effect at the start of this
     /// timetable (see `setInitialTransitionCode`).
-    int initialTransitionCode() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int initialTransitionCode() const;
 
     /// Return `true` if the specified `date` is within the valid range of
     /// this timetable, and `false` otherwise.
-    bool isInRange(const Date& date) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool isInRange(const Date& date) const;
 
     /// Return a `const` reference to the latest date in the valid range of
     /// this timetable.  The behavior is undefined if this timetable does
     /// not have a valid range (i.e., it is in the default constructed
     /// (empty) state).
-    const Date& lastDate() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Date& lastDate() const;
 
     /// Return the number of days in the valid range of this timetable,
     /// which is defined to be 0 if this timetable is empty, and
     /// `lastDate() - firstDate() + 1` otherwise.
-    int length() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int length() const;
 
     /// Return the transition code associated with the latest transition
     /// that occurs on or before the specified `date` and `time` in this
@@ -875,8 +829,7 @@ class Timetable {
     /// `initialTransitionCode()`.  The behavior is undefined unless
     /// `24 > time.hour()` and `date` is within the valid range of this
     /// timetable.
-    int transitionCodeInEffect(const Date& date, const Time& time) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int transitionCodeInEffect(const Date& date, const Time& time) const;
 
     /// Return the transition code associated with the latest transition
     /// that occurs on or before the specified `datetime` in this timetable.
@@ -884,13 +837,12 @@ class Timetable {
     /// `initialTransitionCode()`.  The behavior is undefined unless
     /// `24 > datetime.hour()` and `datetime.date()` is within the valid
     /// range of this timetable.
-    int transitionCodeInEffect(const Datetime& datetime) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int transitionCodeInEffect(const Datetime& datetime) const;
 
                                   // Aspects
 
     /// Return the allocator used by this object to supply memory.
-    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bslma::Allocator *allocator() const;
 
     /// Format this object to the specified output `stream` at the (absolute
     /// value of) the optionally specified indentation `level` and return a
@@ -904,9 +856,7 @@ class Timetable {
     /// effect.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        int           spacesPerLevel = 4) const;
 };
 
 // FREE OPERATORS
@@ -928,17 +878,14 @@ bool operator!=(const Timetable& lhs, const Timetable& rhs);
 
 /// Write the value of the specified `timetable` to the specified output
 /// `stream`, and return a reference to the modifiable `stream`.
-bsl::ostream& operator<<(bsl::ostream& stream, const Timetable& timetable)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(timetable);
+bsl::ostream& operator<<(bsl::ostream& stream, const Timetable& timetable);
 
 // FREE FUNCTIONS
 
 /// Exchange the values of the specified `a` and `b` objects.  This function
 /// provides the no-throw exception-safety guarantee if the two objects were
 /// created with the same allocator and the basic guarantee otherwise.
-void swap(Timetable& a, Timetable& b)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+void swap(Timetable& a, Timetable& b);
 
 // HASH SPECIALIZATIONS
 
@@ -981,13 +928,9 @@ class Timetable_ConstIterator {
     friend class Timetable;
 
     friend bool operator==(const Timetable_ConstIterator& lhs,
-                           const Timetable_ConstIterator& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const Timetable_ConstIterator& rhs);
     friend bool operator!=(const Timetable_ConstIterator& lhs,
-                           const Timetable_ConstIterator& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const Timetable_ConstIterator& rhs);
 
   private:
     // PRIVATE CREATORS
@@ -1030,7 +973,7 @@ class Timetable_ConstIterator {
     /// associated timetable, and return a reference providing modifiable
     /// access to this object.  The behavior is undefined unless, on entry,
     /// this iterator references a valid transition.
-    Timetable_ConstIterator& operator++() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    Timetable_ConstIterator& operator++()
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Regress this iterator to refer to the previous transition in the
@@ -1063,16 +1006,14 @@ class Timetable_ConstIterator {
 /// referenced timetable, and return an iterator referring to the original
 /// element (*before* the advancement).  The behavior is undefined unless,
 /// on entry, `iterator` references a valid transition.
-Timetable_ConstIterator operator++(Timetable_ConstIterator& iterator, int)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(iterator);
+Timetable_ConstIterator operator++(Timetable_ConstIterator& iterator, int);
 
 /// Regress the specified `iterator` to refer to the previous transition in
 /// the referenced timetable, and return an iterator referring to the
 /// original element (*before* the decrementation).  The behavior is
 /// undefined unless, on entry, `iterator` references a valid transition
 /// that is not the first transition of the associated timetable.
-Timetable_ConstIterator operator--(Timetable_ConstIterator& iterator, int)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(iterator);
+Timetable_ConstIterator operator--(Timetable_ConstIterator& iterator, int);
 
 /// Return `true` if the specified `lhs` and `rhs` iterators have the same
 /// value, and `false` otherwise.  Two `Timetable_ConstIterator` iterators
@@ -1144,12 +1085,14 @@ TimetableTransition& TimetableTransition::operator=(
 inline
 const Datetime& TimetableTransition::datetime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_datetime;
 }
 
 inline
 int TimetableTransition::code() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_code;
 }
 
@@ -1207,6 +1150,8 @@ template <class HASHALG>
 inline
 void bdlt::hashAppend(HASHALG& hashAlg, const TimetableTransition& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
 
     hashAppend(hashAlg, object.datetime());
@@ -1313,12 +1258,14 @@ Timetable_CompactableTransition& Timetable_CompactableTransition::operator=(
 inline
 const Time& Timetable_CompactableTransition::time() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_time;
 }
 
 inline
 int Timetable_CompactableTransition::code() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_code;
 }
 
@@ -1379,6 +1326,8 @@ inline
 void bdlt::hashAppend(HASHALG&                               hashAlg,
                       const Timetable_CompactableTransition& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
 
     hashAppend(hashAlg, object.time());
@@ -1425,6 +1374,7 @@ Timetable_Day& Timetable_Day::operator=(const Timetable_Day& rhs)
 inline
 bool Timetable_Day::removeAllTransitions()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int code = finalTransitionCode();
 
     d_transitions.clear();
@@ -1435,6 +1385,7 @@ bool Timetable_Day::removeAllTransitions()
 inline
 bool Timetable_Day::setInitialTransitionCode(int code)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= code || k_UNSET_TRANSITION_CODE == code);
 
     bool rv = d_initialTransitionCode != code && d_transitions.empty();
@@ -1448,6 +1399,7 @@ bool Timetable_Day::setInitialTransitionCode(int code)
 inline
 int Timetable_Day::finalTransitionCode() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::vector<Timetable_CompactableTransition>::const_reverse_iterator iter =
                                                         d_transitions.rbegin();
 
@@ -1459,12 +1411,14 @@ int Timetable_Day::finalTransitionCode() const
 inline
 int Timetable_Day::initialTransitionCode() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_initialTransitionCode;
 }
 
 inline
 bsl::size_t Timetable_Day::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_transitions.size();
 }
 
@@ -1474,6 +1428,8 @@ bsl::size_t Timetable_Day::size() const
 inline
 bool bdlt::operator==(const Timetable_Day& lhs, const Timetable_Day& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_initialTransitionCode == rhs.d_initialTransitionCode
         && lhs.d_transitions           == rhs.d_transitions;
 }
@@ -1481,6 +1437,8 @@ bool bdlt::operator==(const Timetable_Day& lhs, const Timetable_Day& rhs)
 inline
 bool bdlt::operator!=(const Timetable_Day& lhs, const Timetable_Day& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_initialTransitionCode != rhs.d_initialTransitionCode
         || lhs.d_transitions           != rhs.d_transitions;
 }
@@ -1498,6 +1456,8 @@ template <class HASHALG>
 inline
 void bdlt::hashAppend(HASHALG& hashAlg, const Timetable_Day& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
 
     hashAppend(hashAlg, object.d_initialTransitionCode);
@@ -1524,12 +1484,15 @@ Timetable& Timetable::operator=(const Timetable& rhs)
 inline
 void Timetable::addTransition(const Datetime& datetime, int code)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&datetime);
     addTransition(datetime.date(), datetime.time(), code);
 }
 
 inline
 void Timetable::removeAllTransitions()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Date firstDate = d_firstDate;
     Date lastDate  = d_lastDate;
 
@@ -1544,12 +1507,15 @@ void Timetable::removeAllTransitions()
 inline
 void Timetable::removeTransition(const Datetime& datetime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&datetime);
     removeTransition(datetime.date(), datetime.time());
 }
 
 inline
 void Timetable::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_initialTransitionCode = k_UNSET_TRANSITION_CODE;
 
     d_firstDate = Date(9999, 12, 31);
@@ -1581,12 +1547,14 @@ void Timetable::swap(Timetable& other)
 inline
 Timetable::const_iterator Timetable::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return Timetable_ConstIterator(*this, d_timetable.length(), 0);
 }
 
 inline
 const Date& Timetable::firstDate() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(0 < length());
 
     return d_firstDate;
@@ -1595,18 +1563,22 @@ const Date& Timetable::firstDate() const
 inline
 int Timetable::initialTransitionCode() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_initialTransitionCode;
 }
 
 inline
 bool Timetable::isInRange(const Date& date) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     return date >= d_firstDate && date <= d_lastDate;
 }
 
 inline
 const Date& Timetable::lastDate() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(0 < length());
 
     return d_lastDate;
@@ -1615,12 +1587,16 @@ const Date& Timetable::lastDate() const
 inline
 int Timetable::length() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_firstDate <= d_lastDate ? d_lastDate - d_firstDate + 1 : 0;
 }
 
 inline
 int Timetable::transitionCodeInEffect(const Date& date, const Time& time) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     BSLS_ASSERT_NONCONVEYOR(24 > time.hour());
     BSLS_ASSERT_NONCONVEYOR(isInRange(date));
 
@@ -1633,6 +1609,8 @@ int Timetable::transitionCodeInEffect(const Date& date, const Time& time) const
 inline
 int Timetable::transitionCodeInEffect(const Datetime& datetime) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&datetime);
     return transitionCodeInEffect(datetime.date(), datetime.time());
 }
 
@@ -1641,6 +1619,7 @@ int Timetable::transitionCodeInEffect(const Datetime& datetime) const
 inline
 bslma::Allocator *Timetable::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_timetable.allocator();
 }
 
@@ -1650,6 +1629,8 @@ bslma::Allocator *Timetable::allocator() const
 inline
 bool bdlt::operator==(const Timetable& lhs, const Timetable& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_initialTransitionCode == rhs.d_initialTransitionCode
         && lhs.d_firstDate             == rhs.d_firstDate
         && lhs.d_lastDate              == rhs.d_lastDate
@@ -1659,6 +1640,8 @@ bool bdlt::operator==(const Timetable& lhs, const Timetable& rhs)
 inline
 bool bdlt::operator!=(const Timetable& lhs, const Timetable& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_initialTransitionCode != rhs.d_initialTransitionCode
         || lhs.d_firstDate             != rhs.d_firstDate
         || lhs.d_lastDate              != rhs.d_lastDate
@@ -1676,6 +1659,8 @@ bsl::ostream& bdlt::operator<<(bsl::ostream&    stream,
 inline
 void bdlt::swap(Timetable& a, Timetable& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
     if (a.allocator() == b.allocator()) {
         a.swap(b);
 
@@ -1694,6 +1679,8 @@ template <class HASHALG>
 inline
 void bdlt::hashAppend(HASHALG& hashAlg, const Timetable& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
 
     hashAppend(hashAlg, object.d_firstDate);
@@ -1797,6 +1784,7 @@ bdlt::Timetable_ConstIterator bdlt::operator++(
                                              Timetable_ConstIterator& iterator,
                                              int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iterator);
     const Timetable_ConstIterator curr = iterator;
     ++iterator;
     return curr;
@@ -1807,6 +1795,7 @@ bdlt::Timetable_ConstIterator bdlt::operator--(
                                              Timetable_ConstIterator& iterator,
                                              int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iterator);
     const Timetable_ConstIterator curr = iterator;
     --iterator;
     return curr;
@@ -1816,6 +1805,8 @@ inline
 bool bdlt::operator==(const Timetable_ConstIterator& lhs,
                       const Timetable_ConstIterator& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_timetable_p     == rhs.d_timetable_p
         && lhs.d_dayIndex        == rhs.d_dayIndex
         && lhs.d_transitionIndex == rhs.d_transitionIndex;
@@ -1825,6 +1816,8 @@ inline
 bool bdlt::operator!=(const Timetable_ConstIterator& lhs,
                       const Timetable_ConstIterator& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_timetable_p     != rhs.d_timetable_p
         || lhs.d_dayIndex        != rhs.d_dayIndex
         || lhs.d_transitionIndex != rhs.d_transitionIndex;

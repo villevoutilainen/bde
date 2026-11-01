@@ -90,51 +90,44 @@ class TimeZoneFormatter {
     // MANIPULATORS
 
     /// Parse a time zone that will be formatted in default mode.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseDefault()
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseDefault();
 
     /// Parse a time zone that will be formatted in Iso8601 mode.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseIso8601()
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseIso8601();
 
     /// Examine the first character of the specified `*specInOut` and if it is
     /// recognized as a modifier by this object, update this object's state to
     /// reflect it and pop it off the front of `*specInOut` and return `true`,
     /// and if not, return `false` with no modification to `*specInOut`.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextModifier(StringView *specInOut)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextModifier(StringView *specInOut);
 
     /// If the first character of the specified `*specInOut` is recognized by
     /// this specifier formatter, parse it, remove it from `*specInOut`, and
     /// return `true`, otherwise return `false` with no modification to
     /// `*specInOut`.  The behavior is undefined if `*specInOut` is empty.
     BSLS_KEYWORD_CONSTEXPR_CPP20
-    bool parseNextSpecifier(StringView *specInOut)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool parseNextSpecifier(StringView *specInOut);
 
     /// Read post-processed fields from the specified `spec` that are relevant
     /// to this specifier formatter.
-    void postprocess(const bslfmt::FormatSpecificationParser<t_CHAR>& spec)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void postprocess(const bslfmt::FormatSpecificationParser<t_CHAR>& spec);
 
     // ACCESSORS
 
     /// Return the `bslfmt::FormatSpecificationParser::Sections` flags that
     /// apply to this value type.
     BSLS_KEYWORD_CONSTEXPR_CPP20
-    int extraSections() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int extraSections() const;
 
     /// Format the time zone indicated by the specified `offset` to the
     /// specified `out` using the default format and return `out`.
     template <class t_ITERATOR>
-    t_ITERATOR formatDefault(t_ITERATOR out, int offset) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    t_ITERATOR formatDefault(t_ITERATOR out, int offset) const;
 
     /// Format the time zone indicated by the specified `offset` to the
     /// specified `out` using the Iso8601 format and return `out`.
     template <class t_ITERATOR>
-    t_ITERATOR formatIso8601(t_ITERATOR out, int offset) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    t_ITERATOR formatIso8601(t_ITERATOR out, int offset) const;
 
     /// If the first character of the specified `*specInOut` is recognized by
     /// this specifier formatter, use it to format the time zone indicated by
@@ -144,13 +137,12 @@ class TimeZoneFormatter {
     template <class t_ITERATOR>
     bool formatNextSpecifier(bsl::basic_string_view<t_CHAR> *specInOut,
                              t_ITERATOR                     *outIt,
-                             int                             offset) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                             int                             offset) const;
 
     /// Return the anticipated width of output given all the `parse*` calls
     /// that have been happened thus far and the time zone indicated by the
     /// specified `offset`.
-    int totalWidth(int offset) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int totalWidth(int offset) const;
 };
 
                          // -----------------------
@@ -208,6 +200,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 void TimeZoneFormatter<t_CHAR>::parseDefault()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ++d_numDefaultTimeZones;
 }
 
@@ -215,6 +208,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 void TimeZoneFormatter<t_CHAR>::parseIso8601()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ++d_numIso8601TimeZones;
 }
 
@@ -222,6 +216,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool TimeZoneFormatter<t_CHAR>::parseNextModifier(StringView *specInOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(!specInOut->empty());
 
     switch (specInOut->front()) {
@@ -253,6 +248,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool TimeZoneFormatter<t_CHAR>::parseNextSpecifier(StringView *specInOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(!specInOut->empty());
 
     if (t_CHAR('z') == specInOut->front()) {
@@ -269,13 +265,14 @@ template <class t_CHAR>
 inline
 void TimeZoneFormatter<t_CHAR>::postprocess(
                               const bslfmt::FormatSpecificationParser<t_CHAR>&)
-{}
+{ BSLS_ASSERT_CONVEYOR_OBJECT(this); }
 
 // ACCESSORS
 template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 int TimeZoneFormatter<t_CHAR>::extraSections() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0;
 }
 
@@ -285,6 +282,7 @@ inline
 t_ITERATOR TimeZoneFormatter<t_CHAR>::formatDefault(
                                               t_ITERATOR out, int offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return formatImp(out, offset, false);
 }
 
@@ -294,6 +292,7 @@ inline
 t_ITERATOR TimeZoneFormatter<t_CHAR>::formatIso8601(
                                               t_ITERATOR out, int offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return formatImp(out, offset, true);
 }
 
@@ -304,6 +303,7 @@ bool TimeZoneFormatter<t_CHAR>::formatNextSpecifier(
                                   t_ITERATOR                     *outIt,
                                   int                             offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(!specInOut->empty());
 
     if (t_CHAR('z') == specInOut->front()) {
@@ -320,6 +320,7 @@ template <class t_CHAR>
 inline
 int TimeZoneFormatter<t_CHAR>::totalWidth(int offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_Z_TZ_WIDTH        = 1,
            k_COLON_TZ_WIDTH    = 6,
            k_NO_COLON_TZ_WIDTH = 5 };

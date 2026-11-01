@@ -93,8 +93,7 @@ class Formatter {
     /// iterator pointing after the end of parsed input.
     template <class t_PARSE_CONTEXT>
     BSLS_KEYWORD_CONSTEXPR_CPP20 typename t_PARSE_CONTEXT::iterator parse(
-                                                     t_PARSE_CONTEXT& context)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                     t_PARSE_CONTEXT& context);
 
     // ACCESSORS
 
@@ -103,8 +102,7 @@ class Formatter {
     template <class t_FORMAT_CONTEXT, class t_VALUE>
     typename t_FORMAT_CONTEXT::iterator format(
                                         const t_VALUE&    value,
-                                        t_FORMAT_CONTEXT& formatContext) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                        t_FORMAT_CONTEXT& formatContext) const;
 };
 
                                   // ---------
@@ -145,6 +143,8 @@ BSLS_KEYWORD_CONSTEXPR_CPP20
 typename t_PARSE_CONTEXT::iterator
 Formatter<tt_SPECIFIER_FORMATTER, t_CHAR>::parse(t_PARSE_CONTEXT& context)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&context);
     typedef typename Spec::Sections Sections;
     const Sections sections = static_cast<Sections>(
                          Spec::e_SECTIONS_WIDTH | Spec::e_SECTIONS_FILL_ALIGN |
@@ -198,6 +198,9 @@ Formatter<tt_SPECIFIER_FORMATTER, t_CHAR>::format(
                                          const t_VALUE&    value,
                                          t_FORMAT_CONTEXT& formatContext) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&formatContext);
     BSLMF_ASSERT((bsl::is_same<t_CHAR,
                                typename t_FORMAT_CONTEXT::char_type>::value));
 

@@ -355,7 +355,7 @@ class ManagedAllocator : public bslma::Allocator {
     /// Release all memory currently allocated through this allocator.  The
     /// effect of using a pointer after this call that was obtained from
     /// this allocator before this call is undefined.
-    virtual void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS = 0;
+    virtual void release() = 0;
 };
 
 }  // close package namespace

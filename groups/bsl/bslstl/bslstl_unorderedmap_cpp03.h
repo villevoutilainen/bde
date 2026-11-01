@@ -3779,6 +3779,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>&
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::operator=(
                                                       const unordered_map& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that we have delegated responsibility for correct handling of
     // allocator propagation to the 'HashTable' implementation.
 
@@ -3797,6 +3798,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::operator=(
                                 std::is_nothrow_move_assignable<HASH>::value &&
                                 std::is_nothrow_move_assignable<EQUAL>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that we have delegated responsibility for correct handling of
     // allocator propagation to the 'HashTable' implementation.
 
@@ -3814,6 +3816,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>&
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::operator=(
                                          std::initializer_list<value_type> rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unordered_map tmp(rhs.begin(), rhs.end(), d_impl.allocator());
 
     this->swap(tmp);
@@ -3828,6 +3831,8 @@ typename add_lvalue_reference<VALUE>::type
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::operator[](
                                                            const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool           isInserted;  // not used
     HashTableLink *node = d_impl.insertKeyIfMissing(&isInserted, key);
     return static_cast<HashTableNode *>(node)->value().second;
@@ -3839,6 +3844,8 @@ typename add_lvalue_reference<VALUE>::type
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::operator[](
                                   BloombergLP::bslmf::MovableRef<key_type> key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool           isInserted;  // not used
     HashTableLink *node = d_impl.insertKeyIfMissing(
                                         &isInserted,
@@ -3851,6 +3858,8 @@ inline
 typename add_lvalue_reference<VALUE>::type
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::at(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     HashTableLink *node = d_impl.find(key);
 
     if (!node) {
@@ -3867,6 +3876,7 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::begin()
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.elementListRoot());
 }
 
@@ -3875,6 +3885,7 @@ inline
 typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator();
 }
 
@@ -3883,6 +3894,7 @@ inline
 typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::local_iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::begin(size_type index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return local_iterator(&d_impl.bucketAtIndex(index));
@@ -3893,6 +3905,7 @@ inline
 typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::local_iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::end(size_type index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -3904,6 +3917,7 @@ void
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::clear()
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.removeAll();
 }
 
@@ -3924,6 +3938,7 @@ bsl::pair<
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -3944,6 +3959,7 @@ bsl::pair<
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -3967,6 +3983,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -3993,6 +4010,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -4022,6 +4040,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -4054,6 +4073,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -4089,6 +4109,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -4127,6 +4148,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -4168,6 +4190,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -4212,6 +4235,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -4259,6 +4283,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -4287,6 +4312,7 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                                                 const_iterator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4305,6 +4331,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                                                 const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4326,6 +4353,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4350,6 +4378,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4377,6 +4406,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4407,6 +4437,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4440,6 +4471,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4476,6 +4508,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4515,6 +4548,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4557,6 +4591,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4602,6 +4637,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4633,6 +4669,7 @@ bsl::pair<
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -4651,6 +4688,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                                                 const_iterator,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
     bool isInsertedFlag = false;
 
@@ -4669,6 +4707,7 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::erase(
                                                        const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != this->end());
 
     return iterator(d_impl.remove(position.node()));
@@ -4679,6 +4718,7 @@ inline
 typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::erase(iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return erase(const_iterator(position));
 }
 
@@ -4686,6 +4726,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL, class ALLOCATOR>
 typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::erase(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     HashTableLink *target = d_impl.find(key);
     if (target) {
         d_impl.remove(target);
@@ -4701,6 +4743,7 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::erase(const_iterator first,
                                                          const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
 #if defined BDE_BUILD_TARGET_SAFE_2
     if (first != last) {
@@ -4728,6 +4771,8 @@ inline
 bool unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::contains(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return find(key) != end();
 }
 
@@ -4736,6 +4781,8 @@ inline
 typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::find(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return iterator(d_impl.find(key));
 }
 
@@ -4746,6 +4793,8 @@ pair<typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator,
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert(
                                                        const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -4762,6 +4811,8 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert(
                                                        const_iterator,
                                                        const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bool   isInsertedFlag;    // not used
 
     HashTableLink *result = d_impl.insertIfMissing(&isInsertedFlag, value);
@@ -4775,6 +4826,7 @@ void unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert(
                                                           INPUT_ITERATOR first,
                                                           INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insertFromRange(first, last);
 }
 
@@ -4783,6 +4835,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL, class ALLOCATOR>
 void unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -4798,6 +4851,9 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert_or_assign(
     const KEY&       key,
     BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     typedef bsl::pair<iterator, bool> ResultType;
     bool           isInsertedFlag = false;
     HashTableLink *result = d_impl.insertOrAssign(
@@ -4816,6 +4872,9 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert_or_assign(
     BloombergLP::bslmf::MovableRef<KEY> key,
     BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     typedef bsl::pair<iterator, bool> ResultType;
     bool           isInsertedFlag = false;
     HashTableLink *result = d_impl.insertOrAssign(
@@ -4834,6 +4893,9 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert_or_assign(
                                                          const KEY&       key,
                          BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     bool isInsertedFlag = false;
     HashTableLink *result         = d_impl.insertOrAssign(
                 &isInsertedFlag,
@@ -4851,6 +4913,9 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert_or_assign(
                                       BloombergLP::bslmf::MovableRef<KEY> key,
                          BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     bool isInsertedFlag = false;
     HashTableLink *result         = d_impl.insertOrAssign(
                 &isInsertedFlag,
@@ -4868,6 +4933,8 @@ bsl::pair<
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::equal_range(
                                                            const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, iterator> ResultType;
 
     HashTableLink *first = d_impl.find(key);
@@ -4881,6 +4948,7 @@ void
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::max_load_factor(
                                                         float newMaxLoadFactor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.setMaxLoadFactor(newMaxLoadFactor);
 }
 
@@ -4890,6 +4958,7 @@ void
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::rehash(
                                                           size_type numBuckets)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.rehashForNumBuckets(numBuckets);
 }
 
@@ -4899,6 +4968,7 @@ void
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::reserve(
                                                          size_type numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reserveForNumElements(numElements);
 }
 
@@ -4932,6 +5002,8 @@ bsl::pair<
 bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                                                const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -4954,6 +5026,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                                                const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -4979,6 +5053,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5007,6 +5083,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5038,6 +5116,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5072,6 +5152,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5109,6 +5191,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5149,6 +5233,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5192,6 +5278,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5238,6 +5326,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5287,6 +5377,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5318,6 +5410,8 @@ bsl::pair<
 bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                       BloombergLP::bslmf::MovableRef<KEY> key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5340,6 +5434,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                       BloombergLP::bslmf::MovableRef<KEY> key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5365,6 +5461,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5393,6 +5491,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5424,6 +5524,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5458,6 +5560,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5495,6 +5599,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5535,6 +5641,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5578,6 +5686,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5624,6 +5734,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5673,6 +5785,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -5703,6 +5817,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                                            const_iterator hint,
                                                            const KEY&     key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -5723,6 +5839,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                                            const KEY&     key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -5746,6 +5864,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -5772,6 +5892,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -5801,6 +5923,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -5833,6 +5957,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -5868,6 +5994,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -5906,6 +6034,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -5947,6 +6077,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -5991,6 +6123,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6038,6 +6172,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6067,6 +6203,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                  const_iterator                           hint,
                                  BloombergLP::bslmf::MovableRef<KEY>      key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6087,6 +6225,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                  BloombergLP::bslmf::MovableRef<KEY>      key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6110,6 +6250,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6136,6 +6278,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6165,6 +6309,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6197,6 +6343,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6232,6 +6380,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6270,6 +6420,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6311,6 +6463,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6355,6 +6509,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6402,6 +6558,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6435,6 +6593,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                                                const KEY& key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -6456,6 +6616,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                       BloombergLP::bslmf::MovableRef<KEY> key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, bool> ResultType;
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
@@ -6476,6 +6638,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                                            const KEY&     key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6495,6 +6659,8 @@ bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::try_emplace(
                                  BloombergLP::bslmf::MovableRef<KEY>      key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool isInsertedFlag = false;
     HashTableLink *result = d_impl.tryEmplace(
                                 &isInsertedFlag,
@@ -6570,6 +6736,8 @@ typename add_lvalue_reference<const VALUE>::type
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::at(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     HashTableLink *target = d_impl.find(key);
     if (!target ){
         BloombergLP::bslstl::StdExceptUtil::throwOutOfRange(
@@ -6584,6 +6752,7 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::begin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_impl.elementListRoot());
 }
 
@@ -6593,6 +6762,7 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::end() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator();
 }
 
@@ -6602,6 +6772,7 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::cbegin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_impl.elementListRoot());
 }
 
@@ -6611,6 +6782,7 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::cend() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator();
 }
 
@@ -6620,6 +6792,7 @@ typename
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::begin(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(&d_impl.bucketAtIndex(index));
@@ -6631,6 +6804,7 @@ typename
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::end(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -6643,6 +6817,7 @@ unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::cbegin(
                                                          size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(&d_impl.bucketAtIndex(index));
@@ -6654,6 +6829,7 @@ typename
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::cend(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -6665,6 +6841,8 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::bucket(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.bucketIndexForKey(key);
 }
 
@@ -6674,6 +6852,7 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::bucket_count() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.numBuckets();
 }
 
@@ -6703,6 +6882,8 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::count(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.find(key) != 0;
 }
 
@@ -6712,6 +6893,7 @@ bool
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::empty() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_impl.size();
 }
 
@@ -6729,6 +6911,8 @@ bsl::pair<typename unordered_map<KEY,
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::equal_range(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<const_iterator, const_iterator> ResultType;
 
     HashTableLink *first = d_impl.find(key);
@@ -6744,6 +6928,8 @@ typename
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::find(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return const_iterator(d_impl.find(key));
 }
 
@@ -6760,6 +6946,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL, class ALLOCATOR>
 inline
 HASH unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::hash_function() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.hasher();
 }
 
@@ -6767,6 +6954,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL, class ALLOCATOR>
 inline
 EQUAL unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::key_eq() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.comparator();
 }
 
@@ -6776,6 +6964,7 @@ float
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::load_factor() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.loadFactor();
 }
 
@@ -6785,6 +6974,7 @@ float
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::max_load_factor() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.maxLoadFactor();
 }
 
@@ -6794,6 +6984,7 @@ typename unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.size();
 }
 
@@ -6815,6 +7006,8 @@ bool bsl::operator==(
              const bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& lhs,
              const bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_impl == rhs.d_impl;
 }
 
@@ -6825,6 +7018,8 @@ bool bsl::operator!=(
              const bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& lhs,
              const bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 #endif
@@ -6841,6 +7036,7 @@ typename bsl::unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 bsl::erase_if(unordered_map<KEY, VALUE, HASH, EQUAL, ALLOCATOR>&     m,
                                                            PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&m);
     return BloombergLP::bslstl::AlgorithmUtil::containerEraseIf(m, predicate);
 }
 

@@ -891,14 +891,12 @@ class FileObserver : public Observer {
     /// Return the format specification for log records written to the log
     /// file by this file observer.  See {Log Record Formatting} for details
     /// on the syntax of format specifications.
-    const bsl::string& getFileLogFormat() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& getFileLogFormat() const;
 
     /// Return the format specification for log records written to `stdout`
     /// by this file observer.  See {Log Record Formatting} for details on
     /// the syntax of format specifications.
-    const bsl::string& getStdoutLogFormat() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& getStdoutLogFormat() const;
 
     /// Return `true` if file logging is enabled for this file observer, and
     /// `false` otherwise.  Load the optionally specified `result` with the

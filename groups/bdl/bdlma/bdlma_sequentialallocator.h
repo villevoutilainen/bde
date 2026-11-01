@@ -344,8 +344,7 @@ class SequentialAllocator : public ManagedAllocator {
     /// memory space in the current internal buffer, use the allocator
     /// supplied at construction to allocate a new internal buffer, then
     /// allocate memory from the new buffer.
-    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE;
 
     /// Return the address of a contiguous block of memory of at least the
     /// specified `*size` (in bytes), and load the actual amount of memory
@@ -354,15 +353,13 @@ class SequentialAllocator : public ManagedAllocator {
     /// the current internal buffer, use the allocator supplied at
     /// construction to allocate a new internal buffer, then allocate memory
     /// from the new buffer.
-    void *allocateAndExpand(bsls::Types::size_type *size)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocateAndExpand(bsls::Types::size_type *size);
 
     /// This method has no effect on the memory block at the specified
     /// `address` as all memory allocated by this allocator is managed.  The
     /// behavior is undefined unless `address` is 0, or was allocated by
     /// this allocator and has not already been deallocated.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
 
     /// Release all memory allocated through this allocator and return to
     /// the underlying allocator *all* memory.  The allocator is reset to
@@ -371,7 +368,7 @@ class SequentialAllocator : public ManagedAllocator {
     /// following construction.  The effect of subsequently - to this
     /// invokation of `release` - using a pointer obtained from this object
     /// prior to this call to `release` is undefined.
-    void release() BSLS_KEYWORD_OVERRIDE BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void release() BSLS_KEYWORD_OVERRIDE;
 
     /// Release all memory allocated through this allocator and return to
     /// the underlying allocator *only* memory that was allocated outside of
@@ -380,7 +377,7 @@ class SequentialAllocator : public ManagedAllocator {
     /// allocations.  The effect of subsequently - to this invokation of
     /// `rewind` - using a pointer obtained from this object prior to this
     /// call to `rewind` is undefined.
-    virtual void rewind() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    virtual void rewind();
 
     /// Reserve sufficient memory to satisfy allocation requests for at
     /// least the specified `numBytes` without replenishment (i.e., without
@@ -389,8 +386,7 @@ class SequentialAllocator : public ManagedAllocator {
     /// `allocate` requests - due to alignment effects - it is possible that
     /// not all `numBytes` of memory will be used for allocation before
     /// triggering dynamic allocation.
-    void reserveCapacity(bsls::Types::size_type numBytes)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reserveCapacity(bsls::Types::size_type numBytes);
 
     /// Reduce the amount of memory allocated at the specified `address` of
     /// the specified `originalSize` (in bytes) to the specified `newSize`.
@@ -405,8 +401,7 @@ class SequentialAllocator : public ManagedAllocator {
     /// `address`.
     bsls::Types::size_type truncate(void                   *address,
                                     bsls::Types::size_type  originalSize,
-                                    bsls::Types::size_type  newSize)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                    bsls::Types::size_type  newSize);
 };
 
 // ============================================================================
@@ -560,35 +555,41 @@ SequentialAllocator(bsls::Types::size_type       initialSize,
 inline
 void *SequentialAllocator::allocate(bsls::Types::size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequentialPool.allocate(size);
 }
 
 inline
 void *SequentialAllocator::allocateAndExpand(bsls::Types::size_type *size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequentialPool.allocateAndExpand(size);
 }
 
 inline
 void SequentialAllocator::deallocate(void *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
 void SequentialAllocator::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_sequentialPool.release();
 }
 
 inline
 void SequentialAllocator::reserveCapacity(bsls::Types::size_type numBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_sequentialPool.reserveCapacity(numBytes);
 }
 
 inline
 void SequentialAllocator::rewind()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_sequentialPool.rewind();
 }
 
@@ -598,6 +599,7 @@ bsls::Types::size_type SequentialAllocator::truncate(
                                           bsls::Types::size_type  originalSize,
                                           bsls::Types::size_type  newSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequentialPool.truncate(address, originalSize, newSize);
 }
 

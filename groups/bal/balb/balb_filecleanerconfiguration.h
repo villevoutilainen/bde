@@ -202,8 +202,7 @@ class FileCleanerConfiguration {
 
     /// Return a `const` reference to the file pattern attribute of this
     /// object.
-    const bsl::string& filePattern() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& filePattern() const;
 
     /// Return the maximum file age attribute of this object.
     bsls::TimeInterval maxFileAge() const;
@@ -358,6 +357,7 @@ void FileCleanerConfiguration::setMaxNumFiles(int maxNumFiles)
 inline
 const bsl::string& FileCleanerConfiguration::filePattern() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_filePattern;
 }
 

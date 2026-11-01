@@ -306,8 +306,7 @@ class ZoneinfoTransition {
 
     /// Return a reference providing non-modifiable access to the
     /// `descriptor` attribute of this object.
-    const LocalTimeDescriptor& descriptor() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const LocalTimeDescriptor& descriptor() const;
 
     /// Return the value of the `utcTime` attribute of this object.
     bdlt::EpochUtil::TimeT64 utcTime() const;
@@ -527,8 +526,7 @@ class Zoneinfo {
     /// Return a reference providing non-modifiable access to the first
     /// transition contained in this object.  The behavior is undefined
     /// unless `numTransitions() > 0`.
-    const ZoneinfoTransition& firstTransition() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const ZoneinfoTransition& firstTransition() const;
 
     /// Return the allocator used by this object to supply memory.  Note
     /// that if no allocator was supplied at construction the default
@@ -537,15 +535,13 @@ class Zoneinfo {
 
     /// Return a reference providing non-modifiable access to the
     /// `identifier` attribute of this object.
-    const bsl::string& identifier() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& identifier() const;
 
     /// Return a reference providing non-modifiable access to the
     /// `posixExtendedRangeDescription` attribute of this object, used to
     /// describe local time transitions far in the future (see
     /// {posixExtendedRangeDescription}).
-    const bsl::string& posixExtendedRangeDescription() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& posixExtendedRangeDescription() const;
 
     /// Return the number of transitions maintained by this zone info.
     bsl::size_t numTransitions() const;
@@ -642,6 +638,7 @@ ZoneinfoTransition::~ZoneinfoTransition()
 inline
 const LocalTimeDescriptor& ZoneinfoTransition::descriptor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_descriptor_p;
 }
 
@@ -780,12 +777,14 @@ Zoneinfo::allocator_type Zoneinfo::get_allocator() const
 inline
 const bsl::string& Zoneinfo::identifier() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_identifier;
 }
 
 inline
 const bsl::string& Zoneinfo::posixExtendedRangeDescription() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_posixExtendedRangeDescription;
 }
 

@@ -887,6 +887,8 @@ inline
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::push(
                                                        const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     c.push_back(value);
     std::push_heap(c.begin(), c.end(), comp);
 }
@@ -896,6 +898,8 @@ inline
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::push(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     c.push_back(MoveUtil::move(value));
     std::push_heap(c.begin(), c.end(), comp);
 }
@@ -906,6 +910,8 @@ BSLSTL_PRIORITY_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::push_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+BSLS_ASSERT_CONVEYOR_OBJECT(this);
+BSLS_ASSERT_CONVEYOR_OBJECT(&range);
 #if defined(BSLS_LIBRARYFEATURES_HAS_CPP20_RANGES)
     if constexpr (requires{ c.append_range(std::forward<t_RANGE>(range)); }) {
         c.append_range(std::forward<t_RANGE>(range));
@@ -934,6 +940,7 @@ inline
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back();
     std::push_heap(c.begin(), c.end(), comp);
 }
@@ -946,6 +953,7 @@ inline
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01));
     std::push_heap(c.begin(), c.end(), comp);
 }
@@ -960,6 +968,7 @@ void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02));
     std::push_heap(c.begin(), c.end(), comp);
@@ -977,6 +986,7 @@ void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03));
@@ -997,6 +1007,7 @@ void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -1020,6 +1031,7 @@ void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -1046,6 +1058,7 @@ void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -1075,6 +1088,7 @@ void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -1107,6 +1121,7 @@ void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -1142,6 +1157,7 @@ void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -1180,6 +1196,7 @@ void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -1203,6 +1220,7 @@ inline
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args,args)...);
     std::push_heap(c.begin(), c.end(), comp);
 }
@@ -1213,6 +1231,7 @@ template <class VALUE, class CONTAINER, class COMPARATOR>
 inline
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::pop()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     std::pop_heap(c.begin(), c.end(), comp);
     c.pop_back();
 }
@@ -1233,6 +1252,7 @@ template <class VALUE, class CONTAINER, class COMPARATOR>
 inline
 bool priority_queue<VALUE, CONTAINER, COMPARATOR>::empty() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.empty();
 }
 
@@ -1241,6 +1261,7 @@ inline
 typename priority_queue<VALUE, CONTAINER, COMPARATOR>::size_type
 priority_queue<VALUE, CONTAINER, COMPARATOR>::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.size();
 }
 
@@ -1249,6 +1270,7 @@ inline
 typename priority_queue<VALUE, CONTAINER, COMPARATOR>::const_reference
 priority_queue<VALUE, CONTAINER, COMPARATOR>::top() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.front();
 }
 

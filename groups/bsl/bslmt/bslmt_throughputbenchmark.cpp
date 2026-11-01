@@ -151,6 +151,8 @@ void ThroughputBenchmark::execute(
                               int                        millisecondsPerSample,
                               int                        numSamples)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return execute(result,
                    millisecondsPerSample,
                    numSamples,
@@ -167,6 +169,11 @@ void ThroughputBenchmark::execute(
                         const ShutdownSampleFunction&    shutdownFunctor,
                         const CleanupSampleFunction&     cleanupFunctor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&initializeFunctor);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&shutdownFunctor);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&cleanupFunctor);
     BSLS_ASSERT(0 < millisecondsPerSample);
     BSLS_ASSERT(0 < numSamples);
     BSLS_ASSERT_NONCONVEYOR(0 < numThreadGroups());

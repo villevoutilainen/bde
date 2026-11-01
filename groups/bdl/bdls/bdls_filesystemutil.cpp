@@ -3642,6 +3642,7 @@ int FilesystemUtil::mapChecked(FileDescriptor   descriptor,
 
 bsl::ostream& operator<<(bsl::ostream& stream, FilesystemUtil::Whence value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     const char *output = 0;
     switch (value) {
 #undef   CASE
@@ -3662,6 +3663,7 @@ bsl::ostream& operator<<(bsl::ostream& stream, FilesystemUtil::Whence value)
 bsl::ostream& operator<<(bsl::ostream&                      stream,
                          FilesystemUtil::ErrorType          value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     const char *output = 0;
     switch (value) {
 #undef   CASE
@@ -3685,6 +3687,7 @@ bsl::ostream& operator<<(bsl::ostream&                      stream,
 bsl::ostream& operator<<(bsl::ostream&                      stream,
                          FilesystemUtil::FileOpenPolicy     value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     const char *output = 0;
     switch (value) {
 #undef   CASE
@@ -3706,6 +3709,7 @@ bsl::ostream& operator<<(bsl::ostream&                      stream,
 bsl::ostream& operator<<(bsl::ostream&                      stream,
                          FilesystemUtil::FileIOPolicy       value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     const char *output = 0;
     switch (value) {
 #undef   CASE
@@ -3728,6 +3732,7 @@ bsl::ostream& operator<<(bsl::ostream&                      stream,
 bsl::ostream& operator<<(bsl::ostream&                      stream,
                          FilesystemUtil::FileTruncatePolicy value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     const char *output = 0;
     switch (value) {
 #undef   CASE

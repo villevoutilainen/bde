@@ -304,24 +304,18 @@ class StripedUnorderedContainerImpl_Node {
 
     /// Return a reference providing modifiable access to the `value`
     /// attribute of this object.
-    VALUE& value()
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    VALUE& value();
 
     // ACCESSORS
 
     /// Return a `const` reference to the `key` attribute of this object.
-    const KEY& key() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const KEY& key() const;
 
     /// Return the pointer to the next node.
     StripedUnorderedContainerImpl_Node *next() const;
 
     /// Return a `const` reference to the `value` attribute of this object.
-    const VALUE& value() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const VALUE& value() const;
 
                                // Aspects
 
@@ -1707,6 +1701,7 @@ template <class KEY, class VALUE>
 inline
 VALUE& StripedUnorderedContainerImpl_Node<KEY, VALUE>::value()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.object();
 }
 
@@ -1715,6 +1710,7 @@ template <class KEY, class VALUE>
 inline
 const KEY& StripedUnorderedContainerImpl_Node<KEY, VALUE>::key() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_key.object();
 }
 
@@ -1730,6 +1726,7 @@ template <class KEY, class VALUE>
 inline
 const VALUE& StripedUnorderedContainerImpl_Node<KEY, VALUE>::value() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.object();
 }
 

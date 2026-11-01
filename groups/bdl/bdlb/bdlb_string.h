@@ -147,8 +147,7 @@ struct String {
     /// of the newly-created modifiable string.  The string that is returned
     /// is owned by the caller.  The behavior is undefined unless
     /// `bsl::strlen(string) <= INT_MAX` and `basicAllocator` is non-null.
-    static char *copy(const char *string, bslma::Allocator *basicAllocator)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(basicAllocator);
+    static char *copy(const char *string, bslma::Allocator *basicAllocator);
 
     /// Create a null-terminated copy of the specified `string` having the
     /// specified `length` (in bytes), using the specified `basicAllocator`
@@ -159,8 +158,7 @@ struct String {
     /// embedded null ('\0') characters they will be propagated to the copy.
     static char *copy(const char       *string,
                       int               length,
-                      bslma::Allocator *basicAllocator)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(basicAllocator);
+                      bslma::Allocator *basicAllocator);
 
     /// Create a null-terminated copy of the specified `string`, using the
     /// specified `basicAllocator` to supply memory, and return the address
@@ -171,8 +169,7 @@ struct String {
     /// will be propagated to the copy.
     static char *copy(const bsl::string&  string,
                       bslma::Allocator   *basicAllocator)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(string)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(basicAllocator);
+    BSLS_ASSERT_CONVEYOR_REQUIRES(string);
 
     /// Compare the specified `lhsString` and `rhsString` having the
     /// optionally specified `lhsLength` and `rhsLength`, respectively.
@@ -246,10 +243,8 @@ struct String {
     /// is not specified the space (` `) character is appended.  This
     /// operation has no effect if `string.size() >= length`.  The behavior
     /// is undefined unless `0 <= length`.
-    static void pad(bsl::string *string, int length, char padChar = ' ')
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
-    static void pad(std::string *string, int length, char padChar = ' ')
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
+    static void pad(bsl::string *string, int length, char padChar = ' ');
+    static void pad(std::string *string, int length, char padChar = ' ');
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_PMR_STRING
     /// Append repeatedly to the specified `string` the optionally specified
@@ -258,8 +253,7 @@ struct String {
     /// operation has no effect if `string.size() >= length`.
     static void pad(std::pmr::string            *string,
                     std::pmr::string::size_type  length,
-                    char                         padChar = ' ')
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(string);
+                    char                         padChar = ' ');
 #endif
 
     /// Remove all trailing whitespace characters from the specified
@@ -569,6 +563,7 @@ bool String::areEqualCaseless(const bsl::string& lhsString,
 inline
 char *String::copy(const char *string, bslma::Allocator *basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(basicAllocator);
     BSLS_ASSERT(string);
     BSLS_ASSERT(bsl::strlen(string) <= INT_MAX);
     BSLS_ASSERT(basicAllocator);
@@ -582,6 +577,7 @@ inline
 char *String::copy(const bsl::string&  string,
                    bslma::Allocator   *basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(basicAllocator);
     BSLS_ASSERT(string.size() <= INT_MAX);
     BSLS_ASSERT(basicAllocator);
 
@@ -710,6 +706,7 @@ void String::ltrim(std::pmr::string *string)
 inline
 void String::pad(bsl::string *string, int length, char padChar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
     BSLS_ASSERT(0 <= length);
 
@@ -721,6 +718,7 @@ void String::pad(bsl::string *string, int length, char padChar)
 inline
 void String::pad(std::string *string, int length, char padChar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
     BSLS_ASSERT(0 <= length);
 
@@ -735,6 +733,7 @@ void String::pad(std::pmr::string            *string,
                  std::pmr::string::size_type  length,
                  char                         padChar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     if (string->size() < length) {

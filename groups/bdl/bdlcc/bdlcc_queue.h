@@ -754,9 +754,7 @@ class Queue {
     /// The (error-prone) usage of this method will be replaced by an
     /// appropriate smart-pointer-like proctor object in the future.
     /// Meanwhile, use this method with caution.
-    bdlc::Queue<TYPE>& queue()
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlc::Queue<TYPE>& queue();
 
     // ACCESSORS
 
@@ -1199,18 +1197,21 @@ void Queue<TYPE>::tryPopBack(int maxNumItems, std::pmr::vector<TYPE> *buffer)
 template <class TYPE>
 void Queue<TYPE>::removeAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     removeAllImp(static_cast<bsl::vector<TYPE> *>(0));
 }
 
 template <class TYPE>
 void Queue<TYPE>::removeAll(bsl::vector<TYPE> *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     removeAllImp(buffer);
 }
 
 template <class TYPE>
 void Queue<TYPE>::removeAll(std::vector<TYPE> *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     removeAllImp(buffer);
 }
 
@@ -1218,6 +1219,7 @@ void Queue<TYPE>::removeAll(std::vector<TYPE> *buffer)
 template <class TYPE>
 void Queue<TYPE>::removeAll(std::pmr::vector<TYPE> *buffer)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     removeAllImp(buffer);
 }
 #endif
@@ -1356,6 +1358,7 @@ template <class TYPE>
 inline
 bdlc::Queue<TYPE>& Queue<TYPE>::queue()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_queue;
 }
 

@@ -425,6 +425,8 @@ template <class HASHALG>
 inline
 void bsl::hashAppend(HASHALG& hashAlg, const type_index& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlg, object.hash_code());
 }

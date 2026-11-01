@@ -283,8 +283,7 @@ class LocalTimePeriod {
 
     /// Return a reference providing non-modifiable access to the
     /// `descriptor` attribute of this object.
-    const LocalTimeDescriptor& descriptor() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const LocalTimeDescriptor& descriptor() const;
 
     /// Return the allocator used by this object to supply memory.  Note that
     /// if no allocator was supplied at construction the default allocator in
@@ -293,13 +292,11 @@ class LocalTimePeriod {
 
     /// Return a reference providing non-modifiable access to the `utcEndTime`
     /// attribute of this object.
-    const bdlt::Datetime& utcEndTime() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlt::Datetime& utcEndTime() const;
 
     /// Return a reference providing non-modifiable access to the
     /// `utcStartTime` attribute of this object.
-    const bdlt::Datetime& utcStartTime() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlt::Datetime& utcStartTime() const;
 
                         // Aspects
 
@@ -503,6 +500,7 @@ bslma::Allocator *LocalTimePeriod::allocator() const
 inline
 const LocalTimeDescriptor& LocalTimePeriod::descriptor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_descriptor;
 }
 
@@ -516,12 +514,14 @@ LocalTimePeriod::allocator_type LocalTimePeriod::get_allocator() const
 inline
 const bdlt::Datetime& LocalTimePeriod::utcEndTime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_utcEndTime;
 }
 
 inline
 const bdlt::Datetime& LocalTimePeriod::utcStartTime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_utcStartTime;
 }
 

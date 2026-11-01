@@ -579,24 +579,28 @@ SequentialAllocator::SequentialAllocator(
 inline
 void *SequentialAllocator::allocate(size_type numBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequentialPool.allocate(static_cast<int>(numBytes));
 }
 
 inline
 void *SequentialAllocator::allocateAndExpand(int *size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequentialPool.allocateAndExpand(size);
 }
 
 inline
 void *SequentialAllocator::allocateAndExpand(int *size, int maxNumBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequentialPool.allocateAndExpand(size, maxNumBytes);
 }
 
 inline
 void SequentialAllocator::deallocate(void *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
@@ -616,12 +620,14 @@ int SequentialAllocator::expand(void *address,
 inline
 void SequentialAllocator::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_sequentialPool.release();
 }
 
 inline
 void SequentialAllocator::reserveCapacity(int numBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_sequentialPool.reserveCapacity(numBytes);
 }
 
@@ -630,6 +636,7 @@ int SequentialAllocator::truncate(void *address,
                                   int   originalNumBytes,
                                   int   newNumBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequentialPool.truncate(address, originalNumBytes, newNumBytes);
 }
 

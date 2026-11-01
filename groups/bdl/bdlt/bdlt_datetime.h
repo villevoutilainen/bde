@@ -298,16 +298,10 @@ class Datetime {
     bsls::Types::Uint64 d_value;  // encoded offset from the epoch
 
     // FRIENDS
-    friend DatetimeInterval operator-(const Datetime& lhs, const Datetime& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend DatetimeInterval operator-(const Datetime& lhs, const Datetime& rhs);
 
-    friend bool operator==(const Datetime& lhs, const Datetime& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
-    friend bool operator!=(const Datetime& lhs, const Datetime& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator==(const Datetime& lhs, const Datetime& rhs);
+    friend bool operator!=(const Datetime& lhs, const Datetime& rhs);
     friend bool operator<(const Datetime& lhs, const Datetime& rhs)
                                              BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
@@ -321,9 +315,7 @@ class Datetime {
                                              BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     template <class HASHALG>
-    friend void hashAppend(HASHALG& hashAlg, const Datetime& object)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    friend void hashAppend(HASHALG& hashAlg, const Datetime& object);
 
     // PRIVATE MANIPULATOR
 
@@ -479,14 +471,12 @@ class Datetime {
                      int         minute = 0,
                      int         second = 0,
                      int         millisecond = 0,
-                     int         microsecond = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                     int         microsecond = 0);
 
     /// Set the value of this object to a `Datetime` whose "date" part has
     /// the value represented by the specified `date`, and whose "time" part
     /// has the value represented by the specified `time`.
-    void setDatetime(const Date& date, const Time& time)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setDatetime(const Date& date, const Time& time);
 
     /// Set the value of this object to a `Datetime` whose "date" part has
     /// the value represented by the specified `year`, `month`, and `day`
@@ -502,7 +492,7 @@ class Datetime {
                      int minute = 0,
                      int second = 0,
                      int millisecond = 0,
-                     int microsecond = 0) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                     int microsecond = 0);
 
     /// Set the "date" part of this object to have the value represented by
     /// the specified `year`, `month`, and `day` attributes, and set the
@@ -519,8 +509,7 @@ class Datetime {
                            int minute = 0,
                            int second = 0,
                            int millisecond = 0,
-                           int microsecond = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                           int microsecond = 0);
 
     /// Set the value of this object to a `Datetime` whose "date" part has
     /// the value represented by the specified `date`, and whose "time" part
@@ -535,28 +524,25 @@ class Datetime {
                            int         minute = 0,
                            int         second = 0,
                            int         millisecond = 0,
-                           int         microsecond = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                           int         microsecond = 0);
 
     /// Set the "date" part of this object to have the value of the
     /// specified `date`.  Note that this method has no effect on the "time"
     /// part of this object.
-    void setDate(const Date& date) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setDate(const Date& date);
 
     /// Set the "date" part of this object to have the value represented by
     /// the specified `year` and `dayOfYear` attribute values.  The behavior
     /// is undefined unless `year` and `dayOfYear` represent a valid `Date`
     /// value (i.e., `true == Date::isValidYearDay(year, dayOfYear)`).  Note
     /// that this method has no effect on the "time" part of this object.
-    void setYearDay(int year, int dayOfYear)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setYearDay(int year, int dayOfYear);
 
     /// Set this object to have the value represented by the specified
     /// `year` and `dayOfYear` if they comprise a valid `Date` value (see
     /// `Date::isValidYearDay`).  Return 0 on success, and a non-zero value
     /// (with no effect) otherwise.
-    int setYearDayIfValid(int year, int dayOfYear)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setYearDayIfValid(int year, int dayOfYear);
 
     /// Set the "date" part of this object to have the value represented by
     /// the specified `year`, `month`, and `day` attribute values.  The
@@ -564,20 +550,18 @@ class Datetime {
     /// valid `Date` value (i.e.,
     /// `true == Date::isValidYearMonthDay(year, month, day)`).  Note that
     /// this method has no effect on the "time" part of this object.
-    void setYearMonthDay(int year, int month, int day)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setYearMonthDay(int year, int month, int day);
 
     /// Set this object to have the value represented by the specified
     /// `year`, `month`, and `day` if they comprise a valid `Date` value
     /// (see `Date::isValidYearMonthDay`).  Return 0 on success, and a
     /// non-zero value (with no effect) otherwise.
-    int setYearMonthDayIfValid(int year, int month, int day)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setYearMonthDayIfValid(int year, int month, int day);
 
     /// Set the "time" part of this object to have the value of the
     /// specified `time`.  Note that this method has no effect on the "date"
     /// part of this object.
-    void setTime(const Time& time) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setTime(const Time& time);
 
     /// Set the "time" part of this object to have the value represented by
     /// the specified `hour` attribute value and the optionally specified
@@ -591,7 +575,7 @@ class Datetime {
                  int minute = 0,
                  int second = 0,
                  int millisecond = 0,
-                 int microsecond = 0) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                 int microsecond = 0);
 
     /// Set the "time" part of this object to have the value represented by
     /// the specified `hour` attribute value and the optionally specified
@@ -605,77 +589,75 @@ class Datetime {
                        int minute = 0,
                        int second = 0,
                        int millisecond = 0,
-                       int microsecond = 0) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                       int microsecond = 0);
 
     /// Set the "hour" attribute of this object to the specified `hour`
     /// value.  If `24 == hour`, set the `minute`, `second`, `millisecond`,
     /// and `microsecond` attributes to 0.  The behavior is undefined
     /// unless `0 <= hour <= 24`.  Note that this method has no effect on
     /// the "date" part of this object.
-    void setHour(int hour) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setHour(int hour);
 
     /// Set the "hour" attribute of this object to the specified `hour`
     /// value if `0 <= hour <= 24`.  If `24 == hour`, set the `minute`,
     /// `second`, `millisecond`, and `microsecond` attributes to 0.  Return
     /// 0 on success, and a non-zero value (with no effect) otherwise.  Note
     /// that this method has no effect on the "date" part of this object.
-    int setHourIfValid(int hour) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setHourIfValid(int hour);
 
     /// Set the "minute" attribute of this object to the specified `minute`
     /// value.  If `24 == hour()`, set the `hour` attribute to 0.  The
     /// behavior is undefined unless `0 <= minute <= 59`.  Note that this
     /// method has no effect on the "date" part of this object.
-    void setMinute(int minute) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setMinute(int minute);
 
     /// Set the "minute" attribute of this object to the specified `minute`
     /// value if `0 <= minute <= 59`.  If `24 == hour()`, set the `hour`
     /// attribute to 0.  Return 0 on success, and a non-zero value (with no
     /// effect) otherwise.  Note that this method has no effect on the
     /// "date" part of this object.
-    int setMinuteIfValid(int minute) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setMinuteIfValid(int minute);
 
     /// Set the "second" attribute of this object to the specified `second`
     /// value.  If `24 == hour()`, set the `hour` attribute to 0.  The
     /// behavior is undefined unless `0 <= second <= 59`.  Note that this
     /// method has no effect on the "date" part of this object.
-    void setSecond(int second) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setSecond(int second);
 
     /// Set the "second" attribute of this object to the specified `second`
     /// value if `0 <= second <= 59`.  If `24 == hour()`, set the `hour`
     /// attribute to 0.  Return 0 on success, and a non-zero value (with no
     /// effect) otherwise.  Note that this method has no effect on the
     /// "date" part of this object.
-    int setSecondIfValid(int second) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setSecondIfValid(int second);
 
     /// Set the "millisecond" attribute of this object to the specified
     /// `millisecond` value.  If `24 == hour()`, set the `hour` attribute to
     /// 0.  The behavior is undefined unless `0 <= millisecond <= 999`.
     /// Note that this method has no effect on the "date" part of this
     /// object.
-    void setMillisecond(int millisecond) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setMillisecond(int millisecond);
 
     /// Set the "millisecond" attribute of this object to the specified
     /// `millisecond` value if `0 <= millisecond <= 999`.  If
     /// `24 == hour()`, set the `hour` attribute to 0.  Return 0 on success,
     /// and a non-zero value (with no effect) otherwise.  Note that this
     /// method has no effect on the "date" part of this object.
-    int setMillisecondIfValid(int millisecond)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setMillisecondIfValid(int millisecond);
 
     /// Set the "microsecond" attribute of this object to the specified
     /// `microsecond` value.  If `24 == hour()`, set the `hour` attribute to
     /// 0.  The behavior is undefined unless `0 <= microsecond <= 999`.
     /// Note that this method has no effect on the "date" part of this
     /// object.
-    void setMicrosecond(int microsecond) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setMicrosecond(int microsecond);
 
     /// Set the "microsecond" attribute of this object to the specified
     /// `microsecond` value if `0 <= microsecond <= 999`.  If
     /// `24 == hour()`, set the `hour` attribute to 0.  Return 0 on success,
     /// and a non-zero value (with no effect) otherwise.  Note that this
     /// method has no effect on the "date" part of this object.
-    int setMicrosecondIfValid(int microsecond)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setMicrosecondIfValid(int microsecond);
 
     /// Add the specified number of `days` to the value of this object.
     /// Return a reference providing modifiable access to this object.  The
@@ -691,7 +673,7 @@ class Datetime {
     /// otherwise.  Note that this method has no effect on the "time" part
     /// of this object.  Also note that `days` may be positive, 0, or
     /// negative.
-    int addDaysIfValid(int days) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addDaysIfValid(int days);
 
     /// Add the specified number of `hours`, and the optionally specified
     /// number of `minutes`, `seconds`, `milliseconds`, and `microseconds`
@@ -707,8 +689,7 @@ class Datetime {
                  bsls::Types::Int64 minutes = 0,
                  bsls::Types::Int64 seconds = 0,
                  bsls::Types::Int64 milliseconds = 0,
-                 bsls::Types::Int64 microseconds = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                 bsls::Types::Int64 microseconds = 0);
 
     /// Add the specified number of `hours`, and the optionally specified
     /// number of `minutes`, `seconds`, `milliseconds`, and `microseconds`
@@ -723,8 +704,7 @@ class Datetime {
                        bsls::Types::Int64 minutes = 0,
                        bsls::Types::Int64 seconds = 0,
                        bsls::Types::Int64 milliseconds = 0,
-                       bsls::Types::Int64 microseconds = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                       bsls::Types::Int64 microseconds = 0);
 
     /// Add the specified number of `hours` to the value of this object,
     /// adjusting the "date" part of the object accordingly.  Return a
@@ -743,8 +723,7 @@ class Datetime {
     /// performing the addition.  Return 0 on success, and a non-zero value
     /// (with no effect) otherwise.  Note that `hours` may be positive,
     /// negative, or 0.
-    int addHoursIfValid(bsls::Types::Int64 hours)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addHoursIfValid(bsls::Types::Int64 hours);
 
     /// Add the specified number of `minutes` to the value of this object,
     /// adjusting the "date" part of the object accordingly.  Return a
@@ -763,8 +742,7 @@ class Datetime {
     /// performing the addition.  Return 0 on success, and a non-zero value
     /// (with no effect) otherwise.  Note that `minutes` may be positive,
     /// negative, or 0.
-    int addMinutesIfValid(bsls::Types::Int64 minutes)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addMinutesIfValid(bsls::Types::Int64 minutes);
 
     /// Add the specified number of `seconds` to the value of this object,
     /// adjusting the "date" part of the object accordingly.  Return a
@@ -783,8 +761,7 @@ class Datetime {
     /// performing the addition.  Return 0 on success, and a non-zero value
     /// (with no effect) otherwise.  Note that `seconds` may be positive,
     /// negative, or 0.
-    int addSecondsIfValid(bsls::Types::Int64 seconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addSecondsIfValid(bsls::Types::Int64 seconds);
 
     /// Add the specified number of `milliseconds` to the value of this
     /// object, adjusting the "date" part of the object accordingly.  Return
@@ -803,8 +780,7 @@ class Datetime {
     /// performing the addition.  Return 0 on success, and a non-zero value
     /// (with no effect) otherwise.  Note that `milliseconds` may be
     /// positive, negative, or 0.
-    int addMillisecondsIfValid(bsls::Types::Int64 milliseconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addMillisecondsIfValid(bsls::Types::Int64 milliseconds);
 
     /// Add the specified number of `microseconds` to the value of this
     /// object, adjusting the "date" part of the object accordingly.  Return
@@ -823,8 +799,7 @@ class Datetime {
     /// performing the addition.  Return 0 on success, and a non-zero value
     /// (with no effect) otherwise.  Note that `microseconds` may be
     /// positive, negative, or 0.
-    int addMicrosecondsIfValid(bsls::Types::Int64 microseconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addMicrosecondsIfValid(bsls::Types::Int64 microseconds);
 
                                   // Aspects
 
@@ -839,24 +814,23 @@ class Datetime {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     // ACCESSORS
 
     /// Return the value of the "date" part of this object.
-    Date date() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    Date date() const;
 
     /// Return the value of the `day` (of the month) attribute of this
     /// object.
-    int day() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int day() const;
 
     /// Return the value of the `dayOfWeek` attribute associated with the
     /// `day` (of the month) attribute of this object.
-    DayOfWeek::Enum dayOfWeek() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    DayOfWeek::Enum dayOfWeek() const;
 
     /// Return the value of the `dayOfYear` attribute of this object.
-    int dayOfYear() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int dayOfYear() const;
 
     /// Load, into the specified `hour`, and the optionally specified
     /// `minute`, `second`, `millisecond`, and `microsecond` the respective
@@ -869,32 +843,31 @@ class Datetime {
                  int *minute = 0,
                  int *second = 0,
                  int *millisecond = 0,
-                 int *microsecond = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                 int *microsecond = 0) const;
 
     /// Return the value of the `hour` attribute of this object.
-    int hour() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int hour() const;
 
     /// Return the value of the `microsecond` attribute of this object.
-    int microsecond() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int microsecond() const;
 
     /// Return the value of the `millisecond` attribute of this object.
-    int millisecond() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int millisecond() const;
 
     /// Return the value of the `minute` attribute of this object.
-    int minute() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int minute() const;
 
     /// Return the value of the `month` attribute of this object.
-    int month() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int month() const;
 
     /// Return the value of the `second` attribute of this object.
-    int second() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int second() const;
 
     /// Return the value of the "time" part of this object.
-    Time time() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    Time time() const;
 
     /// Return the value of the `year` attribute of this object.
-    int year() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int year() const;
 
     /// Efficiently write to the specified `result` buffer no more than the
     /// specified `numBytes` of a representation of the value of this
@@ -912,8 +885,7 @@ class Datetime {
     /// truncated to avoid `result` overrun.
     int printToBuffer(char *result,
                       int   numBytes,
-                      int   fractionalSecondPrecision = 6) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                      int   fractionalSecondPrecision = 6) const;
 
                                   // Aspects
 
@@ -926,9 +898,7 @@ class Datetime {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Write the value of this object to the specified output `stream` in a
     /// human-readable format, and return a reference to `stream`.
@@ -946,8 +916,7 @@ class Datetime {
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
                         int           spacesPerLevel = 4) const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
 #ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
 
@@ -970,9 +939,7 @@ class Datetime {
     /// reference to the modifiable `stream`.
     ///
     /// @DEPRECATED: Use `print` instead.
-    bsl::ostream& streamOut(bsl::ostream& stream) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::ostream& streamOut(bsl::ostream& stream) const;
 
     /// Set the "date" part of this object's value to the specified `year`,
     /// `month`, and `day`, and the "time" part to the optionally specified
@@ -988,8 +955,7 @@ class Datetime {
                                int hour = 0,
                                int minute = 0,
                                int second = 0,
-                               int millisecond = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               int millisecond = 0);
 
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
 
@@ -1003,32 +969,28 @@ class Datetime {
 /// as if the `hour` attribute of `lhs` is 0.  The behavior is undefined
 /// unless the resulting value is in the valid range for a `Datetime`
 /// object.
-Datetime operator+(const Datetime& lhs, const bsls::TimeInterval& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+Datetime operator+(const Datetime& lhs, const bsls::TimeInterval& rhs);
 
 /// Return a `Datetime` object having a value that is the sum of the
 /// specified `lhs` (`bsls::TimeInterval`) and the specified `rhs`
 /// (`Datetime`).  If `24 == rhs.hour()`, the result is the same as if the
 /// `hour` attribute of `rhs` is 0.  The behavior is undefined unless the
 /// resulting value is in the valid range for a `Datetime` object.
-Datetime operator+(const bsls::TimeInterval& lhs, const Datetime& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+Datetime operator+(const bsls::TimeInterval& lhs, const Datetime& rhs);
 
 /// Return a `Datetime` object having a value that is the sum of the
 /// specified `lhs` (`Datetime`) and the specified `rhs`
 /// (`DatetimeInterval`).  If `24 == lhs.hour()`, the result is the same as
 /// if the `hour` attribute of `lhs` is 0.  The behavior is undefined unless
 /// the resulting value is in the valid range for a `Datetime` object.
-Datetime operator+(const Datetime& lhs, const DatetimeInterval& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+Datetime operator+(const Datetime& lhs, const DatetimeInterval& rhs);
 
 /// Return a `Datetime` object having a value that is the sum of the
 /// specified `lhs` (`DatetimeInterval`) and the specified `rhs`
 /// (`Datetime`).  If `24 == rhs.hour()`, the result is the same as if the
 /// `hour` attribute of `rhs` is 0.  The behavior is undefined unless the
 /// resulting value is in the valid range for a `Datetime` object.
-Datetime operator+(const DatetimeInterval& lhs, const Datetime& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+Datetime operator+(const DatetimeInterval& lhs, const Datetime& rhs);
 
 /// Return a `Datetime` object having a value that is the difference between
 /// the specified `lhs` (`Datetime`) and the specified `rhs`
@@ -1036,16 +998,14 @@ Datetime operator+(const DatetimeInterval& lhs, const Datetime& rhs)
 /// as if the `hour` attribute of `lhs` is 0.  The behavior is undefined
 /// unless the resulting value is in the valid range for a `Datetime`
 /// object.
-Datetime operator-(const Datetime& lhs, const bsls::TimeInterval& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+Datetime operator-(const Datetime& lhs, const bsls::TimeInterval& rhs);
 
 /// Return a `Datetime` object having a value that is the difference between
 /// the specified `lhs` (`Datetime`) and the specified `rhs`
 /// (`DatetimeInterval`).  If `24 == lhs.hour()`, the result is the same as
 /// if the `hour` attribute of `lhs` is 0.  The behavior is undefined unless
 /// the resulting value is in the valid range for a `Datetime` object.
-Datetime operator-(const Datetime& lhs, const DatetimeInterval& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+Datetime operator-(const Datetime& lhs, const DatetimeInterval& rhs);
 
 /// Return a `DatetimeInterval` object having a value that is the difference
 /// between the specified `lhs` (`Datetime`) and the specified `rhs`
@@ -1102,9 +1062,7 @@ bool operator>=(const Datetime& lhs, const Datetime& rhs);
 /// ```
 /// print(stream, 0, -1);
 /// ```
-bsl::ostream& operator<<(bsl::ostream& stream, const Datetime& object)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+bsl::ostream& operator<<(bsl::ostream& stream, const Datetime& object);
 
 // FREE FUNCTIONS
 
@@ -1386,6 +1344,8 @@ void Datetime::setDatetime(const Date& date,
                            int         millisecond,
                            int         microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     BSLS_ASSERT_SAFE(Datetime::isValid(date.year(),
                                        date.month(),
                                        date.day(),
@@ -1409,6 +1369,9 @@ void Datetime::setDatetime(const Date& date,
 inline
 void Datetime::setDatetime(const Date& date, const Time& time)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     if (24 != time.hour()) {
         d_value = (static_cast<bsls::Types::Uint64>(date - Date())
                                                             << k_NUM_TIME_BITS)
@@ -1433,6 +1396,7 @@ void Datetime::setDatetime(int year,
                            int millisecond,
                            int microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(Datetime::isValid(year,
                                        month,
                                        day,
@@ -1460,6 +1424,7 @@ int Datetime::setDatetimeIfValid(int year,
                                  int millisecond,
                                  int microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (Datetime::isValid(year,
@@ -1491,6 +1456,8 @@ int Datetime::setDatetimeIfValid(const Date& date,
                                  int         millisecond,
                                  int         microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (Datetime::isValid(date.year(),
@@ -1517,6 +1484,8 @@ int Datetime::setDatetimeIfValid(const Date& date,
 inline
 void Datetime::setDate(const Date& date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     d_value = updatedRepresentation();
 
     d_value = (static_cast<bsls::Types::Uint64>(date - Date())
@@ -1529,6 +1498,7 @@ void Datetime::setDate(const Date& date)
 inline
 void Datetime::setYearDay(int year, int dayOfYear)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(Date::isValidYearDay(year, dayOfYear));
 
     setDate(Date(year, dayOfYear));
@@ -1537,6 +1507,7 @@ void Datetime::setYearDay(int year, int dayOfYear)
 inline
 int Datetime::setYearDayIfValid(int year, int dayOfYear)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (Date::isValidYearDay(year, dayOfYear)) {
@@ -1549,6 +1520,7 @@ int Datetime::setYearDayIfValid(int year, int dayOfYear)
 inline
 void Datetime::setYearMonthDay(int year, int month, int day)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_PRECONDITIONS_BEGIN();
     BSLS_ASSERT_SAFE(Date::isValidYearMonthDay(year, month, day));
     BSLS_PRECONDITIONS_END();
@@ -1559,6 +1531,7 @@ void Datetime::setYearMonthDay(int year, int month, int day)
 inline
 int Datetime::setYearMonthDayIfValid(int year, int month, int day)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (Date::isValidYearMonthDay(year, month, day)) {
@@ -1571,6 +1544,8 @@ int Datetime::setYearMonthDayIfValid(int year, int month, int day)
 inline
 void Datetime::setTime(const Time& time)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     d_value = updatedRepresentation();
 
     if (24 != time.hour()) {
@@ -1589,6 +1564,7 @@ void Datetime::setTime(int hour,
                        int millisecond,
                        int microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_PRECONDITIONS_BEGIN();
     BSLS_ASSERT_SAFE(
                (0 <= hour      && hour   < bdlt::TimeUnitRatio::k_H_PER_D_32 &&
@@ -1622,6 +1598,7 @@ int Datetime::setTimeIfValid(int hour,
                              int millisecond,
                              int microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (       (0 <= hour      && hour   < bdlt::TimeUnitRatio::k_H_PER_D_32 &&
@@ -1645,6 +1622,7 @@ int Datetime::setTimeIfValid(int hour,
 inline
 void Datetime::setHour(int hour)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 <= hour);
     BSLS_ASSERT_SAFE(     hour <= 24);
 
@@ -1664,6 +1642,7 @@ void Datetime::setHour(int hour)
 inline
 int Datetime::setHourIfValid(int hour)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 <= hour && hour <= 24) {
@@ -1676,6 +1655,7 @@ int Datetime::setHourIfValid(int hour)
 inline
 void Datetime::setMinute(int minute)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 <= minute);
     BSLS_ASSERT_SAFE(     minute <= 59);
 
@@ -1698,6 +1678,7 @@ void Datetime::setMinute(int minute)
 inline
 int Datetime::setMinuteIfValid(int minute)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 <= minute && minute <= 59) {
@@ -1710,6 +1691,7 @@ int Datetime::setMinuteIfValid(int minute)
 inline
 void Datetime::setSecond(int second)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 <= second);
     BSLS_ASSERT_SAFE(     second <= 59);
 
@@ -1732,6 +1714,7 @@ void Datetime::setSecond(int second)
 inline
 int Datetime::setSecondIfValid(int second)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 <= second && second <= 59) {
@@ -1744,6 +1727,7 @@ int Datetime::setSecondIfValid(int second)
 inline
 void Datetime::setMillisecond(int millisecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 <= millisecond);
     BSLS_ASSERT_SAFE(     millisecond <= 999);
 
@@ -1766,6 +1750,7 @@ void Datetime::setMillisecond(int millisecond)
 inline
 int Datetime::setMillisecondIfValid(int millisecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 <= millisecond && millisecond <= 999) {
@@ -1778,6 +1763,7 @@ int Datetime::setMillisecondIfValid(int millisecond)
 inline
 void Datetime::setMicrosecond(int microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0 <= microsecond);
     BSLS_ASSERT_SAFE(     microsecond <= 999);
 
@@ -1798,6 +1784,7 @@ void Datetime::setMicrosecond(int microsecond)
 inline
 int Datetime::setMicrosecondIfValid(int microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 <= microsecond && microsecond <= 999) {
@@ -1823,6 +1810,7 @@ Datetime& Datetime::addDays(int days)
 inline
 int Datetime::addDaysIfValid(int days)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 == Date(date()).addDaysIfValid(days)) {
@@ -1839,6 +1827,7 @@ Datetime& Datetime::addTime(bsls::Types::Int64 hours,
                             bsls::Types::Int64 milliseconds,
                             bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Reduce the input parameters to `days` and `microseconds`, without any
     // constraints on the representation, without the possibility of overflow
     // or underflow.
@@ -1909,6 +1898,7 @@ int Datetime::addTimeIfValid(bsls::Types::Int64 hours,
                              bsls::Types::Int64 milliseconds,
                              bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     // Reduce the input parameters to `days` and `microseconds`, without any
@@ -1997,6 +1987,7 @@ Datetime& Datetime::addHours(bsls::Types::Int64 hours)
 inline
 int Datetime::addHoursIfValid(bsls::Types::Int64 hours)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (   hours <= static_cast<bsls::Types::Int64>
@@ -2029,6 +2020,7 @@ Datetime& Datetime::addMinutes(bsls::Types::Int64 minutes)
 inline
 int Datetime::addMinutesIfValid(bsls::Types::Int64 minutes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (   minutes <=  static_cast<bsls::Types::Int64>
@@ -2061,6 +2053,7 @@ Datetime& Datetime::addSeconds(bsls::Types::Int64 seconds)
 inline
 int Datetime::addSecondsIfValid(bsls::Types::Int64 seconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (   seconds <=  static_cast<bsls::Types::Int64>
@@ -2093,6 +2086,7 @@ Datetime& Datetime::addMilliseconds(bsls::Types::Int64 milliseconds)
 inline
 int Datetime::addMillisecondsIfValid(bsls::Types::Int64 milliseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (   milliseconds <=  static_cast<bsls::Types::Int64>
@@ -2124,6 +2118,7 @@ Datetime& Datetime::addMicroseconds(bsls::Types::Int64 microseconds)
 inline
 int Datetime::addMicrosecondsIfValid(bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (   microseconds <=  static_cast<bsls::Types::Int64>
@@ -2141,6 +2136,8 @@ int Datetime::addMicrosecondsIfValid(bsls::Types::Int64 microseconds)
 template <class STREAM>
 STREAM& Datetime::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 2: {
@@ -2185,6 +2182,7 @@ STREAM& Datetime::bdexStreamIn(STREAM& stream, int version)
 inline
 Date Datetime::date() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Uint64 value = updatedRepresentation() & (~k_REP_MASK);
 
     return Date() + static_cast<int>(value >> k_NUM_TIME_BITS);
@@ -2193,18 +2191,21 @@ Date Datetime::date() const
 inline
 int Datetime::day() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return date().day();
 }
 
 inline
 DayOfWeek::Enum Datetime::dayOfWeek() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return date().dayOfWeek();
 }
 
 inline
 int Datetime::dayOfYear() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return date().dayOfYear();
 }
 
@@ -2215,6 +2216,7 @@ void Datetime::getTime(int *hour,
                        int *millisecond,
                        int *microsecond) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Uint64 microseconds = updatedRepresentation() & k_TIME_MASK;
 
     if (hour) {
@@ -2244,6 +2246,7 @@ void Datetime::getTime(int *hour,
 inline
 int Datetime::hour() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Uint64 microseconds = updatedRepresentation() & k_TIME_MASK;
 
     return static_cast<int>(microseconds / TimeUnitRatio::k_US_PER_H);
@@ -2252,6 +2255,7 @@ int Datetime::hour() const
 inline
 int Datetime::microsecond() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Uint64 microseconds = updatedRepresentation() & k_TIME_MASK;
 
     return static_cast<int>(microseconds % TimeUnitRatio::k_US_PER_MS);
@@ -2260,6 +2264,7 @@ int Datetime::microsecond() const
 inline
 int Datetime::millisecond() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Uint64 microseconds = updatedRepresentation() & k_TIME_MASK;
 
     return static_cast<int>(  microseconds
@@ -2270,6 +2275,7 @@ int Datetime::millisecond() const
 inline
 int Datetime::minute() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Uint64 microseconds = updatedRepresentation() & k_TIME_MASK;
 
     return static_cast<int>(  microseconds
@@ -2280,12 +2286,14 @@ int Datetime::minute() const
 inline
 int Datetime::month() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return date().month();
 }
 
 inline
 int Datetime::second() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Uint64 microseconds = updatedRepresentation() & k_TIME_MASK;
 
     return static_cast<int>(  microseconds
@@ -2311,6 +2319,7 @@ Time Datetime::time() const
 inline
 int Datetime::year() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return date().year();
 }
 
@@ -2319,6 +2328,8 @@ int Datetime::year() const
 template <class STREAM>
 STREAM& Datetime::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 2: {
@@ -2357,6 +2368,8 @@ int Datetime::maxSupportedVersion()
 inline
 bsl::ostream& Datetime::streamOut(bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return stream << *this;
 }
 
@@ -2369,6 +2382,7 @@ int Datetime::validateAndSetDatetime(int year,
                                      int second,
                                      int millisecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return setDatetimeIfValid(year,
                               month,
                               day,
@@ -2387,6 +2401,8 @@ inline
 bdlt::Datetime bdlt::operator+(const Datetime&           lhs,
                                const bsls::TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Datetime result(lhs);
 
     return result += rhs;
@@ -2396,6 +2412,8 @@ inline
 bdlt::Datetime bdlt::operator+(const bsls::TimeInterval& lhs,
                                const Datetime&           rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Datetime result(rhs);
 
     return result += lhs;
@@ -2405,6 +2423,8 @@ inline
 bdlt::Datetime bdlt::operator+(const Datetime&         lhs,
                                const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Datetime result(lhs);
 
     return result += rhs;
@@ -2414,6 +2434,8 @@ inline
 bdlt::Datetime bdlt::operator+(const DatetimeInterval& lhs,
                                const Datetime&         rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Datetime result(rhs);
 
     return result += lhs;
@@ -2423,6 +2445,8 @@ inline
 bdlt::Datetime bdlt::operator-(const Datetime&           lhs,
                                const bsls::TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Datetime result(lhs);
 
     return result -= rhs;
@@ -2432,6 +2456,8 @@ inline
 bdlt::Datetime bdlt::operator-(const Datetime&         lhs,
                                const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Datetime result(lhs);
 
     return result -= rhs;
@@ -2441,6 +2467,8 @@ inline
 bdlt::DatetimeInterval bdlt::operator-(const Datetime& lhs,
                                        const Datetime& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     bsls::Types::Uint64 lhsTotalMicroseconds = lhs.microsecondsFromEpoch();
     bsls::Types::Uint64 rhsTotalMicroseconds = rhs.microsecondsFromEpoch();
 
@@ -2460,6 +2488,8 @@ bdlt::DatetimeInterval bdlt::operator-(const Datetime& lhs,
 inline
 bool bdlt::operator==(const Datetime& lhs, const Datetime& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     bsls::Types::Uint64 lhsValue = lhs.updatedRepresentation();
     bsls::Types::Uint64 rhsValue = rhs.updatedRepresentation();
 
@@ -2469,6 +2499,8 @@ bool bdlt::operator==(const Datetime& lhs, const Datetime& rhs)
 inline
 bool bdlt::operator!=(const Datetime& lhs, const Datetime& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     bsls::Types::Uint64 lhsValue = lhs.updatedRepresentation();
     bsls::Types::Uint64 rhsValue = rhs.updatedRepresentation();
 
@@ -2528,6 +2560,8 @@ template <class HASHALG>
 inline
 void bdlt::hashAppend(HASHALG& hashAlg, const Datetime& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlg, object.updatedRepresentation());
 }

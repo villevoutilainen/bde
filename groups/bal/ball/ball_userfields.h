@@ -152,10 +152,8 @@ class UserFields {
     /// Return a reference providing modifiable access to the value at the
     /// specified `index`.  The behavior is undefined unless
     /// `0 <= index && index < length()`.
-    ball::UserFieldValue& operator[](int index)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    ball::UserFieldValue& value(int index)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    ball::UserFieldValue& operator[](int index);
+    ball::UserFieldValue& value(int index);
 
                                   // Aspects
 
@@ -183,10 +181,8 @@ class UserFields {
     /// Return a reference providing non-modifiable access to the value at
     /// the specified `index`.  The behavior is undefined unless
     /// `0 <= index && index < length()`.
-    const ball::UserFieldValue& operator[](int index) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    const ball::UserFieldValue& value(int index) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const ball::UserFieldValue& operator[](int index) const;
+    const ball::UserFieldValue& value(int index) const;
 
                                   // Aspects
 
@@ -390,12 +386,14 @@ int UserFields::length() const
 inline
 const UserFieldValue& UserFields::operator[](int index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_values[index];
 }
 
 inline
 const UserFieldValue& UserFields::value(int index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_values[index];
 }
 

@@ -775,6 +775,7 @@ bsl::basic_istream<CHARTYPE, TRAITS>&
 bdldfp::operator>>(bsl::basic_istream<CHARTYPE, TRAITS>& stream,
                    Decimal32&                            object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return u::read(stream, object);     // See {DRQS 131792157} for 'bdldfp::'.
 }
 
@@ -783,6 +784,7 @@ bsl::basic_istream<CHARTYPE, TRAITS>&
 bdldfp::operator>>(bsl::basic_istream<CHARTYPE, TRAITS>& stream,
                    Decimal64&                            object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return u::read(stream, object);     // See {DRQS 131792157} for 'bdldfp::'.
 }
 
@@ -791,6 +793,7 @@ bsl::basic_istream<CHARTYPE, TRAITS>&
 bdldfp::operator>>(bsl::basic_istream<CHARTYPE, TRAITS>& stream,
                    Decimal128&                           object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return u::read(stream, object);     // See {DRQS 131792157} for 'bdldfp::'.
 }
 

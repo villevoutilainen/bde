@@ -196,15 +196,13 @@ class PrintAdapter {
     // ACCESSORS
 
     /// Return the `level` attribute.
-    int level() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int level() const;
 
     /// Return a reference to the object referred to by this print adapter.
-    const TYPE& object() const
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& object() const;
 
     /// Return the `spacesPerLevel` attribute.
-    int spacesPerLevel() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int spacesPerLevel() const;
 };
 
                             // ======================
@@ -240,8 +238,7 @@ struct PrintAdapterUtil {
 template <class TYPE>
 bsl::ostream& operator<<(bsl::ostream&             stream,
                          const PrintAdapter<TYPE>& adapter)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(adapter);
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
 // ============================================================================
 //                         INLINE FUNCTION DEFINITIONS
@@ -267,6 +264,7 @@ template <class TYPE>
 inline
 int PrintAdapter<TYPE>::level() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_level;
 }
 
@@ -274,6 +272,7 @@ template <class TYPE>
 inline
 const TYPE& PrintAdapter<TYPE>::object() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_object_p;
 }
 
@@ -281,6 +280,7 @@ template <class TYPE>
 inline
 int PrintAdapter<TYPE>::spacesPerLevel() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_spacesPerLevel;
 }
 
@@ -294,6 +294,9 @@ bsl::ostream& operator<<(bsl::ostream&             stream,
     // reference to 'stream'.  If 'stream' is not valid on entry, this
     // operation has no effect.
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&adapter);
     return bdlb::PrintMethods::print(stream,
                                      adapter.object(),
                                      adapter.level(),

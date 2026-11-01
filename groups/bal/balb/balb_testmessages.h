@@ -182,8 +182,7 @@ class Choice4 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -203,18 +202,14 @@ class Choice4 {
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    bsl::vector<bsl::string>& makeSelection1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    bsl::vector<bsl::string>& makeSelection1(const bsl::vector<bsl::string>& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bsl::string>& makeSelection1();
+    bsl::vector<bsl::string>& makeSelection1(const bsl::vector<bsl::string>& value);
 
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    int& makeSelection2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    int& makeSelection2(int value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeSelection2();
+    int& makeSelection2(int value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -379,8 +374,7 @@ class CustomInt {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -399,8 +393,7 @@ class CustomInt {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Return the most current `bdex` streaming version number supported by
     /// this class.  See the `bslx` package-level documentation for more
@@ -424,8 +417,7 @@ class CustomInt {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `int`.
-    const int& toInt() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const int& toInt() const;
 
     // PUBLIC CLASS METHODS
 
@@ -523,8 +515,7 @@ class CustomString {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -543,8 +534,7 @@ class CustomString {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Return the most current `bdex` streaming version number supported by
     /// this class.  See the `bslx` package-level documentation for more
@@ -568,8 +558,7 @@ class CustomString {
                         int           spacesPerLevel = 4) const;
 
     /// Convert this value to `bsl::string`.
-    const bsl::string& toString() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& toString() const;
 
     // PUBLIC CLASS METHODS
 
@@ -680,8 +669,7 @@ struct Enumerated {
     /// Write to the specified `stream` the string representation of
     /// the specified enumeration `value`.  Return a reference to
     /// the modifiable `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    static bsl::ostream& print(bsl::ostream& stream, Value value);
 
     /// Write the specified `value` to the specified output `stream` and
     /// return a reference to the modifiable `stream`.  Optionally specify
@@ -803,8 +791,7 @@ class SequenceWithAnonymityChoice1 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -824,18 +811,14 @@ class SequenceWithAnonymityChoice1 {
     /// Set the value of this object to be a "Selection5" value.  Optionally
     /// specify the `value` of the "Selection5".  If `value` is not
     /// specified, the default "Selection5" value is used.
-    bool& makeSelection5()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    bool& makeSelection5(bool value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bool& makeSelection5();
+    bool& makeSelection5(bool value);
 
     /// Set the value of this object to be a "Selection6" value.  Optionally
     /// specify the `value` of the "Selection6".  If `value` is not
     /// specified, the default "Selection6" value is used.
-    bsl::string& makeSelection6()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    bsl::string& makeSelection6(const bsl::string& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& makeSelection6();
+    bsl::string& makeSelection6(const bsl::string& value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -1034,8 +1017,7 @@ class SimpleRequest {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -1072,13 +1054,11 @@ class SimpleRequest {
 
     /// Return a reference to the modifiable "Data" attribute of this
     /// object.
-    bsl::string& data()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& data();
 
     /// Return a reference to the modifiable "ResponseLength" attribute of
     /// this object.
-    int& responseLength()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& responseLength();
 
     // ACCESSORS
 
@@ -1104,8 +1084,7 @@ class SimpleRequest {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -1137,8 +1116,7 @@ class SimpleRequest {
 
     /// Return a reference to the non-modifiable "Data" attribute of this
     /// object.
-    const bsl::string& data() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& data() const;
 
     /// Return a reference to the non-modifiable "ResponseLength" attribute
     /// of this object.
@@ -1255,8 +1233,7 @@ class UnsignedSequence {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -1293,18 +1270,15 @@ class UnsignedSequence {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    unsigned int& element1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned int& element1();
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    unsigned short& element2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned short& element2();
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bsls::Types::Uint64& element3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsls::Types::Uint64& element3();
 
     // ACCESSORS
 
@@ -1330,8 +1304,7 @@ class UnsignedSequence {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -1467,8 +1440,7 @@ class VoidSequence {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -1527,8 +1499,7 @@ class VoidSequence {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -1677,8 +1648,7 @@ class Choice5 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -1698,18 +1668,14 @@ class Choice5 {
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    Choice4& makeSelection1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Choice4& makeSelection1(const Choice4& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Choice4& makeSelection1();
+    Choice4& makeSelection1(const Choice4& value);
 
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    int& makeSelection2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    int& makeSelection2(int value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeSelection2();
+    int& makeSelection2(int value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -1920,8 +1886,7 @@ class Sequence3 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -1958,33 +1923,27 @@ class Sequence3 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    bsl::vector<Enumerated::Value>& element1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<Enumerated::Value>& element1();
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bsl::vector<bsl::string>& element2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bsl::string>& element2();
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bdlb::NullableValue<bool>& element3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<bool>& element3();
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::string>& element4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<bsl::string>& element4();
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    bdlb::NullableAllocatedValue<Sequence5>& element5()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableAllocatedValue<Sequence5>& element5();
 
     /// Return a reference to the modifiable "Element6" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<Enumerated::Value> >& element6()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableValue<Enumerated::Value> >& element6();
 
     // ACCESSORS
 
@@ -2010,8 +1969,7 @@ class Sequence3 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -2043,33 +2001,27 @@ class Sequence3 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const bsl::vector<Enumerated::Value>& element1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<Enumerated::Value>& element1() const;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
-    const bsl::vector<bsl::string>& element2() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bsl::string>& element2() const;
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const bdlb::NullableValue<bool>& element3() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<bool>& element3() const;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const bdlb::NullableValue<bsl::string>& element4() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<bsl::string>& element4() const;
 
     /// Return a reference to the non-modifiable "Element5" attribute of
     /// this object.
-    const bdlb::NullableAllocatedValue<Sequence5>& element5() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableAllocatedValue<Sequence5>& element5() const;
 
     /// Return a reference to the non-modifiable "Element6" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<Enumerated::Value> >& element6() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableValue<Enumerated::Value> >& element6() const;
 };
 
 // FREE OPERATORS
@@ -2200,8 +2152,7 @@ class Sequence5 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -2238,38 +2189,31 @@ class Sequence5 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    Sequence3& element1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence3& element1();
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<bool> >& element2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableValue<bool> >& element2();
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<double> >& element3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableValue<double> >& element3();
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<bsl::vector<char> > >& element4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableValue<bsl::vector<char> > >& element4();
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<int> >& element5()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableValue<int> >& element5();
 
     /// Return a reference to the modifiable "Element6" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& element6()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& element6();
 
     /// Return a reference to the modifiable "Element7" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& element7()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& element7();
 
     // ACCESSORS
 
@@ -2295,8 +2239,7 @@ class Sequence5 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -2328,38 +2271,31 @@ class Sequence5 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const Sequence3& element1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Sequence3& element1() const;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<bool> >& element2() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableValue<bool> >& element2() const;
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<double> >& element3() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableValue<double> >& element3() const;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<bsl::vector<char> > >& element4() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableValue<bsl::vector<char> > >& element4() const;
 
     /// Return a reference to the non-modifiable "Element5" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<int> >& element5() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableValue<int> >& element5() const;
 
     /// Return a reference to the non-modifiable "Element6" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& element6() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& element6() const;
 
     /// Return a reference to the non-modifiable "Element7" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& element7() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& element7() const;
 };
 
 // FREE OPERATORS
@@ -2513,8 +2449,7 @@ class Sequence6 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -2551,78 +2486,63 @@ class Sequence6 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    bdlb::NullableValue<unsigned char>& element1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<unsigned char>& element1();
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bdlb::NullableValue<CustomString>& element2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<CustomString>& element2();
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bdlb::NullableValue<CustomInt>& element3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<CustomInt>& element3();
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    unsigned int& element4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned int& element4();
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    unsigned char& element5()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned char& element5();
 
     /// Return a reference to the modifiable "Element6" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<CustomInt> >& element6()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableValue<CustomInt> >& element6();
 
     /// Return a reference to the modifiable "Element7" attribute of this
     /// object.
-    CustomString& element7()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    CustomString& element7();
 
     /// Return a reference to the modifiable "Element8" attribute of this
     /// object.
-    CustomInt& element8()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    CustomInt& element8();
 
     /// Return a reference to the modifiable "Element9" attribute of this
     /// object.
-    bdlb::NullableValue<unsigned int>& element9()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<unsigned int>& element9();
 
     /// Return a reference to the modifiable "Element10" attribute of this
     /// object.
-    bsl::vector<unsigned char>& element10()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<unsigned char>& element10();
 
     /// Return a reference to the modifiable "Element11" attribute of this
     /// object.
-    bsl::vector<CustomString>& element11()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<CustomString>& element11();
 
     /// Return a reference to the modifiable "Element12" attribute of this
     /// object.
-    bsl::vector<unsigned int>& element12()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<unsigned int>& element12();
 
     /// Return a reference to the modifiable "Element13" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<unsigned char> >& element13()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableValue<unsigned char> >& element13();
 
     /// Return a reference to the modifiable "Element14" attribute of this
     /// object.
-    bsl::vector<CustomInt>& element14()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<CustomInt>& element14();
 
     /// Return a reference to the modifiable "Element15" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<unsigned int> >& element15()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableValue<unsigned int> >& element15();
 
     // ACCESSORS
 
@@ -2648,8 +2568,7 @@ class Sequence6 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -2681,18 +2600,15 @@ class Sequence6 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const bdlb::NullableValue<unsigned char>& element1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<unsigned char>& element1() const;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
-    const bdlb::NullableValue<CustomString>& element2() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<CustomString>& element2() const;
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const bdlb::NullableValue<CustomInt>& element3() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<CustomInt>& element3() const;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
@@ -2704,53 +2620,43 @@ class Sequence6 {
 
     /// Return a reference to the non-modifiable "Element6" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<CustomInt> >& element6() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableValue<CustomInt> >& element6() const;
 
     /// Return a reference to the non-modifiable "Element7" attribute of
     /// this object.
-    const CustomString& element7() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const CustomString& element7() const;
 
     /// Return a reference to the non-modifiable "Element8" attribute of
     /// this object.
-    const CustomInt& element8() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const CustomInt& element8() const;
 
     /// Return a reference to the non-modifiable "Element9" attribute of
     /// this object.
-    const bdlb::NullableValue<unsigned int>& element9() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<unsigned int>& element9() const;
 
     /// Return a reference to the non-modifiable "Element10" attribute of
     /// this object.
-    const bsl::vector<unsigned char>& element10() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<unsigned char>& element10() const;
 
     /// Return a reference to the non-modifiable "Element11" attribute of
     /// this object.
-    const bsl::vector<CustomString>& element11() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<CustomString>& element11() const;
 
     /// Return a reference to the non-modifiable "Element12" attribute of
     /// this object.
-    const bsl::vector<unsigned int>& element12() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<unsigned int>& element12() const;
 
     /// Return a reference to the non-modifiable "Element13" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<unsigned char> >& element13() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableValue<unsigned char> >& element13() const;
 
     /// Return a reference to the non-modifiable "Element14" attribute of
     /// this object.
-    const bsl::vector<CustomInt>& element14() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<CustomInt>& element14() const;
 
     /// Return a reference to the non-modifiable "Element15" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<unsigned int> >& element15() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableValue<unsigned int> >& element15() const;
 };
 
 // FREE OPERATORS
@@ -2877,8 +2783,7 @@ class Choice3 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -2898,34 +2803,26 @@ class Choice3 {
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    Sequence6& makeSelection1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Sequence6& makeSelection1(const Sequence6& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence6& makeSelection1();
+    Sequence6& makeSelection1(const Sequence6& value);
 
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    unsigned char& makeSelection2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    unsigned char& makeSelection2(unsigned char value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned char& makeSelection2();
+    unsigned char& makeSelection2(unsigned char value);
 
     /// Set the value of this object to be a "Selection3" value.  Optionally
     /// specify the `value` of the "Selection3".  If `value` is not
     /// specified, the default "Selection3" value is used.
-    CustomString& makeSelection3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    CustomString& makeSelection3(const CustomString& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    CustomString& makeSelection3();
+    CustomString& makeSelection3(const CustomString& value);
 
     /// Set the value of this object to be a "Selection4" value.  Optionally
     /// specify the `value` of the "Selection4".  If `value` is not
     /// specified, the default "Selection4" value is used.
-    CustomInt& makeSelection4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    CustomInt& makeSelection4(const CustomInt& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    CustomInt& makeSelection4();
+    CustomInt& makeSelection4(const CustomInt& value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -3168,8 +3065,7 @@ class SequenceWithAnonymityChoice {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -3189,34 +3085,26 @@ class SequenceWithAnonymityChoice {
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    Sequence6& makeSelection1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Sequence6& makeSelection1(const Sequence6& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence6& makeSelection1();
+    Sequence6& makeSelection1(const Sequence6& value);
 
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    unsigned char& makeSelection2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    unsigned char& makeSelection2(unsigned char value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned char& makeSelection2();
+    unsigned char& makeSelection2(unsigned char value);
 
     /// Set the value of this object to be a "Selection3" value.  Optionally
     /// specify the `value` of the "Selection3".  If `value` is not
     /// specified, the default "Selection3" value is used.
-    CustomString& makeSelection3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    CustomString& makeSelection3(const CustomString& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    CustomString& makeSelection3();
+    CustomString& makeSelection3(const CustomString& value);
 
     /// Set the value of this object to be a "Selection4" value.  Optionally
     /// specify the `value` of the "Selection4".  If `value` is not
     /// specified, the default "Selection4" value is used.
-    CustomInt& makeSelection4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    CustomInt& makeSelection4(const CustomInt& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    CustomInt& makeSelection4();
+    CustomInt& makeSelection4(const CustomInt& value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -3459,8 +3347,7 @@ class Choice1 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -3480,34 +3367,26 @@ class Choice1 {
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    int& makeSelection1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    int& makeSelection1(int value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& makeSelection1();
+    int& makeSelection1(int value);
 
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    double& makeSelection2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    double& makeSelection2(double value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    double& makeSelection2();
+    double& makeSelection2(double value);
 
     /// Set the value of this object to be a "Selection3" value.  Optionally
     /// specify the `value` of the "Selection3".  If `value` is not
     /// specified, the default "Selection3" value is used.
-    Sequence4& makeSelection3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Sequence4& makeSelection3(const Sequence4& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence4& makeSelection3();
+    Sequence4& makeSelection3(const Sequence4& value);
 
     /// Set the value of this object to be a "Selection4" value.  Optionally
     /// specify the `value` of the "Selection4".  If `value` is not
     /// specified, the default "Selection4" value is used.
-    Choice2& makeSelection4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Choice2& makeSelection4(const Choice2& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Choice2& makeSelection4();
+    Choice2& makeSelection4(const Choice2& value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -3750,8 +3629,7 @@ class Choice2 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -3771,34 +3649,26 @@ class Choice2 {
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    bool& makeSelection1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    bool& makeSelection1(bool value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bool& makeSelection1();
+    bool& makeSelection1(bool value);
 
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    bsl::string& makeSelection2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    bsl::string& makeSelection2(const bsl::string& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& makeSelection2();
+    bsl::string& makeSelection2(const bsl::string& value);
 
     /// Set the value of this object to be a "Selection3" value.  Optionally
     /// specify the `value` of the "Selection3".  If `value` is not
     /// specified, the default "Selection3" value is used.
-    Choice1& makeSelection3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Choice1& makeSelection3(const Choice1& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Choice1& makeSelection3();
+    Choice1& makeSelection3(const Choice1& value);
 
     /// Set the value of this object to be a "Selection4" value.  Optionally
     /// specify the `value` of the "Selection4".  If `value` is not
     /// specified, the default "Selection4" value is used.
-    unsigned int& makeSelection4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    unsigned int& makeSelection4(unsigned int value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned int& makeSelection4();
+    unsigned int& makeSelection4(unsigned int value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -4080,8 +3950,7 @@ class Sequence4 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -4118,98 +3987,79 @@ class Sequence4 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    bsl::vector<Sequence3>& element1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<Sequence3>& element1();
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bsl::vector<Choice1>& element2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<Choice1>& element2();
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bdlb::NullableValue<bsl::vector<char> >& element3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<bsl::vector<char> >& element3();
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    bdlb::NullableValue<int>& element4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<int>& element4();
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    bdlb::NullableValue<bdlt::DatetimeTz>& element5()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<bdlt::DatetimeTz>& element5();
 
     /// Return a reference to the modifiable "Element6" attribute of this
     /// object.
-    bdlb::NullableValue<CustomString>& element6()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<CustomString>& element6();
 
     /// Return a reference to the modifiable "Element7" attribute of this
     /// object.
-    bdlb::NullableValue<Enumerated::Value>& element7()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<Enumerated::Value>& element7();
 
     /// Return a reference to the modifiable "Element8" attribute of this
     /// object.
-    bool& element8()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bool& element8();
 
     /// Return a reference to the modifiable "Element9" attribute of this
     /// object.
-    bsl::string& element9()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& element9();
 
     /// Return a reference to the modifiable "Element10" attribute of this
     /// object.
-    double& element10()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    double& element10();
 
     /// Return a reference to the modifiable "Element11" attribute of this
     /// object.
-    bsl::vector<char>& element11()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<char>& element11();
 
     /// Return a reference to the modifiable "Element12" attribute of this
     /// object.
-    int& element12()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& element12();
 
     /// Return a reference to the modifiable "Element13" attribute of this
     /// object.
-    Enumerated::Value& element13()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Enumerated::Value& element13();
 
     /// Return a reference to the modifiable "Element14" attribute of this
     /// object.
-    bsl::vector<bool>& element14()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bool>& element14();
 
     /// Return a reference to the modifiable "Element15" attribute of this
     /// object.
-    bsl::vector<double>& element15()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<double>& element15();
 
     /// Return a reference to the modifiable "Element16" attribute of this
     /// object.
-    bsl::vector<bsl::vector<char> >& element16()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bsl::vector<char> >& element16();
 
     /// Return a reference to the modifiable "Element17" attribute of this
     /// object.
-    bsl::vector<int>& element17()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<int>& element17();
 
     /// Return a reference to the modifiable "Element18" attribute of this
     /// object.
-    bsl::vector<bdlt::DatetimeTz>& element18()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlt::DatetimeTz>& element18();
 
     /// Return a reference to the modifiable "Element19" attribute of this
     /// object.
-    bsl::vector<CustomString>& element19()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<CustomString>& element19();
 
     // ACCESSORS
 
@@ -4235,8 +4085,7 @@ class Sequence4 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -4268,38 +4117,31 @@ class Sequence4 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const bsl::vector<Sequence3>& element1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<Sequence3>& element1() const;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
-    const bsl::vector<Choice1>& element2() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<Choice1>& element2() const;
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const bdlb::NullableValue<bsl::vector<char> >& element3() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<bsl::vector<char> >& element3() const;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const bdlb::NullableValue<int>& element4() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<int>& element4() const;
 
     /// Return a reference to the non-modifiable "Element5" attribute of
     /// this object.
-    const bdlb::NullableValue<bdlt::DatetimeTz>& element5() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<bdlt::DatetimeTz>& element5() const;
 
     /// Return a reference to the non-modifiable "Element6" attribute of
     /// this object.
-    const bdlb::NullableValue<CustomString>& element6() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<CustomString>& element6() const;
 
     /// Return a reference to the non-modifiable "Element7" attribute of
     /// this object.
-    const bdlb::NullableValue<Enumerated::Value>& element7() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<Enumerated::Value>& element7() const;
 
     /// Return a reference to the non-modifiable "Element8" attribute of
     /// this object.
@@ -4307,8 +4149,7 @@ class Sequence4 {
 
     /// Return a reference to the non-modifiable "Element9" attribute of
     /// this object.
-    const bsl::string& element9() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& element9() const;
 
     /// Return a reference to the non-modifiable "Element10" attribute of
     /// this object.
@@ -4316,8 +4157,7 @@ class Sequence4 {
 
     /// Return a reference to the non-modifiable "Element11" attribute of
     /// this object.
-    const bsl::vector<char>& element11() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<char>& element11() const;
 
     /// Return a reference to the non-modifiable "Element12" attribute of
     /// this object.
@@ -4329,33 +4169,27 @@ class Sequence4 {
 
     /// Return a reference to the non-modifiable "Element14" attribute of
     /// this object.
-    const bsl::vector<bool>& element14() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bool>& element14() const;
 
     /// Return a reference to the non-modifiable "Element15" attribute of
     /// this object.
-    const bsl::vector<double>& element15() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<double>& element15() const;
 
     /// Return a reference to the non-modifiable "Element16" attribute of
     /// this object.
-    const bsl::vector<bsl::vector<char> >& element16() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bsl::vector<char> >& element16() const;
 
     /// Return a reference to the non-modifiable "Element17" attribute of
     /// this object.
-    const bsl::vector<int>& element17() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<int>& element17() const;
 
     /// Return a reference to the non-modifiable "Element18" attribute of
     /// this object.
-    const bsl::vector<bdlt::DatetimeTz>& element18() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlt::DatetimeTz>& element18() const;
 
     /// Return a reference to the non-modifiable "Element19" attribute of
     /// this object.
-    const bsl::vector<CustomString>& element19() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<CustomString>& element19() const;
 };
 
 // FREE OPERATORS
@@ -4480,8 +4314,7 @@ class Sequence1 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -4518,28 +4351,23 @@ class Sequence1 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    bdlb::NullableValue<Choice3>& element1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<Choice3>& element1();
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    bsl::vector<Choice1>& element2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<Choice1>& element2();
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    Choice2& element3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Choice2& element3();
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    bsl::vector<bdlb::NullableValue<Choice1> >& element4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bdlb::NullableValue<Choice1> >& element4();
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    bsl::vector<Choice3>& element5()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<Choice3>& element5();
 
     // ACCESSORS
 
@@ -4565,8 +4393,7 @@ class Sequence1 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -4598,28 +4425,23 @@ class Sequence1 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const bdlb::NullableValue<Choice3>& element1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<Choice3>& element1() const;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
-    const bsl::vector<Choice1>& element2() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<Choice1>& element2() const;
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const Choice2& element3() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Choice2& element3() const;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const bsl::vector<bdlb::NullableValue<Choice1> >& element4() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<bdlb::NullableValue<Choice1> >& element4() const;
 
     /// Return a reference to the non-modifiable "Element5" attribute of
     /// this object.
-    const bsl::vector<Choice3>& element5() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<Choice3>& element5() const;
 };
 
 // FREE OPERATORS
@@ -4743,8 +4565,7 @@ class Sequence2 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -4781,28 +4602,23 @@ class Sequence2 {
 
     /// Return a reference to the modifiable "Element1" attribute of this
     /// object.
-    CustomString& element1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    CustomString& element1();
 
     /// Return a reference to the modifiable "Element2" attribute of this
     /// object.
-    unsigned char& element2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    unsigned char& element2();
 
     /// Return a reference to the modifiable "Element3" attribute of this
     /// object.
-    bdlt::DatetimeTz& element3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlt::DatetimeTz& element3();
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    bdlb::NullableValue<Choice1>& element4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<Choice1>& element4();
 
     /// Return a reference to the modifiable "Element5" attribute of this
     /// object.
-    bdlb::NullableValue<double>& element5()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<double>& element5();
 
     // ACCESSORS
 
@@ -4828,8 +4644,7 @@ class Sequence2 {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -4861,8 +4676,7 @@ class Sequence2 {
 
     /// Return a reference to the non-modifiable "Element1" attribute of
     /// this object.
-    const CustomString& element1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const CustomString& element1() const;
 
     /// Return a reference to the non-modifiable "Element2" attribute of
     /// this object.
@@ -4870,18 +4684,15 @@ class Sequence2 {
 
     /// Return a reference to the non-modifiable "Element3" attribute of
     /// this object.
-    const bdlt::DatetimeTz& element3() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlt::DatetimeTz& element3() const;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const bdlb::NullableValue<Choice1>& element4() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<Choice1>& element4() const;
 
     /// Return a reference to the non-modifiable "Element5" attribute of
     /// this object.
-    const bdlb::NullableValue<double>& element5() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<double>& element5() const;
 };
 
 // FREE OPERATORS
@@ -5002,8 +4813,7 @@ class SequenceWithAnonymityChoice2 {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -5023,18 +4833,14 @@ class SequenceWithAnonymityChoice2 {
     /// Set the value of this object to be a "Selection7" value.  Optionally
     /// specify the `value` of the "Selection7".  If `value` is not
     /// specified, the default "Selection7" value is used.
-    Sequence4& makeSelection7()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Sequence4& makeSelection7(const Sequence4& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence4& makeSelection7();
+    Sequence4& makeSelection7(const Sequence4& value);
 
     /// Set the value of this object to be a "Selection8" value.  Optionally
     /// specify the `value` of the "Selection8".  If `value` is not
     /// specified, the default "Selection8" value is used.
-    Choice2& makeSelection8()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Choice2& makeSelection8(const Choice2& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Choice2& makeSelection8();
+    Choice2& makeSelection8(const Choice2& value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -5239,8 +5045,7 @@ class SequenceWithAnonymity {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon
     /// default construction).
@@ -5277,23 +5082,19 @@ class SequenceWithAnonymity {
 
     /// Return a reference to the modifiable "Choice" attribute of this
     /// object.
-    SequenceWithAnonymityChoice& choice()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    SequenceWithAnonymityChoice& choice();
 
     /// Return a reference to the modifiable "Choice1" attribute of this
     /// object.
-    SequenceWithAnonymityChoice1& choice1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    SequenceWithAnonymityChoice1& choice1();
 
     /// Return a reference to the modifiable "Choice2" attribute of this
     /// object.
-    bdlb::NullableValue<SequenceWithAnonymityChoice2>& choice2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlb::NullableValue<SequenceWithAnonymityChoice2>& choice2();
 
     /// Return a reference to the modifiable "Element4" attribute of this
     /// object.
-    Sequence6& element4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence6& element4();
 
     // ACCESSORS
 
@@ -5319,8 +5120,7 @@ class SequenceWithAnonymity {
     /// See the `bslx` package-level documentation for more information
     /// on `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor`
@@ -5352,23 +5152,19 @@ class SequenceWithAnonymity {
 
     /// Return a reference to the non-modifiable "Choice" attribute of this
     /// object.
-    const SequenceWithAnonymityChoice& choice() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const SequenceWithAnonymityChoice& choice() const;
 
     /// Return a reference to the non-modifiable "Choice1" attribute of this
     /// object.
-    const SequenceWithAnonymityChoice1& choice1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const SequenceWithAnonymityChoice1& choice1() const;
 
     /// Return a reference to the non-modifiable "Choice2" attribute of this
     /// object.
-    const bdlb::NullableValue<SequenceWithAnonymityChoice2>& choice2() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<SequenceWithAnonymityChoice2>& choice2() const;
 
     /// Return a reference to the non-modifiable "Element4" attribute of
     /// this object.
-    const Sequence6& element4() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Sequence6& element4() const;
 };
 
 // FREE OPERATORS
@@ -5516,8 +5312,7 @@ class FeatureTestMessage {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -5537,90 +5332,68 @@ class FeatureTestMessage {
     /// Set the value of this object to be a "Selection1" value.  Optionally
     /// specify the `value` of the "Selection1".  If `value` is not
     /// specified, the default "Selection1" value is used.
-    Sequence1& makeSelection1()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Sequence1& makeSelection1(const Sequence1& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence1& makeSelection1();
+    Sequence1& makeSelection1(const Sequence1& value);
 
     /// Set the value of this object to be a "Selection2" value.  Optionally
     /// specify the `value` of the "Selection2".  If `value` is not
     /// specified, the default "Selection2" value is used.
-    bsl::vector<char>& makeSelection2()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    bsl::vector<char>& makeSelection2(const bsl::vector<char>& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<char>& makeSelection2();
+    bsl::vector<char>& makeSelection2(const bsl::vector<char>& value);
 
     /// Set the value of this object to be a "Selection3" value.  Optionally
     /// specify the `value` of the "Selection3".  If `value` is not
     /// specified, the default "Selection3" value is used.
-    Sequence2& makeSelection3()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Sequence2& makeSelection3(const Sequence2& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence2& makeSelection3();
+    Sequence2& makeSelection3(const Sequence2& value);
 
     /// Set the value of this object to be a "Selection4" value.  Optionally
     /// specify the `value` of the "Selection4".  If `value` is not
     /// specified, the default "Selection4" value is used.
-    Sequence3& makeSelection4()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Sequence3& makeSelection4(const Sequence3& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Sequence3& makeSelection4();
+    Sequence3& makeSelection4(const Sequence3& value);
 
     /// Set the value of this object to be a "Selection5" value.  Optionally
     /// specify the `value` of the "Selection5".  If `value` is not
     /// specified, the default "Selection5" value is used.
-    bdlt::DatetimeTz& makeSelection5()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    bdlt::DatetimeTz& makeSelection5(const bdlt::DatetimeTz& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bdlt::DatetimeTz& makeSelection5();
+    bdlt::DatetimeTz& makeSelection5(const bdlt::DatetimeTz& value);
 
     /// Set the value of this object to be a "Selection6" value.  Optionally
     /// specify the `value` of the "Selection6".  If `value` is not
     /// specified, the default "Selection6" value is used.
-    CustomString& makeSelection6()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    CustomString& makeSelection6(const CustomString& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    CustomString& makeSelection6();
+    CustomString& makeSelection6(const CustomString& value);
 
     /// Set the value of this object to be a "Selection7" value.  Optionally
     /// specify the `value` of the "Selection7".  If `value` is not
     /// specified, the default "Selection7" value is used.
-    Enumerated::Value& makeSelection7()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Enumerated::Value& makeSelection7(Enumerated::Value value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Enumerated::Value& makeSelection7();
+    Enumerated::Value& makeSelection7(Enumerated::Value value);
 
     /// Set the value of this object to be a "Selection8" value.  Optionally
     /// specify the `value` of the "Selection8".  If `value` is not
     /// specified, the default "Selection8" value is used.
-    Choice3& makeSelection8()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    Choice3& makeSelection8(const Choice3& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Choice3& makeSelection8();
+    Choice3& makeSelection8(const Choice3& value);
 
     /// Set the value of this object to be a "Selection9" value.  Optionally
     /// specify the `value` of the "Selection9".  If `value` is not
     /// specified, the default "Selection9" value is used.
-    VoidSequence& makeSelection9()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    VoidSequence& makeSelection9(const VoidSequence& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    VoidSequence& makeSelection9();
+    VoidSequence& makeSelection9(const VoidSequence& value);
 
     /// Set the value of this object to be a "Selection10" value.
     /// Optionally specify the `value` of the "Selection10".  If `value` is
     /// not specified, the default "Selection10" value is used.
-    UnsignedSequence& makeSelection10()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    UnsignedSequence& makeSelection10(const UnsignedSequence& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    UnsignedSequence& makeSelection10();
+    UnsignedSequence& makeSelection10(const UnsignedSequence& value);
 
     /// Set the value of this object to be a "Selection11" value.
     /// Optionally specify the `value` of the "Selection11".  If `value` is
     /// not specified, the default "Selection11" value is used.
-    SequenceWithAnonymity& makeSelection11()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    SequenceWithAnonymity& makeSelection11(const SequenceWithAnonymity& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    SequenceWithAnonymity& makeSelection11();
+    SequenceWithAnonymity& makeSelection11(const SequenceWithAnonymity& value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -5969,8 +5742,7 @@ class Request {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -5990,18 +5762,14 @@ class Request {
     /// Set the value of this object to be a "SimpleRequest" value.
     /// Optionally specify the `value` of the "SimpleRequest".  If `value`
     /// is not specified, the default "SimpleRequest" value is used.
-    SimpleRequest& makeSimpleRequest()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    SimpleRequest& makeSimpleRequest(const SimpleRequest& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    SimpleRequest& makeSimpleRequest();
+    SimpleRequest& makeSimpleRequest(const SimpleRequest& value);
 
     /// Set the value of this object to be a "FeatureRequest" value.
     /// Optionally specify the `value` of the "FeatureRequest".  If `value`
     /// is not specified, the default "FeatureRequest" value is used.
-    FeatureTestMessage& makeFeatureRequest()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    FeatureTestMessage& makeFeatureRequest(const FeatureTestMessage& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    FeatureTestMessage& makeFeatureRequest();
+    FeatureTestMessage& makeFeatureRequest(const FeatureTestMessage& value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -6210,8 +5978,7 @@ class Response {
     /// See the `bslx` package-level documentation for more information on
     /// `bdex` streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Reset this object to the default value (i.e., its value upon default
     /// construction).
@@ -6231,18 +5998,14 @@ class Response {
     /// Set the value of this object to be a "ResponseData" value.
     /// Optionally specify the `value` of the "ResponseData".  If `value` is
     /// not specified, the default "ResponseData" value is used.
-    bsl::string& makeResponseData()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    bsl::string& makeResponseData(const bsl::string& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& makeResponseData();
+    bsl::string& makeResponseData(const bsl::string& value);
 
     /// Set the value of this object to be a "FeatureResponse" value.
     /// Optionally specify the `value` of the "FeatureResponse".  If `value`
     /// is not specified, the default "FeatureResponse" value is used.
-    FeatureTestMessage& makeFeatureResponse()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    FeatureTestMessage& makeFeatureResponse(const FeatureTestMessage& value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    FeatureTestMessage& makeFeatureResponse();
+    FeatureTestMessage& makeFeatureResponse(const FeatureTestMessage& value);
 
     /// Invoke the specified `manipulator` on the address of the modifiable
     /// selection, supplying `manipulator` with the corresponding selection
@@ -6408,6 +6171,8 @@ Choice4::~Choice4()
 template <class STREAM>
 STREAM& Choice4::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -6596,6 +6361,8 @@ CustomInt& CustomInt::operator=(const CustomInt& rhs)
 template <class STREAM>
 STREAM& CustomInt::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     int temp;
 
     bslx::InStreamFunctions::bdexStreamIn(stream, temp, version);
@@ -6632,6 +6399,8 @@ int CustomInt::fromInt(const int& value)
 template <class STREAM>
 STREAM& CustomInt::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return bslx::OutStreamFunctions::bdexStreamOut(stream, d_value, version);
 }
 
@@ -6653,6 +6422,7 @@ bsl::ostream& CustomInt::print(bsl::ostream& stream,
 inline
 const int& CustomInt::toInt() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value;
 }
 
@@ -6698,6 +6468,8 @@ CustomString& CustomString::operator=(const CustomString& rhs)
 template <class STREAM>
 STREAM& CustomString::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     bsl::string temp;
 
     bslx::InStreamFunctions::bdexStreamIn(stream, temp, version);
@@ -6734,6 +6506,8 @@ int CustomString::fromString(const bsl::string& value)
 template <class STREAM>
 STREAM& CustomString::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return bslx::OutStreamFunctions::bdexStreamOut(stream, d_value, version);
 }
 
@@ -6755,6 +6529,7 @@ bsl::ostream& CustomString::print(bsl::ostream& stream,
 inline
 const bsl::string& CustomString::toString() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value;
 }
 
@@ -6782,6 +6557,7 @@ inline
 bsl::ostream& Enumerated::print(bsl::ostream&      stream,
                                  Enumerated::Value value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return stream << toString(value);
 }
 
@@ -6851,6 +6627,8 @@ SequenceWithAnonymityChoice1::~SequenceWithAnonymityChoice1()
 template <class STREAM>
 STREAM& SequenceWithAnonymityChoice1::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -7015,6 +6793,8 @@ int SimpleRequest::maxSupportedBdexVersion()
 template <class STREAM>
 STREAM& SimpleRequest::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -7084,12 +6864,14 @@ int SimpleRequest::manipulateAttribute(
 inline
 bsl::string& SimpleRequest::data()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_data;
 }
 
 inline
 int& SimpleRequest::responseLength()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_responseLength;
 }
 
@@ -7097,6 +6879,8 @@ int& SimpleRequest::responseLength()
 template <class STREAM>
 STREAM& SimpleRequest::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, d_data, 1);
@@ -7161,12 +6945,14 @@ int SimpleRequest::accessAttribute(
 inline
 const bsl::string& SimpleRequest::data() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_data;
 }
 
 inline
 int SimpleRequest::responseLength() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_responseLength;
 }
 
@@ -7187,6 +6973,8 @@ int UnsignedSequence::maxSupportedBdexVersion()
 template <class STREAM>
 STREAM& UnsignedSequence::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -7265,18 +7053,21 @@ int UnsignedSequence::manipulateAttribute(
 inline
 unsigned int& UnsignedSequence::element1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 unsigned short& UnsignedSequence::element2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 bsls::Types::Uint64& UnsignedSequence::element3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
@@ -7284,6 +7075,8 @@ bsls::Types::Uint64& UnsignedSequence::element3()
 template <class STREAM>
 STREAM& UnsignedSequence::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, d_element1, 1);
@@ -7357,18 +7150,21 @@ int UnsignedSequence::accessAttribute(
 inline
 unsigned int UnsignedSequence::element1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 unsigned short UnsignedSequence::element2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 bsls::Types::Uint64 UnsignedSequence::element3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
@@ -7389,6 +7185,8 @@ int VoidSequence::maxSupportedBdexVersion()
 template <class STREAM>
 STREAM& VoidSequence::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -7443,6 +7241,8 @@ int VoidSequence::manipulateAttribute(
 template <class STREAM>
 STREAM& VoidSequence::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
       } break;
@@ -7519,6 +7319,8 @@ Choice5::~Choice5()
 template <class STREAM>
 STREAM& Choice5::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -7682,6 +7484,8 @@ int Sequence3::maxSupportedBdexVersion()
 template <class STREAM>
 STREAM& Sequence3::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -7787,36 +7591,42 @@ int Sequence3::manipulateAttribute(
 inline
 bsl::vector<Enumerated::Value>& Sequence3::element1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 bsl::vector<bsl::string>& Sequence3::element2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 bdlb::NullableValue<bool>& Sequence3::element3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
 inline
 bdlb::NullableValue<bsl::string>& Sequence3::element4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 bdlb::NullableAllocatedValue<Sequence5>& Sequence3::element5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
 inline
 bsl::vector<bdlb::NullableValue<Enumerated::Value> >& Sequence3::element6()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element6;
 }
 
@@ -7824,6 +7634,8 @@ bsl::vector<bdlb::NullableValue<Enumerated::Value> >& Sequence3::element6()
 template <class STREAM>
 STREAM& Sequence3::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, d_element1, 1);
@@ -7924,36 +7736,42 @@ int Sequence3::accessAttribute(
 inline
 const bsl::vector<Enumerated::Value>& Sequence3::element1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 const bsl::vector<bsl::string>& Sequence3::element2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 const bdlb::NullableValue<bool>& Sequence3::element3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
 inline
 const bdlb::NullableValue<bsl::string>& Sequence3::element4() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 const bdlb::NullableAllocatedValue<Sequence5>& Sequence3::element5() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
 inline
 const bsl::vector<bdlb::NullableValue<Enumerated::Value> >& Sequence3::element6() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element6;
 }
 
@@ -7974,6 +7792,8 @@ int Sequence5::maxSupportedBdexVersion()
 template <class STREAM>
 STREAM& Sequence5::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -8088,42 +7908,49 @@ int Sequence5::manipulateAttribute(
 inline
 Sequence3& Sequence5::element1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_element1;
 }
 
 inline
 bsl::vector<bdlb::NullableValue<bool> >& Sequence5::element2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 bsl::vector<bdlb::NullableValue<double> >& Sequence5::element3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
 inline
 bsl::vector<bdlb::NullableValue<bsl::vector<char> > >& Sequence5::element4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 bsl::vector<bdlb::NullableValue<int> >& Sequence5::element5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
 inline
 bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& Sequence5::element6()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element6;
 }
 
 inline
 bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& Sequence5::element7()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element7;
 }
 
@@ -8131,6 +7958,8 @@ bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& Sequence5::element7()
 template <class STREAM>
 STREAM& Sequence5::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, *d_element1, 1);
@@ -8240,42 +8069,49 @@ int Sequence5::accessAttribute(
 inline
 const Sequence3& Sequence5::element1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_element1;
 }
 
 inline
 const bsl::vector<bdlb::NullableValue<bool> >& Sequence5::element2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 const bsl::vector<bdlb::NullableValue<double> >& Sequence5::element3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
 inline
 const bsl::vector<bdlb::NullableValue<bsl::vector<char> > >& Sequence5::element4() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 const bsl::vector<bdlb::NullableValue<int> >& Sequence5::element5() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
 inline
 const bsl::vector<bdlb::NullableValue<bdlt::DatetimeTz> >& Sequence5::element6() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element6;
 }
 
 inline
 const bsl::vector<bdlb::NullableAllocatedValue<Sequence3> >& Sequence5::element7() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element7;
 }
 
@@ -8296,6 +8132,8 @@ int Sequence6::maxSupportedBdexVersion()
 template <class STREAM>
 STREAM& Sequence6::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -8482,90 +8320,105 @@ int Sequence6::manipulateAttribute(
 inline
 bdlb::NullableValue<unsigned char>& Sequence6::element1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 bdlb::NullableValue<CustomString>& Sequence6::element2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 bdlb::NullableValue<CustomInt>& Sequence6::element3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
 inline
 unsigned int& Sequence6::element4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 unsigned char& Sequence6::element5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
 inline
 bsl::vector<bdlb::NullableValue<CustomInt> >& Sequence6::element6()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element6;
 }
 
 inline
 CustomString& Sequence6::element7()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element7;
 }
 
 inline
 CustomInt& Sequence6::element8()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element8;
 }
 
 inline
 bdlb::NullableValue<unsigned int>& Sequence6::element9()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element9;
 }
 
 inline
 bsl::vector<unsigned char>& Sequence6::element10()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element10;
 }
 
 inline
 bsl::vector<CustomString>& Sequence6::element11()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element11;
 }
 
 inline
 bsl::vector<unsigned int>& Sequence6::element12()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element12;
 }
 
 inline
 bsl::vector<bdlb::NullableValue<unsigned char> >& Sequence6::element13()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element13;
 }
 
 inline
 bsl::vector<CustomInt>& Sequence6::element14()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element14;
 }
 
 inline
 bsl::vector<bdlb::NullableValue<unsigned int> >& Sequence6::element15()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element15;
 }
 
@@ -8573,6 +8426,8 @@ bsl::vector<bdlb::NullableValue<unsigned int> >& Sequence6::element15()
 template <class STREAM>
 STREAM& Sequence6::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, d_element1, 1);
@@ -8754,90 +8609,105 @@ int Sequence6::accessAttribute(
 inline
 const bdlb::NullableValue<unsigned char>& Sequence6::element1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 const bdlb::NullableValue<CustomString>& Sequence6::element2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 const bdlb::NullableValue<CustomInt>& Sequence6::element3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
 inline
 unsigned int Sequence6::element4() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 unsigned char Sequence6::element5() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
 inline
 const bsl::vector<bdlb::NullableValue<CustomInt> >& Sequence6::element6() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element6;
 }
 
 inline
 const CustomString& Sequence6::element7() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element7;
 }
 
 inline
 const CustomInt& Sequence6::element8() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element8;
 }
 
 inline
 const bdlb::NullableValue<unsigned int>& Sequence6::element9() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element9;
 }
 
 inline
 const bsl::vector<unsigned char>& Sequence6::element10() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element10;
 }
 
 inline
 const bsl::vector<CustomString>& Sequence6::element11() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element11;
 }
 
 inline
 const bsl::vector<unsigned int>& Sequence6::element12() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element12;
 }
 
 inline
 const bsl::vector<bdlb::NullableValue<unsigned char> >& Sequence6::element13() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element13;
 }
 
 inline
 const bsl::vector<CustomInt>& Sequence6::element14() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element14;
 }
 
 inline
 const bsl::vector<bdlb::NullableValue<unsigned int> >& Sequence6::element15() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element15;
 }
 
@@ -8872,6 +8742,8 @@ Choice3::~Choice3()
 template <class STREAM>
 STREAM& Choice3::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -9123,6 +8995,8 @@ SequenceWithAnonymityChoice::~SequenceWithAnonymityChoice()
 template <class STREAM>
 STREAM& SequenceWithAnonymityChoice::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -9374,6 +9248,8 @@ Choice1::~Choice1()
 template <class STREAM>
 STREAM& Choice1::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -9625,6 +9501,8 @@ Choice2::~Choice2()
 template <class STREAM>
 STREAM& Choice2::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -9863,6 +9741,8 @@ int Sequence4::maxSupportedBdexVersion()
 template <class STREAM>
 STREAM& Sequence4::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -10085,114 +9965,133 @@ int Sequence4::manipulateAttribute(
 inline
 bsl::vector<Sequence3>& Sequence4::element1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 bsl::vector<Choice1>& Sequence4::element2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 bdlb::NullableValue<bsl::vector<char> >& Sequence4::element3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
 inline
 bdlb::NullableValue<int>& Sequence4::element4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 bdlb::NullableValue<bdlt::DatetimeTz>& Sequence4::element5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
 inline
 bdlb::NullableValue<CustomString>& Sequence4::element6()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element6;
 }
 
 inline
 bdlb::NullableValue<Enumerated::Value>& Sequence4::element7()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element7;
 }
 
 inline
 bool& Sequence4::element8()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element8;
 }
 
 inline
 bsl::string& Sequence4::element9()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element9;
 }
 
 inline
 double& Sequence4::element10()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element10;
 }
 
 inline
 bsl::vector<char>& Sequence4::element11()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element11;
 }
 
 inline
 int& Sequence4::element12()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element12;
 }
 
 inline
 Enumerated::Value& Sequence4::element13()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element13;
 }
 
 inline
 bsl::vector<bool>& Sequence4::element14()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element14;
 }
 
 inline
 bsl::vector<double>& Sequence4::element15()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element15;
 }
 
 inline
 bsl::vector<bsl::vector<char> >& Sequence4::element16()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element16;
 }
 
 inline
 bsl::vector<int>& Sequence4::element17()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element17;
 }
 
 inline
 bsl::vector<bdlt::DatetimeTz>& Sequence4::element18()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element18;
 }
 
 inline
 bsl::vector<CustomString>& Sequence4::element19()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element19;
 }
 
@@ -10200,6 +10099,8 @@ bsl::vector<CustomString>& Sequence4::element19()
 template <class STREAM>
 STREAM& Sequence4::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, d_element1, 1);
@@ -10417,114 +10318,133 @@ int Sequence4::accessAttribute(
 inline
 const bsl::vector<Sequence3>& Sequence4::element1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 const bsl::vector<Choice1>& Sequence4::element2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 const bdlb::NullableValue<bsl::vector<char> >& Sequence4::element3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
 inline
 const bdlb::NullableValue<int>& Sequence4::element4() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 const bdlb::NullableValue<bdlt::DatetimeTz>& Sequence4::element5() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
 inline
 const bdlb::NullableValue<CustomString>& Sequence4::element6() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element6;
 }
 
 inline
 const bdlb::NullableValue<Enumerated::Value>& Sequence4::element7() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element7;
 }
 
 inline
 bool Sequence4::element8() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element8;
 }
 
 inline
 const bsl::string& Sequence4::element9() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element9;
 }
 
 inline
 double Sequence4::element10() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element10;
 }
 
 inline
 const bsl::vector<char>& Sequence4::element11() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element11;
 }
 
 inline
 int Sequence4::element12() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element12;
 }
 
 inline
 Enumerated::Value Sequence4::element13() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element13;
 }
 
 inline
 const bsl::vector<bool>& Sequence4::element14() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element14;
 }
 
 inline
 const bsl::vector<double>& Sequence4::element15() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element15;
 }
 
 inline
 const bsl::vector<bsl::vector<char> >& Sequence4::element16() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element16;
 }
 
 inline
 const bsl::vector<int>& Sequence4::element17() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element17;
 }
 
 inline
 const bsl::vector<bdlt::DatetimeTz>& Sequence4::element18() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element18;
 }
 
 inline
 const bsl::vector<CustomString>& Sequence4::element19() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element19;
 }
 
@@ -10545,6 +10465,8 @@ int Sequence1::maxSupportedBdexVersion()
 template <class STREAM>
 STREAM& Sequence1::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -10641,30 +10563,35 @@ int Sequence1::manipulateAttribute(
 inline
 bdlb::NullableValue<Choice3>& Sequence1::element1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 bsl::vector<Choice1>& Sequence1::element2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 Choice2& Sequence1::element3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_element3;
 }
 
 inline
 bsl::vector<bdlb::NullableValue<Choice1> >& Sequence1::element4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 bsl::vector<Choice3>& Sequence1::element5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
@@ -10672,6 +10599,8 @@ bsl::vector<Choice3>& Sequence1::element5()
 template <class STREAM>
 STREAM& Sequence1::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, d_element1, 1);
@@ -10763,30 +10692,35 @@ int Sequence1::accessAttribute(
 inline
 const bdlb::NullableValue<Choice3>& Sequence1::element1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 const bsl::vector<Choice1>& Sequence1::element2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 const Choice2& Sequence1::element3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_element3;
 }
 
 inline
 const bsl::vector<bdlb::NullableValue<Choice1> >& Sequence1::element4() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 const bsl::vector<Choice3>& Sequence1::element5() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
@@ -10807,6 +10741,8 @@ int Sequence2::maxSupportedBdexVersion()
 template <class STREAM>
 STREAM& Sequence2::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -10903,30 +10839,35 @@ int Sequence2::manipulateAttribute(
 inline
 CustomString& Sequence2::element1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 unsigned char& Sequence2::element2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 bdlt::DatetimeTz& Sequence2::element3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
 inline
 bdlb::NullableValue<Choice1>& Sequence2::element4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 bdlb::NullableValue<double>& Sequence2::element5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
@@ -10934,6 +10875,8 @@ bdlb::NullableValue<double>& Sequence2::element5()
 template <class STREAM>
 STREAM& Sequence2::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, d_element1, 1);
@@ -11025,30 +10968,35 @@ int Sequence2::accessAttribute(
 inline
 const CustomString& Sequence2::element1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element1;
 }
 
 inline
 unsigned char Sequence2::element2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element2;
 }
 
 inline
 const bdlt::DatetimeTz& Sequence2::element3() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element3;
 }
 
 inline
 const bdlb::NullableValue<Choice1>& Sequence2::element4() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
 inline
 const bdlb::NullableValue<double>& Sequence2::element5() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element5;
 }
 
@@ -11083,6 +11031,8 @@ SequenceWithAnonymityChoice2::~SequenceWithAnonymityChoice2()
 template <class STREAM>
 STREAM& SequenceWithAnonymityChoice2::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -11247,6 +11197,8 @@ int SequenceWithAnonymity::maxSupportedBdexVersion()
 template <class STREAM>
 STREAM& SequenceWithAnonymity::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -11334,24 +11286,28 @@ int SequenceWithAnonymity::manipulateAttribute(
 inline
 SequenceWithAnonymityChoice& SequenceWithAnonymity::choice()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_choice;
 }
 
 inline
 SequenceWithAnonymityChoice1& SequenceWithAnonymity::choice1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_choice1;
 }
 
 inline
 bdlb::NullableValue<SequenceWithAnonymityChoice2>& SequenceWithAnonymity::choice2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_choice2;
 }
 
 inline
 Sequence6& SequenceWithAnonymity::element4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
@@ -11359,6 +11315,8 @@ Sequence6& SequenceWithAnonymity::element4()
 template <class STREAM>
 STREAM& SequenceWithAnonymity::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, d_choice, 1);
@@ -11441,24 +11399,28 @@ int SequenceWithAnonymity::accessAttribute(
 inline
 const SequenceWithAnonymityChoice& SequenceWithAnonymity::choice() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_choice;
 }
 
 inline
 const SequenceWithAnonymityChoice1& SequenceWithAnonymity::choice1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_choice1;
 }
 
 inline
 const bdlb::NullableValue<SequenceWithAnonymityChoice2>& SequenceWithAnonymity::choice2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_choice2;
 }
 
 inline
 const Sequence6& SequenceWithAnonymity::element4() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_element4;
 }
 
@@ -11493,6 +11455,8 @@ FeatureTestMessage::~FeatureTestMessage()
 template <class STREAM>
 STREAM& FeatureTestMessage::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {
@@ -12004,6 +11968,7 @@ Request::~Request()
 template <class STREAM>
 STREAM& Request::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (stream) {
         switch (version) {
@@ -12184,6 +12149,7 @@ Response::~Response()
 template <class STREAM>
 STREAM& Response::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (stream) {
         switch (version) {

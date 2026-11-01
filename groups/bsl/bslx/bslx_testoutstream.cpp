@@ -835,6 +835,8 @@ TestOutStream& TestOutStream::putArrayFloat32(const float *values,
 // FREE OPERATORS
 bsl::ostream& operator<<(bsl::ostream& stream, const TestOutStream& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return stream << object.d_imp;
 }
 

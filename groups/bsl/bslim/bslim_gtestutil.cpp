@@ -10,6 +10,7 @@
 // FREE FUNCTIONS
 void bsl::PrintTo(const bsl::string& value, bsl::ostream *stream)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     *stream << '"' << value << '"';
 }
 

@@ -974,7 +974,7 @@ class unordered_set {
          const HASH&                              hashFunction = HASH(),
          const EQUAL&                             keyEqual = EQUAL(),
          const ALLOCATOR&                         basicAllocator = ALLOCATOR())
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
+                                           BSLS_ASSERT_CONVEYOR_TRUST_PRE(range)
     : d_impl(hashFunction,
                  keyEqual,
                  initialNumBuckets,
@@ -1004,7 +1004,7 @@ class unordered_set {
                   size_type                                initialNumBuckets,
                   const HASH&                              hashFunction,
                   const ALLOCATOR&                         basicAllocator)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
+                                           BSLS_ASSERT_CONVEYOR_TRUST_PRE(range)
     : d_impl(hashFunction, EQUAL(), initialNumBuckets, 1.0f, basicAllocator)
     {
         // Defined inline for Windows.
@@ -1024,7 +1024,7 @@ class unordered_set {
                   BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
                   size_type                                initialNumBuckets,
                   const ALLOCATOR&                         basicAllocator)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
+                                           BSLS_ASSERT_CONVEYOR_TRUST_PRE(range)
     : d_impl(HASH(), EQUAL(), initialNumBuckets, 1.0f, basicAllocator)
     {
         // Defined inline for Windows.
@@ -1043,7 +1043,7 @@ class unordered_set {
     unordered_set(bsl::from_range_t                        ,
                   BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
                   const ALLOCATOR&                         basicAllocator)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
+                                           BSLS_ASSERT_CONVEYOR_TRUST_PRE(range)
     : d_impl(HASH(), EQUAL(), 0, 1.0f, basicAllocator)
     {
         // Defined inline for Windows.
@@ -1102,19 +1102,18 @@ class unordered_set {
     /// reference providing modifiable access to this object.  This method
     /// requires that the (template parameter) type `KEY` type be
     /// `copy-insertable` into this set (see {Requirements on `KEY`}).
-    unordered_set& operator=(std::initializer_list<KEY> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    unordered_set& operator=(std::initializer_list<KEY> values);
 #endif
 
     /// Return an iterator providing modifiable access to the first
     /// `value_type` object (in the sequence of `value_type` objects)
     /// maintained by this set, or the `end` iterator if this set is empty.
-    iterator begin() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator begin() BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an iterator providing modifiable access to the past-the-end
     /// element in the sequence of `value_type` objects maintained by this
     /// unordered set.
-    iterator end() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator end() BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a local iterator providing modifiable access to the first
     /// `value_type` object in the sequence of `value_type` objects of the
@@ -1137,8 +1136,7 @@ class unordered_set {
     /// if a new value was inserted, and `false` if the key was already
     /// present.  This method requires that the (template parameter) type
     /// `KEY` be `copy-insertable` (see {Requirements on `KEY`}).
-    pair<iterator, bool> insert(const value_type& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    pair<iterator, bool> insert(const value_type& value);
 
     /// Insert the specified `value` into this set if a key equivalent to
     /// `value` does not already exist in this set; otherwise, if a key
@@ -1151,8 +1149,7 @@ class unordered_set {
     /// requires that the (template parameter) type `KEY` be
     /// `move-insertable` into this set (see {Requirements on `KEY`}).
     pair<iterator, bool> insert(
-                             BloombergLP::bslmf::MovableRef<value_type> value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                             BloombergLP::bslmf::MovableRef<value_type> value);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Insert the specified `value` into this set if a key equivalent to
@@ -1170,8 +1167,10 @@ class unordered_set {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       pair<iterator, bool> >::type
-    insert(LOOKUP_KEY&& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    insert(LOOKUP_KEY&& value)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         typedef bsl::pair<iterator, bool> ResultType;
         bool isInsertedFlag = false;
         HashTableLink *result = d_impl.insertKeyIfMissing(
@@ -1193,8 +1192,7 @@ class unordered_set {
     /// `hint` is an iterator in the range `[begin() .. end()]` (both
     /// endpoints included).  Note that `hint` is ignored (other than
     /// possibly asserting its validity in some build modes).
-    iterator insert(const_iterator hint, const value_type& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator insert(const_iterator hint, const value_type& value);
 
     /// Insert the specified `value` into this set if a key equivalent to
     /// `value` does not already exist in this set; otherwise, if a key
@@ -1210,8 +1208,7 @@ class unordered_set {
     /// included).  Note that `hint` is ignored (other than possibly
     /// asserting its validity in some build modes).
     iterator insert(const_iterator                             hint,
-                    BloombergLP::bslmf::MovableRef<value_type> value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                    BloombergLP::bslmf::MovableRef<value_type> value);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Insert the specified `value` into this set if a key equivalent to
@@ -1237,8 +1234,9 @@ class unordered_set {
         && !bsl::is_convertible<LOOKUP_KEY&&, const_iterator>::value
          , iterator>::type
     insert(const_iterator, LOOKUP_KEY&& value)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&value);
         return this->insert(
                        BSLS_COMPILERFEATURES_FORWARD(LOOKUP_KEY, value)).first;
     }
@@ -1257,8 +1255,7 @@ class unordered_set {
     /// is undefined unless `first` and `last` refer to a sequence of valid
     /// values where `first` is at a position at or before `last`.
     template <class INPUT_ITERATOR>
-    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last);
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
     /// Insert into this set the value of each `value_type` object in the
@@ -1266,8 +1263,7 @@ class unordered_set {
     /// object is not already contained in this set.  This method requires
     /// that the (template parameter) type `KEY` be `copy-insertable` (see
     /// {Requirements on `KEY`}).
-    void insert(std::initializer_list<KEY> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void insert(std::initializer_list<KEY> values);
 #endif
 
     /// Insert into this set the value of each `value_type` object in the
@@ -1282,9 +1278,9 @@ class unordered_set {
     template <class RANGE>
     BSLSTL_UNORDEREDSET_REQUIRES_CONTAINER_COMPATIBLE_RANGE(RANGE, value_type)
     void insert_range(BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&range);
         // Defined inline for Windows.
 
 #if defined(BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS) \
@@ -1317,8 +1313,7 @@ class unordered_set {
     /// `emplace-constructible` into this set from `arguments` (see
     /// {Requirements on `KEY`}).
     template <class... Args>
-    pair<iterator, bool> emplace(Args&&... arguments)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    pair<iterator, bool> emplace(Args&&... arguments);
 
     /// Insert into this unordered set a newly created `value_type` object,
     /// constructed by forwarding `get_allocator()` (if required) and the
@@ -1338,8 +1333,7 @@ class unordered_set {
     /// ignored (other than possibly asserting its validity in some build
     /// modes).
     template <class... Args>
-    iterator emplace_hint(const_iterator hint, Args&&... arguments)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator emplace_hint(const_iterator hint, Args&&... arguments);
 
 #endif
 
@@ -1362,7 +1356,7 @@ class unordered_set {
     /// iterators and references to the removed element and previously saved
     /// values of the `end()` iterator, and preserves the relative order of
     /// the elements not removed.
-    size_type erase(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type erase(const key_type& key);
     template <class t_KEY>
     typename enable_if<
         BloombergLP::bslmf::IsTransparentPredicate<HASH, t_KEY>::value &&
@@ -1392,8 +1386,7 @@ class unordered_set {
     /// `last` either refer to elements in this set or are the `end`
     /// iterator, and the `first` position is at or before the `last`
     /// position in the sequence provided by this container.
-    iterator erase(const_iterator first, const_iterator last)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator erase(const_iterator first, const_iterator last);
 
     /// Exchange the value, hasher, key-equality functor, and
     /// `max_load_factor` of this object with those of the specified `other`
@@ -1416,7 +1409,7 @@ class unordered_set {
     /// Remove all entries from this unordered set.  Note that the set is
     /// empty after this call, but allocated memory may be retained for
     /// future use.
-    void clear() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void clear() BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an iterator providing modifiable access to the `value_type`
     /// object in this unordered set that is equivalent to the specified
@@ -1430,8 +1423,10 @@ class unordered_set {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       iterator>::type
-    find(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    find(const LOOKUP_KEY& key)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&key);
             return iterator(d_impl.find(key));
         }
 
@@ -1439,7 +1434,7 @@ class unordered_set {
     /// object in this unordered set that is equivalent to the specified
     /// `key`, if such an entry exists, and the past-the-end (`end`)
     /// iterator otherwise.
-    iterator find(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator find(const key_type& key);
 
     /// Return a pair of iterators providing modifiable access to the
     /// sequence of `value_type` objects in this unordered set that are
@@ -1458,8 +1453,10 @@ class unordered_set {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       pair<iterator, iterator> >::type
-    equal_range(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    equal_range(const LOOKUP_KEY& key)
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&key);
             typedef bsl::pair<iterator, iterator> ResultType;
 
             HashTableLink *first = d_impl.find(key);
@@ -1477,13 +1474,11 @@ class unordered_set {
     /// returned iterators will have the same value.  Note that since an
     /// unordered set maintains unique keys, the range will contain at most
     /// one element.
-    pair<iterator, iterator> equal_range(const key_type& key)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    pair<iterator, iterator> equal_range(const key_type& key);
 
     /// Set the maximum load factor of this container to the specified
     /// `newLoadFactor`.
-    void max_load_factor(float newLoadFactor)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void max_load_factor(float newLoadFactor);
 
     /// Change the size of the array of buckets maintained by this container
     /// to the specified `numBuckets`, and redistribute all the contained
@@ -1491,7 +1486,7 @@ class unordered_set {
     /// values.  Note that this operation has no effect if rehashing the
     /// elements into `numBuckets` would cause this set to exceed its
     /// `max_load_factor`.
-    void rehash(size_type numBuckets) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void rehash(size_type numBuckets);
 
     /// Increase the number of buckets of this set to a quantity such that
     /// the ratio between the specified `numElements` and this quantity does
@@ -1501,7 +1496,7 @@ class unordered_set {
     /// allocations may still occur when growing the container to
     /// `size() == numElements`.  Also note that this operation has no
     /// effect if `numElements <= size()`.
-    void reserve(size_type numElements) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reserve(size_type numElements);
 
   private:
     // PRIVATE MANIPULATORS
@@ -1553,31 +1548,26 @@ class unordered_set {
     /// Return an iterator providing non-modifiable access to the first
     /// `value_type` object in the sequence of `value_type` objects
     /// maintained by this set, or the `end` iterator if this set is empty.
-    const_iterator begin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator begin() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in the sequence of `value_type` objects
     /// maintained by this set.
-    const_iterator end() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator end() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an iterator providing non-modifiable access to the first
     /// `value_type` object in the sequence of `value_type` objects
     /// maintained by this set, or the `cend` iterator if this set is empty.
-    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element (in the sequence of `value_type` objects)
     /// maintained by this set.
-    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if this unordered set contains an element whose key is
     /// equivalent to the specified `key`.
-    bool contains(const key_type &key) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool contains(const key_type &key) const;
 
     /// Return `true` if this unordered set contains an element whose key is
     /// equivalent to the specified `key`.
@@ -1589,19 +1579,19 @@ class unordered_set {
             BloombergLP::bslmf::IsTransparentPredicate<EQUAL,
                                                        LOOKUP_KEY>::value,
         bool>::type
-    contains(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    contains(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return find(key) != end();
     }
 
     /// Return `true` if this set contains no elements, and `false`
     /// otherwise.
-    bool empty() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool empty() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the number of elements in this set.
-    size_type size() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type size() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a theoretical upper bound on the largest number of elements
     /// that this set could possibly hold.  Note that there is no guarantee
@@ -1612,11 +1602,11 @@ class unordered_set {
     /// Return (a copy of) the key-equality binary functor that returns
     /// `true` if the value of two `key_type` objects are equivalent, and
     /// `false` otherwise.
-    EQUAL key_eq() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    EQUAL key_eq() const;
 
     /// Return (a copy of) the hash unary functor used by this set to
     /// generate a hash value (of type `size_t`) for a `key_type` object.
-    HASH hash_function() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    HASH hash_function() const;
 
     /// Return an iterator providing non-modifiable access to the
     /// `value_type` object in this unordered set that is equivalent to the
@@ -1630,8 +1620,10 @@ class unordered_set {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       const_iterator>::type
-    find(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    find(const LOOKUP_KEY& key) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&key);
             return const_iterator(d_impl.find(key));
         }
 
@@ -1639,8 +1631,7 @@ class unordered_set {
     /// `value_type` object in this unordered set that is equivalent to the
     /// specified `key`, if such an entry exists, and the past-the-end
     /// (`end`) iterator otherwise.
-    const_iterator find(const key_type& key) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator find(const key_type& key) const;
 
     /// Return the number of `value_type` objects within this unordered set
     /// that are equivalent to the specified `key`.  The behavior is
@@ -1654,8 +1645,10 @@ class unordered_set {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       size_type>::type
-    count(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    count(const LOOKUP_KEY& key) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&key);
             return d_impl.find(key) != 0;
         }
 
@@ -1663,8 +1656,7 @@ class unordered_set {
     /// that are equivalent to the specified `key`.  Note that since an
     /// unordered set maintains unique keys, the returned value will be
     /// either 0 or 1.
-    size_type count(const key_type& key) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type count(const key_type& key) const;
 
     /// Return a pair of iterators providing non-modifiable access to the
     /// sequence of `value_type` objects in this unordered set that are
@@ -1683,8 +1675,10 @@ class unordered_set {
            BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value,
                       pair<const_iterator, const_iterator> >::type
-    equal_range(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    equal_range(const LOOKUP_KEY& key) const
         {
+            BSLS_ASSERT_CONVEYOR_OBJECT(this);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&key);
             typedef bsl::pair<const_iterator, const_iterator> ResultType;
 
             HashTableLink *first = d_impl.find(key);
@@ -1703,13 +1697,11 @@ class unordered_set {
     /// unordered set maintains unique keys, the range will contain at most
     /// one element.
     pair<const_iterator, const_iterator> equal_range(
-                                                    const key_type& key) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                    const key_type& key) const;
 
     /// Return the number of buckets in the array of buckets maintained by
     /// this set.
-    size_type bucket_count() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type bucket_count() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a theoretical upper bound on the largest number of buckets
     /// that this container could possibly manage.  Note that there is no
@@ -1776,16 +1768,14 @@ class unordered_set {
     /// the number of buckets.  The `load_factor` is a measure of how full
     /// the container is, and a higher load factor leads to an increased
     /// number of collisions, thus resulting in a loss performance.
-    float load_factor() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    float load_factor() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the maximum load factor allowed for this container.  If an
     /// insert operation would cause `load_factor` to exceed the
     /// `max_load_factor`, that same insert operation will increase the
     /// number of buckets and rehash the elements of the container into
     /// those buckets the (see rehash).
-    float max_load_factor() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    float max_load_factor() const BSLS_KEYWORD_NOEXCEPT;
 };
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_CTAD
@@ -2087,14 +2077,12 @@ unordered_set(std::initializer_list<KEY>, ALLOC *)
 /// `equality-comparable` (see {Requirements on `KEY`}).
 template <class KEY, class HASH, class EQUAL, class ALLOCATOR>
 bool operator==(const unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& lhs,
-                const unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& rhs);
 
 #ifndef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 template <class KEY, class HASH, class EQUAL, class ALLOCATOR>
 bool operator!=(const unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& lhs,
-                const unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& rhs);
     // Return 'true' if the specified 'lhs' and 'rhs' objects do not have the
     // same value, and 'false' otherwise.  Two 'unordered_set' objects do not
     // have the same value if they do not have the same number of
@@ -2111,8 +2099,7 @@ bool operator!=(const unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& lhs,
 /// erased.
 template <class KEY, class HASH, class EQUAL, class ALLOCATOR, class PREDICATE>
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::size_type
-erase_if(unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& s, PREDICATE predicate)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(s);
+erase_if(unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& s, PREDICATE predicate);
 
 template <class KEY, class HASH, class EQUAL, class ALLOCATOR>
 void swap(unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& a,
@@ -2489,6 +2476,7 @@ inline
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>&
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::operator=(const unordered_set& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that we have delegated responsibility for correct handling of
     // allocator propagation to the 'HashTable' implementation.
 
@@ -2507,6 +2495,7 @@ unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::operator=(
                               && std::is_nothrow_move_assignable<HASH>::value
                               && std::is_nothrow_move_assignable<EQUAL>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that we have delegated responsibility for correct handling of
     // allocator propagation to the 'HashTable' implementation.
 
@@ -2524,6 +2513,7 @@ unordered_set<KEY, HASH, EQUAL, ALLOCATOR>&
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::operator=(
                                              std::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unordered_set tmp(values, d_impl.allocator());
 
     d_impl.swap(tmp.d_impl);
@@ -2537,6 +2527,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::begin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.elementListRoot());
 }
 
@@ -2545,6 +2536,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator();
 }
 
@@ -2553,6 +2545,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::local_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::begin(size_type index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return local_iterator(&d_impl.bucketAtIndex(index));
@@ -2563,6 +2556,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::local_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::end(size_type index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -2572,6 +2566,7 @@ template <class KEY, class HASH, class EQUAL, class ALLOCATOR>
 inline
 void unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::clear() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.removeAll();
 }
 
@@ -2582,6 +2577,7 @@ inline
 pair<typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator, bool>
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::emplace(Args&&... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -2599,6 +2595,7 @@ typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(const_iterator,
                                                          Args&&... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // There is no realistic use-case for the 'hint' in an 'unordered_set' of
     // unique values.  We could quickly test for a duplicate key, and have a
     // fast return path for when the method fails, but in the typical use case
@@ -2618,6 +2615,8 @@ bsl::pair<typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator,
           typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator>
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::equal_range(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<iterator, iterator> ResultType;
 
     iterator first  = this->find(key);
@@ -2635,6 +2634,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != this->end());
 
     return iterator(d_impl.remove(position.node()));
@@ -2645,6 +2645,8 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::erase(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     if (HashTableLink *target = d_impl.find(key)) {
         d_impl.remove(target);
         return 1;                                                     // RETURN
@@ -2660,6 +2662,7 @@ typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::erase(const_iterator first,
                                                   const_iterator last)
 {
+BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #if defined BDE_BUILD_TARGET_SAFE_2
     if (first != last) {
         iterator it        = this->begin();
@@ -2686,6 +2689,8 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::find(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return iterator(d_impl.find(key));
 }
 
@@ -2694,6 +2699,8 @@ inline
 bsl::pair<typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator, bool>
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::insert(const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -2709,6 +2716,8 @@ bsl::pair<typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator, bool>
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::insert(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     typedef bsl::pair<iterator, bool> ResultType;
 
     bool isInsertedFlag = false;
@@ -2725,6 +2734,8 @@ typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::insert(const_iterator,
                                                    const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     // There is no realistic use-case for the 'hint' in an 'unordered_set' of
     // unique values.  We could quickly test for a duplicate key, and have a
     // fast return path for when the method fails, but in the typical use case
@@ -2743,6 +2754,8 @@ unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::insert(
                               const_iterator,
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     // There is no realistic use-case for the 'hint' in an 'unordered_set' of
     // unique values.  We could quickly test for a duplicate key, and have a
     // fast return path for when the method fails, but in the typical use case
@@ -2760,6 +2773,7 @@ inline
 void unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::insert(INPUT_ITERATOR first,
                                                         INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insertFromRange(first, last);
 }
 
@@ -2769,6 +2783,7 @@ inline
 void unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::insert(
                                              std::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -2778,6 +2793,7 @@ inline
 void unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::max_load_factor(
                                                            float newLoadFactor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.setMaxLoadFactor(newLoadFactor);
 }
 
@@ -2785,6 +2801,7 @@ template <class KEY, class HASH, class EQUAL, class ALLOCATOR>
 inline
 void unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::rehash(size_type numBuckets)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.rehashForNumBuckets(numBuckets);
 }
 
@@ -2793,6 +2810,7 @@ inline
 void
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::reserve(size_type numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reserveForNumElements(numElements);
 }
 
@@ -2821,6 +2839,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::begin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_impl.elementListRoot());
 }
 
@@ -2829,6 +2848,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::end() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator();
 }
 
@@ -2838,6 +2858,7 @@ typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::cbegin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_impl.elementListRoot());
 }
 
@@ -2846,6 +2867,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator();
 }
 
@@ -2854,6 +2876,8 @@ inline
 bool unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::contains(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return find(key) != end();
 }
 
@@ -2862,6 +2886,7 @@ inline
 bool
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::empty() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_impl.size();
 }
 
@@ -2870,6 +2895,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::size() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.size();
 }
 
@@ -2887,6 +2913,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::hasher
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::hash_function() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.hasher();
 }
 
@@ -2895,6 +2922,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::key_equal
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::key_eq() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.comparator();
 }
 
@@ -2903,6 +2931,8 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::find(const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return const_iterator(d_impl.find(key));
 }
 
@@ -2911,6 +2941,8 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::count(const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return 0 != d_impl.find(key);
 }
 
@@ -2921,6 +2953,8 @@ bsl::pair<typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator,
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::equal_range(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef bsl::pair<const_iterator, const_iterator> ResultType;
 
     const_iterator first = this->find(key);
@@ -2939,6 +2973,7 @@ typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::bucket_count() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.numBuckets();
 }
 
@@ -2976,6 +3011,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::begin(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(&d_impl.bucketAtIndex(index));
@@ -2986,6 +3022,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::end(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -2996,6 +3033,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::cbegin(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(&d_impl.bucketAtIndex(index));
@@ -3006,6 +3044,7 @@ inline
 typename unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::cend(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -3016,6 +3055,7 @@ inline
 float unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::load_factor() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.loadFactor();
 }
 
@@ -3024,6 +3064,7 @@ inline
 float unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::max_load_factor() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.maxLoadFactor();
 }
 
@@ -3036,6 +3077,8 @@ bool bsl::operator==(
                     const bsl::unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& lhs,
                     const bsl::unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_impl == rhs.d_impl;
 }
 
@@ -3046,6 +3089,8 @@ bool bsl::operator!=(
                     const bsl::unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& lhs,
                     const bsl::unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 #endif
@@ -3057,6 +3102,7 @@ typename bsl::unordered_set<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 bsl::erase_if(unordered_set<KEY, HASH, EQUAL, ALLOCATOR>& s,
               PREDICATE                                   predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&s);
     return BloombergLP::bslstl::AlgorithmUtil::containerEraseIf(s, predicate);
 }
 

@@ -226,15 +226,13 @@ class AligningAllocator : public bslma::Allocator {
     /// address returned conforms to the platform requirement for any object
     /// of size `size` and is also guaranteed to be at least the alignment
     /// passed to the constructor.
-    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE;
 
     /// Return the memory block at the specified `address` back to this
     /// allocator.  If `address` is 0, this function has no effect.  The
     /// behavior is undefined unless `address` was allocated using this
     /// allocator object and has not already been deallocated.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
 };
 
 }  // close package namespace

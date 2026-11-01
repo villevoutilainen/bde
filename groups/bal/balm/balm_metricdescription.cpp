@@ -19,6 +19,8 @@ namespace balm {
 // ACCESSORS
 bsl::ostream& MetricDescription::print(bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     stream << d_category_p->name() << "." << d_name_p;
     return stream;
 }
@@ -26,6 +28,7 @@ bsl::ostream& MetricDescription::print(bsl::ostream& stream) const
 bsl::ostream& MetricDescription::printDescription(
                                                     bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     stream << "[ " << d_category_p->name() << "." << d_name_p << " ";
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);

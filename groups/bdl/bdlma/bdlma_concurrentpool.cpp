@@ -365,6 +365,7 @@ ConcurrentPool::~ConcurrentPool()
 // MANIPULATORS
 void ConcurrentPool::reserveCapacity(int numBlocks)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= numBlocks);
 
     // synchronize with `release` and other `reserveCapacity`

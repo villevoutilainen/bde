@@ -214,6 +214,7 @@ bsl::ostream& operator<<(bsl::ostream& stream, TypeCode::Enum value);
 inline
 bsl::ostream& operator<<(bsl::ostream& stream, TypeCode::Enum value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return TypeCode::print(stream, value, 0, -1);
 }
 

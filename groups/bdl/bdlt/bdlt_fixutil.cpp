@@ -805,6 +805,8 @@ int FixUtil::generate(char                        *buffer,
                       const Date&                  object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 <= bufferLength);
 
@@ -833,6 +835,8 @@ int FixUtil::generate(char                        *buffer,
                       const Time&                  object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 <= bufferLength);
 
@@ -864,6 +868,8 @@ int FixUtil::generate(char                        *buffer,
                       const Datetime&              object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 <= bufferLength);
 
@@ -896,6 +902,8 @@ int FixUtil::generate(char                        *buffer,
                       const DateTz&                object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 <= bufferLength);
 
@@ -929,6 +937,8 @@ int FixUtil::generate(char                        *buffer,
                       const TimeTz&                object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 <= bufferLength);
 
@@ -966,6 +976,8 @@ int FixUtil::generate(char                        *buffer,
                       const DatetimeTz&            object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
     BSLS_ASSERT(0 <= bufferLength);
 
@@ -1002,6 +1014,7 @@ int FixUtil::generateRaw(char                        *buffer,
                          const Date&                  object,
                          const FixUtilConfiguration&  )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(buffer);
 
     char *p = buffer;
@@ -1017,6 +1030,8 @@ int FixUtil::generateRaw(char                        *buffer,
                          const Time&                  object,
                          const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
 
     char *p = buffer;
@@ -1048,6 +1063,8 @@ int FixUtil::generateRaw(char                        *buffer,
                          const Datetime&              object,
                          const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
 
     const int dateLen = generateRaw(buffer, object.date(), configuration);
@@ -1082,6 +1099,8 @@ int FixUtil::generateRaw(char                        *buffer,
                          const DateTz&                object,
                          const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
 
     const int dateLen = generateRaw(buffer,
@@ -1099,6 +1118,8 @@ int FixUtil::generateRaw(char                        *buffer,
                          const TimeTz&                object,
                          const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
 
     const Time time = object.localTime();
@@ -1122,6 +1143,8 @@ int FixUtil::generateRaw(char                        *buffer,
                          const DatetimeTz&            object,
                          const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(buffer);
 
     const int datetimeLen = generateRaw(buffer,
@@ -1139,6 +1162,9 @@ int FixUtil::generate(bsl::string                 *string,
                       const Date&                  object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1148,6 +1174,9 @@ int FixUtil::generate(bsl::string                 *string,
                       const Time&                  object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1157,6 +1186,9 @@ int FixUtil::generate(bsl::string                 *string,
                       const Datetime&              object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1166,6 +1198,9 @@ int FixUtil::generate(bsl::string                 *string,
                       const DateTz&                object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1175,6 +1210,9 @@ int FixUtil::generate(bsl::string                 *string,
                       const TimeTz&                object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1184,6 +1222,9 @@ int FixUtil::generate(bsl::string                 *string,
                       const DatetimeTz&            object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1193,6 +1234,9 @@ int FixUtil::generate(std::string                 *string,
                       const Date&                  object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1202,6 +1246,9 @@ int FixUtil::generate(std::string                 *string,
                       const Time&                  object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1211,6 +1258,9 @@ int FixUtil::generate(std::string                 *string,
                       const Datetime&              object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1220,6 +1270,9 @@ int FixUtil::generate(std::string                 *string,
                       const DateTz&                object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1229,6 +1282,9 @@ int FixUtil::generate(std::string                 *string,
                       const TimeTz&                object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1238,6 +1294,9 @@ int FixUtil::generate(std::string                 *string,
                       const DatetimeTz&            object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1248,6 +1307,9 @@ int FixUtil::generate(std::pmr::string            *string,
                       const Date&                  object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1257,6 +1319,9 @@ int FixUtil::generate(std::pmr::string            *string,
                       const Time&                  object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1266,6 +1331,9 @@ int FixUtil::generate(std::pmr::string            *string,
                       const Datetime&              object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1275,6 +1343,9 @@ int FixUtil::generate(std::pmr::string            *string,
                       const DateTz&                object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1284,6 +1355,9 @@ int FixUtil::generate(std::pmr::string            *string,
                       const TimeTz&                object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1293,6 +1367,9 @@ int FixUtil::generate(std::pmr::string            *string,
                       const DatetimeTz&            object,
                       const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT(string);
 
     return u::Impl::generate(string, object, configuration);
@@ -1301,6 +1378,8 @@ int FixUtil::generate(std::pmr::string            *string,
 
 int FixUtil::parse(Date *result, const char *string, int length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     BSLS_ASSERT(result);
     BSLS_ASSERT(string);
     BSLS_ASSERT(0 <= length);
@@ -1338,6 +1417,8 @@ int FixUtil::parse(Date *result, const char *string, int length)
 
 int FixUtil::parse(Time *result, const char *string, int length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     BSLS_ASSERT(result);
     BSLS_ASSERT(string);
     BSLS_ASSERT(0 <= length);
@@ -1373,6 +1454,8 @@ int FixUtil::parse(Time *result, const char *string, int length)
 
 int FixUtil::parse(Datetime *result, const char *string, int length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     BSLS_ASSERT(result);
     BSLS_ASSERT(string);
     BSLS_ASSERT(0 <= length);
@@ -1419,6 +1502,8 @@ int FixUtil::parse(Datetime *result, const char *string, int length)
 
 int FixUtil::parse(DateTz *result, const char *string, int length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     BSLS_ASSERT(result);
     BSLS_ASSERT(string);
     BSLS_ASSERT(0 <= length);
@@ -1455,6 +1540,8 @@ int FixUtil::parse(DateTz *result, const char *string, int length)
 
 int FixUtil::parse(TimeTz *result, const char *string, int length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     BSLS_ASSERT(result);
     BSLS_ASSERT(string);
     BSLS_ASSERT(0 <= length);
@@ -1486,6 +1573,8 @@ int FixUtil::parse(TimeTz *result, const char *string, int length)
 
 int FixUtil::parse(DatetimeTz *result, const char *string, int length)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     BSLS_ASSERT(result);
     BSLS_ASSERT(string);
     BSLS_ASSERT(0 <= length);

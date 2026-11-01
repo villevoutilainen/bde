@@ -201,8 +201,7 @@ class MetricDescription {
 
     /// Return the address of the non-modifiable category object indicating
     /// the category of the metric described by this object.
-    const Category *category() const
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    const Category *category() const;
 
     /// Return the preferred publication type of this metric.  The
     /// preferred publication type of this metric indicates the preferred
@@ -232,14 +231,12 @@ class MetricDescription {
     /// Print the category and name of this metric description to the
     /// specified output `stream` in some single-line human-readable form,
     /// and return a reference to the modifiable `stream`.
-    bsl::ostream& print(bsl::ostream& stream) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::ostream& print(bsl::ostream& stream) const;
 
     /// Print the properties of this metric description to the specified
     /// output `stream` in some single-line human-readable form, and return
     /// a reference to the modifiable `stream`.
-    bsl::ostream& printDescription(bsl::ostream& stream) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::ostream& printDescription(bsl::ostream& stream) const;
 };
 
 // FREE OPERATORS
@@ -325,6 +322,7 @@ const char *MetricDescription::name() const
 inline
 const Category *MetricDescription::category() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_category_p;
 }
 

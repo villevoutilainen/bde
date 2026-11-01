@@ -19,6 +19,7 @@ namespace bdlma {
 // ACCESSORS
 void MemoryBlockDescriptor::print() const
 {
+BSLS_ASSERT_CONVEYOR_OBJECT(this);
 /// Unfortunately, %zu is not correctly supported across all platforms.
 #define ZU BSLS_BSLTESTUTIL_FORMAT_ZU
 

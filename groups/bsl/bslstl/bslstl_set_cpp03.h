@@ -2330,6 +2330,7 @@ inline
 set<KEY, COMPARATOR, ALLOCATOR>&
 set<KEY, COMPARATOR, ALLOCATOR>::operator=(const set& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this != &rhs)) {
         if (AllocatorTraits::propagate_on_container_copy_assignment::value) {
             set other(rhs, rhs.nodeFactory().allocator());
@@ -2352,6 +2353,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::operator=(
                             AllocatorTraits::is_always_equal::value
                          && std::is_nothrow_move_assignable<COMPARATOR>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     set& lvalue = rhs;
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this != &lvalue)) {
@@ -2378,6 +2380,7 @@ inline
 set<KEY, COMPARATOR, ALLOCATOR>&
 set<KEY, COMPARATOR, ALLOCATOR>::operator=(std::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     clear();
     insert(values.begin(), values.end());
     return *this;
@@ -2389,6 +2392,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::iterator
 set<KEY, COMPARATOR, ALLOCATOR>::begin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_tree.firstNode());
 }
 
@@ -2397,6 +2401,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::iterator
 set<KEY, COMPARATOR, ALLOCATOR>::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_tree.sentinel());
 }
 
@@ -2405,6 +2410,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::reverse_iterator
 set<KEY, COMPARATOR, ALLOCATOR>::rbegin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(end());
 }
 
@@ -2413,6 +2419,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::reverse_iterator
 set<KEY, COMPARATOR, ALLOCATOR>::rend() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(begin());
 }
 
@@ -2421,6 +2428,8 @@ inline
 pair<typename set<KEY, COMPARATOR, ALLOCATOR>::iterator, bool>
 set<KEY, COMPARATOR, ALLOCATOR>::insert(const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -2447,6 +2456,8 @@ pair<typename set<KEY, COMPARATOR, ALLOCATOR>::iterator, bool>
 set<KEY, COMPARATOR, ALLOCATOR>::insert(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     value_type& lvalue = value;
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
@@ -2474,6 +2485,8 @@ typename set<KEY, COMPARATOR, ALLOCATOR>::iterator
 set<KEY, COMPARATOR, ALLOCATOR>::insert(const_iterator    hint,
                                         const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                 const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -2503,6 +2516,8 @@ typename set<KEY, COMPARATOR, ALLOCATOR>::iterator
 set<KEY, COMPARATOR, ALLOCATOR>::insert(const_iterator    hint,
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     value_type& lvalue = value;
     BloombergLP::bslalg::RbTreeNode *hintNode =
                 const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
@@ -2534,6 +2549,7 @@ inline
 void set<KEY, COMPARATOR, ALLOCATOR>::insert(INPUT_ITERATOR first,
                                              INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ///Implementation Notes
     ///--------------------
     // First, consume currently held free nodes.  If those nodes are
@@ -2565,6 +2581,7 @@ template <class KEY, class COMPARATOR, class ALLOCATOR>
 inline
 void set<KEY, COMPARATOR, ALLOCATOR>::insert(std::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -2585,6 +2602,7 @@ pair<typename set<KEY, COMPARATOR, ALLOCATOR>::iterator, bool>
 set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                           )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         );
     int comparisonResult;
@@ -2614,6 +2632,7 @@ pair<typename set<KEY, COMPARATOR, ALLOCATOR>::iterator, bool>
 set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01));
     int comparisonResult;
@@ -2645,6 +2664,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02));
@@ -2679,6 +2699,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2716,6 +2737,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2756,6 +2778,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2799,6 +2822,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2845,6 +2869,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2894,6 +2919,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2946,6 +2972,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -3001,6 +3028,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -3038,6 +3066,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::iterator
 set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         );
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -3071,6 +3100,7 @@ typename set<KEY, COMPARATOR, ALLOCATOR>::iterator
 set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01));
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -3106,6 +3136,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02));
@@ -3144,6 +3175,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -3185,6 +3217,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -3229,6 +3262,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -3276,6 +3310,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -3326,6 +3361,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -3379,6 +3415,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -3435,6 +3472,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -3494,6 +3532,7 @@ set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -3538,6 +3577,7 @@ pair<typename set<KEY, COMPARATOR, ALLOCATOR>::iterator, bool>
 set<KEY, COMPARATOR, ALLOCATOR>::emplace(
                           BSLS_COMPILERFEATURES_FORWARD_REF(Args)... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args, arguments)...);
     int comparisonResult;
@@ -3565,6 +3605,7 @@ typename set<KEY, COMPARATOR, ALLOCATOR>::iterator
 set<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                           BSLS_COMPILERFEATURES_FORWARD_REF(Args)... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
         BSLS_COMPILERFEATURES_FORWARD(Args, arguments)...);
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -3596,6 +3637,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::iterator
 set<KEY, COMPARATOR, ALLOCATOR>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != end());
 
     BloombergLP::bslalg::RbTreeNode *node =
@@ -3612,6 +3654,8 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::size_type
 set<KEY, COMPARATOR, ALLOCATOR>::erase(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const_iterator it = find(key);
     if (it == end()) {
         return 0;                                                     // RETURN
@@ -3626,6 +3670,7 @@ typename set<KEY, COMPARATOR, ALLOCATOR>::iterator
 set<KEY, COMPARATOR, ALLOCATOR>::erase(const_iterator first,
                                        const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (first != last) {
         first = erase(first);
     }
@@ -3697,6 +3742,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 set<KEY, COMPARATOR, ALLOCATOR>::begin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return cbegin();
 }
 
@@ -3705,6 +3751,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 set<KEY, COMPARATOR, ALLOCATOR>::end() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return cend();
 }
 
@@ -3713,6 +3760,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 set<KEY, COMPARATOR, ALLOCATOR>::rbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return crbegin();
 }
 
@@ -3721,6 +3769,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 set<KEY, COMPARATOR, ALLOCATOR>::rend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return crend();
 }
 
@@ -3729,6 +3778,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 set<KEY, COMPARATOR, ALLOCATOR>::cbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_tree.firstNode());
 }
 
@@ -3737,6 +3787,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 set<KEY, COMPARATOR, ALLOCATOR>::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_tree.sentinel());
 }
 
@@ -3745,6 +3796,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 set<KEY, COMPARATOR, ALLOCATOR>::crbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -3753,6 +3805,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 set<KEY, COMPARATOR, ALLOCATOR>::crend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -3760,6 +3813,8 @@ template <class KEY, class COMPARATOR, class ALLOCATOR>
 inline
 bool set<KEY, COMPARATOR, ALLOCATOR>::contains(const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return find(key) != end();
 }
 
@@ -3768,6 +3823,7 @@ template <class KEY, class COMPARATOR, class ALLOCATOR>
 inline
 bool set<KEY, COMPARATOR, ALLOCATOR>::empty() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_tree.numNodes();
 }
 
@@ -3776,6 +3832,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::size_type
 set<KEY, COMPARATOR, ALLOCATOR>::size() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_tree.numNodes();
 }
 
@@ -3792,6 +3849,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::key_compare
 set<KEY, COMPARATOR, ALLOCATOR>::key_comp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return comparator().keyComparator();
 }
 
@@ -3800,6 +3858,7 @@ inline
 typename set<KEY, COMPARATOR, ALLOCATOR>::value_compare
 set<KEY, COMPARATOR, ALLOCATOR>::value_comp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return value_compare(key_comp());
 }
 
@@ -3811,6 +3870,8 @@ inline
 bool bsl::operator==(const bsl::set<KEY, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::set<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return BloombergLP::bslalg::RangeCompare::equal(lhs.begin(),
                                                     lhs.end(),
                                                     lhs.size(),
@@ -3825,6 +3886,8 @@ inline
 bool bsl::operator!=(const bsl::set<KEY, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::set<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 #endif
@@ -3865,6 +3928,8 @@ inline
 bool bsl::operator>(const bsl::set<KEY, COMPARATOR, ALLOCATOR>& lhs,
                     const bsl::set<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs < lhs;
 }
 
@@ -3881,6 +3946,8 @@ inline
 bool bsl::operator>=(const bsl::set<KEY, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::set<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs < rhs);
 }
 
@@ -3892,6 +3959,7 @@ inline
 typename bsl::set<KEY, COMPARATOR, ALLOCATOR>::size_type
 bsl::erase_if(set<KEY, COMPARATOR, ALLOCATOR>& s, PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&s);
     return BloombergLP::bslstl::AlgorithmUtil::containerEraseIf(s, predicate);
 }
 

@@ -175,13 +175,9 @@ class FixUtilConfiguration {
 
     // FRIENDS
     friend bool operator==(const FixUtilConfiguration& lhs,
-                           const FixUtilConfiguration& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const FixUtilConfiguration& rhs);
     friend bool operator!=(const FixUtilConfiguration& lhs,
-                           const FixUtilConfiguration& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const FixUtilConfiguration& rhs);
 
   private:
     // PRIVATE CREATORS
@@ -233,23 +229,21 @@ class FixUtilConfiguration {
     /// specified `value`.  The behavior is undefined unless `0 <= value`
     /// and `6 >= value`.  Note that the FIX protocol allows for much higher
     /// precision.
-    void setFractionalSecondPrecision(int value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setFractionalSecondPrecision(int value);
 
     /// Set the `useZAbbreviationForUtc` attribute of this object to the
     /// specified `value`.
-    void setUseZAbbreviationForUtc(bool value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setUseZAbbreviationForUtc(bool value);
 
     // ACCESSORS
 
     /// Return the value of the `fractionalSecondPrecision` attribute of
     /// this object.
-    int fractionalSecondPrecision() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int fractionalSecondPrecision() const;
 
     /// Return the value of the `useZAbbreviationForUtc` attribute of this
     /// object.
-    bool useZAbbreviationForUtc() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool useZAbbreviationForUtc() const;
 
                                   // Aspects
 
@@ -268,9 +262,7 @@ class FixUtilConfiguration {
     /// notice.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        int           spacesPerLevel = 4) const;
 };
 
 // FREE OPERATORS
@@ -297,9 +289,7 @@ bool operator!=(const FixUtilConfiguration& lhs,
 /// without notice.  Also note that this method has the same behavior as
 /// `object.print(stream, 0, -1)`, but with the attribute names elided.
 bsl::ostream& operator<<(bsl::ostream&               stream,
-                         const FixUtilConfiguration& object)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                         const FixUtilConfiguration& object);
 
 // ============================================================================
 //                             INLINE DEFINITIONS
@@ -378,12 +368,14 @@ FixUtilConfiguration& FixUtilConfiguration::operator=(
 inline
 int FixUtilConfiguration::fractionalSecondPrecision() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_configurationMask & k_FRACTIONAL_SECOND_PRECISION_MASK;
 }
 
 inline
 bool FixUtilConfiguration::useZAbbreviationForUtc() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_configurationMask & k_USE_Z_ABBREVIATION_FOR_UTC_BIT;
 }
 
@@ -394,6 +386,8 @@ inline
 bool bdlt::operator==(const FixUtilConfiguration& lhs,
                       const FixUtilConfiguration& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_configurationMask == rhs.d_configurationMask;
 }
 
@@ -401,6 +395,8 @@ inline
 bool bdlt::operator!=(const FixUtilConfiguration& lhs,
                       const FixUtilConfiguration& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_configurationMask != rhs.d_configurationMask;
 }
 

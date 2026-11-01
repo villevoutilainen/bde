@@ -913,7 +913,7 @@ class multiset {
         BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
         const COMPARATOR&                        comparator     = COMPARATOR(),
         const ALLOCATOR&                         basicAllocator = ALLOCATOR())
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
+                                           BSLS_ASSERT_CONVEYOR_TRUST_PRE(range)
     : d_compAndAlloc(comparator, basicAllocator)
     , d_tree()
     {
@@ -938,7 +938,7 @@ class multiset {
     multiset(from_range_t                             ,
              BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range,
              const ALLOCATOR&                         basicAllocator)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
+                                           BSLS_ASSERT_CONVEYOR_TRUST_PRE(range)
     : d_compAndAlloc(COMPARATOR(), basicAllocator)
     , d_tree()
     {
@@ -1017,32 +1017,29 @@ class multiset {
     /// modifiable access to this object.  This method requires that the
     /// (template parameter) type `KEY` be `copy-insertable` into this
     /// multiset (see {Requirements on `KEY`}).
-    multiset& operator=(std::initializer_list<KEY> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    multiset& operator=(std::initializer_list<KEY> values);
 #endif
 
     /// Return an iterator providing modifiable access to the first
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this multiset, or the `end` iterator if this multiset
     /// is empty.
-    iterator begin() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator begin() BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an iterator providing modifiable access to the past-the-end
     /// element in the ordered sequence of `value_type` objects maintained
     /// by this multiset.
-    iterator end() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator end() BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reverse iterator providing modifiable access to the last
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this multiset, or `rend` if this multiset is empty.
-    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reverse iterator providing modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this multiset.
-    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT;
 
     /// Insert the specified `value` into this multiset.  If a range
     /// containing elements equivalent to `value` already exists, insert the
@@ -1050,8 +1047,7 @@ class multiset {
     /// the newly inserted `value_type` object.  This method requires that
     /// the (template parameter) type `KEY` be `copy-insertable` into this
     /// multiset (see {Requirements on `KEY`}).
-    iterator insert(const value_type& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator insert(const value_type& value);
 
     /// Insert the specified `value` into this multiset.  If a range
     /// containing elements equivalent to `value` already exists in this
@@ -1061,8 +1057,7 @@ class multiset {
     /// equivalent to `value`.  This method requires that the (template
     /// parameter) type `KEY` be `move-insertable` into this multiset (see
     /// {Requirements on `KEY`}).
-    iterator insert(BloombergLP::bslmf::MovableRef<value_type> value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator insert(BloombergLP::bslmf::MovableRef<value_type> value);
 
     /// Insert the specified `value` into this multiset (in amortized
     /// constant time if the specified `hint` is a valid immediate successor
@@ -1074,8 +1069,7 @@ class multiset {
     /// `KEY` be `copy-insertable` into this multiset (see {Requirements on
     /// `KEY`}).  The behavior is undefined unless `hint` is an iterator in
     /// the range `[begin() .. end()]` (both endpoints included).
-    iterator insert(const_iterator hint, const value_type& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator insert(const_iterator hint, const value_type& value);
 
     /// Insert the specified `value` into this multiset (in amortized
     /// constant time if the specified `hint` is a valid immediate successor
@@ -1089,8 +1083,7 @@ class multiset {
     /// The behavior is undefined unless `hint` is an iterator in the range
     /// `[begin() .. end()]` (both endpoints included).
     iterator insert(const_iterator                             hint,
-                    BloombergLP::bslmf::MovableRef<value_type> value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                    BloombergLP::bslmf::MovableRef<value_type> value);
 
     /// Insert into this multiset the value of each `value_type` object in
     /// the range starting at the specified `first` iterator and ending
@@ -1104,16 +1097,14 @@ class multiset {
     /// undefined unless `first` and `last` refer to a sequence of valid
     /// values where `first` is at a position at or before `last`.
     template <class INPUT_ITERATOR>
-    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last);
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
     /// Insert into this multiset the value of each `value_type` object in
     /// the specified `values` initializer list.  This method requires that
     /// the (template parameter) type `KEY` be `copy-insertable` into this
     /// multiset (see {Requirements on `KEY`}).
-    void insert(std::initializer_list<KEY> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void insert(std::initializer_list<KEY> values);
 #endif
 
     /// Insert into this multiset the value of each `value_type` object in the
@@ -1127,9 +1118,9 @@ class multiset {
     template <class RANGE>
     BSLSTL_MULTISET_REQUIRES_CONTAINER_COMPATIBLE_RANGE(RANGE, value_type)
     void insert_range(BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(range)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&range);
         // Defined inline to avoid Windows errors.
 
 #if defined(BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS) \
@@ -1155,7 +1146,7 @@ class multiset {
     /// requires that the (template parameter) type `KEY` be
     /// `emplace-constructible` from `args` (see {Requirements on `KEY`}).
     template <class... Args>
-    iterator emplace(Args&&... args) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator emplace(Args&&... args);
 
     /// Insert into this multiset a newly-created `value_type` object,
     /// constructed by forwarding `get_allocator()` (if required) and the
@@ -1172,8 +1163,7 @@ class multiset {
     /// unless `hint` is an iterator in the range `[begin() .. end()]` (both
     /// endpoints included).
     template <class... Args>
-    iterator emplace_hint(const_iterator hint, Args&&... args)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator emplace_hint(const_iterator hint, Args&&... args);
 
 #endif
 
@@ -1193,7 +1183,7 @@ class multiset {
     /// to `key`, return 0 with no other effect.   This method invalidates
     /// only iterators and references to the removed element and previously
     /// saved values of the `end()` iterator.
-    size_type erase(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type erase(const key_type& key);
     template <class t_KEY>
     typename enable_if<
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
@@ -1224,8 +1214,7 @@ class multiset {
     /// `first` and `last` either refer to elements in this multiset or are
     /// the `end` iterator, and the `first` position is at or before the
     /// `last` position in the ordered sequence provided by this container.
-    iterator erase(const_iterator first, const_iterator last)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator erase(const_iterator first, const_iterator last);
 
     void swap(multiset& other) BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(
                                  AllocatorTraits::is_always_equal::value
@@ -1263,8 +1252,10 @@ class multiset {
     /// iterator otherwise.
     ///
     /// Note: implemented inline due to Sun CC compilation error.
-    iterator find(const key_type& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    iterator find(const key_type& key)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
     }
@@ -1280,8 +1271,10 @@ class multiset {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    find(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    find(const LOOKUP_KEY& key)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
     }
@@ -1297,8 +1290,9 @@ class multiset {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     iterator lower_bound(const key_type& key)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
     }
@@ -1318,8 +1312,10 @@ class multiset {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    lower_bound(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    lower_bound(const LOOKUP_KEY& key)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
     }
@@ -1335,8 +1331,9 @@ class multiset {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     iterator upper_bound(const key_type& key)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
     }
@@ -1356,8 +1353,10 @@ class multiset {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         iterator>::type
-    upper_bound(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    upper_bound(const LOOKUP_KEY& key)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
     }
@@ -1373,8 +1372,9 @@ class multiset {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     pair<iterator, iterator> equal_range(const key_type& key)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         iterator startIt = lower_bound(key);
         iterator endIt   = startIt;
 
@@ -1399,8 +1399,10 @@ class multiset {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         pair<iterator, iterator> >::type
-    equal_range(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    equal_range(const LOOKUP_KEY& key)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         iterator startIt = lower_bound(key);
         iterator endIt   = startIt;
         if (endIt != end() && !comparator()(key, *endIt.node())) {
@@ -1421,58 +1423,49 @@ class multiset {
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this multiset, or the `end` iterator if this multiset
     /// is empty.
-    const_iterator begin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator begin() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in the ordered sequence of `value_type` objects
     /// maintained by this multiset.
-    const_iterator end() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator end() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// last `value_type` object in the ordered sequence of `value_type`
     /// objects maintained by this multiset, or `rend` if this multiset is
     /// empty.
-    const_reverse_iterator rbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator rbegin() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this multiset.
-    const_reverse_iterator rend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator rend() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an iterator providing non-modifiable access to the first
     /// `value_type` object in the ordered sequence of `value_type` objects
     /// maintained by this multiset, or the `end` iterator if this multiset
     /// is empty.
-    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an iterator providing non-modifiable access to the
     /// past-the-end element in the ordered sequence of `value_type` objects
     /// maintained by this multiset.
-    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// last `value_type` object in the ordered sequence of `value_type`
     /// objects maintained by this multiset, or `rend` if this multiset is
     /// empty.
-    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// prior-to-the-beginning element in the ordered sequence of
     /// `value_type` objects maintained by this multiset.
-    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if this map contains an element whose key is
     /// equivalent to the specified `key`.
-    bool contains(const key_type &key) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool contains(const key_type &key) const;
 
     /// Return `true` if this map contains an element whose key is
     /// equivalent to the specified `key`.
@@ -1483,19 +1476,19 @@ class multiset {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         bool>::type
-    contains(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    contains(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return find(key) != end();
     }
 
     /// Return `true` if this multiset contains no elements, and `false`
     /// otherwise.
-    bool empty() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool empty() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the number of elements in this multiset.
-    size_type size() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type size() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a theoretical upper bound on the largest number of elements
     /// that this multiset could possibly hold.  Note that there is no
@@ -1508,12 +1501,12 @@ class multiset {
     /// value, otherwise return a default constructed `key_compare` object.
     /// Note that this comparator compares objects of type `KEY`, which is
     /// the type of the `value_type` objects contained in this multiset.
-    key_compare key_comp() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    key_compare key_comp() const;
 
     /// Return a functor for comparing two `value_type` objects using
     /// `key_comp()`.  Note that since `value_type` is an alias to `KEY` for
     /// `multiset`, this method returns the same functor as `key_comp()`.
-    value_compare value_comp() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    value_compare value_comp() const;
 
     // Turn off complaints about necessarily class-defined methods.
     // BDE_VERIFY pragma: push
@@ -1526,8 +1519,9 @@ class multiset {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     const_iterator find(const key_type& key) const
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
     }
@@ -1543,8 +1537,10 @@ class multiset {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    find(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    find(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::find(
             d_tree, this->comparator(), key));
     }
@@ -1554,8 +1550,9 @@ class multiset {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     size_type count(const key_type& key) const
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         int            count = 0;
         const_iterator it    = lower_bound(key);
 
@@ -1575,8 +1572,10 @@ class multiset {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         size_type>::type
-    count(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    count(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         int            count = 0;
         const_iterator it    = lower_bound(key);
 
@@ -1598,8 +1597,9 @@ class multiset {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     const_iterator lower_bound(const key_type& key) const
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
     }
@@ -1619,8 +1619,10 @@ class multiset {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    lower_bound(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    lower_bound(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::lowerBound(
             d_tree, this->comparator(), key));
     }
@@ -1636,8 +1638,9 @@ class multiset {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     const_iterator upper_bound(const key_type& key) const
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
     }
@@ -1657,8 +1660,10 @@ class multiset {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         const_iterator>::type
-    upper_bound(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    upper_bound(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return const_iterator(BloombergLP::bslalg::RbTreeUtil::upperBound(
             d_tree, this->comparator(), key));
     }
@@ -1675,8 +1680,9 @@ class multiset {
     ///
     /// Note: implemented inline due to Sun CC compilation error.
     pair<const_iterator, const_iterator> equal_range(const key_type& key) const
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         const_iterator startIt = lower_bound(key);
         const_iterator endIt   = startIt;
 
@@ -1702,8 +1708,10 @@ class multiset {
         BloombergLP::bslmf::IsTransparentPredicate<COMPARATOR,
                                                    LOOKUP_KEY>::value,
         pair<const_iterator, const_iterator> >::type
-    equal_range(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    equal_range(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         const_iterator startIt = lower_bound(key);
         const_iterator endIt   = startIt;
         if (endIt != end() && !comparator()(key, *endIt.node())) {
@@ -1855,14 +1863,12 @@ multiset(std::initializer_list<KEY>, ALLOC *)
 /// `equality-comparable` (see {Requirements on `KEY`}).
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator==(const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs);
 
 #ifndef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator!=(const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs);
     // Return 'true' if the specified 'lhs' and 'rhs' objects do not have the
     // same value, and 'false' otherwise.  Two 'multiset' objects 'lhs' and
     // 'rhs' do not have the same value if they do not have the same number of
@@ -1880,15 +1886,13 @@ bool operator!=(const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 BloombergLP::bslalg::SynthThreeWayUtil::Result<KEY>
 operator<=>(const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
-            const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+            const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs);
 
 #else
 
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator< (const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs);
     // Return 'true' if the value of the specified 'lhs' multiset is
     // lexicographically less than that of the specified 'rhs' multiset, and
     // 'false' otherwise.  Given iterators 'i' and 'j' over the respective
@@ -1903,8 +1907,7 @@ bool operator< (const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
 
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator> (const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs);
     // Return 'true' if the value of the specified 'lhs' multiset is
     // lexicographically greater than that of the specified 'rhs' multiset, and
     // 'false' otherwise.  The value of multiset 'lhs' is lexicographically
@@ -1915,8 +1918,7 @@ bool operator> (const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
 
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator<=(const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs);
     // Return 'true' if the value of the specified 'lhs' multiset is
     // lexicographically less than or equal to that of the specified 'rhs'
     // multiset, and 'false' otherwise.  The value of multiset 'lhs' is
@@ -1927,8 +1929,7 @@ bool operator<=(const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
 
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 bool operator>=(const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
-                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const multiset<KEY, COMPARATOR, ALLOCATOR>& rhs);
     // Return 'true' if the value of the specified 'lhs' multiset is
     // lexicographically greater than or equal to that of the specified 'rhs'
     // multiset, and 'false' otherwise.  The value of multiset 'lhs' is
@@ -1945,8 +1946,7 @@ bool operator>=(const multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
 /// specified predicate `predicate`.  Return the number of elements erased.
 template <class KEY, class COMPARATOR, class ALLOCATOR, class PREDICATE>
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::size_type
-erase_if(multiset<KEY, COMPARATOR, ALLOCATOR>& ms, PREDICATE predicate)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(ms);
+erase_if(multiset<KEY, COMPARATOR, ALLOCATOR>& ms, PREDICATE predicate);
 
 template <class KEY, class COMPARATOR, class ALLOCATOR>
 void swap(multiset<KEY, COMPARATOR, ALLOCATOR>& a,
@@ -2545,6 +2545,7 @@ inline
 multiset<KEY, COMPARATOR, ALLOCATOR>&
 multiset<KEY, COMPARATOR, ALLOCATOR>::operator=(const multiset& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this != &rhs)) {
         if (AllocatorTraits::propagate_on_container_copy_assignment::value) {
             multiset other(rhs, rhs.nodeFactory().allocator());
@@ -2567,6 +2568,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::operator=(
                             AllocatorTraits::is_always_equal::value
                          && std::is_nothrow_move_assignable<COMPARATOR>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     multiset& lvalue = rhs;
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this != &lvalue)) {
@@ -2594,6 +2596,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>&
 multiset<KEY, COMPARATOR, ALLOCATOR>::operator=(
                                              std::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     clear();
     insert(values.begin(), values.end());
     return *this;
@@ -2605,6 +2608,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::begin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_tree.firstNode());
 }
 
@@ -2613,6 +2617,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_tree.sentinel());
 }
 
@@ -2621,6 +2626,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::rbegin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(end());
 }
 
@@ -2629,6 +2635,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::rend() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(begin());
 }
 
@@ -2637,6 +2644,8 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::insert(const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *insertLocation =
@@ -2661,6 +2670,8 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::insert(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     value_type& lvalue = value;
     bool        leftChild;
 
@@ -2686,6 +2697,8 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::insert(const_iterator    hint,
                                              const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -2715,6 +2728,8 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::insert(
                               const_iterator                             hint,
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     value_type& lvalue = value;
     bool        leftChild;
 
@@ -2744,6 +2759,7 @@ inline
 void multiset<KEY, COMPARATOR, ALLOCATOR>::insert(INPUT_ITERATOR first,
                                                   INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ///Implementation Notes
     ///--------------------
     // First, consume currently held free nodes.  If those nodes are
@@ -2777,6 +2793,7 @@ inline
 void multiset<KEY, COMPARATOR, ALLOCATOR>::insert(
                                              std::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -2788,6 +2805,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(Args&&... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2813,6 +2831,7 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                                                    Args&&...      args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2841,6 +2860,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != end());
 
     BloombergLP::bslalg::RbTreeNode *node =
@@ -2857,6 +2877,8 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::size_type
 multiset<KEY, COMPARATOR, ALLOCATOR>::erase(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     size_type      count = 0;
     const_iterator first = find(key);
     if (first != end()) {
@@ -2875,6 +2897,7 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::erase(const_iterator first,
                                             const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (first != last) {
         first = erase(first);
     }
@@ -2948,6 +2971,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::begin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return cbegin();
 }
 
@@ -2956,6 +2980,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::end() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return cend();
 }
 
@@ -2964,6 +2989,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::rbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return crbegin();
 }
 
@@ -2972,6 +2998,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::rend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return crend();
 }
 
@@ -2980,6 +3007,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::cbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_tree.firstNode());
 }
 
@@ -2988,6 +3016,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_tree.sentinel());
 }
 
@@ -2996,6 +3025,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::crbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -3004,6 +3034,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::crend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -3011,6 +3042,8 @@ template <class KEY, class COMPARATOR, class ALLOCATOR>
 inline
 bool multiset<KEY, COMPARATOR, ALLOCATOR>::contains(const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return find(key) != end();
 }
 
@@ -3019,6 +3052,7 @@ template <class KEY, class COMPARATOR, class ALLOCATOR>
 inline
 bool multiset<KEY, COMPARATOR, ALLOCATOR>::empty() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_tree.numNodes();
 }
 
@@ -3027,6 +3061,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::size_type
 multiset<KEY, COMPARATOR, ALLOCATOR>::size() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_tree.numNodes();
 }
 
@@ -3043,6 +3078,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::key_compare
 multiset<KEY, COMPARATOR, ALLOCATOR>::key_comp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return comparator().keyComparator();
 }
 
@@ -3051,6 +3087,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::value_compare
 multiset<KEY, COMPARATOR, ALLOCATOR>::value_comp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return value_compare(key_comp());
 }
 
@@ -3062,6 +3099,8 @@ inline
 bool bsl::operator==(const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return BloombergLP::bslalg::RangeCompare::equal(lhs.begin(),
                                                     lhs.end(),
                                                     lhs.size(),
@@ -3076,6 +3115,8 @@ inline
 bool bsl::operator!=(const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 #endif
@@ -3116,6 +3157,8 @@ inline
 bool bsl::operator>(const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
                     const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs < lhs;
 }
 
@@ -3132,6 +3175,8 @@ inline
 bool bsl::operator>=(const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs < rhs);
 }
 
@@ -3143,6 +3188,7 @@ inline
 typename bsl::multiset<KEY, COMPARATOR, ALLOCATOR>::size_type
 bsl::erase_if(multiset<KEY, COMPARATOR, ALLOCATOR>& ms, PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&ms);
     return BloombergLP::bslstl::AlgorithmUtil::containerEraseIf(ms, predicate);
 }
 

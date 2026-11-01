@@ -73,11 +73,13 @@ TimetableCache_Entry& TimetableCache_Entry::operator=(
 // ACCESSORS
 bsl::shared_ptr<const Timetable> TimetableCache_Entry::get() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_ptr;
 }
 
 Datetime TimetableCache_Entry::loadTime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_loadTime;
 }
 
@@ -125,6 +127,7 @@ TimetableCache::~TimetableCache()
 bsl::shared_ptr<const Timetable>
 TimetableCache::getTimetable(const char *timetableName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(timetableName);
 
     {
@@ -180,6 +183,7 @@ TimetableCache::getTimetable(const char *timetableName)
 
 int TimetableCache::invalidate(const char *timetableName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(timetableName);
 
     bslmt::LockGuard<bslmt::Mutex> lockGuard(&d_lock);
@@ -197,6 +201,7 @@ int TimetableCache::invalidate(const char *timetableName)
 
 int TimetableCache::invalidateAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lockGuard(&d_lock);
 
     const int numInvalidated = static_cast<int>(d_cache.size());
@@ -210,6 +215,7 @@ int TimetableCache::invalidateAll()
 bsl::shared_ptr<const Timetable>
 TimetableCache::lookupTimetable(const char *timetableName) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(timetableName);
 
     bslmt::LockGuard<bslmt::Mutex> lockGuard(&d_lock);
@@ -231,6 +237,7 @@ TimetableCache::lookupTimetable(const char *timetableName) const
 
 Datetime TimetableCache::lookupLoadTime(const char *timetableName) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(timetableName);
 
     bslmt::LockGuard<bslmt::Mutex> lockGuard(&d_lock);

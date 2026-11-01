@@ -7020,6 +7020,7 @@ inline
 TYPE& VariantImp<TYPES>::createInPlace(
                           )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7040,6 +7041,7 @@ inline
 TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7063,6 +7065,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7089,6 +7092,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7118,6 +7122,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7150,6 +7155,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7185,6 +7191,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7223,6 +7230,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7264,6 +7272,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7308,6 +7317,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7355,6 +7365,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7405,6 +7416,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) arguments_10,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_11) arguments_11)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7458,6 +7470,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_11) arguments_11,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_12) arguments_12)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7514,6 +7527,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_12) arguments_12,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_13) arguments_13)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7573,6 +7587,7 @@ TYPE& VariantImp<TYPES>::createInPlace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_13) arguments_13,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_14) arguments_14)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 
@@ -7610,6 +7625,7 @@ inline
 TYPE& VariantImp<TYPES>::createInPlace(
                           BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef bsls::ObjectBuffer<TYPE> BufferType;
     BufferType& bufR = *reinterpret_cast<BufferType *>(&this->d_value);
 

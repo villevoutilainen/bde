@@ -897,13 +897,11 @@ class MetricsManager {
 
     /// Return a reference to the non-modifiable repository of collectors
     /// managed by this object.
-    const CollectorRepository& collectorRepository() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const CollectorRepository& collectorRepository() const;
 
     /// Return a reference to the non-modifiable registry of metrics managed
     /// by this object.
-    const MetricRegistry& metricRegistry() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const MetricRegistry& metricRegistry() const;
 };
 
 // ============================================================================
@@ -959,12 +957,14 @@ void MetricsManager::setAllCategoriesEnabled(bool value)
 inline
 CollectorRepository& MetricsManager::collectorRepository()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_collectors;
 }
 
 inline
 MetricRegistry& MetricsManager::metricRegistry()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_metricRegistry;
 }
 
@@ -1003,12 +1003,14 @@ inline
 const CollectorRepository&
 MetricsManager::collectorRepository() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_collectors;
 }
 
 inline
 const MetricRegistry& MetricsManager::metricRegistry() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_metricRegistry;
 }
 

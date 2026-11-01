@@ -154,9 +154,7 @@ struct DefaultTimetableCache {
     /// The behavior is undefined unless `loader` and `allocator` remain
     /// valid until a subsequent call to `destroy`.
     static int initialize(TimetableLoader  *loader,
-                          bslma::Allocator *allocator)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(loader)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(allocator);
+                          bslma::Allocator *allocator);
 
     /// Initialize the default `TimetableCache` object managed by this class
     /// to use the specified `loader` to obtain timetables, to have the
@@ -171,10 +169,7 @@ struct DefaultTimetableCache {
     /// `TimetableCache::getTimetable` on the cache returned by `instance`.
     static int initialize(TimetableLoader           *loader,
                           const bsls::TimeInterval&  timeout,
-                          bslma::Allocator          *allocator)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(loader)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(timeout)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(allocator);
+                          bslma::Allocator          *allocator);
 
     /// Return an address providing modifiable access to the default
     /// `TimetableCache` object managed by this class, if the default cache

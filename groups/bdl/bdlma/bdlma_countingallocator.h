@@ -350,8 +350,7 @@ class CountingAllocator : public bslma::Allocator {
     /// `allocate` method of the allocator supplied at construction, and
     /// increment the number of currently (and cumulatively) allocated bytes
     /// by `size`.
-    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE;
 
     /// Return the memory block at the specified `address` back to this
     /// allocator.  If `address` is 0, this function has no effect (e.g., on
@@ -359,30 +358,26 @@ class CountingAllocator : public bslma::Allocator {
     /// allocated bytes by the size originally requested for the block.  The
     /// behavior is undefined unless `address` was allocated using this
     /// allocator object and has not already been deallocated.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
 
     // ACCESSORS
 
     /// Return the name of this counting allocator, or 0 if no name was
     /// specified at construction.
-    const char *name() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const char *name() const;
 
     /// Return the number of bytes currently allocated from this object.
     /// Note that `numBytesInUse() <= numBytesTotal()`.
-    bsls::Types::Int64 numBytesInUse() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::Int64 numBytesInUse() const;
 
     /// Return the cumulative number of bytes ever allocated from this
     /// object.  Note that `numBytesInUse() <= numBytesTotal()`.
-    bsls::Types::Int64 numBytesTotal() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::Int64 numBytesTotal() const;
 
     /// Write the accumulated state information held in this allocator to
     /// the specified `stream` in some reasonable (multi-line) format, and
     /// return a reference to `stream`.
-    bsl::ostream& print(bsl::ostream& stream) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::ostream& print(bsl::ostream& stream) const;
 };
 
 // ============================================================================
@@ -397,18 +392,21 @@ class CountingAllocator : public bslma::Allocator {
 inline
 const char *CountingAllocator::name() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_name_p;
 }
 
 inline
 bsls::Types::Int64 CountingAllocator::numBytesInUse() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_numBytesInUse.loadRelaxed();
 }
 
 inline
 bsls::Types::Int64 CountingAllocator::numBytesTotal() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_numBytesTotal.loadRelaxed();
 }
 

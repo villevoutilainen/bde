@@ -51,6 +51,7 @@ BlockList::~BlockList()
 // MANIPULATORS
 void *BlockList::allocate(bsls::Types::size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == size) {
         return 0;                                                     // RETURN
     }
@@ -79,6 +80,7 @@ void *BlockList::allocate(bsls::Types::size_type size)
 
 void BlockList::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (address) {
         Block *block = (Block *)(void *)((char *)address - sizeof(Block) +
                                       bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT);
@@ -92,6 +94,7 @@ void BlockList::deallocate(void *address)
 
 void BlockList::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (d_head_p) {
         void *lastBlock = d_head_p;
         d_head_p = d_head_p->d_next_p;

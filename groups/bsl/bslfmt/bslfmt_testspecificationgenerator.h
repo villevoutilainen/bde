@@ -649,13 +649,11 @@ class TestSpecificationGenerator {
 
     /// Return the specification for the formatters `parse` method based on the
     /// current state of this object.
-    const bsl::basic_string<t_CHAR>& spec() const
-                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::basic_string<t_CHAR>& spec() const;
 
     /// Return the specification for the formatters `format` method based on
     /// the current state of this object.
-    const bsl::basic_string<t_CHAR>& formatSpec() const
-                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::basic_string<t_CHAR>& formatSpec() const;
 
     /// Return `true` if the generated specification based on the current state
     /// of this object is valid for the formatters `parse` method, and `false`
@@ -1398,6 +1396,7 @@ template <class t_CHAR>
 const bsl::basic_string<t_CHAR>&
 TestSpecificationGenerator<t_CHAR>::spec() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_spec;
 }
 
@@ -1405,6 +1404,7 @@ template <class t_CHAR>
 const bsl::basic_string<t_CHAR>&
 TestSpecificationGenerator<t_CHAR>::formatSpec() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_formatSpec;
 }
 

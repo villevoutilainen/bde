@@ -149,6 +149,7 @@ DecomposedNumber::DecomposedNumber(const bsl::string_view& value)
 BSLS_ANNOTATION_UNUSED
 bsl::ostream& operator<<(bsl::ostream& stream, const DecomposedNumber& n)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     stream << "[ isNegative = " << n.d_isNegative << ", "
            << "isExpNegative = " << n.d_isExpNegative << ", "
            << "integer = \"" << n.d_integer << "\", "

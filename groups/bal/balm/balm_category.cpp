@@ -56,6 +56,8 @@ void Category::registerCategoryHolder(CategoryHolder *holder)
 // ACCESSORS
 bsl::ostream& Category::print(bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     stream << "[ " << d_name_p << (d_enabled ? " ENABLED ]" : " DISABLED ]");
     return stream;
 }

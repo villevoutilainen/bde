@@ -208,8 +208,7 @@ class ThroughputBenchmarkResult {
     /// The behavior is undefined unless `0 < numSamples`,
     /// `0 < threadGroupSizes.size()`, and `0 < threadGroupSizes[N]` for all
     /// valid N.
-    void initialize(int numSamples, const bsl::vector<int>& threadGroupSizes)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void initialize(int numSamples, const bsl::vector<int>& threadGroupSizes);
 
     /// Set the throughput related to the specified `threadIndex` thread, in
     /// the specified `threadGroupIndex`, and the specified `sampleIndex` to
@@ -329,8 +328,7 @@ class ThroughputBenchmarkResult_TestUtil {
 
     /// Return a reference providing modifiable access to the
     /// `d_vecThroughputs` data member of `ThroughputBenchmarkResult`.
-    bsl::vector<bsl::vector<bsl::vector<double> > >& throughputs()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::vector<bsl::vector<bsl::vector<double> > >& throughputs();
 };
 
 // ============================================================================
@@ -448,6 +446,7 @@ inline
 bsl::vector<bsl::vector<bsl::vector<double> > >&
                               ThroughputBenchmarkResult_TestUtil::throughputs()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_data.d_vecThroughputs;
 }
 

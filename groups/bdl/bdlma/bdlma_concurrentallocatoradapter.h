@@ -284,15 +284,13 @@ class ConcurrentAllocatorAdapter : public bslma::Allocator {
     /// non-exception build.  Note that the alignment of the address
     /// returned conforms to the platform requirement for any object of the
     /// `numBytes`.
-    void *allocate(bsls::Types::size_type numBytes) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type numBytes) BSLS_KEYWORD_OVERRIDE;
 
     /// Return the memory at the specified `address` back to this allocator.
     /// If `address` is 0, this function has no effect.  The behavior is
     /// undefined unless `address` was allocated using this allocator and
     /// has not since been deallocated.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
 };
 
 // ============================================================================

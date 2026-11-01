@@ -146,6 +146,7 @@ Pool::~Pool()
 // MANIPULATORS
 void Pool::reserveCapacity(int numBlocks)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= numBlocks);
 
     Link *p = d_freeList_p;

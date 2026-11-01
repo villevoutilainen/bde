@@ -114,6 +114,7 @@ void ThroughputBenchmarkResult::initialize(
                                       int                     numSamples,
                                       const bsl::vector<int>& threadGroupSizes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&threadGroupSizes);
     BSLS_ASSERT(0 < numSamples);
     BSLS_ASSERT(0 < threadGroupSizes.size());

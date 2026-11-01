@@ -433,12 +433,10 @@ class ErrorInfo
     int columnNumber() const;
 
     /// Return the string that identifies the document being parsed.
-    const bsl::string& source() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& source() const;
 
     /// Return the string describing the error or warning.
-    const bsl::string& message() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& message() const;
 };
 
 // FREE OPERATORS
@@ -529,12 +527,14 @@ ErrorInfo::columnNumber() const
 inline const bsl::string &
 ErrorInfo::source() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_source;
 }
 
 inline const bsl::string &
 ErrorInfo::message() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_message;
 }
 

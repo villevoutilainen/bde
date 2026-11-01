@@ -1659,6 +1659,8 @@ double CommandLine::theDouble(const bsl::string_view& name) const
 
 const bsl::string& CommandLine::theString(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
     BSLS_ASSERT_NONCONVEYOR(OptionType::e_STRING == type(name));
@@ -1670,6 +1672,8 @@ const bsl::string& CommandLine::theString(const bsl::string_view& name) const
 const bdlt::Datetime& CommandLine::theDatetime(
                                             const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
     BSLS_ASSERT_NONCONVEYOR(OptionType::e_DATETIME == type(name));
@@ -1680,6 +1684,8 @@ const bdlt::Datetime& CommandLine::theDatetime(
 
 const bdlt::Date& CommandLine::theDate(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
     BSLS_ASSERT_NONCONVEYOR(OptionType::e_DATE == type(name));
@@ -1690,6 +1696,8 @@ const bdlt::Date& CommandLine::theDate(const bsl::string_view& name) const
 
 const bdlt::Time& CommandLine::theTime(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
     BSLS_ASSERT_NONCONVEYOR(OptionType::e_TIME == type(name));
@@ -1701,6 +1709,8 @@ const bdlt::Time& CommandLine::theTime(const bsl::string_view& name) const
 const bsl::vector<char>&
 CommandLine::theCharArray(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
     BSLS_ASSERT_NONCONVEYOR(OptionType::e_CHAR_ARRAY == type(name));
@@ -1712,6 +1722,8 @@ CommandLine::theCharArray(const bsl::string_view& name) const
 const bsl::vector<int>&
 CommandLine::theIntArray(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
     BSLS_ASSERT_NONCONVEYOR(OptionType::e_INT_ARRAY == type(name));
@@ -1723,6 +1735,7 @@ CommandLine::theIntArray(const bsl::string_view& name) const
 const bsl::vector<bsls::Types::Int64>&
 CommandLine::theInt64Array(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
@@ -1735,6 +1748,7 @@ CommandLine::theInt64Array(const bsl::string_view& name) const
 const bsl::vector<double>&
 CommandLine::theDoubleArray(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
@@ -1747,6 +1761,7 @@ CommandLine::theDoubleArray(const bsl::string_view& name) const
 const bsl::vector<bsl::string>&
 CommandLine::theStringArray(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
@@ -1759,6 +1774,7 @@ CommandLine::theStringArray(const bsl::string_view& name) const
 const bsl::vector<bdlt::Datetime>&
 CommandLine::theDatetimeArray(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
@@ -1771,6 +1787,7 @@ CommandLine::theDatetimeArray(const bsl::string_view& name) const
 const bsl::vector<bdlt::Date>&
 CommandLine::theDateArray(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));
@@ -1783,6 +1800,7 @@ CommandLine::theDateArray(const bsl::string_view& name) const
 const bsl::vector<bdlt::Time>&
 CommandLine::theTimeArray(const bsl::string_view& name) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&name);
     BSLS_ASSERT_NONCONVEYOR(isParsed());
     BSLS_ASSERT_NONCONVEYOR(hasOption(name));

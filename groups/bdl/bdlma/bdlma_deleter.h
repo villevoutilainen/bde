@@ -80,7 +80,7 @@ class Deleter {
     /// its memory footprint to the appropriate memory manager.  Note that a
     /// particular implementation is allowed to destroy this deleter itself.
     virtual void deleteObject(TYPE *instance)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES_THIS= 0;
+= 0;
 };
 
 // ============================================================================

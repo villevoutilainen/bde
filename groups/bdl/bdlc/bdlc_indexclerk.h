@@ -153,13 +153,9 @@ class IndexClerkIter {
 
     // FRIENDS
     friend bool operator==(const IndexClerkIter& lhs,
-                           const IndexClerkIter& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const IndexClerkIter& rhs);
     friend bool operator!=(const IndexClerkIter& lhs,
-                           const IndexClerkIter& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const IndexClerkIter& rhs);
   public:
     // TRAITS
     BSLMF_NESTED_TRAIT_DECLARATION(IndexClerkIter, bslmf::IsBitwiseCopyable);
@@ -190,20 +186,20 @@ class IndexClerkIter {
     /// corresponding sequence of decommissioned indices.  Return a
     /// reference to this modifiable iterator.  The behavior is undefined
     /// unless the current index is within the range `[ begin() .. end() )`.
-    IndexClerkIter& operator++() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    IndexClerkIter& operator++();
 
     /// Decrement this iterator to refer to the previous index in the
     /// corresponding sequence of decommissioned indices.  Return a
     /// reference to this modifiable iterator.  The behavior is undefined
     /// unless the current index is within the range `( begin() .. end() ]`.
-    IndexClerkIter& operator--() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    IndexClerkIter& operator--();
 
     // ACCESSORS
 
     /// Return the value of the integer to which this iterator currently
     /// refers.  The behavior is undefined unless the iterator is within the
     /// range `[ begin() .. end() )`.
-    int operator*() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int operator*() const;
 };
 
 /// Return `true` if `lhs` and `rhs` have the same value and `false`
@@ -212,8 +208,7 @@ class IndexClerkIter {
 /// value for the same container.  The behavior is undefined unless `lhs`
 /// and `rhs` refer to the same container and are non-singular (i.e., are
 /// not default-constructed or copies of singular iterators).
-bool operator==(const IndexClerkIter& lhs, const IndexClerkIter& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator==(const IndexClerkIter& lhs, const IndexClerkIter& rhs);
 
 /// Return `true` if `lhs` and `rhs` do not have the same value and `false`
 /// otherwise.  Two iterators do not have the same value if they do not
@@ -222,8 +217,7 @@ bool operator==(const IndexClerkIter& lhs, const IndexClerkIter& rhs)
 /// the end) of the same container.  The behavior is undefined unless `lhs`
 /// and `rhs` refer to the same container and are non-singular (i.e., are
 /// not default-constructed or copies of singular iterators).
-bool operator!=(const IndexClerkIter& lhs, const IndexClerkIter& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator!=(const IndexClerkIter& lhs, const IndexClerkIter& rhs);
 
                               // ================
                               // class IndexClerk
@@ -240,12 +234,8 @@ class IndexClerk {
     int              d_nextNewIndex;  // next unused index to be created
 
     // FRIENDS
-    friend bool operator==(const IndexClerk& lhs, const IndexClerk& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
-    friend bool operator!=(const IndexClerk& lhs, const IndexClerk& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend bool operator==(const IndexClerk& lhs, const IndexClerk& rhs);
+    friend bool operator!=(const IndexClerk& lhs, const IndexClerk& rhs);
 
     // PRIVATE CLASS METHODS
 
@@ -314,12 +304,11 @@ class IndexClerk {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     /// Return the next available unused integer index.  Existing
     /// decommissioned indices are reissued before new ones are created.
-    int getIndex() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int getIndex();
 
     /// Return the specified `index` to this index clerk, which indicates
     /// that `index` is no longer in use and may be reissued.  The behavior
@@ -334,7 +323,7 @@ class IndexClerk {
     /// assert(0 == numDecommissionedIndices());
     /// assert(0 == nextNewIndex());
     /// ```
-    void removeAll() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void removeAll();
 
     // ACCESSORS
 
@@ -347,17 +336,16 @@ class IndexClerk {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Return a `IndexClerkIter` referring to the first index returned to
     /// this `IndexClerk` that is currently unused, or `end()` if there are
     /// currently no decommissioned indices.
-    IndexClerkIter begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    IndexClerkIter begin() const;
 
     /// Return a `IndexClerkIter` referring to an invalid index, indicating
     /// the end of the sequence of decommissioned index.
-    IndexClerkIter end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    IndexClerkIter end() const;
 
     /// Return `true` if the specified `index` is currently in use, and
     /// `false` otherwise.  The behavior is undefined unless `0 <= index`
@@ -366,16 +354,16 @@ class IndexClerk {
     bool isInUse(int index) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Return the number of indices currently in use.
-    int numCommissionedIndices() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int numCommissionedIndices() const;
 
     /// Return the number of indices that are currently decommissioned.
-    int numDecommissionedIndices() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int numDecommissionedIndices() const;
 
     /// Return the smallest (non-negative) index that has not been issued by
     /// this index clerk.  Note that this function offers the client a
     /// "peek" at the next "new" index, but has no effect on the value of
     /// this index clerk.
-    int nextNewIndex() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int nextNewIndex() const;
 
     /// Format this index clerk to the specified output `stream` at the
     /// (absolute value of) the optionally specified indentation `level` and
@@ -388,8 +376,7 @@ class IndexClerk {
     /// not valid on entry, this operation has no effect.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        int           spacesPerLevel = 4) const;
 
 #ifndef BDE_OMIT_INTERNAL_DEPRECATED  // pending deprecation
 
@@ -408,21 +395,18 @@ class IndexClerk {
 /// value, and `false` otherwise.  Two `IndexClerk` objects have the same value
 /// if they have the same `nextNewIndex()` and would always generate the same
 /// sequence of integer indices.
-bool operator==(const IndexClerk& lhs, const IndexClerk& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator==(const IndexClerk& lhs, const IndexClerk& rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` index clerks do not have the
 /// same value, and `false` otherwise.  Two `IndexClerk` objects do not have
 /// the same value if they do not have the same `nextNewIndex()`, or might
 /// generate different sequences of integer indices.
-bool operator!=(const IndexClerk& lhs, const IndexClerk& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bool operator!=(const IndexClerk& lhs, const IndexClerk& rhs);
 
 /// Write the specified `rhs` index clerk to the specified output `stream` in
 /// some single-line (human-readable) format, and return a reference to the
 /// modifiable `stream`.
-bsl::ostream& operator<<(bsl::ostream& stream, const IndexClerk& rhs)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+bsl::ostream& operator<<(bsl::ostream& stream, const IndexClerk& rhs);
 
 // ============================================================================
 //                            INLINE DEFINITIONS
@@ -469,6 +453,7 @@ IndexClerkIter::operator=(const IndexClerkIter& rhs)
 inline
 IndexClerkIter& IndexClerkIter::operator++()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(0 != d_index_p.base());
 
     ++d_index_p;
@@ -478,6 +463,7 @@ IndexClerkIter& IndexClerkIter::operator++()
 inline
 IndexClerkIter& IndexClerkIter::operator--()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(0 != d_index_p.base());
 
     --d_index_p;
@@ -488,6 +474,7 @@ IndexClerkIter& IndexClerkIter::operator--()
 inline
 int IndexClerkIter::operator*() const
 {
+BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #if defined(BSLS_PLATFORM_CMP_GNU) && \
     BSLS_PLATFORM_CMP_VERSION >= 120000 && BSLS_PLATFORM_CMP_VERSION < 150000
     // See implementation notes in the .cpp file for explanation.
@@ -509,12 +496,16 @@ int IndexClerkIter::operator*() const
 inline
 bool bdlc::operator==(const IndexClerkIter& lhs, const IndexClerkIter& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_index_p == rhs.d_index_p;
 }
 
 inline
 bool bdlc::operator!=(const IndexClerkIter& lhs, const IndexClerkIter& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_index_p != rhs.d_index_p;
 }
 
@@ -564,6 +555,7 @@ IndexClerk& IndexClerk::operator=(const IndexClerk& rhs)
 inline
 int IndexClerk::getIndex()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_unusedStack.empty()) {
         return d_nextNewIndex++;                                      // RETURN
     }
@@ -587,6 +579,7 @@ void IndexClerk::putIndex(int index)
 inline
 void IndexClerk::removeAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_unusedStack.clear();
     d_nextNewIndex = 0;
 }
@@ -596,6 +589,8 @@ void IndexClerk::removeAll()
 template <class STREAM>
 STREAM& IndexClerk::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         int nextNewIndex;
@@ -631,6 +626,8 @@ template <class STREAM>
 inline
 STREAM& IndexClerk::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 1: {
@@ -649,30 +646,35 @@ STREAM& IndexClerk::bdexStreamOut(STREAM& stream, int version) const
 inline
 int IndexClerk::numCommissionedIndices() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_nextNewIndex - static_cast<int>(d_unusedStack.size());
 }
 
 inline
 IndexClerkIter IndexClerk::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return IndexClerkIter(d_unusedStack.begin() + d_unusedStack.size());
 }
 
 inline
 IndexClerkIter IndexClerk::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return IndexClerkIter(d_unusedStack.begin());
 }
 
 inline
 int IndexClerk::numDecommissionedIndices() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_unusedStack.size());
 }
 
 inline
 int IndexClerk::nextNewIndex() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_nextNewIndex;
 }
 
@@ -699,6 +701,8 @@ int IndexClerk::maxSupportedBdexVersion()
 inline
 bool bdlc::operator==(const IndexClerk& lhs, const IndexClerk& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_nextNewIndex == rhs.d_nextNewIndex
         && lhs.d_unusedStack  == rhs.d_unusedStack;
 }
@@ -706,6 +710,8 @@ bool bdlc::operator==(const IndexClerk& lhs, const IndexClerk& rhs)
 inline
 bool bdlc::operator!=(const IndexClerk& lhs, const IndexClerk& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_nextNewIndex != rhs.d_nextNewIndex
         || lhs.d_unusedStack  != rhs.d_unusedStack;
 }

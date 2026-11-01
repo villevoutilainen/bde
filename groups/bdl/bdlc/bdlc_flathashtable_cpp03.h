@@ -2544,6 +2544,7 @@ inline
 ENTRY& FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::operator[](
                                BSLS_COMPILERFEATURES_FORWARD_REF(KEY_TYPE) key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -2566,6 +2567,7 @@ template <class KEY, class ENTRY, class ENTRY_UTIL, class HASH, class EQUAL>
 inline
 void FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ImplUtil::destroyEntryArray(d_entries_p,
                                 d_entries_p + d_capacity,
                                 d_controls_p,
@@ -2585,6 +2587,8 @@ bsl::pair<
          typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::iterator>
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::equal_range(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     iterator it1 = find(key);
     if (it1 == end()) {
         return bsl::make_pair(it1, it1);                              // RETURN
@@ -2612,6 +2616,7 @@ bsl::pair<typename
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p);
@@ -2631,6 +2636,7 @@ bsl::pair<typename
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2653,6 +2659,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2678,6 +2685,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2706,6 +2714,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2737,6 +2746,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2771,6 +2781,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2808,6 +2819,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2848,6 +2860,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2891,6 +2904,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2937,6 +2951,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2968,6 +2983,7 @@ bsl::pair<typename
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::ObjectBuffer<entry_type> value;
     ENTRY_UTIL::construct(value.address(),
                           d_allocator_p,
@@ -2985,6 +3001,8 @@ inline
 bsl::size_t FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::erase(
                                                                 const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     iterator it = find(key);
     if (it == end()) {
         return 0;                                                     // RETURN
@@ -3003,6 +3021,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::erase(
                                                HASH,
                                                EQUAL>::const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != end());
 
     bsl::size_t index = &*position - d_entries_p;
@@ -3032,6 +3051,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::erase(
                                                HASH,
                                                EQUAL>::iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that this overload is necessary to avoid ambiguity when the key is
     // a table iterator.
 
@@ -3068,6 +3088,7 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::erase(
                                                   HASH,
                                                   EQUAL>::const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     iterator rv;
     {
         if (last != end()) {
@@ -3093,6 +3114,8 @@ inline
 typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::iterator
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::find(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bsl::size_t index = findKey(key, d_hasher(key));
     if (index < d_capacity) {
         return iterator(IteratorImp(d_entries_p  + index,
@@ -3107,6 +3130,8 @@ inline
 bsl::pair<typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::iterator, bool>
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::insert(const ENTRY& entry)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&entry);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(ENTRY_UTIL::key(entry));
     bsl::size_t index     = indexOfKey(&notFound,
@@ -3132,6 +3157,8 @@ bsl::pair<typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::iterator,
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::insert(
                                                 bslmf::MovableRef<ENTRY> entry)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&entry);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(ENTRY_UTIL::key(entry));
     bsl::size_t index     = indexOfKey(&notFound,
@@ -3162,6 +3189,7 @@ void FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::insert(
                                                           INPUT_ITERATOR first,
                                                           INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     for (; first != last; ++first) {
         insert(*first);
     }
@@ -3172,6 +3200,7 @@ inline
 void FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::rehash(
                                                    bsl::size_t minimumCapacity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     minimumCapacity = minimumCompliantCapacity(minimumCapacity);
 
     if (0 < minimumCapacity) {
@@ -3193,6 +3222,7 @@ inline
 void FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::reserve(
                                                         bsl::size_t numEntries)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == d_capacity && 0 == numEntries) {
         // From DRQS 167247593, 'reserve(0)' on an empty container is a
         // performance concern.
@@ -3211,6 +3241,7 @@ template <class KEY, class ENTRY, class ENTRY_UTIL, class HASH, class EQUAL>
 inline
 void FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 != d_entries_p) {
         ImplUtil::destroyEntryArray(d_entries_p,
                                     d_entries_p + d_capacity,
@@ -3245,6 +3276,8 @@ bsl::pair<typename
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                                                                const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3275,6 +3308,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                                                                const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3308,6 +3343,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3344,6 +3381,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3383,6 +3422,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3425,6 +3466,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3470,6 +3513,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3518,6 +3563,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3569,6 +3616,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3623,6 +3672,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3680,6 +3731,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -3719,6 +3772,8 @@ bsl::pair<typename
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                                       BloombergLP::bslmf::MovableRef<KEY> key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -3749,6 +3804,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                                       BloombergLP::bslmf::MovableRef<KEY> key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -3782,6 +3839,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -3818,6 +3877,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -3857,6 +3918,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -3899,6 +3962,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -3944,6 +4009,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -3992,6 +4059,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -4043,6 +4112,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -4097,6 +4168,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -4154,6 +4227,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -4196,6 +4271,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                                                                const KEY& key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bool        notFound;
     bsl::size_t hashValue = d_hasher(key);
     bsl::size_t index     = indexOfKey(&notFound, key, hashValue);
@@ -4225,6 +4302,8 @@ FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::try_emplace(
                                       BloombergLP::bslmf::MovableRef<KEY> key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const KEY&  k = key;
     bool        notFound;
     bsl::size_t hashValue = d_hasher(k);
@@ -4254,6 +4333,7 @@ inline
 typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::iterator
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::begin()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_size) {
         for (bsl::size_t i = 0; i < d_capacity; ++i) {
             if (0 == (d_controls_p[i] & GroupControl::k_EMPTY)) {
@@ -4271,6 +4351,7 @@ inline
 typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::iterator
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::end()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator();
 }
 
@@ -4298,6 +4379,7 @@ inline
 bsl::size_t FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::
                                                                capacity() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_capacity;
 }
 
@@ -4306,6 +4388,8 @@ inline
 bool FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::contains(
                                                           const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return find(key) != end();
 }
 
@@ -4325,6 +4409,8 @@ inline
 bsl::size_t FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::count(
                                                           const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return contains(key) ? 1 : 0;
 }
 
@@ -4332,6 +4418,7 @@ template <class KEY, class ENTRY, class ENTRY_UTIL, class HASH, class EQUAL>
 inline
 bool FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::empty() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_size;
 }
 
@@ -4361,6 +4448,8 @@ bsl::pair<typename FlatHashTable<KEY,
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::equal_range(
                                                           const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const_iterator cit1 = find(key);
     const_iterator cit2 = cit1;
     if (cit1 != end()) {
@@ -4374,6 +4463,8 @@ inline
 typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::const_iterator
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::find(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     bsl::size_t index = findKey(key, d_hasher(key));
     if (index < d_capacity) {
         return const_iterator(IteratorImp(d_entries_p  + index,
@@ -4387,6 +4478,7 @@ template <class KEY, class ENTRY, class ENTRY_UTIL, class HASH, class EQUAL>
 inline
 HASH FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::hash_function() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_hasher;
 }
 
@@ -4394,6 +4486,7 @@ template <class KEY, class ENTRY, class ENTRY_UTIL, class HASH, class EQUAL>
 inline
 EQUAL FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::key_eq() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_equal;
 }
 
@@ -4426,6 +4519,7 @@ template <class KEY, class ENTRY, class ENTRY_UTIL, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_size;
 }
 
@@ -4436,6 +4530,7 @@ inline
 typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::const_iterator
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_size) {
         for (bsl::size_t i = 0; i < d_capacity; ++i) {
             if (0 == (d_controls_p[i] & GroupControl::k_EMPTY)) {
@@ -4454,6 +4549,7 @@ inline
 typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::const_iterator
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::cbegin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return begin();
 }
 
@@ -4462,6 +4558,7 @@ inline
 typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::const_iterator
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::cend() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return end();
 }
 
@@ -4470,6 +4567,7 @@ inline
 typename FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::const_iterator
 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator();
 }
 
@@ -4480,6 +4578,7 @@ inline
 bslma::Allocator *FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>::
                                                               allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_allocator_p;
 }
 
@@ -4498,6 +4597,8 @@ bool bdlc::operator==(const FlatHashTable<KEY,
                                           HASH,
                                           EQUAL>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     typedef typename FlatHashTable<KEY,
                                    ENTRY,
                                    ENTRY_UTIL,
@@ -4542,6 +4643,8 @@ bool bdlc::operator!=(const FlatHashTable<KEY,
                                           HASH,
                                           EQUAL>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -4551,6 +4654,8 @@ inline
 void bdlc::swap(FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& a,
                 FlatHashTable<KEY, ENTRY, ENTRY_UTIL, HASH, EQUAL>& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
     if (a.allocator() == b.allocator()) {
         a.swap(b);
 

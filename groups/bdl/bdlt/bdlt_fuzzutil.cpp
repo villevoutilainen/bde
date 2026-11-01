@@ -16,6 +16,7 @@ namespace bdlt {
 // CLASS METHODS
 DateTz FuzzUtil::consumeDateTz(bslim::FuzzDataView *fuzzDataView)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzDataView);
     return DateTz(consumeDate(fuzzDataView), consumeTz(fuzzDataView));
 }
 
@@ -23,12 +24,16 @@ DateTz FuzzUtil::consumeDateTzInRange(bslim::FuzzDataView *fuzzDataView,
                                       const bdlt::Date&    begin,
                                       const bdlt::Date&    end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzDataView);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&begin);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&end);
     return DateTz(consumeDateInRange(fuzzDataView, begin, end),
                   consumeTz(fuzzDataView));
 }
 
 Datetime FuzzUtil::consumeDatetime(bslim::FuzzDataView *fuzzDataView)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzDataView);
     return Datetime(consumeDate(fuzzDataView), consumeTime(fuzzDataView));
 }
 
@@ -36,12 +41,16 @@ Datetime FuzzUtil::consumeDatetimeInRange(bslim::FuzzDataView *fuzzDataView,
                                           const bdlt::Date&    begin,
                                           const bdlt::Date&    end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzDataView);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&begin);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&end);
     return Datetime(consumeDateInRange(fuzzDataView, begin, end),
                     consumeTime(fuzzDataView));
 }
 
 DatetimeTz FuzzUtil::consumeDatetimeTz(bslim::FuzzDataView *fuzzDataView)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzDataView);
     return DatetimeTz(consumeDatetime(fuzzDataView), consumeTz(fuzzDataView));
 }
 
@@ -50,12 +59,16 @@ DatetimeTz FuzzUtil::consumeDatetimeTzInRange(
                                              const bdlt::Date&    begin,
                                              const bdlt::Date&    end)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzDataView);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&begin);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&end);
     return DatetimeTz(consumeDatetimeInRange(fuzzDataView, begin, end),
                       consumeTz(fuzzDataView));
 }
 
 Time FuzzUtil::consumeTime(bslim::FuzzDataView *fuzzDataView)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzDataView);
     // 24h == 86'400'000'000us so we need at least 5 bytes
     bsls::Types::Uint64 t =
                         bslim::FuzzUtil::consumeNumber<unsigned>(fuzzDataView);
@@ -80,6 +93,7 @@ Time FuzzUtil::consumeTime(bslim::FuzzDataView *fuzzDataView)
 
 TimeTz FuzzUtil::consumeTimeTz(bslim::FuzzDataView *fuzzDataView)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(fuzzDataView);
     return TimeTz(consumeTime(fuzzDataView), consumeTz(fuzzDataView));
 }
 

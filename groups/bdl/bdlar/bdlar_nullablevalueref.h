@@ -209,6 +209,7 @@ int NullableValueRef::manipulateValue(t_MANIPULATOR& manipulator) const
 inline
 void NullableValueRef::reset() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_vtable_p->d_reset_fp(d_object_p);
 }
 
@@ -231,6 +232,7 @@ const NullableValueVtable *NullableValueRef::vtable() const
 inline
 bool NullableValueRef::isNull() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_vtable_p->d_const.d_isNull_fp(d_object_p);
 }
 

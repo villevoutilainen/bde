@@ -21,6 +21,8 @@ void LiteralUtil::createQuotedEscapedCString_Impl(
                                                OUT_STR                 *result,
                                                const bsl::string_view&  input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     result->clear();
     result->reserve(input.length() + 2);
     *result += '"';
@@ -85,6 +87,8 @@ void LiteralUtil::createQuotedEscapedCString_Impl(
 void LiteralUtil::createQuotedEscapedCString(bsl::string             *result,
                                              const bsl::string_view&  input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     LiteralUtil::createQuotedEscapedCString_Impl(result, input);
 }
 
@@ -92,6 +96,8 @@ void LiteralUtil::createQuotedEscapedCString(bsl::string             *result,
 void LiteralUtil::createQuotedEscapedCString(std::string             *result,
                                              const bsl::string_view&  input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     LiteralUtil::createQuotedEscapedCString_Impl(result, input);
 }
 
@@ -99,6 +105,8 @@ void LiteralUtil::createQuotedEscapedCString(std::string             *result,
 void LiteralUtil::createQuotedEscapedCString(std::pmr::string        *result,
                                              const bsl::string_view&  input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     LiteralUtil::createQuotedEscapedCString_Impl(result, input);
 }
 #endif

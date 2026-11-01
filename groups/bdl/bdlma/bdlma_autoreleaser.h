@@ -272,13 +272,13 @@ class AutoReleaser {
     /// Release from management the allocator or pool currently managed by this
     /// proctor.  If no allocator or pool is currently being managed, this
     /// method has no effect.
-    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void release();
 
     /// Set the specified `newAllocator` as the allocator or pool to be managed
     /// by this proctor.  Note that this method releases from management any
     /// previously held allocator or pool, and so may be invoked with or
     /// without having called `release` when reusing this object.
-    void reset(ALLOCATOR *newAllocator) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reset(ALLOCATOR *newAllocator);
 };
 
 // ============================================================================
@@ -311,6 +311,7 @@ template <class ALLOCATOR>
 inline
 void AutoReleaser<ALLOCATOR>::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_allocator_p = 0;
 }
 
@@ -318,6 +319,7 @@ template <class ALLOCATOR>
 inline
 void AutoReleaser<ALLOCATOR>::reset(ALLOCATOR *newAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_allocator_p = newAllocator;
 }
 

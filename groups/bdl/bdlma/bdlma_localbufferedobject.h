@@ -314,13 +314,11 @@ class LocalBufferedObject {
 
     /// Return a pointer providing modifiable access to the underlying
     /// `t_TYPE` object.
-    value_type *operator->() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    value_type *operator->();
 
     /// Return a reference providing modifiable access to the underlying
     /// `t_TYPE` object.
-    value_type& operator*() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    value_type& operator*();
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Destroy the `value_type` object unless `t_DISABLE_DESTRUCTION` is
@@ -328,8 +326,7 @@ class LocalBufferedObject {
     /// `value_type` object using the specified `args` and using the
     /// sequential allocator based on the local stack buffer.
     template <class... ARGS>
-    void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args);
 #endif
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
@@ -338,8 +335,7 @@ class LocalBufferedObject {
     /// `value_type` object using the specified `il` and using the
     /// sequential allocator based on the local stack buffer.
     template <class INIT_LIST_TYPE>
-    void emplace(std::initializer_list<INIT_LIST_TYPE> il)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void emplace(std::initializer_list<INIT_LIST_TYPE> il);
 
 #endif  // BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS
 
@@ -347,13 +343,11 @@ class LocalBufferedObject {
 
     /// Return a pointer providing const access to the underlying `t_TYPE`
     /// object.
-    const value_type *operator->() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    const value_type *operator->() const;
 
     /// Return a reference providing const access to the underlying `t_TYPE`
     /// object.
-    const value_type& operator*() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const value_type& operator*() const;
 
     /// Return the alloctor passed at construction, used to provide heap
     /// memory after the local stack buffer is exhausted.  Note that this
@@ -473,6 +467,7 @@ inline
 t_TYPE *LocalBufferedObject<t_TYPE, t_BUFFER_SIZE, t_DISABLE_DESTRUCTION>::
                                                                    operator->()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_object.address();
 }
 
@@ -481,6 +476,7 @@ inline
 t_TYPE& LocalBufferedObject<t_TYPE, t_BUFFER_SIZE, t_DISABLE_DESTRUCTION>::
                                                                     operator*()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_object.object();
 }
 
@@ -490,6 +486,7 @@ template <class... ARGS>
 void LocalBufferedObject<t_TYPE, t_BUFFER_SIZE, t_DISABLE_DESTRUCTION>::
                        emplace(BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     destroyHeldObject();
     d_arenaAllocator.release();
     bslma::ConstructionUtil::construct(
@@ -505,6 +502,7 @@ template <class INIT_LIST_TYPE>
 void LocalBufferedObject<t_TYPE, t_BUFFER_SIZE, t_DISABLE_DESTRUCTION>::
                               emplace(std::initializer_list<INIT_LIST_TYPE> il)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     destroyHeldObject();
     d_arenaAllocator.release();
     bslma::ConstructionUtil::construct(
@@ -521,6 +519,7 @@ const t_TYPE *
 LocalBufferedObject<t_TYPE, t_BUFFER_SIZE, t_DISABLE_DESTRUCTION>::
                                                              operator->() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_object.address();
 }
 
@@ -530,6 +529,7 @@ const t_TYPE&
 LocalBufferedObject<t_TYPE, t_BUFFER_SIZE, t_DISABLE_DESTRUCTION>::
                                                               operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_object.object();
 }
 

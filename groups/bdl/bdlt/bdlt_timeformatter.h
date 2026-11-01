@@ -140,39 +140,33 @@ class TimeFormatter {
     // MANIPULATORS
 
     /// Parse a time that will be formatted in default mode.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseDefault()
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseDefault();
 
     /// Parse a time that will be formatted in Iso8601 mode.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseIso8601()
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 void parseIso8601();
 
     /// Examine the first character of the specified `*specInOut` and if it is
     /// recognized as a modifier by this object, update this object's state to
     /// reflect it and pop it off the front of `*specInOut` and return `true`,
     /// and if not, return `false` with no modification to `*specInOut`.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextModifier(StringView *specInOut)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextModifier(StringView *specInOut);
 
     /// If the first character of the specified `*specInOut` is recognized by
     /// this specifier formatter, parse it, remove it from `*specInOut`, and
     /// return `true`, otherwise return `false` with no modification to
     /// `*specInOut`.  The behavior is undefined if `*specInOut` is empty.
     BSLS_KEYWORD_CONSTEXPR_CPP20
-    bool parseNextSpecifier(StringView *specInOut)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool parseNextSpecifier(StringView *specInOut);
 
     /// Read post-processed fields from the specified `spec` that are relevant
     /// to this specifier formatter.
-    void postprocess(const bslfmt::FormatSpecificationParser<t_CHAR>& spec)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void postprocess(const bslfmt::FormatSpecificationParser<t_CHAR>& spec);
 
     // ACCESSORS
 
     /// Return the `bslfmt::FormatSpecificationParser::Sections` flags that
     /// apply to this value type.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 int extraSections() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 int extraSections() const;
 
     /// If the first character of the specified `*specInOut` is recognized by
     /// this specifier formatter, use it to format the specified `value` to
@@ -181,25 +175,21 @@ class TimeFormatter {
     template <class t_ITERATOR>
     bool formatNextSpecifier(StringView         *specInOut,
                              t_ITERATOR         *outIt,
-                             const FormatCache&  value) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                             const FormatCache&  value) const;
 
     /// Format the specified `value` to the specified `out` using the default
     /// format and return `out`.
     template <class t_ITERATOR>
-    t_ITERATOR formatDefault(t_ITERATOR out, const FormatCache& value) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    t_ITERATOR formatDefault(t_ITERATOR out, const FormatCache& value) const;
 
     /// Format the specified `value` to the specified `out` using the Iso8601
     /// format and return `out`.
     template <class t_ITERATOR>
-    t_ITERATOR formatIso8601(t_ITERATOR out, const FormatCache& value) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    t_ITERATOR formatIso8601(t_ITERATOR out, const FormatCache& value) const;
 
     /// Return the anticipated width of output given all the `parse*` calls
     /// that have been happened thus far and the specified `value`.
-    int totalWidth(const FormatCache& value) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int totalWidth(const FormatCache& value) const;
 };
 
                          // =========================
@@ -227,19 +217,19 @@ class TimeFormatter_Cache {
     // ACCESSORS
 
     /// Return the cached `hour` field.
-    int hour() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int hour() const;
 
     /// Return the cached `minute` field.
-    int minute() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int minute() const;
 
     /// Return the cached `second` field.
-    int second() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int second() const;
 
     /// Return the cached `millisecone` field.
-    int millisecond() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int millisecond() const;
 
     /// Return the cached `microsecond` field.
-    int microsecond() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int microsecond() const;
 };
 
 // ============================================================================
@@ -337,6 +327,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 void TimeFormatter<t_CHAR>::parseDefault()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ++d_numDefaultSecondSpecifiers;
     d_fixedWidth += k_HOUR_WIDTH + k_COLON_WIDTH + k_MINUTE_WIDTH +
                     k_COLON_WIDTH + k_SECOND_WIDTH;
@@ -346,6 +337,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 void TimeFormatter<t_CHAR>::parseIso8601()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ++d_numIso8601SecondSpecifiers;
     d_fixedWidth += k_HOUR_WIDTH + k_COLON_WIDTH + k_MINUTE_WIDTH +
                     k_COLON_WIDTH + k_SECOND_WIDTH;
@@ -355,6 +347,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool TimeFormatter<t_CHAR>::parseNextModifier(StringView *specInOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (t_CHAR(',') == specInOut->front()) {
         d_comma = true;
         specInOut->remove_prefix(1);
@@ -368,6 +361,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool TimeFormatter<t_CHAR>::parseNextSpecifier(StringView *specInOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(!specInOut->empty());
 
     switch(static_cast<char>(specInOut->front())) {
@@ -408,6 +402,8 @@ inline
 void TimeFormatter<t_CHAR>::postprocess(
                          const bslfmt::FormatSpecificationParser<t_CHAR>& spec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&spec);
     if (spec.postprocessedPrecision().category() ==
         bslfmt::FormatterSpecificationNumericValue::e_VALUE) {
         d_precision = spec.postprocessedPrecision().value();
@@ -419,6 +415,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 int TimeFormatter<t_CHAR>::extraSections() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return bslfmt::FormatSpecificationParserEnums::e_SECTIONS_PRECISION;
 }
 
@@ -430,6 +427,7 @@ bool TimeFormatter<t_CHAR>::formatNextSpecifier(
                                                t_ITERATOR         *outIt,
                                                const FormatCache&  value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BSLS_ASSERT_SAFE(!specInOut->empty());
 
@@ -489,6 +487,8 @@ inline
 t_ITERATOR TimeFormatter<t_CHAR>::formatDefault(
                                 t_ITERATOR out, const FormatCache& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return formatTime(out, precision(), value);
 }
 
@@ -498,6 +498,8 @@ inline
 t_ITERATOR TimeFormatter<t_CHAR>::formatIso8601(
                                 t_ITERATOR out, const FormatCache& value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return formatTime(out, iso8601Precision(), value);
 }
 
@@ -505,6 +507,7 @@ template <class t_CHAR>
 inline
 int TimeFormatter<t_CHAR>::totalWidth(const FormatCache&) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int ret = d_fixedWidth;
 
     if (d_precision) {
@@ -542,30 +545,35 @@ TimeFormatter_Cache::TimeFormatter_Cache(const Time& value)
 inline
 int TimeFormatter_Cache::hour() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_hour;
 }
 
 inline
 int TimeFormatter_Cache::minute() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_minute;
 }
 
 inline
 int TimeFormatter_Cache::second() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_second;
 }
 
 inline
 int TimeFormatter_Cache::millisecond() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_millisecond;
 }
 
 inline
 int TimeFormatter_Cache::microsecond() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_microsecond;
 }
 

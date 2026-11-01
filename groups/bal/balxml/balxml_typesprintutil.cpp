@@ -1075,6 +1075,8 @@ TypesPrintUtil_Imp::printBase64(bsl::ostream&               stream,
                                 const EncoderOptions       *,
                                 bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     // Calls a function in the unnamed namespace.  Cannot be inlined.
     return u::encodeBase64(stream, object.begin(), object.end());
 }
@@ -1085,6 +1087,7 @@ TypesPrintUtil_Imp::printBase64(bsl::ostream&              stream,
                                 const EncoderOptions      *,
                                 bdlat_TypeCategory::Array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     // Calls a function in the unnamed namespace.  Cannot be inlined.
     return u::encodeBase64(stream, object.begin(), object.end());
@@ -1098,6 +1101,8 @@ TypesPrintUtil_Imp::printHex(bsl::ostream&               stream,
                              const EncoderOptions       *,
                              bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return bdlb::Print::singleLineHexDump(stream,
                                           object.begin(),
                                           object.end());
@@ -1109,6 +1114,7 @@ TypesPrintUtil_Imp::printHex(bsl::ostream&              stream,
                              const EncoderOptions      *,
                              bdlat_TypeCategory::Array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return bdlb::Print::singleLineHexDump(stream,
                                           object.begin(),
@@ -1123,6 +1129,8 @@ TypesPrintUtil_Imp::printText(bsl::ostream&               stream,
                               const EncoderOptions       *encoderOptions,
                               bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     // Calls a function in the unnamed namespace.  Cannot be inlined.
     u::printTextReplacingXMLEscapes(stream, &object, 1, encoderOptions);
     return stream;
@@ -1134,6 +1142,8 @@ TypesPrintUtil_Imp::printText(bsl::ostream&               stream,
                               const EncoderOptions       *encoderOptions,
                               bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     // Calls a function in the unnamed namespace.  Cannot be inlined.
     u::printTextReplacingXMLEscapes(stream, object, -1, encoderOptions);
     return stream;
@@ -1145,6 +1155,8 @@ TypesPrintUtil_Imp::printText(bsl::ostream&               stream,
                               const EncoderOptions       *encoderOptions,
                               bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     // Calls a function in the unnamed namespace.  Cannot be inlined.
     u::printTextReplacingXMLEscapes(stream,
                                     object.data(),
@@ -1159,6 +1171,7 @@ TypesPrintUtil_Imp::printText(bsl::ostream&              stream,
                               const EncoderOptions      *encoderOptions,
                               bdlat_TypeCategory::Array)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     // Calls a function in the unnamed namespace.  Cannot be inlined.
 
@@ -1179,6 +1192,8 @@ TypesPrintUtil_Imp::printDecimal(bsl::ostream&               stream,
                                  const EncoderOptions       *,
                                  bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return u::printDecimalUsingNecessaryDigitsOnly(stream, object);
 }
 
@@ -1188,6 +1203,8 @@ TypesPrintUtil_Imp::printDecimal(bsl::ostream&               stream,
                                  const EncoderOptions       *encoderOptions,
                                  bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     if (!encoderOptions
         || (BSLS_ASSERT_CONVEYOR_REF(*encoderOptions).maxDecimalTotalDigits()
                                                                       .isNull()
@@ -1222,6 +1239,8 @@ bsl::ostream& TypesPrintUtil_Imp::printDefault(
                                             const EncoderOptions       *,
                                             bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return u::printDefaultFloatImpl(stream, object);
 }
 
@@ -1231,6 +1250,8 @@ bsl::ostream& TypesPrintUtil_Imp::printDefault(
                                             const EncoderOptions       *,
                                             bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return u::printDefaultFloatImpl(stream, object);
 }
 
@@ -1240,6 +1261,8 @@ bsl::ostream& TypesPrintUtil_Imp::printDecimal(
                                              const EncoderOptions       *,
                                              bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return u::printDecimalImpl(stream, object, true);
 }
 
@@ -1249,6 +1272,8 @@ bsl::ostream& TypesPrintUtil_Imp::printDefault(
                                     const EncoderOptions       *,
                                     bdlat_TypeCategory::Simple)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return u::printDecimalImpl(stream, object, false);
 }
 

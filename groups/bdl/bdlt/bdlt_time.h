@@ -167,15 +167,9 @@ class Time {
     bsls::Types::Int64 d_value;  // encoded offset from 00:00:00.000000
 
     // FRIENDS
-    friend DatetimeInterval operator-(const Time& lhs, const Time& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
-    friend bool operator==(const Time& lhs, const Time& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
-    friend bool operator!=(const Time& lhs, const Time& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    friend DatetimeInterval operator-(const Time& lhs, const Time& rhs);
+    friend bool operator==(const Time& lhs, const Time& rhs);
+    friend bool operator!=(const Time& lhs, const Time& rhs);
     friend bool operator<(const Time& lhs, const Time& rhs)
                                              BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
@@ -189,9 +183,7 @@ class Time {
                                              BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
                                             BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
     template <class HASHALG>
-    friend void hashAppend(HASHALG& hashAlg, const Time& object)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    friend void hashAppend(HASHALG& hashAlg, const Time& object);
 
     // PRIVATE MANIPULATORS
 
@@ -289,53 +281,49 @@ class Time {
     /// Add to this time object the value of the specified `rhs` datetime
     /// interval, and return a reference providing modifiable access to this
     /// object.
-    Time& operator+=(const DatetimeInterval& rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    Time& operator+=(const DatetimeInterval& rhs);
 
     /// Subtract from this time object the value of the specified `rhs`
     /// datetime interval, and return a reference providing modifiable
     /// access to this object.
-    Time& operator-=(const DatetimeInterval& rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    Time& operator-=(const DatetimeInterval& rhs);
 
     /// Increase the value of this time object by the specified number of
     /// `hours`, and return the (signed) number of times that the
     /// 23:59:59.999999 - 00:00:00.000000 boundary was crossed in performing
     /// the operation.  Note that `hours` may be negative.
-    int addHours(int hours) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addHours(int hours);
 
     /// Increase the value of this time object by the specified number of
     /// `minutes`, and return the (signed) number of times that the
     /// 23:59:59.999999 - 00:00:00.000000 boundary was crossed in performing
     /// the operation.  Note that `minutes` may be negative.
-    int addMinutes(int minutes) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addMinutes(int minutes);
 
     /// Increase the value of this time object by the specified number of
     /// `seconds`, and return the (signed) number of times that the
     /// 23:59:59.999999 - 00:00:00.000000 boundary was crossed in performing
     /// the operation.  Note that `seconds` may be negative.
-    int addSeconds(int seconds) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addSeconds(int seconds);
 
     /// Increase the value of this time object by the specified number of
     /// `milliseconds`, and return the (signed) number of times that the
     /// 23:59:59.999999 - 00:00:00.000000 boundary was crossed in performing
     /// the operation.  Note that `milliseconds` may be negative.
-    int addMilliseconds(int milliseconds) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addMilliseconds(int milliseconds);
 
     /// Increase the value of this time object by the specified number of
     /// `microseconds`, and return the (signed) number of times that the
     /// 23:59:59.999999 - 00:00:00.000000 boundary was crossed in performing
     /// the operation.  Note that `microseconds` may be negative.
-    int addMicroseconds(bsls::Types::Int64 microseconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addMicroseconds(bsls::Types::Int64 microseconds);
 
     /// Increase the value of this time object by the specified `interval`
     /// of time, and return the (signed) number of times that the
     /// 23:59:59.999999 - 00:00:00.000000 boundary was crossed in performing
     /// the operation.  The behavior is undefined unless the number of
     /// crossings that would be returned can be represented by an `int`.
-    int addInterval(const DatetimeInterval& interval)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addInterval(const DatetimeInterval& interval);
 
     /// Add to the value of this time object the specified (signed) number
     /// of `hours`, and the optionally specified (signed) numbers of
@@ -347,67 +335,64 @@ class Time {
                 int                minutes = 0,
                 int                seconds = 0,
                 int                milliseconds = 0,
-                bsls::Types::Int64 microseconds = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                bsls::Types::Int64 microseconds = 0);
 
     /// Set the "hour" attribute of this time object to the specified
     /// `hour`; if `hour` is 24, set the remaining attributes of this object
     /// to 0.  The behavior is undefined unless `0 <= hour <= 24`.
-    void setHour(int hour) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setHour(int hour);
 
     /// Set the "hour" attribute of this time object to the specified `hour`
     /// value *if* `0 <= hour <= 24`.  If `24 == hour`, set the remaining
     /// attributes to 0.  Return 0 on success, and a non-zero value (with no
     /// effect) otherwise.
-    int setHourIfValid(int hour) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setHourIfValid(int hour);
 
     /// Set the "minute" attribute of this time object to the specified
     /// `minute`; if the `hour` attribute is 24, set the `hour` attribute to
     /// 0.  The behavior is undefined unless `0 <= minute < 60`.
-    void setMinute(int minute) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setMinute(int minute);
 
     /// Set the "minute" attribute of this time object to the specified
     /// `minute` *if* `0 <= minute < 60`; if the `hour` attribute is 24, set
     /// the `hour` attribute to 0.  Return 0 on success, and a non-zero
     /// value (with no effect) otherwise.
-    int setMinuteIfValid(int minute) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setMinuteIfValid(int minute);
 
     /// Set the "second" attribute of this time object to the specified
     /// `second`; if the `hour` attribute is 24, set the `hour` attribute to
     /// 0.  The behavior is undefined unless `0 <= second < 60`.
-    void setSecond(int second) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setSecond(int second);
 
     /// Set the "second" attribute of this time object to the specified
     /// `second` *if* `0 <= second < 60`; if the `hour` attribute is 24, set
     /// the `hour` attribute to 0.  Return 0 on success, and a non-zero
     /// value (with no effect) otherwise.
-    int setSecondIfValid(int second) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setSecondIfValid(int second);
 
     /// Set the "millisecond" attribute of this time object to the specified
     /// `millisecond`; if the `hour` attribute is 24, set the `hour`
     /// attribute to 0.  The behavior is undefined unless
     /// `0 <= millisecond < 1000`.
-    void setMillisecond(int millisecond) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setMillisecond(int millisecond);
 
     /// Set the "millisecond" attribute of this time object to the specified
     /// `millisecond` *if* `0 <= millisecond < 1000`; if the `hour`
     /// attribute is 24, set the `hour` attribute to 0.  Return 0 on
     /// success, and a non-zero value (with no effect) otherwise.
-    int setMillisecondIfValid(int millisecond)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setMillisecondIfValid(int millisecond);
 
     /// Set the "microsecond" attribute of this time object to the specified
     /// `microsecond`; if the `hour` attribute is 24, set the `hour`
     /// attribute to 0.  The behavior is undefined unless
     /// `0 <= microsecond < 1000`.
-    void setMicrosecond(int microsecond) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setMicrosecond(int microsecond);
 
     /// Set the "microsecond" attribute of this time object to the specified
     /// `microsecond` *if* `0 <= microsecond < 1000`; if the `hour`
     /// attribute is 24, set the `hour` attribute to 0.  Return 0 on
     /// success, and a non-zero value (with no effect) otherwise.
-    int setMicrosecondIfValid(int microsecond)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setMicrosecondIfValid(int microsecond);
 
     /// Set the value of this time object to the specified `hour`, and the
     /// optionally specified `minute`, `second`, `millisecond`, and
@@ -418,7 +403,7 @@ class Time {
                  int minute = 0,
                  int second = 0,
                  int millisecond = 0,
-                 int microsecond = 0) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                 int microsecond = 0);
 
     /// Set the value of this time object to the specified `hour`, and the
     /// optionally specified `minute`, `second`, `millisecond`, and
@@ -429,7 +414,7 @@ class Time {
                        int minute = 0,
                        int second = 0,
                        int millisecond = 0,
-                       int microsecond = 0) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                       int microsecond = 0);
 
                                   // Aspects
 
@@ -444,8 +429,7 @@ class Time {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     // ACCESSORS
 
@@ -460,23 +444,22 @@ class Time {
                  int *minute = 0,
                  int *second = 0,
                  int *millisecond = 0,
-                 int *microsecond = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                 int *microsecond = 0) const;
 
     /// Return the value of the `hour` attribute of this time object.
-    int hour() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int hour() const;
 
     /// Return the value of the `minute` attribute of this time object.
-    int minute() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int minute() const;
 
     /// Return the value of the `second` attribute of this time object.
-    int second() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int second() const;
 
     /// Return the value of the `millisecond` attribute of this time object.
-    int millisecond() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int millisecond() const;
 
     /// Return the value of the `microsecond` attribute of this time object.
-    int microsecond() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int microsecond() const;
 
     /// Efficiently write to the specified `result` buffer no more than the
     /// specified `numBytes` of a representation of the value of this
@@ -494,8 +477,7 @@ class Time {
     /// truncated to avoid `result` overrun.
     int printToBuffer(char *result,
                       int   numBytes,
-                      int   fractionalSecondPrecision = 6) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                      int   fractionalSecondPrecision = 6) const;
 
                                   // Aspects
 
@@ -508,9 +490,7 @@ class Time {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Write the value of this object to the specified output `stream` in a
     /// human-readable format, and return a reference to `stream`.
@@ -528,8 +508,7 @@ class Time {
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
                         int           spacesPerLevel = 4) const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
 #ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
 
@@ -554,9 +533,7 @@ class Time {
     /// reference to the modifiable `stream`.
     ///
     /// @DEPRECATED: Use `print` instead.
-    bsl::ostream& streamOut(bsl::ostream& stream) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::ostream& streamOut(bsl::ostream& stream) const;
 
     /// Set the value of this time object to the specified `hour`, and the
     /// optionally specified `minute`, `second`, and `millisecond`, if they
@@ -568,8 +545,7 @@ class Time {
     int validateAndSetTime(int hour,
                            int minute = 0,
                            int second = 0,
-                           int millisecond = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                           int millisecond = 0);
 
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
 
@@ -585,18 +561,15 @@ void hashAppend(HASHALG& hashAlg, const Time& object);
 
 /// Return a `Time` value that is the sum of the specified `lhs` time and
 /// the specified `rhs` datetime interval.
-Time operator+(const Time& lhs, const DatetimeInterval& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+Time operator+(const Time& lhs, const DatetimeInterval& rhs);
 
 /// Return a `Time` value that is the sum of the specified `lhs` datetime
 /// interval and the specified `rhs` time.
-Time operator+(const DatetimeInterval& lhs, const Time& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+Time operator+(const DatetimeInterval& lhs, const Time& rhs);
 
 /// Return a `Time` value that is the difference between the specified `lhs`
 /// time and the specified `rhs` datetime interval.
-Time operator-(const Time& lhs, const DatetimeInterval& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+Time operator-(const Time& lhs, const DatetimeInterval& rhs);
 
 /// Return a `DatetimeInterval` object initialized with the difference
 /// between the specified `lhs` and `rhs` time values.
@@ -648,8 +621,7 @@ bool operator>=(const Time& lhs, const Time& rhs);
 /// ```
 /// print(stream, 0, -1);
 /// ```
-bsl::ostream& operator<<(bsl::ostream& stream, const Time& time)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream) BSLS_ASSERT_CONVEYOR_REQUIRES(time);
+bsl::ostream& operator<<(bsl::ostream& stream, const Time& time);
 
 // ============================================================================
 //                             INLINE DEFINITIONS
@@ -765,6 +737,8 @@ Time& Time::operator=(const Time& rhs)
 inline
 Time& Time::operator+=(const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     addInterval(rhs);
     return *this;
 }
@@ -772,6 +746,8 @@ Time& Time::operator+=(const DatetimeInterval& rhs)
 inline
 Time& Time::operator-=(const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     addInterval(-rhs);
     return *this;
 }
@@ -779,6 +755,7 @@ Time& Time::operator-=(const DatetimeInterval& rhs)
 inline
 int Time::setHourIfValid(int hour)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 <= hour && hour <= 24) {
@@ -791,6 +768,7 @@ int Time::setHourIfValid(int hour)
 inline
 int Time::setMicrosecondIfValid(int microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 <= microsecond && microsecond <= 999) {
@@ -803,6 +781,7 @@ int Time::setMicrosecondIfValid(int microsecond)
 inline
 int Time::setMillisecondIfValid(int millisecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 <= millisecond && millisecond <= 999) {
@@ -815,6 +794,7 @@ int Time::setMillisecondIfValid(int millisecond)
 inline
 int Time::setMinuteIfValid(int minute)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 <= minute && minute <= 59) {
@@ -827,6 +807,7 @@ int Time::setMinuteIfValid(int minute)
 inline
 int Time::setSecondIfValid(int second)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (0 <= second && second <= 59) {
@@ -843,6 +824,7 @@ int Time::setTimeIfValid(int hour,
                          int millisecond,
                          int microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (isValid(hour, minute, second, millisecond, microsecond)) {
@@ -858,6 +840,8 @@ int Time::setTimeIfValid(int hour,
 template <class STREAM>
 STREAM& Time::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 2: {
@@ -898,6 +882,7 @@ STREAM& Time::bdexStreamIn(STREAM& stream, int version)
 inline
 int Time::hour() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(microsecondsFromMidnight()
                                                   / TimeUnitRatio::k_US_PER_H);
 }
@@ -905,6 +890,7 @@ int Time::hour() const
 inline
 int Time::microsecond() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(  microsecondsFromMidnight()
                             % TimeUnitRatio::k_US_PER_MS);
 }
@@ -912,6 +898,7 @@ int Time::microsecond() const
 inline
 int Time::millisecond() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(  microsecondsFromMidnight()
                             / TimeUnitRatio::k_US_PER_MS
                             % TimeUnitRatio::k_MS_PER_S);
@@ -920,6 +907,7 @@ int Time::millisecond() const
 inline
 int Time::minute() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(  microsecondsFromMidnight()
                             / TimeUnitRatio::k_US_PER_M
                             % TimeUnitRatio::k_M_PER_H);
@@ -928,6 +916,7 @@ int Time::minute() const
 inline
 int Time::second() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(  microsecondsFromMidnight()
                             / TimeUnitRatio::k_US_PER_S
                             % TimeUnitRatio::k_S_PER_M);
@@ -938,6 +927,8 @@ int Time::second() const
 template <class STREAM>
 STREAM& Time::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 2: {
@@ -975,12 +966,15 @@ int Time::maxSupportedVersion()
 inline
 bsl::ostream& Time::streamOut(bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return stream << *this;
 }
 
 inline
 int Time::validateAndSetTime(int hour, int minute, int second, int millisecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return setTimeIfValid(hour, minute, second, millisecond);
 }
 
@@ -992,6 +986,8 @@ int Time::validateAndSetTime(int hour, int minute, int second, int millisecond)
 inline
 bdlt::Time bdlt::operator+(const Time& lhs, const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Time result(lhs);
     return result += rhs;
 }
@@ -999,6 +995,8 @@ bdlt::Time bdlt::operator+(const Time& lhs, const DatetimeInterval& rhs)
 inline
 bdlt::Time bdlt::operator+(const DatetimeInterval& lhs, const Time& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Time result(rhs);
     return result += lhs;
 }
@@ -1006,6 +1004,8 @@ bdlt::Time bdlt::operator+(const DatetimeInterval& lhs, const Time& rhs)
 inline
 bdlt::Time bdlt::operator-(const Time& lhs, const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Time result(lhs);
     return result -= rhs;
 }
@@ -1013,6 +1013,8 @@ bdlt::Time bdlt::operator-(const Time& lhs, const DatetimeInterval& rhs)
 inline
 bdlt::DatetimeInterval bdlt::operator-(const Time& lhs, const Time& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     DatetimeInterval timeInterval;
 
     timeInterval.setTotalMicroseconds(
@@ -1025,6 +1027,8 @@ bdlt::DatetimeInterval bdlt::operator-(const Time& lhs, const Time& rhs)
 inline
 bool bdlt::operator==(const Time& lhs, const Time& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     bsls::Types::Int64 lhsValue = lhs.microsecondsFromMidnight();
     bsls::Types::Int64 rhsValue = rhs.microsecondsFromMidnight();
 
@@ -1034,6 +1038,8 @@ bool bdlt::operator==(const Time& lhs, const Time& rhs)
 inline
 bool bdlt::operator!=(const Time& lhs, const Time& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     bsls::Types::Int64 lhsValue = lhs.microsecondsFromMidnight();
     bsls::Types::Int64 rhsValue = rhs.microsecondsFromMidnight();
 
@@ -1107,6 +1113,8 @@ template <class HASHALG>
 inline
 void bdlt::hashAppend(HASHALG& hashAlg, const Time& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlg, object.microsecondsFromMidnight());
 }

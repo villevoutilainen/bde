@@ -22,6 +22,7 @@ Iso8601UtilConfiguration::s_defaultConfiguration = { 3 };
 // MANIPULATORS
 void Iso8601UtilConfiguration::setOmitColonInZoneDesignator(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (value) {
         d_configurationMask |= k_OMIT_COLON_IN_ZONE_DESIGNATOR_BIT;
     }
@@ -32,6 +33,7 @@ void Iso8601UtilConfiguration::setOmitColonInZoneDesignator(bool value)
 
 void Iso8601UtilConfiguration::setFractionalSecondPrecision(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= value);
     BSLS_ASSERT(6 >= value);
 
@@ -41,6 +43,7 @@ void Iso8601UtilConfiguration::setFractionalSecondPrecision(int value)
 
 void Iso8601UtilConfiguration::setUseCommaForDecimalSign(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (value) {
         d_configurationMask |= k_USE_COMMA_FOR_DECIMAL_SIGN_BIT;
     }
@@ -51,6 +54,7 @@ void Iso8601UtilConfiguration::setUseCommaForDecimalSign(bool value)
 
 void Iso8601UtilConfiguration::setUseZAbbreviationForUtc(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (value) {
         d_configurationMask |= k_USE_Z_ABBREVIATION_FOR_UTC_BIT;
     }
@@ -68,6 +72,8 @@ Iso8601UtilConfiguration::print(bsl::ostream& stream,
                                 int           level,
                                 int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("fractionalSecondPrecision",

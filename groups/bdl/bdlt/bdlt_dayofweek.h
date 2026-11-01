@@ -137,9 +137,7 @@ struct DayOfWeek {
     template <class STREAM>
     static STREAM& bdexStreamIn(STREAM&          stream,
                                 DayOfWeek::Enum& variable,
-                                int              version)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(variable);
+                                int              version);
 
     /// Write the value of the specified `value`, using the specified
     /// `version` format, to the specified output `stream`, and return a
@@ -152,8 +150,7 @@ struct DayOfWeek {
     template <class STREAM>
     static STREAM& bdexStreamOut(STREAM&         stream,
                                  DayOfWeek::Enum value,
-                                 int             version)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
+                                 int             version);
 
     /// Return the maximum valid BDEX format version, as indicated by the
     /// specified `versionSelector`, to be passed to the `bdexStreamOut`
@@ -182,8 +179,7 @@ struct DayOfWeek {
     static bsl::ostream& print(bsl::ostream&          stream,
                                DayOfWeek::Enum        value,
                                int                    level          = 0,
-                               int                    spacesPerLevel = 4)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
+                               int                    spacesPerLevel = 4);
 
     /// Return the abbreviated character-string representation of the
     /// enumerator corresponding to the specified `dayOfWeek`.  This
@@ -223,8 +219,7 @@ struct DayOfWeek {
 /// ```
 /// bdlt::DayOfWeek::print(stream, value, 0, -1);
 /// ```
-bsl::ostream& operator<<(bsl::ostream& stream, DayOfWeek::Enum value)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
+bsl::ostream& operator<<(bsl::ostream& stream, DayOfWeek::Enum value);
 
 // FREE FUNCTIONS
 
@@ -280,6 +275,8 @@ STREAM& DayOfWeek::bdexStreamIn(STREAM&          stream,
                                 DayOfWeek::Enum& variable,
                                 int              version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&variable);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 1: {
@@ -305,6 +302,7 @@ STREAM& DayOfWeek::bdexStreamOut(STREAM&         stream,
                                  DayOfWeek::Enum value,
                                  int             version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 1: {
@@ -359,6 +357,8 @@ STREAM& bdlt::bdexStreamOut(STREAM&                      stream,
                             const bdlt::DayOfWeek::Enum& value,
                             int                          version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return bdlt::DayOfWeek::bdexStreamOut(stream, value, version);
 }
 

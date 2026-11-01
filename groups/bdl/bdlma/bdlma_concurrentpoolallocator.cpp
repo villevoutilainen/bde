@@ -151,6 +151,7 @@ ConcurrentPoolAllocator::~ConcurrentPoolAllocator()
 // MANIPULATORS
 void *ConcurrentPoolAllocator::allocate(size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(0 == size)) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return 0;                                                     // RETURN
@@ -200,6 +201,7 @@ void *ConcurrentPoolAllocator::allocate(size_type size)
 
 void ConcurrentPoolAllocator::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(!address)) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return;                                                       // RETURN

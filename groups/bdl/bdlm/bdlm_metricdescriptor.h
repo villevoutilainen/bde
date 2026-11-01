@@ -215,24 +215,19 @@ class MetricDescriptor {
     const InstanceCount::Value& instanceNumber() const;
 
     /// Return the `metricName` attribute.
-    const bsl::string& metricName() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& metricName() const;
 
     /// Return the `metricNamespace` attribute.
-    const bsl::string& metricNamespace() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& metricNamespace() const;
 
     /// Return the `objectIdentifier` attribute.
-    const bsl::string& objectIdentifier() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& objectIdentifier() const;
 
     /// Return the `objectTypeAbbreviation` attribute.
-    const bsl::string& objectTypeAbbreviation() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& objectTypeAbbreviation() const;
 
     /// Return the `objectTypeName` attribute.
-    const bsl::string& objectTypeName() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& objectTypeName() const;
 
     /// Return the allocator used by this object to supply memory.
     bslma::Allocator *allocator() const;
@@ -362,30 +357,35 @@ const InstanceCount::Value& MetricDescriptor::instanceNumber() const
 inline
 const bsl::string& MetricDescriptor::metricName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_metricName;
 }
 
 inline
 const bsl::string& MetricDescriptor::metricNamespace() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_metricNamespace;
 }
 
 inline
 const bsl::string& MetricDescriptor::objectIdentifier() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_objectIdentifier;
 }
 
 inline
 const bsl::string& MetricDescriptor::objectTypeAbbreviation() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_objectTypeAbbreviation;
 }
 
 inline
 const bsl::string& MetricDescriptor::objectTypeName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_objectTypeName;
 }
 

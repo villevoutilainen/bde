@@ -511,8 +511,7 @@ class PipeTaskManager {
 
     /// Return a `const` reference to the `ControlManager` object of this
     /// `PipeTaskManager`.
-    const balb::ControlManager& controlManager() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const balb::ControlManager& controlManager() const;
 
     /// Return the path of the named pipe used by the implementation.  The
     /// behavior is undefined unless the task manager has been started.

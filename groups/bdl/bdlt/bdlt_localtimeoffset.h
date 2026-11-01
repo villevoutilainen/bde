@@ -231,8 +231,7 @@ struct LocalTimeOffset {
     /// between local time and UTC time at the specified `utcDatetime`.
     /// This method uses the currently installed local-time-offset callback
     /// mechanism.
-    static bsls::TimeInterval localTimeOffset(const Datetime& utcDatetime)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(utcDatetime);
+    static bsls::TimeInterval localTimeOffset(const Datetime& utcDatetime);
 
                         // ** default callback **
 
@@ -241,8 +240,7 @@ struct LocalTimeOffset {
     /// Note that the local time zone is determined by the `TZ` environment
     /// variable in the same manner as the `localtime` POSIX function.
     static bsls::TimeInterval localTimeOffsetDefault(
-                                                  const Datetime& utcDatetime)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(utcDatetime);
+                                                  const Datetime& utcDatetime);
 
                         // ** set callback **
 
@@ -270,6 +268,7 @@ inline
 bsls::TimeInterval LocalTimeOffset::
                                    localTimeOffset(const Datetime& utcDatetime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utcDatetime);
     return localTimeOffsetCallback()(utcDatetime);
 }
 

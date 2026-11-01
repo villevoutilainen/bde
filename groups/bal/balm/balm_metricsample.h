@@ -230,8 +230,7 @@ class MetricSampleGroup {
 
     /// Return a reference to the non-modifiable elapsed time interval over
     /// which this object's metric records were aggregated.
-    const bsls::TimeInterval& elapsedTime() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsls::TimeInterval& elapsedTime() const;
 
     /// Return an iterator positioned at the beginning of the sequence of
     /// `MetricRecord` objects referenced by this object.
@@ -393,12 +392,10 @@ class MetricSample {
     /// unless `0 <= index < numGroups()`.  Note that the returned
     /// reference will remain valid until this sample is modified by
     /// invoking `appendGroup` or `removeAllRecords()`.
-    const MetricSampleGroup& sampleGroup(int index) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const MetricSampleGroup& sampleGroup(int index) const;
 
     /// Return a reference to the non-modifiable timestamp for this sample.
-    const bdlt::DatetimeTz& timeStamp() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlt::DatetimeTz& timeStamp() const;
 
     /// Return an iterator positioned at the beginning of the sequence of
     /// `MetricSampleGroup` objects contained by this object.  Note that the
@@ -530,6 +527,7 @@ int MetricSampleGroup::numRecords() const
 inline
 const bsls::TimeInterval& MetricSampleGroup::elapsedTime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_elapsedTime;
 }
 
@@ -641,6 +639,7 @@ const MetricSampleGroup& MetricSample::sampleGroup(int index) const
 inline
 const bdlt::DatetimeTz& MetricSample::timeStamp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_timeStamp;
 }
 

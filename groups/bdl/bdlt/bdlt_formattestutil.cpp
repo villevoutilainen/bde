@@ -16,6 +16,7 @@ namespace bdlt {
 // CLASS METHODS
 bsl::string FormatTestUtil::narrow(const bsl::wstring_view& viewIn)
 {
+   BSLS_ASSERT_CONVEYOR_OBJECT(&viewIn);
    // We anticipate that this function will mostly be used to narrow `wstring`
    // values being displayed by `ASSERTV`, so it is not important that this
    // function be particularly fast, therefore we make it non-inline to

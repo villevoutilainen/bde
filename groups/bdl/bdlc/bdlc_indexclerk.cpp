@@ -77,6 +77,8 @@ bsl::ostream& IndexClerk::print(bsl::ostream& stream,
                                 int           level,
                                 int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     int nestedLevel, nestedSpacesPerLevel;
 
     bdlb::Print::indent(stream, level, spacesPerLevel);

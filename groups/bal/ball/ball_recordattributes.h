@@ -412,18 +412,15 @@ class RecordAttributes {
     bsls::Types::Uint64 kernelThreadID() const;
 
     /// Return the timestamp attribute of this record attributes object.
-    const bdlt::Datetime& timestamp() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlt::Datetime& timestamp() const;
 
     /// Return a reference to the non-modifiable stream buffer associated
     /// with the message attribute of this record attributes object.
-    const bdlsb::MemOutStreamBuf& messageStreamBuf() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlsb::MemOutStreamBuf& messageStreamBuf() const;
 
     /// Return a reference to the non-modifiable stream associated with the
     /// message attribute of this record attributes object.
-    const bsl::ostream& messageStream() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::ostream& messageStream() const;
 
     /// Format this object to the specified output `stream` at the
     /// optionally specified indentation `level` and return a reference to
@@ -508,12 +505,14 @@ void RecordAttributes::clearMessage()
 inline
 bdlsb::MemOutStreamBuf& RecordAttributes::messageStreamBuf()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_messageStreamBuf;
 }
 
 inline
 bsl::ostream& RecordAttributes::messageStream()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_messageStream;
 }
 
@@ -611,18 +610,21 @@ bsls::Types::Uint64 RecordAttributes::kernelThreadID() const
 inline
 const bdlsb::MemOutStreamBuf& RecordAttributes::messageStreamBuf() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_messageStreamBuf;
 }
 
 inline
 const bsl::ostream& RecordAttributes::messageStream() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_messageStream;
 }
 
 inline
 const bdlt::Datetime& RecordAttributes::timestamp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_timestamp;
 }
 

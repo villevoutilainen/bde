@@ -273,8 +273,7 @@ class BerDecoderOptions {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Invoke the specified `accessor` sequentially on each
     /// (non-modifiable) attribute of this object, supplying `accessor` with
@@ -306,28 +305,23 @@ class BerDecoderOptions {
 
     /// Return a reference to the non-modifiable "MaxDepth" attribute of
     /// this object.
-    const int& maxDepth() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const int& maxDepth() const;
 
     /// Return a reference to the non-modifiable "SkipUnknownElements"
     /// attribute of this object.
-    const bool& skipUnknownElements() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bool& skipUnknownElements() const;
 
     /// Return a reference to the non-modifiable "TraceLevel" attribute of
     /// this object.
-    const int& traceLevel() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const int& traceLevel() const;
 
     /// Return a reference to the non-modifiable "MaxSequenceSize" attribute
     /// of this object.
-    const int& maxSequenceSize() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const int& maxSequenceSize() const;
 
     /// Return a reference to the non-modifiable "DefaultEmptyStrings"
     /// attribute of this object.
-    const bool& defaultEmptyStrings() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bool& defaultEmptyStrings() const;
 };
 
 // FREE OPERATORS
@@ -568,6 +562,8 @@ inline
 STREAM& BerDecoderOptions::bdexStreamOut(STREAM& stream,
                                          int     version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 1: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, d_maxDepth, 1);
@@ -686,30 +682,35 @@ int BerDecoderOptions::accessAttribute(ACCESSOR&   accessor,
 inline
 const int& BerDecoderOptions::maxDepth() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_maxDepth;
 }
 
 inline
 const bool& BerDecoderOptions::skipUnknownElements() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_skipUnknownElements;
 }
 
 inline
 const int& BerDecoderOptions::traceLevel() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_traceLevel;
 }
 
 inline
 const int& BerDecoderOptions::maxSequenceSize() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_maxSequenceSize;
 }
 
 inline
 const bool& BerDecoderOptions::defaultEmptyStrings() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_defaultEmptyStrings;
 }
 

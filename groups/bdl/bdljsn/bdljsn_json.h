@@ -2162,9 +2162,7 @@ class Json {
     /// Return a reference providing non-modifiable access to the value of type
     /// `JsonString` held by this object.  The behavior is undefined unless
     /// `isString()` returns true.
-    const bsl::string& theString() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& theString() const;
 
     /// Return the type of this `Json` value.
     JsonType::Enum type() const BSLS_KEYWORD_NOEXCEPT;
@@ -2524,9 +2522,7 @@ class Json_Initializer {
 
     /// Return a reference providing non-modifiable access to the internal
     /// variant.
-    const Storage& get_storage() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Storage& get_storage() const;
 };
 
                            // ----------------------
@@ -2663,6 +2659,7 @@ inline
 const Json_Initializer::Storage&
 Json_Initializer::get_storage() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_storage;
 }
 
@@ -2879,9 +2876,7 @@ class JsonObject_MemberInitializer {
 
     /// Return a reference providing non-modifiable access to the value that
     /// the object was created with.
-    const Json_Initializer& value() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Json_Initializer& value() const;
 
 // BDE_VERIFY pragma: pop
 };
@@ -2959,6 +2954,7 @@ bsl::string_view JsonObject_MemberInitializer::key() const
 inline
 const Json_Initializer& JsonObject_MemberInitializer::value() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_second;
 }
 

@@ -555,16 +555,12 @@ class ConstructorProxy {
     // MANIPULATORS
 
     /// Return a reference to the modifiable object held by this proxy.
-    OBJECT_TYPE& object() BSLS_KEYWORD_NOEXCEPT
-                              BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                              BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    OBJECT_TYPE& object() BSLS_KEYWORD_NOEXCEPT;
 
     // ACCESSORS
 
     /// Return a reference to the non-modifiable object held by this proxy.
-    const OBJECT_TYPE& object() const BSLS_KEYWORD_NOEXCEPT
-                              BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                              BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const OBJECT_TYPE& object() const BSLS_KEYWORD_NOEXCEPT;
 };
 
 // ============================================================================
@@ -1154,6 +1150,7 @@ template <class OBJECT_TYPE>
 inline
 OBJECT_TYPE& ConstructorProxy<OBJECT_TYPE>::object() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_objectBuffer.object();
 }
 
@@ -1163,6 +1160,7 @@ inline
 const OBJECT_TYPE& ConstructorProxy<OBJECT_TYPE>::object() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_objectBuffer.object();
 }
 

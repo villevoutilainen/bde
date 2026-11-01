@@ -2136,6 +2136,7 @@ inline
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>&
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::operator=(const multimap& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this != &rhs)) {
         if (AllocatorTraits::propagate_on_container_copy_assignment::value) {
             multimap other(rhs, rhs.nodeFactory().allocator());
@@ -2158,6 +2159,7 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::operator=(
                             AllocatorTraits::is_always_equal::value &&
                             std::is_nothrow_move_assignable<COMPARATOR>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     multimap& lvalue = rhs;
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this != &lvalue)) {
@@ -2185,6 +2187,7 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>&
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::operator=(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     clear();
     insert(values.begin(), values.end());
     return *this;
@@ -2196,6 +2199,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::begin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_tree.firstNode());
 }
 
@@ -2204,6 +2208,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_tree.sentinel());
 }
 
@@ -2212,6 +2217,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::reverse_iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::rbegin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(end());
 }
 
@@ -2220,6 +2226,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::reverse_iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::rend() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(begin());
 }
 
@@ -2228,6 +2235,8 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *insertLocation =
@@ -2252,6 +2261,7 @@ inline
 void multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(INPUT_ITERATOR first,
                                                          INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ///Implementation Notes
     ///--------------------
     // First, consume currently held free nodes.  Tf those nodes are
@@ -2281,6 +2291,7 @@ inline
 void multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(const_iterator first,
                                                          const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (first != last) {
         insert(*first);
         ++first;
@@ -2294,6 +2305,8 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(const_iterator    hint,
                                                     const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -2322,6 +2335,7 @@ inline
 void multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -2342,6 +2356,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2370,6 +2385,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_1) args_1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2400,6 +2416,7 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_1) args_1,
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_2) args_2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2428,6 +2445,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2460,6 +2478,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_1) args_1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2494,6 +2513,7 @@ multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_1) args_1,
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_2) args_2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2529,6 +2549,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2555,6 +2576,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2586,6 +2608,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != end());
 
     BloombergLP::bslalg::RbTreeNode *node =
@@ -2602,6 +2625,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::erase(iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return erase(const_iterator(position));
 }
 
@@ -2610,6 +2634,8 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::size_type
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::erase(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     size_type      count = 0;
     const_iterator first = find(key);
 
@@ -2629,6 +2655,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::erase(const_iterator first,
                                                    const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (first != last) {
         first = erase(first);
     }
@@ -2703,6 +2730,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::begin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return cbegin();
 }
 
@@ -2711,6 +2739,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::end() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return cend();
 }
 
@@ -2720,6 +2749,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::rbegin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return crbegin();
 }
 
@@ -2728,6 +2758,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::rend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return crend();
 }
 
@@ -2737,6 +2768,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::cbegin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_tree.firstNode());
 }
 
@@ -2745,6 +2777,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_tree.sentinel());
 }
 
@@ -2754,6 +2787,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::crbegin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -2763,6 +2797,7 @@ typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::crend() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -2771,6 +2806,8 @@ inline
 bool multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::contains(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return find(key) != end();
 }
 
@@ -2780,6 +2817,7 @@ inline
 bool multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::empty() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_tree.numNodes();
 }
 
@@ -2788,6 +2826,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::size_type
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::size() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_tree.numNodes();
 }
 
@@ -2805,6 +2844,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::key_compare
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::key_comp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return comparator().keyComparator();
 }
 
@@ -2813,6 +2853,7 @@ inline
 typename multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::value_compare
 multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::value_comp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return value_compare(key_comp());
 }
 
@@ -2825,6 +2866,8 @@ bool bsl::operator==(
                    const bsl::multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
                    const bsl::multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return BloombergLP::bslalg::RangeCompare::equal(lhs.begin(),
                                                     lhs.end(),
                                                     lhs.size(),
@@ -2840,6 +2883,8 @@ bool bsl::operator!=(
                    const bsl::multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
                    const bsl::multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 #endif
@@ -2882,6 +2927,8 @@ bool bsl::operator>(
                    const bsl::multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
                    const bsl::multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs < lhs;
 }
 
@@ -2900,6 +2947,8 @@ bool bsl::operator>=(
                    const bsl::multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
                    const bsl::multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs < rhs);
 }
 
@@ -2916,6 +2965,7 @@ typename bsl::multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>::size_type
 bsl::erase_if(bsl::multimap<KEY, VALUE, COMPARATOR, ALLOCATOR>&      m,
                                                            PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&m);
     return BloombergLP::bslstl::AlgorithmUtil::containerEraseIf(m, predicate);
 }
 

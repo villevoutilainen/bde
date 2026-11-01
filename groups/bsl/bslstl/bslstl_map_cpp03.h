@@ -5049,6 +5049,7 @@ inline
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>&
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::operator=(const map& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this != &rhs)) {
         if (AllocatorTraits::propagate_on_container_copy_assignment::value) {
             map other(rhs, rhs.nodeFactory().allocator());
@@ -5071,6 +5072,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::operator=(
                             AllocatorTraits::is_always_equal::value &&
                             std::is_nothrow_move_assignable<COMPARATOR>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     map& lvalue = rhs;
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this != &lvalue)) {
@@ -5098,6 +5100,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>&
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::operator=(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     clear();
     insert(values.begin(), values.end());
     return *this;
@@ -5109,6 +5112,8 @@ inline
 typename add_lvalue_reference<VALUE>::type
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::operator[](const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     iterator iter = lower_bound(key);
     if (iter == end() || this->comparator()(key, *iter.node())) {
 #if defined(BSLS_LIBRARYFEATURES_HAS_CPP11_PAIR_PIECEWISE_CONSTRUCTOR)
@@ -5141,6 +5146,8 @@ typename add_lvalue_reference<VALUE>::type
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::operator[](
                                   BloombergLP::bslmf::MovableRef<key_type> key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     iterator iter = lower_bound(lvalue);
@@ -5174,6 +5181,8 @@ template <class KEY, class VALUE, class COMPARATOR, class ALLOCATOR>
 typename add_lvalue_reference<VALUE>::type
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::at(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *node =
         BloombergLP::bslalg::RbTreeUtil::find(d_tree, this->comparator(), key);
     if (d_tree.sentinel() == node) {
@@ -5188,6 +5197,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::begin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_tree.firstNode());
 }
 
@@ -5196,6 +5206,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_tree.sentinel());
 }
 
@@ -5204,6 +5215,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::reverse_iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::rbegin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(end());
 }
 
@@ -5212,6 +5224,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::reverse_iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::rend() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(begin());
 }
 
@@ -5220,6 +5233,8 @@ inline
 pair<typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator, bool>
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -5246,6 +5261,8 @@ pair<typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator, bool>
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     value_type& lvalue = value;
 
     int comparisonResult;
@@ -5274,6 +5291,7 @@ inline
 void map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(INPUT_ITERATOR first,
                                                     INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insertFromRange(first, last);
 }
 
@@ -5283,6 +5301,7 @@ inline
 void map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(const_iterator first,
                                                     const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (first != last) {
         insert(*first);
         ++first;
@@ -5296,6 +5315,8 @@ typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(const_iterator    hint,
                                                const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                 const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -5326,6 +5347,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(
                               const_iterator                             hint,
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     value_type& lvalue = value;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -5358,6 +5381,7 @@ inline
 void map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -5372,6 +5396,9 @@ pair<typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator, bool>
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert_or_assign(const key_type&  key,
                          BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -5405,6 +5432,9 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert_or_assign(const_iterator   hint,
                                                          const key_type&  key,
                          BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -5441,6 +5471,9 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert_or_assign(
                                   BloombergLP::bslmf::MovableRef<key_type> key,
                          BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -5476,6 +5509,9 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::insert_or_assign(
                                  BloombergLP::bslmf::MovableRef<key_type> key,
                          BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -5523,6 +5559,7 @@ pair<typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator, bool>
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                                  );
     int comparisonResult;
@@ -5553,6 +5590,7 @@ pair<typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator, bool>
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01));
     int comparisonResult;
@@ -5585,6 +5623,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02));
@@ -5620,6 +5659,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -5658,6 +5698,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -5699,6 +5740,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -5743,6 +5785,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -5790,6 +5833,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -5840,6 +5884,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -5893,6 +5938,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -5949,6 +5995,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -5987,6 +6034,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                                  );
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -6020,6 +6068,7 @@ typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01));
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -6055,6 +6104,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02));
@@ -6093,6 +6143,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -6134,6 +6185,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -6178,6 +6230,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -6225,6 +6278,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -6275,6 +6329,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -6328,6 +6383,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -6384,6 +6440,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -6443,6 +6500,7 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                               BSLS_COMPILERFEATURES_FORWARD(Args_01, args_01),
                               BSLS_COMPILERFEATURES_FORWARD(Args_02, args_02),
@@ -6488,6 +6546,7 @@ pair<typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator, bool>
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                                  BSLS_COMPILERFEATURES_FORWARD(Args, args)...);
     int comparisonResult;
@@ -6516,6 +6575,7 @@ typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
                                  BSLS_COMPILERFEATURES_FORWARD(Args, args)...);
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -6548,6 +6608,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != end());
 
     BloombergLP::bslalg::RbTreeNode *node =
@@ -6564,6 +6625,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::erase(iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return erase(const_iterator(position));
 }
 
@@ -6572,6 +6634,8 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::size_type
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::erase(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const_iterator it = find(key);
     if (it == end()) {
         return 0;                                                     // RETURN
@@ -6586,6 +6650,7 @@ typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::erase(const_iterator first,
                                               const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (first != last) {
         first = erase(first);
     }
@@ -6638,6 +6703,8 @@ inline
 pair<typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator, bool>
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -6676,6 +6743,8 @@ pair<typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator, bool>
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -6717,6 +6786,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -6762,6 +6833,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -6811,6 +6884,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -6864,6 +6939,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -6921,6 +6998,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -6982,6 +7061,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -7047,6 +7128,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -7116,6 +7199,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -7189,6 +7274,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -7246,6 +7333,8 @@ typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                                                     const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7288,6 +7377,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                                                     const key_type& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7333,6 +7424,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7382,6 +7475,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7435,6 +7530,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7492,6 +7589,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7553,6 +7652,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7618,6 +7719,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7687,6 +7790,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7760,6 +7865,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7837,6 +7944,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -7897,6 +8006,8 @@ pair<typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator, bool>
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                                  BloombergLP::bslmf::MovableRef<key_type> key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -7939,6 +8050,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                                  BloombergLP::bslmf::MovableRef<key_type> key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -7984,6 +8097,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -8033,6 +8148,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -8086,6 +8203,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -8143,6 +8262,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -8204,6 +8325,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -8269,6 +8392,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -8338,6 +8463,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -8411,6 +8538,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -8488,6 +8617,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -8549,6 +8680,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                                  const_iterator                           hint,
                                  BloombergLP::bslmf::MovableRef<key_type> key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -8594,6 +8727,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                                  BloombergLP::bslmf::MovableRef<key_type> key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -8642,6 +8777,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -8694,6 +8831,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -8750,6 +8889,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -8810,6 +8951,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -8874,6 +9017,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -8942,6 +9087,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -9014,6 +9161,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -9090,6 +9239,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -9170,6 +9321,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -9234,6 +9387,8 @@ pair<typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::iterator, bool>
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const key_type& key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     int comparisonResult;
     BloombergLP::bslalg::RbTreeNode *insertLocation =
         BloombergLP::bslalg::RbTreeUtil::findUniqueInsertLocation(
@@ -9271,6 +9426,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(const_iterator  hint,
                                                     const key_type& key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BloombergLP::bslalg::RbTreeNode *hintNode =
                     const_cast<BloombergLP::bslalg::RbTreeNode *>(hint.node());
     int comparisonResult;
@@ -9311,6 +9468,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                                  BloombergLP::bslmf::MovableRef<key_type> key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     int comparisonResult;
@@ -9352,6 +9511,8 @@ map<KEY, VALUE, COMPARATOR, ALLOCATOR>::try_emplace(
                                  BloombergLP::bslmf::MovableRef<key_type> key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     key_type& lvalue = key;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -9423,6 +9584,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::begin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return cbegin();
 }
 
@@ -9431,6 +9593,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::end() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return cend();
 }
 
@@ -9439,6 +9602,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::rbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return crbegin();
 }
 
@@ -9447,6 +9611,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::rend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return crend();
 }
 
@@ -9455,6 +9620,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::cbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_tree.firstNode());
 }
 
@@ -9463,6 +9629,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_tree.sentinel());
 }
 
@@ -9471,6 +9638,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::crbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -9479,6 +9647,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::crend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -9487,6 +9656,8 @@ inline
 bool map<KEY, VALUE, COMPARATOR, ALLOCATOR>::contains(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return find(key) != end();
 }
 
@@ -9496,6 +9667,7 @@ inline
 bool map<KEY, VALUE, COMPARATOR, ALLOCATOR>::empty() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_tree.numNodes();
 }
 
@@ -9504,6 +9676,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::size_type
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::size() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_tree.numNodes();
 }
 
@@ -9520,6 +9693,8 @@ typename add_lvalue_reference<const VALUE>::type
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::at(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const BloombergLP::bslalg::RbTreeNode *node =
                       BloombergLP::bslalg::RbTreeUtil::find(d_tree,
                                                             this->comparator(),
@@ -9536,6 +9711,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::key_compare
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::key_comp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return comparator().keyComparator();
 }
 
@@ -9544,6 +9720,7 @@ inline
 typename map<KEY, VALUE, COMPARATOR, ALLOCATOR>::value_compare
 map<KEY, VALUE, COMPARATOR, ALLOCATOR>::value_comp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return value_compare(key_comp());
 }
 
@@ -9555,6 +9732,8 @@ inline
 bool bsl::operator==(const bsl::map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return BloombergLP::bslalg::RangeCompare::equal(lhs.begin(),
                                                     lhs.end(),
                                                     lhs.size(),
@@ -9569,6 +9748,8 @@ inline
 bool bsl::operator!=(const bsl::map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 #endif
@@ -9609,6 +9790,8 @@ inline
 bool bsl::operator>(const bsl::map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
                     const bsl::map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs < lhs;
 }
 
@@ -9625,6 +9808,8 @@ inline
 bool bsl::operator>=(const bsl::map<KEY, VALUE, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::map<KEY, VALUE, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs < rhs);
 }
 
@@ -9640,6 +9825,7 @@ inline
 typename bsl::map<KEY, VALUE, COMPARATOR, ALLOCATOR>::size_type
 bsl::erase_if(map<KEY, VALUE, COMPARATOR, ALLOCATOR>& m, PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&m);
     return BloombergLP::bslstl::AlgorithmUtil::containerEraseIf(m, predicate);
 }
 

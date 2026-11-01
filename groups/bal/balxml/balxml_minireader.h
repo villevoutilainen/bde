@@ -425,12 +425,8 @@ class MiniReader :  public Reader {
     MiniReader& operator=(const MiniReader&);  // = delete;
 
     // PRIVATE MANIPULATORS
-    Node&       currentNode()
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    const Node& currentNode() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Node&       currentNode();
+    const Node& currentNode() const;
 
     int setError(ErrorInfo::Severity error, const bsl::string &msg);
 
@@ -441,10 +437,8 @@ class MiniReader :  public Reader {
     // HIGH LEVEL PARSING PRIMITIVES
 
     void  preAdvance();
-    const bsl::string& findNamespace(const char *prefix) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
-    const bsl::string& findNamespace(const bsl::string &prefix) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& findNamespace(const char *prefix) const;
+    const bsl::string& findNamespace(const bsl::string &prefix) const;
     int   checkPrefixes();
 
     /// Push the `currentNode()`s data onto the `d_activeNodes` stack.
@@ -923,12 +917,14 @@ class MiniReader :  public Reader {
 inline
 MiniReader::Node& MiniReader::currentNode()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_currentNode;
 }
 
 inline
 const MiniReader::Node& MiniReader::currentNode() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_currentNode;
 }
 

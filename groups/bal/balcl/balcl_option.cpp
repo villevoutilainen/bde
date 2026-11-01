@@ -206,11 +206,13 @@ OptionInfo::ArgType Option::argType() const
 
 const bsl::string& Option::description() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_optionInfo.object().d_description;
 }
 
 const bsl::string& Option::environmentVariableName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_optionInfo.object().d_environmentVariableName;
 }
 
@@ -229,11 +231,13 @@ const char *Option::longTag() const
 
 const bsl::string& Option::name() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_optionInfo.object().d_name;
 }
 
 const OccurrenceInfo& Option::occurrenceInfo() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_optionInfo.object().d_defaultInfo;
 }
 
@@ -247,11 +251,13 @@ char Option::shortTag() const
 
 const bsl::string& Option::tagString() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_optionInfo.object().d_tag;
 }
 
 const TypeInfo& Option::typeInfo() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_optionInfo.object().d_typeInfo;
 }
 

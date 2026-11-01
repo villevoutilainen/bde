@@ -1979,6 +1979,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::iterator
 Deque_Base<VALUE_TYPE>::begin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_start;
 }
 
@@ -1987,6 +1988,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::iterator
 Deque_Base<VALUE_TYPE>::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_finish;
 }
 
@@ -1995,6 +1997,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::reverse_iterator
 Deque_Base<VALUE_TYPE>::rbegin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(end());
 }
 
@@ -2003,6 +2006,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::reverse_iterator
 Deque_Base<VALUE_TYPE>::rend() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(begin());
 }
 
@@ -2020,6 +2024,7 @@ template <class VALUE_TYPE>
 typename Deque_Base<VALUE_TYPE>::reference
 Deque_Base<VALUE_TYPE>::at(size_type position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(position >= size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -2057,6 +2062,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_iterator
 Deque_Base<VALUE_TYPE>::begin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_start;
 }
 
@@ -2065,6 +2071,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_iterator
 Deque_Base<VALUE_TYPE>::cbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_start;
 }
 
@@ -2073,6 +2080,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_iterator
 Deque_Base<VALUE_TYPE>::end() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_finish;
 }
 
@@ -2081,6 +2089,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_iterator
 Deque_Base<VALUE_TYPE>::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_finish;
 }
 
@@ -2089,6 +2098,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reverse_iterator
 Deque_Base<VALUE_TYPE>::rbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -2097,6 +2107,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reverse_iterator
 Deque_Base<VALUE_TYPE>::crbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -2105,6 +2116,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reverse_iterator
 Deque_Base<VALUE_TYPE>::rend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -2113,6 +2125,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reverse_iterator
 Deque_Base<VALUE_TYPE>::crend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -2121,6 +2134,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::size_type
 Deque_Base<VALUE_TYPE>::size() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_finish - d_start;
 }
 
@@ -2167,6 +2181,7 @@ template <class VALUE_TYPE>
 inline
 bool Deque_Base<VALUE_TYPE>::empty() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_start == d_finish;
 }
 
@@ -2184,6 +2199,7 @@ template <class VALUE_TYPE>
 typename Deque_Base<VALUE_TYPE>::const_reference
 Deque_Base<VALUE_TYPE>::at(size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(position >= size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3193,6 +3209,7 @@ template <class VALUE_TYPE, class ALLOCATOR>
 deque<VALUE_TYPE, ALLOCATOR>&
 deque<VALUE_TYPE, ALLOCATOR>::operator=(const deque<VALUE_TYPE,ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef typename
         AllocatorTraits::propagate_on_container_copy_assignment Propagate;
 
@@ -3247,6 +3264,7 @@ deque<VALUE_TYPE, ALLOCATOR>::operator=(
     BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(
                                        AllocatorTraits::is_always_equal::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     deque& lvalue = rhs;
 
     typedef typename
@@ -3279,6 +3297,7 @@ deque<VALUE_TYPE, ALLOCATOR>&
 deque<VALUE_TYPE, ALLOCATOR>::operator=(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(values.begin(), values.end());
     return *this;
 }
@@ -3289,6 +3308,7 @@ template <class INPUT_ITERATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::assign(INPUT_ITERATOR first,
                                           INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateAssign(first, last);
 }
 
@@ -3296,6 +3316,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::assign(size_type         numElements,
                                           const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(numElements > max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3339,6 +3361,7 @@ inline
 void deque<VALUE_TYPE, ALLOCATOR>::assign(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(values.begin(), values.end());
 }
 #endif
@@ -3349,12 +3372,15 @@ BSLSTL_DEQUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
 void deque<VALUE_TYPE, ALLOCATOR>::assign_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     privateAssign(ranges::begin(range), ranges::end(range));
 }
 
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::reserve(size_type numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Make sure 'numElements' isn't high enough to make the calculations of
     // 'num(Front|Back)Blocks' overflow.
 
@@ -3425,6 +3451,7 @@ void deque<VALUE_TYPE, ALLOCATOR>::reserve(size_type numElements)
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::resize(size_type newSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(newSize > max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3458,6 +3485,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::resize(size_type         newSize,
                                           const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(newSize > max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3478,6 +3507,7 @@ void deque<VALUE_TYPE, ALLOCATOR>::resize(size_type         newSize,
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::shrink_to_fit()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Minimize the length of 'd_blocks_p' without moving any elements.  A more
     // complex algorithm is not justified.  At most 'BLOCK_LENGTH' bytes are
     // wasted.
@@ -3516,6 +3546,8 @@ BSLSTL_DEQUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
 void deque<VALUE_TYPE, ALLOCATOR>::append_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     privateAppend(ranges::begin(range), ranges::end(range));
 }
 
@@ -3525,12 +3557,16 @@ BSLSTL_DEQUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
 void deque<VALUE_TYPE, ALLOCATOR>::prepend_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     privatePrepend(ranges::begin(range), ranges::end(range));
 }
 
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::push_front(const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3564,6 +3600,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::push_front(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3599,6 +3637,8 @@ void deque<VALUE_TYPE, ALLOCATOR>::push_front(
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::push_back(const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3628,6 +3668,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::push_back(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3672,6 +3714,7 @@ typename deque<VALUE_TYPE, ALLOCATOR>::reference
 deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                            )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3709,6 +3752,7 @@ typename deque<VALUE_TYPE, ALLOCATOR>::reference
 deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3750,6 +3794,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3795,6 +3840,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3844,6 +3890,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3897,6 +3944,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3954,6 +4002,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4015,6 +4064,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4080,6 +4130,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4149,6 +4200,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4222,6 +4274,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4279,6 +4332,7 @@ typename deque<VALUE_TYPE, ALLOCATOR>::reference
 deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                            )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4315,6 +4369,7 @@ typename deque<VALUE_TYPE, ALLOCATOR>::reference
 deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4355,6 +4410,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4399,6 +4455,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4447,6 +4504,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4499,6 +4557,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4555,6 +4614,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4615,6 +4675,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4679,6 +4740,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4747,6 +4809,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4819,6 +4882,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4877,6 +4941,7 @@ typename deque<VALUE_TYPE, ALLOCATOR>::reference
 deque<VALUE_TYPE, ALLOCATOR>::emplace_front(
                            BSLS_COMPILERFEATURES_FORWARD_REF(Args)...arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4914,6 +4979,7 @@ typename deque<VALUE_TYPE, ALLOCATOR>::reference
 deque<VALUE_TYPE, ALLOCATOR>::emplace_back(
                            BSLS_COMPILERFEATURES_FORWARD_REF(Args)...arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -4960,6 +5026,7 @@ template <class VALUE_TYPE, class ALLOCATOR>
 typename deque<VALUE_TYPE, ALLOCATOR>::iterator
 deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5023,6 +5090,7 @@ typename deque<VALUE_TYPE, ALLOCATOR>::iterator
 deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5090,6 +5158,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5163,6 +5232,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5242,6 +5312,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5327,6 +5398,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5418,6 +5490,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5515,6 +5588,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5618,6 +5692,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5727,6 +5802,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5842,6 +5918,7 @@ deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -5945,6 +6022,7 @@ typename deque<VALUE_TYPE, ALLOCATOR>::iterator
 deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                           BSLS_COMPILERFEATURES_FORWARD_REF(Args)... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position >= this->cbegin());
     BSLS_ASSERT(position <= this->cend());
 
@@ -6271,6 +6349,8 @@ deque<VALUE_TYPE, ALLOCATOR>::insert_range(
                            const_iterator                             position,
                            BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     const size_type posIdx = position - this->cbegin();
     privateInsert(position, ranges::begin(range), ranges::end(range));
     return this->begin() + posIdx;
@@ -6366,6 +6446,7 @@ void deque<VALUE_TYPE, ALLOCATOR>::swap(deque<VALUE_TYPE, ALLOCATOR>& other)
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::clear() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     DequePrimitives::destruct(this->d_start,
                               this->d_finish,
                               this->allocatorRef());
@@ -6412,6 +6493,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 bool operator==(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                 const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.size() != rhs.size()) {
         return false;                                                 // RETURN
     }
@@ -6442,6 +6525,8 @@ inline
 bool operator!=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                 const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -6455,6 +6540,8 @@ BloombergLP::bslalg::SynthThreeWayUtil::Result<VALUE_TYPE> operator<=>(
                                        const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                                        const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return bsl::lexicographical_compare_three_way(
                               lhs.begin(),
                               lhs.end(),
@@ -6470,6 +6557,8 @@ inline
 bool operator<(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return 0 > BloombergLP::bslalg::RangeCompare::lexicographical(lhs.begin(),
                                                                   lhs.end(),
                                                                   lhs.size(),
@@ -6483,6 +6572,8 @@ inline
 bool operator>(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs < lhs;
 }
 
@@ -6491,6 +6582,8 @@ inline
 bool operator<=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                 const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(rhs < lhs);
 }
 
@@ -6499,6 +6592,8 @@ inline
 bool operator>=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                 const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs < rhs);
 }
 
@@ -6509,6 +6604,8 @@ template <class VALUE_TYPE, class ALLOCATOR, class BDE_OTHER_TYPE>
 inline typename deque<VALUE_TYPE, ALLOCATOR>::size_type
 erase(deque<VALUE_TYPE, ALLOCATOR>& deq, const BDE_OTHER_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&deq);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     typename deque<VALUE_TYPE, ALLOCATOR>::size_type oldSize = deq.size();
     deq.erase(bsl::remove(deq.begin(), deq.end(), value), deq.end());
     return oldSize - deq.size();
@@ -6518,6 +6615,7 @@ template <class VALUE_TYPE, class ALLOCATOR, class PREDICATE>
 inline typename deque<VALUE_TYPE, ALLOCATOR>::size_type
 erase_if(deque<VALUE_TYPE, ALLOCATOR>& deq, PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&deq);
     typename deque<VALUE_TYPE, ALLOCATOR>::size_type oldSize = deq.size();
     deq.erase(bsl::remove_if(deq.begin(), deq.end(), predicate), deq.end());
     return oldSize - deq.size();

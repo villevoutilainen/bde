@@ -200,8 +200,7 @@ class ManagedAttribute {
     // ACCESSORS
 
     /// Return a `const` reference to the attribute of this object.
-    const Attribute& attribute() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Attribute& attribute() const;
 
     /// Return the allocator used by this object to supply memory.  Note
     /// that if no allocator was supplied at construction the default
@@ -222,8 +221,7 @@ class ManagedAttribute {
                         int           spacesPerLevel = 4) const;
 
     /// Return a `const` reference to the attribute name of this object.
-    const bsl::string& key() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& key() const;
 
     /// Return the attribute name of this object.  Note that this accessor
     /// should not be used to get the attribute name if the name string
@@ -233,8 +231,7 @@ class ManagedAttribute {
     const char *name() const;
 
     /// Return a `const` reference to the attribute value of this object.
-    const Attribute::Value& value() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Attribute::Value& value() const;
 };
 
 // FREE OPERATORS
@@ -466,12 +463,14 @@ void ManagedAttribute::setValue(const void *value)
 inline
 const Attribute& ManagedAttribute::attribute() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_attribute;
 }
 
 inline
 const bsl::string& ManagedAttribute::key() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_name;
 }
 
@@ -484,6 +483,7 @@ const char *ManagedAttribute::name() const
 inline
 const Attribute::Value& ManagedAttribute::value() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_attribute.value();
 }
 

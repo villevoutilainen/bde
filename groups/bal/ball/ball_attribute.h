@@ -306,8 +306,7 @@ class Attribute {
 
     /// Return a reference to the non-modifiable attribute value of this
     /// object.
-    const Value& value() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Value& value() const;
 
     /// Format this object to the specified output `stream` at the (absolute
     /// value of) the optionally specified indentation `level` and return a
@@ -602,6 +601,7 @@ const char *Attribute::name() const
 inline
 const Attribute::Value& Attribute::value() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value;
 }
 

@@ -162,6 +162,7 @@ void LoggerManagerConfiguration::setTriggerMarkers(TriggerMarkers value)
 // ACCESSORS
 const LoggerManagerDefaults& LoggerManagerConfiguration::defaults() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_defaults;
 }
 
@@ -198,12 +199,14 @@ int LoggerManagerConfiguration::defaultTriggerAllLevel() const
 const LoggerManagerConfiguration::UserFieldsPopulatorCallback&
 LoggerManagerConfiguration::userFieldsPopulatorCallback() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_userPopulator;
 }
 
 const LoggerManagerConfiguration::CategoryNameFilterCallback&
 LoggerManagerConfiguration::categoryNameFilterCallback() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_categoryNameFilter;
 }
 

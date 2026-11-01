@@ -1455,8 +1455,7 @@ class LoggerManager {
     /// method (which takes a *shared* pointer to an `observer`), instead.
     static LoggerManager& initSingleton(
                        Observer                          *observer,
-                       bslma::Allocator                  *globalAllocator = 0)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+                       bslma::Allocator                  *globalAllocator = 0);
     static LoggerManager& initSingleton(
                        Observer                          *observer,
                        const LoggerManagerConfiguration&  configuration,
@@ -1473,12 +1472,10 @@ class LoggerManager {
     /// non-`const` reference to the logger manager singleton.  This method
     /// has no effect (aside from logging a warning) if the logger manager
     /// singleton already exists.
-    static LoggerManager& initSingleton(bslma::Allocator *globalAllocator = 0)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    static LoggerManager& initSingleton(bslma::Allocator *globalAllocator = 0);
     static LoggerManager& initSingleton(
                        const LoggerManagerConfiguration&  configuration,
-                       bslma::Allocator                  *globalAllocator = 0)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+                       bslma::Allocator                  *globalAllocator = 0);
 
     /// Initialize the logger manager singleton with the specified
     /// `singleton`.  Optionally specify an `adoptSingleton` flag indicating
@@ -1541,8 +1538,7 @@ class LoggerManager {
 
     /// Return a non-`const` reference to the logger manager singleton.  The
     /// behavior is undefined unless the logger manager singleton exists.
-    static LoggerManager& singleton()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    static LoggerManager& singleton();
 
     // CREATORS
 
@@ -1886,8 +1882,7 @@ class LoggerManager {
 
     /// Return a `const` reference to the *Default* *Category* in the
     /// category registry of this logger manager.
-    const Category& defaultCategory() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Category& defaultCategory() const;
 
     /// Return the default pass threshold level of this logger manager.
     int defaultPassThresholdLevel() const;
@@ -1964,8 +1959,7 @@ class LoggerManager {
 
     /// Return a `const` reference to the rule set maintained by this
     /// object.
-    const RuleSet& ruleSet() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const RuleSet& ruleSet() const;
 
     /// Return the address of the non-modifiable user populator functor
     /// registered with this logger manager, or 0 if there is no registered
@@ -1999,8 +1993,7 @@ class LoggerManager {
 
     /// Return the default threshold levels associated with this logger
     /// manager object.
-    const ThresholdAggregate& defaultThresholdLevels() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const ThresholdAggregate& defaultThresholdLevels() const;
 
     /// Load into the specified `*levels` the threshold levels that would be
     /// set for a newly created category, irrespective of whether a category
@@ -2125,8 +2118,7 @@ class LoggerManagerCategoryIter {
     /// Return a `const` reference to the category currently referred to by
     /// this iterator.  The behavior is undefined unless this iterator is
     /// valid.
-    const Category& operator()() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Category& operator()() const;
 };
 
                         // ================================
@@ -2249,6 +2241,7 @@ LoggerManager& LoggerManager::singleton()
 inline
 Category& LoggerManager::defaultCategory()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_defaultCategory_p;
 }
 
@@ -2400,6 +2393,7 @@ bslma::Allocator *LoggerManager::allocator() const
 inline
 const Category& LoggerManager::defaultCategory() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_defaultCategory_p;
 }
 
@@ -2464,6 +2458,7 @@ int LoggerManager::numCategories() const
 inline
 const RuleSet& LoggerManager::ruleSet() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_categoryManager.ruleSet();
 }
 
@@ -2547,6 +2542,7 @@ LoggerManagerCategoryIter::operator const void *() const
 inline
 const Category& LoggerManagerCategoryIter::operator()() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_iter();
 }
 

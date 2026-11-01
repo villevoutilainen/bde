@@ -911,6 +911,7 @@ LoggerManager& LoggerManager::initSingleton(
                             const LoggerManagerConfiguration&  configuration,
                             bslma::Allocator                  *globalAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT(observer);
 
     // Make shared pointer with nil deleter.
@@ -947,6 +948,7 @@ LoggerManager& LoggerManager::initSingleton(
                             const LoggerManagerConfiguration&  configuration,
                             bslma::Allocator                  *globalAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     bslmt::QLockGuard qLockGuard(&singletonQLock);
 
     initSingletonImpl(configuration, globalAllocator);
@@ -1691,6 +1693,7 @@ LoggerManager::userFieldsPopulatorCallback() const
 
 const ThresholdAggregate& LoggerManager::defaultThresholdLevels() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_defaultThresholdLevels;
 }
 

@@ -275,18 +275,15 @@ class EncoderTestAddress {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const bsl::string& street() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& street() const;
         // Return a reference offering non-modifiable access to the "Street"
         // attribute of this object.
 
-    const bsl::string& city() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& city() const;
         // Return a reference offering non-modifiable access to the "City"
         // attribute of this object.
 
-    const bsl::string& state() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& state() const;
         // Return a reference offering non-modifiable access to the "State"
         // attribute of this object.
 
@@ -654,8 +651,7 @@ class EncoderTestChoiceWithAllCategoriesCustomizedType {
         // operation has no effect.  Note that a trailing newline is provided
         // in multiline mode only.
 
-    const bsl::string& toString() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& toString() const;
         // Convert this value to 'bsl::string'.
 
     // PUBLIC CLASS METHODS
@@ -770,8 +766,7 @@ struct EncoderTestChoiceWithAllCategoriesEnumeration {
         // no effect on 'result' otherwise (i.e., 'number' does not match any
         // enumerator).
 
-    static bsl::ostream& print(bsl::ostream& stream, Value value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    static bsl::ostream& print(bsl::ostream& stream, Value value);
         // Write to the specified 'stream' the string representation of
         // the specified enumeration 'value'.  Return a reference to
         // the modifiable 'stream'.
@@ -1452,8 +1447,7 @@ class EncoderTestSequenceWithAllCategoriesCustomizedType {
         // operation has no effect.  Note that a trailing newline is provided
         // in multiline mode only.
 
-    const bsl::string& toString() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& toString() const;
         // Convert this value to 'bsl::string'.
 
     // PUBLIC CLASS METHODS
@@ -1568,8 +1562,7 @@ struct EncoderTestSequenceWithAllCategoriesEnumeration {
         // no effect on 'result' otherwise (i.e., 'number' does not match any
         // enumerator).
 
-    static bsl::ostream& print(bsl::ostream& stream, Value value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    static bsl::ostream& print(bsl::ostream& stream, Value value);
         // Write to the specified 'stream' the string representation of
         // the specified enumeration 'value'.  Return a reference to
         // the modifiable 'stream'.
@@ -5917,13 +5910,11 @@ class EncoderTestEmployee {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const bsl::string& name() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& name() const;
         // Return a reference offering non-modifiable access to the "Name"
         // attribute of this object.
 
-    const EncoderTestAddress& homeAddress() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestAddress& homeAddress() const;
         // Return a reference offering non-modifiable access to the
         // "HomeAddress" attribute of this object.
 
@@ -6213,41 +6204,34 @@ class EncoderTestSequenceWithAllCategories {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const bsl::vector<char>& charArray() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<char>& charArray() const;
         // Return a reference offering non-modifiable access to the "CharArray"
         // attribute of this object.
 
-    const bsl::string& aString() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& aString() const;
         // Return a reference offering non-modifiable access to the "AString"
         // attribute of this object.
 
-    const bsl::vector<int>& array() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::vector<int>& array() const;
         // Return a reference offering non-modifiable access to the "Array"
         // attribute of this object.
 
-    const EncoderTestSequenceWithAllCategoriesChoice& choice() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithAllCategoriesChoice& choice() const;
         // Return a reference offering non-modifiable access to the "Choice"
         // attribute of this object.
 
-    const EncoderTestSequenceWithAllCategoriesCustomizedType& customizedType() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithAllCategoriesCustomizedType& customizedType() const;
         // Return a reference offering non-modifiable access to the
         // "CustomizedType" attribute of this object.
 
     EncoderTestSequenceWithAllCategoriesEnumeration::Value enumeration() const;
         // Return the value of the "Enumeration" attribute of this object.
 
-    const bdlb::NullableValue<int>& nullableValue() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<int>& nullableValue() const;
         // Return a reference offering non-modifiable access to the
         // "NullableValue" attribute of this object.
 
-    const EncoderTestSequenceWithAllCategoriesSequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithAllCategoriesSequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -6429,8 +6413,7 @@ class EncoderTestSequenceWithUntagged1 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged1Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged1Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -6630,8 +6613,7 @@ class EncoderTestSequenceWithUntagged10 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged10Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged10Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -6841,13 +6823,11 @@ class EncoderTestSequenceWithUntagged11 {
     int attribute0() const;
         // Return the value of the "Attribute0" attribute of this object.
 
-    const EncoderTestSequenceWithUntagged11Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged11Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
-    const EncoderTestSequenceWithUntagged11Sequence1& sequence1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged11Sequence1& sequence1() const;
         // Return a reference offering non-modifiable access to the "Sequence1"
         // attribute of this object.
 
@@ -7051,8 +7031,7 @@ class EncoderTestSequenceWithUntagged12 {
     int attribute0() const;
         // Return the value of the "Attribute0" attribute of this object.
 
-    const EncoderTestSequenceWithUntagged12Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged12Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -7262,8 +7241,7 @@ class EncoderTestSequenceWithUntagged13 {
     int attribute1() const;
         // Return the value of the "Attribute1" attribute of this object.
 
-    const EncoderTestSequenceWithUntagged13Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged13Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -7453,13 +7431,11 @@ class EncoderTestSequenceWithUntagged3 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged3Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged3Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
-    const EncoderTestSequenceWithUntagged3Sequence1& sequence1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged3Sequence1& sequence1() const;
         // Return a reference offering non-modifiable access to the "Sequence1"
         // attribute of this object.
 
@@ -7650,8 +7626,7 @@ class EncoderTestSequenceWithUntagged4 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged4Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged4Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -7848,8 +7823,7 @@ class EncoderTestSequenceWithUntagged5 {
     int attribute0() const;
         // Return the value of the "Attribute0" attribute of this object.
 
-    const EncoderTestSequenceWithUntagged5Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged5Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
@@ -8051,18 +8025,15 @@ class EncoderTestSequenceWithUntagged7 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged7Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged7Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
-    const EncoderTestSequenceWithUntagged7Sequence1& sequence1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged7Sequence1& sequence1() const;
         // Return a reference offering non-modifiable access to the "Sequence1"
         // attribute of this object.
 
-    const EncoderTestSequenceWithUntagged7Sequence2& sequence2() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged7Sequence2& sequence2() const;
         // Return a reference offering non-modifiable access to the "Sequence2"
         // attribute of this object.
 
@@ -8263,13 +8234,11 @@ class EncoderTestSequenceWithUntagged8 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged8Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged8Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
-    const EncoderTestSequenceWithUntagged8Sequence1& sequence1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged8Sequence1& sequence1() const;
         // Return a reference offering non-modifiable access to the "Sequence1"
         // attribute of this object.
 
@@ -8473,16 +8442,14 @@ class EncoderTestSequenceWithUntagged9 {
         // invocation of 'accessor' if 'name' identifies an attribute of this
         // class, and -1 otherwise.
 
-    const EncoderTestSequenceWithUntagged9Sequence& sequence() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged9Sequence& sequence() const;
         // Return a reference offering non-modifiable access to the "Sequence"
         // attribute of this object.
 
     int attribute0() const;
         // Return the value of the "Attribute0" attribute of this object.
 
-    const EncoderTestSequenceWithUntagged9Sequence1& sequence1() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderTestSequenceWithUntagged9Sequence1& sequence1() const;
         // Return a reference offering non-modifiable access to the "Sequence1"
         // attribute of this object.
 
@@ -8619,18 +8586,21 @@ int EncoderTestAddress::manipulateAttribute(
 inline
 bsl::string& EncoderTestAddress::street()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_street;
 }
 
 inline
 bsl::string& EncoderTestAddress::city()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_city;
 }
 
 inline
 bsl::string& EncoderTestAddress::state()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_state;
 }
 
@@ -8698,18 +8668,21 @@ int EncoderTestAddress::accessAttribute(
 inline
 const bsl::string& EncoderTestAddress::street() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_street;
 }
 
 inline
 const bsl::string& EncoderTestAddress::city() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_city;
 }
 
 inline
 const bsl::string& EncoderTestAddress::state() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_state;
 }
 
@@ -8910,6 +8883,7 @@ bsl::ostream& EncoderTestChoiceWithAllCategoriesCustomizedType::print(bsl::ostre
 inline
 const bsl::string& EncoderTestChoiceWithAllCategoriesCustomizedType::toString() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value;
 }
 
@@ -8931,6 +8905,7 @@ inline
 bsl::ostream& EncoderTestChoiceWithAllCategoriesEnumeration::print(bsl::ostream&      stream,
                                  EncoderTestChoiceWithAllCategoriesEnumeration::Value value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return stream << toString(value);
 }
 
@@ -9321,6 +9296,7 @@ bsl::ostream& EncoderTestSequenceWithAllCategoriesCustomizedType::print(bsl::ost
 inline
 const bsl::string& EncoderTestSequenceWithAllCategoriesCustomizedType::toString() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value;
 }
 
@@ -9342,6 +9318,7 @@ inline
 bsl::ostream& EncoderTestSequenceWithAllCategoriesEnumeration::print(bsl::ostream&      stream,
                                  EncoderTestSequenceWithAllCategoriesEnumeration::Value value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return stream << toString(value);
 }
 
@@ -11813,12 +11790,14 @@ int EncoderTestEmployee::manipulateAttribute(
 inline
 bsl::string& EncoderTestEmployee::name()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_name;
 }
 
 inline
 EncoderTestAddress& EncoderTestEmployee::homeAddress()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_homeAddress;
 }
 
@@ -11892,12 +11871,14 @@ int EncoderTestEmployee::accessAttribute(
 inline
 const bsl::string& EncoderTestEmployee::name() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_name;
 }
 
 inline
 const EncoderTestAddress& EncoderTestEmployee::homeAddress() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_homeAddress;
 }
 
@@ -12058,30 +12039,35 @@ int EncoderTestSequenceWithAllCategories::manipulateAttribute(
 inline
 bsl::vector<char>& EncoderTestSequenceWithAllCategories::charArray()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_charArray;
 }
 
 inline
 bsl::string& EncoderTestSequenceWithAllCategories::aString()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_aString;
 }
 
 inline
 bsl::vector<int>& EncoderTestSequenceWithAllCategories::array()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_array;
 }
 
 inline
 EncoderTestSequenceWithAllCategoriesChoice& EncoderTestSequenceWithAllCategories::choice()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_choice;
 }
 
 inline
 EncoderTestSequenceWithAllCategoriesCustomizedType& EncoderTestSequenceWithAllCategories::customizedType()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_customizedType;
 }
 
@@ -12094,12 +12080,14 @@ EncoderTestSequenceWithAllCategoriesEnumeration::Value& EncoderTestSequenceWithA
 inline
 bdlb::NullableValue<int>& EncoderTestSequenceWithAllCategories::nullableValue()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_nullableValue;
 }
 
 inline
 EncoderTestSequenceWithAllCategoriesSequence& EncoderTestSequenceWithAllCategories::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -12221,30 +12209,35 @@ int EncoderTestSequenceWithAllCategories::accessAttribute(
 inline
 const bsl::vector<char>& EncoderTestSequenceWithAllCategories::charArray() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_charArray;
 }
 
 inline
 const bsl::string& EncoderTestSequenceWithAllCategories::aString() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_aString;
 }
 
 inline
 const bsl::vector<int>& EncoderTestSequenceWithAllCategories::array() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_array;
 }
 
 inline
 const EncoderTestSequenceWithAllCategoriesChoice& EncoderTestSequenceWithAllCategories::choice() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_choice;
 }
 
 inline
 const EncoderTestSequenceWithAllCategoriesCustomizedType& EncoderTestSequenceWithAllCategories::customizedType() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_customizedType;
 }
 
@@ -12257,12 +12250,14 @@ EncoderTestSequenceWithAllCategoriesEnumeration::Value EncoderTestSequenceWithAl
 inline
 const bdlb::NullableValue<int>& EncoderTestSequenceWithAllCategories::nullableValue() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_nullableValue;
 }
 
 inline
 const EncoderTestSequenceWithAllCategoriesSequence& EncoderTestSequenceWithAllCategories::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -12327,6 +12322,7 @@ int EncoderTestSequenceWithUntagged1::manipulateAttribute(
 inline
 EncoderTestSequenceWithUntagged1Sequence& EncoderTestSequenceWithUntagged1::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -12378,6 +12374,7 @@ int EncoderTestSequenceWithUntagged1::accessAttribute(
 inline
 const EncoderTestSequenceWithUntagged1Sequence& EncoderTestSequenceWithUntagged1::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -12462,6 +12459,7 @@ int EncoderTestSequenceWithUntagged10::manipulateAttribute(
 inline
 EncoderTestSequenceWithUntagged10Sequence& EncoderTestSequenceWithUntagged10::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -12541,6 +12539,7 @@ int EncoderTestSequenceWithUntagged10::accessAttribute(
 inline
 const EncoderTestSequenceWithUntagged10Sequence& EncoderTestSequenceWithUntagged10::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -12643,12 +12642,14 @@ int& EncoderTestSequenceWithUntagged11::attribute0()
 inline
 EncoderTestSequenceWithUntagged11Sequence& EncoderTestSequenceWithUntagged11::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
 inline
 EncoderTestSequenceWithUntagged11Sequence1& EncoderTestSequenceWithUntagged11::sequence1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence1;
 }
 
@@ -12722,12 +12723,14 @@ int EncoderTestSequenceWithUntagged11::attribute0() const
 inline
 const EncoderTestSequenceWithUntagged11Sequence& EncoderTestSequenceWithUntagged11::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
 inline
 const EncoderTestSequenceWithUntagged11Sequence1& EncoderTestSequenceWithUntagged11::sequence1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence1;
 }
 
@@ -12818,6 +12821,7 @@ int& EncoderTestSequenceWithUntagged12::attribute0()
 inline
 EncoderTestSequenceWithUntagged12Sequence& EncoderTestSequenceWithUntagged12::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -12897,6 +12901,7 @@ int EncoderTestSequenceWithUntagged12::attribute0() const
 inline
 const EncoderTestSequenceWithUntagged12Sequence& EncoderTestSequenceWithUntagged12::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -12999,6 +13004,7 @@ int& EncoderTestSequenceWithUntagged13::attribute1()
 inline
 EncoderTestSequenceWithUntagged13Sequence& EncoderTestSequenceWithUntagged13::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -13078,6 +13084,7 @@ int EncoderTestSequenceWithUntagged13::attribute1() const
 inline
 const EncoderTestSequenceWithUntagged13Sequence& EncoderTestSequenceWithUntagged13::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -13144,12 +13151,14 @@ int EncoderTestSequenceWithUntagged3::manipulateAttribute(
 inline
 EncoderTestSequenceWithUntagged3Sequence& EncoderTestSequenceWithUntagged3::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
 inline
 EncoderTestSequenceWithUntagged3Sequence1& EncoderTestSequenceWithUntagged3::sequence1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence1;
 }
 
@@ -13209,12 +13218,14 @@ int EncoderTestSequenceWithUntagged3::accessAttribute(
 inline
 const EncoderTestSequenceWithUntagged3Sequence& EncoderTestSequenceWithUntagged3::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
 inline
 const EncoderTestSequenceWithUntagged3Sequence1& EncoderTestSequenceWithUntagged3::sequence1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence1;
 }
 
@@ -13281,6 +13292,7 @@ int EncoderTestSequenceWithUntagged4::manipulateAttribute(
 inline
 EncoderTestSequenceWithUntagged4Sequence& EncoderTestSequenceWithUntagged4::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -13346,6 +13358,7 @@ int EncoderTestSequenceWithUntagged4::accessAttribute(
 inline
 const EncoderTestSequenceWithUntagged4Sequence& EncoderTestSequenceWithUntagged4::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -13424,6 +13437,7 @@ int& EncoderTestSequenceWithUntagged5::attribute0()
 inline
 EncoderTestSequenceWithUntagged5Sequence& EncoderTestSequenceWithUntagged5::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -13489,6 +13503,7 @@ int EncoderTestSequenceWithUntagged5::attribute0() const
 inline
 const EncoderTestSequenceWithUntagged5Sequence& EncoderTestSequenceWithUntagged5::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -13573,18 +13588,21 @@ int EncoderTestSequenceWithUntagged7::manipulateAttribute(
 inline
 EncoderTestSequenceWithUntagged7Sequence& EncoderTestSequenceWithUntagged7::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
 inline
 EncoderTestSequenceWithUntagged7Sequence1& EncoderTestSequenceWithUntagged7::sequence1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence1;
 }
 
 inline
 EncoderTestSequenceWithUntagged7Sequence2& EncoderTestSequenceWithUntagged7::sequence2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence2;
 }
 
@@ -13652,18 +13670,21 @@ int EncoderTestSequenceWithUntagged7::accessAttribute(
 inline
 const EncoderTestSequenceWithUntagged7Sequence& EncoderTestSequenceWithUntagged7::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
 inline
 const EncoderTestSequenceWithUntagged7Sequence1& EncoderTestSequenceWithUntagged7::sequence1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence1;
 }
 
 inline
 const EncoderTestSequenceWithUntagged7Sequence2& EncoderTestSequenceWithUntagged7::sequence2() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence2;
 }
 
@@ -13748,12 +13769,14 @@ int EncoderTestSequenceWithUntagged8::manipulateAttribute(
 inline
 EncoderTestSequenceWithUntagged8Sequence& EncoderTestSequenceWithUntagged8::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
 inline
 EncoderTestSequenceWithUntagged8Sequence1& EncoderTestSequenceWithUntagged8::sequence1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence1;
 }
 
@@ -13827,12 +13850,14 @@ int EncoderTestSequenceWithUntagged8::accessAttribute(
 inline
 const EncoderTestSequenceWithUntagged8Sequence& EncoderTestSequenceWithUntagged8::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
 inline
 const EncoderTestSequenceWithUntagged8Sequence1& EncoderTestSequenceWithUntagged8::sequence1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence1;
 }
 
@@ -13923,6 +13948,7 @@ int EncoderTestSequenceWithUntagged9::manipulateAttribute(
 inline
 EncoderTestSequenceWithUntagged9Sequence& EncoderTestSequenceWithUntagged9::sequence()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -13935,6 +13961,7 @@ int& EncoderTestSequenceWithUntagged9::attribute0()
 inline
 EncoderTestSequenceWithUntagged9Sequence1& EncoderTestSequenceWithUntagged9::sequence1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence1;
 }
 
@@ -14002,6 +14029,7 @@ int EncoderTestSequenceWithUntagged9::accessAttribute(
 inline
 const EncoderTestSequenceWithUntagged9Sequence& EncoderTestSequenceWithUntagged9::sequence() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence;
 }
 
@@ -14014,6 +14042,7 @@ int EncoderTestSequenceWithUntagged9::attribute0() const
 inline
 const EncoderTestSequenceWithUntagged9Sequence1& EncoderTestSequenceWithUntagged9::sequence1() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sequence1;
 }
 

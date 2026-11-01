@@ -8910,6 +8910,8 @@ template <class HASHALG>
 inline
 void bdldfp::hashAppend(HASHALG& hashAlg, const bdldfp::Decimal32& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
 
     bdldfp::Decimal32 normalizedObject = DecimalImpUtil::normalize(
@@ -8921,6 +8923,8 @@ template <class HASHALG>
 inline
 void bdldfp::hashAppend(HASHALG& hashAlg, const bdldfp::Decimal64& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
 
     bdldfp::Decimal64 normalizedObject = DecimalImpUtil::normalize(
@@ -8933,6 +8937,8 @@ template <class HASHALG>
 inline
 void bdldfp::hashAppend(HASHALG& hashAlg, const bdldfp::Decimal128& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
 
     bdldfp::Decimal128 normalizedObject = DecimalImpUtil::normalize(

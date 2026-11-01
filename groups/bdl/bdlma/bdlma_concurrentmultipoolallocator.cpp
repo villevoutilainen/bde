@@ -22,6 +22,7 @@ ConcurrentMultipoolAllocator::~ConcurrentMultipoolAllocator()
 // MANIPULATORS
 void *ConcurrentMultipoolAllocator::allocate(bsls::Types::size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(0 == size)) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return 0;                                                     // RETURN
@@ -32,6 +33,7 @@ void *ConcurrentMultipoolAllocator::allocate(bsls::Types::size_type size)
 
 void ConcurrentMultipoolAllocator::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(address != 0)) {
         d_multipool.deallocate(address);
     }
@@ -42,6 +44,7 @@ void ConcurrentMultipoolAllocator::deallocate(void *address)
 
 void ConcurrentMultipoolAllocator::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_multipool.release();
 }
 

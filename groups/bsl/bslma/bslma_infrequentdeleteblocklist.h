@@ -238,6 +238,7 @@ InfrequentDeleteBlockList::
 inline
 void InfrequentDeleteBlockList::deallocate(void *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 }  // close package namespace

@@ -416,8 +416,7 @@ class Encoder_Context {
     bsl::ostream& rawOutputStream();
 
     // ACCESSORS
-    const EncoderOptions& encoderOptions() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderOptions& encoderOptions() const;
 
     int status() const;
 };
@@ -708,14 +707,12 @@ class Encoder_SequenceFirstPass {
     // ACCESSORS
 
     /// Return true if a sub-element is found, and false otherwise.
-    const bool& hasSubElements() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bool& hasSubElements() const;
 
     /// Return a null value if there is no element with `IS_SIMPLE_CONTENT`
     /// flag, or a non-null value with the integer `id` of the element
     /// otherwise.
-    const bdlb::NullableValue<int>& simpleContentId() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlb::NullableValue<int>& simpleContentId() const;
 };
 
                       // ================================
@@ -1260,6 +1257,7 @@ bsl::ostream& Encoder_Context::rawOutputStream()
 inline
 const EncoderOptions& Encoder_Context::encoderOptions() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_encoder->options();
 }
 
@@ -1739,6 +1737,7 @@ int Encoder_SequenceFirstPass::operator()(const TYPE&      object,
 inline
 const bool& Encoder_SequenceFirstPass::hasSubElements() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_hasSubElements;
 }
 
@@ -1746,6 +1745,7 @@ inline
 const bdlb::NullableValue<int>&
 Encoder_SequenceFirstPass::simpleContentId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_simpleContentId;
 }
 

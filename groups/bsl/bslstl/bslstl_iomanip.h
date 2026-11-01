@@ -222,8 +222,7 @@ class IoManip_QuotedStringFormatter {
     /// string because this type is designed so that its objects are created
     /// as temporary objects that proxy an underlying string (see class
     /// documentation).
-    bsl::basic_string<t_CHAR_TYPE, t_CHAR_TRAITS, t_ALLOC> *str() const
-                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    bsl::basic_string<t_CHAR_TYPE, t_CHAR_TRAITS, t_ALLOC> *str() const;
 };
 
                   // =======================================
@@ -287,8 +286,7 @@ std::basic_istream<t_CHAR_TYPE, t_CHAR_TRAITS>& operator>>(
                        std::basic_istream<t_CHAR_TYPE, t_CHAR_TRAITS>& input,
                        const IoManip_QuotedStringFormatter<t_CHAR_TYPE,
                                                            t_CHAR_TRAITS,
-                                                           t_ALLOC>&   object)
-                                     BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                                           t_ALLOC>&   object);
 
 /// Write the value of the specified `object` to the specified `output`
 /// stream.
@@ -297,8 +295,7 @@ std::basic_ostream<t_CHAR_TYPE, t_CHAR_TRAITS>& operator<<(
                        std::basic_ostream<t_CHAR_TYPE, t_CHAR_TRAITS>& output,
                        const IoManip_QuotedStringFormatter<t_CHAR_TYPE,
                                                            t_CHAR_TRAITS,
-                                                           t_ALLOC>&   object)
-                                     BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+                                                           t_ALLOC>&   object);
 
 /// Write the value of the specified `object` to the specified `output`
 /// stream.
@@ -474,6 +471,8 @@ BloombergLP::bslstl::operator>>(
                                                             t_CHAR_TRAITS,
                                                             t_ALLOC>&   object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     std::basic_string<t_CHAR_TYPE, t_CHAR_TRAITS> temp;
     input >> std::quoted(temp, object.delim(), object.escape());
     *object.str() = temp;

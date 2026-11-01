@@ -258,13 +258,11 @@ class LocalDatetime {
 
     /// Return a reference providing non-modifiable access to the
     /// `datetimeTz` attribute of this object.
-    const bdlt::DatetimeTz& datetimeTz() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bdlt::DatetimeTz& datetimeTz() const;
 
     /// Return a reference providing non-modifiable access to the `timeZoneId`
     /// attribute of this object.
-    const bsl::string& timeZoneId() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& timeZoneId() const;
 
                                 // Aspects
 
@@ -290,8 +288,7 @@ class LocalDatetime {
     /// `bslx` package-level documentation for more information on BDEX
     /// streaming of value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Write the value of this object to the specified output `stream` in a
     /// human-readable format, and return a reference providing modifiable
@@ -508,12 +505,14 @@ void LocalDatetime::swap(LocalDatetime& other)
 inline
 const bdlt::DatetimeTz& LocalDatetime::datetimeTz() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_datetimeTz;
 }
 
 inline
 const bsl::string& LocalDatetime::timeZoneId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_timeZoneId;
 }
 
@@ -538,6 +537,8 @@ LocalDatetime::allocator_type LocalDatetime::get_allocator() const
 template <class STREAM>
 STREAM& LocalDatetime::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) {
           case 1: {

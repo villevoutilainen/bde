@@ -2214,6 +2214,7 @@ inline
 multiset<KEY, COMPARATOR, ALLOCATOR>&
 multiset<KEY, COMPARATOR, ALLOCATOR>::operator=(const multiset& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this != &rhs)) {
         if (AllocatorTraits::propagate_on_container_copy_assignment::value) {
             multiset other(rhs, rhs.nodeFactory().allocator());
@@ -2236,6 +2237,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::operator=(
                             AllocatorTraits::is_always_equal::value
                          && std::is_nothrow_move_assignable<COMPARATOR>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     multiset& lvalue = rhs;
 
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this != &lvalue)) {
@@ -2263,6 +2265,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>&
 multiset<KEY, COMPARATOR, ALLOCATOR>::operator=(
                                              std::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     clear();
     insert(values.begin(), values.end());
     return *this;
@@ -2274,6 +2277,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::begin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_tree.firstNode());
 }
 
@@ -2282,6 +2286,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_tree.sentinel());
 }
 
@@ -2290,6 +2295,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::rbegin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(end());
 }
 
@@ -2298,6 +2304,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::rend() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(begin());
 }
 
@@ -2306,6 +2313,8 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::insert(const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *insertLocation =
@@ -2330,6 +2339,8 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::insert(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     value_type& lvalue = value;
     bool        leftChild;
 
@@ -2355,6 +2366,8 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::insert(const_iterator    hint,
                                              const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *hintNode =
@@ -2384,6 +2397,8 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::insert(
                               const_iterator                             hint,
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     value_type& lvalue = value;
     bool        leftChild;
 
@@ -2413,6 +2428,7 @@ inline
 void multiset<KEY, COMPARATOR, ALLOCATOR>::insert(INPUT_ITERATOR first,
                                                   INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ///Implementation Notes
     ///--------------------
     // First, consume currently held free nodes.  If those nodes are
@@ -2442,6 +2458,7 @@ inline
 void multiset<KEY, COMPARATOR, ALLOCATOR>::insert(
                                              std::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -2462,6 +2479,7 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2489,6 +2507,7 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2518,6 +2537,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2550,6 +2570,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2585,6 +2606,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2623,6 +2645,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2664,6 +2687,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2708,6 +2732,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2755,6 +2780,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2805,6 +2831,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2858,6 +2885,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2893,6 +2921,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2924,6 +2953,7 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2957,6 +2987,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -2993,6 +3024,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -3032,6 +3064,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -3074,6 +3107,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -3119,6 +3153,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -3167,6 +3202,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -3218,6 +3254,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -3272,6 +3309,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -3329,6 +3367,7 @@ multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -3371,6 +3410,7 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -3396,6 +3436,7 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::emplace_hint(const_iterator hint,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bool leftChild;
 
     BloombergLP::bslalg::RbTreeNode *node = nodeFactory().emplaceIntoNewNode(
@@ -3425,6 +3466,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != end());
 
     BloombergLP::bslalg::RbTreeNode *node =
@@ -3441,6 +3483,8 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::size_type
 multiset<KEY, COMPARATOR, ALLOCATOR>::erase(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     size_type      count = 0;
     const_iterator first = find(key);
     if (first != end()) {
@@ -3459,6 +3503,7 @@ typename multiset<KEY, COMPARATOR, ALLOCATOR>::iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::erase(const_iterator first,
                                             const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (first != last) {
         first = erase(first);
     }
@@ -3532,6 +3577,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::begin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return cbegin();
 }
 
@@ -3540,6 +3586,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::end() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return cend();
 }
 
@@ -3548,6 +3595,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::rbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return crbegin();
 }
 
@@ -3556,6 +3604,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::rend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return crend();
 }
 
@@ -3564,6 +3613,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::cbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_tree.firstNode());
 }
 
@@ -3572,6 +3622,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_tree.sentinel());
 }
 
@@ -3580,6 +3631,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::crbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -3588,6 +3640,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::const_reverse_iterator
 multiset<KEY, COMPARATOR, ALLOCATOR>::crend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -3595,6 +3648,8 @@ template <class KEY, class COMPARATOR, class ALLOCATOR>
 inline
 bool multiset<KEY, COMPARATOR, ALLOCATOR>::contains(const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return find(key) != end();
 }
 
@@ -3603,6 +3658,7 @@ template <class KEY, class COMPARATOR, class ALLOCATOR>
 inline
 bool multiset<KEY, COMPARATOR, ALLOCATOR>::empty() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_tree.numNodes();
 }
 
@@ -3611,6 +3667,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::size_type
 multiset<KEY, COMPARATOR, ALLOCATOR>::size() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_tree.numNodes();
 }
 
@@ -3627,6 +3684,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::key_compare
 multiset<KEY, COMPARATOR, ALLOCATOR>::key_comp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return comparator().keyComparator();
 }
 
@@ -3635,6 +3693,7 @@ inline
 typename multiset<KEY, COMPARATOR, ALLOCATOR>::value_compare
 multiset<KEY, COMPARATOR, ALLOCATOR>::value_comp() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return value_compare(key_comp());
 }
 
@@ -3646,6 +3705,8 @@ inline
 bool bsl::operator==(const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return BloombergLP::bslalg::RangeCompare::equal(lhs.begin(),
                                                     lhs.end(),
                                                     lhs.size(),
@@ -3660,6 +3721,8 @@ inline
 bool bsl::operator!=(const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 #endif
@@ -3700,6 +3763,8 @@ inline
 bool bsl::operator>(const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
                     const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs < lhs;
 }
 
@@ -3716,6 +3781,8 @@ inline
 bool bsl::operator>=(const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& lhs,
                      const bsl::multiset<KEY, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs < rhs);
 }
 
@@ -3727,6 +3794,7 @@ inline
 typename bsl::multiset<KEY, COMPARATOR, ALLOCATOR>::size_type
 bsl::erase_if(multiset<KEY, COMPARATOR, ALLOCATOR>& ms, PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&ms);
     return BloombergLP::bslstl::AlgorithmUtil::containerEraseIf(ms, predicate);
 }
 

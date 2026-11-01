@@ -1371,8 +1371,7 @@ class RegEx {
     /// Return a reference to the non-modifiable pattern held by this
     /// regular-expression object.  The behavior is undefined unless
     /// `isPrepared() == true`.
-    const bsl::string& pattern() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& pattern() const;
 
     /// Replace parts of the specified `subject` that are matched with the
     /// specified `replacement`.  Optionally specify a bit mask of `options`
@@ -1570,6 +1569,7 @@ size_t RegEx::jitStackSize() const
 inline
 const bsl::string& RegEx::pattern() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_pattern;
 }
 

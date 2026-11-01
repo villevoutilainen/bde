@@ -461,7 +461,7 @@ class TransformIterator
     /// ```
     /// functor()(*iterator())
     /// ```
-    reference operator*() BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    reference operator*();
 
     /// Return the address of the result of applying the functor of this
     /// object to the result of dereferencing the underlying iterator.  The
@@ -482,18 +482,15 @@ class TransformIterator
     /// ```
     /// functor()(iterator()[offset])
     /// ```
-    reference operator[](difference_type offset)
-        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    reference operator[](difference_type offset);
 
     /// Return a reference providing modifiable access to the functor of
     /// this object.
-    FUNCTOR& functor() BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    FUNCTOR& functor();
 
     /// Return a reference providing modifiable access to the underlying
     /// iterator of this object.
-    ITERATOR& iterator() BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    ITERATOR& iterator();
 
                                   // Aspects
 
@@ -511,7 +508,7 @@ class TransformIterator
     /// ```
     /// functor()(*iterator())
     /// ```
-    reference operator*() const BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    reference operator*() const;
 
     /// Return the address of the result of applying the functor of this
     /// object to the result of dereferencing the underlying iterator.  The
@@ -532,17 +529,14 @@ class TransformIterator
     /// ```
     /// functor()(iterator()[offset])
     /// ```
-    reference operator[](difference_type offset) const
-        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    reference operator[](difference_type offset) const;
 
     /// Return a `const` reference to the functor of this object.
-    const FUNCTOR& functor() const BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const FUNCTOR& functor() const;
 
     /// Return a `const` reference to the underlying iterator of this
     /// object.
-    const ITERATOR& iterator() const BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const ITERATOR& iterator() const;
 };
 
                           // ===========================
@@ -816,6 +810,7 @@ inline
 typename TransformIterator<FUNCTOR, ITERATOR>::reference
 TransformIterator<FUNCTOR, ITERATOR>::operator*()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return functor()(*iterator());
 }
 
@@ -832,6 +827,7 @@ inline
 typename TransformIterator<FUNCTOR, ITERATOR>::reference
 TransformIterator<FUNCTOR, ITERATOR>::operator[](difference_type offset)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return functor()(iterator()[offset]);
 }
 
@@ -839,6 +835,7 @@ template <class FUNCTOR, class ITERATOR>
 inline
 FUNCTOR& TransformIterator<FUNCTOR, ITERATOR>::functor()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_functor.object();
 }
 
@@ -846,6 +843,7 @@ template <class FUNCTOR, class ITERATOR>
 inline
 ITERATOR& TransformIterator<FUNCTOR, ITERATOR>::iterator()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_iterator.object();
 }
 
@@ -869,6 +867,7 @@ inline
 typename TransformIterator<FUNCTOR, ITERATOR>::reference
 TransformIterator<FUNCTOR, ITERATOR>::operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return functor()(*iterator());
 }
 
@@ -885,6 +884,7 @@ inline
 typename TransformIterator<FUNCTOR, ITERATOR>::reference
 TransformIterator<FUNCTOR, ITERATOR>::operator[](difference_type offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return functor()(iterator()[offset]);
 }
 
@@ -892,6 +892,7 @@ template <class FUNCTOR, class ITERATOR>
 inline
 const FUNCTOR& TransformIterator<FUNCTOR, ITERATOR>::functor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_functor.object();
 }
 
@@ -899,6 +900,7 @@ template <class FUNCTOR, class ITERATOR>
 inline
 const ITERATOR& TransformIterator<FUNCTOR, ITERATOR>::iterator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_iterator.object();
 }
 

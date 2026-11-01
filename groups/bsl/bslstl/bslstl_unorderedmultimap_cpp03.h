@@ -1869,6 +1869,7 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>&
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::operator=(
                                                  const unordered_multimap& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that we have delegated responsibility for correct handling of
     // allocator propagation to the 'HashTable' implementation.
 
@@ -1887,6 +1888,7 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::operator=(
                                 std::is_nothrow_move_assignable<HASH>::value &&
                                 std::is_nothrow_move_assignable<EQUAL>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that we have delegated responsibility for correct handling of
     // allocator propagation to the 'HashTable' implementation.
 
@@ -1904,6 +1906,7 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>&
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::operator=(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unordered_multimap tmp(values.begin(), values.end(), d_impl.allocator());
 
     d_impl.swap(tmp.d_impl);
@@ -1928,6 +1931,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                                 ));
 
@@ -1942,6 +1946,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_1) args_1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                                BSLS_COMPILERFEATURES_FORWARD(Args_1, args_1)));
 
@@ -1958,6 +1963,7 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_1) args_1,
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_2) args_2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                                BSLS_COMPILERFEATURES_FORWARD(Args_1, args_1),
                                BSLS_COMPILERFEATURES_FORWARD(Args_2, args_2)));
@@ -1973,6 +1979,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                                                            const_iterator hint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node()));
 }
 #endif  // BSLSTL_UNORDEREDMULTIMAP_VARIADIC_LIMIT_B >= 0
@@ -1986,6 +1993,7 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                                                            const_iterator hint,
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_1) args_1)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                                BSLS_COMPILERFEATURES_FORWARD(Args_1, args_1)));
 }
@@ -2002,6 +2010,7 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_1) args_1,
                               BSLS_COMPILERFEATURES_FORWARD_REF(Args_2) args_2)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                                BSLS_COMPILERFEATURES_FORWARD(Args_1, args_1),
                                BSLS_COMPILERFEATURES_FORWARD(Args_2, args_2)));
@@ -2018,6 +2027,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                                 BSLS_COMPILERFEATURES_FORWARD(Args, args)...));
 
@@ -2031,6 +2041,7 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                                                            const_iterator hint,
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                                 BSLS_COMPILERFEATURES_FORWARD(Args, args)...));
 }
@@ -2043,6 +2054,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::begin()
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.elementListRoot());
 }
 
@@ -2052,6 +2064,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::end()
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator();
 }
 
@@ -2060,6 +2073,7 @@ inline
 typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::local_iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::begin(size_type index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return local_iterator(&d_impl.bucketAtIndex(index));
@@ -2070,6 +2084,7 @@ inline
 typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::local_iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::end(size_type index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -2080,6 +2095,7 @@ inline
 void unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::clear()
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.removeAll();
 }
 
@@ -2088,6 +2104,8 @@ inline
 bool unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::contains(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return find(key) != end();
 }
 
@@ -2097,6 +2115,8 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::find(
                                                            const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return iterator(d_impl.find(key));
 }
 
@@ -2107,6 +2127,8 @@ bsl::pair<
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::equal_range(
                                                            const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     HashTableLink *first;
     HashTableLink *last;
     d_impl.findRange(&first, &last, key);
@@ -2119,6 +2141,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::erase(
                                                        const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position != this->end());
 
     return iterator(d_impl.remove(position.node()));
@@ -2130,6 +2153,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::erase(
                                                              iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return erase(const_iterator(position));
 }
 
@@ -2137,7 +2161,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL, class ALLOCATOR>
 typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::erase(
                                                            const key_type& key)
-{   // As an alternative implementation, the table could return an extracted
+{ BSLS_ASSERT_CONVEYOR_OBJECT(this); BSLS_ASSERT_CONVEYOR_OBJECT(&key); // As an alternative implementation, the table could return an extracted
     // "slice" list from the underlying table, and now need merely:
     //   iterate each node, destroying the associated value
     //   reclaim each node (potentially returning to a node-pool)
@@ -2165,6 +2189,7 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::erase(
                                                           const_iterator first,
                                                           const_iterator last)
 {
+BSLS_ASSERT_CONVEYOR_OBJECT(this);
 #if defined BDE_BUILD_TARGET_SAFE_2
     if (first != last) {
         iterator it        = this->begin();
@@ -2192,6 +2217,8 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert(
                                                        const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return iterator(d_impl.insert(value));
 }
 
@@ -2202,6 +2229,8 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert(
                                                        const_iterator    hint,
                                                        const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return iterator(d_impl.insert(value, hint.node()));
 }
 
@@ -2211,6 +2240,7 @@ void unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert(
                                                           INPUT_ITERATOR first,
                                                           INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insertFromRange(first, last);
 }
 
@@ -2220,6 +2250,7 @@ inline
 void unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::insert(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -2229,6 +2260,7 @@ inline
 void unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::max_load_factor(
                                                            float newLoadFactor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.setMaxLoadFactor(newLoadFactor);
 }
 
@@ -2237,6 +2269,7 @@ inline
 void unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::rehash(
                                                           size_type numBuckets)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.rehashForNumBuckets(numBuckets);
 }
 
@@ -2245,6 +2278,7 @@ inline
 void unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::reserve(
                                                          size_type numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reserveForNumElements(numElements);
 }
 
@@ -2275,6 +2309,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::begin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_impl.elementListRoot());
 }
 
@@ -2284,6 +2319,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::end() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator();
 }
 
@@ -2292,6 +2328,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::cbegin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_impl.elementListRoot());
 }
 
@@ -2301,6 +2338,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::cend() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator();
 }
 
@@ -2311,6 +2349,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::begin(
                                                          size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(&d_impl.bucketAtIndex(index));
@@ -2323,6 +2362,7 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::end(
                                                          size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -2335,6 +2375,7 @@ unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::cbegin(
                                                          size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(&d_impl.bucketAtIndex(index));
@@ -2347,6 +2388,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::cend(
                                                          size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -2358,6 +2400,8 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::bucket(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.bucketIndexForKey(key);
 }
 
@@ -2367,6 +2411,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::bucket_count() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.numBuckets();
 }
 
@@ -2386,6 +2431,8 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>:: size_type
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::count(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef ::BloombergLP::bslalg::BidirectionalNode<value_type> BNode;
 
     size_type result = 0;
@@ -2409,6 +2456,8 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::find(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return const_iterator(d_impl.find(key));
 }
 
@@ -2417,6 +2466,7 @@ inline
 bool unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::empty() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_impl.size();
 }
 
@@ -2426,6 +2476,7 @@ typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.size();
 }
 
@@ -2443,6 +2494,7 @@ inline
 typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::hasher
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::hash_function() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.hasher();
 }
 
@@ -2451,6 +2503,7 @@ inline
 typename unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::key_equal
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::key_eq() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.comparator();
 }
 
@@ -2468,6 +2521,8 @@ bsl::pair<typename unordered_multimap<KEY,
 unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::equal_range(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     HashTableLink *first;
     HashTableLink *last;
     d_impl.findRange(&first, &last, key);
@@ -2491,6 +2546,7 @@ float unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::load_factor()
                                                                           const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.loadFactor();
 }
 
@@ -2500,6 +2556,7 @@ float unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::max_load_factor()
                                                                           const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.maxLoadFactor();
 }
 
@@ -2512,6 +2569,8 @@ bool bsl::operator==(
         const bsl::unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& lhs,
         const bsl::unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_impl == rhs.d_impl;
 }
 
@@ -2522,6 +2581,8 @@ bool bsl::operator!=(
         const bsl::unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& lhs,
         const bsl::unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 #endif
@@ -2538,6 +2599,7 @@ typename bsl::unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>::size_type
 bsl::erase_if(unordered_multimap<KEY, VALUE, HASH, EQUAL, ALLOCATOR>& m,
                                                            PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&m);
     return BloombergLP::bslstl::AlgorithmUtil::containerEraseIf(m, predicate);
 }
 

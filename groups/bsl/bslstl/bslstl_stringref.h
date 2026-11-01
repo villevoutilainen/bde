@@ -1025,6 +1025,7 @@ bsl::basic_string<CHAR_TYPE>
 bslstl::operator+(const StringRefImp<CHAR_TYPE>& lhs,
                   const StringRefImp<CHAR_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     bsl::basic_string<CHAR_TYPE> result;
 
     result.reserve(lhs.length() + rhs.length());
@@ -1040,6 +1041,8 @@ bsl::basic_string<CHAR_TYPE>
 bslstl::operator+(const bsl::basic_string<CHAR_TYPE>& lhs,
                   const StringRefImp<CHAR_TYPE>&      rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return StringRefImp<CHAR_TYPE>(lhs) + rhs;
 }
 
@@ -1049,6 +1052,8 @@ bsl::basic_string<CHAR_TYPE>
 bslstl::operator+(const StringRefImp<CHAR_TYPE>&      lhs,
                   const bsl::basic_string<CHAR_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs + StringRefImp<CHAR_TYPE>(rhs);
 }
 
@@ -1058,6 +1063,8 @@ bsl::basic_string<CHAR_TYPE>
 bslstl::operator+(const std::basic_string<CHAR_TYPE>& lhs,
                   const StringRefImp<CHAR_TYPE>&      rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return StringRefImp<CHAR_TYPE>(lhs) + rhs;
 }
 
@@ -1067,6 +1074,8 @@ bsl::basic_string<CHAR_TYPE>
 bslstl::operator+(const StringRefImp<CHAR_TYPE>&      lhs,
                   const std::basic_string<CHAR_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs + StringRefImp<CHAR_TYPE>(rhs);
 }
 
@@ -1076,6 +1085,7 @@ bsl::basic_string<CHAR_TYPE>
 bslstl::operator+(const CHAR_TYPE                *lhs,
                   const StringRefImp<CHAR_TYPE>&  rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     // We have to traverse `lhs` to know how much space to allocate in the
     // result anyway, so best to build a `StringRefImp` from it.
 
@@ -1088,6 +1098,7 @@ bsl::basic_string<CHAR_TYPE>
 bslstl::operator+(const StringRefImp<CHAR_TYPE>&  lhs,
                   const CHAR_TYPE                *rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     // We have to traverse `rhs` to know how much space to allocate in the
     // result anyway, so best to build a `StringRefImp` from it.
 
@@ -1099,6 +1110,8 @@ inline
 void bslstl::hashAppend(HASHALG&                       hashAlg,
                         const StringRefImp<CHAR_TYPE>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     using ::BloombergLP::bslh::hashAppend;
     hashAlg(input.data(), sizeof(CHAR_TYPE)*input.length());
     hashAppend(hashAlg, input.length());

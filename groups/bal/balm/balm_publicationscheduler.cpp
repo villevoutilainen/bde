@@ -243,8 +243,7 @@ class PublicationScheduler_ClockData {
 
     /// Return a reference to the modifiable set of categories scheduled at
     /// the clock's publication interval.
-    bsl::set<const Category *>& categories()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::set<const Category *>& categories();
 
     /// Return a reference to the boolean indicating whether the clock's
     /// publication interval is the default publication interval.
@@ -254,8 +253,7 @@ class PublicationScheduler_ClockData {
     /// `defaultClock()` is `true`, should *not* be published as part of the
     /// default publication.  If `defaultClock()` is false, the meaning of
     /// this property is undefined and the value must be an empty set.
-    bsl::set<const Category *>& nonDefaultCategories()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::set<const Category *>& nonDefaultCategories();
 };
 
                    // -------------------------------------
@@ -293,6 +291,7 @@ inline
 bsl::set<const Category *>&
 PublicationScheduler_ClockData::categories()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_categories;
 }
 
@@ -306,6 +305,7 @@ inline
 bsl::set<const Category *>&
 PublicationScheduler_ClockData::nonDefaultCategories()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_nonDefaultCategories;
 }
 

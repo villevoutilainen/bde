@@ -406,8 +406,7 @@ class CategoryManager {
     /// Return a `const` reference to the category at the specified `index`
     /// in the registry of this category manager.  The behavior is undefined
     /// unless `0 <= index < length()`.
-    const Category& operator[](int index) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Category& operator[](int index) const;
 
     /// Return the number of categories in the registry of this category
     /// manager.
@@ -421,8 +420,7 @@ class CategoryManager {
     /// Return a `const` reference to the rule set maintained by this
     /// category manager.  The mutex returned by `rulesetMutex` should be
     /// locked prior to accessing the rule set.
-    const RuleSet& ruleSet() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const RuleSet& ruleSet() const;
 
     /// Return the sequence number that tracks changes to the rule set
     /// maintained by this category manager.  The value returned by this
@@ -498,8 +496,7 @@ class CategoryManagerIter {
     /// Return a `const` reference to the category currently referred to by
     /// this iterator.  The behavior is undefined unless this iterator is
     /// valid.
-    const Category& operator()() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Category& operator()() const;
 };
 
                         // ==========================
@@ -571,6 +568,7 @@ class CategoryManagerManip {
 inline
 Category& CategoryManager::operator[](int index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterLock> guard(&d_registryLock);
     return *d_categories[index];
 }
@@ -605,6 +603,7 @@ int CategoryManager::length() const
 inline
 const Category& CategoryManager::operator[](int index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::ReaderWriterLock> guard(&d_registryLock);
     return *d_categories[index];
 }
@@ -612,6 +611,7 @@ const Category& CategoryManager::operator[](int index) const
 inline
 const RuleSet& CategoryManager::ruleSet() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_ruleSet;
 }
 

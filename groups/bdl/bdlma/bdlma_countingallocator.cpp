@@ -70,6 +70,7 @@ CountingAllocator::~CountingAllocator()
 // MANIPULATORS
 void *CountingAllocator::allocate(bsls::Types::size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(0 == size)) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return 0;                                                     // RETURN
@@ -93,6 +94,7 @@ void *CountingAllocator::allocate(bsls::Types::size_type size)
 
 void CountingAllocator::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(0 == address)) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return;                                                       // RETURN
@@ -110,6 +112,8 @@ void CountingAllocator::deallocate(void *address)
 // ACCESSORS
 bsl::ostream& CountingAllocator::print(bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     stream << "----------------------------------------\n"
            << "        Counting Allocator State\n"
            << "----------------------------------------\n";

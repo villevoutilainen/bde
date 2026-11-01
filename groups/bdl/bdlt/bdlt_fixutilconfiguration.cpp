@@ -22,6 +22,7 @@ FixUtilConfiguration::s_defaultConfiguration = { 3 };
 // MANIPULATORS
 void FixUtilConfiguration::setFractionalSecondPrecision(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= value);
     BSLS_ASSERT(6 >= value);
 
@@ -31,6 +32,7 @@ void FixUtilConfiguration::setFractionalSecondPrecision(int value)
 
 void FixUtilConfiguration::setUseZAbbreviationForUtc(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (value) {
         d_configurationMask |= k_USE_Z_ABBREVIATION_FOR_UTC_BIT;
     }
@@ -48,6 +50,8 @@ FixUtilConfiguration::print(bsl::ostream& stream,
                             int           level,
                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("fractionalSecondPrecision",

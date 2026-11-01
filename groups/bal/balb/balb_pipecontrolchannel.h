@@ -441,8 +441,7 @@ class PipeControlChannel {
     int permissions() const;
 
     /// Return the fully qualified system name of the pipe.
-    const bsl::string& pipeName() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& pipeName() const;
 
                                   // Aspects
 
@@ -545,6 +544,7 @@ int PipeControlChannel::permissions() const
 inline
 const bsl::string& PipeControlChannel::pipeName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_pipeName;
 }
 

@@ -34,6 +34,7 @@ LocalTimeOffset::s_localTimeOffsetCallback_p =
 bsls::TimeInterval LocalTimeOffset::
                             localTimeOffsetDefault(const Datetime& utcDatetime)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&utcDatetime);
     bsl::time_t currentTime;
     int         status = EpochUtil::convertToTimeT(&currentTime, utcDatetime);
 

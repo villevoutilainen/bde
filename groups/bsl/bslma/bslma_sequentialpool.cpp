@@ -193,6 +193,7 @@ SequentialPool::SequentialPool(
 // MANIPULATORS
 void *SequentialPool::allocate(int size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= size);
 
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(0 == size)) {
@@ -229,6 +230,7 @@ void *SequentialPool::allocate(int size)
 
 void SequentialPool::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_blockList.release();
     d_cursor  = 0;
     d_buffer  = 0;
@@ -237,6 +239,7 @@ void SequentialPool::release()
 
 void SequentialPool::reserveCapacity(int numBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= numBytes);
 
     if (numBytes) {
@@ -268,6 +271,7 @@ void SequentialPool::reserveCapacity(int numBytes)
 
 void *SequentialPool::allocateAndExpand(int *size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(size);
     BSLS_ASSERT(0 <= *size);
 
@@ -289,6 +293,7 @@ void *SequentialPool::allocateAndExpand(int *size)
 
 void *SequentialPool::allocateAndExpand(int *size, int maxNumBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(size);
     BSLS_ASSERT(0 <= *size);  BSLS_ASSERT(*size <= maxNumBytes);
 
@@ -353,6 +358,7 @@ int SequentialPool::truncate(void *address,
                              int   originalNumBytes,
                              int   newNumBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(newNumBytes <= originalNumBytes);
 
     if ((char *)address + originalNumBytes == d_buffer + d_cursor) {

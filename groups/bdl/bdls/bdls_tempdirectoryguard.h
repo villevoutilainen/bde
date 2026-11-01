@@ -110,8 +110,7 @@ class TempDirectoryGuard {
     /// Return a `const` reference to the name of the created temporary
     /// directory, or an empty string if the directory was released
     /// from management.
-    const bsl::string& getTempDirName() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& getTempDirName() const;
 
 };
 

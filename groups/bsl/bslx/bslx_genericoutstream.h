@@ -761,8 +761,7 @@ class GenericOutStream {
 /// undefined unless `TYPE` is BDEX-compliant.
 template <class STREAMBUF, class TYPE>
 GenericOutStream<STREAMBUF>&
-operator<<(GenericOutStream<STREAMBUF>& stream, const TYPE& value)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value) BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
+operator<<(GenericOutStream<STREAMBUF>& stream, const TYPE& value);
 
 // ============================================================================
 //                          INLINE DEFINITIONS
@@ -1701,6 +1700,8 @@ inline
 GenericOutStream<STREAMBUF>&
 operator<<(GenericOutStream<STREAMBUF>& stream, const TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return OutStreamFunctions::bdexStreamOut(stream, value);
 }
 

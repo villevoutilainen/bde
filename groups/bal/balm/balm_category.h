@@ -174,13 +174,11 @@ class Category {
     /// avoiding indirection through abstracted interfaces, albeit at some
     /// risk of object-lifetime violations.  The returned reference must not
     /// be allowed to outlive this category object.
-    const bsls::AtomicInt& isEnabledRaw() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsls::AtomicInt& isEnabledRaw() const;
 
     /// Print this category to the specified output `stream` in some human
     /// readable form, and return the modifiable `stream`.
-    bsl::ostream& print(bsl::ostream& stream) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::ostream& print(bsl::ostream& stream) const;
 };
 
 // ============================================================================
@@ -315,6 +313,7 @@ bool Category::enabled() const
 inline
 const bsls::AtomicInt& Category::isEnabledRaw() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_enabled;
 }
 

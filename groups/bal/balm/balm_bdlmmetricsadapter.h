@@ -193,13 +193,11 @@ class BdlmMetricsAdapter : public bdlm::MetricsAdapter {
 
     /// Return the namespace attribute value to be used as the default value
     /// for `MetricDescriptor` instances.
-    const bsl::string& defaultMetricNamespace() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& defaultMetricNamespace() const;
 
     /// Return a string to be used as the default prefix for a
     /// `MetricDescriptor` object identifier attribute value.
-    const bsl::string& defaultObjectIdentifierPrefix() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& defaultObjectIdentifierPrefix() const;
 
                                   // Aspects
 
@@ -239,12 +237,14 @@ int BdlmMetricsAdapter::removeCollectionCallback(const CallbackHandle& handle)
 inline
 const bsl::string& BdlmMetricsAdapter::defaultMetricNamespace() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_metricNamespace;
 }
 
 inline
 const bsl::string& BdlmMetricsAdapter::defaultObjectIdentifierPrefix() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_objectIdentifierPrefix;
 }
 

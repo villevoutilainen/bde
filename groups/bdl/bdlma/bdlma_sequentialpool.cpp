@@ -456,6 +456,7 @@ SequentialPool::SequentialPool(
 // MANIPULATORS
 void SequentialPool::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Set 'd_bufferManager' to not manage any memory.
 
     d_bufferManager.reset();
@@ -495,6 +496,7 @@ void SequentialPool::release()
 
 void SequentialPool::reserveCapacity(bsls::Types::size_type numBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(0 == numBytes)) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return;                                                       // RETURN
@@ -565,6 +567,7 @@ void SequentialPool::reserveCapacity(bsls::Types::size_type numBytes)
 
 void SequentialPool::rewind()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Set 'd_bufferManager' to not manage any memory.
 
     d_bufferManager.reset();

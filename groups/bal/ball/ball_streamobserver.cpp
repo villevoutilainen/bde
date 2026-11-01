@@ -97,6 +97,7 @@ bool StreamObserver::isPublishInLocalTimeEnabled() const
 
 const bsl::string& StreamObserver::getFormat() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
     return d_observerFormatterImp.getFormat();
 }

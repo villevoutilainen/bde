@@ -262,8 +262,7 @@ class LocalTimeDescriptor {
     /// Return a `const` reference to the `description` attribute of this
     /// object.  Note that `description` is not canonical, and is intended
     /// for debugging only.
-    const bsl::string& description() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& description() const;
 
     /// Return the value of the `dstInEffectFlag` attribute of this object.
     /// Note that `true` implies Daylight-Saving Time (DST) is in effect.
@@ -494,6 +493,7 @@ void LocalTimeDescriptor::swap(LocalTimeDescriptor& other)
 inline
 const bsl::string& LocalTimeDescriptor::description() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_description;
 }
 

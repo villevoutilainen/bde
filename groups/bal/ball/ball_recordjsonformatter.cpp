@@ -594,8 +594,7 @@ class ThreadIdFormatter : public RecordJsonFormatter_FieldFormatter {
     // ACCESSORS
 
     /// Return the name of the log record field or attribute.
-    const bsl::string& name() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& name() const;
 
 };
 
@@ -634,8 +633,7 @@ class FixedFieldFormatter : public RecordJsonFormatter_FieldFormatter {
     // ACCESSORS
 
     /// Return the name of the log record field or attribute.
-    const bsl::string& name() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& name() const;
 };
 
                    // ========================
@@ -952,8 +950,7 @@ class AttributeFormatter : public RecordJsonFormatter_FieldFormatter {
        // value otherwise.
 
     // ACCESSORS
-    const bsl::string& key() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& key() const;
       // Return the key the user-defined attribute.
 };
 
@@ -1359,6 +1356,7 @@ int FixedFieldFormatter::parse(bdld::DatumMapRef v)
 // ACCESSORS
 const bsl::string& FixedFieldFormatter::name() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_name;
 }
 
@@ -1593,6 +1591,7 @@ int AttributeFormatter::parse(bdld::DatumMapRef v)
 // ACCESSORS
 const bsl::string& AttributeFormatter::key() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_key;
 }
 

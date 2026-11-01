@@ -243,29 +243,28 @@ class InfrequentDeleteBlockList {
     /// `size` (in bytes).  If `size` is 0, no memory is allocated and 0 is
     /// returned.  The returned memory is guaranteed to be maximally
     /// aligned.
-    void *allocate(bsls::Types::size_type size)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type size);
 
     /// This method has no effect on the memory block at the specified
     /// `address` as all memory allocated by this object is managed.  The
     /// behavior is undefined unless `address` was allocated by this object,
     /// and has not already been released.
-    void deallocate(void *address) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address);
 
     /// Deallocate all memory blocks managed by this object, returning this
     /// object to its default-constructed state.
-    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void release();
 
     /// Deallocate all except the most-recently obtained block of the memory
     /// blocks managed by this object.  If no blocks are managed, this
     /// method has no effect.
-    void releaseAllButLastBlock() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void releaseAllButLastBlock();
 
     // ACCESSORS
                                   // Aspects
 
     /// Return the allocator used by this object to supply memory.
-    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bslma::Allocator *allocator() const;
 };
 
 // ============================================================================
@@ -290,6 +289,7 @@ InfrequentDeleteBlockList::InfrequentDeleteBlockList(
 inline
 void InfrequentDeleteBlockList::deallocate(void *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 // ACCESSORS
@@ -298,6 +298,7 @@ void InfrequentDeleteBlockList::deallocate(void *)
 inline
 bslma::Allocator *InfrequentDeleteBlockList::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_allocator_p;
 }
 

@@ -214,16 +214,12 @@ class SetComparator : private bslalg::FunctorAdapter<COMPARATOR>::Type {
     /// Return a reference providing modifiable access to the function
     /// pointer or functor to which this comparator delegates comparison
     /// operations.
-    COMPARATOR& keyComparator()
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    COMPARATOR& keyComparator();
 
     /// Return a reference providing non-modifiable access to the function
     /// pointer or functor to which this comparator delegates comparison
     /// operations.
-    const COMPARATOR& keyComparator() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const COMPARATOR& keyComparator() const;
 };
 
 
@@ -330,6 +326,7 @@ template <class KEY, class COMPARATOR>
 inline
 COMPARATOR& SetComparator<KEY, COMPARATOR>::keyComparator()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *this;
 }
 
@@ -337,6 +334,7 @@ template <class KEY, class COMPARATOR>
 inline
 const COMPARATOR& SetComparator<KEY, COMPARATOR>::keyComparator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *this;
 }
 

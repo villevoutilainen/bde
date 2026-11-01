@@ -240,55 +240,45 @@ class MetricRecord {
 
     /// Return a reference to the modifiable `count` attribute representing
     /// the number of individually recorded values.
-    int& count()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    int& count();
 
     /// Return a reference to the modifiable `total` attribute representing
     /// the sum of the individually recorded values.
-    double& total()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    double& total();
 
     /// Return a reference to the modifiable `max` attribute representing
     /// the maximum of the individually recorded values.
-    double& max()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    double& max();
 
     /// Return a reference to the modifiable `min` attribute representing
     /// the minimum of the individually recorded values.
-    double& min()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    double& min();
 
     // ACCESSORS
 
     /// Return a reference to the non-modifiable `metricId` attribute
     /// representing the identifier for the metric being recorded.
-    const MetricId& metricId() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const MetricId& metricId() const;
 
     /// Return a reference to the non-modifiable `count` attribute
     /// representing the number of individually recorded values.
-    const int& count() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const int& count() const;
 
     /// Return a reference to the non-modifiable `total` attribute
     /// representing the sum of the individually recorded values.
-    const double& total() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const double& total() const;
 
     /// Return a reference to the non-modifiable `max` attribute
     /// representing the maximum of the individually recorded values.
-    const double& max() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const double& max() const;
 
     /// Return a reference to the non-modifiable `min` attribute
     /// representing the minimum of the individually recorded values.
-    const double& min() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const double& min() const;
 
     /// Write a description of this record to the specified `stream` and
     /// return a reference to the modifiable `stream`.
-    bsl::ostream& print(bsl::ostream& stream) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::ostream& print(bsl::ostream& stream) const;
 };
 
 // ============================================================================
@@ -365,30 +355,35 @@ MetricRecord::MetricRecord(const MetricId& metricId,
 inline
 MetricId& MetricRecord::metricId()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_metricId;
 }
 
 inline
 int& MetricRecord::count()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_count;
 }
 
 inline
 double& MetricRecord::total()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_total;
 }
 
 inline
 double& MetricRecord::max()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_max;
 }
 
 inline
 double& MetricRecord::min()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_min;
 }
 
@@ -396,30 +391,35 @@ double& MetricRecord::min()
 inline
 const MetricId& MetricRecord::metricId() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_metricId;
 }
 
 inline
 const int& MetricRecord::count() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_count;
 }
 
 inline
 const double& MetricRecord::total() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_total;
 }
 
 inline
 const double& MetricRecord::max() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_max;
 }
 
 inline
 const double& MetricRecord::min() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_min;
 }
 

@@ -306,8 +306,7 @@ bsl::ostream& print(bsl::ostream& stream,
                     const TYPE&   object,
                     int           level          = 0,
                     int           spacesPerLevel = 4)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 bsl::ostream& print(bsl::ostream& stream,
                     char          object,
                     int           level          = 0,
@@ -330,8 +329,7 @@ bsl::ostream& print(bsl::ostream&                          stream,
                                             ALLOC>&        object,
                     int                                    level          = 0,
                     int                                    spacesPerLevel = 4)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
 /// Format the specified `object` to the specified output `stream` at the
 /// (absolute value of) the optionally specified indentation `level` and
@@ -344,8 +342,7 @@ bsl::ostream& print(bsl::ostream&                   stream,
                     const bsl::vector<char, ALLOC>& object,
                     int                             level          = 0,
                     int                             spacesPerLevel = 4)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP17_BASELINE_LIBRARY
 
@@ -365,8 +362,7 @@ bsl::ostream& print(bsl::ostream&              stream,
                     const std::optional<TYPE>& object,
                     int                        level          = 0,
                     int                        spacesPerLevel = 4)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
 /// Format the specified `object` to the specified output `stream` at the
 /// (absolute value of) the optionally specified indentation `level` and
@@ -386,8 +382,7 @@ bsl::ostream& print(bsl::ostream&                 stream,
                     const std::variant<TYPE ...>& object,
                     int                           level          = 0,
                     int                           spacesPerLevel = 4)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
 /// Format the specified `object` to the specified output `stream` at the
 /// (absolute value of) the optionally specified indentation `level` and
@@ -404,8 +399,7 @@ bsl::ostream& print(bsl::ostream&         stream,
                     const std::monostate& object,
                     int                   level          = 0,
                     int                   spacesPerLevel = 4)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
 
 #endif  // BSLS_LIBRARYFEATURES_HAS_CPP17_BASELINE_LIBRARY
 

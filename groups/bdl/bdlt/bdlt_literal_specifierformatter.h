@@ -70,8 +70,7 @@ class Literal_SpecifierFormatter {
     /// `d_totalWidth`, pop the first character off of `spec` and return
     /// `true`, otherwise return `false`.  The behavior is undefined if `*spec`
     /// is empty.
-    BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextSpecifier(StringView *spec)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    BSLS_KEYWORD_CONSTEXPR_CPP20 bool parseNextSpecifier(StringView *spec);
 
     // ACCESSORS
 
@@ -80,12 +79,11 @@ class Literal_SpecifierFormatter {
     /// the sort of output indicated by that character off of `spec` and return
     /// `true`, otherwise return `false`.
     template <class t_ITERATOR>
-    bool formatNextSpecifier(StringView *spec, t_ITERATOR *outIt) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool formatNextSpecifier(StringView *spec, t_ITERATOR *outIt) const;
 
     /// Return the total width of the output anticipated from all the previous
     /// calls to `parseNextSpecifier`.
-    int totalWidth() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int totalWidth() const;
 };
 
                         // --------------------------------
@@ -104,6 +102,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool Literal_SpecifierFormatter<t_CHAR>::parseNextSpecifier(StringView *spec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(!spec->empty());
 
     switch (spec->front()) {
@@ -127,6 +126,7 @@ inline
 bool Literal_SpecifierFormatter<t_CHAR>::
                  formatNextSpecifier(StringView *spec, t_ITERATOR *outIt) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(!spec->empty());
 
     t_CHAR outChar;
@@ -156,6 +156,7 @@ template <class t_CHAR>
 inline
 int Literal_SpecifierFormatter<t_CHAR>::totalWidth() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_totalWidth;
 }
 

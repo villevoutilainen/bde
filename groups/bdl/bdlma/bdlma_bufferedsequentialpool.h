@@ -483,21 +483,19 @@ class BufferedSequentialPool {
     /// returned.  If the allocation request exceeds the remaining free
     /// memory space in the external buffer supplied at construction, use
     /// memory obtained from the allocator supplied at construction.
-    void *allocate(bsls::Types::size_type size)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type size);
 
     /// Destroy the specified `object`.  Note that this method has the same
     /// effect as the `deleteObjectRaw` method (since no deallocation is
     /// involved), and exists for consistency across memory pools.
     template <class TYPE>
-    void deleteObject(const TYPE *object) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deleteObject(const TYPE *object);
 
     /// Destroy the specified `object`.  Note that memory associated with
     /// `object` is not deallocated because there is no `deallocate` method
     /// in `BufferedSequentialPool`.
     template <class TYPE>
-    void deleteObjectRaw(const TYPE *object)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deleteObjectRaw(const TYPE *object);
 
     /// Release all memory allocated through this pool and return to the
     /// underlying allocator *all* memory except the external buffer
@@ -509,7 +507,7 @@ class BufferedSequentialPool {
     /// The effect of subsequently - to this invokation of `release` - using
     /// a pointer obtained from this object prior to this call to `release`
     /// is undefined.
-    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void release();
 
     /// Release all memory allocated through this pool and return to the
     /// underlying allocator *only* memory that was allocated outside of the
@@ -518,14 +516,14 @@ class BufferedSequentialPool {
     /// The effect of subsequently - to this invokation of `rewind` - using
     /// a pointer obtained from this object prior to this call to `rewind`
     /// is undefined.
-    void rewind() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void rewind();
 
     // ACCESSORS
 
     /// Return the allocator used by this object to allocate memory.  Note
     /// that this allocator can not be used to deallocate memory allocated
     /// through this pool.
-    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bslma::Allocator *allocator() const;
 };
 
 }  // close package namespace
@@ -583,8 +581,7 @@ class BufferedSequentialPool {
 /// }
 /// ```
 void *operator new(bsl::size_t                                 size,
-                   BloombergLP::bdlma::BufferedSequentialPool& pool)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(pool);
+                   BloombergLP::bdlma::BufferedSequentialPool& pool);
 
 /// Use the specified `pool` to deallocate the memory at the specified
 /// `address`.  The behavior is undefined unless `address` was allocated
@@ -592,8 +589,7 @@ void *operator new(bsl::size_t                                 size,
 /// supplied solely to allow the compiler to arrange for it to be called in
 /// case of an exception.
 void operator delete(void                                        *address,
-                     BloombergLP::bdlma::BufferedSequentialPool&  pool)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(pool);
+                     BloombergLP::bdlma::BufferedSequentialPool&  pool);
 
 // ============================================================================
 //                             INLINE DEFINITIONS
@@ -661,6 +657,7 @@ template <class TYPE>
 inline
 void BufferedSequentialPool::deleteObject(const TYPE *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     this->deleteObjectRaw(object);
 }
 
@@ -668,6 +665,7 @@ template <class TYPE>
 inline
 void BufferedSequentialPool::deleteObjectRaw(const TYPE *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 != object) {
 #ifndef BSLS_PLATFORM_CMP_SUN
         object->~TYPE();
@@ -729,6 +727,7 @@ inline
 void *operator new(bsl::size_t                                 size,
                    BloombergLP::bdlma::BufferedSequentialPool& pool)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&pool);
     return pool.allocate(size);
 }
 

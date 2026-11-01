@@ -903,13 +903,11 @@ class vectorBase {
     /// Return a reverse iterator providing modifiable access to the last
     /// element in this vector, and the past-the-end reverse iterator if this
     /// vector is empty.
-    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the past-the-end reverse iterator providing modifiable access to
     /// this vector.
-    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT;
 
                           // *** element access ***
 
@@ -922,8 +920,7 @@ class vectorBase {
     /// Return a reference providing modifiable access to the element at the
     /// specified `position` in this vector.  Throw a `std::out_of_range`
     /// exception if `position >= size()`.
-    reference at(size_type position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    reference at(size_type position);
 
     /// Return a reference providing modifiable access to the first element in
     /// this vector.  The behavior is undefined unless this vector is not
@@ -957,22 +954,18 @@ class vectorBase {
     /// access to this vector.
     const_iterator cend() const BSLS_KEYWORD_NOEXCEPT;
 
-    const_reverse_iterator  rbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator  rbegin() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reverse iterator providing non-modifiable access to the last
     /// element in this vector, and the past-the-end reverse iterator if this
     /// vector is empty.
-    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT;
 
-    const_reverse_iterator  rend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator  rend() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the past-the-end reverse iterator providing non-modifiable
     /// access to this vector.
-    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT;
 
                             // *** capacity ***
 
@@ -998,9 +991,7 @@ class vectorBase {
     /// Return a reference providing non-modifiable access to the element at
     /// the specified `position` in this vector.  Throw a
     /// `bsl::out_of_range` exception if `position >= size()`.
-    const_reference at(size_type position) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const_reference at(size_type position) const;
 
     /// Return a reference providing non-modifiable access to the first
     /// element in this vector.  The behavior is undefined unless this
@@ -1380,7 +1371,7 @@ class vector : public  vectorBase<VALUE_TYPE>
            BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range,
            const ALLOCATOR&                           basicAllocator =
                                                                   ALLOCATOR())
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(range);
 
     /// Create a vector having the same value as the specified `original`
     /// object.  Use the allocator returned by
@@ -1486,8 +1477,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// method requires that the (template parameter) type `VALUE_TYPE` be
     /// `copy-insertable` into this vector (see {Requirements on
     /// `VALUE_TYPE`}).
-    vector& operator=(std::initializer_list<VALUE_TYPE> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    vector& operator=(std::initializer_list<VALUE_TYPE> values);
 
     /// Assign to this object the value resulting from first clearing this
     /// vector and then inserting (in order) each `VALUE_TYPE` object in the
@@ -1496,8 +1486,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// requires that the (template parameter) type `VALUE_TYPE` be
     /// `copy-insertable` into this vector (see {Requirements on
     /// `VALUE_TYPE`}).
-    void assign(std::initializer_list<VALUE_TYPE> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void assign(std::initializer_list<VALUE_TYPE> values);
 #endif
 
     /// Assign to this object the value resulting from first clearing this
@@ -1515,8 +1504,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// behavior is undefined unless `first` and `last` refer to a range of
     /// valid values where `first` is at a position at or before `last`.
     template <class INPUT_ITER>
-    void assign(INPUT_ITER first, INPUT_ITER last)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void assign(INPUT_ITER first, INPUT_ITER last);
 
     /// Assign to this object the value resulting from first clearing this
     /// vector and then inserting the specified `numElements` copies of the
@@ -1525,8 +1513,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// `numElements > max_size()`.  This method requires that the (template
     /// parameter) type `VALUE_TYPE` be `copy-insertable` into this vector
     /// (see {Requirements on `VALUE_TYPE`}).
-    void assign(size_type numElements, const VALUE_TYPE& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void assign(size_type numElements, const VALUE_TYPE& value);
 
     /// Assign to this object the elements of the specified `range`.  Note that
     /// `range` must meet the requirements of an input range and the values
@@ -1534,9 +1521,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// parameter) `VALUE_TYPE`.
     template <class t_RANGE>
     BSLSTL_VECTOR_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
-    void assign_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void assign_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
                              // *** capacity ***
 
@@ -1551,7 +1536,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// that the (template parameter) type `VALUE_TYPE` be
     /// `default-insertable` and `move-insertable` into this vector (see
     /// {Requirements on `VALUE_TYPE`}).
-    void resize(size_type newSize) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void resize(size_type newSize);
 
     /// Change the size of this vector to the specified `newSize`, inserting
     /// `newSize - size()` copies of the specified `value` at the end of
@@ -1562,8 +1547,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// `std::length_error` if `newSize > max_size()`.  This method requires
     /// that the (template parameter) type `VALUE_TYPE` be `copy-insertable`
     /// into this vector (see {Requirements on `VALUE_TYPE`}).
-    void resize(size_type newSize, const VALUE_TYPE& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void resize(size_type newSize, const VALUE_TYPE& value);
 
     /// Change the capacity of this vector to the specified `newCapacity`.
     /// If an exception is thrown (other than by the move constructor of a
@@ -1573,13 +1557,13 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// `move-insertable` into this vector (see {Requirements on
     /// `VALUE_TYPE`}).  Note that the capacity of this vector after this
     /// operation has completed may be greater than `newCapacity`.
-    void reserve(size_type newCapacity) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reserve(size_type newCapacity);
 
     /// Reduce the capacity of this vector to its size.  If an exception is
     /// thrown (other than by the move constructor of a non-copy-insertable
     /// `value_type`), `*this` is unaffected.  Note that this method has no
     /// effect if the capacity is equivalent to the size.
-    void shrink_to_fit() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void shrink_to_fit();
 
                             // *** modifiers ***
 
@@ -1589,9 +1573,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// (template parameter) `VALUE_TYPE`.
     template <class t_RANGE>
     BSLSTL_VECTOR_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
-    void append_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void append_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Append to the end of this vector a newly created `value_type`
@@ -1606,8 +1588,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// into this vector and `emplace-constructible` from `arguments` (see
     /// {Requirements on `VALUE_TYPE`}).
     template <class... Args>
-    VALUE_TYPE &emplace_back(Args&&... arguments)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    VALUE_TYPE &emplace_back(Args&&... arguments);
 #endif
 
     /// Append to the end of this vector a copy of the specified `value`.
@@ -1615,7 +1596,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// `std::length_error` if `size() == max_size()`.  This method
     /// requires that the (template parameter) type `VALUE_TYPE` be
     /// `copy-constructible` (see {Requirements on `VALUE_TYPE`}).
-    void push_back(const VALUE_TYPE& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void push_back(const VALUE_TYPE& value);
 
     /// Append to the end of this vector the specified move-insertable
     /// `value`.  `value` is left in a valid but unspecified state.  If an
@@ -1624,8 +1605,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// `std::length_error` if `size() == max_size()`.  This method requires
     /// that the (template parameter) type `VALUE_TYPE` be `move-insertable`
     /// into this vector (see {Requirements on `VALUE_TYPE`}).
-    void push_back(BloombergLP::bslmf::MovableRef<VALUE_TYPE> value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void push_back(BloombergLP::bslmf::MovableRef<VALUE_TYPE> value);
 
     /// Erase the last element from this vector.  The behavior is undefined
     /// if this vector is empty.
@@ -1804,8 +1784,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// parameter) type `VALUE_TYPE` be `copy-insertable` into this vector
     /// (see {Requirements on `VALUE_TYPE`}).
     iterator insert(const_iterator                    position,
-                    std::initializer_list<VALUE_TYPE> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                    std::initializer_list<VALUE_TYPE> values);
 #endif
 
     /// Insert at the specified `position` in this object the elements of the
@@ -1816,8 +1795,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     BSLSTL_VECTOR_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
     iterator insert_range(const_iterator                             position,
                           BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Remove from this vector the element at the specified `position`, and
     /// return an iterator providing modifiable access to the element
@@ -1858,7 +1836,7 @@ class vector : public  vectorBase<VALUE_TYPE>
     /// Remove all elements from this vector making its size 0.  Note that
     /// although this vector is empty after this method returns, it preserves
     /// the same capacity it had before the method was called.
-    void clear() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void clear() BSLS_KEYWORD_NOEXCEPT;
 
     // ACCESSORS
 
@@ -1888,8 +1866,7 @@ class vector : public  vectorBase<VALUE_TYPE>
 /// `equality-comparable` (see {Requirements on `VALUE_TYPE`}).
 template <class VALUE_TYPE, class ALLOCATOR>
 bool operator==(const vector<VALUE_TYPE, ALLOCATOR>& lhs,
-                const vector<VALUE_TYPE, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const vector<VALUE_TYPE, ALLOCATOR>& rhs);
 
 #ifndef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the same
@@ -1912,8 +1889,7 @@ bool operator!=(const vector<VALUE_TYPE, ALLOCATOR>& lhs,
 template <class VALUE_TYPE, class ALLOCATOR>
 BloombergLP::bslalg::SynthThreeWayUtil::Result<VALUE_TYPE> operator<=>(
                                      const vector<VALUE_TYPE, ALLOCATOR>& lhs,
-                                     const vector<VALUE_TYPE, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                     const vector<VALUE_TYPE, ALLOCATOR>& rhs);
 
 #else
 
@@ -1973,15 +1949,13 @@ bool operator>=(const vector<VALUE_TYPE, ALLOCATOR>& lhs,
 /// to the specified `value`.  Return the number of elements erased.
 template <class VALUE_TYPE, class ALLOCATOR, class BDE_OTHER_TYPE>
 typename vector<VALUE_TYPE, ALLOCATOR>::size_type
-erase(vector<VALUE_TYPE, ALLOCATOR>& vec, const BDE_OTHER_TYPE& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(vec);
+erase(vector<VALUE_TYPE, ALLOCATOR>& vec, const BDE_OTHER_TYPE& value);
 
 /// Erase all the elements in the specified vector `vec` that satisfy the
 /// specified predicate `predicate`.  Return the number of elements erased.
 template <class VALUE_TYPE, class ALLOCATOR, class PREDICATE>
 typename vector<VALUE_TYPE, ALLOCATOR>::size_type
-erase_if(vector<VALUE_TYPE, ALLOCATOR>& vec, PREDICATE predicate)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(vec);
+erase_if(vector<VALUE_TYPE, ALLOCATOR>& vec, PREDICATE predicate);
 
 /// Exchange the value of the specified `a` object with that of the
 /// specified `b` object; also exchange the allocator of `a` with that of
@@ -2075,7 +2049,7 @@ class vector<VALUE_TYPE *, ALLOCATOR>
            BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range,
            const ALLOCATOR&                           basicAllocator =
                                                                   ALLOCATOR())
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(range);
 
     vector(const vector& original);
 
@@ -2111,25 +2085,19 @@ class vector<VALUE_TYPE *, ALLOCATOR>
     }
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
-    vector& operator=(std::initializer_list<VALUE_TYPE *> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    vector& operator=(std::initializer_list<VALUE_TYPE *> values);
 
-    void assign(std::initializer_list<VALUE_TYPE *> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void assign(std::initializer_list<VALUE_TYPE *> values);
 
 #endif
 
     template <class INPUT_ITER>
-    void assign(INPUT_ITER first, INPUT_ITER last)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
-    void assign(size_type numElements, VALUE_TYPE *value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void assign(INPUT_ITER first, INPUT_ITER last);
+    void assign(size_type numElements, VALUE_TYPE *value);
 
     template <class t_RANGE>
     BSLSTL_VECTOR_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE*)
-    void assign_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void assign_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
 
                              // *** iterators ***
@@ -2137,15 +2105,13 @@ class vector<VALUE_TYPE *, ALLOCATOR>
     iterator begin() BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR;
     iterator end() BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR;
 
-    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
-    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT;
+    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT;
 
                           // *** element access ***
 
     reference operator[](size_type position);
-    reference at(size_type position) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reference at(size_type position);
 
     reference front();
     reference back();
@@ -2154,52 +2120,44 @@ class vector<VALUE_TYPE *, ALLOCATOR>
 
                              // *** capacity ***
 
-    void resize(size_type newLength) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
-    void resize(size_type newLength, VALUE_TYPE *value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void resize(size_type newLength);
+    void resize(size_type newLength, VALUE_TYPE *value);
 
-    void reserve(size_type newCapacity) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
-    void shrink_to_fit() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reserve(size_type newCapacity);
+    void shrink_to_fit();
 
                             // *** modifiers ***
 
     template <class t_RANGE>
     BSLSTL_VECTOR_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE*)
-    void append_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void append_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
-    value_type &emplace_back() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    value_type &emplace_back();
 
 # if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES)
     template <class ARG>
-    value_type &emplace_back(ARG&& arg) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    value_type &emplace_back(ARG&& arg);
 # else
-    value_type &emplace_back(VALUE_TYPE *ptr)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    value_type &emplace_back(VALUE_TYPE *ptr);
 # endif
 
-    void push_back(VALUE_TYPE *value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void push_back(VALUE_TYPE *value);
 
     void pop_back();
 
-    iterator emplace(const_iterator position)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator emplace(const_iterator position);
 
 # if defined(BSLS_COMPILERFEATURES_SUPPORT_RVALUE_REFERENCES)
     template <class ARG>
-    iterator emplace(const_iterator position, ARG&& arg)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator emplace(const_iterator position, ARG&& arg);
 # else
-    iterator emplace(const_iterator position, VALUE_TYPE *ptr)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator emplace(const_iterator position, VALUE_TYPE *ptr);
 # endif
 
-    iterator insert(const_iterator position, VALUE_TYPE *value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator insert(const_iterator position, VALUE_TYPE *value);
     iterator insert(const_iterator  position,
                     size_type       numElements,
-                    VALUE_TYPE     *value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                    VALUE_TYPE     *value);
 
     template <class INPUT_ITER>
     iterator insert(const_iterator position,
@@ -2219,16 +2177,14 @@ class vector<VALUE_TYPE *, ALLOCATOR>
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
     iterator insert(const_iterator position,
-                    std::initializer_list<VALUE_TYPE *> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                    std::initializer_list<VALUE_TYPE *> values);
 #endif
 
     template <class t_RANGE>
     BSLSTL_VECTOR_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE*)
     iterator insert_range(const_iterator                             position,
                           BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     iterator erase(const_iterator position);
     iterator erase(const_iterator first, const_iterator last);
@@ -2237,7 +2193,7 @@ class vector<VALUE_TYPE *, ALLOCATOR>
         BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(BSLS_KEYWORD_NOEXCEPT_OPERATOR(
                                                    d_impl.swap(other.d_impl)));
 
-    void clear() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void clear() BSLS_KEYWORD_NOEXCEPT;
 
     // ACCESSORS
     allocator_type get_allocator() const BSLS_KEYWORD_NOEXCEPT;
@@ -2251,14 +2207,10 @@ class vector<VALUE_TYPE *, ALLOCATOR>
     const_iterator  end() const BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR;
     const_iterator cend() const BSLS_KEYWORD_NOEXCEPT;
 
-    const_reverse_iterator  rbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
-    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
-    const_reverse_iterator  rend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
-    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator  rbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator  rend() const BSLS_KEYWORD_NOEXCEPT;
+    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT;
 
                              // *** capacity ***
 
@@ -2270,8 +2222,7 @@ class vector<VALUE_TYPE *, ALLOCATOR>
 
     const_reference operator[](size_type position) const;
 
-    const_reference at(size_type position) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reference at(size_type position) const;
 
     const_reference front() const;
     const_reference back() const;
@@ -2281,8 +2232,9 @@ class vector<VALUE_TYPE *, ALLOCATOR>
     // FRIENDS
     friend
     bool operator==(const vector& lhs, const vector& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return lhs.d_impl == rhs.d_impl;
     }
 
@@ -2290,8 +2242,9 @@ class vector<VALUE_TYPE *, ALLOCATOR>
 
     friend BloombergLP::bslalg::SynthThreeWayUtil::Result<Impl>
     operator<=>(const vector& lhs, const vector& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
         return BloombergLP::bslalg::SynthThreeWayUtil::compare(lhs.d_impl,
                                                                rhs.d_impl);
     }
@@ -2821,6 +2774,7 @@ inline
 typename vectorBase<VALUE_TYPE>::reverse_iterator
 vectorBase<VALUE_TYPE>::rbegin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(end());
 }
 
@@ -2829,6 +2783,7 @@ inline
 typename vectorBase<VALUE_TYPE>::reverse_iterator
 vectorBase<VALUE_TYPE>::rend() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(begin());
 }
 
@@ -2848,6 +2803,7 @@ template <class VALUE_TYPE>
 typename vectorBase<VALUE_TYPE>::reference
 vectorBase<VALUE_TYPE>::at(size_type position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(position >= size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         BloombergLP::bslstl::StdExceptUtil::throwOutOfRange(
@@ -2925,6 +2881,7 @@ inline
 typename vectorBase<VALUE_TYPE>::const_reverse_iterator
 vectorBase<VALUE_TYPE>::rbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -2933,6 +2890,7 @@ inline
 typename vectorBase<VALUE_TYPE>::const_reverse_iterator
 vectorBase<VALUE_TYPE>::crbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -2941,6 +2899,7 @@ inline
 typename vectorBase<VALUE_TYPE>::const_reverse_iterator
 vectorBase<VALUE_TYPE>::rend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -2949,6 +2908,7 @@ inline
 typename vectorBase<VALUE_TYPE>::const_reverse_iterator
 vectorBase<VALUE_TYPE>::crend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -2994,6 +2954,7 @@ template <class VALUE_TYPE>
 typename vectorBase<VALUE_TYPE>::const_reference
 vectorBase<VALUE_TYPE>::at(size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(position >= size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         BloombergLP::bslstl::StdExceptUtil::throwOutOfRange(
@@ -4077,6 +4038,7 @@ vector<VALUE_TYPE, ALLOCATOR>& vector<VALUE_TYPE, ALLOCATOR>::operator=(
               AllocatorTraits::propagate_on_container_move_assignment::value ||
               AllocatorTraits::is_always_equal::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef typename
         AllocatorTraits::propagate_on_container_move_assignment Propagate;
 
@@ -4108,6 +4070,7 @@ vector<VALUE_TYPE, ALLOCATOR>&
 vector<VALUE_TYPE, ALLOCATOR>::operator=(
                                       std::initializer_list<VALUE_TYPE> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     this->assign(values.begin(), values.end());
     return *this;
 }
@@ -4117,6 +4080,7 @@ inline
 void vector<VALUE_TYPE, ALLOCATOR>::assign(
                                       std::initializer_list<VALUE_TYPE> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(values.begin(), values.end());
 }
 #endif
@@ -4126,6 +4090,7 @@ template <class INPUT_ITER>
 inline
 void vector<VALUE_TYPE, ALLOCATOR>::assign(INPUT_ITER first, INPUT_ITER last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(!Vector_RangeCheck::isInvalidRange(first, last));
 
     clear();
@@ -4137,6 +4102,8 @@ inline
 void vector<VALUE_TYPE, ALLOCATOR>::assign(size_type         numElements,
                                            const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     clear();
     insert(this->begin(), numElements, value);
 }
@@ -4147,6 +4114,8 @@ BSLSTL_VECTOR_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
 void vector<VALUE_TYPE, ALLOCATOR>::assign_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     clear();
     append_range(BSLS_COMPILERFEATURES_FORWARD(t_RANGE, range));
 }
@@ -4156,6 +4125,7 @@ void vector<VALUE_TYPE, ALLOCATOR>::assign_range(
 template <class VALUE_TYPE, class ALLOCATOR>
 void vector<VALUE_TYPE, ALLOCATOR>::resize(size_type newSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // This function provides the *strong* exception guarantee (except when
     // the move constructor of a non-copy-insertable 'value_type' throws).
 
@@ -4212,6 +4182,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 void vector<VALUE_TYPE, ALLOCATOR>::resize(size_type         newSize,
                                            const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     // This function provides the *strong* exception guarantee (except when
     // the move constructor of a non-copy-insertable 'value_type' throws).
 
@@ -4230,6 +4202,7 @@ void vector<VALUE_TYPE, ALLOCATOR>::resize(size_type         newSize,
 template <class VALUE_TYPE, class ALLOCATOR>
 void vector<VALUE_TYPE, ALLOCATOR>::reserve(size_type newCapacity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(newCapacity > max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         BloombergLP::bslstl::StdExceptUtil::throwLengthError(
@@ -4256,6 +4229,7 @@ void vector<VALUE_TYPE, ALLOCATOR>::reserve(size_type newCapacity)
 template <class VALUE_TYPE, class ALLOCATOR>
 void vector<VALUE_TYPE, ALLOCATOR>::shrink_to_fit()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (this->size() < this->d_capacity) {
         vector temp(this->get_allocator());
         if (this->size() > 0) {
@@ -4280,6 +4254,8 @@ BSLSTL_VECTOR_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
 void vector<VALUE_TYPE, ALLOCATOR>::append_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     privateAppendRange(BSLS_COMPILERFEATURES_FORWARD(t_RANGE, range),
                        ranges::begin(range));
 }
@@ -4291,6 +4267,7 @@ inline
 VALUE_TYPE &
 vector<VALUE_TYPE, ALLOCATOR>::emplace_back(Args&&...arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this->d_capacity > this->size())) {
         AllocatorTraits::construct(
             this->allocatorRef(),
@@ -4310,6 +4287,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 inline
 void vector<VALUE_TYPE, ALLOCATOR>::push_back(const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this->d_capacity > this->size())) {
         AllocatorTraits::construct(this->allocatorRef(),
                                    this->d_dataEnd_p,
@@ -4326,6 +4305,8 @@ inline
 void vector<VALUE_TYPE, ALLOCATOR>::push_back(
                               BloombergLP::bslmf::MovableRef<VALUE_TYPE> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     VALUE_TYPE& lvalue = value;
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(this->d_capacity > this->size())) {
         AllocatorTraits::construct(this->allocatorRef(),
@@ -4354,6 +4335,7 @@ typename vector<VALUE_TYPE, ALLOCATOR>::iterator
 vector<VALUE_TYPE, ALLOCATOR>::insert(const_iterator    position,
                                       const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(this->begin() <= position);
     BSLS_ASSERT_SAFE(position      <= this->end());
 
@@ -4366,6 +4348,7 @@ vector<VALUE_TYPE, ALLOCATOR>::insert(
                            const_iterator                             position,
                            BloombergLP::bslmf::MovableRef<VALUE_TYPE> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(this->begin() <= position);
     BSLS_ASSERT_SAFE(position      <= this->end());
 
@@ -4419,6 +4402,7 @@ vector<VALUE_TYPE, ALLOCATOR>::insert(const_iterator    position,
                                       size_type         numElements,
                                       const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(this->begin() <= position);
     BSLS_ASSERT_SAFE(position      <= this->end());
 
@@ -4474,6 +4458,7 @@ vector<VALUE_TYPE, ALLOCATOR>::insert(
                                     const_iterator                    position,
                                     std::initializer_list<VALUE_TYPE> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return insert(position, values.begin(), values.end());
 }
 #endif
@@ -4486,6 +4471,7 @@ vector<VALUE_TYPE, ALLOCATOR>::insert_range(
                            const_iterator                             position,
                            BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     BSLS_ASSERT_SAFE(this->begin() <= position);
     BSLS_ASSERT_SAFE(position      <= this->end());
 
@@ -4573,6 +4559,7 @@ template <class VALUE_TYPE, class ALLOCATOR>
 inline
 void vector<VALUE_TYPE, ALLOCATOR>::clear() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!this->empty()) {
         BloombergLP::bslalg::ArrayDestructionPrimitives::destroy(
                                                    this->d_dataBegin_p,
@@ -4611,6 +4598,8 @@ inline
 bool operator==(const vector<VALUE_TYPE, ALLOCATOR>& lhs,
                 const vector<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return BloombergLP::bslalg::RangeCompare::equal(lhs.begin(),
                                                     lhs.end(),
                                                     lhs.size(),
@@ -4637,6 +4626,8 @@ BloombergLP::bslalg::SynthThreeWayUtil::Result<VALUE_TYPE> operator<=>(
                                       const vector<VALUE_TYPE, ALLOCATOR>& lhs,
                                       const vector<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lexicographical_compare_three_way(
                               lhs.begin(),
                               lhs.end(),
@@ -4694,6 +4685,8 @@ template <class VALUE_TYPE, class ALLOCATOR, class BDE_OTHER_TYPE>
 inline typename vector<VALUE_TYPE, ALLOCATOR>::size_type
 erase(vector<VALUE_TYPE, ALLOCATOR>& vec, const BDE_OTHER_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     typename vector<VALUE_TYPE, ALLOCATOR>::size_type oldSize = vec.size();
     vec.erase(bsl::remove(vec.begin(), vec.end(), value), vec.end());
     return oldSize - vec.size();
@@ -4703,6 +4696,7 @@ template <class VALUE_TYPE, class ALLOCATOR, class PREDICATE>
 inline typename vector<VALUE_TYPE, ALLOCATOR>::size_type
 erase_if(vector<VALUE_TYPE, ALLOCATOR>& vec, PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
     typename vector<VALUE_TYPE, ALLOCATOR>::size_type oldSize = vec.size();
     vec.erase(bsl::remove_if(vec.begin(), vec.end(), predicate), vec.end());
     return oldSize - vec.size();
@@ -4722,8 +4716,9 @@ void swap(vector<VALUE_TYPE, ALLOCATOR>& a,
 template <class HASHALG, class VALUE_TYPE, class ALLOCATOR>
 inline
 void hashAppend(HASHALG& hashAlg, const vector<VALUE_TYPE, ALLOCATOR>& input)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
     BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
     using ::BloombergLP::bslh::hashAppend;
     typedef typename vector<VALUE_TYPE, ALLOCATOR>::const_iterator ci_t;
@@ -4737,8 +4732,9 @@ void hashAppend(HASHALG& hashAlg, const vector<VALUE_TYPE, ALLOCATOR>& input)
 template <class HASHALG, class ALLOCATOR>
 inline
 void hashAppend(HASHALG& hashAlg, const vector<char, ALLOCATOR>& input)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlg, input.size());
     hashAppend(hashAlg, input.data(), input.size());
@@ -4878,6 +4874,7 @@ inline
 vector<VALUE_TYPE *, ALLOCATOR>& vector<VALUE_TYPE *, ALLOCATOR>::operator=(
                                                              const vector& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl = rhs.d_impl;
     return *this;
 }
@@ -4888,6 +4885,7 @@ inline
 vector<VALUE_TYPE *, ALLOCATOR>& vector<VALUE_TYPE *, ALLOCATOR>::operator=(
                                     std::initializer_list<VALUE_TYPE *> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(values);
     return *this;
 }
@@ -4897,6 +4895,7 @@ inline
 void vector<VALUE_TYPE *, ALLOCATOR>::assign(
                                     std::initializer_list<VALUE_TYPE *> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef typename std::initializer_list<VALUE_TYPE *>::const_iterator
                                                                       InitIter;
 
@@ -4912,6 +4911,7 @@ template <class INPUT_ITER>
 inline
 void vector<VALUE_TYPE *, ALLOCATOR>::assign(INPUT_ITER first, INPUT_ITER last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     typedef typename vector_ForwardIteratorForPtrs<VALUE_TYPE,
                                                    INPUT_ITER>::type Iter;
 
@@ -4923,6 +4923,8 @@ inline
 void vector<VALUE_TYPE *, ALLOCATOR>::assign(size_type   numElements,
                                              VALUE_TYPE *value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_impl.assign(numElements, (UintPtr) value);
 }
 
@@ -4933,6 +4935,8 @@ inline
 void vector<VALUE_TYPE *, ALLOCATOR>::assign_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     d_impl.assign_range(
              vector_makeUintPtrRangeAdapter<VALUE_TYPE *>(ranges::begin(range),
                                                           ranges::end(range)));
@@ -5060,6 +5064,7 @@ template <class VALUE_TYPE, class ALLOCATOR>
 inline
 void vector<VALUE_TYPE *, ALLOCATOR>::resize(size_type newLength)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.resize(newLength);
 }
 
@@ -5068,6 +5073,8 @@ inline
 void vector<VALUE_TYPE *, ALLOCATOR>::resize(size_type   newLength,
                                              VALUE_TYPE *value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_impl.resize(newLength, (UintPtr) value);
 }
 
@@ -5075,6 +5082,7 @@ template <class VALUE_TYPE, class ALLOCATOR>
 inline
 void vector<VALUE_TYPE *, ALLOCATOR>::reserve(size_type newCapacity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reserve(newCapacity);
 }
 
@@ -5082,6 +5090,7 @@ template <class VALUE_TYPE, class ALLOCATOR>
 inline
 void vector<VALUE_TYPE *, ALLOCATOR>::shrink_to_fit()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.shrink_to_fit();
 }
 
@@ -5095,6 +5104,8 @@ inline
 void vector<VALUE_TYPE *, ALLOCATOR>::append_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     d_impl.append_range(
              vector_makeUintPtrRangeAdapter<VALUE_TYPE *>(ranges::begin(range),
                                                           ranges::end(range)));
@@ -5117,6 +5128,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::reference
 vector<VALUE_TYPE *, ALLOCATOR>::emplace_back(ARG&& arg)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&arg);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     VALUE_TYPE *ptr(arg);  // Support explicit conversion operators
     d_impl.emplace_back(reinterpret_cast<UintPtr>(ptr));
@@ -5138,6 +5150,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 inline
 void vector<VALUE_TYPE *, ALLOCATOR>::push_back(VALUE_TYPE *value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     d_impl.emplace_back(reinterpret_cast<UintPtr>(value));
 }
 
@@ -5164,6 +5178,7 @@ inline
 typename vector<VALUE_TYPE *, ALLOCATOR>::iterator
 vector<VALUE_TYPE *, ALLOCATOR>::emplace(const_iterator position, ARG&& arg)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&arg);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     VALUE_TYPE *ptr(arg);  // Support explicit conversion operators
     return (iterator) d_impl.emplace((const UintPtr *)position,
@@ -5234,6 +5249,7 @@ vector<VALUE_TYPE *, ALLOCATOR>::insert_range(
                            const_iterator                             position,
                            BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (iterator) d_impl.insert_range(
              (const UintPtr*) position,
@@ -5275,6 +5291,7 @@ template <class VALUE_TYPE, class ALLOCATOR>
 inline
 void vector<VALUE_TYPE *, ALLOCATOR>::clear() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.clear();
 }
 

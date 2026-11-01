@@ -166,6 +166,7 @@ CountingAllocator::CountingAllocator(bslma::Allocator *basicAllocator)
 inline
 void *CountingAllocator::allocate(size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     size_type paddedSize =
                           bsls::AlignmentUtil::roundUpToMaximalAlignment(size);
     size_type totalSize = paddedSize + bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT;
@@ -179,6 +180,7 @@ void *CountingAllocator::allocate(size_type size)
 inline
 void CountingAllocator::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (address) {
         address = (char *)address - bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT;
         d_byteCount -= *((int *)address);
@@ -196,6 +198,7 @@ void CountingAllocator::resetNumBytesTotal()
 inline
 CountingAllocator::size_type CountingAllocator::numBytesTotal() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_byteCount;
 }
 

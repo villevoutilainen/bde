@@ -211,8 +211,7 @@ struct BerUniversalTagNumber {
     /// Write to the specified `stream` the string representation of the
     /// specified enumeration `value`.  Return a reference to the modifiable
     /// `stream`.
-    static bsl::ostream& print(bsl::ostream& stream, Value value)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    static bsl::ostream& print(bsl::ostream& stream, Value value);
 
     /// Return the universal tag number for the specified `object` using the
     /// specified `formattingMode`, and load into the specified
@@ -531,6 +530,7 @@ inline
 bsl::ostream& BerUniversalTagNumber::print(bsl::ostream&                stream,
                                            BerUniversalTagNumber::Value value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return stream << toString(value);
 }
 

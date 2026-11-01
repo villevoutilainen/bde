@@ -21,6 +21,7 @@ bsl::ostream& MonthOfYear::print(bsl::ostream&     stream,
                                  int               level,
                                  int               spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     bslim::Printer printer(&stream, level, spacesPerLevel);
 
     printer.start(true);

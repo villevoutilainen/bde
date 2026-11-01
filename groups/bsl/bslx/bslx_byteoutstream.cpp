@@ -62,6 +62,7 @@ ByteOutStream& ByteOutStream::putString(const bsl::string& value)
 // FREE OPERATORS
 bsl::ostream& operator<<(bsl::ostream& stream, const ByteOutStream& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     const int           len   = static_cast<int>(object.d_buffer.size());
     const char         *data  = object.d_buffer.data();

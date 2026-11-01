@@ -2991,6 +2991,8 @@ inline
 void bsl::hashAppend(HASHALG&                                         hashAlg,
                      const basic_string_view<CHAR_TYPE, CHAR_TRAITS>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     using ::BloombergLP::bslh::hashAppend;
     hashAlg(input.data(), sizeof(CHAR_TYPE)*input.size());
     hashAppend(hashAlg, input.size());
@@ -3007,6 +3009,8 @@ void bslh::hashAppend(
                  HASHALG&                                              hashAlg,
                  const std::basic_string_view<CHAR_TYPE, CHAR_TRAITS>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     hashAlg(input.data(), sizeof(CHAR_TYPE)*input.size());
     hashAppend(hashAlg, input.size());
 }

@@ -20,6 +20,8 @@ namespace bslx {
 // FREE OPERATORS
 bsl::ostream& operator<<(bsl::ostream& stream, const ByteInStream& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     const bsl::size_t   len   = object.length();
     const char         *data  = object.data();
     bsl::ios::fmtflags  flags = stream.flags();

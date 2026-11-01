@@ -551,16 +551,14 @@ class GuardingAllocator : public bslma::Allocator {
     /// memory is allocated and 0 is returned.  Note that a multiple of the
     /// platform's memory page size is allocated for *every* call to this
     /// method.
-    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE;
 
     /// Return the memory block at the specified `address` back to this
     /// allocator.  If `address` is 0, this method has no effect.
     /// Otherwise, the guard page associated with `address` is unprotected
     /// and also deallocated.  The behavior is undefined unless `address`
     /// was returned by `allocate` and has not already been deallocated.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
 };
 
 // ============================================================================

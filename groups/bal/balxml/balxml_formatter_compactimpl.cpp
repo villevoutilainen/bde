@@ -49,6 +49,7 @@ void Formatter_CompactImplUtil::addCommentImpl(
 bsl::ostream& Formatter_CompactImplUtil::addBlankLine(bsl::ostream&  stream,
                                                       State         *state)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
 
@@ -80,6 +81,8 @@ bsl::ostream& Formatter_CompactImplUtil::addComment(
                                               const bsl::string_view&  comment,
                                               bool)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&comment);
     const bsl::string_view openMarker = "<!-- ";
     const bsl::string_view closeMarker = " -->";
 
@@ -115,6 +118,7 @@ bsl::ostream& Formatter_CompactImplUtil::addHeader(
 bsl::ostream& Formatter_CompactImplUtil::addNewline(bsl::ostream&  stream,
                                                     State         *state)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
 
@@ -202,6 +206,7 @@ bsl::ostream& Formatter_CompactImplUtil::closeElement(
 bsl::ostream& Formatter_CompactImplUtil::flush(bsl::ostream&  stream,
                                                State         *state)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
 

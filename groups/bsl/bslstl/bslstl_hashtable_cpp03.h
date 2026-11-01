@@ -4783,6 +4783,7 @@ bslalg::BidirectionalLink *
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                           )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode();
     return insertNode(node, 0);
@@ -4797,6 +4798,7 @@ bslalg::BidirectionalLink *
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01));
@@ -4814,6 +4816,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -4834,6 +4837,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -4857,6 +4861,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -4883,6 +4888,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -4912,6 +4918,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -4944,6 +4951,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -4979,6 +4987,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5017,6 +5026,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5058,6 +5068,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5082,6 +5093,7 @@ bslalg::BidirectionalLink *
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                                           bslalg::BidirectionalLink *hint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode();
     return insertNode(node, hint);
@@ -5097,6 +5109,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                                           bslalg::BidirectionalLink *hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01));
@@ -5115,6 +5128,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5136,6 +5150,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5160,6 +5175,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5187,6 +5203,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5217,6 +5234,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5250,6 +5268,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5286,6 +5305,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5325,6 +5345,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5367,6 +5388,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_01, arguments_01),
@@ -5391,6 +5413,7 @@ bslalg::BidirectionalLink *
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                                               bool             *isInsertedFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5408,6 +5431,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                                               bool             *isInsertedFlag,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5428,6 +5452,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5451,6 +5476,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5477,6 +5503,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5506,6 +5533,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5538,6 +5566,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5573,6 +5602,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5611,6 +5641,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5652,6 +5683,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5696,6 +5728,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5724,6 +5757,7 @@ bslalg::BidirectionalLink *
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplace(
                           BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(BSLS_COMPILERFEATURES_FORWARD(ARGS, arguments)...);
     return insertNode(node, 0);
@@ -5737,6 +5771,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceWithHint(
                                           bslalg::BidirectionalLink *hint,
                           BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslalg::BidirectionalLink *node =
                  createNode(BSLS_COMPILERFEATURES_FORWARD(ARGS, arguments)...);
     return insertNode(node, hint);
@@ -5750,6 +5785,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::emplaceIfMissing(
                                               bool             *isInsertedFlag,
                           BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     bslalg::BidirectionalLink *node =
@@ -5767,6 +5803,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::insertKeyIfMissing(
                     bool                                       *isInsertedFlag,
                     BSLS_COMPILERFEATURES_FORWARD_REF(KEY_ARG)  key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return tryEmplace(isInsertedFlag,
                       0,
                       BSLS_COMPILERFEATURES_FORWARD(KEY_ARG, key));
@@ -5780,6 +5817,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::insertIfMissing(
                  bool                                          *isInsertedFlag,
                  BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE) value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(isInsertedFlag);
 
     typedef bsl::integral_constant<
@@ -5801,6 +5839,8 @@ bslalg::BidirectionalLink *
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::insert(
                           BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE) value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(SOURCE_TYPE, value));
 }
 
@@ -5812,6 +5852,8 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::insert(
                           BSLS_COMPILERFEATURES_FORWARD_REF(SOURCE_TYPE) value,
                           bslalg::BidirectionalLink                     *hint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return emplaceWithHint(hint,
                            BSLS_COMPILERFEATURES_FORWARD(SOURCE_TYPE, value));
 }
@@ -5828,6 +5870,9 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::insertOrAssign(
                                 BSLS_COMPILERFEATURES_FORWARD_REF(KEY_ARG) key,
                          BSLS_COMPILERFEATURES_FORWARD_REF(BDE_OTHER_TYPE) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -5860,6 +5905,7 @@ void
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::rehashForNumBuckets(
                                                         SizeType newNumBuckets)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (newNumBuckets > this->numBuckets()) {
         // Compute a "good" number of buckets, e.g., pick a prime number from a
         // sorted array of exponentially increasing primes.
@@ -5902,6 +5948,7 @@ template <class KEY_CONFIG, class HASHER, class COMPARATOR, class ALLOCATOR>
 void
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::removeAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     this->removeAllImp();
     if (HashTable_ImpDetails::defaultBucketAddress() !=
         d_anchor.bucketArrayAddress()) {
@@ -5921,6 +5968,7 @@ void
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::reserveForNumElements(
                                                           SizeType numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (numElements < 1) { // Return avoids undefined behavior in node factory.
         return;                                                       // RETURN
     }
@@ -5947,6 +5995,7 @@ inline
 void HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::setMaxLoadFactor(
                                                         float newMaxLoadFactor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(0.0f < newMaxLoadFactor);
 
     size_t capacity;
@@ -6002,6 +6051,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                                      bslalg::BidirectionalLink *hint,
                                 BSLS_COMPILERFEATURES_FORWARD_REF(KEY_ARG) key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6040,6 +6090,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                                 BSLS_COMPILERFEATURES_FORWARD_REF(KEY_ARG) key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6081,6 +6132,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6125,6 +6177,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6172,6 +6225,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6222,6 +6276,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6275,6 +6330,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6331,6 +6387,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6390,6 +6447,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6452,6 +6510,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6517,6 +6576,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6567,6 +6627,7 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::tryEmplace(
                                 BSLS_COMPILERFEATURES_FORWARD_REF(KEY_ARG) key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLMF_ASSERT(IsLookupKey<KEY_ARG>::value);
     BSLS_ASSERT(isInsertedFlag);
 
@@ -6624,6 +6685,8 @@ typename HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::SizeType
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::bucketIndexForKey(
                                                   const LOOKUP_KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BSLMF_ASSERT(IsLookupKey<LOOKUP_KEY>::value);
 
     // The following cast will not discard any useful bits, unless 'SizeType'
@@ -6644,6 +6707,7 @@ inline
 const COMPARATOR&
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::comparator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_parameters.originalComparator();
 }
 
@@ -6663,6 +6727,7 @@ inline
 bslalg::BidirectionalLink *
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::elementListRoot() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_anchor.listRootAddress();
 }
 
@@ -6673,6 +6738,8 @@ bslalg::BidirectionalLink *
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::find(
                                                   const LOOKUP_KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BSLMF_ASSERT(IsLookupKey<LOOKUP_KEY>::value);
 
     return bslalg::HashTableImpUtil::find<KEY_CONFIG>(
@@ -6687,6 +6754,7 @@ bslalg::BidirectionalLink *
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::findEndOfRange(
                                         bslalg::BidirectionalLink *first) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(first);
 
     typedef bslalg::HashTableImpUtil ImpUtil;
@@ -6717,6 +6785,8 @@ HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::findRange(
                                          bslalg::BidirectionalLink **last,
                                          const LOOKUP_KEY&           key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     BSLS_ASSERT_SAFE(first);
     BSLS_ASSERT_SAFE(last);
 
@@ -6729,6 +6799,8 @@ bool
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::hasSameValue(
                                                   const HashTable& other) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     // TBD: The template bloat of this function can be significantly reduced.
     //..
     // What matters is that the two hash tables:
@@ -6877,6 +6949,7 @@ inline
 const HASHER&
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::hasher() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_parameters.originalHasher();
 }
 
@@ -6884,6 +6957,7 @@ template <class KEY_CONFIG, class HASHER, class COMPARATOR, class ALLOCATOR>
 inline
 float HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::loadFactor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<float>(static_cast<double>(this->size())
                                     / static_cast<double>(this->numBuckets()));
 }
@@ -6893,6 +6967,7 @@ inline
 float
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::maxLoadFactor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_maxLoadFactor;
 }
 
@@ -6927,6 +7002,7 @@ inline
 typename HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::SizeType
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::numBuckets() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<SizeType>(d_anchor.bucketArraySize());
 }
 
@@ -6935,6 +7011,7 @@ inline
 typename HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::SizeType
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::rehashThreshold() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_capacity;
 }
 
@@ -6943,6 +7020,7 @@ inline
 typename HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::SizeType
 HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_size;
 }
 
@@ -6983,6 +7061,8 @@ bool bslstl::operator==(
        const bslstl::HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& lhs,
        const bslstl::HashTable<KEY_CONFIG, HASHER, COMPARATOR, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.hasSameValue(rhs);
 }
 

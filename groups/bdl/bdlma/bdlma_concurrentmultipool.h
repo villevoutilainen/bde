@@ -677,14 +677,13 @@ class ConcurrentMultipool {
     /// will be deallocated when the `release` method is called, or when
     /// this object is destroyed.  If `size` is 0, no memory is allocated
     /// and 0 is returned.
-    void *allocate(bsls::Types::size_type size)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type size);
 
     /// Relinquish the memory block at the specified `address` back to this
     /// multipool object for reuse.  The behavior is undefined unless
     /// `address` is non-zero, was allocated by this multipool object, and
     /// has not already been deallocated.
-    void deallocate(void *address) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address);
 
     /// Destroy the specified `object` based on its dynamic type and then
     /// use this multipool object to deallocate its memory footprint.  This
@@ -694,7 +693,7 @@ class ConcurrentMultipool {
     /// Note that `dynamic_cast<void *>(object)` is applied if `TYPE` is
     /// polymorphic, and `static_cast<void *>(object)` is applied otherwise.
     template <class TYPE>
-    void deleteObject(const TYPE *object) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deleteObject(const TYPE *object);
 
     /// Destroy the specified `object` and then use this multipool to
     /// deallocate its memory footprint.  This method has no effect if
@@ -704,11 +703,10 @@ class ConcurrentMultipool {
     /// allocated using this multipool, and has not already been
     /// deallocated.
     template <class TYPE>
-    void deleteObjectRaw(const TYPE *object)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deleteObjectRaw(const TYPE *object);
 
     /// Relinquish all memory currently allocated via this multipool object.
-    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void release();
 
     /// Reserve memory from this multipool to satisfy memory requests for at
     /// least the specified `numBlocks` having the specified `size` (in
@@ -721,7 +719,7 @@ class ConcurrentMultipool {
     // ACCESSORS
 
     /// Return the number of pools managed by this multipool object.
-    int numPools() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int numPools() const;
 
     /// Return the maximum size of memory blocks that are pooled by this
     /// multipool object.  Note that the maximum value is defined as:
@@ -730,8 +728,7 @@ class ConcurrentMultipool {
     /// ```
     /// where `numPools` is either specified at construction, or an
     /// implementation-defined value.
-    bsls::Types::size_type maxPooledBlockSize() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::size_type maxPooledBlockSize() const;
 
 
                                   // Aspects
@@ -739,7 +736,7 @@ class ConcurrentMultipool {
     /// Return the allocator used by this object to allocate memory.  Note
     /// that this allocator can not be used to deallocate memory
     /// allocated through this pool.
-    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bslma::Allocator *allocator() const;
 };
 
 // ============================================================================
@@ -755,6 +752,7 @@ template <class TYPE>
 inline
 void ConcurrentMultipool::deleteObject(const TYPE *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::DeleterHelper::deleteObject(object, this);
 }
 
@@ -762,6 +760,7 @@ template <class TYPE>
 inline
 void ConcurrentMultipool::deleteObjectRaw(const TYPE *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::DeleterHelper::deleteObjectRaw(object, this);
 }
 
@@ -769,12 +768,14 @@ void ConcurrentMultipool::deleteObjectRaw(const TYPE *object)
 inline
 int ConcurrentMultipool::numPools() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_numPools;
 }
 
 inline
 bsls::Types::size_type ConcurrentMultipool::maxPooledBlockSize() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_maxBlockSize;
 }
 
@@ -783,6 +784,7 @@ bsls::Types::size_type ConcurrentMultipool::maxPooledBlockSize() const
 inline
 bslma::Allocator *ConcurrentMultipool::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_blockList.allocator();
 }
 

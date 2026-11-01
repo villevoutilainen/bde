@@ -79,6 +79,8 @@ bslmt::ThreadGroup::~ThreadGroup()
 
 // MANIPULATORS
 void bslmt::ThreadGroup::addThread(const ThreadUtil::Handle& handle) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&handle);
     ThreadDetachGuard detachGuard(handle);
     LockGuard<Mutex> lockGuard(&d_threadsMutex);
 

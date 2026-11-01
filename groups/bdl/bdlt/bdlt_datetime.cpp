@@ -156,6 +156,7 @@ bsl::ostream& Datetime::print(bsl::ostream& stream,
                               int           level,
                               int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Format the output to a buffer first instead of inserting into 'stream'
     // directly to improve performance and in case the caller has done
     // something like:
@@ -187,6 +188,7 @@ int Datetime::printToBuffer(char *result,
                             int   numBytes,
                             int   fractionalSecondPrecision) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(result);
     BSLS_ASSERT(0 <= numBytes);
     BSLS_ASSERT(0 <= fractionalSecondPrecision);

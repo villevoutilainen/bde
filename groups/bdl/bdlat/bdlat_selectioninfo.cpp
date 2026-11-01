@@ -16,6 +16,7 @@ namespace BloombergLP {
 bsl::ostream& operator<<(bsl::ostream&              stream,
                          const bdlat_SelectionInfo& selectionInfo)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     stream << "( " << selectionInfo.formattingMode()
            << ", " << selectionInfo.id()
            << ", ";

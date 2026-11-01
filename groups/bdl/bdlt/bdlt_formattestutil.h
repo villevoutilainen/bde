@@ -49,8 +49,7 @@ struct FormatTestUtil {
     /// to `char` and return the resulting `bsl::string` by value.  The
     /// behavior is undefined unless all of the `wchar_t` values in `viewIn`
     /// are ascii.
-    static bsl::string narrow(const bsl::wstring_view& viewIn)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(viewIn);
+    static bsl::string narrow(const bsl::wstring_view& viewIn);
 
     /// Compare the specified `exp` to the string result of calling
     /// `bsl::format` with the specified `format` and `value`, and return
@@ -62,11 +61,7 @@ struct FormatTestUtil {
     static bool testFormat(bsl::string             *message,
                            const bsl::string_view&  exp,
                            const bsl::string_view&  format,
-                           const t_VALUE_TYPE&      value)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(message)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(exp)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(format)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+                           const t_VALUE_TYPE&      value);
 
     /// Compare the specified `exp` to the string result of calling
     /// `bsl::format` with the specified `format`, `value`, and `arg`, and
@@ -79,19 +74,12 @@ struct FormatTestUtil {
                               const bsl::string_view&  exp,
                               const bsl::string_view&  format,
                               const t_VALUE_TYPE&      value,
-                              const t_ARG_TYPE&        arg)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(message)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(exp)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(format)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(arg);
+                              const t_ARG_TYPE&        arg);
 
     /// Load the `wstring` version of the specified `char`-based string view
     /// `viewIn` into the specified `result`.  The behavior is undefined unless
     /// all of the `char` values in `viewIn` are ascii.
-    static void widen(bsl::wstring *result, const bsl::string_view& viewIn)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(viewIn);
+    static void widen(bsl::wstring *result, const bsl::string_view& viewIn);
 };
 
                             // --------------------
@@ -104,6 +92,10 @@ bool FormatTestUtil::testFormat(bsl::string             *message,
                                 const bsl::string_view&  format,
                                 const t_VALUE_TYPE&      value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(message);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&exp);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&format);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     message->clear();
     bool rc = bslfmt::FormatterTestUtil<char>::testEvaluateVFormat(
                                             message, exp, true, format, value);
@@ -132,6 +124,11 @@ bool FormatTestUtil::testFormatArg(bsl::string             *message,
                                    const t_VALUE_TYPE&      value,
                                    const t_ARG_TYPE&        arg)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(message);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&exp);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&format);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&arg);
     message->clear();
     bool rc = bslfmt::FormatterTestUtil<char>::testEvaluateVFormat(
                                        message, exp, true, format, value, arg);
@@ -157,6 +154,8 @@ inline
 void FormatTestUtil::widen(bsl::wstring            *result,
                            const bsl::string_view&  viewIn)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&viewIn);
     result->clear();
     result->reserve(viewIn.length());
     typedef bsl::string_view::iterator It;

@@ -124,6 +124,8 @@ void DefaultCalendarCache::destroy()
 int DefaultCalendarCache::initialize(CalendarLoader   *loader,
                                      bslma::Allocator *allocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(loader);
+    BSLS_ASSERT_CONVEYOR_OBJECT(allocator);
     return initializePrivate(loader, false, bsls::TimeInterval(), allocator);
 }
 
@@ -131,6 +133,9 @@ int DefaultCalendarCache::initialize(CalendarLoader            *loader,
                                      const bsls::TimeInterval&  timeout,
                                      bslma::Allocator          *allocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(loader);
+    BSLS_ASSERT_CONVEYOR_OBJECT(allocator);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&timeout);
     return initializePrivate(loader, true, timeout, allocator);
 }
 

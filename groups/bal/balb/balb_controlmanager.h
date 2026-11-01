@@ -192,18 +192,15 @@ class ControlManager {
 
         /// Return a non-modifiable reference to the `callback` member of
         /// this object.
-        const ControlManager::ControlHandler& callback() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+        const ControlManager::ControlHandler& callback() const;
 
         /// Return a non-modifiable reference to the `arguments` member of
         /// this object.
-        const bsl::string& arguments() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+        const bsl::string& arguments() const;
 
         /// Return a non-modifiable reference to the `arguments` member of
         /// this object.
-        const bsl::string& description() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+        const bsl::string& description() const;
     };
 
     struct CaselessLessThan {
@@ -355,12 +352,14 @@ void ControlManager::ControlManager_Entry::setCallback(
 inline
 bsl::string& ControlManager::ControlManager_Entry::arguments()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_arguments;
 }
 
 inline
 bsl::string& ControlManager::ControlManager_Entry::description()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_description;
 }
 
@@ -369,18 +368,21 @@ inline
 const ControlManager::ControlHandler&
 ControlManager::ControlManager_Entry::callback() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_callback;
 }
 
 inline
 const bsl::string& ControlManager::ControlManager_Entry::arguments() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_arguments;
 }
 
 inline
 const bsl::string& ControlManager::ControlManager_Entry::description() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_description;
 }
 

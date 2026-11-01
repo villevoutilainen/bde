@@ -299,6 +299,7 @@ void DatetimeInterval::setInterval(int                days,
                                    bsls::Types::Int64 milliseconds,
                                    bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Int64 d = static_cast<bsls::Types::Int64>(days)
                          + hours        / TimeUnitRatio::k_H_PER_D
                          + minutes      / TimeUnitRatio::k_M_PER_D
@@ -328,6 +329,7 @@ int DatetimeInterval::setIntervalIfValid(int                days,
                                          bsls::Types::Int64 milliseconds,
                                          bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if   (u::k_HOURS_CEILING        < hours
        || u::k_MINUTES_CEILING      < minutes
        || u::k_SECONDS_CEILING      < seconds
@@ -363,6 +365,7 @@ int DatetimeInterval::setIntervalIfValid(int                days,
 
 void DatetimeInterval::setTotalSecondsFromDouble(double seconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(!U_IS_INF(seconds));
     BSLS_ASSERT(!U_IS_NAN(seconds));
 
@@ -392,6 +395,7 @@ void DatetimeInterval::setTotalSecondsFromDouble(double seconds)
 
 int DatetimeInterval::setTotalSecondsFromDoubleIfValid(double seconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (U_IS_INF(seconds) || U_IS_NAN(seconds)) {
         return -1;                                                    // RETURN
     }
@@ -427,6 +431,7 @@ DatetimeInterval& DatetimeInterval::addInterval(
                                                bsls::Types::Int64 milliseconds,
                                                bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Int64 d = static_cast<bsls::Types::Int64>(days)
                          + hours        / TimeUnitRatio::k_H_PER_D
                          + minutes      / TimeUnitRatio::k_M_PER_D
@@ -459,6 +464,7 @@ int DatetimeInterval::addIntervalIfValid(int                days,
                                          bsls::Types::Int64 milliseconds,
                                          bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Int64 d = static_cast<bsls::Types::Int64>(days)
                          + hours        / TimeUnitRatio::k_H_PER_D
                          + minutes      / TimeUnitRatio::k_M_PER_D
@@ -501,6 +507,7 @@ int DatetimeInterval::printToBuffer(char *result,
                                     int   numBytes,
                                     int   fractionalSecondPrecision) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(result);
     BSLS_ASSERT(0 <= numBytes);
     BSLS_ASSERT(0 <= fractionalSecondPrecision     );
@@ -603,6 +610,8 @@ bsl::ostream& DatetimeInterval::print(bsl::ostream& stream,
                                       int           level,
                                       int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     // Format the output to a buffer first instead of inserting into 'stream'
     // directly to improve performance and in case the caller has done
     // something like:
@@ -634,6 +643,8 @@ bsl::ostream& DatetimeInterval::print(bsl::ostream& stream,
 // DEPRECATED METHODS
 bsl::ostream& DatetimeInterval::streamOut(bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return stream << *this;
 }
 

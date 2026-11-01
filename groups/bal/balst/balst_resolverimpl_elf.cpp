@@ -1104,12 +1104,10 @@ class FrameRec {
         // Return the 'address' field from this object.
 
 #ifdef u_DWARF
-    const bsl::string& compileUnitDir() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& compileUnitDir() const;
         // Return the compile unit directory name.
 
-    const bsl::string& compileUnitFileName() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& compileUnitFileName() const;
         // Return the compile unit file name.
 
     u::Offset compileUnitOffset() const;
@@ -1119,8 +1117,7 @@ class FrameRec {
         // Return the line number offset field.
 #endif
 
-    balst::StackTraceFrame& frame() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    balst::StackTraceFrame& frame() const;
         // Return a reference to the modifiable 'frame' referenced by this
         // object.  Note that though this is a 'const' method, modifiable
         // access to the frame is provided.
@@ -1233,12 +1230,14 @@ const void *FrameRec::address() const
 inline
 const bsl::string& FrameRec::compileUnitDir() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_compileUnitDir;
 }
 
 inline
 const bsl::string& FrameRec::compileUnitFileName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_compileUnitFileName;
 }
 
@@ -1258,6 +1257,7 @@ u::Offset FrameRec::lineNumberOffset() const
 inline
 balst::StackTraceFrame& FrameRec::frame() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_frame_p;
 }
 

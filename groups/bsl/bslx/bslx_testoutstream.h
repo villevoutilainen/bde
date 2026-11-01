@@ -257,12 +257,11 @@ class TestOutStream {
 
     /// Set the internal buffer size of this stream to be at least the
     /// specified `newCapacity` (in bytes).
-    void reserveCapacity(bsl::size_t newCapacity)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reserveCapacity(bsl::size_t newCapacity);
 
     /// Remove all content in this stream and validate this stream if it is
     /// currently invalid.
-    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reset();
 
                       // *** scalar integer values ***
 
@@ -795,8 +794,7 @@ bsl::ostream& operator<<(bsl::ostream&        stream,
 /// documentation), and return a reference to `stream`.  The behavior is
 /// undefined unless `TYPE` is BDEX-compliant.
 template <class TYPE>
-TestOutStream& operator<<(TestOutStream& stream, const TYPE& value)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(value) BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream);
+TestOutStream& operator<<(TestOutStream& stream, const TYPE& value);
 
 // ============================================================================
 //                           INLINE DEFINITIONS
@@ -822,12 +820,14 @@ void TestOutStream::makeNextInvalid()
 inline
 void TestOutStream::reserveCapacity(bsl::size_t newCapacity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_imp.reserveCapacity(newCapacity);
 }
 
 inline
 void TestOutStream::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_imp.reset();
 }
 
@@ -877,6 +877,8 @@ template <class TYPE>
 inline
 TestOutStream& operator<<(TestOutStream& stream, const TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return OutStreamFunctions::bdexStreamOut(stream, value);
 }
 

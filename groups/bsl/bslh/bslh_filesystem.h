@@ -308,6 +308,7 @@ template <class HASHALG>
 BSLS_PLATFORM_AGGRESSIVE_INLINE
 void hashAppend(HASHALG& hashAlg, const std::filesystem::path& path)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
     using BloombergLP::bslh::hashAppend;
     BloombergLP::bslh::Hash<std::filesystem::path> hashFunctor;
 

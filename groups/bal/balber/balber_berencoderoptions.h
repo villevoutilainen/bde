@@ -272,8 +272,7 @@ class BerEncoderOptions {
         // in multiline mode only.
 
     template <typename t_STREAM>
-    t_STREAM& bdexStreamOut(t_STREAM& stream, int version) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    t_STREAM& bdexStreamOut(t_STREAM& stream, int version) const;
         // Write the value of this object to the specified output 'stream'
         // using the specified 'version' format and return a reference to the
         // modifiable 'stream'.  If 'version' is not supported, 'stream' is
@@ -609,6 +608,8 @@ void BerEncoderOptions::setEncodeArrayLengthHints(bool value)
 template <typename t_STREAM>
 t_STREAM& BerEncoderOptions::bdexStreamOut(t_STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     switch (version) {
       case 3: {
         bslx::OutStreamFunctions::bdexStreamOut(stream, this->traceLevel(), 1);

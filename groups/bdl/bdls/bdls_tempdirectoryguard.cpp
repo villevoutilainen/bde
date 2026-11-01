@@ -51,6 +51,7 @@ void TempDirectoryGuard::release()
 // ACCESSORS
 const bsl::string& TempDirectoryGuard::getTempDirName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_dirName;
 }
 

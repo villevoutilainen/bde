@@ -25,6 +25,7 @@ extern const nostopstate_t nostopstate = nostopstate_t();
 // ACCESSORS
 bool stop_token::stop_possible() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (!d_state_p) {
         return false;                                                 // RETURN
     }
@@ -36,6 +37,7 @@ bool stop_token::stop_possible() const BSLS_KEYWORD_NOEXCEPT
 
 bool stop_token::stop_requested() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_state_p && d_state_p->stopRequested();
 }
 
@@ -88,22 +90,26 @@ stop_source& stop_source::operator=(
 
 bool stop_source::request_stop() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_state_p && d_state_p->requestStop();
 }
 
 // ACCESSORS
 stop_token stop_source::get_token() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return stop_token(d_state_p);
 }
 
 bool stop_source::stop_possible() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_state_p;
 }
 
 bool stop_source::stop_requested() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_state_p && d_state_p->stopRequested();
 }
 }  // close namespace bsl

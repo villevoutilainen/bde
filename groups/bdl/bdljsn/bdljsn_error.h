@@ -201,9 +201,7 @@ class Error {
     const Location& location() const;
 
     /// Return the `message` attribute of this object.
-    const bsl::string&  message() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string&  message() const;
 
                                   // Aspects
 
@@ -389,6 +387,7 @@ const Location& Error::location() const
 inline
 const bsl::string& Error::message() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_message;
 }
 
@@ -424,6 +423,7 @@ template <class HASHALG>
 inline
 void bdljsn::hashAppend(HASHALG& hashAlgorithm, const Error& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlgorithm);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlgorithm, object.location());

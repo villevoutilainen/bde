@@ -179,8 +179,7 @@ struct DateUtil {
     /// month.  The behavior is undefined unless `original` is either the
     /// 28th or 29th of February, and the resulting date results in a valid
     /// `Date` value.  Note that `numYears` may be negative.
-    static Date addYearsEomEndOfFebruary(const Date& original, int numYears)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(original);
+    static Date addYearsEomEndOfFebruary(const Date& original, int numYears);
 
   public:
     // CLASS METHODS
@@ -195,8 +194,7 @@ struct DateUtil {
     /// 29, 2001), move the resulting date to the last day of the month.
     /// The behavior is undefined unless the operation results in a valid
     /// `Date` value.  Note that `numMonths` may be negative.
-    static Date addMonths(const Date& original, int numMonths, bool eomFlag)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(original);
+    static Date addMonths(const Date& original, int numMonths, bool eomFlag);
 
     /// Return the date that is the specified `numMonths` from the specified
     /// `original` date, adjusted as necessary according to the following
@@ -207,8 +205,7 @@ struct DateUtil {
     /// of the month.  The behavior is undefined unless the operation
     /// results in a valid `Date` value.  Note that `numMonths` may be
     /// negative.
-    static Date addMonthsEom(const Date& original, int numMonths)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(original);
+    static Date addMonthsEom(const Date& original, int numMonths);
 
     /// Return the date that is the specified `numMonths` from the specified
     /// `original` date, adjusted as necessary according to the following
@@ -217,8 +214,7 @@ struct DateUtil {
     /// the resulting date to the last day of the month.  The behavior is
     /// undefined unless the operation results in a valid `Date` value.
     /// Note that `numMonths` may be negative.
-    static Date addMonthsNoEom(const Date& original, int numMonths)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(original);
+    static Date addMonthsNoEom(const Date& original, int numMonths);
 
     /// Return the date that is the specified `numYears` from the specified
     /// `original` date, adjusted as necessary according to the specified
@@ -230,8 +226,7 @@ struct DateUtil {
     /// 29, 2001), move the resulting date to the last day of the month.
     /// The behavior is undefined unless the operation results in a valid
     /// `Date` value.  Note that `numYears` may be negative.
-    static Date addYears(const Date& original, int numYears, bool eomFlag)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(original);
+    static Date addYears(const Date& original, int numYears, bool eomFlag);
 
     /// Return the date that is the specified `numYears` from the specified
     /// `original` date, adjusted as necessary according to the following
@@ -242,8 +237,7 @@ struct DateUtil {
     /// last day of the month.  The behavior is undefined unless the
     /// operation results in a valid `Date` value.  Note that `numYears` may
     /// be negative.
-    static Date addYearsEom(const Date& original, int numYears)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(original);
+    static Date addYearsEom(const Date& original, int numYears);
 
     /// Return the date that is the specified `numYears` from the specified
     /// `original` date, adjusted as necessary according to the following
@@ -252,15 +246,13 @@ struct DateUtil {
     /// resulting date to the last day of the month.  The behavior is
     /// undefined unless the operation results in a valid `Date` value.
     /// Note that `numYears` may be negative.
-    static Date addYearsNoEom(const Date& original, int numYears)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(original);
+    static Date addYearsNoEom(const Date& original, int numYears);
 
     /// Load, into the specified `result`, the `Date` value represented by
     /// the specified `yyyymmddValue` in the "YYYYMMDD" format.  Return 0 on
     /// success, and a non-zero value, with no effect on `result`, if
     /// `yyyymmddValue` does not represent a valid `Date`.
-    static int convertFromYYYYMMDD(Date *result, int yyyymmddValue)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result);
+    static int convertFromYYYYMMDD(Date *result, int yyyymmddValue);
 
     /// Return the `Date` value represented by the specified `yyyymmddValue`
     /// in the "YYYYMMDD" format.  The behavior is undefined unless
@@ -269,8 +261,7 @@ struct DateUtil {
 
     /// Return the integer value in the "YYYYMMDD" format that represents
     /// the specified `date`.
-    static int convertToYYYYMMDD(const Date& date)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(date);
+    static int convertToYYYYMMDD(const Date& date);
 
     /// Return the earliest date in the specified `month` of the specified
     /// `year` that falls on the specified `dayOfWeek`.  The behavior is
@@ -303,15 +294,13 @@ struct DateUtil {
     /// Return the first date *after* the specified `date` that falls on the
     /// specified `dayOfWeek`.  The behavior is undefined unless the
     /// resulting date is no later than 9999/12/31.
-    static Date nextDayOfWeek(DayOfWeek::Enum dayOfWeek, const Date& date)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(date);
+    static Date nextDayOfWeek(DayOfWeek::Enum dayOfWeek, const Date& date);
 
     /// Return the first date *on* or *after* the specified `date` that
     /// falls on the specified `dayOfWeek`.  The behavior is undefined
     /// unless the resulting date is no later than 9999/12/31.
     static Date nextDayOfWeekInclusive(DayOfWeek::Enum dayOfWeek,
-                                       const Date&     date)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(date);
+                                       const Date&     date);
 
     /// Return the date in the specified `month` of the specified `year`
     /// corresponding to the specified `n`th occurrence of the specified
@@ -339,15 +328,13 @@ struct DateUtil {
     /// Return the last date *before* the specified `date` that falls on the
     /// specified `dayOfWeek`.  The behavior is undefined unless the
     /// resulting date is no earlier than 1/1/1.
-    static Date previousDayOfWeek(DayOfWeek::Enum dayOfWeek, const Date& date)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(date);
+    static Date previousDayOfWeek(DayOfWeek::Enum dayOfWeek, const Date& date);
 
     /// Return the last date *on* or *before* the specified `date` that
     /// falls on the specified `dayOfWeek`.  The behavior is undefined
     /// unless the resulting date is no earlier than 1/1/1.
     static Date previousDayOfWeekInclusive(DayOfWeek::Enum dayOfWeek,
-                                           const Date&     date)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(date);
+                                           const Date&     date);
 };
 
 // ============================================================================
@@ -362,6 +349,7 @@ struct DateUtil {
 inline
 Date DateUtil::addMonths(const Date& original, int numMonths, bool eomFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 
     return eomFlag ? addMonthsEom(original, numMonths)
                    : addMonthsNoEom(original, numMonths);
@@ -370,6 +358,7 @@ Date DateUtil::addMonths(const Date& original, int numMonths, bool eomFlag)
 inline
 Date DateUtil::addYears(const Date& original, int numYears, bool eomFlag)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
 
     return eomFlag ? addYearsEom(original, numYears)
                    : addYearsNoEom(original, numYears);
@@ -378,6 +367,7 @@ Date DateUtil::addYears(const Date& original, int numYears, bool eomFlag)
 inline
 Date DateUtil::addYearsEom(const Date& original, int numYears)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     BSLS_REVIEW(   1 <= original.year() + numYears);
     BSLS_REVIEW(9999 >= original.year() + numYears);
 
@@ -390,6 +380,7 @@ Date DateUtil::addYearsEom(const Date& original, int numYears)
 inline
 Date DateUtil::addYearsNoEom(const Date& original, int numYears)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     BSLS_REVIEW(   1 <= original.year() + numYears);
     BSLS_REVIEW(9999 >= original.year() + numYears);
 
@@ -408,6 +399,7 @@ Date DateUtil::addYearsNoEom(const Date& original, int numYears)
 inline
 int DateUtil::convertFromYYYYMMDD(Date *result, int yyyymmddValue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_REVIEW(result);
 
     if (!isValidYYYYMMDD(yyyymmddValue)) {
@@ -431,6 +423,7 @@ Date DateUtil::convertFromYYYYMMDDRaw(int yyyymmddValue)
 inline
 int DateUtil::convertToYYYYMMDD(const Date& date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     return date.year() * 10000 + date.month() * 100 + date.day();
 }
 

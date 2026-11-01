@@ -297,8 +297,7 @@ struct equal_to {
     /// Return `true` if the specified `lhs` compares equal to the specified
     /// `rhs` using the equality-comparison operator, `lhs == rhs`.
     BSLA_NODISCARD BSLS_KEYWORD_CONSTEXPR bool
-    operator()(const VALUE_TYPE& lhs, const VALUE_TYPE& rhs) const
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    operator()(const VALUE_TYPE& lhs, const VALUE_TYPE& rhs) const;
 };
 
 /// This `struct` defines a binary comparison functor applying `operator==`
@@ -340,8 +339,7 @@ struct equal_to<void> {
     auto operator()(TYPE1&& lhs, TYPE2&& rhs) const
       noexcept(noexcept(std::forward<TYPE1>(lhs) == std::forward<TYPE2>(rhs)))
       -> decltype(      std::forward<TYPE1>(lhs) == std::forward<TYPE2>(rhs))
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs)
-    { return            std::forward<TYPE1>(lhs) == std::forward<TYPE2>(rhs); }
+    { BSLS_ASSERT_CONVEYOR_OBJECT(&lhs); BSLS_ASSERT_CONVEYOR_OBJECT(&rhs); BSLS_ASSERT_CONVEYOR_OBJECT(this); return            std::forward<TYPE1>(lhs) == std::forward<TYPE2>(rhs); }
 #else
     /// Return `true` if the specified `lhs` compares equal to the specified
     /// `rhs` using the equality-comparison operator, `lhs == rhs`.
@@ -372,6 +370,9 @@ BSLA_NODISCARD BSLS_KEYWORD_CONSTEXPR inline
 bool equal_to<VALUE_TYPE>::operator()(const VALUE_TYPE& lhs,
                                       const VALUE_TYPE& rhs) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return lhs == rhs;
 }
 }  // close namespace bsl

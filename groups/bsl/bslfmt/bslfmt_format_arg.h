@@ -381,8 +381,7 @@ class basic_format_arg<basic_format_context<t_OUT, t_CHAR> > {
     // ACCESSORS
 
     /// Return whether this object holds a value.
-    operator BoolType() const BSLS_KEYWORD_NOEXCEPT
-        BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    operator BoolType() const BSLS_KEYWORD_NOEXCEPT;
 
     // MANIPULATORS
 
@@ -801,6 +800,7 @@ inline
 basic_format_arg<basic_format_context<t_OUT, t_CHAR> >::operator BoolType()
     const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return UnspecifiedBoolType::makeValue(
                              !bsl::holds_alternative<bsl::monostate>(d_value));
 }

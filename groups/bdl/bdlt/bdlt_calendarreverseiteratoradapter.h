@@ -308,7 +308,6 @@ class CalendarReverseIteratorAdapter {
     /// entry, this reverse iterator does not have the past-the-end value for a
     /// reverse iterator over the underlying sequence.
     CalendarReverseIteratorAdapter& operator++()
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     /// Modify this reverse iterator to refer to the previous element in the
@@ -317,7 +316,6 @@ class CalendarReverseIteratorAdapter {
     /// entry, this reverse iterator does not have the same value as a reverse
     /// iterator at the start of the underlying sequence.
     CalendarReverseIteratorAdapter& operator--()
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
                                         BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
 
     // ACCESSORS
@@ -325,16 +323,16 @@ class CalendarReverseIteratorAdapter {
     /// Return a reference to the element referred to by this reverse iterator.
     /// The behavior is undefined unless this iterator is within the bounds of
     /// the underlying sequence.
-    reference operator*() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reference operator*() const;
 
     /// Return a pointer to the element referred to by this reverse iterator.
     /// The behavior is undefined unless this iterator is within the bounds of
     /// the underlying sequence.
-    pointer operator->() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    pointer operator->() const;
 
     /// Return the forward iterator referring to the element in the forward
     /// sequence after the element referred to by this reverse iterator.
-    ITERATOR forwardIterator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    ITERATOR forwardIterator() const;
 };
 
 // FREE OPERATORS
@@ -347,8 +345,7 @@ class CalendarReverseIteratorAdapter {
 /// `lhs` and `rhs` refer to the same underlying sequence.
 template <class ITERATOR>
 bool operator==(const CalendarReverseIteratorAdapter<ITERATOR>& lhs,
-                const CalendarReverseIteratorAdapter<ITERATOR>& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const CalendarReverseIteratorAdapter<ITERATOR>& rhs);
 
 /// Return `true` if the specified `lhs` reverse iterator does not have the
 /// same value as the specified `rhs` reverse iterator, and `false`
@@ -359,8 +356,7 @@ bool operator==(const CalendarReverseIteratorAdapter<ITERATOR>& lhs,
 /// refer to the same underlying sequence.
 template <class ITERATOR>
 bool operator!=(const CalendarReverseIteratorAdapter<ITERATOR>& lhs,
-                const CalendarReverseIteratorAdapter<ITERATOR>& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const CalendarReverseIteratorAdapter<ITERATOR>& rhs);
 
 /// Modify the specified `iterator` to refer to the next element in the
 /// reverse iteration sequence, and return a reverse iterator having the
@@ -369,8 +365,7 @@ bool operator!=(const CalendarReverseIteratorAdapter<ITERATOR>& lhs,
 /// iterator over the underlying sequence.
 template <class ITERATOR>
 CalendarReverseIteratorAdapter<ITERATOR> operator++(
-                      CalendarReverseIteratorAdapter<ITERATOR>& iterator, int)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(iterator);
+                      CalendarReverseIteratorAdapter<ITERATOR>& iterator, int);
 
 /// Modify the specified `iterator` to refer to the previous element in the
 /// reverse iteration sequence, and return a reverse iterator having the
@@ -379,8 +374,7 @@ CalendarReverseIteratorAdapter<ITERATOR> operator++(
 /// the start of the underlying sequence.
 template <class ITERATOR>
 CalendarReverseIteratorAdapter<ITERATOR> operator--(
-                      CalendarReverseIteratorAdapter<ITERATOR>& iterator, int)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(iterator);
+                      CalendarReverseIteratorAdapter<ITERATOR>& iterator, int);
 
 // ============================================================================
 //                             INLINE DEFINITIONS
@@ -431,6 +425,7 @@ inline
 CalendarReverseIteratorAdapter<ITERATOR>&
 CalendarReverseIteratorAdapter<ITERATOR>::operator++()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     --d_forwardIter;
     return *this;
 }
@@ -440,6 +435,7 @@ inline
 CalendarReverseIteratorAdapter<ITERATOR>&
 CalendarReverseIteratorAdapter<ITERATOR>::operator--()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ++d_forwardIter;
     return *this;
 }
@@ -450,6 +446,7 @@ inline
 typename CalendarReverseIteratorAdapter<ITERATOR>::reference
 CalendarReverseIteratorAdapter<ITERATOR>::operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ITERATOR tmp = d_forwardIter;
     return *--tmp;
 }
@@ -459,6 +456,7 @@ inline
 typename CalendarReverseIteratorAdapter<ITERATOR>::pointer
 CalendarReverseIteratorAdapter<ITERATOR>::operator->() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ITERATOR tmp = d_forwardIter;
     return &*--tmp;
 }
@@ -467,6 +465,7 @@ template <class ITERATOR>
 inline
 ITERATOR CalendarReverseIteratorAdapter<ITERATOR>::forwardIterator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_forwardIter;
 }
 
@@ -478,6 +477,8 @@ inline
 bool bdlt::operator==(const CalendarReverseIteratorAdapter<ITERATOR>& lhs,
                       const CalendarReverseIteratorAdapter<ITERATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.forwardIterator() == rhs.forwardIterator();
 }
 
@@ -486,6 +487,8 @@ inline
 bool bdlt::operator!=(const CalendarReverseIteratorAdapter<ITERATOR>& lhs,
                       const CalendarReverseIteratorAdapter<ITERATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.forwardIterator() != rhs.forwardIterator();
 }
 
@@ -494,6 +497,7 @@ inline
 bdlt::CalendarReverseIteratorAdapter<ITERATOR>
       bdlt::operator++(CalendarReverseIteratorAdapter<ITERATOR>& iterator, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iterator);
     CalendarReverseIteratorAdapter<ITERATOR> tmp = iterator;
     ++iterator;
     return tmp;
@@ -504,6 +508,7 @@ inline
 bdlt::CalendarReverseIteratorAdapter<ITERATOR>
       bdlt::operator--(CalendarReverseIteratorAdapter<ITERATOR>& iterator, int)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&iterator);
     CalendarReverseIteratorAdapter<ITERATOR> tmp = iterator;
     --iterator;
     return tmp;

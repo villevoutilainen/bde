@@ -812,6 +812,7 @@ typename queue<VALUE, CONTAINER>::reference
 queue<VALUE, CONTAINER>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back();
     return back();
 }
@@ -825,6 +826,7 @@ typename queue<VALUE, CONTAINER>::reference
 queue<VALUE, CONTAINER>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01));
     return back();
 }
@@ -840,6 +842,7 @@ queue<VALUE, CONTAINER>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02));
     return back();
@@ -858,6 +861,7 @@ queue<VALUE, CONTAINER>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03));
@@ -879,6 +883,7 @@ queue<VALUE, CONTAINER>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -903,6 +908,7 @@ queue<VALUE, CONTAINER>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -930,6 +936,7 @@ queue<VALUE, CONTAINER>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -960,6 +967,7 @@ queue<VALUE, CONTAINER>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -993,6 +1001,7 @@ queue<VALUE, CONTAINER>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -1029,6 +1038,7 @@ queue<VALUE, CONTAINER>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -1068,6 +1078,7 @@ queue<VALUE, CONTAINER>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args_01,args_01),
                    BSLS_COMPILERFEATURES_FORWARD(Args_02,args_02),
                    BSLS_COMPILERFEATURES_FORWARD(Args_03,args_03),
@@ -1092,6 +1103,7 @@ typename queue<VALUE, CONTAINER>::reference
 queue<VALUE, CONTAINER>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(Args)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args,args)...);
     return back();
 }
@@ -1102,6 +1114,8 @@ template <class VALUE, class CONTAINER>
 inline
 void queue<VALUE, CONTAINER>::push(const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     c.push_back(value);
 }
 
@@ -1110,6 +1124,8 @@ inline
 void queue<VALUE, CONTAINER>::push(BloombergLP::bslmf::MovableRef<value_type>
                                                                          value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     c.push_back(MoveUtil::move(value));
 }
 
@@ -1119,6 +1135,8 @@ BSLSTL_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
 void queue<VALUE, CONTAINER>::push_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+BSLS_ASSERT_CONVEYOR_OBJECT(this);
+BSLS_ASSERT_CONVEYOR_OBJECT(&range);
 #if defined(BSLS_LIBRARYFEATURES_HAS_CPP20_CONCEPTS) \
  && defined(BSLS_LIBRARYFEATURES_HAS_CPP20_RANGES)
     if constexpr (requires{ c.append_range(std::forward<t_RANGE>(range)); }) {
@@ -1136,6 +1154,7 @@ template <class VALUE, class CONTAINER>
 inline
 void queue<VALUE, CONTAINER>::pop()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.pop_front();
 }
 
@@ -1153,6 +1172,7 @@ template <class VALUE, class CONTAINER>
 inline
 bool queue<VALUE, CONTAINER>::empty() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.empty();
 }
 
@@ -1161,6 +1181,7 @@ inline
 typename queue<VALUE, CONTAINER>::size_type
 queue<VALUE, CONTAINER>::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.size();
 }
 
@@ -1169,6 +1190,7 @@ inline
 typename queue<VALUE, CONTAINER>::reference
 queue<VALUE, CONTAINER>::front()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.front();
 }
 
@@ -1177,6 +1199,7 @@ inline
 typename queue<VALUE, CONTAINER>::const_reference
 queue<VALUE, CONTAINER>::front() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.front();
 }
 
@@ -1185,6 +1208,7 @@ inline
 typename queue<VALUE, CONTAINER>::reference
 queue<VALUE, CONTAINER>::back()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.back();
 }
 
@@ -1193,6 +1217,7 @@ inline
 typename queue<VALUE, CONTAINER>::const_reference
 queue<VALUE, CONTAINER>::back() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.back();
 }
 
@@ -1202,6 +1227,8 @@ inline
 bool operator==(const queue<VALUE, CONTAINER>& lhs,
                 const queue<VALUE, CONTAINER>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.c == rhs.c;
 }
 
@@ -1210,6 +1237,8 @@ inline
 bool operator!=(const queue<VALUE, CONTAINER>& lhs,
                 const queue<VALUE, CONTAINER>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.c != rhs.c;
 }
 
@@ -1218,6 +1247,8 @@ inline
 bool operator< (const queue<VALUE, CONTAINER>& lhs,
                 const queue<VALUE, CONTAINER>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.c < rhs.c;
 }
 
@@ -1226,6 +1257,8 @@ inline
 bool operator> (const queue<VALUE, CONTAINER>& lhs,
                 const queue<VALUE, CONTAINER>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.c > rhs.c;
 }
 
@@ -1234,6 +1267,8 @@ inline
 bool operator<=(const queue<VALUE, CONTAINER>& lhs,
                 const queue<VALUE, CONTAINER>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.c <= rhs.c;
 }
 
@@ -1242,6 +1277,8 @@ inline
 bool operator>=(const queue<VALUE, CONTAINER>& lhs,
                 const queue<VALUE, CONTAINER>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.c >= rhs.c;
 }
 

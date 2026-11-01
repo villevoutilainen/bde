@@ -456,8 +456,7 @@ class PerformanceMonitor {
 
         /// Return the user-supplied description of the process identified
         /// by the result of the `pid()` function.
-        const bsl::string& description() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+        const bsl::string& description() const;
 
         /// Return the number of seconds (in wall time) that have elapsed
         /// since the startup the process identified by the result of the
@@ -465,8 +464,7 @@ class PerformanceMonitor {
         double elapsedTime() const;
 
         /// Return the startup time in Coordinated Universal Time.
-        const bdlt::Datetime& startupTime() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+        const bdlt::Datetime& startupTime() const;
 
         /// Print all collected statistics to the specified `os` stream.
         void print(bsl::ostream& os) const;
@@ -554,9 +552,7 @@ class PerformanceMonitor {
 
         /// Return a reference to the non-modifiable value type of this
         /// iterator.
-        pointer operator->() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+        pointer operator->() const;
 
         /// Return `true` if the specified `rhs` iterator points to the
         /// same instance of the iterator's value type as "this" iterator,
@@ -858,6 +854,7 @@ int PerformanceMonitor::Statistics::pid() const
 inline
 const bsl::string& PerformanceMonitor::Statistics::description() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_description;
 }
 
@@ -871,6 +868,7 @@ double PerformanceMonitor::Statistics::elapsedTime() const
 inline
 const bdlt::Datetime& PerformanceMonitor::Statistics::startupTime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_startTimeUtc;
 }
 

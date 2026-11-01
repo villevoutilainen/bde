@@ -201,28 +201,23 @@ class Formatter_CompactImplState {
 
     /// Return a reference providing non-modifiable access to the `column`
     /// attribute of this object.
-    const int& column() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const int& column() const;
 
     /// Return a reference providing non-modifiable access to the `id`
     /// attribute of this object.
-    const Id::Enum& id() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Id::Enum& id() const;
 
     /// Return a reference providing non-modifiable access to the
     /// `indentLevel` attribute of this object.
-    const int& indentLevel() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const int& indentLevel() const;
 
     /// Return a reference providing non-modifiable access to the
     /// `initialIndentLevel` attribute of this object.
-    const int& initialIndentLevel() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const int& initialIndentLevel() const;
 
     /// Return a reference providing non-modifiable access to the
     /// `spacesPerLevel` attribute of this object.
-    const int& spacesPerLevel() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const int& spacesPerLevel() const;
 };
 
                       // ================================
@@ -284,8 +279,7 @@ struct Formatter_CompactImplUtil {
                    const bsl::string_view&  name,
                    const VALUE_TYPE&        value,
                    int                      valueFormattingMode = 0,
-                   const EncoderOptions&    encoderOptions = EncoderOptions())
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+                   const EncoderOptions&    encoderOptions = EncoderOptions());
 
     /// Insert one or two newline characters into the specified `stream`
     /// stream such that a blank line results, depending on the specified
@@ -294,8 +288,7 @@ struct Formatter_CompactImplUtil {
     /// otherwise two newlines are added.  If following a call to
     /// `openElement`, or `addAttribute`, add a closing `>` to the opened
     /// tag.
-    static bsl::ostream& addBlankLine(bsl::ostream& stream, State *state)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    static bsl::ostream& addBlankLine(bsl::ostream& stream, State *state);
 
     /// Write the specified `comment` into the specified `stream`, with
     /// formatting depending on the specified `state`, and update the
@@ -310,8 +303,7 @@ struct Formatter_CompactImplUtil {
                                  bsl::ostream&            stream,
                                  State                   *state,
                                  const bsl::string_view&  comment,
-                                 bool                     forceNewline = true)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+                                 bool                     forceNewline = true);
 
     /// Add the specified `value` as the data content to the specified
     /// `stream`, with formatting depending on the specified `state`, and
@@ -340,8 +332,7 @@ struct Formatter_CompactImplUtil {
                      State                 *state,
                      const VALUE_TYPE&      value,
                      int                    formattingMode = 0,
-                     const EncoderOptions&  encoderOptions = EncoderOptions())
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+                     const EncoderOptions&  encoderOptions = EncoderOptions());
 
     /// Add element of the specified `name` and the specified `value` as the
     /// data content to the specified `stream`, with formatting depending on
@@ -357,8 +348,7 @@ struct Formatter_CompactImplUtil {
                    const bsl::string_view&  name,
                    const TYPE&              value,
                    int                      formattingMode = 0,
-                   const EncoderOptions&    encoderOptions = EncoderOptions())
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+                   const EncoderOptions&    encoderOptions = EncoderOptions());
 
     /// Add XML header with optionally specified `encoding` to the specified
     /// `stream`, with formatting depending on the specified `state`, and
@@ -397,16 +387,14 @@ struct Formatter_CompactImplUtil {
                      State                 *state,
                      const VALUE_TYPE&      value,
                      int                    formattingMode = 0,
-                     const EncoderOptions&  encoderOptions = EncoderOptions())
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+                     const EncoderOptions&  encoderOptions = EncoderOptions());
 
     /// Insert a literal newline into the XML output of the specified
     /// `stream`, with formatting depending on the specified `state`, and
     /// update `state` accordingly.  Return the `stream`.  If following a
     /// call to `openElement`, or `addAttribute`, add a closing `>` to the
     /// opened tag.
-    static bsl::ostream& addNewline(bsl::ostream& stream, State *state)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    static bsl::ostream& addNewline(bsl::ostream& stream, State *state);
 
     /// Write the specified `comment` into the specified `stream`, with
     /// formatting depending on the specified `state`, and update the
@@ -446,8 +434,7 @@ struct Formatter_CompactImplUtil {
     /// specified output `stream`, with formatting depending on the
     /// specified `state`, and update `state` accordingly.  Return the
     /// `stream`.
-    static bsl::ostream& flush(bsl::ostream& stream, State *state)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    static bsl::ostream& flush(bsl::ostream& stream, State *state);
 
     /// Open an element of the specified `name` at current indent level with
     /// the optionally specified whitespace constraint `whitespaceMode` for
@@ -519,30 +506,35 @@ Formatter_CompactImplState::Formatter_CompactImplState(
 inline
 int& Formatter_CompactImplState::column()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_column;
 }
 
 inline
 Formatter_CompactImplStateId::Enum& Formatter_CompactImplState::id()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_id;
 }
 
 inline
 int& Formatter_CompactImplState::indentLevel()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_indentLevel;
 }
 
 inline
 int& Formatter_CompactImplState::initialIndentLevel()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_initialIndentLevel;
 }
 
 inline
 int& Formatter_CompactImplState::spacesPerLevel()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_spacesPerLevel;
 }
 
@@ -550,6 +542,7 @@ int& Formatter_CompactImplState::spacesPerLevel()
 inline
 const int& Formatter_CompactImplState::column() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_column;
 }
 
@@ -557,24 +550,28 @@ inline
 const Formatter_CompactImplStateId::Enum&
 Formatter_CompactImplState::id() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_id;
 }
 
 inline
 const int& Formatter_CompactImplState::indentLevel() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_indentLevel;
 }
 
 inline
 const int& Formatter_CompactImplState::initialIndentLevel() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_initialIndentLevel;
 }
 
 inline
 const int& Formatter_CompactImplState::spacesPerLevel() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_spacesPerLevel;
 }
 
@@ -592,6 +589,10 @@ bsl::ostream& Formatter_CompactImplUtil::addAttribute(
                                        int                      formattingMode,
                                        const EncoderOptions&    encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&encoderOptions);
 
     stream << ' ' << name << "=\"";
     TypesPrintUtil::print(stream, value, formattingMode, &encoderOptions);
@@ -612,6 +613,9 @@ bsl::ostream& Formatter_CompactImplUtil::addData(
                                          int                    formattingMode,
                                          const EncoderOptions&  encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&encoderOptions);
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
 
@@ -639,6 +643,10 @@ bsl::ostream& Formatter_CompactImplUtil::addElementAndData(
                                        int                      formattingMode,
                                        const EncoderOptions&    encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&name);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&encoderOptions);
     openElement(stream, state, name, WhitespaceType::e_PRESERVE_WHITESPACE);
     addData(stream, state, value, formattingMode, encoderOptions);
     closeElement(stream, state, name);
@@ -654,6 +662,9 @@ bsl::ostream& Formatter_CompactImplUtil::addListData(
                                          int                    formattingMode,
                                          const EncoderOptions&  encoderOptions)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&encoderOptions);
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
 

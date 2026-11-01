@@ -1025,14 +1025,12 @@ class AsyncFileObserver : public Observer {
     /// Return the format specification for log records written to the log
     /// file by this async file observer.  See {Log Record Formatting} for
     /// details on the syntax of format specifications.
-    const bsl::string& getFileLogFormat() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& getFileLogFormat() const;
 
     /// Return the format specification for log records written to `stdout`
     /// by this async file observer.  See {Log Record Formatting} for
     /// details on the syntax of format specifications.
-    const bsl::string& getStdoutLogFormat() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& getStdoutLogFormat() const;
 
     /// Return `true` if file logging is enabled for this async file
     /// observer, and `false` otherwise.  Load the optionally specified
@@ -1263,12 +1261,14 @@ bool AsyncFileObserver::isFileLoggingEnabled() const
 inline
 const bsl::string& AsyncFileObserver::getFileLogFormat() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_fileObserver.getFileLogFormat();
 }
 
 inline
 const bsl::string& AsyncFileObserver::getStdoutLogFormat() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_fileObserver.getStdoutLogFormat();
 }
 

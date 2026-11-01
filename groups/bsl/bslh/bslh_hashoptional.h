@@ -89,8 +89,9 @@ template <class HASH_ALGORITHM, class TYPE>
 inline
 void
 hashAppend(HASH_ALGORITHM& algorithm, const std::optional<TYPE> &input)
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&algorithm);
     if (input) {
         hashAppend(algorithm, input.value());
     } else {

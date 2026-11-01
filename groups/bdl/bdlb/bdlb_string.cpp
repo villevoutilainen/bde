@@ -80,6 +80,7 @@ char *String::copy(const char       *string,
                    int               length,
                    bslma::Allocator *basicAllocator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(basicAllocator);
     BSLS_ASSERT(string || 0 == length);
     BSLS_ASSERT(          0 <= length);
     BSLS_ASSERT(basicAllocator);

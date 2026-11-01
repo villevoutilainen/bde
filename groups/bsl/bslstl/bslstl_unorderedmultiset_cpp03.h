@@ -2060,6 +2060,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>&
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::operator=(
                                                  const unordered_multiset& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that we have delegated responsibility for correct handling of
     // allocator propagation to the 'HashTable' implementation.
 
@@ -2078,6 +2079,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::operator=(
                               && std::is_nothrow_move_assignable<HASH>::value
                               && std::is_nothrow_move_assignable<EQUAL>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that we have delegated responsibility for correct handling of
     // allocator propagation to the 'HashTable' implementation.
 
@@ -2095,6 +2097,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>&
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::operator=(
                                              std::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     unordered_multiset tmp(values, d_impl.allocator());
 
     d_impl.swap(tmp.d_impl);
@@ -2119,6 +2122,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                           )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                            ));
 
@@ -2133,6 +2137,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01)));
 
@@ -2149,6 +2154,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02)));
@@ -2168,6 +2174,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2190,6 +2197,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2215,6 +2223,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2243,6 +2252,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2274,6 +2284,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2308,6 +2319,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2345,6 +2357,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2385,6 +2398,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2408,6 +2422,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                                                       const_iterator hint)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node()));
 }
 #endif  // BSLSTL_UNORDEREDMULTISET_VARIADIC_LIMIT_B >= 0
@@ -2421,6 +2436,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                                                       const_iterator hint,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01)));
 }
@@ -2437,6 +2453,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_01) arguments_01,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02)));
@@ -2456,6 +2473,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_02) arguments_02,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2478,6 +2496,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_03) arguments_03,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2503,6 +2522,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_04) arguments_04,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2531,6 +2551,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_05) arguments_05,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2562,6 +2583,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_06) arguments_06,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2596,6 +2618,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_07) arguments_07,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2633,6 +2656,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_08) arguments_08,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2673,6 +2697,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_09) arguments_09,
                        BSLS_COMPILERFEATURES_FORWARD_REF(Args_10) arguments_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                         BSLS_COMPILERFEATURES_FORWARD(Args_01, arguments_01),
                         BSLS_COMPILERFEATURES_FORWARD(Args_02, arguments_02),
@@ -2697,6 +2722,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace(
                           BSLS_COMPILERFEATURES_FORWARD_REF(Args)... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplace(
                            BSLS_COMPILERFEATURES_FORWARD(Args, arguments)...));
 
@@ -2710,6 +2736,7 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::emplace_hint(
                                                       const_iterator hint,
                           BSLS_COMPILERFEATURES_FORWARD_REF(Args)... arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.emplaceWithHint(hint.node(),
                            BSLS_COMPILERFEATURES_FORWARD(Args, arguments)...));
 }
@@ -2721,6 +2748,7 @@ inline
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::begin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator(d_impl.elementListRoot());
 }
 
@@ -2729,6 +2757,7 @@ inline
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return iterator();
 }
 
@@ -2737,6 +2766,7 @@ inline
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::local_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::begin(size_type index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return local_iterator(&d_impl.bucketAtIndex(index));
@@ -2747,6 +2777,7 @@ inline
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::local_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::end(size_type index)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -2757,6 +2788,7 @@ inline
 void
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::clear() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.removeAll();
 }
 
@@ -2764,6 +2796,8 @@ template <class KEY, class HASH, class EQUAL, class ALLOCATOR>
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::find(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return iterator(d_impl.find(key));
 }
 
@@ -2774,6 +2808,8 @@ bsl::pair<typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator,
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::equal_range(
                                                            const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     HashTableLink *first;
     HashTableLink *last;
     d_impl.findRange(&first, &last, key);
@@ -2785,6 +2821,7 @@ inline
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(position != this->end());
 
     return iterator(d_impl.remove(position.node()));
@@ -2794,6 +2831,8 @@ template <class KEY, class HASH, class EQUAL, class ALLOCATOR>
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::erase(const key_type& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef ::BloombergLP::bslalg::BidirectionalNode<value_type> BNode;
 
     HashTableLink *target = d_impl.find(key);
@@ -2817,6 +2856,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::erase(const_iterator first,
                                                        const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 
 #if defined BDE_BUILD_TARGET_SAFE_2
     if (first != last) {
@@ -2845,6 +2885,8 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::insert(
                                                        const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return iterator(d_impl.insert(value));
 }
 
@@ -2854,6 +2896,8 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::insert(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return iterator(d_impl.insert(MoveUtil::move(value)));
 }
 
@@ -2864,6 +2908,8 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::insert(
                                                        const_iterator    hint,
                                                        const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return iterator(d_impl.insert(value, hint.node()));
 }
 
@@ -2874,6 +2920,8 @@ unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::insert(
                               const_iterator                             hint,
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     return iterator(d_impl.insert(MoveUtil::move(value), hint.node()));
 }
 
@@ -2883,6 +2931,7 @@ void
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::insert(INPUT_ITERATOR first,
                                                         INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insertFromRange(first, last);
 }
 
@@ -2892,6 +2941,7 @@ inline
 void unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::insert(
                                              std::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -2901,6 +2951,7 @@ inline
 void unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::max_load_factor(
                                                            float newLoadFactor)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.setMaxLoadFactor(newLoadFactor);
 }
 
@@ -2909,6 +2960,7 @@ inline
 void
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::rehash(size_type numBuckets)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.rehashForNumBuckets(numBuckets);
 }
 
@@ -2917,6 +2969,7 @@ inline
 void
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::reserve(size_type numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reserveForNumElements(numElements);
 }
 
@@ -2949,6 +3002,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::begin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_impl.elementListRoot());
 }
 
@@ -2958,6 +3012,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::end() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator();
 }
 
@@ -2967,6 +3022,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::cbegin() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator(d_impl.elementListRoot());
 }
 
@@ -2976,6 +3032,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::cend() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_iterator();
 }
 
@@ -2984,6 +3041,7 @@ inline
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::begin(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(&d_impl.bucketAtIndex(index));
@@ -2995,6 +3053,7 @@ typename
  unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::end(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -3006,6 +3065,7 @@ typename
  unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::cbegin(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(&d_impl.bucketAtIndex(index));
@@ -3016,6 +3076,7 @@ inline
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::const_local_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::cend(size_type index) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(index < this->bucket_count());
 
     return const_local_iterator(0, &d_impl.bucketAtIndex(index));
@@ -3027,6 +3088,8 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::bucket(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.bucketIndexForKey(key);
 }
 
@@ -3036,6 +3099,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::bucket_count() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.numBuckets();
 }
 
@@ -3055,6 +3119,8 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::count(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     typedef ::BloombergLP::bslalg::BidirectionalNode<value_type> BNode;
 
     size_type result = 0;
@@ -3078,6 +3144,8 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::const_iterator
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::find(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return const_iterator(d_impl.find(key));
 }
 
@@ -3086,6 +3154,8 @@ inline
 bool unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::contains(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return find(key) != end();
 }
 
@@ -3095,6 +3165,7 @@ bool
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::empty() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_impl.size();
 }
 
@@ -3104,6 +3175,7 @@ typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::size() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.size();
 }
 
@@ -3121,6 +3193,7 @@ inline
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::hasher
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::hash_function() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.hasher();
 }
 
@@ -3129,6 +3202,7 @@ inline
 typename unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::key_equal
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::key_eq() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.comparator();
 }
 
@@ -3140,6 +3214,8 @@ bsl::pair<
 unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::equal_range(
                                                      const key_type& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     HashTableLink *first;
     HashTableLink *last;
     d_impl.findRange(&first, &last, key);
@@ -3161,6 +3237,7 @@ inline
 float unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::load_factor() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.loadFactor();
 }
 
@@ -3169,6 +3246,7 @@ inline
 float unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::max_load_factor() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.maxLoadFactor();
 }
 
@@ -3181,6 +3259,8 @@ bool bsl::operator==(
                const bsl::unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>& lhs,
                const bsl::unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_impl == rhs.d_impl;
 }
 
@@ -3191,6 +3271,8 @@ bool bsl::operator!=(
                const bsl::unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>& lhs,
                const bsl::unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 #endif
@@ -3202,6 +3284,7 @@ typename bsl::unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>::size_type
 bsl::erase_if(unordered_multiset<KEY, HASH, EQUAL, ALLOCATOR>& ms,
               PREDICATE                                        predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&ms);
     return BloombergLP::bslstl::AlgorithmUtil::containerEraseIf(ms, predicate);
 }
 

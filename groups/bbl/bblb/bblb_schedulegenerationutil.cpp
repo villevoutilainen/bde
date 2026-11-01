@@ -458,6 +458,7 @@ void generateFromBusinessDayOfMonthImp(
                                                   U_SERIAL2Y(startSerialMonth),
                                                   U_SERIAL2M(startSerialMonth),
                                                   targetBusinessDayOfMonth)) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
             // empty schedule
 
             return;                                                   // RETURN
@@ -475,6 +476,7 @@ void generateFromBusinessDayOfMonthImp(
                                                    U_SERIAL2Y(endSerialMonth),
                                                    U_SERIAL2M(endSerialMonth),
                                                    targetBusinessDayOfMonth)) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
             // empty schedule
 
             return;                                                   // RETURN
@@ -509,6 +511,7 @@ void generateFromBusinessDayOfMonthImp(
                                                    U_SERIAL2Y(sm),
                                                    U_SERIAL2M(sm),
                                                    targetBusinessDayOfMonth)) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
             // empty schedule
 
             schedule->clear();

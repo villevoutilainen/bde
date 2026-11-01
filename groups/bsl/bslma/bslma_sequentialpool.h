@@ -716,6 +716,7 @@ template <class TYPE>
 inline
 void SequentialPool::deleteObjectRaw(const TYPE *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 != object) {
 #if defined(BSLS_PLATFORM_CMP_SUN) && BSLS_PLATFORM_CMP_VERSION < 0x5130
         const_cast<TYPE *>(object)->~TYPE();
@@ -729,6 +730,7 @@ template <class TYPE>
 inline
 void SequentialPool::deleteObject(const TYPE *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     deleteObjectRaw(object);
 }
 
@@ -750,6 +752,7 @@ typedef bslma::SequentialPool bslma_SequentialPool;
 inline
 void *operator new(std::size_t size, BloombergLP::bslma::SequentialPool& pool)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&pool);
     return pool.allocate(static_cast<int>(size));
 }
 

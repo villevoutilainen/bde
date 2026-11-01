@@ -668,8 +668,7 @@ class RecordJsonFormatter {
     /// Return the message format specification of this record JSON
     /// formatter.  See {`Record Format Specification`}.  Note that the syntax
     /// of this string depends on `formatSyntax()`.
-    const bsl::string& format() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& format() const;
 
     /// Return the message format specification syntax of this record JSON
     /// formatter.  See {`Record Format Specification`}.
@@ -679,8 +678,7 @@ class RecordJsonFormatter {
     RecordFormatterTimezone::Enum timezoneDefault() const;
 
     /// Return the record separator of this record JSON formatter.
-    const bsl::string& recordSeparator() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& recordSeparator() const;
 
                                   // Aspects
 
@@ -808,6 +806,7 @@ void RecordJsonFormatter::setRecordSeparator(
 inline
 const bsl::string& RecordJsonFormatter::format() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_formatSpec;
 }
 
@@ -827,6 +826,7 @@ RecordJsonFormatter::timezoneDefault() const
 inline
 const bsl::string& RecordJsonFormatter::recordSeparator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_recordSeparator;
 }
 

@@ -260,6 +260,7 @@ inline
 bsl::ostream& operator<<(bsl::ostream&             stream,
                          JsonFormatter_State::Enum value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return JsonFormatter_State::print(stream, value, 0, -1);
 }
 

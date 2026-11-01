@@ -611,14 +611,10 @@ class SkipListPair {
     // ACCESSORS
 
     /// Return a reference to the modifiable "data" of this pair.
-    DATA& data() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    DATA& data() const;
 
     /// Return a reference to the non-modifiable "key" value of this pair.
-    const KEY& key() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const KEY& key() const;
 };
 
                           // ========================
@@ -1745,6 +1741,7 @@ template <class KEY, class DATA>
 inline
 DATA& SkipListPair<KEY, DATA>::data() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return SkipList<KEY, DATA>::data(this);
 }
 
@@ -1752,6 +1749,7 @@ template <class KEY, class DATA>
 inline
 const KEY& SkipListPair<KEY, DATA>::key() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return SkipList<KEY, DATA>::key(this);
 }
 

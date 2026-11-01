@@ -526,8 +526,7 @@ class OptionValue {
     /// `OptionType::TypeToEnum<TYPE>::value == type()`, and
     /// `false == isNull()`.
     template <class TYPE>
-    TYPE& the()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    TYPE& the();
 
                                   // Aspects
 
@@ -557,8 +556,7 @@ class OptionValue {
     /// `OptionType::typeToEnum<TYPE>::value == type()`, and
     /// `false == isNull()`.
     template <class TYPE>
-    const TYPE& the() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const TYPE& the() const;
 
     /// Return the type of this command-line-option value.  The type
     /// `OptionType::e_VOID` represents the unset state.

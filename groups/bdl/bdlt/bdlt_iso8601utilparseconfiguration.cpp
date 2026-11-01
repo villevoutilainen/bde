@@ -24,6 +24,8 @@ Iso8601UtilParseConfiguration::print(bsl::ostream& stream,
                                      int           level,
                                      int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     printer.printAttribute("basic", basic());

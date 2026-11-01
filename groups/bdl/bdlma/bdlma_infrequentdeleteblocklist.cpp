@@ -56,6 +56,7 @@ InfrequentDeleteBlockList::~InfrequentDeleteBlockList()
 // MANIPULATORS
 void *InfrequentDeleteBlockList::allocate(bsls::Types::size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_LIKELY(size)) {
         size = alignedAllocationSize(size, sizeof(Block));
 
@@ -83,6 +84,7 @@ void *InfrequentDeleteBlockList::allocate(bsls::Types::size_type size)
 
 void InfrequentDeleteBlockList::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (d_head_p) {
         void *lastBlock = d_head_p;
         d_head_p        = d_head_p->d_next_p;
@@ -92,6 +94,7 @@ void InfrequentDeleteBlockList::release()
 
 void InfrequentDeleteBlockList::releaseAllButLastBlock()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_head_p == 0) {
         return;                                                       // RETURN
     }

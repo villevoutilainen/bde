@@ -294,7 +294,7 @@ class CalendarLoader {
     /// value other than 1 is returned (indicating a different error),
     /// `*result` is valid, but its value is undefined.
     virtual int load(PackedCalendar *result, const char *calendarName)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES_THIS= 0;
+= 0;
 };
 
 }  // close package namespace

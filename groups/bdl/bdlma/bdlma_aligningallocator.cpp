@@ -52,6 +52,7 @@ AligningAllocator::AligningAllocator(bsls::Types::size_type  alignment,
 // MANIPULATORS
 void *AligningAllocator::allocate(bsls::Types::size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     void *ret;
 
     if (d_mask > bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT) {
@@ -111,6 +112,7 @@ void *AligningAllocator::allocate(bsls::Types::size_type size)
 
 void AligningAllocator::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_mask > bsls::AlignmentUtil::BSLS_MAX_ALIGNMENT) {
         if (address) {
             AllocationHeader *header =

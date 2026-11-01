@@ -1228,8 +1228,7 @@ class Deque<TYPE>::DequeThrowGuard {
     /// specified `*monoDeque_p`.  The behavior is undefined if
     /// `0 == monoDeque_p`.
     explicit
-    DequeThrowGuard(MonoDeque *monoDeque_p)
-        BSLS_ASSERT_CONVEYOR_TRUST_PRE(*monoDeque_p);
+    DequeThrowGuard(MonoDeque *monoDeque_p);
 
     /// If a `MonoDeque` is being managed by this `ThrowGuard`, restore it
     /// to the state it was in when this object was created.
@@ -1273,8 +1272,7 @@ class Deque<TYPE>::VectorThrowGuard {
     /// `*vector_p`.  Note that the case where `0 == vector_p` is explicitly
     /// permitted, in which case this object will not manage anything.
     explicit
-    VectorThrowGuard(VECTOR *vector_p)
-        BSLS_ASSERT_CONVEYOR_TRUST_PRE(*vector_p);
+    VectorThrowGuard(VECTOR *vector_p);
 
     /// If a `vector` is being managed by this `VectorThrowGuard`, restore
     /// it to the state it was in when this object was created.
@@ -1360,16 +1358,12 @@ class Deque<TYPE>::Proctor {
     /// Return a pointer to the `bsl::deque` contained in the `Deque`
     /// managed by this `Proctor` object'.  The behavior is undefined if
     /// this `Proctor` has been released.
-    MonoDeque *operator->() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    MonoDeque *operator->() const;
 
     /// Return a reference to the `bsl::deque` managed by this `Proctor`
     /// object.  The behavior is undefined if this `Proctor` has been
     /// released.
-    MonoDeque& operator*() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    MonoDeque& operator*() const;
 
     /// Return a reference providing modifiable access to the element at the
     /// specified `position` in the `bsl::deque` held by this proctor.  The
@@ -1438,16 +1432,12 @@ class Deque<TYPE>::ConstProctor {
     /// Return a pointer to the `bsl::deque` contained in the `Deque`
     /// managed by this object.  The behavior is undefined if this
     /// `ConstProctor` has been released.
-    const MonoDeque *operator->() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    const MonoDeque *operator->() const;
 
     /// Return a reference to the `bsl::deque` managed by this `Proctor`
     /// object.  The behavior is undefined if this `ConstProctor` has been
     /// released.
-    const MonoDeque& operator*() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const MonoDeque& operator*() const;
 
     /// Return a reference providing non-modifiable access to the element at
     /// the specified `position` in the `bsl::deque` held by this proctor.

@@ -1175,14 +1175,10 @@ class TimeQueueItem {
     TimeQueueItem& operator=(const TimeQueueItem<DATA>& rhs);
 
     /// Return the modifiable time value associated with this item.
-    bsls::TimeInterval& time()
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsls::TimeInterval& time();
 
     /// Return the modifiable data instance associated with this item.
-    DATA& data()
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    DATA& data();
 
     /// Return the modifiable handle value associated with this item.
     Handle& handle()
@@ -1194,21 +1190,15 @@ class TimeQueueItem {
     }
 
     /// Return the modifiable key value associated with this item.
-    Key& key()
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Key& key();
 
     // ACCESSORS
 
     /// Return the non-modifiable time value associated with this item.
-    const bsls::TimeInterval& time() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsls::TimeInterval& time() const;
 
     /// Return the non-modifiable data associated with this item.
-    const DATA& data() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const DATA& data() const;
 
     /// Return the non-modifiable handle value associated with this item.
     Handle handle() const
@@ -1220,9 +1210,7 @@ class TimeQueueItem {
     }
 
     /// Return the non-modifiable key value associated with this item.
-    const Key& key() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Key& key() const;
 };
 
                         // =========================
@@ -2151,6 +2139,7 @@ template <class DATA>
 inline
 bsls::TimeInterval& TimeQueueItem<DATA>::time()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_time;
 }
 
@@ -2158,6 +2147,7 @@ template <class DATA>
 inline
 DATA& TimeQueueItem<DATA>::data()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_data;
 }
 }  // close package namespace
@@ -2184,6 +2174,7 @@ inline
 typename TimeQueueItem<DATA>::Key&
 TimeQueueItem<DATA>::key()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_key;
 }
 
@@ -2192,6 +2183,7 @@ template <class DATA>
 inline
 const bsls::TimeInterval& TimeQueueItem<DATA>::time() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_time;
 }
 
@@ -2199,6 +2191,7 @@ template <class DATA>
 inline
 const DATA& TimeQueueItem<DATA>::data() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_data;
 }
 }  // close package namespace
@@ -2225,6 +2218,7 @@ inline
 const typename TimeQueueItem<DATA>::Key&
 TimeQueueItem<DATA>::key() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_key;
 }
 }  // close package namespace

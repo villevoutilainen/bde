@@ -610,7 +610,7 @@ class priority_queue {
          from_range_t                               ,
          BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range,
          const COMPARATOR&                          comparator = COMPARATOR())
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(range);
     template <class t_RANGE, class t_ALLOCATOR>
     BSLSTL_PRIORITY_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
     priority_queue(from_range_t                               ,
@@ -620,7 +620,7 @@ class priority_queue {
                    typename enable_if<bsl::uses_allocator<CONTAINER,
                                                           t_ALLOCATOR>::value,
                                       t_ALLOCATOR>::type * = 0)
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(range);
     template <class t_RANGE, class t_ALLOCATOR>
     BSLSTL_PRIORITY_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
     priority_queue(from_range_t                               ,
@@ -629,7 +629,7 @@ class priority_queue {
                    typename enable_if<bsl::uses_allocator<CONTAINER,
                                                           t_ALLOCATOR>::value,
                                       t_ALLOCATOR>::type * = 0)
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(range);
 
     // MANIPULATORS
 
@@ -647,12 +647,11 @@ class priority_queue {
 
     /// Insert the specified `value` into this priority queue.  In effect,
     /// performs `c.push_back(value);`.
-    void push(const value_type& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void push(const value_type& value);
 
     /// Insert the specified `value` into this priority queue.  In effect,
     /// performs `c.push_back(value);`.
-    void push(BloombergLP::bslmf::MovableRef<value_type> value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void push(BloombergLP::bslmf::MovableRef<value_type> value);
 
     /// Insert the elements of the specified `range` into this priority queue.
     /// Note that `range` must meet the requirements of an input range and the
@@ -660,9 +659,7 @@ class priority_queue {
     /// (template parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_PRIORITY_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    void push_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void push_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Insert into this priority queue a newly created `value_type` object,
@@ -670,14 +667,14 @@ class priority_queue {
     /// to the corresponding constructor of `value_type`.  In effect,
     /// performs `c.emplace_back(FORWARD(Args,args)...);`.
     template <class... Args>
-    void emplace(Args&&... args) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void emplace(Args&&... args);
 #endif
 
     /// Remove the top element from this `priority_queue` object that has
     /// the highest priority.  In effect, performs `c.pop_back();`.  The
     /// behavior is undefined if there is currently no elements in this
     /// object.
-    void pop() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void pop();
 
     /// Efficiently exchange the value of this object with the value of the
     /// specified `other` object.  In effect, performs
@@ -690,17 +687,17 @@ class priority_queue {
 
     /// Return `true` if this `priority_queue` object contains no elements,
     /// and `false` otherwise.  In effect, performs `return c.empty();`.
-    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool empty() const;
 
     /// Return the number of elements in this `priority_queue` object.  In
     /// effect, performs `return c.size()`.
-    size_type size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type size() const;
 
     /// Return a reference providing non-modifiable access to the element
     /// having the highest priority in this `priority_queue` object.  In
     /// effect, performs `return c.front()`.  The behavior is undefined if
     /// the priority queue is empty.
-    const_reference top() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reference top() const;
 };
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_CTAD
@@ -1093,6 +1090,8 @@ inline
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::push(
                                                        const value_type& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     c.push_back(value);
     std::push_heap(c.begin(), c.end(), comp);
 }
@@ -1102,6 +1101,8 @@ inline
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::push(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     c.push_back(MoveUtil::move(value));
     std::push_heap(c.begin(), c.end(), comp);
 }
@@ -1112,6 +1113,8 @@ BSLSTL_PRIORITY_QUEUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::push_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+BSLS_ASSERT_CONVEYOR_OBJECT(this);
+BSLS_ASSERT_CONVEYOR_OBJECT(&range);
 #if defined(BSLS_LIBRARYFEATURES_HAS_CPP20_RANGES)
     if constexpr (requires{ c.append_range(std::forward<t_RANGE>(range)); }) {
         c.append_range(std::forward<t_RANGE>(range));
@@ -1131,6 +1134,7 @@ template <class... Args>
 inline
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::emplace(Args&&... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     c.emplace_back(BSLS_COMPILERFEATURES_FORWARD(Args,args)...);
     std::push_heap(c.begin(), c.end(), comp);
 }
@@ -1140,6 +1144,7 @@ template <class VALUE, class CONTAINER, class COMPARATOR>
 inline
 void priority_queue<VALUE, CONTAINER, COMPARATOR>::pop()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     std::pop_heap(c.begin(), c.end(), comp);
     c.pop_back();
 }
@@ -1160,6 +1165,7 @@ template <class VALUE, class CONTAINER, class COMPARATOR>
 inline
 bool priority_queue<VALUE, CONTAINER, COMPARATOR>::empty() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.empty();
 }
 
@@ -1168,6 +1174,7 @@ inline
 typename priority_queue<VALUE, CONTAINER, COMPARATOR>::size_type
 priority_queue<VALUE, CONTAINER, COMPARATOR>::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.size();
 }
 
@@ -1176,6 +1183,7 @@ inline
 typename priority_queue<VALUE, CONTAINER, COMPARATOR>::const_reference
 priority_queue<VALUE, CONTAINER, COMPARATOR>::top() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return c.front();
 }
 

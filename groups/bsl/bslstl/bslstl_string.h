@@ -1781,7 +1781,7 @@ class basic_string
     basic_string(const basic_string& original,
                  size_type           position,
                  const ALLOCATOR&    basicAllocator = ALLOCATOR())
-                                      BSLS_ASSERT_CONVEYOR_REQUIRES(original);
+                                      BSLS_ASSERT_CONVEYOR_TRUST_PRE(original);
 
     /// Create a string that has the same value as the substring of the
     /// specified `numChars` length starting at the specified `position` in
@@ -1795,7 +1795,7 @@ class basic_string
                  size_type           position,
                  size_type           numChars,
                  const ALLOCATOR&    basicAllocator = ALLOCATOR())
-                                      BSLS_ASSERT_CONVEYOR_REQUIRES(original);
+                                      BSLS_ASSERT_CONVEYOR_TRUST_PRE(original);
 
     /// Create a string having the same value as the specified
     /// null-terminated `characterString` (of length
@@ -2012,8 +2012,7 @@ class basic_string
     /// size.  Also note that if (and only if) reallocation occurs, all
     /// iterators, including the past the end iterator, and all references
     /// to the elements are invalidated.
-    void shrink_to_fit()
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void shrink_to_fit();
 
     /// Reset this string to an empty value.  Note that the capacity may
     /// change (or not if `BASIC_STRING_DEALLOCATE_IN_CLEAR` is `false`).
@@ -2052,8 +2051,7 @@ class basic_string
     /// Return a reference providing modifiable access to the character at
     /// the specified `position` in this string.  Throw `out_of_range` if
     /// `position >= length()`.
-    reference at(size_type position)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reference at(size_type position);
 
     /// Return a reference providing modifiable access to the character at
     /// the first position in this string.  The behavior is undefined if
@@ -2070,8 +2068,7 @@ class basic_string
 
     /// Append the specified `rhs` string to this string, and return a
     /// reference providing modifiable access to this string.
-    basic_string& operator+=(const basic_string& rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+    basic_string& operator+=(const basic_string& rhs);
 
     /// Append the specified null-terminated `rhs` string (of length
     /// `CHAR_TRAITS::length(rhs)`) to this string, and return a reference
@@ -2080,8 +2077,7 @@ class basic_string
 
     /// Append the specified `character` to this string, and return a
     /// reference providing modifiable access to this string.
-    basic_string& operator+=(CHAR_TYPE character)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    basic_string& operator+=(CHAR_TYPE character);
 
     /// Append the specified `rhs` to this string, and return a reference
     /// providing modifiable access to this string.
@@ -2097,8 +2093,7 @@ class basic_string
 
     /// Append to this string the specified `suffix`, and return a reference
     /// providing modifiable access to this string.
-    basic_string& append(const basic_string& suffix)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(suffix);
+    basic_string& append(const basic_string& suffix);
 
     /// Append to this string the optionally specified `numChars` characters
     /// starting at the specified `position` in the specified `suffix`, or
@@ -2109,8 +2104,7 @@ class basic_string
     /// `position > suffix.length()`.
     basic_string& append(const basic_string& suffix,
                          size_type           position,
-                         size_type           numChars = npos)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(suffix);
+                         size_type           numChars = npos);
 
     /// Append to this string the specified initial `numChars` characters
     /// from the specified `characterString`, and return a reference
@@ -2177,8 +2171,7 @@ class basic_string
     basic_string& append_range(BSLS_COMPILERFEATURES_FORWARD_REF(RANGE) range);
 
     /// Append the specified `character` to this string.
-    void push_back(CHAR_TYPE character)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void push_back(CHAR_TYPE character);
 
     /// Assign to this string the value of the specified `replacement`
     /// string, propagate to this object the allocator of `replacement` if
@@ -2212,8 +2205,7 @@ class basic_string
     /// `position > replacement.length()`.
     basic_string& assign(const basic_string& replacement,
                          size_type           position,
-                         size_type           numChars = npos)
-                                    BSLS_ASSERT_CONVEYOR_REQUIRES(replacement);
+                         size_type           numChars = npos);
 
     /// Assign to this string the value of the specified null-terminated
     /// `characterString` (of length
@@ -2291,9 +2283,7 @@ class basic_string
     /// specified `other` string, and return a reference providing
     /// modifiable access to this string.  Throw `out_of_range` if
     /// `position > length()`.
-    basic_string& insert(size_type position, const basic_string& other)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(other)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    basic_string& insert(size_type position, const basic_string& other);
 
     /// Insert at the specified `position` in this string the optionally
     /// specified `numChars` characters starting at the specified
@@ -2306,9 +2296,7 @@ class basic_string
     basic_string& insert(size_type           position,
                          const basic_string& other,
                          size_type           sourcePosition,
-                         size_type           numChars = npos)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                         size_type           numChars = npos);
 
     /// Insert at the specified `position` in this string the specified
     /// initial `numChars` characters in the specified `characterString`,
@@ -2317,8 +2305,7 @@ class basic_string
     /// undefined unless `characterString` is at least `numChars` long.
     basic_string& insert(size_type        position,
                          const CHAR_TYPE *characterString,
-                         size_type        numChars)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                         size_type        numChars);
 
     /// Insert at the specified `position` in this string the specified
     /// null-terminated `characterString` (of length
@@ -2326,8 +2313,7 @@ class basic_string
     /// providing modifiable access to this string.  Throw `out_of_range` if
     /// `position > length()`.
     basic_string& insert(size_type        position,
-                         const CHAR_TYPE *characterString)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                         const CHAR_TYPE *characterString);
 
     /// Insert at the specified `position` in this string the specified
     /// `numChars` copies of the specified `character`, and return a
@@ -2335,8 +2321,7 @@ class basic_string
     /// `out_of_range` if `position > length()`.
     basic_string& insert(size_type position,
                          size_type numChars,
-                         CHAR_TYPE character)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                         CHAR_TYPE character);
 
     /// Insert the specified `character` at the specified `position` in this
     /// string, and return an iterator providing modifiable access to the
@@ -2377,8 +2362,7 @@ class basic_string
     /// if the length of the resulting string exceeds `max_size()`.
     template <class STRING_VIEW_LIKE_TYPE>
     BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(basic_string&)
-    insert(size_type position, const STRING_VIEW_LIKE_TYPE& other)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    insert(size_type position, const STRING_VIEW_LIKE_TYPE& other);
 
     /// Insert at the specified `position` in this string the optionally
     /// specified `numChars` characters starting at the specified
@@ -2395,8 +2379,7 @@ class basic_string
     insert(size_type                    position,
            const STRING_VIEW_LIKE_TYPE& other,
            size_type                    sourcePosition,
-           size_type                    numChars = npos)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+           size_type                    numChars = npos);
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
     /// Insert at the specified `position` in this string each `CHAR_TYPE`
@@ -2434,8 +2417,7 @@ class basic_string
     /// remaining length of the string is erased (i.e., `numChars` is set to
     /// `length() - position`).  Throw `out_of_range` if
     /// `position > length()`.
-    basic_string& erase(size_type position = 0, size_type numChars = npos)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    basic_string& erase(size_type position = 0, size_type numChars = npos);
 
     /// Erase a character at the specified `position` from this string, and
     /// return an iterator providing modifiable access to the character at
@@ -2469,9 +2451,7 @@ class basic_string
     /// `outPosition > length()`.
     basic_string& replace(size_type           outPosition,
                           size_type           outNumChars,
-                          const basic_string& replacement)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                    BSLS_ASSERT_CONVEYOR_REQUIRES(replacement);
+                          const basic_string& replacement);
 
     /// Replace the specified `outNumChars` characters starting at the
     /// specified `outPosition` in this string (or the suffix of this string
@@ -2487,9 +2467,7 @@ class basic_string
                           size_type           outNumChars,
                           const basic_string& replacement,
                           size_type           position,
-                          size_type           numChars = npos)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                    BSLS_ASSERT_CONVEYOR_REQUIRES(replacement);
+                          size_type           numChars = npos);
 
     /// Replace the specified `outNumChars` characters starting at the
     /// specified `outPosition` in this string (or the suffix of this string
@@ -2502,8 +2480,7 @@ class basic_string
     basic_string& replace(size_type        outPosition,
                           size_type        outNumChars,
                           const CHAR_TYPE *characterString,
-                          size_type        numChars)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                          size_type        numChars);
 
     /// Replace the specified `outNumChars` characters starting at the
     /// specified `outPosition` in this string (or the suffix of this string
@@ -2514,8 +2491,7 @@ class basic_string
     /// `outPosition > length()`.
     basic_string& replace(size_type        outPosition,
                           size_type        outNumChars,
-                          const CHAR_TYPE *characterString)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                          const CHAR_TYPE *characterString);
 
     /// Replace the specified `outNumChars` characters starting at the
     /// specified `outPosition` in this string (or the suffix of this string
@@ -2526,8 +2502,7 @@ class basic_string
     basic_string& replace(size_type outPosition,
                           size_type outNumChars,
                           size_type numChars,
-                          CHAR_TYPE character)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                          CHAR_TYPE character);
 
     /// Replace the specified `outNumChars` characters starting at the
     /// specified `outPosition` in this string (or the suffix of this string
@@ -2539,8 +2514,7 @@ class basic_string
     BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(basic_string&)
     replace(size_type                    outPosition,
             size_type                    outNumChars,
-            const STRING_VIEW_LIKE_TYPE& replacement)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+            const STRING_VIEW_LIKE_TYPE& replacement);
 
     /// Replace the specified `outNumChars` characters starting at the
     /// specified `outPosition` in this string (or the suffix of this string
@@ -2558,8 +2532,7 @@ class basic_string
             size_type                    outNumChars,
             const STRING_VIEW_LIKE_TYPE& replacement,
             size_type                    position,
-            size_type                    numChars = npos)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+            size_type                    numChars = npos);
 
     /// Replace the substring in the range starting at the specified `first`
     /// position and ending right before the specified `last` position with
@@ -2570,8 +2543,7 @@ class basic_string
     basic_string& replace(const_iterator      first,
                           const_iterator      last,
                           const basic_string& replacement)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                    BSLS_ASSERT_CONVEYOR_REQUIRES(replacement);
+                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
 
     /// Replace the substring in the range starting at the specified `first`
     /// position and ending right before the specified `last` position with
@@ -2746,8 +2718,7 @@ class basic_string
     /// Return a reference providing non-modifiable access to the character
     /// at the specified `position` in this string.  Throw `out_of_range` if
     /// `position >= length()`.
-    const_reference at(size_type position) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reference at(size_type position) const;
 
     /// Return a reference providing non-modifiable access to the character
     /// at the first position in this string.  The behavior is undefined if
@@ -2770,8 +2741,7 @@ class basic_string
     /// output `characterString` is *not* null-terminated.
     size_type copy(CHAR_TYPE *characterString,
                    size_type  numChars,
-                   size_type  position = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                   size_type  position = 0) const;
 
                      // *** 21.3.7 string operations: ***
 
@@ -2799,9 +2769,7 @@ class basic_string
     /// characters, and return `npos` otherwise.
     size_type find(const basic_string& substring,
                    size_type           position = 0) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                      BSLS_ASSERT_CONVEYOR_REQUIRES(substring)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the starting position of the *first* occurrence of the
     /// specified `substring`, if such a substring can be found in this
@@ -2824,8 +2792,7 @@ class basic_string
                const STRING_VIEW_LIKE_TYPE& substring,
                size_type                    position = 0,
                BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0)
-                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true);
 
     /// Return the starting position of the *first* occurrence of the
     /// specified `substring` of the optionally specified `numChars` length,
@@ -2836,18 +2803,15 @@ class basic_string
     /// `CHAR_TRAITS::length(substring)` is used.
     size_type find(const CHAR_TYPE *substring,
                    size_type        position,
-                   size_type        numChars) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                   size_type        numChars) const;
     size_type find(const CHAR_TYPE *substring,
-                   size_type        position = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                   size_type        position = 0) const;
 
     /// Return the position of the *first* occurrence of the specified
     /// `character`, if such an occurrence can be found in this string (on
     /// or *after* the optionally specified `position` if such a `position`
     /// is specified), and return `npos` otherwise.
-    size_type find(CHAR_TYPE character, size_type position = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type find(CHAR_TYPE character, size_type position = 0) const;
 
     /// Return the starting position of the *last* occurrence of the
     /// specified `substring` within this string, if such a sequence can be
@@ -2857,9 +2821,7 @@ class basic_string
     /// otherwise.
     size_type rfind(const basic_string& substring,
                     size_type           position = npos) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                      BSLS_ASSERT_CONVEYOR_REQUIRES(substring)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the starting position of the *last* occurrence of the
     /// specified `substring` within this string, if such a sequence can be
@@ -2883,8 +2845,7 @@ class basic_string
                const STRING_VIEW_LIKE_TYPE& substring,
                size_type                    position = npos,
                BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0)
-                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true);
 
     /// Return the starting position of the *last* occurrence of a substring
     /// whose value equals that of the specified `characterString` of the
@@ -2895,18 +2856,15 @@ class basic_string
     /// `CHAR_TRAITS::length(characterString)` is used.
     size_type rfind(const CHAR_TYPE *characterString,
                     size_type        position,
-                    size_type        numChars) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                    size_type        numChars) const;
     size_type rfind(const CHAR_TYPE *characterString,
-                    size_type        position = npos) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                    size_type        position = npos) const;
 
     /// Return the position of the *last* occurrence of the specified
     /// `character`, if such an occurrence can be found in this string (on
     /// or *before* the optionally specified `position` if such a `position`
     /// is specified), and return `npos` otherwise.
-    size_type rfind(CHAR_TYPE character, size_type position = npos) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type rfind(CHAR_TYPE character, size_type position = npos) const;
 
     /// Return the position of the *first* occurrence of a character
     /// belonging to the specified `characterString`, if such an occurrence
@@ -2915,9 +2873,7 @@ class basic_string
     /// otherwise.
     size_type find_first_of(const basic_string& characterString,
                             size_type           position = 0) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(characterString)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the position of the *first* occurrence of a character
     /// belonging to the specified `characterString`, if such an occurrence
@@ -2940,8 +2896,7 @@ class basic_string
                const STRING_VIEW_LIKE_TYPE& characterString,
                size_type                    position = 0,
                BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0)
-                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true);
 
     /// Return the position of the *first* occurrence of a character
     /// belonging to the specified `characterString` of the optionally
@@ -2952,19 +2907,16 @@ class basic_string
     /// is used.
     size_type find_first_of(const CHAR_TYPE *characterString,
                             size_type        position,
-                            size_type        numChars) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                            size_type        numChars) const;
     size_type find_first_of(const CHAR_TYPE *characterString,
-                            size_type        position = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                            size_type        position = 0) const;
 
     /// Return the position of the *first* occurrence of the specified
     /// `character`, if such an occurrence can be found in this string (on
     /// or *after* the optionally specified `position` if such a `position`
     /// is specified), and return `npos` otherwise.
     size_type find_first_of(CHAR_TYPE character,
-                            size_type position = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                            size_type position = 0) const;
 
     /// Return the position of the *last* occurrence of a character
     /// belonging to the specified `characterString`, if such an occurrence
@@ -2973,9 +2925,7 @@ class basic_string
     /// otherwise.
     size_type find_last_of(const basic_string& characterString,
                            size_type           position = npos) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(characterString)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the position of the *last* occurrence of a character
     /// belonging to the specified `characterString`, if such an occurrence
@@ -2998,8 +2948,7 @@ class basic_string
                const STRING_VIEW_LIKE_TYPE& characterString,
                size_type                    position = npos,
                BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0)
-                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true);
 
     /// Return the position of the *last* occurrence of a character
     /// belonging to the specified `characterString` of the optionally
@@ -3010,19 +2959,16 @@ class basic_string
     /// is used.
     size_type find_last_of(const CHAR_TYPE *characterString,
                            size_type        position,
-                           size_type        numChars) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                           size_type        numChars) const;
     size_type find_last_of(const CHAR_TYPE *characterString,
-                           size_type        position = npos) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                           size_type        position = npos) const;
 
     /// Return the position of the *last* occurrence of the specified
     /// `character`, if such an occurrence can be found in this string (on
     /// or *before* the optionally specified `position` if such a `position`
     /// is specified), and return `npos` otherwise.
     size_type find_last_of(CHAR_TYPE character,
-                           size_type position = npos) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                           size_type position = npos) const;
 
     /// Return the position of the *first* occurrence of a character *not*
     /// belonging to the specified `characterString`, if such an occurrence
@@ -3031,9 +2977,7 @@ class basic_string
     /// otherwise.
     size_type find_first_not_of(const basic_string& characterString,
                                 size_type           position = 0) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(characterString)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the position of the *first* occurrence of a character *not*
     /// belonging to the specified `characterString`, if such an occurrence
@@ -3056,8 +3000,7 @@ class basic_string
                const STRING_VIEW_LIKE_TYPE& characterString,
                size_type                    position = 0,
                BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0)
-                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true);
 
     /// Return the position of the *first* occurrence of a character *not*
     /// belonging to the specified `characterString` of the optionally
@@ -3068,11 +3011,9 @@ class basic_string
     /// is used.
     size_type find_first_not_of(const CHAR_TYPE *characterString,
                                 size_type        position,
-                                size_type        numChars) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                size_type        numChars) const;
     size_type find_first_not_of(const CHAR_TYPE *characterString,
-                                size_type        position = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                size_type        position = 0) const;
 
     /// Return the position of the *first* occurrence of a character
     /// *different* from the specified `character`, if such an occurrence
@@ -3080,8 +3021,7 @@ class basic_string
     /// `position` if such a `position` is specified), and return `npos`
     /// otherwise.
     size_type find_first_not_of(CHAR_TYPE character,
-                                size_type position = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                size_type position = 0) const;
 
     /// Return the position of the *last* occurrence of a character *not*
     /// belonging to the specified `characterString`, if such an occurrence
@@ -3090,9 +3030,7 @@ class basic_string
     /// otherwise.
     size_type find_last_not_of(const basic_string& characterString,
                                size_type           position = npos) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                BSLS_ASSERT_CONVEYOR_REQUIRES(characterString)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the position of the *last* occurrence of a character *not*
     /// belonging to the specified `characterString`, if such an occurrence
@@ -3115,8 +3053,7 @@ class basic_string
                const STRING_VIEW_LIKE_TYPE& characterString,
                size_type                    position = npos,
                BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0)
-                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true);
 
     /// Return the position of the *last* occurrence of a character *not*
     /// belonging to the specified `characterString` of the optionally
@@ -3127,11 +3064,9 @@ class basic_string
     /// is used.
     size_type find_last_not_of(const CHAR_TYPE *characterString,
                                size_type        position,
-                               size_type        numChars) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               size_type        numChars) const;
     size_type find_last_not_of(const CHAR_TYPE *characterString,
-                               size_type        position = npos) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               size_type        position = npos) const;
 
     /// Return the position of the *last* occurrence of a character
     /// *different* from the specified `character`, if such an occurrence
@@ -3139,24 +3074,20 @@ class basic_string
     /// `position` if such a `position` is specified), and return `npos`
     /// otherwise.
     size_type find_last_not_of(CHAR_TYPE character,
-                               size_type position = npos) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               size_type position = npos) const;
 
     /// Return `true` if this view contains with the specified `subview`, and
     /// `false` otherwise.  See {Lexicographical Comparisons}.
     bool contains(basic_string_view<CHAR_TYPE, CHAR_TRAITS> subview)
-                                                   const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                   const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if this view contains with the specified `character`,
     /// and `false` otherwise.
-    bool contains(CHAR_TYPE character) const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool contains(CHAR_TYPE character) const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if this view contains with the specified
     /// `characterString`, and `false` otherwise.
-    bool contains(const CHAR_TYPE* characterString) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool contains(const CHAR_TYPE* characterString) const;
 
     /// Return `true` if the length of this string is equal to or greater
     /// than the length of the specified `characterString` and the first
@@ -3165,15 +3096,13 @@ class basic_string
     /// `CHAR_TRAITS::compare` is used to compare characters.  See
     /// {Lexicographical Comparisons}.
     bool starts_with(basic_string_view<CHAR_TYPE, CHAR_TRAITS> characterString)
-                                                   const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                   const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if this string contains at least one symbol and the
     /// last symbol of this string is equal to the specified `character`,
     /// and `false` otherwise.  `CHAR_TRAITS::eq` is used to compare
     /// characters.  See {Lexicographical Comparisons}.
-    bool starts_with(CHAR_TYPE character) const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool starts_with(CHAR_TYPE character) const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if the length of this string is equal to or greater
     /// than the length of the specified `characterString` and the first
@@ -3181,8 +3110,7 @@ class basic_string
     /// equal to the characters of the `characterString`, and `false`
     /// otherwise.  `CHAR_TRAITS::compare` is used to compare characters.
     /// See {Lexicographical Comparisons}.
-    bool starts_with(const CHAR_TYPE *characterString) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool starts_with(const CHAR_TYPE *characterString) const;
 
     /// Return `true` if the length of this string is equal to or greater
     /// than the length of the specified `characterString` and the last
@@ -3191,15 +3119,13 @@ class basic_string
     /// `CHAR_TRAITS::compare` is used to compare characters.  See
     /// {Lexicographical Comparisons}.
     bool ends_with(basic_string_view<CHAR_TYPE, CHAR_TRAITS> characterString)
-                                                   const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                   const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if this string contains at least one symbol and the
     /// last symbol of this string is equal to the specified `character`,
     /// and `false` otherwise.  `CHAR_TRAITS::eq` is used to compare
     /// characters.  See {Lexicographical Comparisons}.
-    bool ends_with(CHAR_TYPE character) const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool ends_with(CHAR_TYPE character) const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if the length of this string is equal to or greater
     /// than the length of the specified `characterString` and the last
@@ -3207,8 +3133,7 @@ class basic_string
     /// equal to the characters of the `characterString`, and `false`
     /// otherwise.  `CHAR_TRAITS::compare` is used to compare characters.
     /// See {Lexicographical Comparisons}.
-    bool ends_with(const CHAR_TYPE *characterString) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool ends_with(const CHAR_TYPE *characterString) const;
 
     /// Return a string whose value is the substring starting at the
     /// optionally specified `position` in this string, of length the
@@ -3219,14 +3144,12 @@ class basic_string
     /// `position` to the end of the string is returned).
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     basic_string substr(size_type position = 0,
-                        size_type numChars = npos) const &
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        size_type numChars = npos) const &;
     basic_string substr(size_type position = 0,
                         size_type numChars = npos) &&;
 #else
     basic_string substr(size_type position = 0,
-                        size_type numChars = npos) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        size_type numChars = npos) const;
 #endif
 
     /// Lexicographically compare this string with the specified `other`
@@ -3234,9 +3157,7 @@ class basic_string
     /// `other`, a positive value if it is greater than `other`, and 0 in
     /// case of equality.  `CHAR_TRAITS::lt` is used to compare characters.
     /// See {Lexicographical Comparisons}.
-    int compare(const basic_string& other) const BSLS_KEYWORD_NOEXCEPT
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+    int compare(const basic_string& other) const BSLS_KEYWORD_NOEXCEPT;
 
     /// Lexicographically compare the substring of this string of the
     /// specified `numChars` length starting at the specified `position` (or
@@ -3249,9 +3170,7 @@ class basic_string
     /// `out_of_range` if `position > length()`.
     int compare(size_type           position,
                 size_type           numChars,
-                const basic_string& other) const
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                const basic_string& other) const;
 
     /// Lexicographically compare the substring of this string of the
     /// specified `lhsNumChars` length starting at the specified
@@ -3274,9 +3193,7 @@ class basic_string
                 size_type           lhsNumChars,
                 const basic_string& other,
                 size_type           otherPosition,
-                size_type           otherNumChars = npos) const
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(other);
+                size_type           otherNumChars = npos) const;
 
     /// Lexicographically compare this string with the specified
     /// null-terminated `other` string (of length
@@ -3284,8 +3201,7 @@ class basic_string
     /// string is less than `other`, a positive value if it is greater than
     /// `other`, and 0 in case of equality.  `CHAR_TRAITS::lt` is used to
     /// compare characters.  See {Lexicographical Comparisons}.
-    int compare(const CHAR_TYPE *other) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int compare(const CHAR_TYPE *other) const;
 
     /// Lexicographically compare the substring of this string of the
     /// specified `lhsNumChars` length starting at the specified
@@ -3300,8 +3216,7 @@ class basic_string
     int compare(size_type        lhsPosition,
                 size_type        lhsNumChars,
                 const CHAR_TYPE *other,
-                size_type        otherNumChars) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                size_type        otherNumChars) const;
 
     /// Lexicographically compare the substring of this string of the
     /// specified `lhsNumChars` length starting at the specified
@@ -3316,8 +3231,7 @@ class basic_string
     /// Comparisons}.
     int compare(size_type        lhsPosition,
                 size_type        lhsNumChars,
-                const CHAR_TYPE *other) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                const CHAR_TYPE *other) const;
 
     /// Lexicographically compare this string with the specified `other`,
     /// and return a negative value if this string is less than `other`, a
@@ -3339,8 +3253,7 @@ class basic_string
     int compare(
                const STRING_VIEW_LIKE_TYPE& other,
                BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0)
-                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                               const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true);
 
     /// Lexicographically compare the substring of this string of the
     /// specified `numChars` length starting at the specified `position` (or
@@ -3356,8 +3269,7 @@ class basic_string
         size_type                    position,
         size_type                    numChars,
         const STRING_VIEW_LIKE_TYPE& other,
-        BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+        BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0) const;
 
     /// Lexicographically compare the substring of this string of the
     /// specified `lhsNumChars` length starting at the specified
@@ -3381,8 +3293,7 @@ class basic_string
         const STRING_VIEW_LIKE_TYPE& other,
         size_type                    otherPosition,
         size_type                    otherNumChars = npos,
-        BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+        BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) * = 0) const;
 
     // *** BDE compatibility with platform libraries: ***
 
@@ -3574,16 +3485,12 @@ basic_string(std::initializer_list<CHAR_TYPE>, ALLOC *)
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOC>
 bool operator==(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>&  lhs,
                 const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>&  rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOC1, class ALLOC2>
 bool
 operator==(const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>& lhs,
            const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>& rhs)
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
 /// Return `true` if the specified `lhs` string has the same value as the
 /// specified `rhs` string, and `false` otherwise.  Two strings have the
@@ -3591,8 +3498,7 @@ operator==(const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>& lhs,
 /// respective position have the same value according to `CHAR_TRAITS::eq`.
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOC>
 bool operator==(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>&  lhs,
-                const CHAR_TYPE                                  *rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+                const CHAR_TYPE                                  *rhs);
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 
@@ -3600,9 +3506,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOC>
 String_ComparisonCategoryType<CHAR_TRAITS>
 operator<=>(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>& lhs,
             const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>& rhs)
-                                                          BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                                          BSLS_KEYWORD_NOEXCEPT;
 
 /// Perform a lexicographic three-way comparison of the specified `lhs` and
 /// the specified `rhs` strings by using `CHAR_TRAITS::eq` on each
@@ -3610,14 +3514,12 @@ operator<=>(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>& lhs,
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOC>
 String_ComparisonCategoryType<CHAR_TRAITS>
 operator<=>(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>&  lhs,
-            const CHAR_TYPE                                  *rhs)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+            const CHAR_TYPE                                  *rhs);
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOC1, class ALLOC2>
 String_ComparisonCategoryType<CHAR_TRAITS>
 operator<=>(const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>& lhs,
             const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>& rhs)
-                                                          BSLS_KEYWORD_NOEXCEPT
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+                                                          BSLS_KEYWORD_NOEXCEPT;
 
 #else
 
@@ -3770,32 +3672,25 @@ bool operator>=(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>&  lhs,
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 operator+(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&     lhs,
-          const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&     rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+          const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&     rhs);
 #ifdef BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>
 operator+(bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  lhs,
-          const basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>&   rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+          const basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>&   rhs);
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>
 operator+(const basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>&   lhs,
-          bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+          bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  rhs);
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>
 operator+(bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  lhs,
-          bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+          bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  rhs);
 #endif  // BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOC1, class ALLOC2>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>
 operator+(const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>&   lhs,
-          const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>&   rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+          const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>&   rhs);
 #ifdef BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOC1, class ALLOC2>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>
@@ -3805,8 +3700,7 @@ operator+(const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>&   lhs,
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOC1, class ALLOC2>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>
 operator+(const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>&   lhs,
-          const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>&   rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+          const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>&   rhs);
 #ifdef BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOC1, class ALLOC2>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>
@@ -3816,32 +3710,27 @@ operator+(bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC1> &&     lhs,
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 operator+(const CHAR_TYPE                                         *lhs,
-          const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&     rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+          const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&     rhs);
 #ifdef BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>
 operator+(const CHAR_TYPE                                         *lhs,
-          bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+          bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  rhs);
 #endif  // BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 operator+(CHAR_TYPE                                                lhs,
-          const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&     rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+          const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&     rhs);
 #ifdef BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 operator+(CHAR_TYPE                                                lhs,
-          bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+          bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  rhs);
 #endif  // BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 operator+(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&     lhs,
-          const CHAR_TYPE                                         *rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+          const CHAR_TYPE                                         *rhs);
 #ifdef BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
@@ -3851,14 +3740,12 @@ operator+(bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  lhs,
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 operator+(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&     lhs,
-          CHAR_TYPE                                                rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+          CHAR_TYPE                                                rhs);
 #ifdef BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 operator+(bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  lhs,
-          CHAR_TYPE                                                rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+          CHAR_TYPE                                                rhs);
 #endif  // BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE,
           class CHAR_TRAITS,
@@ -3867,8 +3754,7 @@ template <class CHAR_TYPE,
 BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(
                           bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>)
 operator+(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> &    lhs,
-          const STRING_VIEW_LIKE_TYPE                         &    rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(lhs);
+          const STRING_VIEW_LIKE_TYPE                         &    rhs);
 #ifdef BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE,
           class CHAR_TRAITS,
@@ -3886,8 +3772,7 @@ template <class CHAR_TYPE,
 BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(
                           bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>)
 operator+(const STRING_VIEW_LIKE_TYPE                         &    lhs,
-          const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> &    rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+          const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> &    rhs);
 #ifdef BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 template <class CHAR_TYPE,
           class CHAR_TRAITS,
@@ -3896,8 +3781,7 @@ template <class CHAR_TYPE,
 BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(
                           bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>)
 operator+(const STRING_VIEW_LIKE_TYPE                         &    lhs,
-                basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> &&   rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> &&   rhs);
 #endif  // BSLSTL_STRING_SUPPORT_RVALUE_ADDITION_OPERATORS
 
 /// Write the string specified by `str` into the output stream specified by
@@ -3909,9 +3793,7 @@ operator+(const STRING_VIEW_LIKE_TYPE                         &    lhs,
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>&
 operator<<(std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>&          os,
-           const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& str)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str)
-                                            BSLS_ASSERT_CONVEYOR_TRUST_PRE(os);
+           const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& str);
 
 /// Replace the contents of the specified `str` string with a word read from
 /// the specified `is` input stream, and return `is`.  The word begins at
@@ -3925,9 +3807,7 @@ operator<<(std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>&          os,
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&
 operator>>(std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&     is,
-           basic_string<CHAR_TYPE,CHAR_TRAITS, ALLOCATOR>& str)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str)
-                                            BSLS_ASSERT_CONVEYOR_TRUST_PRE(is);
+           basic_string<CHAR_TYPE,CHAR_TRAITS, ALLOCATOR>& str);
 
 #if defined (BSLS_LIBRARYFEATURES_HAS_CPP11_BASELINE_LIBRARY) && \
     defined (BSLS_COMPILERFEATURES_SUPPORT_INLINE_NAMESPACE)
@@ -4011,8 +3891,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&
 getline(std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&     is,
         basic_string<CHAR_TYPE,CHAR_TRAITS, ALLOCATOR>& str,
-        CHAR_TYPE                                       delim)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
+        CHAR_TYPE                                       delim);
 
 /// Replace the contents of the specified `str` string by extracting
 /// characters from the specified `is` stream until a newline character
@@ -4026,8 +3905,7 @@ getline(std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&     is,
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&
 getline(std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&     is,
-        basic_string<CHAR_TYPE,CHAR_TRAITS, ALLOCATOR>& str)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
+        basic_string<CHAR_TYPE,CHAR_TRAITS, ALLOCATOR>& str);
 
 int  stoi(const string&  str, std::size_t *pos = 0, int base = 10);
 int  stoi(const wstring& str, std::size_t *pos = 0, int base = 10);
@@ -4184,8 +4062,7 @@ template <class CHAR_TYPE,
           class OTHER_CHAR_TYPE>
 typename basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::size_type
 erase(basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& str,
-      const OTHER_CHAR_TYPE&                           c)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
+      const OTHER_CHAR_TYPE&                           c);
 
 /// Erase (in-place) all the elements from the specified `str` where the
 /// specified `pred` returns `true`, and return the number of erased
@@ -4196,8 +4073,7 @@ template <class CHAR_TYPE,
           class UNARY_PREDICATE>
 typename basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::size_type
 erase_if(basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& str,
-         const UNARY_PREDICATE&                           pred)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(str);
+         const UNARY_PREDICATE&                           pred);
 
 /// This `enum` give upper bounds on the maximum string lengths storing each
 /// scalar numerical type, and the starting value for `long double` that can
@@ -4227,8 +4103,7 @@ enum MaxDecimalStringLengths{
 /// algorithm of the (template parameter) type `HASHALG`.
 template <class HASHALG, class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 void hashAppend(HASHALG&                                               hashAlg,
-                const basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& input)
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(input);
+                const basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& input);
 
 /// Return a hash value for the specified `str`.
 template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
@@ -4314,8 +4189,7 @@ template <class HASHALG, class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 BSLS_PLATFORM_AGGRESSIVE_INLINE
 void hashAppend(
            HASHALG&                                                    hashAlg,
-           const std::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& input)
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(input);
+           const std::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& input);
 
 }  // close namespace bslh
 }  // close enterprise namespace
@@ -6005,6 +5879,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 BSLS_PLATFORM_AGGRESSIVE_INLINE
 void basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::shrink_to_fit()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (this->size() < this->d_capacity) {
         basic_string temp(this->get_allocator());
         temp.privateAppend(this->data(),
@@ -6075,6 +5950,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::reference
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::at(size_type position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note: deliberately not inline, because 1) this is not a very widely used
     // function, and 2) it is very convenient to have at least one non-inlined
     // element accessor for debugging.
@@ -6113,6 +5989,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::operator+=(
                                                        const basic_string& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return append(rhs);
 }
 
@@ -6122,6 +6000,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::operator+=(
                                                           const CHAR_TYPE *rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(rhs);
 
     return append(rhs);
@@ -6132,6 +6012,7 @@ BSLS_PLATFORM_AGGRESSIVE_INLINE
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::operator+=(CHAR_TYPE character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     push_back(character);
     return *this;
 }
@@ -6144,6 +6025,8 @@ BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::operator+=(
                                               const STRING_VIEW_LIKE_TYPE& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = rhs;
     return append(strView.data(),strView.length());
 }
@@ -6155,6 +6038,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::operator+=(
                   const std::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC2>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return append(rhs.begin(),rhs.end());
 }
 
@@ -6164,6 +6049,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::append(
                                                    const basic_string&  suffix)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&suffix);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return append(suffix, size_type(0), npos);
 }
 
@@ -6174,6 +6061,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::append(
                                                   size_type           position,
                                                   size_type           numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&suffix);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateThrowOutOfRange(
                  position > suffix.length(),
                  "string<...>::append(const string&,pos,n): invalid position");
@@ -6194,6 +6083,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::append(
                                               const CHAR_TYPE *characterString,
                                               size_type        numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString || 0 == numChars);
 
     return privateAppend(characterString,
@@ -6207,6 +6097,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::append(
                                               const CHAR_TYPE *characterString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     return append(characterString, CHAR_TRAITS::length(characterString));
@@ -6218,6 +6109,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::append(size_type numChars,
                                                       CHAR_TYPE character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return privateAppend(numChars,
                          character,
                          "string<...>::append(n,c): string too long");
@@ -6231,6 +6123,8 @@ BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(
 basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::append(
                                            const STRING_VIEW_LIKE_TYPE& suffix)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&suffix);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = suffix;
     return privateAppend(
                     strView.data(),
@@ -6247,6 +6141,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::append(
                                          size_type                    position,
                                          size_type                    numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&suffix);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = suffix;
     privateThrowOutOfRange(
               position > strView.length(),
@@ -6268,6 +6164,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::append(INPUT_ITER first,
                                                       INPUT_ITER last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return privateAppend(first,
                          last,
                          "string<...>::append<Iter>(i,j): string too long");
@@ -6280,6 +6177,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::append(
                                        std::initializer_list<CHAR_TYPE> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return privateAppend(
                      values.begin(),
                      values.end(),
@@ -6306,6 +6204,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 void basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::push_back(
                                                            CHAR_TYPE character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateThrowLengthError(length() >= max_size(),
                             "string<...>::push_back(char): string too long");
 
@@ -6323,6 +6222,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::assign(
                                                const basic_string& replacement)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->operator=(replacement);
 }
 
@@ -6333,6 +6234,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::assign(
                       BloombergLP::bslmf::MovableRef<basic_string> replacement)
                                      BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(false)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     basic_string& other = replacement;
     return this->operator=(MoveUtil::move(other));
 }
@@ -6344,6 +6247,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::assign(
                                                size_type           position,
                                                size_type           numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateThrowOutOfRange(
                  position > replacement.length(),
                  "string<...>::assign(const string&,pos,n): invalid position");
@@ -6363,6 +6268,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::assign(
                                               const CHAR_TYPE *characterString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     return assign(characterString, CHAR_TRAITS::length(characterString));
@@ -6375,6 +6281,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::assign(
                                               const CHAR_TYPE *characterString,
                                               size_type        numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString || 0 == numChars);
 
     return privateAssignDispatch(
@@ -6391,6 +6298,8 @@ BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::assign(
                                       const STRING_VIEW_LIKE_TYPE& replacement)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = replacement;
 
     return this->operator=(strView);
@@ -6406,6 +6315,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::assign(
                                       size_type                    position,
                                       size_type                    numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = replacement;
 
     privateThrowOutOfRange(
@@ -6428,6 +6339,7 @@ basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>&
 basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::assign(
                const std::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC2>& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->operator=(string);
 }
 
@@ -6437,6 +6349,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::assign(size_type numChars,
                                                       CHAR_TYPE character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return privateAssignDispatch(numChars,
                                  character,
                                  "string<...>::assign(n,c): string too long");
@@ -6449,6 +6362,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::assign(INPUT_ITER first,
                                                       INPUT_ITER last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return privateAssignDispatch(
                             first,
                             last,
@@ -6462,6 +6376,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::assign(
                                        std::initializer_list<CHAR_TYPE> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return privateAssignDispatch(
                      values.begin(),
                      values.end(),
@@ -6492,6 +6407,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::insert(
                                                   size_type           position,
                                                   const basic_string& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return insert(position, other, size_type(0), npos);
 }
 
@@ -6503,6 +6420,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::insert(
                                            size_type            sourcePosition,
                                            size_type            numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateThrowOutOfRange(
                 position > length(),
                 "string<...>::insert(pos,const string&...): invalid position");
@@ -6526,6 +6445,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::insert(
                                               const CHAR_TYPE *characterString,
                                               size_type        numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString || 0 == numChars);
 
     privateThrowOutOfRange(
@@ -6545,6 +6465,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::insert(
                                               size_type        position,
                                               const CHAR_TYPE *characterString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     return insert(position,
@@ -6558,6 +6479,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::insert(size_type position,
                                                       size_type numChars,
                                                       CHAR_TYPE character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateThrowOutOfRange(position > length(),
                            "string<...>::insert(pos,n,c): invalid position");
 
@@ -6571,6 +6493,7 @@ typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::iterator
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::insert(const_iterator position,
                                                       CHAR_TYPE      character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position >= cbegin());
     BSLS_ASSERT_SAFE(position <= cend());
 
@@ -6601,6 +6524,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::insert(const_iterator position,
                                                       INPUT_ITER     first,
                                                       INPUT_ITER     last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position >= cbegin());
     BSLS_ASSERT_SAFE(position <= cend());
 
@@ -6616,6 +6540,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::insert(const_iterator position,
                                                       size_type      numChars,
                                                       CHAR_TYPE      character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position >= cbegin());
     BSLS_ASSERT_SAFE(position <= cend());
 
@@ -6632,6 +6557,8 @@ basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::insert(
                                          size_type                    position,
                                          const STRING_VIEW_LIKE_TYPE& other)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = other;
     privateThrowOutOfRange(
               position > length(),
@@ -6652,6 +6579,8 @@ basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::insert(
                                    size_type                    sourcePosition,
                                    size_type                    numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = other;
     privateThrowOutOfRange(
            position > length(),
@@ -6679,6 +6608,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::insert(
                                      const_iterator                   position,
                                      std::initializer_list<CHAR_TYPE> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position >= cbegin());
     BSLS_ASSERT_SAFE(position <= cend());
 
@@ -6716,6 +6646,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::erase(size_type position,
                                                      size_type numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateThrowOutOfRange(position > length(),
                            "string<...>::erase(pos,n): invalid position");
 
@@ -6736,6 +6667,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::iterator
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position >= cbegin());
     BSLS_ASSERT_SAFE(position < cend());
 
@@ -6756,6 +6688,7 @@ typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::iterator
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::erase(const_iterator first,
                                                      const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(first >= cbegin());
     BSLS_ASSERT_SAFE(first <= cend());
     BSLS_ASSERT_SAFE(last >= cbegin());
@@ -6791,6 +6724,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                                size_type           outNumChars,
                                                const basic_string& replacement)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
     privateThrowOutOfRange(
                length() < outPosition,
                "string<...>::replace(pos,const string&...): invalid position");
@@ -6816,6 +6751,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                                size_type           position,
                                                size_type           numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
     privateThrowOutOfRange(
                length() < outPosition,
                "string<...>::replace(pos,const string&...): invalid position");
@@ -6848,6 +6785,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                               const CHAR_TYPE *characterString,
                                               size_type        numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString || 0 == numChars);
 
     privateThrowOutOfRange(
@@ -6876,6 +6814,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                               size_type        outNumChars,
                                               const CHAR_TYPE *characterString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     return replace(outPosition,
@@ -6891,6 +6830,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(size_type outPosition,
                                                        size_type numChars,
                                                        CHAR_TYPE character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateThrowOutOfRange(
                             length() < outPosition,
                             "string<...>::replace(pos,n,c): invalid position");
@@ -6916,6 +6856,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                       size_type                    outNumChars,
                                       const STRING_VIEW_LIKE_TYPE& replacement)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
     privateThrowOutOfRange(
               length() < outPosition,
               "string<...>::replace(pos,const strView&...): invalid position");
@@ -6945,6 +6887,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                       size_type                    position,
                                       size_type                    numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
     privateThrowOutOfRange(
               length() < outPosition,
               "string<...>::replace(pos,const strView&...): invalid position");
@@ -6978,6 +6922,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                                const_iterator      last,
                                                const basic_string& replacement)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
     BSLS_ASSERT_SAFE(first >= cbegin());
     BSLS_ASSERT_SAFE(first <= cend());
     BSLS_ASSERT_SAFE(first <= last);
@@ -7006,6 +6952,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                       const_iterator               last,
                                       const STRING_VIEW_LIKE_TYPE& replacement)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&replacement);
     BSLS_ASSERT_SAFE(first >= cbegin());
     BSLS_ASSERT_SAFE(first <= cend());
     BSLS_ASSERT_SAFE(first <= last);
@@ -7034,6 +6982,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                               const CHAR_TYPE *characterString,
                                               size_type        numChars)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(first >= cbegin());
     BSLS_ASSERT_SAFE(first <= cend());
     BSLS_ASSERT_SAFE(first <= last);
@@ -7060,6 +7009,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                               const_iterator   last,
                                               const CHAR_TYPE *characterString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(first >= cbegin());
     BSLS_ASSERT_SAFE(first <= cend());
     BSLS_ASSERT_SAFE(first <= last);
@@ -7080,6 +7030,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                                       size_type      numChars,
                                                       CHAR_TYPE      character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(first >= cbegin());
     BSLS_ASSERT_SAFE(first <= cend());
     BSLS_ASSERT_SAFE(first <= last);
@@ -7103,6 +7054,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::replace(
                                                     INPUT_ITER     stringFirst,
                                                     INPUT_ITER     stringLast)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(first >= cbegin());
     BSLS_ASSERT_SAFE(first <= cend());
     BSLS_ASSERT_SAFE(first <= last);
@@ -7328,6 +7280,7 @@ BSLS_PLATFORM_AGGRESSIVE_INLINE
 typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::const_reference
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::at(size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note: deliberately not inlined (see comment in non-'const' version).
 
     privateThrowOutOfRange(position >= length(),
@@ -7361,6 +7314,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::copy(CHAR_TYPE *characterString,
                                                     size_type  numChars,
                                                     size_type  position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     privateThrowOutOfRange(
@@ -7410,6 +7364,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find(
                                            size_type            position) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&substring);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return find(substring.data(), position, substring.length());
 }
 
@@ -7423,6 +7379,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find(
                 BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) *)
                                 const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&substring);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = substring;
     return find(strView.data(), position, strView.length());
 }
@@ -7434,6 +7392,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find(
                                                size_type        position,
                                                size_type        numChars) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&substring);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(substring);
 
     size_type remChars = length() - position;
@@ -7465,6 +7425,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find(
                                                const CHAR_TYPE *substring,
                                                size_type        position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&substring);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(substring);
 
     return find(substring, position, CHAR_TRAITS::length(substring));
@@ -7475,6 +7437,7 @@ typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::size_type
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find(CHAR_TYPE character,
                                                     size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (position >= length()) {
         return npos;                                                  // RETURN
     }
@@ -7493,6 +7456,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::rfind(
                                             size_type           position) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&substring);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return rfind(substring.data(), position, substring.length());
 }
 
@@ -7506,6 +7471,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::rfind(
                 BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) *)
                                 const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&substring);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = substring;
     return rfind(strView.data(), position, strView.length());
 }
@@ -7517,6 +7484,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::rfind(
                                               size_type        position,
                                               size_type        numChars) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString || 0 == numChars);
 
     if (0 == numChars) {
@@ -7545,6 +7513,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::rfind(
                                               const CHAR_TYPE *characterString,
                                               size_type        position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     return rfind(characterString,
@@ -7558,6 +7527,7 @@ typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::size_type
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::rfind(CHAR_TYPE character,
                                                      size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return rfind(&character, position, size_type(1));
 }
 
@@ -7569,6 +7539,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_first_of(
                                            size_type           position) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return find_first_of(characterString.data(),
                          position,
                          characterString.length());
@@ -7584,6 +7556,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_first_of(
                 BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) *)
                                 const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = characterString;
     return find_first_of(strView.data(), position, strView.length());
 }
@@ -7595,6 +7569,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_first_of(
                                               size_type        position,
                                               size_type        numChars) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString || 0 == numChars);
 
     if (0 < numChars && position < length()) {
@@ -7618,6 +7594,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_first_of(
                                               const CHAR_TYPE *characterString,
                                               size_type        position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     return find_first_of(characterString,
@@ -7632,6 +7610,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_first_of(
                                                       CHAR_TYPE character,
                                                       size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return find_first_of(&character, position, size_type(1));
 }
 
@@ -7643,6 +7622,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_last_of(
                                            size_type           position) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return find_last_of(characterString.data(),
                         position,
                         characterString.length());
@@ -7658,6 +7639,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_last_of(
                 BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) *)
                                 const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = characterString;
     return find_last_of(strView.data(), position, strView.length());
 }
@@ -7669,6 +7652,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_last_of(
                                               size_type        position,
                                               size_type        numChars) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString || 0 == numChars);
 
     if (0 < numChars && 0 < length()) {
@@ -7696,6 +7681,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_last_of(
                                               const CHAR_TYPE *characterString,
                                               size_type        position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     return find_last_of(characterString,
@@ -7710,6 +7697,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_last_of(
                                                       CHAR_TYPE character,
                                                       size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return find_last_of(&character, position, size_type(1));
 }
 
@@ -7721,6 +7709,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_first_not_of(
                                            size_type           position) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return find_first_not_of(characterString.data(),
                              position,
                              characterString.length());
@@ -7736,6 +7726,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_first_not_of(
                 BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) *)
                                 const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = characterString;
     return find_first_not_of(strView.data(), position, strView.length());
 }
@@ -7747,6 +7739,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_first_not_of(
                                               size_type        position,
                                               size_type        numChars) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString || 0 == numChars);
 
     if (position < length()) {
@@ -7771,6 +7765,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_first_not_of(
                                               const CHAR_TYPE *characterString,
                                               size_type        position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     return find_first_not_of(characterString,
@@ -7785,6 +7781,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_first_not_of(
                                                       CHAR_TYPE character,
                                                       size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return find_first_not_of(&character, position, size_type(1));
 }
 
@@ -7796,6 +7793,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_last_not_of (
                                            size_type           position) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return find_last_not_of(characterString.data(),
                             position,
                             characterString.length());
@@ -7811,6 +7810,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_last_not_of(
                 BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) *)
                                 const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = characterString;
     return find_last_not_of(strView.data(), position, strView.length());
 }
@@ -7822,6 +7823,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_last_not_of (
                                               size_type        position,
                                               size_type        numChars) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString || 0 == numChars);
 
     if (0 < length()) {
@@ -7846,6 +7849,8 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_last_not_of (
                                               const CHAR_TYPE *characterString,
                                               size_type        position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&characterString);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     return find_last_not_of(characterString,
@@ -7860,6 +7865,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::find_last_not_of (
                                                       CHAR_TYPE character,
                                                       size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return find_last_not_of(&character, position, size_type(1));
 }
 
@@ -7869,6 +7875,7 @@ bool basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::contains(
                              basic_string_view<CHAR_TYPE, CHAR_TRAITS> subview)
                                                     const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return npos != find(subview);
 }
 
@@ -7877,6 +7884,7 @@ BSLS_PLATFORM_AGGRESSIVE_INLINE
 bool basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::contains(
                                CHAR_TYPE character) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return npos != find(character);
 }
 
@@ -7885,6 +7893,7 @@ BSLS_PLATFORM_AGGRESSIVE_INLINE
 bool basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::contains(
                                         const CHAR_TYPE* characterString) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
     return npos != find(characterString);
 }
@@ -7895,6 +7904,7 @@ basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::starts_with(
                      basic_string_view<CHAR_TYPE, CHAR_TRAITS> characterString)
                                                     const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (length() >= characterString.length() &&
             0 == CHAR_TRAITS::compare(data(),
                                       characterString.data(),
@@ -7906,6 +7916,7 @@ BSLS_PLATFORM_AGGRESSIVE_INLINE
 bool basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::starts_with(
                                CHAR_TYPE character) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (0 < length() &&  CHAR_TRAITS::eq(*data(), character));
 }
 
@@ -7914,6 +7925,7 @@ BSLS_PLATFORM_AGGRESSIVE_INLINE
 bool basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::starts_with(
                                         const CHAR_TYPE *characterString) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     std::size_t strLength = CHAR_TRAITS::length(characterString);
@@ -7929,6 +7941,7 @@ basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::ends_with(
                      basic_string_view<CHAR_TYPE, CHAR_TRAITS> characterString)
                                                     const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (length() >= characterString.length() &&
             0 == CHAR_TRAITS::compare(
                                   data() + length() - characterString.length(),
@@ -7941,6 +7954,7 @@ BSLS_PLATFORM_AGGRESSIVE_INLINE
 bool basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::ends_with(
                                CHAR_TYPE character) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return (0 < length() &&
             CHAR_TRAITS::eq(*(data()+ length() - 1), character));
 }
@@ -7950,6 +7964,7 @@ BSLS_PLATFORM_AGGRESSIVE_INLINE
 bool basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::ends_with(
                                         const CHAR_TYPE *characterString) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(characterString);
 
     std::size_t strLength = CHAR_TRAITS::length(characterString);
@@ -7967,6 +7982,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::substr(
                                                     size_type position,
                                                     size_type numChars) const &
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return basic_string<CHAR_TYPE,
                         CHAR_TRAITS,
                         ALLOCATOR>(*this, position, numChars);
@@ -7978,6 +7994,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::substr(size_type position,
                                                       size_type numChars) &&
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return basic_string<CHAR_TYPE,
                         CHAR_TRAITS,
                         ALLOCATOR>(MoveUtil::move(*this), position, numChars);
@@ -7989,6 +8006,7 @@ basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::substr(size_type position,
                                                       size_type numChars) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return basic_string<CHAR_TYPE,
                         CHAR_TRAITS,
                         ALLOCATOR>(*this, position, numChars);
@@ -8001,6 +8019,8 @@ int basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::compare(
                                                const basic_string& other) const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     return privateCompareRaw(size_type(0),
                              length(),
                              other.data(),
@@ -8013,6 +8033,8 @@ int basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::compare(
                                               size_type            numChars,
                                               const basic_string&  other) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     privateThrowOutOfRange(
                     length() < position,
                     "const string<...>::compare(pos,n,...): invalid position");
@@ -8030,6 +8052,8 @@ int basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::compare(
                                        size_type           otherPosition,
                                        size_type           otherNumChars) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     privateThrowOutOfRange(
                     length() < lhsPosition,
                     "const string<...>::compare(pos,n,...): invalid position");
@@ -8053,6 +8077,8 @@ BSLS_PLATFORM_AGGRESSIVE_INLINE
 int basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::compare(
                                                   const CHAR_TYPE *other) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     BSLS_ASSERT_SAFE(other);
 
     return privateCompareRaw(size_type(0),
@@ -8068,6 +8094,8 @@ int basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::compare(
                                           const CHAR_TYPE *other,
                                           size_type        otherNumChars) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     BSLS_ASSERT_SAFE(other);
 
     privateThrowOutOfRange(
@@ -8089,6 +8117,8 @@ int basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::compare(
                                                   size_type        lhsNumChars,
                                                   const CHAR_TYPE *other) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     BSLS_ASSERT_SAFE(other);
 
     return compare(lhsPosition,
@@ -8105,6 +8135,8 @@ int basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::compare(
                 BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) *)
                                 const BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(true)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     bsl::basic_string_view<CHAR_TYPE, CHAR_TRAITS> strView = other;
 
     return privateCompareRaw(size_type(0),
@@ -8121,6 +8153,8 @@ int basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::compare(
           const STRING_VIEW_LIKE_TYPE& other,
           BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) *) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     privateThrowOutOfRange(
                   length() < position,
                   "string<...>::compare(pos,n,StrViewLike): invalid position");
@@ -8146,6 +8180,8 @@ int basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::compare(
           size_type                    otherNumChars,
           BSLSTL_STRINGVIEWLIKEPARAM_ONLY_ENABLE_IF_T(void) *) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     privateThrowOutOfRange(
         length() < lhsPosition,
         "string<...>::compare(pos,n, StrViewLike,...): invalid lhs position");
@@ -8285,6 +8321,8 @@ typename bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::size_type
 bsl::erase(basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& str,
            const OTHER_CHAR_TYPE&                           c)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&c);
     typename basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::iterator it =
                                         bsl::remove(str.begin(), str.end(), c);
 
@@ -8305,6 +8343,8 @@ typename bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::size_type
 bsl::erase_if(basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& str,
               const UNARY_PREDICATE&                           pred)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&pred);
     typename basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::iterator it =
                                   bsl::remove_if(str.begin(), str.end(), pred);
 
@@ -8323,6 +8363,8 @@ bool bsl::operator==(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>& lhs,
                      const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>& rhs)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.size() == rhs.size()
         && 0 == CHAR_TRAITS::compare(lhs.data(), rhs.data(), lhs.size());
 }
@@ -8334,6 +8376,8 @@ bsl::operator==(const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>& lhs,
                 const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>& rhs)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.size() == rhs.size()
         && 0 == CHAR_TRAITS::compare(lhs.data(), rhs.data(), lhs.size());
 }
@@ -8343,6 +8387,8 @@ inline
 bool bsl::operator==(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>&  lhs,
                      const CHAR_TYPE                                  *rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_SAFE(rhs);
 
     std::size_t len = CHAR_TRAITS::length(rhs);
@@ -8391,6 +8437,8 @@ bsl::operator==(const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>& lhs,
                 const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>& rhs)
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.size() == rhs.size()
         && 0 == CHAR_TRAITS::compare(lhs.data(), rhs.data(), lhs.size());
 }
@@ -8400,6 +8448,8 @@ inline
 bool bsl::operator==(const CHAR_TYPE                                  *lhs,
                      const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC>&  rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_SAFE(lhs);
 
     std::size_t len = CHAR_TRAITS::length(lhs);
@@ -8689,6 +8739,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& lhs,
                const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> result(
         bsl::allocator_traits<ALLOCATOR>::
             select_on_container_copy_construction(lhs.get_allocator()));
@@ -8704,6 +8756,8 @@ bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>
 bsl::operator+(bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> && lhs,
                const basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>&  rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& lvalue = lhs;
     lvalue.append(rhs);
     return basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>(
@@ -8715,6 +8769,8 @@ bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>
 bsl::operator+(const basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>&  lhs,
                bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> && rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& lvalue = rhs;
     lvalue.insert(0, lhs);
     return basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>(
@@ -8726,6 +8782,8 @@ bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>
 bsl::operator+(bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>&& lhs,
                bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>&& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& lvalue = lhs;
     lvalue.append(rhs);
     return basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>(
@@ -8738,6 +8796,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>
 bsl::operator+(const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>& lhs,
                const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2> result(
         bsl::allocator_traits<ALLOC2>::
             select_on_container_copy_construction(rhs.get_allocator()));
@@ -8753,6 +8813,8 @@ bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC2>
 bsl::operator+(const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>& lhs,
                bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC2> &&   rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC2>& lvalue = rhs;
     lvalue.insert(0, lhs.c_str(), lhs.size());
     return basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC2>(
@@ -8765,6 +8827,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>
 bsl::operator+(const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1>& lhs,
                const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC1> result(
         bsl::allocator_traits<ALLOC1>::
             select_on_container_copy_construction(lhs.get_allocator()));
@@ -8780,6 +8844,8 @@ bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC1>
 bsl::operator+(bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC1> &&   lhs,
                const std::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOC2>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC1>& lvalue = lhs;
     lvalue.append(rhs.c_str(), rhs.length());
     return basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOC1>(
@@ -8792,6 +8858,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(const CHAR_TYPE                                      *lhs,
                const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&  rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_SAFE(lhs);
 
     typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::size_type
@@ -8812,6 +8880,8 @@ bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>
 bsl::operator+(const CHAR_TYPE                                        *lhs,
                bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>&&  rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_SAFE(lhs);
 
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& lvalue = rhs;
@@ -8826,6 +8896,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(CHAR_TYPE                                            lhs,
                const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> result(
         bsl::allocator_traits<ALLOCATOR>::
             select_on_container_copy_construction(rhs.get_allocator()));
@@ -8841,6 +8913,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(CHAR_TYPE                                               lhs,
                bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> && rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& lvalue = rhs;
     lvalue.insert(lvalue.begin(), lhs);
     return basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>(
@@ -8853,6 +8927,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>&  lhs,
                const CHAR_TYPE                                      *rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_SAFE(rhs);
     typename basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>::size_type
                                           rhsLength = CHAR_TRAITS::length(rhs);
@@ -8872,6 +8948,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> &&  lhs,
                const CHAR_TYPE                                         *rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_SAFE(rhs);
 
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& lvalue = lhs;
@@ -8886,6 +8964,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& lhs,
                CHAR_TYPE                                            rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> result(
         bsl::allocator_traits<ALLOCATOR>::
             select_on_container_copy_construction(lhs.get_allocator()));
@@ -8901,6 +8981,8 @@ bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>
 bsl::operator+(bsl::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR> && lhs,
                CHAR_TYPE                                               rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& lvalue = lhs;
     lvalue.push_back(rhs);
     return basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>(
@@ -8917,6 +8999,8 @@ inline BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(
 bsl::operator+(const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> & lhs,
                const STRING_VIEW_LIKE_TYPE                              & rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> result(
         allocator_traits<ALLOCATOR>::
             select_on_container_copy_construction(lhs.get_allocator()));
@@ -8936,6 +9020,8 @@ inline BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(
 bsl::operator+(      bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> && lhs,
                const STRING_VIEW_LIKE_TYPE                              &  rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     lhs.append(rhs);
     return std::move(lhs);
 }
@@ -8950,6 +9036,8 @@ inline BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(
 bsl::operator+(const STRING_VIEW_LIKE_TYPE                              & lhs,
                const bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> & rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> result(
         bsl::allocator_traits<ALLOCATOR>::
             select_on_container_copy_construction(rhs.get_allocator()));
@@ -8969,6 +9057,8 @@ inline BSLSTL_STRING_ONLY_STRINGVIEW_ENABLE_IF_T(
 bsl::operator+(const STRING_VIEW_LIKE_TYPE                              &  lhs,
                      bsl::basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR> && rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     rhs.insert(0, lhs);
     return std::move(rhs);
 }
@@ -9040,6 +9130,8 @@ std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&
 bsl::operator>>(std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&     is,
                 basic_string<CHAR_TYPE,CHAR_TRAITS, ALLOCATOR>& str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&is);
     typedef std::basic_istream<CHAR_TYPE, CHAR_TRAITS> Istrm;
     typename Istrm::sentry sentry(is);
 
@@ -9100,6 +9192,8 @@ bsl::getline(std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&    is,
              basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& str,
              CHAR_TYPE                                      delim)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&is);
     typedef std::basic_istream<CHAR_TYPE, CHAR_TRAITS> Istrm;
     std::size_t nread = 0;
     typename Istrm::sentry sentry(is, true);
@@ -9137,6 +9231,8 @@ std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&
 bsl::getline(std::basic_istream<CHAR_TYPE, CHAR_TRAITS>&    is,
              basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&is);
     return getline(is, str, is.widen('\n'));
 }
 
@@ -9147,6 +9243,8 @@ void bsl::hashAppend(
                 HASHALG&                                               hashAlg,
                 const basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     using ::BloombergLP::bslh::hashAppend;
     hashAlg(input.data(), sizeof(CHAR_TYPE)*input.size());
     hashAppend(hashAlg, input.size());
@@ -9168,6 +9266,8 @@ void bslh::hashAppend(
            HASHALG&                                                    hashAlg,
            const std::basic_string<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     hashAlg(input.data(), sizeof(CHAR_TYPE)*input.size());
     hashAppend(hashAlg, input.size());
 }

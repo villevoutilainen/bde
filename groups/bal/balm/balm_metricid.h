@@ -175,8 +175,7 @@ class MetricId {
     /// identifying the category with which this metric id is associated.
     /// The behavior is undefined unless `isValid()` is `true`.  Note that
     /// this method is logically equivalent to `description()->category()`.
-    const Category *category() const
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    const Category *category() const;
 
     /// Return the address of the non-modifiable name for the category with
     /// which this metric id is associated.  The behavior is undefined
@@ -192,8 +191,7 @@ class MetricId {
     /// Print this metric id to the specified output `stream` in some
     /// single-line human-readable form, and return a reference to the
     /// modifiable `stream`.
-    bsl::ostream& print(bsl::ostream& stream) const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::ostream& print(bsl::ostream& stream) const;
 };
 
 // ============================================================================
@@ -276,6 +274,7 @@ bool MetricId::isValid() const
 inline
 const Category *MetricId::category() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(d_description_p);
     return d_description_p->category();
 }

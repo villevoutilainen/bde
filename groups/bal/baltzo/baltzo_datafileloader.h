@@ -324,8 +324,7 @@ class DataFileLoader : public Loader {
     /// will attempt to load Zoneinfo binary data files.  The behavior is
     /// undefined unless either `configureRootPath` has been called or
     /// `configureRootPathIfValid` has been called successfully.
-    const bsl::string& rootPath() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& rootPath() const;
 
     /// Return `true` if the directory returned by the `rootPath` method
     /// exists and appears to contain valid Zoneinfo time-zone information

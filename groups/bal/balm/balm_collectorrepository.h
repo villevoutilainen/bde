@@ -362,8 +362,7 @@ class CollectorRepository {
 
     /// Return a reference to the non-modifiable registry of metrics used by
     /// this collector repository.
-    const MetricRegistry& registry() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const MetricRegistry& registry() const;
 };
 
 // ============================================================================
@@ -427,6 +426,7 @@ CollectorRepository::addIntegerCollector(const char *category,
 inline
 MetricRegistry& CollectorRepository::registry()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_registry_p;
 }
 
@@ -434,6 +434,7 @@ MetricRegistry& CollectorRepository::registry()
 inline
 const MetricRegistry& CollectorRepository::registry() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_registry_p;
 }
 }  // close package namespace

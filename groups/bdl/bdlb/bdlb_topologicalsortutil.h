@@ -694,10 +694,7 @@ struct TopologicalSortUtil {
     static bool sort(
            bsl::vector<NODE_TYPE>                               *result,
            bsl::vector<NODE_TYPE>                               *unsorted,
-           const bsl::vector<bsl::pair<NODE_TYPE, NODE_TYPE> >&  relations)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(result)
-    BSLS_ASSERT_CONVEYOR_REQUIRES_PTR(unsorted)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(relations);
+           const bsl::vector<bsl::pair<NODE_TYPE, NODE_TYPE> >&  relations);
 };
 
 // ============================================================================
@@ -881,6 +878,9 @@ bool TopologicalSortUtil::sort(
            bsl::vector<NODE_TYPE>                               *unsorted,
            const bsl::vector<bsl::pair<NODE_TYPE, NODE_TYPE> >&  relations)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(unsorted);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&relations);
     typedef bsl::vector<NODE_TYPE> vector_type;
 
     return sort(relations.begin(),

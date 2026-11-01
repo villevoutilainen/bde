@@ -123,8 +123,7 @@ class DefaultDeleter : public Deleter<TYPE> {
     /// `instance` was supplied by the same allocator as is used by this
     /// default deleter.  Note that this method does not destroy the deleter
     /// itself.
-    virtual void deleteObject(TYPE *instance)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    virtual void deleteObject(TYPE *instance);
 };
 
 // ============================================================================
@@ -149,6 +148,7 @@ template <class TYPE>
 inline
 void DefaultDeleter<TYPE>::deleteObject(TYPE *instance)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_allocator_p->deleteObject(instance);
 }
 

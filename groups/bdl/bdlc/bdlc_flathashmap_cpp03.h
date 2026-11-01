@@ -3222,6 +3222,7 @@ template <class KEY, class VALUE, class ENTRY>
 inline
 const KEY& FlatHashMap_EntryUtil<KEY, VALUE, ENTRY>::key(const ENTRY& entry)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&entry);
     return entry.first;
 }
 
@@ -3441,6 +3442,7 @@ inline
 FlatHashMap<KEY, VALUE, HASH, EQUAL>&
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::operator=(const FlatHashMap& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl = rhs.d_impl;
 
     return *this;
@@ -3452,6 +3454,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>&
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::operator=(
                                             bslmf::MovableRef<FlatHashMap> rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     FlatHashMap& lvalue = rhs;
 
     d_impl = bslmf::MovableRefUtil::move(lvalue.d_impl);
@@ -3466,6 +3469,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>&
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::operator=(
                                       bsl::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     FlatHashMap tmp(values.begin(),
                     values.end(),
                     0,
@@ -3483,6 +3487,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 VALUE& FlatHashMap<KEY, VALUE, HASH, EQUAL>::operator[](const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl[key].second;
 }
 
@@ -3490,6 +3496,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 VALUE& FlatHashMap<KEY, VALUE, HASH, EQUAL>::operator[](bslmf::MovableRef<KEY> key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl[BSLS_COMPILERFEATURES_FORWARD(KEY, key)].second;
 }
 
@@ -3497,6 +3505,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 VALUE& FlatHashMap<KEY, VALUE, HASH, EQUAL>::at(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     iterator node = d_impl.find(key);
 
     if (node == d_impl.end()) {
@@ -3512,6 +3522,7 @@ inline
 void
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.clear();
 }
 
@@ -3520,6 +3531,8 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator,
           typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::equal_range(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.equal_range(key);
 }
 
@@ -3539,6 +3552,7 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace();
 }
 #endif  // BDLC_FLATHASHMAP_VARIADIC_LIMIT_H >= 0
@@ -3551,6 +3565,7 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01));
 }
 #endif  // BDLC_FLATHASHMAP_VARIADIC_LIMIT_H >= 1
@@ -3565,6 +3580,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02));
 }
@@ -3582,6 +3598,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03));
@@ -3602,6 +3619,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3625,6 +3643,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3651,6 +3670,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3680,6 +3700,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3712,6 +3733,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3747,6 +3769,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3785,6 +3808,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3805,6 +3829,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace().first;
 }
 #endif  // BDLC_FLATHASHMAP_VARIADIC_LIMIT_H >= 0
@@ -3817,6 +3842,7 @@ typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01)).first;
 }
 #endif  // BDLC_FLATHASHMAP_VARIADIC_LIMIT_H >= 1
@@ -3831,6 +3857,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02)).first;
 }
@@ -3848,6 +3875,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03)).first;
@@ -3868,6 +3896,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3891,6 +3920,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3917,6 +3947,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3946,6 +3977,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3978,6 +4010,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -4013,6 +4046,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -4051,6 +4085,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -4074,6 +4109,7 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS, args)...);
 }
 
@@ -4084,6 +4120,7 @@ typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS, args)...).first;
 }
 // }}} END GENERATED CODE
@@ -4093,6 +4130,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
 template <class KEY, class VALUE, class HASH, class EQUAL>
 bsl::size_t FlatHashMap<KEY, VALUE, HASH, EQUAL>::erase(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.erase(key);
 }
 
@@ -4101,6 +4140,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != end());
 
     return d_impl.erase(position);
@@ -4111,6 +4151,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::erase(iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that this overload is necessary to avoid ambiguity when the key is
     // an iterator.
 
@@ -4124,6 +4165,7 @@ typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::erase(const_iterator first,
                                             const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.erase(first, last);
 }
 
@@ -4132,6 +4174,8 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::find(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.find(key);
 }
 
@@ -4140,6 +4184,7 @@ template <class INPUT_ITERATOR>
 void FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert(INPUT_ITERATOR first,
                                                   INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.insert(first, last);
 }
 
@@ -4153,6 +4198,9 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert_or_assign(const KEY& key,
                                  BSLS_COMPILERFEATURES_FORWARD_REF(MAPPED) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     iterator iter = find(key);
     if (iter != end()) {
         iter->second = BSLS_COMPILERFEATURES_FORWARD(MAPPED, obj);
@@ -4169,6 +4217,9 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert_or_assign(
                                        BloombergLP::bslmf::MovableRef<KEY> key,
                                  BSLS_COMPILERFEATURES_FORWARD_REF(MAPPED) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     const KEY& lvalue = key;
     iterator iter = find(lvalue);
     if (iter != end()) {
@@ -4187,6 +4238,9 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert_or_assign(const_iterator,
                                                        const KEY&      key,
                                  BSLS_COMPILERFEATURES_FORWARD_REF(MAPPED) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     return insert_or_assign(key,
                              BSLS_COMPILERFEATURES_FORWARD(MAPPED, obj)).first;
 }
@@ -4200,6 +4254,9 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert_or_assign(
                                        BloombergLP::bslmf::MovableRef<KEY> key,
                                  BSLS_COMPILERFEATURES_FORWARD_REF(MAPPED) obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     const KEY& lvalue = key;
     return insert_or_assign(bslmf::MovableRefUtil::move(lvalue),
                             BSLS_COMPILERFEATURES_FORWARD(MAPPED, obj)).first;
@@ -4211,6 +4268,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 void FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert(
                                       bsl::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -4219,6 +4277,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 void FlatHashMap<KEY, VALUE, HASH, EQUAL>::rehash(bsl::size_t minimumCapacity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.rehash(minimumCapacity);
 }
 
@@ -4226,6 +4285,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 void FlatHashMap<KEY, VALUE, HASH, EQUAL>::reserve(bsl::size_t numEntries)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reserve(numEntries);
 }
 
@@ -4233,6 +4293,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 void FlatHashMap<KEY, VALUE, HASH, EQUAL>::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reset();
 }
 
@@ -4252,6 +4313,8 @@ inline
 bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4268,6 +4331,8 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4287,6 +4352,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4309,6 +4376,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4334,6 +4403,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4362,6 +4433,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4393,6 +4466,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4427,6 +4502,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4464,6 +4541,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4504,6 +4583,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4547,6 +4628,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4572,6 +4655,8 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                                       BloombergLP::bslmf::MovableRef<KEY> key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4588,6 +4673,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                                       BloombergLP::bslmf::MovableRef<KEY> key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4607,6 +4694,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4629,6 +4718,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4654,6 +4745,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4682,6 +4775,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4713,6 +4808,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4747,6 +4844,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4784,6 +4883,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4824,6 +4925,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4867,6 +4970,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -4892,6 +4997,8 @@ typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                                                   const KEY&      key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4909,6 +5016,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                                                   const KEY&      key,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4929,6 +5038,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4952,6 +5063,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -4978,6 +5091,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -5007,6 +5122,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -5039,6 +5156,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -5074,6 +5193,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -5112,6 +5233,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -5153,6 +5276,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -5197,6 +5322,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -5223,6 +5350,8 @@ typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BloombergLP::bslmf::MovableRef<KEY> key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5240,6 +5369,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BloombergLP::bslmf::MovableRef<KEY> key,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5260,6 +5391,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5283,6 +5416,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5309,6 +5444,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5338,6 +5475,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5370,6 +5509,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5405,6 +5546,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5443,6 +5586,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5484,6 +5629,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5528,6 +5675,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5559,6 +5708,8 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -5573,6 +5724,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                                       BloombergLP::bslmf::MovableRef<KEY> key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5587,6 +5740,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                                                   const KEY&      key,
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -5602,6 +5757,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BloombergLP::bslmf::MovableRef<KEY> key,
                          BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -5620,6 +5777,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
                                   FlatHashMap<KEY, VALUE, HASH, EQUAL>::begin()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.begin();
 }
 
@@ -5628,6 +5786,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
                                     FlatHashMap<KEY, VALUE, HASH, EQUAL>::end()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.end();
 }
 
@@ -5647,6 +5806,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 const VALUE& FlatHashMap<KEY, VALUE, HASH, EQUAL>::at(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const_iterator node = d_impl.find(key);
 
     if (node == d_impl.end()) {
@@ -5661,6 +5822,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashMap<KEY, VALUE, HASH, EQUAL>::capacity() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.capacity();
 }
 
@@ -5668,6 +5830,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bool FlatHashMap<KEY, VALUE, HASH, EQUAL>::contains(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.contains(key);
 }
 
@@ -5675,6 +5839,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashMap<KEY, VALUE, HASH, EQUAL>::count(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.count(key);
 }
 
@@ -5682,6 +5848,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bool FlatHashMap<KEY, VALUE, HASH, EQUAL>::empty() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.empty();
 }
 
@@ -5690,6 +5857,8 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator,
           typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::equal_range(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.equal_range(key);
 }
 
@@ -5698,6 +5867,8 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::find(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.find(key);
 }
 
@@ -5705,6 +5876,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 HASH FlatHashMap<KEY, VALUE, HASH, EQUAL>::hash_function() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.hash_function();
 }
 
@@ -5712,6 +5884,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 EQUAL FlatHashMap<KEY, VALUE, HASH, EQUAL>::key_eq() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.key_eq();
 }
 
@@ -5719,6 +5892,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 float FlatHashMap<KEY, VALUE, HASH, EQUAL>::load_factor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.load_factor();
 }
 
@@ -5726,6 +5900,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 float FlatHashMap<KEY, VALUE, HASH, EQUAL>::max_load_factor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.max_load_factor();
 }
 
@@ -5733,6 +5908,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashMap<KEY, VALUE, HASH, EQUAL>::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.size();
 }
 
@@ -5743,6 +5919,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator
                       FlatHashMap<KEY, VALUE, HASH, EQUAL>::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.begin();
 }
 template <class KEY, class VALUE, class HASH, class EQUAL>
@@ -5750,6 +5927,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator
                      FlatHashMap<KEY, VALUE, HASH, EQUAL>::cbegin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.cbegin();
 }
 
@@ -5758,6 +5936,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator
                        FlatHashMap<KEY, VALUE, HASH, EQUAL>::cend() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.cend();
 }
 
@@ -5766,6 +5945,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator
                         FlatHashMap<KEY, VALUE, HASH, EQUAL>::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.end();
 }
 
@@ -5775,6 +5955,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bslma::Allocator *FlatHashMap<KEY, VALUE, HASH, EQUAL>::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.allocator();
 }
 
@@ -5784,6 +5965,8 @@ bsl::ostream& FlatHashMap<KEY, VALUE, HASH, EQUAL>::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }
@@ -5811,6 +5994,8 @@ inline
 bool bdlc::operator==(const FlatHashMap<KEY, VALUE, HASH, EQUAL>& lhs,
                       const FlatHashMap<KEY, VALUE, HASH, EQUAL>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_impl == rhs.d_impl;
 }
 
@@ -5819,6 +6004,8 @@ inline
 bool bdlc::operator!=(const FlatHashMap<KEY, VALUE, HASH, EQUAL>& lhs,
                       const FlatHashMap<KEY, VALUE, HASH, EQUAL>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_impl != rhs.d_impl;
 }
 
@@ -5837,6 +6024,8 @@ inline
 void bdlc::swap(FlatHashMap<KEY, VALUE, HASH, EQUAL>& a,
                 FlatHashMap<KEY, VALUE, HASH, EQUAL>& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
     bslalg::SwapUtil::swap(&a.d_impl, &b.d_impl);
 }
 

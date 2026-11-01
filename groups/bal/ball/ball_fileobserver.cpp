@@ -290,6 +290,7 @@ void FileObserver::getLogFormat(const char **logFileFormat,
 
 const bsl::string& FileObserver::getFileLogFormat() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     return d_fileObserver2.getFormat();
@@ -297,6 +298,7 @@ const bsl::string& FileObserver::getFileLogFormat() const
 
 const bsl::string& FileObserver::getStdoutLogFormat() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_mutex);
 
     return d_stdoutObserver.getFormat();

@@ -22,12 +22,14 @@ ConcurrentAllocatorAdapter::~ConcurrentAllocatorAdapter()
 // MANIPULATORS
 void *ConcurrentAllocatorAdapter::allocate(bsls::Types::size_type numBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(d_mutex_p);
     return d_allocator_p->allocate(numBytes);
 }
 
 void ConcurrentAllocatorAdapter::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(d_mutex_p);
     d_allocator_p->deallocate(address);
 }

@@ -269,14 +269,12 @@ class CategoryManager_RadixTree_Node {
 
     /// Return a reference providing modifiable access to the child nodes of
     /// this node.
-    Children& children()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    Children& children();
 
     /// Return a reference providing modifiable access to the prefix string of
     /// this node.  Note that only a part of the prefix is stored in a node;
     /// the full key is obtained by concatenating the prefixes of all nodes.
-    bsl::string& prefix()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::string& prefix();
 
     /// Efficiently exchange the value of this object with the value of the
     /// specified `other` object.  This method provides the no-throw
@@ -286,25 +284,21 @@ class CategoryManager_RadixTree_Node {
 
     /// Return a reference providing modifiable access to the optional value of
     /// this node.
-    bsl::optional<t_VALUE>& value()
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::optional<t_VALUE>& value();
 
     // ACCESSORS
 
     /// Return a reference providing non-modifiable access to the child nodes
     /// of this node.
-    const Children& children() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const Children& children() const;
 
     /// Return a reference providing non-modifiable access to the prefix string
     /// of this node.
-    const bsl::string& prefix() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& prefix() const;
 
     /// Return a reference providing non-modifiable access to the optional
     /// value of this node.
-    const bsl::optional<t_VALUE>& value() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::optional<t_VALUE>& value() const;
 
                                   // Aspects
 
@@ -926,6 +920,7 @@ inline
 typename CategoryManager_RadixTree_Node<t_VALUE>::Children&
 CategoryManager_RadixTree_Node<t_VALUE>::children()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_children;
 }
 
@@ -933,6 +928,7 @@ template <class t_VALUE>
 inline
 bsl::string& CategoryManager_RadixTree_Node<t_VALUE>::prefix()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_prefix;
 }
 
@@ -952,6 +948,7 @@ template <class t_VALUE>
 inline
 bsl::optional<t_VALUE>& CategoryManager_RadixTree_Node<t_VALUE>::value()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.object();
 }
 
@@ -961,6 +958,7 @@ inline
 const typename CategoryManager_RadixTree_Node<t_VALUE>::Children&
 CategoryManager_RadixTree_Node<t_VALUE>::children() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_children;
 }
 
@@ -968,6 +966,7 @@ template <class t_VALUE>
 inline
 const bsl::string& CategoryManager_RadixTree_Node<t_VALUE>::prefix() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_prefix;
 }
 
@@ -976,6 +975,7 @@ inline
 const bsl::optional<t_VALUE>&
 CategoryManager_RadixTree_Node<t_VALUE>::value() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value.object();
 }
 

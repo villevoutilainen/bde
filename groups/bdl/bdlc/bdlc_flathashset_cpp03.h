@@ -1580,6 +1580,7 @@ template <class ENTRY>
 inline
 const ENTRY& FlatHashSet_EntryUtil<ENTRY>::key(const ENTRY& entry)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&entry);
     return entry;
 }
 
@@ -1790,6 +1791,7 @@ inline
 FlatHashSet<KEY, HASH, EQUAL>& FlatHashSet<KEY, HASH, EQUAL>::operator=(
                                                         const FlatHashSet& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl = rhs.d_impl;
 
     return *this;
@@ -1800,6 +1802,7 @@ inline
 FlatHashSet<KEY, HASH, EQUAL>& FlatHashSet<KEY, HASH, EQUAL>::operator=(
                                             bslmf::MovableRef<FlatHashSet> rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     FlatHashSet& lvalue = rhs;
 
     d_impl = bslmf::MovableRefUtil::move(lvalue.d_impl);
@@ -1813,6 +1816,7 @@ inline
 FlatHashSet<KEY, HASH, EQUAL>& FlatHashSet<KEY, HASH, EQUAL>::operator=(
                                              bsl::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     FlatHashSet tmp(values.begin(),
                     values.end(),
                     0,
@@ -1830,6 +1834,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 void FlatHashSet<KEY, HASH, EQUAL>::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.clear();
 }
 
@@ -1848,6 +1853,7 @@ inline bsl::pair<typename FlatHashSet<KEY, HASH, EQUAL>::iterator, bool>
 FlatHashSet<KEY, HASH, EQUAL>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace();
 }
 #endif  // BDLC_FLATHASHSET_VARIADIC_LIMIT_G >= 0
@@ -1859,6 +1865,7 @@ inline bsl::pair<typename FlatHashSet<KEY, HASH, EQUAL>::iterator, bool>
 FlatHashSet<KEY, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01));
 }
 #endif  // BDLC_FLATHASHSET_VARIADIC_LIMIT_G >= 1
@@ -1872,6 +1879,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02));
 }
@@ -1888,6 +1896,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03));
@@ -1907,6 +1916,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -1929,6 +1939,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -1954,6 +1965,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -1982,6 +1994,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2013,6 +2026,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2047,6 +2061,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2084,6 +2099,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                           BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2104,6 +2120,7 @@ inline typename FlatHashSet<KEY, HASH, EQUAL>::iterator
 FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace().first;
 }
 #endif  // BDLC_FLATHASHSET_VARIADIC_LIMIT_G >= 0
@@ -2116,6 +2133,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01)
                          ).first;
 }
@@ -2131,6 +2149,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02)
                          ).first;
@@ -2149,6 +2168,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03)
@@ -2170,6 +2190,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2194,6 +2215,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2221,6 +2243,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2251,6 +2274,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2284,6 +2308,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2320,6 +2345,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2359,6 +2385,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                          BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -2382,6 +2409,7 @@ inline bsl::pair<typename FlatHashSet<KEY, HASH, EQUAL>::iterator, bool>
 FlatHashSet<KEY, HASH, EQUAL>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS, args)...);
 }
 
@@ -2392,6 +2420,7 @@ FlatHashSet<KEY, HASH, EQUAL>::emplace_hint(
                   typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator,
                   BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS, args)...).first;
 }
 
@@ -2403,6 +2432,8 @@ template <class KEY, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashSet<KEY, HASH, EQUAL>::erase(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.erase(key);
 }
 
@@ -2411,6 +2442,7 @@ inline
 typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator
                   FlatHashSet<KEY, HASH, EQUAL>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != end());
 
     return d_impl.erase(position);
@@ -2421,6 +2453,7 @@ inline
 typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator
 FlatHashSet<KEY, HASH, EQUAL>::erase(const_iterator first, const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.erase(first, last);
 }
 
@@ -2430,6 +2463,7 @@ inline
 void FlatHashSet<KEY, HASH, EQUAL>::insert(INPUT_ITERATOR first,
                                            INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.insert(first, last);
 }
 
@@ -2438,6 +2472,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 void FlatHashSet<KEY, HASH, EQUAL>::insert(bsl::initializer_list<KEY> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -2446,6 +2481,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 void FlatHashSet<KEY, HASH, EQUAL>::rehash(bsl::size_t minimumCapacity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.rehash(minimumCapacity);
 }
 
@@ -2453,6 +2489,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 void FlatHashSet<KEY, HASH, EQUAL>::reserve(bsl::size_t numEntries)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reserve(numEntries);
 }
 
@@ -2460,6 +2497,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 void FlatHashSet<KEY, HASH, EQUAL>::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reset();
 }
 
@@ -2479,6 +2517,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashSet<KEY, HASH, EQUAL>::capacity() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.capacity();
 }
 
@@ -2486,6 +2525,8 @@ template <class KEY, class HASH, class EQUAL>
 inline
 bool FlatHashSet<KEY, HASH, EQUAL>::contains(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.contains(key);
 }
 
@@ -2493,6 +2534,8 @@ template <class KEY, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashSet<KEY, HASH, EQUAL>::count(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.count(key);
 }
 
@@ -2500,6 +2543,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 bool FlatHashSet<KEY, HASH, EQUAL>::empty() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.empty();
 }
 
@@ -2509,6 +2553,8 @@ bsl::pair<typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator,
           typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator>
                FlatHashSet<KEY, HASH, EQUAL>::equal_range(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.equal_range(key);
 }
 
@@ -2517,6 +2563,8 @@ inline
 typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator
                       FlatHashSet<KEY, HASH, EQUAL>::find(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.find(key);
 }
 
@@ -2524,6 +2572,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 HASH FlatHashSet<KEY, HASH, EQUAL>::hash_function() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.hash_function();
 }
 
@@ -2531,6 +2580,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 EQUAL FlatHashSet<KEY, HASH, EQUAL>::key_eq() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.key_eq();
 }
 
@@ -2538,6 +2588,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 float FlatHashSet<KEY, HASH, EQUAL>::load_factor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.load_factor();
 }
 
@@ -2545,6 +2596,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 float FlatHashSet<KEY, HASH, EQUAL>::max_load_factor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.max_load_factor();
 }
 
@@ -2552,6 +2604,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashSet<KEY, HASH, EQUAL>::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.size();
 }
 
@@ -2562,6 +2615,7 @@ inline
 typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator
                                    FlatHashSet<KEY, HASH, EQUAL>::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.begin();
 }
 
@@ -2570,6 +2624,7 @@ inline
 typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator
                                  FlatHashSet<KEY, HASH, EQUAL>::cbegin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.cbegin();
 }
 
@@ -2578,6 +2633,7 @@ inline
 typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator
                                    FlatHashSet<KEY, HASH, EQUAL>::cend() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.cend();
 }
 
@@ -2586,6 +2642,7 @@ inline
 typename FlatHashSet<KEY, HASH, EQUAL>::const_iterator
                                      FlatHashSet<KEY, HASH, EQUAL>::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.end();
 }
 
@@ -2595,6 +2652,7 @@ template <class KEY, class HASH, class EQUAL>
 inline
 bslma::Allocator *FlatHashSet<KEY, HASH, EQUAL>::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.allocator();
 }
 
@@ -2604,6 +2662,8 @@ bsl::ostream& FlatHashSet<KEY, HASH, EQUAL>::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }
@@ -2631,6 +2691,8 @@ inline
 bool bdlc::operator==(const FlatHashSet<KEY, HASH, EQUAL>& lhs,
                       const FlatHashSet<KEY, HASH, EQUAL>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_impl == rhs.d_impl;
 }
 
@@ -2639,6 +2701,8 @@ inline
 bool bdlc::operator!=(const FlatHashSet<KEY, HASH, EQUAL>& lhs,
                       const FlatHashSet<KEY, HASH, EQUAL>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_impl != rhs.d_impl;
 }
 
@@ -2656,6 +2720,8 @@ inline
 void bdlc::swap(FlatHashSet<KEY, HASH, EQUAL>& a,
                 FlatHashSet<KEY, HASH, EQUAL>& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
     bslalg::SwapUtil::swap(&a.d_impl, &b.d_impl);
 }
 

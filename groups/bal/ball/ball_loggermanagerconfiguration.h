@@ -450,8 +450,7 @@ class LoggerManagerConfiguration {
 
     /// Return a reference to the non-modifiable defaults object attribute
     /// of this object.
-    const LoggerManagerDefaults& defaults() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const LoggerManagerDefaults& defaults() const;
 
     /// Return the default-logger record-buffer size attribute of the
     /// `LoggerManagerDefaults` attribute of this object.
@@ -479,13 +478,11 @@ class LoggerManagerConfiguration {
 
     /// Return a reference providing non-modifiable access to the
     /// user-fields populator functor attribute of this object.
-    const UserFieldsPopulatorCallback& userFieldsPopulatorCallback() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const UserFieldsPopulatorCallback& userFieldsPopulatorCallback() const;
 
     /// Return a reference to the non-modifiable category name filter
     /// functor attribute of this object.
-    const CategoryNameFilterCallback& categoryNameFilterCallback() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const CategoryNameFilterCallback& categoryNameFilterCallback() const;
 
     /// Return a reference to the non-modifiable default severity-level
     /// thresholds functor attribute of this object.

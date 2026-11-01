@@ -168,38 +168,23 @@ class DatetimeInterval {
     bsls::Types::Int64 d_microseconds;  // field for fractional day
 
     // FRIENDS
-    friend DatetimeInterval operator-(const DatetimeInterval& value)
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(value);
+    friend DatetimeInterval operator-(const DatetimeInterval& value);
 
     friend bool operator==(const DatetimeInterval& lhs,
-                           const DatetimeInterval& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const DatetimeInterval& rhs);
     friend bool operator!=(const DatetimeInterval& lhs,
-                           const DatetimeInterval& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const DatetimeInterval& rhs);
     friend bool operator<(const DatetimeInterval& lhs,
-                          const DatetimeInterval& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                          const DatetimeInterval& rhs);
     friend bool operator<=(const DatetimeInterval& lhs,
-                           const DatetimeInterval& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const DatetimeInterval& rhs);
     friend bool operator>(const DatetimeInterval& lhs,
-                          const DatetimeInterval& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                          const DatetimeInterval& rhs);
     friend bool operator>=(const DatetimeInterval& lhs,
-                           const DatetimeInterval& rhs)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES(lhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const DatetimeInterval& rhs);
 
     template <class HASHALG>
-    friend void hashAppend(HASHALG& hashAlg, const DatetimeInterval& object)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(hashAlg)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+    friend void hashAppend(HASHALG& hashAlg, const DatetimeInterval& object);
 
     // PRIVATE MANIPULATORS
 
@@ -305,16 +290,14 @@ class DatetimeInterval {
     /// object.  The behavior is undefined unless the resulting time
     /// interval value is valid (i.e., the days field must not overflow a
     /// 32-bit integer).
-    DatetimeInterval& operator+=(const DatetimeInterval& rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    DatetimeInterval& operator+=(const DatetimeInterval& rhs);
 
     /// Subtract from this time interval the value of the specified `rhs`
     /// time interval, and return a reference providing modifiable access to
     /// this object.  The behavior is undefined unless the resulting time
     /// interval value is valid (i.e., the days field must not overflow a
     /// 32-bit integer).
-    DatetimeInterval& operator-=(const DatetimeInterval& rhs)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    DatetimeInterval& operator-=(const DatetimeInterval& rhs);
 
     /// Set the time interval represented by this object to the value given
     /// by the specified `days`, and the optionally specified `hours`,
@@ -328,8 +311,7 @@ class DatetimeInterval {
                      bsls::Types::Int64 minutes = 0,
                      bsls::Types::Int64 seconds = 0,
                      bsls::Types::Int64 milliseconds = 0,
-                     bsls::Types::Int64 microseconds = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                     bsls::Types::Int64 microseconds = 0);
 
     /// Set the time interval represented by this object to the value given
     /// by the specified `days`, and the optionally specified `hours`,
@@ -344,62 +326,54 @@ class DatetimeInterval {
                            bsls::Types::Int64 minutes = 0,
                            bsls::Types::Int64 seconds = 0,
                            bsls::Types::Int64 milliseconds = 0,
-                           bsls::Types::Int64 microseconds = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                           bsls::Types::Int64 microseconds = 0);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `days`.
-    void setTotalDays(int days) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setTotalDays(int days);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `hours`.  The behavior is undefined unless the resulting
     /// time interval value is valid (i.e., the days field must not overflow
     /// a 32-bit integer).
-    void setTotalHours(bsls::Types::Int64 hours)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setTotalHours(bsls::Types::Int64 hours);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `hours`.  Return 0 if the resulting time interval value is
     /// valid (i.e., the `days` field must not overflow an `int`) and a
     /// non-zero value (with no effect) otherwise.
-    int setTotalHoursIfValid(bsls::Types::Int64 hours)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setTotalHoursIfValid(bsls::Types::Int64 hours);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `minutes`.  The behavior is undefined unless the resulting
     /// time interval value is valid (i.e., the days field must not overflow
     /// a 32-bit integer).
-    void setTotalMinutes(bsls::Types::Int64 minutes)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setTotalMinutes(bsls::Types::Int64 minutes);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `minutes`.  Return 0 if the resulting time interval value
     /// is valid (i.e., the `days` field must not overflow an `int`) and a
     /// non-zero value (with no effect) otherwise.
-    int setTotalMinutesIfValid(bsls::Types::Int64 minutes)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setTotalMinutesIfValid(bsls::Types::Int64 minutes);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `seconds`.  The behavior is undefined unless the resulting
     /// time interval value is valid (i.e., the days field must not overflow
     /// a 32-bit integer).
-    void setTotalSeconds(bsls::Types::Int64 seconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setTotalSeconds(bsls::Types::Int64 seconds);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `seconds`.  Return 0 if the resulting time interval value
     /// is valid (i.e., the `days` field must not overflow an `int`) and a
     /// non-zero value (with no effect) otherwise.
-    int setTotalSecondsIfValid(bsls::Types::Int64 seconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setTotalSecondsIfValid(bsls::Types::Int64 seconds);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `seconds`.  The fractional part of `seconds`, if any, is
     /// rounded to the nearest whole number of microseconds.  The behavior
     /// is undefined unless the resulting time interval value is valid
     /// (i.e., the days field must not overflow a 32-bit integer).
-    void setTotalSecondsFromDouble(double seconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setTotalSecondsFromDouble(double seconds);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `seconds`.  The fractional part of `seconds`, if any, is
@@ -407,29 +381,25 @@ class DatetimeInterval {
     /// the resulting time interval value is valid (i.e., the `days` field
     /// must not overflow an `int`) and a non-zero value (with no effect)
     /// otherwise.
-    int setTotalSecondsFromDoubleIfValid(double seconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setTotalSecondsFromDoubleIfValid(double seconds);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `milliseconds`.  The behavior is undefined unless the
     /// resulting time interval value is valid (i.e., the days field must
     /// not overflow a 32-bit integer).
-    void setTotalMilliseconds(bsls::Types::Int64 milliseconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setTotalMilliseconds(bsls::Types::Int64 milliseconds);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `milliseconds`.  Return 0 if the resulting time interval
     /// value is valid (i.e., the days field must not overflow an `int`) and
     /// a non-zero value (with no effect) otherwise.
-    int setTotalMillisecondsIfValid(bsls::Types::Int64 milliseconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int setTotalMillisecondsIfValid(bsls::Types::Int64 milliseconds);
 
     /// Set the overall value of this object to indicate the specified
     /// number of `microseconds`.  Note that there is no
     /// `setTotalMicrosecondsIfValid` because no value of `microseconds` can
     /// cause the number of days to overflow.
-    void setTotalMicroseconds(bsls::Types::Int64 microseconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void setTotalMicroseconds(bsls::Types::Int64 microseconds);
 
     /// Add to this time interval the specified number of `days`, and the
     /// optionally specified number of `hours`, `minutes`, `seconds`,
@@ -444,8 +414,7 @@ class DatetimeInterval {
                                   bsls::Types::Int64 minutes = 0,
                                   bsls::Types::Int64 seconds = 0,
                                   bsls::Types::Int64 milliseconds = 0,
-                                  bsls::Types::Int64 microseconds = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                  bsls::Types::Int64 microseconds = 0);
 
     /// Add to this time interval the specified number of `days`, and the
     /// optionally specified number of `hours`, `minutes`, `seconds`,
@@ -459,90 +428,79 @@ class DatetimeInterval {
                            bsls::Types::Int64 minutes = 0,
                            bsls::Types::Int64 seconds = 0,
                            bsls::Types::Int64 milliseconds = 0,
-                           bsls::Types::Int64 microseconds = 0)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                           bsls::Types::Int64 microseconds = 0);
 
     /// Add to this time interval the specified number of `days`, and return
     /// a reference providing modifiable access to this object.  The
     /// behavior is undefined unless the resulting time interval value is
     /// valid (i.e., the days field must not overflow a 32-bit integer).
-    DatetimeInterval& addDays(int days) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    DatetimeInterval& addDays(int days);
 
     /// Add to this time interval the specified number of `days`.  Return 0
     /// if the resulting time interval value is valid (i.e., the days field
     /// must not overflow an `int`) and a non-zero value (with no effect)
     /// otherwise.
-    int addDaysIfValid(int days) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addDaysIfValid(int days);
 
     /// Add to this time interval the specified number of `hours`, and
     /// return a reference providing modifiable access to this object.  The
     /// behavior is undefined unless the resulting time interval value is
     /// valid (i.e., the days field must not overflow a 32-bit integer).
-    DatetimeInterval& addHours(bsls::Types::Int64 hours)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    DatetimeInterval& addHours(bsls::Types::Int64 hours);
 
     /// Add to this time interval the specified number of `hours`.  Return 0
     /// if the resulting time interval value is valid (i.e., the days field
     /// must not overflow an `int`) and a non-zero value (with no effect)
     /// otherwise.
-    int addHoursIfValid(bsls::Types::Int64 hours)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addHoursIfValid(bsls::Types::Int64 hours);
 
     /// Add to this time interval the specified number of `minutes`, and
     /// return a reference providing modifiable access to this object.  The
     /// behavior is undefined unless the resulting time interval value is
     /// valid (i.e., the days field must not overflow a 32-bit integer).
-    DatetimeInterval& addMinutes(bsls::Types::Int64 minutes)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    DatetimeInterval& addMinutes(bsls::Types::Int64 minutes);
 
     /// Add to this time interval the specified number of `minutes`.  Return
     /// 0 if the resulting time interval value is valid (i.e., the days
     /// field must not overflow an `int`) and a non-zero value (with no
     /// effect) otherwise.
-    int addMinutesIfValid(bsls::Types::Int64 minutes)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addMinutesIfValid(bsls::Types::Int64 minutes);
 
     /// Add to this time interval the specified number of `seconds`, and
     /// return a reference providing modifiable access to this object.  The
     /// behavior is undefined unless the resulting time interval value is
     /// valid (i.e., the days field must not overflow a 32-bit integer).
-    DatetimeInterval& addSeconds(bsls::Types::Int64 seconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    DatetimeInterval& addSeconds(bsls::Types::Int64 seconds);
 
     /// Add to this time interval the specified number of `seconds`.  Return
     /// 0 if the resulting time interval value is valid (i.e., the days
     /// field must not overflow an `int`) and a non-zero value (with no
     /// effect) otherwise.
-    int addSecondsIfValid(bsls::Types::Int64 seconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addSecondsIfValid(bsls::Types::Int64 seconds);
 
     /// Add to this time interval the specified number of `milliseconds`,
     /// and return a reference providing modifiable access to this object.
     /// The behavior is undefined unless the resulting time interval value
     /// is valid (i.e., the days field must not overflow a 32-bit integer).
-    DatetimeInterval& addMilliseconds(bsls::Types::Int64 milliseconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    DatetimeInterval& addMilliseconds(bsls::Types::Int64 milliseconds);
 
     /// Add to this time interval the specified number of `milliseconds`.
     /// Return 0 if the resulting time interval value is valid (i.e., the
     /// days field must not overflow an `int`) and a non-zero value (with no
     /// effect) otherwise.
-    int addMillisecondsIfValid(bsls::Types::Int64 milliseconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addMillisecondsIfValid(bsls::Types::Int64 milliseconds);
 
     /// Add to this time interval the specified number of `microseconds`,
     /// and return a reference providing modifiable access to this object.
     /// The behavior is undefined unless the resulting time interval value
     /// is valid (i.e., the days field must not overflow a 32-bit integer).
-    DatetimeInterval& addMicroseconds(bsls::Types::Int64 microseconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    DatetimeInterval& addMicroseconds(bsls::Types::Int64 microseconds);
 
     /// Add to this time interval the specified number of `microseconds`.
     /// Return 0 if the resulting time interval value is valid (i.e., the
     /// days field must not overflow an `int`) and a non-zero value (with no
     /// effect) otherwise.
-    int addMicrosecondsIfValid(bsls::Types::Int64 microseconds)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int addMicrosecondsIfValid(bsls::Types::Int64 microseconds);
 
                                   // Aspects
 
@@ -557,8 +515,7 @@ class DatetimeInterval {
     /// documentation for more information on BDEX streaming of
     /// value-semantic types and containers.
     template <class STREAM>
-    STREAM& bdexStreamIn(STREAM& stream, int version)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    STREAM& bdexStreamIn(STREAM& stream, int version);
 
     // ACCESSORS
 
@@ -566,37 +523,36 @@ class DatetimeInterval {
     /// of this time interval.  Note that the return value may be negative.
     /// Also note that the return value is the same as that returned by
     /// `totalDays`.
-    int days() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int days() const;
 
     /// Return the value of this time interval as an integral number of
     /// microseconds modulo the number of microseconds in a day.  Note that
     /// the return value may be negative.
-    bsls::Types::Int64 fractionalDayInMicroseconds() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::Int64 fractionalDayInMicroseconds() const;
 
     /// Return the hours field in the canonical representation of the value
     /// of this time interval.  Note that the return value may be negative.
-    int hours() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int hours() const;
 
     /// Return the minutes field in the canonical representation of the
     /// value of this time interval.  Note that the return value may be
     /// negative.
-    int minutes() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int minutes() const;
 
     /// Return the seconds field in the canonical representation of the
     /// value of this time interval.  Note that the return value may be
     /// negative.
-    int seconds() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int seconds() const;
 
     /// Return the milliseconds field in the canonical representation of the
     /// value of this time interval.  Note that the return value may be
     /// negative.
-    int milliseconds() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int milliseconds() const;
 
     /// Return the microseconds field in the canonical representation of the
     /// value of this time interval.  Note that the return value may be
     /// negative.
-    int microseconds() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int microseconds() const;
 
     /// Efficiently write to the specified `result` buffer no more than the
     /// specified `numBytes` of a representation of the value of this
@@ -614,43 +570,40 @@ class DatetimeInterval {
     /// truncated to avoid `result` overrun.
     int printToBuffer(char *result,
                       int   numBytes,
-                      int   fractionalSecondPrecision = 6) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                      int   fractionalSecondPrecision = 6) const;
 
     /// Return the value of this time interval in integral days, rounded
     /// toward 0.  Note that the return value may be negative.  Also note
     /// that the return value is the same as that returned by `days`.
-    int totalDays() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    int totalDays() const;
 
     /// Return the value of this time interval in integral hours, rounded
     /// toward 0.  Note that the return value may be negative.
-    bsls::Types::Int64 totalHours() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::Int64 totalHours() const;
 
     /// Return the value of this time interval in integral minutes, rounded
     /// toward 0.  Note that the return value may be negative.
-    bsls::Types::Int64 totalMinutes() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::Int64 totalMinutes() const;
 
     /// Return the value of this time interval in integral seconds, rounded
     /// toward 0.  Note that the return value may be negative.
-    bsls::Types::Int64 totalSeconds() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::Int64 totalSeconds() const;
 
     /// Return the value of this time interval in seconds as a `double`,
     /// potentially with a fractional part.  Note that the return value may
     /// be negative.  Also note that the conversion from the internal
     /// representation to `double` may *lose* precision.
-    double totalSecondsAsDouble() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    double totalSecondsAsDouble() const;
 
     /// Return the value of this time interval in integral milliseconds,
     /// rounded towards zero.  Note that the return value may be negative.
-    bsls::Types::Int64 totalMilliseconds() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::Int64 totalMilliseconds() const;
 
     /// Return the value of this time interval as an integral number of
     /// microseconds.  The behavior is undefined unless the number of
     /// microseconds can be represented with a 64-bit signed integer.  Note
     /// that the return value may be negative.
-    bsls::Types::Int64 totalMicroseconds() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::Int64 totalMicroseconds() const;
 
                                   // Aspects
 
@@ -663,9 +616,7 @@ class DatetimeInterval {
     /// information on BDEX streaming of value-semantic types and
     /// containers.
     template <class STREAM>
-    STREAM& bdexStreamOut(STREAM& stream, int version) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    STREAM& bdexStreamOut(STREAM& stream, int version) const;
 
     /// Write the value of this object to the specified output `stream` in a
     /// human-readable format, and return a reference to `stream`.
@@ -681,9 +632,7 @@ class DatetimeInterval {
     /// is not fully specified, and can change without notice.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        int           spacesPerLevel = 4) const;
 
 #ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
 
@@ -708,9 +657,7 @@ class DatetimeInterval {
     /// return a reference to `stream`.
     ///
     /// @DEPRECATED: use `operator<<` or `print` instead.
-    bsl::ostream& streamOut(bsl::ostream& stream) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    bsl::ostream& streamOut(bsl::ostream& stream) const;
 
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
 
@@ -723,16 +670,14 @@ class DatetimeInterval {
 /// unless the resulting time interval value is valid (i.e., the days field
 /// must not overflow a 32-bit integer).
 DatetimeInterval operator+(const DatetimeInterval& lhs,
-                           const DatetimeInterval& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const DatetimeInterval& rhs);
 
 /// Return a `DatetimeInterval` object whose value is the difference between
 /// the specified `lhs` and `rhs` time intervals.  The behavior is undefined
 /// unless the resulting time interval value is valid (i.e., the days field
 /// must not overflow a 32-bit integer).
 DatetimeInterval operator-(const DatetimeInterval& lhs,
-                           const DatetimeInterval& rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                           const DatetimeInterval& rhs);
 
 /// Return a `DatetimeInterval` object whose value is the negative of the
 /// specified time interval `value`.  The behavior is undefined unless
@@ -772,9 +717,7 @@ bool operator>=(const DatetimeInterval& lhs, const DatetimeInterval& rhs);
 /// operation has no effect.  Note that this human-readable format is not
 /// fully specified and can change without notice.  Also note that this
 /// method has the same behavior as `object.print(stream, 0, -1)`.
-bsl::ostream& operator<<(bsl::ostream& stream, const DatetimeInterval& object)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(object);
+bsl::ostream& operator<<(bsl::ostream& stream, const DatetimeInterval& object);
 
 // FREE FUNCTIONS
 
@@ -854,6 +797,8 @@ DatetimeInterval& DatetimeInterval::operator=(const DatetimeInterval& rhs)
 inline
 DatetimeInterval& DatetimeInterval::operator+=(const DatetimeInterval& rhs)
 {
+BSLS_ASSERT_CONVEYOR_OBJECT(this);
+BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
 #ifdef BSLS_ASSERT_IS_USED
     int rc = addIntervalIfValid(rhs.d_days, 0, 0, 0, 0, rhs.d_microseconds);
     BSLS_ASSERT(0 == rc && "operator+= over/under flow");  (void) rc;
@@ -867,6 +812,8 @@ DatetimeInterval& DatetimeInterval::operator+=(const DatetimeInterval& rhs)
 inline
 DatetimeInterval& DatetimeInterval::operator-=(const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     Int64 rhsDays         = rhs.d_days;
     Int64 rhsMicroseconds = rhs.d_microseconds;
     if (INT_MIN == rhsDays) {
@@ -891,6 +838,7 @@ DatetimeInterval& DatetimeInterval::operator-=(const DatetimeInterval& rhs)
 inline
 void DatetimeInterval::setTotalDays(int days)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_days         = days;
     d_microseconds = 0;
 }
@@ -898,6 +846,7 @@ void DatetimeInterval::setTotalDays(int days)
 inline
 void DatetimeInterval::setTotalHours(bsls::Types::Int64 hours)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(hours / TimeUnitRatio::k_H_PER_D,
            hours % TimeUnitRatio::k_H_PER_D * TimeUnitRatio::k_US_PER_H);
 }
@@ -905,6 +854,7 @@ void DatetimeInterval::setTotalHours(bsls::Types::Int64 hours)
 inline
 int DatetimeInterval::setTotalHoursIfValid(bsls::Types::Int64 hours)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return assignIfValid(hours / TimeUnitRatio::k_H_PER_D,
                         (hours % TimeUnitRatio::k_H_PER_D) *
                                                     TimeUnitRatio::k_US_PER_H);
@@ -913,6 +863,7 @@ int DatetimeInterval::setTotalHoursIfValid(bsls::Types::Int64 hours)
 inline
 void DatetimeInterval::setTotalMinutes(bsls::Types::Int64 minutes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(minutes / TimeUnitRatio::k_M_PER_D,
            minutes % TimeUnitRatio::k_M_PER_D * TimeUnitRatio::k_US_PER_M);
 }
@@ -920,6 +871,7 @@ void DatetimeInterval::setTotalMinutes(bsls::Types::Int64 minutes)
 inline
 int DatetimeInterval::setTotalMinutesIfValid(bsls::Types::Int64 minutes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return assignIfValid(minutes / TimeUnitRatio::k_M_PER_D,
                         (minutes % TimeUnitRatio::k_M_PER_D) *
                                                     TimeUnitRatio::k_US_PER_M);
@@ -928,6 +880,7 @@ int DatetimeInterval::setTotalMinutesIfValid(bsls::Types::Int64 minutes)
 inline
 void DatetimeInterval::setTotalSeconds(bsls::Types::Int64 seconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(seconds / TimeUnitRatio::k_S_PER_D,
            seconds % TimeUnitRatio::k_S_PER_D * TimeUnitRatio::k_US_PER_S);
 }
@@ -935,6 +888,7 @@ void DatetimeInterval::setTotalSeconds(bsls::Types::Int64 seconds)
 inline
 int DatetimeInterval::setTotalSecondsIfValid(bsls::Types::Int64 seconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return assignIfValid(seconds / TimeUnitRatio::k_S_PER_D,
                         (seconds % TimeUnitRatio::k_S_PER_D) *
                                                     TimeUnitRatio::k_US_PER_S);
@@ -943,6 +897,7 @@ int DatetimeInterval::setTotalSecondsIfValid(bsls::Types::Int64 seconds)
 inline
 void DatetimeInterval::setTotalMilliseconds(bsls::Types::Int64 milliseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(milliseconds / TimeUnitRatio::k_MS_PER_D,
            milliseconds % TimeUnitRatio::k_MS_PER_D
                                                  * TimeUnitRatio::k_US_PER_MS);
@@ -952,6 +907,7 @@ inline
 int DatetimeInterval::setTotalMillisecondsIfValid(
                                                bsls::Types::Int64 milliseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return assignIfValid(milliseconds / TimeUnitRatio::k_MS_PER_D,
                         (milliseconds % TimeUnitRatio::k_MS_PER_D) *
                                                    TimeUnitRatio::k_US_PER_MS);
@@ -960,6 +916,7 @@ int DatetimeInterval::setTotalMillisecondsIfValid(
 inline
 void DatetimeInterval::setTotalMicroseconds(bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(microseconds / TimeUnitRatio::k_US_PER_D,
            microseconds % TimeUnitRatio::k_US_PER_D);
 }
@@ -967,6 +924,7 @@ void DatetimeInterval::setTotalMicroseconds(bsls::Types::Int64 microseconds)
 inline
 DatetimeInterval& DatetimeInterval::addDays(int days)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(static_cast<bsls::Types::Int64>(d_days)
                                        + static_cast<bsls::Types::Int64>(days),
            d_microseconds);
@@ -976,6 +934,7 @@ DatetimeInterval& DatetimeInterval::addDays(int days)
 inline
 int DatetimeInterval::addDaysIfValid(int days)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return assignIfValid(static_cast<bsls::Types::Int64>(d_days)
                                        + static_cast<bsls::Types::Int64>(days),
                          d_microseconds);
@@ -984,6 +943,7 @@ int DatetimeInterval::addDaysIfValid(int days)
 inline
 DatetimeInterval& DatetimeInterval::addHours(bsls::Types::Int64 hours)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(static_cast<bsls::Types::Int64>(d_days)
                                             + hours / TimeUnitRatio::k_H_PER_D,
            d_microseconds +
@@ -994,6 +954,7 @@ DatetimeInterval& DatetimeInterval::addHours(bsls::Types::Int64 hours)
 inline
 int DatetimeInterval::addHoursIfValid(bsls::Types::Int64 hours)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return assignIfValid(static_cast<bsls::Types::Int64>(d_days)
                                             + hours / TimeUnitRatio::k_H_PER_D,
                          d_microseconds + (hours % TimeUnitRatio::k_H_PER_D) *
@@ -1003,6 +964,7 @@ int DatetimeInterval::addHoursIfValid(bsls::Types::Int64 hours)
 inline
 DatetimeInterval& DatetimeInterval::addMinutes(bsls::Types::Int64 minutes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(static_cast<bsls::Types::Int64>(d_days)
                                           + minutes / TimeUnitRatio::k_M_PER_D,
            d_microseconds +
@@ -1013,6 +975,7 @@ DatetimeInterval& DatetimeInterval::addMinutes(bsls::Types::Int64 minutes)
 inline
 int DatetimeInterval::addMinutesIfValid(bsls::Types::Int64 minutes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return assignIfValid(static_cast<bsls::Types::Int64>(d_days)
                                           + minutes / TimeUnitRatio::k_M_PER_D,
                          d_microseconds +
@@ -1023,6 +986,7 @@ int DatetimeInterval::addMinutesIfValid(bsls::Types::Int64 minutes)
 inline
 DatetimeInterval& DatetimeInterval::addSeconds(bsls::Types::Int64 seconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(static_cast<bsls::Types::Int64>(d_days)
                                           + seconds / TimeUnitRatio::k_S_PER_D,
            d_microseconds +
@@ -1033,6 +997,7 @@ DatetimeInterval& DatetimeInterval::addSeconds(bsls::Types::Int64 seconds)
 inline
 int DatetimeInterval::addSecondsIfValid(bsls::Types::Int64 seconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return assignIfValid(static_cast<bsls::Types::Int64>(d_days)
                                           + seconds / TimeUnitRatio::k_S_PER_D,
                          d_microseconds +
@@ -1044,6 +1009,7 @@ inline
 DatetimeInterval&
 DatetimeInterval::addMilliseconds(bsls::Types::Int64 milliseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(static_cast<bsls::Types::Int64>(d_days)
                                     + milliseconds / TimeUnitRatio::k_MS_PER_D,
            d_microseconds + milliseconds % TimeUnitRatio::k_MS_PER_D
@@ -1054,6 +1020,7 @@ DatetimeInterval::addMilliseconds(bsls::Types::Int64 milliseconds)
 inline
 int DatetimeInterval::addMillisecondsIfValid(bsls::Types::Int64 milliseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return assignIfValid(static_cast<bsls::Types::Int64>(d_days)
                                     + milliseconds / TimeUnitRatio::k_MS_PER_D,
                          d_microseconds +
@@ -1065,6 +1032,7 @@ inline
 DatetimeInterval&
 DatetimeInterval::addMicroseconds(bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(static_cast<bsls::Types::Int64>(d_days)
                                     + microseconds / TimeUnitRatio::k_US_PER_D,
            d_microseconds + microseconds % TimeUnitRatio::k_US_PER_D);
@@ -1074,6 +1042,7 @@ DatetimeInterval::addMicroseconds(bsls::Types::Int64 microseconds)
 inline
 int DatetimeInterval::addMicrosecondsIfValid(bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return assignIfValid(static_cast<bsls::Types::Int64>(d_days)
                                     + microseconds / TimeUnitRatio::k_US_PER_D,
                          d_microseconds +
@@ -1085,6 +1054,8 @@ int DatetimeInterval::addMicrosecondsIfValid(bsls::Types::Int64 microseconds)
 template <class STREAM>
 STREAM& DatetimeInterval::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 2: {
@@ -1129,24 +1100,28 @@ STREAM& DatetimeInterval::bdexStreamIn(STREAM& stream, int version)
 inline
 int DatetimeInterval::days() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_days;
 }
 
 inline
 bsls::Types::Int64 DatetimeInterval::fractionalDayInMicroseconds() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_microseconds;
 }
 
 inline
 int DatetimeInterval::hours() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_microseconds / TimeUnitRatio::k_US_PER_H);
 }
 
 inline
 int DatetimeInterval::minutes() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_microseconds / TimeUnitRatio::k_US_PER_M
                                                    % TimeUnitRatio::k_M_PER_H);
 }
@@ -1154,6 +1129,7 @@ int DatetimeInterval::minutes() const
 inline
 int DatetimeInterval::seconds() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_microseconds / TimeUnitRatio::k_US_PER_S
                                                    % TimeUnitRatio::k_S_PER_M);
 }
@@ -1161,6 +1137,7 @@ int DatetimeInterval::seconds() const
 inline
 int DatetimeInterval::milliseconds() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_microseconds / TimeUnitRatio::k_US_PER_MS
                                                   % TimeUnitRatio::k_MS_PER_S);
 }
@@ -1168,18 +1145,21 @@ int DatetimeInterval::milliseconds() const
 inline
 int DatetimeInterval::microseconds() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<int>(d_microseconds % TimeUnitRatio::k_US_PER_MS);
 }
 
 inline
 int DatetimeInterval::totalDays() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_days;
 }
 
 inline
 bsls::Types::Int64 DatetimeInterval::totalHours() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<bsls::Types::Int64>(d_days) * TimeUnitRatio::k_H_PER_D
                                   + d_microseconds / TimeUnitRatio::k_US_PER_H;
 }
@@ -1187,6 +1167,7 @@ bsls::Types::Int64 DatetimeInterval::totalHours() const
 inline
 bsls::Types::Int64 DatetimeInterval::totalMinutes() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<bsls::Types::Int64>(d_days) * TimeUnitRatio::k_M_PER_D
                                   + d_microseconds / TimeUnitRatio::k_US_PER_M;
 }
@@ -1194,6 +1175,7 @@ bsls::Types::Int64 DatetimeInterval::totalMinutes() const
 inline
 bsls::Types::Int64 DatetimeInterval::totalSeconds() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<bsls::Types::Int64>(d_days) * TimeUnitRatio::k_S_PER_D
                                   + d_microseconds / TimeUnitRatio::k_US_PER_S;
 }
@@ -1201,6 +1183,7 @@ bsls::Types::Int64 DatetimeInterval::totalSeconds() const
 inline
 double DatetimeInterval::totalSecondsAsDouble() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_days * static_cast<double>(TimeUnitRatio::k_S_PER_D) +
                          static_cast<double>(d_microseconds) /
                                 static_cast<double>(TimeUnitRatio::k_US_PER_S);
@@ -1209,6 +1192,7 @@ double DatetimeInterval::totalSecondsAsDouble() const
 inline
 bsls::Types::Int64 DatetimeInterval::totalMilliseconds() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return static_cast<bsls::Types::Int64>(d_days) * TimeUnitRatio::k_MS_PER_D
                                  + d_microseconds / TimeUnitRatio::k_US_PER_MS;
 }
@@ -1216,6 +1200,7 @@ bsls::Types::Int64 DatetimeInterval::totalMilliseconds() const
 inline
 bsls::Types::Int64 DatetimeInterval::totalMicroseconds() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_REVIEW(   0 >= d_days
                      || (bsl::numeric_limits<bsls::Types::Int64>::max() -
                         d_microseconds) / TimeUnitRatio::k_US_PER_D >= d_days);
@@ -1242,6 +1227,8 @@ bsls::Types::Int64 DatetimeInterval::totalMicroseconds() const
 template <class STREAM>
 STREAM& DatetimeInterval::bdexStreamOut(STREAM& stream, int version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream) {
         switch (version) { // switch on the schema version
           case 2: {
@@ -1285,6 +1272,8 @@ inline
 bdlt::DatetimeInterval bdlt::operator+(const DatetimeInterval& lhs,
                                        const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     DatetimeInterval ret(lhs);
 
 #ifdef BSLS_ASSERT_IS_USED
@@ -1302,6 +1291,8 @@ inline
 bdlt::DatetimeInterval bdlt::operator-(const DatetimeInterval& lhs,
                                        const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     DatetimeInterval ret(lhs);
 
 #ifdef BSLS_ASSERT_IS_USED
@@ -1318,6 +1309,7 @@ bdlt::DatetimeInterval bdlt::operator-(const DatetimeInterval& lhs,
 inline
 bdlt::DatetimeInterval bdlt::operator-(const DatetimeInterval& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BSLS_REVIEW(value.d_days > bsl::numeric_limits<int32_t>::min());
 
     DatetimeInterval interval;
@@ -1331,6 +1323,8 @@ bdlt::DatetimeInterval bdlt::operator-(const DatetimeInterval& value)
 inline
 bool bdlt::operator==(const DatetimeInterval& lhs, const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_days == rhs.d_days
         && lhs.d_microseconds == rhs.d_microseconds;
 }
@@ -1338,6 +1332,8 @@ bool bdlt::operator==(const DatetimeInterval& lhs, const DatetimeInterval& rhs)
 inline
 bool bdlt::operator!=(const DatetimeInterval& lhs, const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_days != rhs.d_days
         || lhs.d_microseconds != rhs.d_microseconds;
 }
@@ -1363,6 +1359,8 @@ bool bdlt::operator<=(const DatetimeInterval& lhs,
 inline
 bool bdlt::operator> (const DatetimeInterval& lhs, const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_days > rhs.d_days
         || (   lhs.d_days == rhs.d_days
             && lhs.d_microseconds > rhs.d_microseconds);
@@ -1371,6 +1369,8 @@ bool bdlt::operator> (const DatetimeInterval& lhs, const DatetimeInterval& rhs)
 inline
 bool bdlt::operator>=(const DatetimeInterval& lhs, const DatetimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_days > rhs.d_days
         || (   lhs.d_days == rhs.d_days
             && lhs.d_microseconds >= rhs.d_microseconds);
@@ -1387,6 +1387,8 @@ bsl::ostream& bdlt::operator<<(bsl::ostream&           stream,
 template <class HASHALG>
 void bdlt::hashAppend(HASHALG& hashAlg, const DatetimeInterval& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlg, object.d_days);
     hashAppend(hashAlg, object.d_microseconds);

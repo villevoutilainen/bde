@@ -117,6 +117,7 @@ ConcurrentFixedPool::~ConcurrentFixedPool()
 // MANIPULATORS
 void *ConcurrentFixedPool::allocate()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int contentionCount = 0;
 
     int head;
@@ -146,6 +147,7 @@ void *ConcurrentFixedPool::allocate()
 
 void ConcurrentFixedPool::deallocate(void *address)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     int contentionCount = 0;
 
     Node *node = (Node *)(void *)((char *)address - d_dataOffset);
@@ -165,6 +167,7 @@ void ConcurrentFixedPool::deallocate(void *address)
 
 void ConcurrentFixedPool::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> guard(&d_nodePoolMutex);
 
     d_freeList.storeRelease(0);
@@ -175,6 +178,7 @@ void ConcurrentFixedPool::release()
 
 int ConcurrentFixedPool::reserveCapacity(int numObjects)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= numObjects);
 
     int contentionCount = 0;

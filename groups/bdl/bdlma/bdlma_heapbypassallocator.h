@@ -193,12 +193,10 @@ class HeapBypassAllocator : public bslma::Allocator {
     /// of bytes, then it will throw a `std::bad_alloc` exception in an
     /// exception-enabled build, or else will abort the program in a non-
     /// exception build.  The behavior is undefined unless `0 <= size`.
-    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(bsls::Types::size_type size) BSLS_KEYWORD_OVERRIDE;
 
     /// This method has no effect for this heap bypass allocator.
-    void deallocate(void *) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *) BSLS_KEYWORD_OVERRIDE;
 };
 
 //=============================================================================
@@ -212,6 +210,7 @@ class HeapBypassAllocator : public bslma::Allocator {
 inline
 void *HeapBypassAllocator::allocate(size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(size == 0)) {
         return 0;                                                     // RETURN
     }
@@ -229,6 +228,7 @@ void *HeapBypassAllocator::allocate(size_type size)
 
 inline void HeapBypassAllocator::deallocate(void *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 }  // close package namespace

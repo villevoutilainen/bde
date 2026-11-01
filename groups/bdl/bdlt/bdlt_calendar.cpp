@@ -177,6 +177,7 @@ Calendar::~Calendar()
 // MANIPULATORS
 void Calendar::addDay(const Date& date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == length()) {
         setValidRange(date, date);
@@ -191,6 +192,7 @@ void Calendar::addDay(const Date& date)
 
 void Calendar::addHoliday(const Date& date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == length()) {
         d_nonBusinessDays.reserveCapacity(1);
@@ -221,6 +223,7 @@ void Calendar::addHoliday(const Date& date)
 
 void Calendar::addHolidayCode(const Date& date, int holidayCode)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == length()) {
         d_nonBusinessDays.reserveCapacity(1);
@@ -273,6 +276,8 @@ void Calendar::addWeekendDay(DayOfWeek::Enum weekendDay)
 
 void Calendar::addWeekendDays(const DayOfWeekSet& weekendDays)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&weekendDays);
     if (!weekendDays.isEmpty()) {
         for (DayOfWeekSet::iterator it = weekendDays.begin();
              it != weekendDays.end();
@@ -336,6 +341,7 @@ int Calendar::getNextBusinessDay(Date        *nextBusinessDay,
                                  const Date&  date,
                                  int          nth) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(nextBusinessDay);
     BSLS_ASSERT_NONCONVEYOR(Date(9999, 12, 31) > date);
@@ -363,6 +369,8 @@ int Calendar::getNextBusinessDay(Date        *nextBusinessDay,
 // DEPRECATED METHODS
 Date Calendar::getNextBusinessDay(const Date& initialDate) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&initialDate);
     Date currentDate = initialDate;
     ++currentDate;
 
@@ -422,6 +430,8 @@ Date Calendar::getNextBusinessDay(const Date& initialDate) const
 
 Date Calendar::getNextBusinessDay(const Date& initialDate, int nth) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&initialDate);
     BSLS_ASSERT(nth >= 1);
 
     Date currentDate       = initialDate;
@@ -580,6 +590,8 @@ Calendar_BusinessDayConstIter::Calendar_BusinessDayConstIter(
 // FREE FUNCTIONS
 void bdlt::swap(Calendar& a, Calendar& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
     if (a.allocator() == b.allocator()) {
         a.swap(b);
 

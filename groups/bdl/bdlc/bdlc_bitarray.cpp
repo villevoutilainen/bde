@@ -191,6 +191,7 @@ void BitArray::rotateRight(size_t numBits)
 
 void BitArray::setLength(size_t newLength, bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const size_t oldLength = d_length;
     const int    oldPos    = static_cast<unsigned>(oldLength) %
                                                              k_BITS_PER_UINT64;
@@ -237,6 +238,8 @@ bsl::ostream& BitArray::print(bsl::ostream& stream,
                               int           level,
                               int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return stream ? bdlb::BitStringUtil::print(stream,
                                                data(),
                                                d_length,
@@ -250,6 +253,8 @@ bsl::ostream& BitArray::print(bsl::ostream& stream,
 // FREE FUNCTIONS
 void bdlc::swap(BitArray& a, BitArray& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
     if (a.allocator() == b.allocator()) {
         a.swap(b);
 

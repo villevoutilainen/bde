@@ -308,17 +308,13 @@ class Formatter_StreamHolder {
 
     /// Return the address that provides modifiable access to this object's
     /// held `bsl::ostream`.
-    bsl::ostream *stream()
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    bsl::ostream *stream();
 
     // ACCESSORS
 
     /// Return the address that provides non-modifiable access to this
     /// object's held `bsl::ostream`.
-    const bsl::ostream *stream() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    const bsl::ostream *stream() const;
 };
 
                            // =====================
@@ -722,8 +718,7 @@ class Formatter {
     // ACCESSORS
 
     /// Return the encoder options being used.
-    const EncoderOptions& encoderOptions() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const EncoderOptions& encoderOptions() const;
 
     /// Return the current level of indentation.
     int indentLevel() const;
@@ -771,6 +766,7 @@ Formatter_StreamHolder::Formatter_StreamHolder(bsl::ostream *stream)
 inline
 bsl::ostream *Formatter_StreamHolder::stream()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_stream_p;
 }
 
@@ -778,6 +774,7 @@ bsl::ostream *Formatter_StreamHolder::stream()
 inline
 const bsl::ostream *Formatter_StreamHolder::stream() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_stream_p;
 }
 
@@ -1024,6 +1021,7 @@ bsl::ostream& Formatter::rawOutputStream()
 inline
 const EncoderOptions& Formatter::encoderOptions() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_encoderOptions;
 }
 

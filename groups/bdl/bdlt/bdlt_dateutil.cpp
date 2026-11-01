@@ -29,6 +29,7 @@ int dayOfWeekDifference(DayOfWeek::Enum day1, DayOfWeek::Enum day2)
 // PRIVATE CLASS METHODS
 Date DateUtil::addYearsEomEndOfFebruary(const Date& original, int numYears)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     // Implementation note: The complete 'addYearsEom' was too long to be
     // implemented as an 'inline' function.  However, performance testing
     // showed that this factoring of 'addYearsEom', where the trivial and
@@ -61,6 +62,7 @@ Date DateUtil::addYearsEomEndOfFebruary(const Date& original, int numYears)
 // CLASS METHODS
 Date DateUtil::addMonthsEom(const Date& original, int numMonths)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     const int totalMonths = original.year() * 12 + original.month() +
                                                                  numMonths - 1;
 
@@ -90,6 +92,7 @@ Date DateUtil::addMonthsEom(const Date& original, int numMonths)
 
 Date DateUtil::addMonthsNoEom(const Date& original, int numMonths)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     const int totalMonths = original.year() * 12 + original.month()
                                                                + numMonths - 1;
 
@@ -123,6 +126,7 @@ Date DateUtil::lastDayOfWeekInMonth(int             year,
 
 Date DateUtil::nextDayOfWeek(DayOfWeek::Enum dayOfWeek, const Date& date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     const Date d = date + 1;
 
     return d + dayOfWeekDifference(d.dayOfWeek(), dayOfWeek);
@@ -131,6 +135,7 @@ Date DateUtil::nextDayOfWeek(DayOfWeek::Enum dayOfWeek, const Date& date)
 Date DateUtil::nextDayOfWeekInclusive(DayOfWeek::Enum dayOfWeek,
                                       const Date&     date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     return date + dayOfWeekDifference(date.dayOfWeek(), dayOfWeek);
 }
 
@@ -160,6 +165,7 @@ Date DateUtil::nthDayOfWeekInMonth(int             year,
 
 Date DateUtil::previousDayOfWeek(DayOfWeek::Enum dayOfWeek, const Date& date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     const Date d = date - 1;
 
     return d - dayOfWeekDifference(dayOfWeek, d.dayOfWeek());
@@ -168,6 +174,7 @@ Date DateUtil::previousDayOfWeek(DayOfWeek::Enum dayOfWeek, const Date& date)
 Date DateUtil::previousDayOfWeekInclusive(DayOfWeek::Enum dayOfWeek,
                                           const Date&     date)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&date);
     return date - dayOfWeekDifference(dayOfWeek, date.dayOfWeek());
 }
 

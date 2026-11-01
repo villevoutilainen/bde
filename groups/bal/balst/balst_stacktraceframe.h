@@ -307,8 +307,7 @@ class StackTraceFrame {
     /// Return a reference providing non-modifiable access to the
     /// `libraryFileName` attribute of this object.  Note the empty string
     /// indicates that the `libraryFileName` is "unknown".
-    const bsl::string& libraryFileName() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& libraryFileName() const;
 
     /// Return the value of the `lineNumber` attribute of this object.  Note
     /// that -1 indicates that `lineNumber` is "unknown".
@@ -317,8 +316,7 @@ class StackTraceFrame {
     /// Return a reference providing non-modifiable access to the
     /// `mangledSymbolName` attribute of this object.  Note that the empty
     /// string indicates that `mangledSymbolName` is "unknown".
-    const bsl::string& mangledSymbolName() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& mangledSymbolName() const;
 
     /// Return the value of the `offsetFromSymbol` attribute of this object.
     /// Note that `(bsl::size_t)-1` indicates that `lineNumber` is not
@@ -328,14 +326,12 @@ class StackTraceFrame {
     /// Return a reference providing non-modifiable access to the
     /// `sourceFileName` attribute of this object.  Note that the empty
     /// string indicates that `sourceFileName` is "unknown".
-    const bsl::string& sourceFileName() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& sourceFileName() const;
 
     /// Return a reference providing non-modifiable access to the
     /// `symbolName` attribute of this object.  Note that the empty string
     /// indicates that `symbolName` is "unknown".
-    const bsl::string& symbolName() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& symbolName() const;
 
                         // Predicates
 
@@ -569,6 +565,7 @@ const void *StackTraceFrame::address() const
 inline
 const bsl::string& StackTraceFrame::libraryFileName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_libraryFileName;
 }
 
@@ -587,18 +584,21 @@ bsl::size_t StackTraceFrame::offsetFromSymbol() const
 inline
 const bsl::string& StackTraceFrame::mangledSymbolName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_mangledSymbolName;
 }
 
 inline
 const bsl::string& StackTraceFrame::sourceFileName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_sourceFileName;
 }
 
 inline
 const bsl::string& StackTraceFrame::symbolName() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_symbolName;
 }
 

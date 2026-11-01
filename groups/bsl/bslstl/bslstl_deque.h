@@ -604,22 +604,20 @@ class Deque_Base {
 
     /// Return an iterator providing modifiable access to the first element
     /// in this deque, and the past-the-end iterator if this deque is empty.
-    iterator begin() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator begin() BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the past-the-end (forward) iterator providing modifiable
     /// access to this deque.
-    iterator end() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator end() BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reverse iterator providing modifiable access to the last
     /// element in this deque, and the past-the-end reverse iterator if this
     /// deque is empty.
-    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reverse_iterator rbegin() BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the past-the-end reverse iterator providing modifiable access
     /// to this deque.
-    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reverse_iterator rend() BSLS_KEYWORD_NOEXCEPT;
 
     // *** element access ***
 
@@ -633,9 +631,7 @@ class Deque_Base {
     /// Return a reference providing modifiable access to the element at the
     /// specified `position` in this deque.  Throw a `std::out_of_range`
     /// exception if `position >= size()`.
-    reference at(size_type position)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    reference at(size_type position);
 
     /// Return a reference providing modifiable access to the first element
     /// in this deque.  The behavior is undefined unless this deque is not
@@ -655,45 +651,36 @@ class Deque_Base {
 
     // *** iterators ***
 
-    const_iterator  begin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator  begin() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return an iterator providing non-modifiable access to the first
     /// element in this deque, and the past-the-end iterator if this deque
     /// is empty.
-    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator cbegin() const BSLS_KEYWORD_NOEXCEPT;
 
-    const_iterator  end() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator  end() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the past-the-end (forward) iterator providing non-modifiable
     /// access to this deque.
-    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator cend() const BSLS_KEYWORD_NOEXCEPT;
 
-    const_reverse_iterator  rbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator  rbegin() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return a reverse iterator providing non-modifiable access to the
     /// last element in this deque, and the past-the-end reverse iterator if
     /// this deque is empty.
-    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator crbegin() const BSLS_KEYWORD_NOEXCEPT;
 
-    const_reverse_iterator rend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator rend() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the past-the-end reverse iterator providing non-modifiable
     /// access to this deque.
-    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_reverse_iterator crend() const BSLS_KEYWORD_NOEXCEPT;
 
     // *** capacity ***
 
     /// Return the number of elements contained by this deque.
-    size_type size() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type size() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the sum of the current size of this deque plus the minimum
     /// number of `push_front` or `push_back` operations needed to
@@ -704,8 +691,7 @@ class Deque_Base {
 
     /// Return `true` if this deque contains no elements, and `false`
     /// otherwise.
-    bool empty() const BSLS_KEYWORD_NOEXCEPT
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool empty() const BSLS_KEYWORD_NOEXCEPT;
 
     // *** element access ***
 
@@ -719,9 +705,7 @@ class Deque_Base {
     /// Return a reference providing non-modifiable access to the element at
     /// the specified `position` in this deque.  Throw a `std::out_of_range`
     /// exception if `position >= size()`.
-    const_reference at(size_type position) const
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const_reference at(size_type position) const;
 
     /// Return a reference providing non-modifiable access to the first
     /// element in this deque.  The behavior is undefined unless this deque
@@ -1118,7 +1102,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
           BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range,
           const ALLOCATOR&                           basicAllocator =
                                                                   ALLOCATOR())
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(range);
 
     /// Create a deque that has the same value as the specified `original`
     /// object.  Use the allocator returned by
@@ -1218,8 +1202,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// access to this object.  This method requires that the (template
     /// parameter) `VALUE_TYPE` be `copy-insertable` into this deque (see
     /// {Requirements on `VALUE_TYPE`}).
-    deque& operator=(std::initializer_list<value_type> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    deque& operator=(std::initializer_list<value_type> values);
 #endif
 
     /// Assign to this deque the values in the range starting at the
@@ -1235,16 +1218,14 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// `first` and `last` refer to a sequence of valid values where `first`
     /// is at a position at or before `last`.
     template <class INPUT_ITERATOR>
-    void assign(INPUT_ITERATOR first, INPUT_ITERATOR last)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void assign(INPUT_ITERATOR first, INPUT_ITERATOR last);
 
     /// Assign to this object the value resulting from first clearing this
     /// deque and then appending the specified `numElements` having the
     /// specified `value`.  This method requires that the (template
     /// parameter) `VALUE_TYPE` be `copy-assignable` and `copy-insertable`
     /// into this deque (see {Requirements on `VALUE_TYPE`}).
-    void assign(size_type numElements, const VALUE_TYPE& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void assign(size_type numElements, const VALUE_TYPE& value);
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
     /// Assign to this object the value resulting from first clearing this
@@ -1252,8 +1233,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// `values` initializer list.  This method requires that the (template
     /// parameter) `VALUE_TYPE` be `copy-assignable` and `copy-insertable`
     /// into this deque (see {Requirements on `VALUE_TYPE`}).
-    void assign(std::initializer_list<value_type> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void assign(std::initializer_list<value_type> values);
 #endif
 
     /// Assign to this object the elements of the specified `range`.  Note that
@@ -1262,9 +1242,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// parameter) `VALUE_TYPE`.
     template <class t_RANGE>
     BSLSTL_DEQUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
-    void assign_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void assign_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
     // *** capacity ***
 
@@ -1278,7 +1256,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// Also note that this method, if it has any effect, will invalidate
     /// iterators initialized prior to the call.  Also note that this method
     /// is not part of the C++ standard.
-    void reserve(size_type numElements) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reserve(size_type numElements);
 
     /// Change the size of this deque to the specified `newSize`.  Erase
     /// `size() - newSize` elements at the back if `newSize < size()`.
@@ -1288,16 +1266,15 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// `VALUE_TYPE` are emplaced.  This method has no effect if
     /// `newSize == size()`.  Throw `bsl::length_error` if
     /// `newSize > max_size()`.
-    void resize(size_type newSize) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
-    void resize(size_type newSize, const VALUE_TYPE& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void resize(size_type newSize);
+    void resize(size_type newSize, const VALUE_TYPE& value);
 
     /// Minimize the memory used by this deque to the extent possible
     /// without moving any contained elements.  If an exception is thrown,
     /// the value of this object is unchanged.  Note that this method has no
     /// effect on the memory used by individual elements of the (template
     /// parameter) `VALUE_TYPE`.
-    void shrink_to_fit() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void shrink_to_fit();
 
     // *** modifiers ***
 
@@ -1307,9 +1284,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// (template parameter) `VALUE_TYPE`.
     template <class t_RANGE>
     BSLSTL_DEQUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
-    void append_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void append_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
     /// Prepend to the front of this object the elements of the specified
     /// `range`.  Note that `range` must meet the requirements of an input
@@ -1317,17 +1292,14 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// convertible to (template parameter) `VALUE_TYPE`.
     template <class t_RANGE>
     BSLSTL_DEQUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
-    void prepend_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void prepend_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
     /// Prepend to the front of this deque a copy of the specified `value`.
     /// This method offers full guarantee of rollback in case an exception
     /// is thrown.  This method requires that the (template parameter)
     /// `VALUE_TYPE` be `copy-constructible` (see {Requirements on
     /// `VALUE_TYPE`}).
-    void push_front(const VALUE_TYPE& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void push_front(const VALUE_TYPE& value);
 
     /// Prepend to the front of this deque the specified move-insertable
     /// `value`.  `value` is left in a valid but unspecified state.  If an
@@ -1336,15 +1308,14 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// method requires that the (template parameter) `VALUE_TYPE` be
     /// `move-insertable` into this deque (see {Requirements on
     /// `VALUE_TYPE`}).
-    void push_front(BloombergLP::bslmf::MovableRef<value_type> value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void push_front(BloombergLP::bslmf::MovableRef<value_type> value);
 
     /// Append to the back of this deque a copy of the specified `value`.
     /// This method offers full guarantee of rollback in case an exception
     /// is thrown.  This method requires that the (template parameter)
     /// `VALUE_TYPE` be `copy-constructible` (see {Requirements on
     /// `VALUE_TYPE`}).
-    void push_back(const VALUE_TYPE& value) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void push_back(const VALUE_TYPE& value);
 
     /// Append to the back of this deque the specified move-insertable
     /// `value`.  `value` is left in a valid but unspecified state.  If an
@@ -1353,8 +1324,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// method requires that the (template parameter) `VALUE_TYPE` be
     /// `move-insertable` into this deque (see {Requirements on
     /// `VALUE_TYPE`}).
-    void push_back(BloombergLP::bslmf::MovableRef<value_type> value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void push_back(BloombergLP::bslmf::MovableRef<value_type> value);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Prepend to the front of this deque a newly created `value_type`
@@ -1369,8 +1339,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// `arguments` (see
     /// {Requirements on `VALUE_TYPE`}).
     template <class... Args>
-    reference emplace_front(Args&&... arguments)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reference emplace_front(Args&&... arguments);
 
     /// Append to the back of this deque a newly created `value_type`
     /// object, constructed by forwarding `get_allocator()` (if required)
@@ -1384,8 +1353,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// `arguments` (see
     /// {Requirements on `VALUE_TYPE`}).
     template <class... Args>
-    reference emplace_back(Args&&... arguments)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    reference emplace_back(Args&&... arguments);
 #endif
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
@@ -1403,8 +1371,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// undefined unless `position` is an iterator in the range
     /// `[cbegin() .. cend()]` (both endpoints included).
     template <class... Args>
-    iterator emplace(const_iterator position, Args&&... arguments)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator emplace(const_iterator position, Args&&... arguments);
 #endif
 
     /// Erase the first element from this deque.  The behavior is undefined
@@ -1505,9 +1472,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     template <class t_RANGE>
     BSLSTL_DEQUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
     iterator insert_range(const_iterator                             position,
-                          BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
-                                          BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                          BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
     /// Remove from this deque the element at the specified `position`, and
     /// return an iterator providing modifiable access to the element
@@ -1550,7 +1515,7 @@ class deque : public  Deque_Base<VALUE_TYPE>
     /// Remove all elements from this deque making its size 0.  Note that
     /// although this deque is empty after this method returns, it preserves
     /// the same capacity it had before the method was called.
-    void clear() BSLS_KEYWORD_NOEXCEPT BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void clear() BSLS_KEYWORD_NOEXCEPT;
 
     // ACCESSORS
 
@@ -1660,8 +1625,7 @@ deque(from_range_t, t_RANGE&&, t_ALLOCATOR = t_ALLOCATOR())
 /// `VALUE_TYPE`}).
 template <class VALUE_TYPE, class ALLOCATOR>
 bool operator==(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
-                const deque<VALUE_TYPE, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const deque<VALUE_TYPE, ALLOCATOR>& rhs);
 
 #ifndef BSLS_COMPILERFEATURES_SUPPORT_THREE_WAY_COMPARISON
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
@@ -1674,8 +1638,7 @@ bool operator==(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
 /// on `VALUE_TYPE`}).
 template <class VALUE_TYPE, class ALLOCATOR>
 bool operator!=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
-                const deque<VALUE_TYPE, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const deque<VALUE_TYPE, ALLOCATOR>& rhs);
 #endif
 
 #ifdef BSLALG_SYNTHTHREEWAYUTIL_AVAILABLE
@@ -1686,8 +1649,7 @@ bool operator!=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
 template <class VALUE_TYPE, class ALLOCATOR>
 BloombergLP::bslalg::SynthThreeWayUtil::Result<VALUE_TYPE> operator<=>(
                                       const deque<VALUE_TYPE, ALLOCATOR>& lhs,
-                                      const deque<VALUE_TYPE, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                                      const deque<VALUE_TYPE, ALLOCATOR>& rhs);
 
 #else
 
@@ -1704,8 +1666,7 @@ BloombergLP::bslalg::SynthThreeWayUtil::Result<VALUE_TYPE> operator<=>(
 /// defined for `value_type`.
 template <class VALUE_TYPE, class ALLOCATOR>
 bool operator<(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
-               const deque<VALUE_TYPE, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+               const deque<VALUE_TYPE, ALLOCATOR>& rhs);
 
 /// Return `true` if the value of the specified `lhs` deque is
 /// lexicographically greater than that of the specified `rhs` deque, and
@@ -1716,8 +1677,7 @@ bool operator<(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
 /// operator returns `rhs < lhs`.
 template <class VALUE_TYPE, class ALLOCATOR>
 bool operator>(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
-               const deque<VALUE_TYPE, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+               const deque<VALUE_TYPE, ALLOCATOR>& rhs);
 
 /// Return `true` if the value of the specified `lhs` deque is
 /// lexicographically less than or equal to that of the specified `rhs`
@@ -1728,8 +1688,7 @@ bool operator>(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
 /// `value_type`.  Note that this operator returns `!(rhs < lhs)`.
 template <class VALUE_TYPE, class ALLOCATOR>
 bool operator<=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
-                const deque<VALUE_TYPE, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const deque<VALUE_TYPE, ALLOCATOR>& rhs);
 
 /// Return `true` if the value of the specified `lhs` deque is
 /// lexicographically greater than or equal to that of the specified `rhs`
@@ -1740,8 +1699,7 @@ bool operator<=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
 /// `value_type`.  Note that this operator returns `!(lhs < rhs)`.
 template <class VALUE_TYPE, class ALLOCATOR>
 bool operator>=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
-                const deque<VALUE_TYPE, ALLOCATOR>& rhs)
-         BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const deque<VALUE_TYPE, ALLOCATOR>& rhs);
 
 #endif  // BSLALG_SYNTHTHREEWAYUTIL_AVAILABLE
 
@@ -1751,15 +1709,13 @@ bool operator>=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
 /// to the specified `value`.  Return the number of elements erased.
 template <class VALUE_TYPE, class ALLOCATOR, class BDE_OTHER_TYPE>
 typename deque<VALUE_TYPE, ALLOCATOR>::size_type
-erase(deque<VALUE_TYPE, ALLOCATOR>& deq, const BDE_OTHER_TYPE& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(deq);
+erase(deque<VALUE_TYPE, ALLOCATOR>& deq, const BDE_OTHER_TYPE& value);
 
 /// Erase all the elements in the specified deque `deq` that satisfy the
 /// specified predicate `predicate`.  Return the number of elements erased.
 template <class VALUE_TYPE, class ALLOCATOR, class PREDICATE>
 typename deque<VALUE_TYPE, ALLOCATOR>::size_type
-erase_if(deque<VALUE_TYPE, ALLOCATOR>& deq, PREDICATE predicate)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(deq);
+erase_if(deque<VALUE_TYPE, ALLOCATOR>& deq, PREDICATE predicate);
 
 /// Exchange the value of the specified `a` object with that of the
 /// specified `b` object; also exchange the allocator of `a` with that of
@@ -2042,6 +1998,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::iterator
 Deque_Base<VALUE_TYPE>::begin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_start;
 }
 
@@ -2050,6 +2007,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::iterator
 Deque_Base<VALUE_TYPE>::end() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_finish;
 }
 
@@ -2058,6 +2016,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::reverse_iterator
 Deque_Base<VALUE_TYPE>::rbegin() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(end());
 }
 
@@ -2066,6 +2025,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::reverse_iterator
 Deque_Base<VALUE_TYPE>::rend() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return reverse_iterator(begin());
 }
 
@@ -2083,6 +2043,7 @@ template <class VALUE_TYPE>
 typename Deque_Base<VALUE_TYPE>::reference
 Deque_Base<VALUE_TYPE>::at(size_type position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(position >= size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -2120,6 +2081,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_iterator
 Deque_Base<VALUE_TYPE>::begin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_start;
 }
 
@@ -2128,6 +2090,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_iterator
 Deque_Base<VALUE_TYPE>::cbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_start;
 }
 
@@ -2136,6 +2099,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_iterator
 Deque_Base<VALUE_TYPE>::end() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_finish;
 }
 
@@ -2144,6 +2108,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_iterator
 Deque_Base<VALUE_TYPE>::cend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_finish;
 }
 
@@ -2152,6 +2117,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reverse_iterator
 Deque_Base<VALUE_TYPE>::rbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -2160,6 +2126,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reverse_iterator
 Deque_Base<VALUE_TYPE>::crbegin() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(end());
 }
 
@@ -2168,6 +2135,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reverse_iterator
 Deque_Base<VALUE_TYPE>::rend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -2176,6 +2144,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::const_reverse_iterator
 Deque_Base<VALUE_TYPE>::crend() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return const_reverse_iterator(begin());
 }
 
@@ -2184,6 +2153,7 @@ inline
 typename Deque_Base<VALUE_TYPE>::size_type
 Deque_Base<VALUE_TYPE>::size() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_finish - d_start;
 }
 
@@ -2230,6 +2200,7 @@ template <class VALUE_TYPE>
 inline
 bool Deque_Base<VALUE_TYPE>::empty() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_start == d_finish;
 }
 
@@ -2247,6 +2218,7 @@ template <class VALUE_TYPE>
 typename Deque_Base<VALUE_TYPE>::const_reference
 Deque_Base<VALUE_TYPE>::at(size_type position) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(position >= size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3332,6 +3304,7 @@ deque<VALUE_TYPE, ALLOCATOR>::operator=(
     BSLS_KEYWORD_NOEXCEPT_SPECIFICATION(
                                        AllocatorTraits::is_always_equal::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     deque& lvalue = rhs;
 
     typedef typename
@@ -3364,6 +3337,7 @@ deque<VALUE_TYPE, ALLOCATOR>&
 deque<VALUE_TYPE, ALLOCATOR>::operator=(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(values.begin(), values.end());
     return *this;
 }
@@ -3374,6 +3348,7 @@ template <class INPUT_ITERATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::assign(INPUT_ITERATOR first,
                                           INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateAssign(first, last);
 }
 
@@ -3381,6 +3356,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::assign(size_type         numElements,
                                           const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(numElements > max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3424,6 +3401,7 @@ inline
 void deque<VALUE_TYPE, ALLOCATOR>::assign(
                                       std::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     assign(values.begin(), values.end());
 }
 #endif
@@ -3434,12 +3412,15 @@ BSLSTL_DEQUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
 void deque<VALUE_TYPE, ALLOCATOR>::assign_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     privateAssign(ranges::begin(range), ranges::end(range));
 }
 
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::reserve(size_type numElements)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Make sure 'numElements' isn't high enough to make the calculations of
     // 'num(Front|Back)Blocks' overflow.
 
@@ -3510,6 +3491,7 @@ void deque<VALUE_TYPE, ALLOCATOR>::reserve(size_type numElements)
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::resize(size_type newSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(newSize > max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3543,6 +3525,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::resize(size_type         newSize,
                                           const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(newSize > max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3563,6 +3547,7 @@ void deque<VALUE_TYPE, ALLOCATOR>::resize(size_type         newSize,
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::shrink_to_fit()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Minimize the length of 'd_blocks_p' without moving any elements.  A more
     // complex algorithm is not justified.  At most 'BLOCK_LENGTH' bytes are
     // wasted.
@@ -3601,6 +3586,8 @@ BSLSTL_DEQUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
 void deque<VALUE_TYPE, ALLOCATOR>::append_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     privateAppend(ranges::begin(range), ranges::end(range));
 }
 
@@ -3610,12 +3597,16 @@ BSLSTL_DEQUE_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE_TYPE)
 void deque<VALUE_TYPE, ALLOCATOR>::prepend_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     privatePrepend(ranges::begin(range), ranges::end(range));
 }
 
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::push_front(const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3649,6 +3640,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::push_front(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3684,6 +3677,8 @@ void deque<VALUE_TYPE, ALLOCATOR>::push_front(
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::push_back(const VALUE_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3713,6 +3708,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::push_back(
                               BloombergLP::bslmf::MovableRef<value_type> value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3748,6 +3745,7 @@ template <class... Args>
 typename deque<VALUE_TYPE, ALLOCATOR>::reference
 deque<VALUE_TYPE, ALLOCATOR>::emplace_front(Args&&...arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3786,6 +3784,7 @@ template <class... Args>
 typename deque<VALUE_TYPE, ALLOCATOR>::reference
 deque<VALUE_TYPE, ALLOCATOR>::emplace_back(Args&&...arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(this->size() >= max_size())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
 
@@ -3824,6 +3823,7 @@ typename deque<VALUE_TYPE, ALLOCATOR>::iterator
 deque<VALUE_TYPE, ALLOCATOR>::emplace(const_iterator position,
                                       Args&&...      arguments)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(position >= this->cbegin());
     BSLS_ASSERT_NONCONVEYOR(position <= this->cend());
 
@@ -4151,6 +4151,8 @@ deque<VALUE_TYPE, ALLOCATOR>::insert_range(
                            const_iterator                             position,
                            BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
     const size_type posIdx = position - this->cbegin();
     privateInsert(position, ranges::begin(range), ranges::end(range));
     return this->begin() + posIdx;
@@ -4246,6 +4248,7 @@ void deque<VALUE_TYPE, ALLOCATOR>::swap(deque<VALUE_TYPE, ALLOCATOR>& other)
 template <class VALUE_TYPE, class ALLOCATOR>
 void deque<VALUE_TYPE, ALLOCATOR>::clear() BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     DequePrimitives::destruct(this->d_start,
                               this->d_finish,
                               this->allocatorRef());
@@ -4292,6 +4295,8 @@ template <class VALUE_TYPE, class ALLOCATOR>
 bool operator==(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                 const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.size() != rhs.size()) {
         return false;                                                 // RETURN
     }
@@ -4322,6 +4327,8 @@ inline
 bool operator!=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                 const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs == rhs);
 }
 
@@ -4335,6 +4342,8 @@ BloombergLP::bslalg::SynthThreeWayUtil::Result<VALUE_TYPE> operator<=>(
                                        const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                                        const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return bsl::lexicographical_compare_three_way(
                               lhs.begin(),
                               lhs.end(),
@@ -4350,6 +4359,8 @@ inline
 bool operator<(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return 0 > BloombergLP::bslalg::RangeCompare::lexicographical(lhs.begin(),
                                                                   lhs.end(),
                                                                   lhs.size(),
@@ -4363,6 +4374,8 @@ inline
 bool operator>(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs < lhs;
 }
 
@@ -4371,6 +4384,8 @@ inline
 bool operator<=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                 const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(rhs < lhs);
 }
 
@@ -4379,6 +4394,8 @@ inline
 bool operator>=(const deque<VALUE_TYPE, ALLOCATOR>& lhs,
                 const deque<VALUE_TYPE, ALLOCATOR>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !(lhs < rhs);
 }
 
@@ -4389,6 +4406,8 @@ template <class VALUE_TYPE, class ALLOCATOR, class BDE_OTHER_TYPE>
 inline typename deque<VALUE_TYPE, ALLOCATOR>::size_type
 erase(deque<VALUE_TYPE, ALLOCATOR>& deq, const BDE_OTHER_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&deq);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     typename deque<VALUE_TYPE, ALLOCATOR>::size_type oldSize = deq.size();
     deq.erase(bsl::remove(deq.begin(), deq.end(), value), deq.end());
     return oldSize - deq.size();
@@ -4398,6 +4417,7 @@ template <class VALUE_TYPE, class ALLOCATOR, class PREDICATE>
 inline typename deque<VALUE_TYPE, ALLOCATOR>::size_type
 erase_if(deque<VALUE_TYPE, ALLOCATOR>& deq, PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&deq);
     typename deque<VALUE_TYPE, ALLOCATOR>::size_type oldSize = deq.size();
     deq.erase(bsl::remove_if(deq.begin(), deq.end(), predicate), deq.end());
     return oldSize - deq.size();

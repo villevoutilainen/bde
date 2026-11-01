@@ -522,6 +522,7 @@ error_code::operator BoolType() const
 template <class HASHALG>
 void hashAppend(HASHALG& hashAlgorithm, const error_code& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlgorithm, static_cast<const void *>(&object.category()));
     hashAppend(hashAlgorithm, object.value());
@@ -540,6 +541,7 @@ std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>& operator<<(
                      std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>& stream,
                      const error_code&                           code)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return stream << code.category().name() << ':' << code.value();
 }
 
@@ -628,6 +630,7 @@ error_condition::operator BoolType() const
 template <class HASHALG>
 void hashAppend(HASHALG& hashAlgorithm, const error_condition& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     using ::BloombergLP::bslh::hashAppend;
     hashAppend(hashAlgorithm, static_cast<const void *>(&object.category()));
     hashAppend(hashAlgorithm, object.value());

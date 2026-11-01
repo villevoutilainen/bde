@@ -229,6 +229,7 @@ void OccurrenceInfo::setHidden()
 // ACCESSORS
 const OptionValue& OccurrenceInfo::defaultValue() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_defaultValue;
 }
 

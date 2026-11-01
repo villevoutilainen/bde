@@ -265,7 +265,7 @@ class AlignedAllocator : public bslma::Allocator {
     /// non-negative power of two.
     virtual void *allocateAligned(bsls::Types::size_type size,
                                   bsls::Types::size_type alignment)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES_THIS= 0;
+= 0;
 };
 
 }  // close package namespace

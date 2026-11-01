@@ -795,8 +795,7 @@ struct Default {
     /// subsequent calls to the `setDefaultAllocator` method if the
     /// optionally-specified `basicAllocator` is 0; return `basicAllocator`
     /// otherwise.
-    static Allocator *allocator(Allocator *basicAllocator = 0)
-                                     BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    static Allocator *allocator(Allocator *basicAllocator = 0);
 
                         // *** global allocator ***
 
@@ -805,8 +804,7 @@ struct Default {
     /// Note that prior to the first call to the `setGlobalAllocator`
     /// method, the address of the global allocator is that of the
     /// `NewDeleteAllocator` singleton.
-    static Allocator *globalAllocator(Allocator *basicAllocator = 0)
-                                     BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    static Allocator *globalAllocator(Allocator *basicAllocator = 0);
 
     /// Unconditionally set the address of the global allocator to the
     /// specified `basicAllocator`, or to the address of the

@@ -539,9 +539,7 @@ class JsonNumber {
     bool isIntegral() const;
 
     /// Return the textual representation of this `JsonNumber`.
-    const bsl::string& value() const
-                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(*this)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& value() const;
 
 // BDE_VERIFY pragma: push
 // BDE_VERIFY pragma: -FABC01 // not in alphabetic order
@@ -944,6 +942,7 @@ bool JsonNumber::isIntegral() const
 inline
 const bsl::string& JsonNumber::value() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_value;
 }
 
@@ -1109,6 +1108,7 @@ inline
 void bdljsn::hashAppend(HASHALG&                  hashAlgorithm,
                         const bdljsn::JsonNumber& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlgorithm);
     hashAppend(hashAlgorithm, object.value());
 }

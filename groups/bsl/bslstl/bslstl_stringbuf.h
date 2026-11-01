@@ -668,7 +668,7 @@ class basic_stringbuf
     /// in the buffer.  Otherwise this object has been created in neither
     /// input nor output mode and a zero length `StringType` is returned.
     /// This object is left in an empty state.
-    StringType str() && BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    StringType str() &&;
 #endif
 
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP11_BASELINE_LIBRARY
@@ -1627,6 +1627,7 @@ template <class CHAR_TYPE, class CHAR_TRAITS, class ALLOCATOR>
 typename basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::StringType
 basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::str() &&
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_mode & ios_base::out) {
         d_str.resize(static_cast<typename StringType::size_type>(streamSize()));
         this->setp(d_str.data(), d_str.data());
@@ -1709,6 +1710,7 @@ basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::str() const &
 basic_stringbuf<CHAR_TYPE, CHAR_TRAITS, ALLOCATOR>::str() const
 #endif
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return StringType(view());
 }
 

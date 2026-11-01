@@ -20,6 +20,9 @@ int CalendarUtil::addBusinessDaysIfValid(
                                         const bdlt::Calendar&  calendar,
                                         int                    numBusinessDays)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
     BSLS_ASSERT(result);
 
     enum { e_SUCCESS = 0, e_OUT_OF_RANGE = 1 };
@@ -81,6 +84,8 @@ int CalendarUtil::nthBusinessDayOfMonthOrMaxIfValid(
                                                int                    month,
                                                int                    n)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
     BSLS_ASSERT(result);
     BSLS_ASSERT(year  >= 1 && year  <= 9999);
     BSLS_ASSERT(month >= 1 && month <= 12);
@@ -165,6 +170,9 @@ int CalendarUtil::shiftIfValid(bdlt::Date            *result,
                                const bdlt::Calendar&  calendar,
                                ShiftConvention        convention)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
     BSLS_ASSERT(result);
 
     enum { e_BAD_CONVENTION = -1, e_SUCCESS = 0 };
@@ -202,6 +210,9 @@ int CalendarUtil::shiftIfValid(bdlt::Date            *result,
                                bool                   extendSpecialDay,
                                ShiftConvention        specialConvention)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
     BSLS_ASSERT(result);
 
     enum { e_OUT_OF_RANGE = 1 };
@@ -236,6 +247,8 @@ int CalendarUtil::shiftModifiedFollowingIfValid(
                                                const bdlt::Date&      original,
                                                const bdlt::Calendar&  calendar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
     BSLS_ASSERT(result);
 
@@ -293,6 +306,8 @@ int CalendarUtil::shiftModifiedPrecedingIfValid(
                                                const bdlt::Date&      original,
                                                const bdlt::Calendar&  calendar)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
     BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
     BSLS_ASSERT(result);
 
@@ -350,6 +365,9 @@ int CalendarUtil::subtractBusinessDaysIfValid(
                                         const bdlt::Calendar&  calendar,
                                         int                    numBusinessDays)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&original);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&calendar);
     BSLS_ASSERT(result);
 
     enum { e_SUCCESS = 0, e_OUT_OF_RANGE = 1 };

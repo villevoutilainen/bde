@@ -422,8 +422,7 @@ class ObserverFormatterImp {
                          const bsl::shared_ptr<const Record>& record) const;
 
     /// Return the currently active format configuration string of this object.
-    const bsl::string& getFormat() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    const bsl::string& getFormat() const;
 
     /// Return the currently active time zone default of this object.
     TimezoneEnum getTimezoneDefault() const;
@@ -506,6 +505,7 @@ void ObserverFormatterImp::setTimezoneDefault(TimezoneEnum timezoneDefault)
 inline
 const bsl::string& ObserverFormatterImp::getFormat() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_format;
 }
 

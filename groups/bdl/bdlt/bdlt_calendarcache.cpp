@@ -72,11 +72,13 @@ CalendarCache_Entry& CalendarCache_Entry::operator=(
 // ACCESSORS
 bsl::shared_ptr<const Calendar> CalendarCache_Entry::get() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_ptr;
 }
 
 Datetime CalendarCache_Entry::loadTime() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_loadTime;
 }
 
@@ -124,6 +126,7 @@ CalendarCache::~CalendarCache()
 bsl::shared_ptr<const Calendar>
 CalendarCache::getCalendar(const char *calendarName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(calendarName);
 
     {
@@ -182,6 +185,7 @@ CalendarCache::getCalendar(const char *calendarName)
 
 int CalendarCache::invalidate(const char *calendarName)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(calendarName);
 
     bslmt::LockGuard<bslmt::Mutex> lockGuard(&d_lock);
@@ -199,6 +203,7 @@ int CalendarCache::invalidate(const char *calendarName)
 
 int CalendarCache::invalidateAll()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::LockGuard<bslmt::Mutex> lockGuard(&d_lock);
 
     const int numInvalidated = static_cast<int>(d_cache.size());
@@ -212,6 +217,7 @@ int CalendarCache::invalidateAll()
 bsl::shared_ptr<const Calendar>
 CalendarCache::lookupCalendar(const char *calendarName) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(calendarName);
 
     bslmt::LockGuard<bslmt::Mutex> lockGuard(&d_lock);
@@ -233,6 +239,7 @@ CalendarCache::lookupCalendar(const char *calendarName) const
 
 Datetime CalendarCache::lookupLoadTime(const char *calendarName) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(calendarName);
 
     bslmt::LockGuard<bslmt::Mutex> lockGuard(&d_lock);

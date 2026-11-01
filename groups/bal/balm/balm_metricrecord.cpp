@@ -50,6 +50,8 @@ BSLMF_ASSERT(bslmf::IsBitwiseCopyable<MetricRecord>::value);
 // ACCESSORS
 bsl::ostream& MetricRecord::print(bsl::ostream& stream) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     stream << "[ " << d_metricId << ": " << d_count
            << " " << d_total
            << " " << d_min

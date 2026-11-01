@@ -1362,6 +1362,8 @@ template <class TYPE>
 template <class STREAM>
 STREAM& NullableAllocatedValue<TYPE>::bdexStreamIn(STREAM& stream, int version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     using bslx::InStreamFunctions::bdexStreamIn;
 
     char isNullFlag = 0; // Redundant initialization to suppress -Werror.
@@ -1385,6 +1387,8 @@ template <class TYPE>
 inline
 TYPE& NullableAllocatedValue<TYPE>::makeValue(const TYPE& val)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&val);
     if (has_value()) {
         TYPE &v = value();
         v = val;
@@ -1412,6 +1416,7 @@ template <class TYPE>
 inline
 TYPE& NullableAllocatedValue<TYPE>::makeValue()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     reset();
 
     // Note that this alternative implementation, instead of 'reset()',
@@ -1446,6 +1451,7 @@ template <class TYPE>
 inline
 void NullableAllocatedValue<TYPE>::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (has_value()) {
         TYPE *p = getAddress();
         BSLS_ASSERT(p);
@@ -1516,6 +1522,7 @@ inline
 TYPE& NullableAllocatedValue<TYPE>::emplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -1552,6 +1559,7 @@ inline
 TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -1592,6 +1600,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -1636,6 +1645,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -1684,6 +1694,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -1736,6 +1747,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -1792,6 +1804,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -1852,6 +1865,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -1916,6 +1930,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -1984,6 +1999,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2056,6 +2072,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2113,6 +2130,7 @@ template <class INIT_LIST_TYPE>
 TYPE& NullableAllocatedValue<TYPE>::emplace(
                                std::initializer_list<INIT_LIST_TYPE>      il)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2151,6 +2169,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                                std::initializer_list<INIT_LIST_TYPE>      il,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2193,6 +2212,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2239,6 +2259,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2289,6 +2310,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2343,6 +2365,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2401,6 +2424,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2463,6 +2487,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2529,6 +2554,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2599,6 +2625,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2673,6 +2700,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2734,6 +2762,7 @@ inline
 TYPE& NullableAllocatedValue<TYPE>::emplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2771,6 +2800,7 @@ TYPE& NullableAllocatedValue<TYPE>::emplace(
                                std::initializer_list<INIT_LIST_TYPE>      il,
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslma::Allocator *alloc = allocator();
     TYPE             *ptr = getAddress();
     if (has_value()) {
@@ -2887,6 +2917,8 @@ template <class STREAM>
 STREAM& NullableAllocatedValue<TYPE>::bdexStreamOut(STREAM& stream,
                                                     int     version) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     using bslx::OutStreamFunctions::bdexStreamOut;
 
     stream.putInt8(has_value() ? 0 : 1);
@@ -2910,6 +2942,7 @@ template <class TYPE>
 inline
 bool NullableAllocatedValue<TYPE>::has_value() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_allocator.readFlag(k_HAS_VALUE);
 }
 
@@ -2917,6 +2950,7 @@ template <class TYPE>
 inline
 bool NullableAllocatedValue<TYPE>::isNull() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return !has_value();
 }
 
@@ -2924,6 +2958,7 @@ bool NullableAllocatedValue<TYPE>::isNull() const BSLS_KEYWORD_NOEXCEPT
 template <class TYPE>
 NullableAllocatedValue<TYPE>::operator bool() const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return has_value();
 }
 # endif  // BSLS_COMPILERFEATURES_SUPPORT_OPERATOR_EXPLICIT
@@ -2933,6 +2968,7 @@ inline
 int NullableAllocatedValue<TYPE>::maxSupportedBdexVersion(
                                                      int versionSelector) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     using bslx::VersionFunctions::maxSupportedBdexVersion;
 
     // We need to call the 'bslx::VersionFunctions' helper function, because we
@@ -2948,6 +2984,7 @@ template <class TYPE>
 inline
 int NullableAllocatedValue<TYPE>::maxSupportedBdexVersion() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return maxSupportedBdexVersion(0);
 }
 #endif  // BDE_OMIT_INTERNAL_DEPRECATED
@@ -2957,6 +2994,8 @@ template <class ANY_TYPE>
 inline TYPE
 NullableAllocatedValue<TYPE>::value_or(const ANY_TYPE& default_value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&default_value);
     return has_value() ? value() : static_cast<TYPE>(default_value);
 }
 
@@ -2982,6 +3021,7 @@ template <class TYPE>
 inline
 bslma::Allocator *NullableAllocatedValue<TYPE>::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_allocator.getPointer();
 }
 
@@ -2992,6 +3032,8 @@ bsl::ostream& NullableAllocatedValue<TYPE>::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (!has_value()) {
         return bdlb::PrintMethods::print(stream,
                                          "NULL",
@@ -3043,6 +3085,7 @@ inline
 TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                                )
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace();
 }
 #endif  // BDLB_NULLABLEALLOCATEDVALUE_VARIADIC_LIMIT_D >= 0
@@ -3054,6 +3097,7 @@ inline
 TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01));
 }
 #endif  // BDLB_NULLABLEALLOCATEDVALUE_VARIADIC_LIMIT_D >= 1
@@ -3067,6 +3111,7 @@ TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_01) args_01,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02));
 }
@@ -3083,6 +3128,7 @@ TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_02) args_02,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03));
@@ -3102,6 +3148,7 @@ TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_03) args_03,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3124,6 +3171,7 @@ TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_04) args_04,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3149,6 +3197,7 @@ TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_05) args_05,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3177,6 +3226,7 @@ TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_06) args_06,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3208,6 +3258,7 @@ TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_07) args_07,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3242,6 +3293,7 @@ TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_08) args_08,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3279,6 +3331,7 @@ TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_09) args_09,
                             BSLS_COMPILERFEATURES_FORWARD_REF(ARGS_10) args_10)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS_01, args_01),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_02, args_02),
                    BSLS_COMPILERFEATURES_FORWARD(ARGS_03, args_03),
@@ -3301,6 +3354,7 @@ inline
 TYPE& NullableAllocatedValue<TYPE>::makeValueInplace(
                                BSLS_COMPILERFEATURES_FORWARD_REF(ARGS)... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS, args)...);
 }
 // }}} END GENERATED CODE
@@ -3310,6 +3364,8 @@ template <class TYPE>
 inline
 TYPE NullableAllocatedValue<TYPE>::valueOr(const TYPE& otherValue) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&otherValue);
     return has_value() ? value() : otherValue;
 }
 
@@ -3327,6 +3383,8 @@ inline
 bool bdlb::operator==(const NullableAllocatedValue<LHS_TYPE>& lhs,
                       const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.isNull()) {
         return rhs.isNull();                                          // RETURN
     }
@@ -3339,6 +3397,8 @@ inline
 bool bdlb::operator==(const NullableAllocatedValue<LHS_TYPE>& lhs,
                       const RHS_TYPE&                         rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.isNull() ? false : lhs.value() == rhs;
 }
 
@@ -3347,6 +3407,8 @@ inline
 bool bdlb::operator==(const LHS_TYPE&                         lhs,
                       const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.isNull() ? false : lhs == rhs.value();
 }
 
@@ -3355,6 +3417,8 @@ inline
 bool bdlb::operator!=(const NullableAllocatedValue<LHS_TYPE>& lhs,
                       const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.isNull()) {
         return !rhs.isNull();                                         // RETURN
     }
@@ -3367,6 +3431,8 @@ inline
 bool bdlb::operator!=(const NullableAllocatedValue<LHS_TYPE>& lhs,
                       const RHS_TYPE&                         rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.isNull() ? true : lhs.value() != rhs;
 }
 
@@ -3375,6 +3441,8 @@ inline
 bool bdlb::operator!=(const LHS_TYPE&                         lhs,
                       const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.isNull() ? true : lhs != rhs.value();
 }
 
@@ -3439,6 +3507,8 @@ inline
 bool bdlb::operator>(const NullableAllocatedValue<LHS_TYPE>& lhs,
                      const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.isNull()) {
         return false;                                                 // RETURN
     }
@@ -3451,6 +3521,8 @@ inline
 bool bdlb::operator>(const NullableAllocatedValue<LHS_TYPE>& lhs,
                      const RHS_TYPE&                         rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.isNull() ? false : lhs.value() > rhs;
 }
 
@@ -3459,6 +3531,8 @@ inline
 bool bdlb::operator>(const LHS_TYPE&                         lhs,
                      const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.isNull() ? true : lhs > rhs.value();
 }
 
@@ -3467,6 +3541,8 @@ inline
 bool bdlb::operator>=(const NullableAllocatedValue<LHS_TYPE>& lhs,
                       const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (rhs.isNull()) {
         return true;                                                  // RETURN
     }
@@ -3479,6 +3555,8 @@ inline
 bool bdlb::operator>=(const NullableAllocatedValue<LHS_TYPE>& lhs,
                       const RHS_TYPE&                         rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.isNull() ? false : lhs.value() >= rhs;
 }
 
@@ -3487,6 +3565,8 @@ inline
 bool bdlb::operator>=(const LHS_TYPE&                         lhs,
                       const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.isNull() ? true : lhs >= rhs.value();
 }
 
@@ -3507,6 +3587,7 @@ inline
 bool bdlb::operator==(const NullableAllocatedValue<TYPE>& lhs,
                       const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return !lhs.has_value();
 }
 
@@ -3516,6 +3597,7 @@ bool bdlb::operator==(
                  const bsl::nullopt_t&,
                  const NullableAllocatedValue<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !rhs.has_value();
 }
 
@@ -3523,6 +3605,7 @@ template <class TYPE>
 inline bool bdlb::operator!=(const NullableAllocatedValue<TYPE>& lhs,
                              const bsl::nullopt_t& ) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs.has_value();
 }
 
@@ -3532,6 +3615,7 @@ bool bdlb::operator!=(
                  const bsl::nullopt_t&,
                  const NullableAllocatedValue<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return rhs.has_value();
 }
 
@@ -3557,6 +3641,7 @@ inline
 bool bdlb::operator>(const NullableAllocatedValue<TYPE>& lhs,
                      const bsl::nullopt_t&) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     return lhs.has_value();
 }
 
@@ -3599,6 +3684,7 @@ bool bdlb::operator>=(
                  const bsl::nullopt_t&,
                  const NullableAllocatedValue<TYPE>& rhs) BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return !rhs.has_value();
 }
 
@@ -3611,6 +3697,8 @@ inline
 bool bdlb::operator==(const NullableAllocatedValue<LHS_TYPE>& lhs,
                       const bsl::optional<RHS_TYPE>&          rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.has_value() != rhs.has_value())
         return false;                                                 // RETURN
     return lhs.has_value () ? lhs.value() == rhs.value () : true;
@@ -3621,6 +3709,8 @@ inline
 bool bdlb::operator==(const bsl::optional<LHS_TYPE>&          lhs,
                       const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.has_value() != rhs.has_value())
         return false;                                                 // RETURN
     return lhs.has_value () ? lhs.value() == rhs.value () : true;
@@ -3631,6 +3721,8 @@ inline
 bool bdlb::operator!=(const NullableAllocatedValue<LHS_TYPE>& lhs,
                       const bsl::optional<RHS_TYPE>&          rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.has_value() != rhs.has_value())
         return true;                                                  // RETURN
     return lhs.has_value () ? lhs.value() != rhs.value () : false;
@@ -3641,6 +3733,8 @@ inline
 bool bdlb::operator!=(const bsl::optional<LHS_TYPE>&          lhs,
                       const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.has_value() != rhs.has_value())
         return true;                                                  // RETURN
     return lhs.has_value () ? lhs.value() != rhs.value () : false;
@@ -3672,6 +3766,8 @@ inline
 bool bdlb::operator>(const NullableAllocatedValue<LHS_TYPE>& lhs,
                      const bsl::optional<RHS_TYPE>&          rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.has_value() != rhs.has_value())
         return lhs.has_value();                                       // RETURN
     return lhs.has_value () ? lhs.value() > rhs.value () : false;
@@ -3682,6 +3778,8 @@ inline
 bool bdlb::operator>(const bsl::optional<LHS_TYPE>&          lhs,
                      const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.has_value() != rhs.has_value())
         return lhs.has_value();                                       // RETURN
     return lhs.has_value () ? lhs.value() > rhs.value () : false;
@@ -3712,6 +3810,8 @@ inline
 bool bdlb::operator>=(const NullableAllocatedValue<LHS_TYPE>& lhs,
                       const bsl::optional<RHS_TYPE>&          rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.has_value() != rhs.has_value())
         return lhs.has_value();                                       // RETURN
     return lhs.has_value () ? lhs.value() >= rhs.value () : true;
@@ -3722,6 +3822,8 @@ inline
 bool bdlb::operator>=(const bsl::optional<LHS_TYPE>&          lhs,
                       const NullableAllocatedValue<RHS_TYPE>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (lhs.has_value() != rhs.has_value())
         return lhs.has_value();                                       // RETURN
     return lhs.has_value () ? lhs.value() >= rhs.value () : true;
@@ -3733,6 +3835,8 @@ template <class HASHALG, class TYPE>
 void bdlb::hashAppend(HASHALG&                            hashAlg,
                       const NullableAllocatedValue<TYPE>& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hashAlg);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     using ::BloombergLP::bslh::hashAppend;
 
     if (!input.isNull()) {
@@ -3748,6 +3852,8 @@ template <class TYPE>
 void bdlb::swap(NullableAllocatedValue<TYPE>& a,
                 NullableAllocatedValue<TYPE>& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
     if (a.allocator() == b.allocator()) {
         a.swap(b);
 

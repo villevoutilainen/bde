@@ -119,12 +119,10 @@ struct owner_less<shared_ptr<ELEMENT_TYPE> > {
     // ACCESSORS
     bool operator()(const shared_ptr<ELEMENT_TYPE>& a,
                     const shared_ptr<ELEMENT_TYPE>& b) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-             BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+                                                         BSLS_KEYWORD_NOEXCEPT;
     bool operator()(const shared_ptr<ELEMENT_TYPE>& a,
                     const weak_ptr<ELEMENT_TYPE>&   b) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-             BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if the address of the
     /// `BloombergLP::bslma::SharedPtrRep` object used by the specified `a`
@@ -135,8 +133,7 @@ struct owner_less<shared_ptr<ELEMENT_TYPE> > {
     /// otherwise.
     bool operator()(const weak_ptr<ELEMENT_TYPE>&   a,
                     const shared_ptr<ELEMENT_TYPE>& b) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-             BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 };
 
 template <class ELEMENT_TYPE>
@@ -168,12 +165,10 @@ struct owner_less<weak_ptr<ELEMENT_TYPE> > {
     // ACCESSORS
     bool operator()(const weak_ptr<ELEMENT_TYPE>&   a,
                     const weak_ptr<ELEMENT_TYPE>&   b) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-             BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+                                                         BSLS_KEYWORD_NOEXCEPT;
     bool operator()(const shared_ptr<ELEMENT_TYPE>& a,
                     const weak_ptr<ELEMENT_TYPE>&   b) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-             BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if the address of the
     /// `BloombergLP::bslma::SharedPtrRep` object used by the specified `a`
@@ -184,8 +179,7 @@ struct owner_less<weak_ptr<ELEMENT_TYPE> > {
     /// otherwise.
     bool operator()(const weak_ptr<ELEMENT_TYPE>&   a,
                     const shared_ptr<ELEMENT_TYPE>& b) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-             BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 };
 
 template<>
@@ -218,18 +212,15 @@ struct owner_less<void> {
     template<class ELEMENT_TYPE_A, class ELEMENT_TYPE_B>
     bool operator()(const shared_ptr<ELEMENT_TYPE_A> &a,
                     const shared_ptr<ELEMENT_TYPE_B> &b) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-             BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+                                                         BSLS_KEYWORD_NOEXCEPT;
     template<class ELEMENT_TYPE_A, class ELEMENT_TYPE_B>
     bool operator()(const shared_ptr<ELEMENT_TYPE_A> &a,
                     const weak_ptr<  ELEMENT_TYPE_B> &b) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-             BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+                                                         BSLS_KEYWORD_NOEXCEPT;
     template<class ELEMENT_TYPE_A, class ELEMENT_TYPE_B>
     bool operator()(const weak_ptr<  ELEMENT_TYPE_A> &a,
                     const shared_ptr<ELEMENT_TYPE_B> &b) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-             BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `true` if the address of the
     /// `BloombergLP::bslma::SharedPtrRep` object used by the specified `a`
@@ -241,8 +232,7 @@ struct owner_less<void> {
     template<class ELEMENT_TYPE_A, class ELEMENT_TYPE_B>
     bool operator()(const weak_ptr<ELEMENT_TYPE_A> &a,
                     const weak_ptr<ELEMENT_TYPE_B> &b) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-             BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 };
 
 // ============================================================================
@@ -259,6 +249,9 @@ bool owner_less<shared_ptr<ELEMENT_TYPE> >::operator()(
                  const shared_ptr<ELEMENT_TYPE>& a,
                  const shared_ptr<ELEMENT_TYPE>& b) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return a.owner_before(b);
 }
 
@@ -268,6 +261,9 @@ bool owner_less<shared_ptr<ELEMENT_TYPE> >::operator()(
                  const shared_ptr<ELEMENT_TYPE>& a,
                  const weak_ptr<ELEMENT_TYPE>&   b) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return a.owner_before(b);
 }
 
@@ -277,6 +273,9 @@ bool owner_less<shared_ptr<ELEMENT_TYPE> >::operator()(
                  const weak_ptr<ELEMENT_TYPE>&   a,
                  const shared_ptr<ELEMENT_TYPE>& b) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return a.owner_before(b);
 }
 
@@ -290,6 +289,9 @@ bool owner_less<weak_ptr<ELEMENT_TYPE> >::operator()(
                    const weak_ptr<ELEMENT_TYPE>& a,
                    const weak_ptr<ELEMENT_TYPE>& b) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return a.owner_before(b);
 }
 
@@ -299,6 +301,9 @@ bool owner_less<weak_ptr<ELEMENT_TYPE> >::operator()(
                  const shared_ptr<ELEMENT_TYPE>& a,
                  const weak_ptr<ELEMENT_TYPE>&   b) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return a.owner_before(b);
 }
 
@@ -308,6 +313,9 @@ bool owner_less<weak_ptr<ELEMENT_TYPE> >::operator()(
                  const weak_ptr<ELEMENT_TYPE>&   a,
                  const shared_ptr<ELEMENT_TYPE>& b) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return a.owner_before(b);
 }
 
@@ -321,6 +329,9 @@ bool owner_less<void>::operator()(
                const shared_ptr<ELEMENT_TYPE_A> &a,
                const shared_ptr<ELEMENT_TYPE_B> &b) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return a.owner_before(b);
 }
 
@@ -330,6 +341,9 @@ bool owner_less<void>::operator()(
                const shared_ptr<ELEMENT_TYPE_A> &a,
                const weak_ptr<  ELEMENT_TYPE_B> &b) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return a.owner_before(b);
 }
 
@@ -339,6 +353,9 @@ bool owner_less<void>::operator()(
                const weak_ptr<  ELEMENT_TYPE_A> &a,
                const shared_ptr<ELEMENT_TYPE_B> &b) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return a.owner_before(b);
 }
 
@@ -348,6 +365,9 @@ bool owner_less<void>::operator()(
                  const weak_ptr<ELEMENT_TYPE_A> &a,
                  const weak_ptr<ELEMENT_TYPE_B> &b) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return a.owner_before(b);
 }
 

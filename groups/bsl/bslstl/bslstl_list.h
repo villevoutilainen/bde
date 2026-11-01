@@ -817,16 +817,14 @@ class List_Iterator {
     /// iterator is in the range `[begin() .. end())` for some list (i.e.,
     /// the iterator is not singular, is not `end()`, and has not been
     /// invalidated).
-    reference operator*() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    reference operator*() const;
 
     /// Return a pointer providing modifiable access to the element
     /// referenced by this iterator.  The behavior is undefined unless this
     /// iterator is in the range `[begin() .. end())` for some list (i.e.,
     /// the iterator is not singular, is not `end()`, and has not been
     /// invalidated).
-    pointer operator->() const
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    pointer operator->() const;
 };
 
 // FREE OPERATORS
@@ -1273,7 +1271,7 @@ class list {
          BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range,
          const ALLOCATOR&                           basicAllocator =
                                                                   ALLOCATOR())
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                                         BSLS_ASSERT_CONVEYOR_TRUST_PRE(range);
 
     /// Create a list having the same value as the specified `original`
     /// object.  Use the allocator returned by
@@ -1442,8 +1440,7 @@ class list {
     /// parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    void assign_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void assign_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
                               // *** iterators ***
 
@@ -1530,8 +1527,7 @@ class list {
     /// (template parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    void append_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void append_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Append to the back of this list a newly created `value_type` object,
@@ -1569,8 +1565,7 @@ class list {
     /// convertible to (template parameter) `VALUE`.
     template <class t_RANGE>
     BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
-    void prepend_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+    void prepend_range(BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
     /// Append to the back of this list a copy of the specified `value`.
     /// This method offers full guarantee of rollback in case an exception
@@ -1718,8 +1713,7 @@ class list {
     template <class t_RANGE>
     BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
     iterator insert_range(const_iterator                             position,
-                          BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
-                                         BSLS_ASSERT_CONVEYOR_REQUIRES(range);
+                          BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range);
 
                           // *** list operations ***
 
@@ -1747,14 +1741,12 @@ class list {
 
     /// Erase all the elements having the specified `value` from this list
     /// and return the number of erased elements.
-    size_type remove(const value_type& value)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type remove(const value_type& value);
 
     /// Erase all the elements in this list for which the specified unary
     /// `predicate` returns `true` and return the number of erased elements.
     template <class PREDICATE>
-    size_type remove_if(PREDICATE predicate)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type remove_if(PREDICATE predicate);
 
     /// Reverse the order of the elements in this list.
     void reverse() BSLS_KEYWORD_NOEXCEPT;
@@ -1821,14 +1813,13 @@ class list {
 
     /// Erase from this list all but the first element of every consecutive
     /// group of elements that have the same value.
-    void unique() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void unique();
 
     /// Erase from this list all but the first element of every consecutive
     /// group of elements for which the specified `binaryPredicate` returns
     /// `true` for any two consecutive elements in the group.
     template <class EQ_PREDICATE>
-    void unique(EQ_PREDICATE binaryPredicate)
-                                           BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void unique(EQ_PREDICATE binaryPredicate);
 
                               // *** misc ***
 
@@ -2088,15 +2079,13 @@ bool operator>=(const list<VALUE, ALLOCATOR>& lhs,
 /// the specified `value`.  Return the number of elements erased.
 template <class VALUE, class ALLOCATOR, class BDE_OTHER_TYPE>
 typename list<VALUE, ALLOCATOR>::size_type
-erase(list<VALUE, ALLOCATOR>& l, const BDE_OTHER_TYPE& value)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(l);
+erase(list<VALUE, ALLOCATOR>& l, const BDE_OTHER_TYPE& value);
 
 /// Erase all the elements in the specified list `l` that satisfy the
 /// specified predicate `predicate`.  Return the number of elements erased.
 template <class VALUE, class ALLOCATOR, class PREDICATE>
 typename list<VALUE, ALLOCATOR>::size_type
-erase_if(list<VALUE, ALLOCATOR>& l, PREDICATE predicate)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES(l);
+erase_if(list<VALUE, ALLOCATOR>& l, PREDICATE predicate);
 
 /// Exchange the value of the specified `a` object with that of the specified
 /// `b` object; also exchange the allocator of `a` with that of `b` if the
@@ -2196,6 +2185,7 @@ inline
 typename bsl::List_Iterator<VALUE>::reference
                                         List_Iterator<VALUE>::operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->d_node_p->d_value;
 }
 
@@ -2204,6 +2194,7 @@ inline
 typename bsl::List_Iterator<VALUE>::pointer
                                        List_Iterator<VALUE>::operator->() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return BloombergLP::bsls::Util::addressOf(this->d_node_p->d_value);
 }
 
@@ -2881,6 +2872,8 @@ BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
 void list<VALUE, ALLOCATOR>::assign_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     clear();
     append_range(BSLS_COMPILERFEATURES_FORWARD(t_RANGE, range));
 }
@@ -3069,6 +3062,8 @@ BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
 void list<VALUE, ALLOCATOR>::append_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateAppendRange(ranges::begin(range), ranges::end(range));
 }
 
@@ -3102,6 +3097,8 @@ BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
 void list<VALUE, ALLOCATOR>::prepend_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert_range(begin(), BSLS_COMPILERFEATURES_FORWARD(t_RANGE, range));
 }
 
@@ -3210,6 +3207,8 @@ list<VALUE, ALLOCATOR>::insert_range(
                            const_iterator                             position,
                            BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     list tmp(from_range,
              BSLS_COMPILERFEATURES_FORWARD(t_RANGE, range),
              get_allocator());
@@ -3289,6 +3288,8 @@ template <class VALUE, class ALLOCATOR>
 typename list<VALUE, ALLOCATOR>::size_type
 list<VALUE, ALLOCATOR>::remove(const VALUE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const size_type origSize = this->size();
     const const_iterator e = cend();
     for (const_iterator i = cbegin(); e != i; ) {
@@ -3310,6 +3311,7 @@ template <class PREDICATE>
 typename list<VALUE, ALLOCATOR>::size_type
 list<VALUE, ALLOCATOR>::remove_if(PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const size_type origSize = this->size();
     const iterator e = end();
     for (iterator i = begin(); e != i; ) {
@@ -3474,6 +3476,7 @@ void list<VALUE, ALLOCATOR>::splice(
 template <class VALUE, class ALLOCATOR>
 void list<VALUE, ALLOCATOR>::unique()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (size() < 2) {
         return;                                                       // RETURN
     }
@@ -3492,6 +3495,7 @@ template <class VALUE, class ALLOCATOR>
 template <class EQ_PREDICATE>
 void list<VALUE, ALLOCATOR>::unique(EQ_PREDICATE binaryPredicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (size() < 2) {
         return;                                                       // RETURN
     }

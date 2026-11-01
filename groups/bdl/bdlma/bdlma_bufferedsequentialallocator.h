@@ -316,16 +316,14 @@ class BufferedSequentialAllocator : public ManagedAllocator {
     /// returned.  If the allocation request exceeds the remaining free
     /// memory space in the external buffer supplied at construction, use
     /// memory obtained from the allocator supplied at construction.
-    void *allocate(size_type size) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(size_type size) BSLS_KEYWORD_OVERRIDE;
 
     /// This method has no effect on the memory block at the specified
     /// `address` as all memory allocated by this allocator is managed.  The
     /// behavior is undefined unless `address` is 0, or was allocated by
     /// this allocator and has not already been deallocated.  The effect of
     /// using `address` after this call is undefined.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
 
     /// Release all memory allocated through this allocator and return to
     /// the underlying allocator *all* memory except the external buffer
@@ -337,7 +335,7 @@ class BufferedSequentialAllocator : public ManagedAllocator {
     /// The effect of subsequently - to this invokation of `release` - using
     /// a pointer obtained from this object prior to this call to `release`
     /// is undefined.
-    void release() BSLS_KEYWORD_OVERRIDE BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void release() BSLS_KEYWORD_OVERRIDE;
 
     /// Release all memory allocated through this allocator and return to
     /// the underlying allocator *only* memory that was allocated outside of
@@ -346,12 +344,12 @@ class BufferedSequentialAllocator : public ManagedAllocator {
     /// allocations.  The effect of subsequently - to this invokation of
     /// `rewind` - using a pointer obtained from this object prior to this
     /// call to `rewind` is undefined.
-    virtual void rewind() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    virtual void rewind();
 
     // ACCESSORS
 
     /// Return the allocator passed at construction.
-    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bslma::Allocator *allocator() const;
 };
 
 // ============================================================================
@@ -464,6 +462,7 @@ BufferedSequentialAllocator::BufferedSequentialAllocator(
 inline
 void *BufferedSequentialAllocator::allocate(size_type size)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(0 == size)) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return 0;                                                     // RETURN
@@ -475,17 +474,20 @@ void *BufferedSequentialAllocator::allocate(size_type size)
 inline
 void BufferedSequentialAllocator::deallocate(void *)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
 }
 
 inline
 void BufferedSequentialAllocator::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_pool.release();
 }
 
 inline
 void BufferedSequentialAllocator::rewind()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_pool.rewind();
 }
 
@@ -493,6 +495,7 @@ void BufferedSequentialAllocator::rewind()
 inline
 bslma::Allocator *BufferedSequentialAllocator::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_pool.allocator();
 }
 

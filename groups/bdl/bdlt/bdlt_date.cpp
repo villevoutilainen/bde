@@ -35,6 +35,7 @@ static const char *const months[] = {
 // MANIPULATORS
 int Date::addDaysIfValid(int numDays)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     enum { k_SUCCESS = 0, k_FAILURE = -1 };
 
     if (bsl::numeric_limits<int>::max() - d_serialDate < numDays) {
@@ -57,6 +58,8 @@ bsl::ostream& Date::print(bsl::ostream& stream,
                           int           level,
                           int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(stream.bad())) {
         BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
         return stream;                                                // RETURN

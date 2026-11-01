@@ -715,33 +715,31 @@ class ConcurrentPoolAllocator : public bslma::Allocator {
     /// request will be satisfied directly by the external allocator
     /// supplied at construction (or the default allocator, if no allocator
     /// was supplied).
-    void *allocate(size_type size) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void *allocate(size_type size) BSLS_KEYWORD_OVERRIDE;
 
     /// Return the memory at the specified `address` back to this allocator.
     /// If `address` is 0, this method has no effect.  The behavior is
     /// undefined unless `address` was allocated using this allocator and
     /// has not already been deallocated.
-    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deallocate(void *address) BSLS_KEYWORD_OVERRIDE;
 
     /// Relinquish all memory currently allocated through this pool
     /// allocator.
-    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void release();
 
     /// Reserve memory from this pool allocator to satisfy memory requests
     /// for at least the specified `numObjects` before the pool replenishes.
     /// The behavior is undefined unless `0 <= numObjects`.  Note that this
     /// operation has no effect unless block size was supplied at
     /// construction, or `allocate` was invoked.
-    void reserveCapacity(int numObjects) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reserveCapacity(int numObjects);
 
     // ACCESSORS
 
     /// Return the size (in bytes) of the memory blocks allocated from this
     /// allocator.  Note that all blocks dispensed by this allocator have
     /// the same size.
-    size_type blockSize() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    size_type blockSize() const;
 };
 
 // ============================================================================
@@ -756,6 +754,7 @@ class ConcurrentPoolAllocator : public bslma::Allocator {
 inline
 void ConcurrentPoolAllocator::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_initialized == k_INITIALIZED) {
         d_pool.object().release();
     }
@@ -764,6 +763,7 @@ void ConcurrentPoolAllocator::release()
 inline
 void ConcurrentPoolAllocator::reserveCapacity(int numObjects)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (d_initialized == k_INITIALIZED) {
         d_pool.object().reserveCapacity(numObjects);
     }
@@ -773,6 +773,7 @@ void ConcurrentPoolAllocator::reserveCapacity(int numObjects)
 inline
 bsls::Types::size_type ConcurrentPoolAllocator::blockSize() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_blockSize;
 }
 

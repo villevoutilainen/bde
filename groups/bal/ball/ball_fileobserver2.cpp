@@ -815,6 +815,7 @@ bool FileObserver2::isSuppressUniqueFileNameOnRotation() const
 
 const bsl::string& FileObserver2::getFormat() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_observerFormatterImp.getFormat();
 }
 

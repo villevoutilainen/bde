@@ -1483,6 +1483,7 @@ inline
 bsls::TimeInterval bsls::operator+(const TimeInterval& lhs,
                                    const TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     TimeInterval result(lhs);
     return result.addInterval(rhs.seconds(), rhs.nanoseconds());
@@ -1491,12 +1492,16 @@ bsls::TimeInterval bsls::operator+(const TimeInterval& lhs,
 inline
 bsls::TimeInterval bsls::operator+(const TimeInterval& lhs, double rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs + TimeInterval(rhs);
 }
 
 inline
 bsls::TimeInterval bsls::operator+(double lhs, const TimeInterval& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return TimeInterval(lhs) + rhs;
 }
 

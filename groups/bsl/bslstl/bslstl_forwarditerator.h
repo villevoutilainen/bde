@@ -222,14 +222,12 @@ class ForwardIterator
     /// Return a reference to the current, modifiable element.  The behavior
     /// is undefined if this iterator has the past-the-end value for an
     /// iterator over the underlying sequence.
-    T& operator*() const
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    T& operator*() const;
 
     /// Return a pointer to the current, modifiable element.  The behavior
     /// is undefined if this iterator has the past-the-end value for an
     /// iterator over the underlying sequence.
-    T *operator->() const
-                                            BSLS_ASSERT_CONVEYOR_RESULT_OBJECT;
+    T *operator->() const;
 
     /// Return a non-modifiable reference to the implementation object.
     const ITER_IMP& imp() const;
@@ -327,6 +325,7 @@ template <class T, class ITER_IMP, class TAG_TYPE>
 inline
 T& ForwardIterator<T,ITER_IMP,TAG_TYPE>::operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return *d_imp;
 }
 
@@ -334,6 +333,7 @@ template <class T, class ITER_IMP, class TAG_TYPE>
 inline
 T *ForwardIterator<T,ITER_IMP,TAG_TYPE>::operator->() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return BSLS_UTIL_ADDRESSOF(*d_imp);
 }
 

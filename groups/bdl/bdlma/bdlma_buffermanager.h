@@ -339,14 +339,13 @@ class BufferManager {
     /// `object` is not deallocated because there is no `deallocate` method
     /// in `BufferManager`.
     template <class TYPE>
-    void deleteObjectRaw(const TYPE *object)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deleteObjectRaw(const TYPE *object);
 
     /// Destroy the specified `object`.  Note that this method has the same
     /// effect as the `deleteObjectRaw` method (since no deallocation is
     /// involved), and exists for consistency with a pool interface.
     template <class TYPE>
-    void deleteObject(const TYPE *object) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void deleteObject(const TYPE *object);
 
     /// Increase the amount of memory allocated at the specified `address`
     /// from the original `size` (in bytes) to also include the maximum
@@ -371,21 +370,20 @@ class BufferManager {
     /// allocate memory from the beginning of the new external buffer.  The
     /// behavior is undefined unless `0 < newBufferSize` and `newBuffer` has
     /// at least `newBufferSize` bytes.
-    char *replaceBuffer(char *newBuffer, bsls::Types::size_type newBufferSize)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    char *replaceBuffer(char *newBuffer, bsls::Types::size_type newBufferSize);
 
     /// Release all memory currently allocated through this buffer manager.
     /// After this call, the external buffer managed by this object is
     /// retained.  Subsequent allocations will allocate memory from the
     /// beginning of the external buffer (if any).
-    void release() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void release();
 
     /// Reset this buffer manager to its default constructed state, except
     /// retain the alignment strategy in effect at the time of construction.
     /// The currently managed buffer (if any) is removed from the management
     /// of this object with no effect on the outstanding allocated memory
     /// blocks.
-    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reset();
 
     /// Reduce the amount of memory allocated at the specified `address` of
     /// the specified `originalSize` (in bytes) to the specified `newSize`
@@ -407,18 +405,16 @@ class BufferManager {
 
     /// Return the alignment strategy passed to this object at
     /// construction.
-    bsls::Alignment::Strategy alignmentStrategy() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Alignment::Strategy alignmentStrategy() const;
 
     /// Return an address providing modifiable access to the buffer
     /// currently managed by this object, or 0 if this object currently
     /// manages no buffer.
-    char *buffer() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    char *buffer() const;
 
     /// Return the size (in bytes) of the buffer currently managed by this
     /// object, or 0 if this object currently manages no buffer.
-    bsls::Types::size_type bufferSize() const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsls::Types::size_type bufferSize() const;
 
     /// Return the minimum non-negative integer that, when added to the
     /// numerical value of the specified `address`, yields the alignment as
@@ -428,8 +424,7 @@ class BufferManager {
     /// method is identical to the result for `0 == size` and maximal
     /// alignment.
     int calculateAlignmentOffsetFromSize(const void             *address,
-                                         bsls::Types::size_type  size) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                         bsls::Types::size_type  size) const;
 
     /// Return `true` if there is sufficient memory space in the buffer to
     /// allocate a contiguous memory block of the specified `size` (in
@@ -537,6 +532,7 @@ template <class TYPE>
 inline
 void BufferManager::deleteObjectRaw(const TYPE *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 != object) {
 #ifndef BSLS_PLATFORM_CMP_SUN
         object->~TYPE();
@@ -550,6 +546,7 @@ template <class TYPE>
 inline
 void BufferManager::deleteObject(const TYPE *object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     deleteObjectRaw(object);
 }
 
@@ -557,6 +554,7 @@ inline
 char *BufferManager::replaceBuffer(char                   *newBuffer,
                                    bsls::Types::size_type  newBufferSize)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(newBuffer);
     BSLS_ASSERT(0 < newBufferSize);
 
@@ -571,12 +569,14 @@ char *BufferManager::replaceBuffer(char                   *newBuffer,
 inline
 void BufferManager::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_cursor = 0;
 }
 
 inline
 void BufferManager::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_buffer_p   = 0;
     d_bufferSize = 0;
     d_cursor     = 0;
@@ -586,6 +586,7 @@ void BufferManager::reset()
 inline
 bsls::Alignment::Strategy BufferManager::alignmentStrategy() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return 0 == d_alignmentAndMask ? bsls::Alignment::BSLS_MAXIMUM
                                    : 1 == d_alignmentOrMask
                                    ? bsls::Alignment::BSLS_BYTEALIGNED
@@ -595,12 +596,14 @@ bsls::Alignment::Strategy BufferManager::alignmentStrategy() const
 inline
 char *BufferManager::buffer() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_buffer_p;
 }
 
 inline
 bsls::Types::size_type BufferManager::bufferSize() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_bufferSize;
 }
 
@@ -609,6 +612,7 @@ int BufferManager::calculateAlignmentOffsetFromSize(
                                             const void             *address,
                                             bsls::Types::size_type  size) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::size_type alignment =
             (size & static_cast<bsls::Types::size_type>(d_alignmentAndMask)) |
                                                              d_alignmentOrMask;

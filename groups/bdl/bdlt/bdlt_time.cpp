@@ -220,6 +220,7 @@ bsls::Types::Int64 Time::invalidMicrosecondsFromMidnight() const
 // MANIPULATORS
 int Time::addHours(int hours)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Int64 totalMicroseconds =
                         microsecondsFromMidnight() % TimeUnitRatio::k_US_PER_D;
                                               // Force zero if 24:00:00.000000.
@@ -237,6 +238,7 @@ int Time::addHours(int hours)
 
 int Time::addMinutes(int minutes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Int64 totalMicroseconds =
                         microsecondsFromMidnight() % TimeUnitRatio::k_US_PER_D;
                                               // Force zero if 24:00:00.000000.
@@ -254,6 +256,7 @@ int Time::addMinutes(int minutes)
 
 int Time::addSeconds(int seconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Int64 totalMicroseconds =
                         microsecondsFromMidnight() % TimeUnitRatio::k_US_PER_D;
                                               // Force zero if 24:00:00.000000.
@@ -271,6 +274,7 @@ int Time::addSeconds(int seconds)
 
 int Time::addMilliseconds(int milliseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Int64 totalMicroseconds =
                         microsecondsFromMidnight() % TimeUnitRatio::k_US_PER_D;
                                               // Force zero if 24:00:00.000000.
@@ -288,6 +292,7 @@ int Time::addMilliseconds(int milliseconds)
 
 int Time::addMicroseconds(bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Int64 totalMicroseconds =
                         microsecondsFromMidnight() % TimeUnitRatio::k_US_PER_D;
                                               // Force zero if 24:00:00.000000.
@@ -305,6 +310,8 @@ int Time::addMicroseconds(bsls::Types::Int64 microseconds)
 
 int Time::addInterval(const DatetimeInterval& interval)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&interval);
     bsls::Types::Int64 totalMicroseconds =
                         microsecondsFromMidnight() % TimeUnitRatio::k_US_PER_D;
                                               // Force zero if 24:00:00.000000.
@@ -328,6 +335,7 @@ int Time::addTime(int                hours,
                   int                milliseconds,
                   bsls::Types::Int64 microseconds)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Int64 totalMicroseconds =
                         microsecondsFromMidnight() % TimeUnitRatio::k_US_PER_D;
                                               // Force zero if 24:00:00.000000.
@@ -358,6 +366,7 @@ int Time::addTime(int                hours,
 
 void Time::setHour(int hour)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= hour);
     BSLS_ASSERT(     hour <= TimeUnitRatio::k_H_PER_D_32);
 
@@ -376,6 +385,7 @@ void Time::setHour(int hour)
 
 void Time::setMicrosecond(int microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= microsecond);
     BSLS_ASSERT(     microsecond < TimeUnitRatio::k_US_PER_MS_32);
 
@@ -397,6 +407,7 @@ void Time::setMicrosecond(int microsecond)
 
 void Time::setMillisecond(int millisecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= millisecond);
     BSLS_ASSERT(     millisecond < TimeUnitRatio::k_MS_PER_S_32);
 
@@ -419,6 +430,7 @@ void Time::setMillisecond(int millisecond)
 
 void Time::setMinute(int minute)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= minute);
     BSLS_ASSERT(     minute < TimeUnitRatio::k_M_PER_H_32);
 
@@ -441,6 +453,7 @@ void Time::setMinute(int minute)
 
 void Time::setSecond(int second)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(0 <= second);
     BSLS_ASSERT(     second < TimeUnitRatio::k_S_PER_M_32);
 
@@ -467,6 +480,7 @@ void Time::setTime(int hour,
                    int millisecond,
                    int microsecond)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(
                       isValid(hour, minute, second, millisecond, microsecond));
 
@@ -484,6 +498,7 @@ void Time::getTime(int *hour,
                    int *millisecond,
                    int *microsecond) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bsls::Types::Int64 totalMicroseconds = microsecondsFromMidnight();
 
     if (hour) {
@@ -522,6 +537,7 @@ int Time::printToBuffer(char *result,
                         int   numBytes,
                         int   fractionalSecondPrecision) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT(result);
     BSLS_ASSERT(0 <= numBytes);
     BSLS_ASSERT(0 <= fractionalSecondPrecision     );
@@ -592,6 +608,7 @@ bsl::ostream& Time::print(bsl::ostream& stream,
                           int           level,
                           int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Format the output to a buffer first instead of inserting into 'stream'
     // directly to improve performance and in case the caller has done
     // something like:

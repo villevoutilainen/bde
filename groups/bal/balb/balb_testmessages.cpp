@@ -183,6 +183,7 @@ int Choice4::makeSelection(const char *name, int nameLength)
 
 bsl::vector<bsl::string>& Choice4::makeSelection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection1.object());
     }
@@ -198,6 +199,8 @@ bsl::vector<bsl::string>& Choice4::makeSelection1()
 
 bsl::vector<bsl::string>& Choice4::makeSelection1(const bsl::vector<bsl::string>& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         d_selection1.object() = value;
     }
@@ -213,6 +216,7 @@ bsl::vector<bsl::string>& Choice4::makeSelection1(const bsl::vector<bsl::string>
 
 int& Choice4::makeSelection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection2.object());
     }
@@ -228,6 +232,7 @@ int& Choice4::makeSelection2()
 
 int& Choice4::makeSelection2(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         d_selection2.object() = value;
     }
@@ -563,6 +568,7 @@ int SequenceWithAnonymityChoice1::makeSelection(const char *name, int nameLength
 
 bool& SequenceWithAnonymityChoice1::makeSelection5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION5 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection5.object());
     }
@@ -578,6 +584,7 @@ bool& SequenceWithAnonymityChoice1::makeSelection5()
 
 bool& SequenceWithAnonymityChoice1::makeSelection5(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION5 == d_selectionId) {
         d_selection5.object() = value;
     }
@@ -593,6 +600,7 @@ bool& SequenceWithAnonymityChoice1::makeSelection5(bool value)
 
 bsl::string& SequenceWithAnonymityChoice1::makeSelection6()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION6 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection6.object());
     }
@@ -608,6 +616,8 @@ bsl::string& SequenceWithAnonymityChoice1::makeSelection6()
 
 bsl::string& SequenceWithAnonymityChoice1::makeSelection6(const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION6 == d_selectionId) {
         d_selection6.object() = value;
     }
@@ -1119,6 +1129,7 @@ int Choice5::makeSelection(const char *name, int nameLength)
 
 Choice4& Choice5::makeSelection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection1.object());
     }
@@ -1134,6 +1145,8 @@ Choice4& Choice5::makeSelection1()
 
 Choice4& Choice5::makeSelection1(const Choice4& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         d_selection1.object() = value;
     }
@@ -1149,6 +1162,7 @@ Choice4& Choice5::makeSelection1(const Choice4& value)
 
 int& Choice5::makeSelection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection2.object());
     }
@@ -1164,6 +1178,7 @@ int& Choice5::makeSelection2()
 
 int& Choice5::makeSelection2(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         d_selection2.object() = value;
     }
@@ -2072,6 +2087,7 @@ int Choice3::makeSelection(const char *name, int nameLength)
 
 Sequence6& Choice3::makeSelection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection1.object());
     }
@@ -2087,6 +2103,8 @@ Sequence6& Choice3::makeSelection1()
 
 Sequence6& Choice3::makeSelection1(const Sequence6& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         d_selection1.object() = value;
     }
@@ -2102,6 +2120,7 @@ Sequence6& Choice3::makeSelection1(const Sequence6& value)
 
 unsigned char& Choice3::makeSelection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection2.object());
     }
@@ -2117,6 +2136,7 @@ unsigned char& Choice3::makeSelection2()
 
 unsigned char& Choice3::makeSelection2(unsigned char value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         d_selection2.object() = value;
     }
@@ -2132,6 +2152,7 @@ unsigned char& Choice3::makeSelection2(unsigned char value)
 
 CustomString& Choice3::makeSelection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION3 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection3.object());
     }
@@ -2147,6 +2168,8 @@ CustomString& Choice3::makeSelection3()
 
 CustomString& Choice3::makeSelection3(const CustomString& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION3 == d_selectionId) {
         d_selection3.object() = value;
     }
@@ -2162,6 +2185,7 @@ CustomString& Choice3::makeSelection3(const CustomString& value)
 
 CustomInt& Choice3::makeSelection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION4 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection4.object());
     }
@@ -2177,6 +2201,8 @@ CustomInt& Choice3::makeSelection4()
 
 CustomInt& Choice3::makeSelection4(const CustomInt& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION4 == d_selectionId) {
         d_selection4.object() = value;
     }
@@ -2436,6 +2462,7 @@ int SequenceWithAnonymityChoice::makeSelection(const char *name, int nameLength)
 
 Sequence6& SequenceWithAnonymityChoice::makeSelection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection1.object());
     }
@@ -2451,6 +2478,8 @@ Sequence6& SequenceWithAnonymityChoice::makeSelection1()
 
 Sequence6& SequenceWithAnonymityChoice::makeSelection1(const Sequence6& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         d_selection1.object() = value;
     }
@@ -2466,6 +2495,7 @@ Sequence6& SequenceWithAnonymityChoice::makeSelection1(const Sequence6& value)
 
 unsigned char& SequenceWithAnonymityChoice::makeSelection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection2.object());
     }
@@ -2481,6 +2511,7 @@ unsigned char& SequenceWithAnonymityChoice::makeSelection2()
 
 unsigned char& SequenceWithAnonymityChoice::makeSelection2(unsigned char value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         d_selection2.object() = value;
     }
@@ -2496,6 +2527,7 @@ unsigned char& SequenceWithAnonymityChoice::makeSelection2(unsigned char value)
 
 CustomString& SequenceWithAnonymityChoice::makeSelection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION3 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection3.object());
     }
@@ -2511,6 +2543,8 @@ CustomString& SequenceWithAnonymityChoice::makeSelection3()
 
 CustomString& SequenceWithAnonymityChoice::makeSelection3(const CustomString& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION3 == d_selectionId) {
         d_selection3.object() = value;
     }
@@ -2526,6 +2560,7 @@ CustomString& SequenceWithAnonymityChoice::makeSelection3(const CustomString& va
 
 CustomInt& SequenceWithAnonymityChoice::makeSelection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION4 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection4.object());
     }
@@ -2541,6 +2576,8 @@ CustomInt& SequenceWithAnonymityChoice::makeSelection4()
 
 CustomInt& SequenceWithAnonymityChoice::makeSelection4(const CustomInt& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION4 == d_selectionId) {
         d_selection4.object() = value;
     }
@@ -2798,6 +2835,7 @@ int Choice1::makeSelection(const char *name, int nameLength)
 
 int& Choice1::makeSelection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection1.object());
     }
@@ -2813,6 +2851,7 @@ int& Choice1::makeSelection1()
 
 int& Choice1::makeSelection1(int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         d_selection1.object() = value;
     }
@@ -2828,6 +2867,7 @@ int& Choice1::makeSelection1(int value)
 
 double& Choice1::makeSelection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection2.object());
     }
@@ -2843,6 +2883,7 @@ double& Choice1::makeSelection2()
 
 double& Choice1::makeSelection2(double value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         d_selection2.object() = value;
     }
@@ -2858,6 +2899,7 @@ double& Choice1::makeSelection2(double value)
 
 Sequence4& Choice1::makeSelection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION3 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(d_selection3);
     }
@@ -2873,6 +2915,8 @@ Sequence4& Choice1::makeSelection3()
 
 Sequence4& Choice1::makeSelection3(const Sequence4& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION3 == d_selectionId) {
         *d_selection3 = value;
     }
@@ -2888,6 +2932,7 @@ Sequence4& Choice1::makeSelection3(const Sequence4& value)
 
 Choice2& Choice1::makeSelection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION4 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(d_selection4);
     }
@@ -2903,6 +2948,8 @@ Choice2& Choice1::makeSelection4()
 
 Choice2& Choice1::makeSelection4(const Choice2& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION4 == d_selectionId) {
         *d_selection4 = value;
     }
@@ -3162,6 +3209,7 @@ int Choice2::makeSelection(const char *name, int nameLength)
 
 bool& Choice2::makeSelection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection1.object());
     }
@@ -3177,6 +3225,7 @@ bool& Choice2::makeSelection1()
 
 bool& Choice2::makeSelection1(bool value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         d_selection1.object() = value;
     }
@@ -3192,6 +3241,7 @@ bool& Choice2::makeSelection1(bool value)
 
 bsl::string& Choice2::makeSelection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection2.object());
     }
@@ -3207,6 +3257,8 @@ bsl::string& Choice2::makeSelection2()
 
 bsl::string& Choice2::makeSelection2(const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         d_selection2.object() = value;
     }
@@ -3222,6 +3274,7 @@ bsl::string& Choice2::makeSelection2(const bsl::string& value)
 
 Choice1& Choice2::makeSelection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION3 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(d_selection3);
     }
@@ -3237,6 +3290,8 @@ Choice1& Choice2::makeSelection3()
 
 Choice1& Choice2::makeSelection3(const Choice1& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION3 == d_selectionId) {
         *d_selection3 = value;
     }
@@ -3252,6 +3307,7 @@ Choice1& Choice2::makeSelection3(const Choice1& value)
 
 unsigned int& Choice2::makeSelection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION4 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection4.object());
     }
@@ -3267,6 +3323,7 @@ unsigned int& Choice2::makeSelection4()
 
 unsigned int& Choice2::makeSelection4(unsigned int value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION4 == d_selectionId) {
         d_selection4.object() = value;
     }
@@ -4153,6 +4210,7 @@ int SequenceWithAnonymityChoice2::makeSelection(const char *name, int nameLength
 
 Sequence4& SequenceWithAnonymityChoice2::makeSelection7()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION7 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(d_selection7);
     }
@@ -4168,6 +4226,8 @@ Sequence4& SequenceWithAnonymityChoice2::makeSelection7()
 
 Sequence4& SequenceWithAnonymityChoice2::makeSelection7(const Sequence4& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION7 == d_selectionId) {
         *d_selection7 = value;
     }
@@ -4183,6 +4243,7 @@ Sequence4& SequenceWithAnonymityChoice2::makeSelection7(const Sequence4& value)
 
 Choice2& SequenceWithAnonymityChoice2::makeSelection8()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION8 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(d_selection8);
     }
@@ -4198,6 +4259,8 @@ Choice2& SequenceWithAnonymityChoice2::makeSelection8()
 
 Choice2& SequenceWithAnonymityChoice2::makeSelection8(const Choice2& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION8 == d_selectionId) {
         *d_selection8 = value;
     }
@@ -4783,6 +4846,7 @@ int FeatureTestMessage::makeSelection(const char *name, int nameLength)
 
 Sequence1& FeatureTestMessage::makeSelection1()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection1.object());
     }
@@ -4798,6 +4862,8 @@ Sequence1& FeatureTestMessage::makeSelection1()
 
 Sequence1& FeatureTestMessage::makeSelection1(const Sequence1& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION1 == d_selectionId) {
         d_selection1.object() = value;
     }
@@ -4813,6 +4879,7 @@ Sequence1& FeatureTestMessage::makeSelection1(const Sequence1& value)
 
 bsl::vector<char>& FeatureTestMessage::makeSelection2()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection2.object());
     }
@@ -4828,6 +4895,8 @@ bsl::vector<char>& FeatureTestMessage::makeSelection2()
 
 bsl::vector<char>& FeatureTestMessage::makeSelection2(const bsl::vector<char>& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION2 == d_selectionId) {
         d_selection2.object() = value;
     }
@@ -4843,6 +4912,7 @@ bsl::vector<char>& FeatureTestMessage::makeSelection2(const bsl::vector<char>& v
 
 Sequence2& FeatureTestMessage::makeSelection3()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION3 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection3.object());
     }
@@ -4858,6 +4928,8 @@ Sequence2& FeatureTestMessage::makeSelection3()
 
 Sequence2& FeatureTestMessage::makeSelection3(const Sequence2& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION3 == d_selectionId) {
         d_selection3.object() = value;
     }
@@ -4873,6 +4945,7 @@ Sequence2& FeatureTestMessage::makeSelection3(const Sequence2& value)
 
 Sequence3& FeatureTestMessage::makeSelection4()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION4 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(d_selection4);
     }
@@ -4888,6 +4961,8 @@ Sequence3& FeatureTestMessage::makeSelection4()
 
 Sequence3& FeatureTestMessage::makeSelection4(const Sequence3& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION4 == d_selectionId) {
         *d_selection4 = value;
     }
@@ -4903,6 +4978,7 @@ Sequence3& FeatureTestMessage::makeSelection4(const Sequence3& value)
 
 bdlt::DatetimeTz& FeatureTestMessage::makeSelection5()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION5 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection5.object());
     }
@@ -4918,6 +4994,8 @@ bdlt::DatetimeTz& FeatureTestMessage::makeSelection5()
 
 bdlt::DatetimeTz& FeatureTestMessage::makeSelection5(const bdlt::DatetimeTz& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION5 == d_selectionId) {
         d_selection5.object() = value;
     }
@@ -4933,6 +5011,7 @@ bdlt::DatetimeTz& FeatureTestMessage::makeSelection5(const bdlt::DatetimeTz& val
 
 CustomString& FeatureTestMessage::makeSelection6()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION6 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection6.object());
     }
@@ -4948,6 +5027,8 @@ CustomString& FeatureTestMessage::makeSelection6()
 
 CustomString& FeatureTestMessage::makeSelection6(const CustomString& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION6 == d_selectionId) {
         d_selection6.object() = value;
     }
@@ -4963,6 +5044,7 @@ CustomString& FeatureTestMessage::makeSelection6(const CustomString& value)
 
 Enumerated::Value& FeatureTestMessage::makeSelection7()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION7 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection7.object());
     }
@@ -4978,6 +5060,7 @@ Enumerated::Value& FeatureTestMessage::makeSelection7()
 
 Enumerated::Value& FeatureTestMessage::makeSelection7(Enumerated::Value value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION7 == d_selectionId) {
         d_selection7.object() = value;
     }
@@ -4993,6 +5076,7 @@ Enumerated::Value& FeatureTestMessage::makeSelection7(Enumerated::Value value)
 
 Choice3& FeatureTestMessage::makeSelection8()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION8 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection8.object());
     }
@@ -5008,6 +5092,8 @@ Choice3& FeatureTestMessage::makeSelection8()
 
 Choice3& FeatureTestMessage::makeSelection8(const Choice3& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION8 == d_selectionId) {
         d_selection8.object() = value;
     }
@@ -5023,6 +5109,7 @@ Choice3& FeatureTestMessage::makeSelection8(const Choice3& value)
 
 VoidSequence& FeatureTestMessage::makeSelection9()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION9 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection9.object());
     }
@@ -5038,6 +5125,8 @@ VoidSequence& FeatureTestMessage::makeSelection9()
 
 VoidSequence& FeatureTestMessage::makeSelection9(const VoidSequence& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION9 == d_selectionId) {
         d_selection9.object() = value;
     }
@@ -5053,6 +5142,7 @@ VoidSequence& FeatureTestMessage::makeSelection9(const VoidSequence& value)
 
 UnsignedSequence& FeatureTestMessage::makeSelection10()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION10 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection10.object());
     }
@@ -5068,6 +5158,8 @@ UnsignedSequence& FeatureTestMessage::makeSelection10()
 
 UnsignedSequence& FeatureTestMessage::makeSelection10(const UnsignedSequence& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION10 == d_selectionId) {
         d_selection10.object() = value;
     }
@@ -5083,6 +5175,7 @@ UnsignedSequence& FeatureTestMessage::makeSelection10(const UnsignedSequence& va
 
 SequenceWithAnonymity& FeatureTestMessage::makeSelection11()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SELECTION11 == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_selection11.object());
     }
@@ -5098,6 +5191,8 @@ SequenceWithAnonymity& FeatureTestMessage::makeSelection11()
 
 SequenceWithAnonymity& FeatureTestMessage::makeSelection11(const SequenceWithAnonymity& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SELECTION11 == d_selectionId) {
         d_selection11.object() = value;
     }
@@ -5354,6 +5449,7 @@ int Request::makeSelection(const char *name, int nameLength)
 
 SimpleRequest& Request::makeSimpleRequest()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_SIMPLE_REQUEST == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_simpleRequest.object());
     }
@@ -5369,6 +5465,8 @@ SimpleRequest& Request::makeSimpleRequest()
 
 SimpleRequest& Request::makeSimpleRequest(const SimpleRequest& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_SIMPLE_REQUEST == d_selectionId) {
         d_simpleRequest.object() = value;
     }
@@ -5384,6 +5482,7 @@ SimpleRequest& Request::makeSimpleRequest(const SimpleRequest& value)
 
 FeatureTestMessage& Request::makeFeatureRequest()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_FEATURE_REQUEST == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_featureRequest.object());
     }
@@ -5399,6 +5498,8 @@ FeatureTestMessage& Request::makeFeatureRequest()
 
 FeatureTestMessage& Request::makeFeatureRequest(const FeatureTestMessage& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_FEATURE_REQUEST == d_selectionId) {
         d_featureRequest.object() = value;
     }
@@ -5606,6 +5707,7 @@ int Response::makeSelection(const char *name, int nameLength)
 
 bsl::string& Response::makeResponseData()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_RESPONSE_DATA == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_responseData.object());
     }
@@ -5621,6 +5723,8 @@ bsl::string& Response::makeResponseData()
 
 bsl::string& Response::makeResponseData(const bsl::string& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_RESPONSE_DATA == d_selectionId) {
         d_responseData.object() = value;
     }
@@ -5636,6 +5740,7 @@ bsl::string& Response::makeResponseData(const bsl::string& value)
 
 FeatureTestMessage& Response::makeFeatureResponse()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (SELECTION_ID_FEATURE_RESPONSE == d_selectionId) {
         bdlat_ValueTypeFunctions::reset(&d_featureResponse.object());
     }
@@ -5651,6 +5756,8 @@ FeatureTestMessage& Response::makeFeatureResponse()
 
 FeatureTestMessage& Response::makeFeatureResponse(const FeatureTestMessage& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     if (SELECTION_ID_FEATURE_RESPONSE == d_selectionId) {
         d_featureResponse.object() = value;
     }

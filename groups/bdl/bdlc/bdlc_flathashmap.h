@@ -319,18 +319,15 @@ class FlatHashMap;
 
 template <class KEY, class VALUE, class HASH, class EQUAL>
 bool operator==(const FlatHashMap<KEY, VALUE, HASH, EQUAL> &lhs,
-                const FlatHashMap<KEY, VALUE, HASH, EQUAL> &rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const FlatHashMap<KEY, VALUE, HASH, EQUAL> &rhs);
 
 template <class KEY, class VALUE, class HASH, class EQUAL>
 bool operator!=(const FlatHashMap<KEY, VALUE, HASH, EQUAL> &lhs,
-                const FlatHashMap<KEY, VALUE, HASH, EQUAL> &rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const FlatHashMap<KEY, VALUE, HASH, EQUAL> &rhs);
 
 template <class KEY, class VALUE, class HASH, class EQUAL>
 void swap(FlatHashMap<KEY, VALUE, HASH, EQUAL>& a,
-          FlatHashMap<KEY, VALUE, HASH, EQUAL>& b)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+          FlatHashMap<KEY, VALUE, HASH, EQUAL>& b);
 
                        // ============================
                        // struct FlatHashMap_EntryUtil
@@ -365,9 +362,7 @@ struct FlatHashMap_EntryUtil
                         BSLS_COMPILERFEATURES_FORWARD_REF(KEY_TYPE)  key);
 
     /// Return the key of the specified `entry`.
-    static const KEY& key(const ENTRY& entry)
-                                          BSLS_ASSERT_CONVEYOR_TRUST_PRE(entry)
-                                        BSLS_ASSERT_CONVEYOR_RESULT_OBJECT_REF;
+    static const KEY& key(const ENTRY& entry);
 };
 
                             // =================
@@ -584,8 +579,7 @@ class FlatHashMap {
     /// requires that the (template parameter) type `KEY` be
     /// `copy-insertable` into this map (see {Requirements on `KEY`, `HASH`,
     /// and `EQUAL`}).
-    FlatHashMap& operator=(bsl::initializer_list<value_type> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    FlatHashMap& operator=(bsl::initializer_list<value_type> values);
 #endif
 
     /// Return a reference providing modifiable access to the mapped value
@@ -594,7 +588,7 @@ class FlatHashMap {
     /// the `key` and a default-constructed `VALUE`, and return a reference
     /// to the newly mapped value.  If `key` is movable, `key` is left in a
     /// (valid) unspecified state.
-    VALUE& operator[](const KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    VALUE& operator[](const KEY& key);
 
     /// Return a reference providing modifiable access to the mapped value
     /// associated with the specified `key` in this map.  If this map does
@@ -602,8 +596,7 @@ class FlatHashMap {
     /// the `key` and a default-constructed `VALUE`, and return a reference
     /// to the newly mapped value.  If `key` is movable, `key` is left in a
     /// (valid) unspecified state.
-    VALUE& operator[](bslmf::MovableRef<KEY> key)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    VALUE& operator[](bslmf::MovableRef<KEY> key);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP11_PAIR_PIECEWISE_CONSTRUCTOR
@@ -618,8 +611,10 @@ class FlatHashMap {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , VALUE&>::type
-    operator[](LOOKUP_KEY&& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    operator[](LOOKUP_KEY&& key)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         return try_emplace(
                  BSLS_COMPILERFEATURES_FORWARD(LOOKUP_KEY, key)).first->second;
     }
@@ -630,7 +625,7 @@ class FlatHashMap {
     /// associated with the specified `key` in this map, if such an entry
     /// exists; otherwise throw a `std::out_of_range` exception.  Note that
     /// this method is not exception-neutral.
-    VALUE& at(const KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    VALUE& at(const KEY& key);
 
     /// Return a reference providing modifiable access to the mapped value
     /// associated with a key that is equivalent to the specified `key` in this
@@ -641,8 +636,10 @@ class FlatHashMap {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , VALUE&>::type
-    at(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    at(const LOOKUP_KEY& key)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         // Note: implemented inline due to Sun CC compilation error.
 
         iterator iter = find(key);
@@ -656,7 +653,7 @@ class FlatHashMap {
     /// Remove all elements from this map.  Note that this map will be empty
     /// after calling this method, but allocated memory may be retained for
     /// future use.  See the `capacity` method.
-    void clear() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void clear();
 
     /// Return a pair of iterators defining the sequence of modifiable
     /// elements in this map having the specified `key`, where the first
@@ -666,8 +663,7 @@ class FlatHashMap {
     /// two returned iterators will have the same value.  Note that since a
     /// map maintains unique keys, the range will contain at most one
     /// element.
-    bsl::pair<iterator, iterator> equal_range(const KEY& key)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::pair<iterator, iterator> equal_range(const KEY& key);
 
     /// Return a pair of iterators defining the sequence of modifiable
     /// elements in this map having a key equivalent to the specified `key`,
@@ -682,8 +678,10 @@ class FlatHashMap {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::pair<iterator, iterator> >::type
-    equal_range(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    equal_range(const LOOKUP_KEY& key)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         // Note: implemented inline due to Sun CC compilation error.
 
         return d_impl.equal_range(key);
@@ -705,8 +703,7 @@ class FlatHashMap {
     /// `VALUE` both be `emplace-constructible` from `args` (see
     /// {Requirements on `value_type`}).
     template <class... ARGS>
-    bsl::pair<iterator, bool> emplace(ARGS&&... args)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::pair<iterator, bool> emplace(ARGS&&... args);
 
     /// Insert into this map a newly-created `value_type` object,
     /// constructed by forwarding `get_allocator()` (if required) and the
@@ -725,8 +722,7 @@ class FlatHashMap {
     /// endpoints included).  Note that `hint` is ignored (other than
     /// possibly asserting its validity in some build modes).
     template <class... ARGS>
-    iterator emplace_hint(const_iterator hint, ARGS&&... args)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator emplace_hint(const_iterator hint, ARGS&&... args);
 #endif
 
     /// Remove from this map the element whose key is equal to the specified
@@ -734,7 +730,7 @@ class FlatHashMap {
     /// having `key` in this map), return 0 with no other effect.  This
     /// method invalidates all iterators and references to the removed
     /// element.
-    bsl::size_t erase(const KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::size_t erase(const KEY& key);
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
     /// Remove from this map the element whose key is equivalent to the
@@ -771,13 +767,12 @@ class FlatHashMap {
     /// valid iterators on this map, and the `first` position is at or
     /// before the `last` position in the iteration sequence provided by
     /// this container.
-    iterator erase(const_iterator first, const_iterator last)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator erase(const_iterator first, const_iterator last);
 
     /// Return an iterator referring to the modifiable element in this map
     /// having the specified `key`, or `end()` if no such entry exists in
     /// this map.
-    iterator find(const KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator find(const KEY& key);
 
     /// Return an `iterator` referring to the modifiable element in this map
     /// having the key equivalent to the specified `key`, or `end()` if no such
@@ -787,8 +782,10 @@ class FlatHashMap {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , iterator>::type
-    find(const LOOKUP_KEY& key) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    find(const LOOKUP_KEY& key)
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         // Note: implemented inline due to Sun CC compilation error.
 
         return iterator(d_impl.find(key));
@@ -816,8 +813,8 @@ class FlatHashMap {
                             bsl::pair<iterator, bool> >::type
 #endif
     insert(BSLS_COMPILERFEATURES_FORWARD_REF(VALUE_TYPE) value)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         // Note that some compilers require functions declared with 'enable_if'
         // to be defined inline.
 
@@ -845,8 +842,8 @@ class FlatHashMap {
 #endif
     insert(const_iterator                                ,
            BSLS_COMPILERFEATURES_FORWARD_REF(VALUE_TYPE) value)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
         // Note that some compilers require functions declared with 'enable_if'
         // to be defined inline.
 
@@ -862,8 +859,7 @@ class FlatHashMap {
     /// the input sequence is equivalent to the key of an earlier member,
     /// the later member will not be inserted.
     template <class INPUT_ITERATOR>
-    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void insert(INPUT_ITERATOR first, INPUT_ITERATOR last);
 
 #if defined(BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS)
     /// Insert into this map an element having the value of each object in
@@ -871,8 +867,7 @@ class FlatHashMap {
     /// equivalent key is not already contained in this map.  This method
     /// requires that the (template parameter) type `KEY` be copy-insertable
     /// (see {Requirements on `KEY`, `HASH`, and `EQUAL`}).
-    void insert(bsl::initializer_list<value_type> values)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void insert(bsl::initializer_list<value_type> values);
 #endif
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
@@ -883,8 +878,7 @@ class FlatHashMap {
     /// new entry into the map with the and return an iterator to that entry
     /// and `true`.  `obj` is left in a (valid) unspecified state.
     template<class M>
-    bsl::pair<iterator, bool> insert_or_assign(const KEY& key, M&& obj)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::pair<iterator, bool> insert_or_assign(const KEY& key, M&& obj);
 
     /// If this map contains an entry with a key equivalent to the specified
     /// `key`, assign the specified `obj` to the `mapped_type` of that entry,
@@ -893,8 +887,7 @@ class FlatHashMap {
     /// and `true`.  `obj` is left in a (valid) unspecified state.
     template<class M>
     bsl::pair<iterator, bool> insert_or_assign(
-                             BloombergLP::bslmf::MovableRef<KEY> key, M&& obj)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                             BloombergLP::bslmf::MovableRef<KEY> key, M&& obj);
 
     /// If this map contains an entry with a key equivalent to the specified
     /// `key`, assign the specified `obj` to the `mapped_type` of that entry,
@@ -907,8 +900,10 @@ class FlatHashMap {
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::pair<iterator, bool> >::type
     insert_or_assign(LOOKUP_KEY&& key, M&& obj)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         iterator iter = find(key);
         if (iter != end()) {
             iter->second = std::forward<M>(obj);
@@ -924,8 +919,7 @@ class FlatHashMap {
     /// inserted or updated entry.  `obj` is left in a (valid) unspecified
     /// state.
     template <class MAPPED>
-    iterator insert_or_assign(const_iterator, const KEY& key, MAPPED&& obj)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator insert_or_assign(const_iterator, const KEY& key, MAPPED&& obj);
 
     /// If this map contains an entry with a key equivalent to the specified
     /// `key`, assign the specified `obj` to the `mapped_type` of that entry.
@@ -935,7 +929,7 @@ class FlatHashMap {
     template <class MAPPED>
     iterator insert_or_assign(const_iterator,
                               BloombergLP::bslmf::MovableRef<KEY> key,
-                              MAPPED&& obj) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                              MAPPED&& obj);
 
     /// If this map contains an entry with a key equivalent to the specified
     /// `key`, assign the specified `obj` to the `mapped_type` of that entry.
@@ -948,8 +942,10 @@ class FlatHashMap {
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , iterator>::type
     insert_or_assign(const_iterator, LOOKUP_KEY&& key, MAPPED&& obj)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         return insert_or_assign(
                  BSLS_COMPILERFEATURES_FORWARD(LOOKUP_KEY, key),
                  BSLS_COMPILERFEATURES_FORWARD(MAPPED, obj)).first;
@@ -964,8 +960,7 @@ class FlatHashMap {
     /// default constructed state.  After this call, `load_factor()` will be
     /// less than or equal to `max_load_factor()` and all iterators,
     /// pointers, and references to elements of this map are invalidated.
-    void rehash(bsl::size_t minimumCapacity)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void rehash(bsl::size_t minimumCapacity);
 
     /// Change the capacity of this map to at least a capacity that can
     /// accommodate the specified `numEntries` (accounting for the load
@@ -979,11 +974,11 @@ class FlatHashMap {
     /// ```
     ///    rehash(bsl::ceil(numEntries / max_load_factor()))
     /// ```
-    void reserve(bsl::size_t numEntries) BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reserve(bsl::size_t numEntries);
 
     /// Remove all elements from this map and release all memory from this
     /// map, returning the map to the default constructed state.
-    void reset() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    void reset();
 
 #if !BSLS_COMPILERFEATURES_SIMULATE_CPP11_FEATURES
 #ifdef BSLS_LIBRARYFEATURES_HAS_CPP11_PAIR_PIECEWISE_CONSTRUCTOR
@@ -997,8 +992,7 @@ class FlatHashMap {
     /// `emplace-constructible` from `key` and `args` respectively.  For
     /// C++03, `VALUE` must also be `copy-constructible`.
     template< class... ARGS>
-    bsl::pair<iterator, bool> try_emplace(const KEY& key, ARGS&&... args)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::pair<iterator, bool> try_emplace(const KEY& key, ARGS&&... args);
 
     /// If a key equivalent to the specified `key` already exists in this
     /// map, return a pair containing an iterator referring to the existing
@@ -1012,8 +1006,7 @@ class FlatHashMap {
     template <class... ARGS>
     bsl::pair<iterator, bool> try_emplace(
                                      BloombergLP::bslmf::MovableRef<KEY> key,
-                                     ARGS&&...                           args)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                     ARGS&&...                           args);
 
     /// If a key equivalent to the specified `key` already exists in this map
     /// return a pair containing an iterator referring to the existing
@@ -1030,8 +1023,9 @@ class FlatHashMap {
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::pair<iterator, bool> >::type
     try_emplace(LOOKUP_KEY&& key, ARGS&&... args)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         // Note: implemented inline due to Sun CC compilation error.
 
         return d_impl.try_emplace(
@@ -1051,8 +1045,7 @@ class FlatHashMap {
     /// C++03, `VALUE` must also be `copy-constructible`.
     template<class... ARGS>
     iterator
-    try_emplace(const_iterator, const KEY& key, ARGS&&... args)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    try_emplace(const_iterator, const KEY& key, ARGS&&... args);
 
     /// If a key equivalent to the specified `key` already exists in this
     /// map, return an iterator referring to the existing item.  Otherwise,
@@ -1065,8 +1058,7 @@ class FlatHashMap {
     template <class... ARGS>
     iterator try_emplace(const_iterator,
                          BloombergLP::bslmf::MovableRef<KEY> key,
-                         ARGS&&...                           args)
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                         ARGS&&...                           args);
 
     /// If a key equivalent to the specified `key` already exists in this map
     /// return an iterator referring to the existing item.  Otherwise, insert
@@ -1082,8 +1074,9 @@ class FlatHashMap {
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , iterator>::type
     try_emplace(const_iterator, LOOKUP_KEY&& key, ARGS&&... args)
-                                             BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         // Note: implemented inline due to Sun CC compilation error.
 
         return d_impl.try_emplace(
@@ -1104,11 +1097,11 @@ class FlatHashMap {
     /// Return an iterator to the first element in the sequence of
     /// modifiable elements maintained by this map, or the `end` iterator if
     /// this map is empty.
-    iterator begin() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator begin();
 
     /// Return an iterator to the past-the-end element in the sequence of
     /// modifiable elements maintained by this map.
-    iterator end() BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    iterator end();
 
                              // Aspects
 
@@ -1124,7 +1117,7 @@ class FlatHashMap {
     /// value associated with the specified `key` in this map, if such an
     /// entry exists; otherwise throw a `std::out_of_range` exception.  Note
     /// that this method is not exception-neutral.
-    const VALUE& at(const KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const VALUE& at(const KEY& key) const;
 
     /// Return a reference providing non-modifiable access to the mapped
     /// value associated with a key that is equivalent to the specified `key`
@@ -1136,8 +1129,10 @@ class FlatHashMap {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , const VALUE&>::type
-    at(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    at(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         // Note: implemented inline due to Sun CC compilation error.
 
         const_iterator iter = find(key);
@@ -1150,11 +1145,11 @@ class FlatHashMap {
 
     /// Return the number of elements this map could hold if the load factor
     /// were 1.
-    bsl::size_t capacity() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::size_t capacity() const;
 
     /// Return `true` if this map contains an element having the specified
     /// `key`, and `false` otherwise.
-    bool contains(const KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool contains(const KEY& key) const;
 
     /// Return `true` if this map contains an element whose key is equivalent
     /// to the specified `key`.
@@ -1163,8 +1158,10 @@ class FlatHashMap {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
         &&  BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
         , bool>::type
-    contains(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    contains(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         // Note: implemented inline due to Sun CC compilation error.
 
         return find(key) != end();
@@ -1173,7 +1170,7 @@ class FlatHashMap {
     /// Return the number of elements in this map having the specified
     /// `key`.  Note that since a flat hash map maintains unique keys, the
     /// returned value will be either 0 or 1.
-    bsl::size_t count(const KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::size_t count(const KEY& key) const;
 
     /// Return the number of elements in this map having a key equivalent to
     /// the specified `key`.  Note that since a flat hash map maintains unique
@@ -1183,8 +1180,10 @@ class FlatHashMap {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::size_t >::type
-    count(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    count(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         // Note: implemented inline due to Sun CC compilation error.
 
         return find(key) != end() ? 1 : 0;
@@ -1192,7 +1191,7 @@ class FlatHashMap {
 
     /// Return `true` if this map contains no elements, and `false`
     /// otherwise.
-    bool empty() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bool empty() const;
 
     /// Return a pair of `const_iterator`s defining the sequence of elements
     /// in this map having the specified `key`, where the first iterator is
@@ -1202,8 +1201,7 @@ class FlatHashMap {
     /// iterators will have the same value.  Note that since a map maintains
     /// unique keys, the range will contain at most one element.
     bsl::pair<const_iterator, const_iterator> equal_range(
-                                                         const KEY& key) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                                                         const KEY& key) const;
 
     /// Return a pair of iterators providing non-modifiable access to the
     /// sequence of `value_type` objects in this unordered map that are
@@ -1219,8 +1217,10 @@ class FlatHashMap {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , bsl::pair<const_iterator, const_iterator> >::type
-    equal_range(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    equal_range(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         // Note: implemented inline due to Sun CC compilation error.
 
         return d_impl.equal_range(key);
@@ -1229,8 +1229,7 @@ class FlatHashMap {
     /// Return a `const_iterator` referring to the element in this map
     /// having the specified `key`, or `end()` if no such entry exists in
     /// this map.
-    const_iterator find(const KEY& key) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator find(const KEY& key) const;
 
     /// Return a `const_iterator` referring to the element in this map
     /// having the specified `key`, or `end()` if no such entry exists in
@@ -1240,8 +1239,10 @@ class FlatHashMap {
             BloombergLP::bslmf::IsTransparentPredicate<HASH, LOOKUP_KEY>::value
          && BloombergLP::bslmf::IsTransparentPredicate<EQUAL,LOOKUP_KEY>::value
           , const_iterator>::type
-    find(const LOOKUP_KEY& key) const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS
+    find(const LOOKUP_KEY& key) const
     {
+        BSLS_ASSERT_CONVEYOR_OBJECT(this);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&key);
         // Note: implemented inline due to Sun CC compilation error.
 
         return const_iterator(d_impl.find(key));
@@ -1250,16 +1251,16 @@ class FlatHashMap {
 
     /// Return (a copy of) the unary hash functor used by this map to
     /// generate a hash value (of type `bsl::size_t`) for a `KEY` object.
-    HASH hash_function() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    HASH hash_function() const;
 
     /// Return (a copy of) the binary key-equality functor that returns
     /// `true` if the value of two `KEY` objects are equivalent, and `false`
     /// otherwise.
-    EQUAL key_eq() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    EQUAL key_eq() const;
 
     /// Return the current ratio between the number of elements in this
     /// container and its capacity.
-    float load_factor() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    float load_factor() const;
 
     /// Return the maximum load factor allowed for this map.  Note that if
     /// an insert operation would cause the load factor to exceed
@@ -1268,35 +1269,35 @@ class FlatHashMap {
     /// and Resizing}).  Also note that the value returned by
     /// `max_load_factor` is implementation defined and cannot be changed by
     /// the user.
-    float max_load_factor() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    float max_load_factor() const;
 
     /// Return the number of elements in this map.
-    bsl::size_t size() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bsl::size_t size() const;
 
                           // Iterators
 
     /// Return a `const_iterator` to the first element in the sequence of
     /// elements maintained by this map, or the `end` iterator if this map
     /// is empty.
-    const_iterator begin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator begin() const;
 
     /// Return a `const_iterator` to the first element in the sequence of
     /// elements maintained by this map, or the `end` iterator if this map
     /// is empty.
-    const_iterator cbegin() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator cbegin() const;
 
     /// Return a `const_iterator` to the past-the-end element in the
     /// sequence of elements maintained by this map.
-    const_iterator cend() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator cend() const;
 
     /// Return a `const_iterator` to the past-the-end element in the
     /// sequence of elements maintained by this map.
-    const_iterator end() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    const_iterator end() const;
 
                            // Aspects
 
     /// Return the allocator used by this flat hash map to supply memory.
-    bslma::Allocator *allocator() const BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+    bslma::Allocator *allocator() const;
 
     /// Format this object to the specified output `stream` at the (absolute
     /// value of) the optionally specified indentation `level`, and return a
@@ -1310,8 +1311,7 @@ class FlatHashMap {
     /// effect.
     bsl::ostream& print(bsl::ostream& stream,
                         int           level = 0,
-                        int           spacesPerLevel = 4) const
-                                            BSLS_ASSERT_CONVEYOR_REQUIRES_THIS;
+                        int           spacesPerLevel = 4) const;
 };
 
 // FREE OPERATORS
@@ -1323,8 +1323,7 @@ class FlatHashMap {
 /// not involved in the comparison.
 template <class KEY, class VALUE, class HASH, class EQUAL>
 bool operator==(const FlatHashMap<KEY, VALUE, HASH, EQUAL> &lhs,
-                const FlatHashMap<KEY, VALUE, HASH, EQUAL> &rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const FlatHashMap<KEY, VALUE, HASH, EQUAL> &rhs);
 
 /// Return `true` if the specified `lhs` and `rhs` objects do not have the
 /// same value, and `false` otherwise.  Two `FlatHashMap` objects do not
@@ -1333,8 +1332,7 @@ bool operator==(const FlatHashMap<KEY, VALUE, HASH, EQUAL> &lhs,
 /// functors are not involved in the comparison.
 template <class KEY, class VALUE, class HASH, class EQUAL>
 bool operator!=(const FlatHashMap<KEY, VALUE, HASH, EQUAL> &lhs,
-                const FlatHashMap<KEY, VALUE, HASH, EQUAL> &rhs)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(lhs) BSLS_ASSERT_CONVEYOR_REQUIRES(rhs);
+                const FlatHashMap<KEY, VALUE, HASH, EQUAL> &rhs);
 
 /// Write the value of the specified `map` to the specified output `stream`
 /// in a single-line format, and return a reference providing modifiable
@@ -1343,8 +1341,7 @@ bool operator!=(const FlatHashMap<KEY, VALUE, HASH, EQUAL> &lhs,
 /// specified and can change without notice.
 template <class KEY, class VALUE, class HASH, class EQUAL>
 bsl::ostream& operator<<(bsl::ostream&                               stream,
-                         const FlatHashMap<KEY, VALUE, HASH, EQUAL>& map)
-    BSLS_ASSERT_CONVEYOR_TRUST_PRE(stream) BSLS_ASSERT_CONVEYOR_REQUIRES(map);
+                         const FlatHashMap<KEY, VALUE, HASH, EQUAL>& map);
 
 // FREE FUNCTIONS
 
@@ -1354,8 +1351,7 @@ bsl::ostream& operator<<(bsl::ostream&                               stream,
 /// allocator and the basic guarantee otherwise.
 template <class KEY, class VALUE, class HASH, class EQUAL>
 void swap(FlatHashMap<KEY, VALUE, HASH, EQUAL>& a,
-          FlatHashMap<KEY, VALUE, HASH, EQUAL>& b)
-    BSLS_ASSERT_CONVEYOR_REQUIRES(a) BSLS_ASSERT_CONVEYOR_REQUIRES(b);
+          FlatHashMap<KEY, VALUE, HASH, EQUAL>& b);
 
 // ============================================================================
 //                  TEMPLATE AND INLINE FUNCTION DEFINITIONS
@@ -1409,6 +1405,7 @@ template <class KEY, class VALUE, class ENTRY>
 inline
 const KEY& FlatHashMap_EntryUtil<KEY, VALUE, ENTRY>::key(const ENTRY& entry)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&entry);
     return entry.first;
 }
 
@@ -1628,6 +1625,7 @@ inline
 FlatHashMap<KEY, VALUE, HASH, EQUAL>&
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::operator=(const FlatHashMap& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl = rhs.d_impl;
 
     return *this;
@@ -1639,6 +1637,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>&
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::operator=(
                                             bslmf::MovableRef<FlatHashMap> rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     FlatHashMap& lvalue = rhs;
 
     d_impl = bslmf::MovableRefUtil::move(lvalue.d_impl);
@@ -1653,6 +1652,7 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>&
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::operator=(
                                       bsl::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     FlatHashMap tmp(values.begin(),
                     values.end(),
                     0,
@@ -1670,6 +1670,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 VALUE& FlatHashMap<KEY, VALUE, HASH, EQUAL>::operator[](const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl[key].second;
 }
 
@@ -1677,6 +1679,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 VALUE& FlatHashMap<KEY, VALUE, HASH, EQUAL>::operator[](bslmf::MovableRef<KEY> key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl[BSLS_COMPILERFEATURES_FORWARD(KEY, key)].second;
 }
 
@@ -1684,6 +1688,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 VALUE& FlatHashMap<KEY, VALUE, HASH, EQUAL>::at(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     iterator node = d_impl.find(key);
 
     if (node == d_impl.end()) {
@@ -1699,6 +1705,7 @@ inline
 void
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::clear()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.clear();
 }
 
@@ -1707,6 +1714,8 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator,
           typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::equal_range(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.equal_range(key);
 }
 
@@ -1717,6 +1726,7 @@ inline
 bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace(ARGS&&... args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS, args)...);
 }
 
@@ -1727,6 +1737,7 @@ typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
                                                    ARGS&&...       args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return emplace(BSLS_COMPILERFEATURES_FORWARD(ARGS, args)...).first;
 }
 #endif
@@ -1735,6 +1746,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::emplace_hint(const_iterator,
 template <class KEY, class VALUE, class HASH, class EQUAL>
 bsl::size_t FlatHashMap<KEY, VALUE, HASH, EQUAL>::erase(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.erase(key);
 }
 
@@ -1743,6 +1756,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::erase(const_iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(position != end());
 
     return d_impl.erase(position);
@@ -1753,6 +1767,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::erase(iterator position)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // Note that this overload is necessary to avoid ambiguity when the key is
     // an iterator.
 
@@ -1766,6 +1781,7 @@ typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::erase(const_iterator first,
                                             const_iterator last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.erase(first, last);
 }
 
@@ -1774,6 +1790,8 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::find(const KEY& key)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.find(key);
 }
 
@@ -1782,6 +1800,7 @@ template <class INPUT_ITERATOR>
 void FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert(INPUT_ITERATOR first,
                                                   INPUT_ITERATOR last)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.insert(first, last);
 }
 
@@ -1793,6 +1812,9 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert_or_assign(const KEY& key,
                                                        MAPPED&&   obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     iterator iter = find(key);
     if (iter != end()) {
         iter->second = std::forward<MAPPED>(obj);
@@ -1809,6 +1831,9 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert_or_assign(
                                        BloombergLP::bslmf::MovableRef<KEY> key,
                                        MAPPED&&                            obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     const KEY& lvalue = key;
     BSLS_ASSERT_CONVEYOR_OBJECT(&lvalue);
     iterator iter = find(lvalue);
@@ -1828,6 +1853,9 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert_or_assign(const_iterator,
                                                        const KEY&      key,
                                                        MAPPED&&        obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     return insert_or_assign(key,
                              BSLS_COMPILERFEATURES_FORWARD(MAPPED, obj)).first;
 }
@@ -1841,6 +1869,9 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert_or_assign(
                                        BloombergLP::bslmf::MovableRef<KEY> key,
                                        MAPPED&&                            obj)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
     const KEY& lvalue = key;
     return insert_or_assign(bslmf::MovableRefUtil::move(lvalue),
                             BSLS_COMPILERFEATURES_FORWARD(MAPPED, obj)).first;
@@ -1852,6 +1883,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 void FlatHashMap<KEY, VALUE, HASH, EQUAL>::insert(
                                       bsl::initializer_list<value_type> values)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert(values.begin(), values.end());
 }
 #endif
@@ -1860,6 +1892,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 void FlatHashMap<KEY, VALUE, HASH, EQUAL>::rehash(bsl::size_t minimumCapacity)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.rehash(minimumCapacity);
 }
 
@@ -1867,6 +1900,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 void FlatHashMap<KEY, VALUE, HASH, EQUAL>::reserve(bsl::size_t numEntries)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reserve(numEntries);
 }
 
@@ -1874,6 +1908,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 void FlatHashMap<KEY, VALUE, HASH, EQUAL>::reset()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     d_impl.reset();
 }
 
@@ -1886,6 +1921,8 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator, bool>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const KEY& key,
                                                   ARGS&&...  args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -1900,6 +1937,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(
                                       BloombergLP::bslmf::MovableRef<KEY> key,
                                       ARGS&&...                           args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -1914,6 +1953,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                                                   const KEY&      key,
                                                   ARGS&&...       args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           key,
           std::piecewise_construct,
@@ -1929,6 +1970,8 @@ FlatHashMap<KEY, VALUE, HASH, EQUAL>::try_emplace(const_iterator,
                          BloombergLP::bslmf::MovableRef<KEY> key,
                          ARGS&&...                           args)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.try_emplace(
           BSLS_COMPILERFEATURES_FORWARD(KEY, key),
           std::piecewise_construct,
@@ -1946,6 +1989,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
                                   FlatHashMap<KEY, VALUE, HASH, EQUAL>::begin()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.begin();
 }
 
@@ -1954,6 +1998,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::iterator
                                     FlatHashMap<KEY, VALUE, HASH, EQUAL>::end()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.end();
 }
 
@@ -1973,6 +2018,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 const VALUE& FlatHashMap<KEY, VALUE, HASH, EQUAL>::at(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     const_iterator node = d_impl.find(key);
 
     if (node == d_impl.end()) {
@@ -1987,6 +2034,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashMap<KEY, VALUE, HASH, EQUAL>::capacity() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.capacity();
 }
 
@@ -1994,6 +2042,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bool FlatHashMap<KEY, VALUE, HASH, EQUAL>::contains(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.contains(key);
 }
 
@@ -2001,6 +2051,8 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashMap<KEY, VALUE, HASH, EQUAL>::count(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.count(key);
 }
 
@@ -2008,6 +2060,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bool FlatHashMap<KEY, VALUE, HASH, EQUAL>::empty() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.empty();
 }
 
@@ -2016,6 +2069,8 @@ bsl::pair<typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator,
           typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator>
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::equal_range(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.equal_range(key);
 }
 
@@ -2024,6 +2079,8 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator
 FlatHashMap<KEY, VALUE, HASH, EQUAL>::find(const KEY& key) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&key);
     return d_impl.find(key);
 }
 
@@ -2031,6 +2088,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 HASH FlatHashMap<KEY, VALUE, HASH, EQUAL>::hash_function() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.hash_function();
 }
 
@@ -2038,6 +2096,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 EQUAL FlatHashMap<KEY, VALUE, HASH, EQUAL>::key_eq() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.key_eq();
 }
 
@@ -2045,6 +2104,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 float FlatHashMap<KEY, VALUE, HASH, EQUAL>::load_factor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.load_factor();
 }
 
@@ -2052,6 +2112,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 float FlatHashMap<KEY, VALUE, HASH, EQUAL>::max_load_factor() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.max_load_factor();
 }
 
@@ -2059,6 +2120,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bsl::size_t FlatHashMap<KEY, VALUE, HASH, EQUAL>::size() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.size();
 }
 
@@ -2069,6 +2131,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator
                       FlatHashMap<KEY, VALUE, HASH, EQUAL>::begin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.begin();
 }
 template <class KEY, class VALUE, class HASH, class EQUAL>
@@ -2076,6 +2139,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator
                      FlatHashMap<KEY, VALUE, HASH, EQUAL>::cbegin() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.cbegin();
 }
 
@@ -2084,6 +2148,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator
                        FlatHashMap<KEY, VALUE, HASH, EQUAL>::cend() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.cend();
 }
 
@@ -2092,6 +2157,7 @@ inline
 typename FlatHashMap<KEY, VALUE, HASH, EQUAL>::const_iterator
                         FlatHashMap<KEY, VALUE, HASH, EQUAL>::end() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.end();
 }
 
@@ -2101,6 +2167,7 @@ template <class KEY, class VALUE, class HASH, class EQUAL>
 inline
 bslma::Allocator *FlatHashMap<KEY, VALUE, HASH, EQUAL>::allocator() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return d_impl.allocator();
 }
 
@@ -2110,6 +2177,8 @@ bsl::ostream& FlatHashMap<KEY, VALUE, HASH, EQUAL>::print(
                                             int           level,
                                             int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     if (stream.bad()) {
         return stream;                                                // RETURN
     }
@@ -2137,6 +2206,8 @@ inline
 bool bdlc::operator==(const FlatHashMap<KEY, VALUE, HASH, EQUAL>& lhs,
                       const FlatHashMap<KEY, VALUE, HASH, EQUAL>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_impl == rhs.d_impl;
 }
 
@@ -2145,6 +2216,8 @@ inline
 bool bdlc::operator!=(const FlatHashMap<KEY, VALUE, HASH, EQUAL>& lhs,
                       const FlatHashMap<KEY, VALUE, HASH, EQUAL>& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.d_impl != rhs.d_impl;
 }
 
@@ -2163,6 +2236,8 @@ inline
 void bdlc::swap(FlatHashMap<KEY, VALUE, HASH, EQUAL>& a,
                 FlatHashMap<KEY, VALUE, HASH, EQUAL>& b)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&a);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&b);
     bslalg::SwapUtil::swap(&a.d_impl, &b.d_impl);
 }
 

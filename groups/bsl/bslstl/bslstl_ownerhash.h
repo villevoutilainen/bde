@@ -158,16 +158,14 @@ struct owner_hash {
     // ACCESSORS
     template <class ELEMENT_TYPE>
     size_t operator()(const shared_ptr<ELEMENT_TYPE>& x) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                              BSLS_ASSERT_CONVEYOR_REQUIRES(x);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 
     /// Return the result of calling `owner_hash()` on the specified `x`.
     ///  Note that for any object `y` where `x.owner_equal(y)` is true,
     /// `x.owner_hash() == y.owner_hash()` is true.
     template <class ELEMENT_TYPE>
     size_t operator()(const weak_ptr<  ELEMENT_TYPE>& x) const
-                                                         BSLS_KEYWORD_NOEXCEPT
-                                              BSLS_ASSERT_CONVEYOR_REQUIRES(x);
+                                                         BSLS_KEYWORD_NOEXCEPT;
 };
 
 // ============================================================================
@@ -183,6 +181,8 @@ inline
 size_t owner_hash::operator()(
                  const shared_ptr<ELEMENT_TYPE>& x) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&x);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return x.owner_hash();
 }
 
@@ -191,6 +191,8 @@ inline
 size_t owner_hash::operator()(
                    const weak_ptr<ELEMENT_TYPE>& x) const BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&x);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return x.owner_hash();
 }
 

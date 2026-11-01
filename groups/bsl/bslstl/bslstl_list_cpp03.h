@@ -2020,6 +2020,7 @@ inline
 typename bsl::List_Iterator<VALUE>::reference
                                         List_Iterator<VALUE>::operator*() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return this->d_node_p->d_value;
 }
 
@@ -2028,6 +2029,7 @@ inline
 typename bsl::List_Iterator<VALUE>::pointer
                                        List_Iterator<VALUE>::operator->() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return BloombergLP::bsls::Util::addressOf(this->d_node_p->d_value);
 }
 
@@ -2705,6 +2707,8 @@ BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
 void list<VALUE, ALLOCATOR>::assign_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     clear();
     append_range(BSLS_COMPILERFEATURES_FORWARD(t_RANGE, range));
 }
@@ -2893,6 +2897,8 @@ BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
 void list<VALUE, ALLOCATOR>::append_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     privateAppendRange(ranges::begin(range), ranges::end(range));
 }
 
@@ -3506,6 +3512,8 @@ BSLSTL_LIST_REQUIRES_CONTAINER_COMPATIBLE_RANGE(t_RANGE, VALUE)
 void list<VALUE, ALLOCATOR>::prepend_range(
                               BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     insert_range(begin(), BSLS_COMPILERFEATURES_FORWARD(t_RANGE, range));
 }
 
@@ -3946,6 +3954,8 @@ list<VALUE, ALLOCATOR>::insert_range(
                            const_iterator                             position,
                            BSLS_COMPILERFEATURES_FORWARD_REF(t_RANGE) range)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&range);
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     list tmp(from_range,
              BSLS_COMPILERFEATURES_FORWARD(t_RANGE, range),
              get_allocator());
@@ -4023,6 +4033,8 @@ template <class VALUE, class ALLOCATOR>
 typename list<VALUE, ALLOCATOR>::size_type
 list<VALUE, ALLOCATOR>::remove(const VALUE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const size_type origSize = this->size();
     const const_iterator e = cend();
     for (const_iterator i = cbegin(); e != i; ) {
@@ -4044,6 +4056,7 @@ template <class PREDICATE>
 typename list<VALUE, ALLOCATOR>::size_type
 list<VALUE, ALLOCATOR>::remove_if(PREDICATE predicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const size_type origSize = this->size();
     const iterator e = end();
     for (iterator i = begin(); e != i; ) {
@@ -4208,6 +4221,7 @@ void list<VALUE, ALLOCATOR>::splice(
 template <class VALUE, class ALLOCATOR>
 void list<VALUE, ALLOCATOR>::unique()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (size() < 2) {
         return;                                                       // RETURN
     }
@@ -4226,6 +4240,7 @@ template <class VALUE, class ALLOCATOR>
 template <class EQ_PREDICATE>
 void list<VALUE, ALLOCATOR>::unique(EQ_PREDICATE binaryPredicate)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (size() < 2) {
         return;                                                       // RETURN
     }

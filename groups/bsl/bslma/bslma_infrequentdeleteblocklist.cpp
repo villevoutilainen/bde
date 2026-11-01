@@ -28,6 +28,7 @@ InfrequentDeleteBlockList::~InfrequentDeleteBlockList()
 // MANIPULATORS
 void *InfrequentDeleteBlockList::allocate(int numBytes)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (0 == numBytes) {
         return 0;                                                     // RETURN
     }
@@ -46,6 +47,7 @@ void *InfrequentDeleteBlockList::allocate(int numBytes)
 
 void InfrequentDeleteBlockList::release()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     while (d_head_p) {
         void *lastBlock = d_head_p;
         d_head_p = d_head_p->d_next_p;
