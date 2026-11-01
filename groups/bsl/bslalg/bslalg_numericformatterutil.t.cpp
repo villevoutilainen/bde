@@ -80019,7 +80019,7 @@ void dblMantissaToHex(char (&hexout)[16], UINT64_T m52)
     char * const end = Util::toChars(bb, be, m52, 16);
 
     BSLS_ASSERT(0 != end);
-    BSLS_ASSERT(end <= be);
+    BSLS_ASSERT_NONCONVEYOR(end <= be);
 
     const size_t slack = be - end;
     if (slack > 0) {
