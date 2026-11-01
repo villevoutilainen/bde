@@ -767,7 +767,7 @@ struct Optional_DataImp {
     // ACCESSORS
 
     /// Return `true` if this objects has a value, and `false` otherwise.
-    bool hasValue() const BSLS_KEYWORD_NOEXCEPT;
+    bool hasValue() const BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR;
 
 # ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return the `value_type` object in `d_buffer` with const
@@ -1336,7 +1336,7 @@ class Optional_Base {
     allocator_type get_allocator() const BSLS_KEYWORD_NOEXCEPT;
 
     /// Return `false` if this object is disengaged, and `true` otherwise.
-    bool has_value() const BSLS_KEYWORD_NOEXCEPT;
+    bool has_value() const BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR;
 
 # ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return a reference providing non-modifiable access to the underlying
@@ -1914,7 +1914,7 @@ class Optional_Base<t_TYPE, false> {
     // ACCESSORS
 
     /// Return `false` if this object is disengaged, and `true` otherwise.
-    bool has_value() const BSLS_KEYWORD_NOEXCEPT;
+    bool has_value() const BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR;
 
 #  ifdef BSLS_COMPILERFEATURES_SUPPORT_REF_QUALIFIERS
     /// Return a reference providing non-modifiable access to the underlying
@@ -3546,6 +3546,7 @@ t_TYPE& Optional_DataImp<t_TYPE>::value()
 template <class t_TYPE>
 inline
 bool Optional_DataImp<t_TYPE>::hasValue() const BSLS_KEYWORD_NOEXCEPT
+                                                         BSLS_KEYWORD_CONVEYOR
 {
 #ifdef BSLS_PLATFORM_CMP_GNU
 # pragma GCC diagnostic push
@@ -4172,7 +4173,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 t_TYPE *Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator->()
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return BSLS_UTIL_ADDRESSOF(d_value.value());
 }
@@ -4182,7 +4183,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 t_TYPE& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*() &
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return d_value.value();
 }
@@ -4191,7 +4192,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 t_TYPE&& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*() &&
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return std::move(d_value.value());
 }
@@ -4201,7 +4202,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 t_TYPE& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*()
 {
-   BSLS_ASSERT_NONCONVEYOR(has_value());
+   BSLS_ASSERT(has_value());
 
    return d_value.value();
 }
@@ -4223,7 +4224,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 bool
 Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::has_value() const
-                                                          BSLS_KEYWORD_NOEXCEPT
+                                    BSLS_KEYWORD_NOEXCEPT BSLS_KEYWORD_CONVEYOR
 {
     return d_value.hasValue();
 }
@@ -4340,7 +4341,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 const t_TYPE *Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator->() const
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return BSLS_UTIL_ADDRESSOF(d_value.value());
 }
@@ -4350,7 +4351,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 const t_TYPE& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*() const&
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return d_value.value();
 }
@@ -4359,7 +4360,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 const t_TYPE&& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*() const&&
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return std::move(d_value.value());
 }
@@ -4369,7 +4370,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 inline
 const t_TYPE& Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator*() const
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return d_value.value();
 }
@@ -5042,7 +5043,7 @@ template <class t_TYPE>
 inline
 t_TYPE& Optional_Base<t_TYPE, false>::operator*() &
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return d_value.value();
 }
@@ -5051,7 +5052,7 @@ template <class t_TYPE>
 inline
 t_TYPE&& Optional_Base<t_TYPE, false>::operator*() &&
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return std::move(d_value.value());
 }
@@ -5060,7 +5061,7 @@ template <class t_TYPE>
 inline
 t_TYPE& Optional_Base<t_TYPE, false>::operator*()
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return d_value.value();
 }
@@ -5070,7 +5071,7 @@ template <class t_TYPE>
 inline
 t_TYPE *Optional_Base<t_TYPE, false>::operator->()
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return BSLS_UTIL_ADDRESSOF(d_value.value());
 }
@@ -5080,6 +5081,7 @@ t_TYPE *Optional_Base<t_TYPE, false>::operator->()
 template <class t_TYPE>
 inline
 bool Optional_Base<t_TYPE, false>::has_value() const BSLS_KEYWORD_NOEXCEPT
+                                                         BSLS_KEYWORD_CONVEYOR
 {
     return d_value.hasValue();
 }
@@ -5164,7 +5166,7 @@ template <class t_TYPE>
 inline
 const t_TYPE *Optional_Base<t_TYPE, false>::operator->() const
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return BSLS_UTIL_ADDRESSOF(d_value.value());
 }
@@ -5174,7 +5176,7 @@ template <class t_TYPE>
 inline
 const t_TYPE& Optional_Base<t_TYPE, false>::operator*() const&
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return d_value.value();
 }
@@ -5183,7 +5185,7 @@ template <class t_TYPE>
 inline
 const t_TYPE&& Optional_Base<t_TYPE, false>::operator*() const&&
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return std::move(d_value.value());
 }
@@ -5193,7 +5195,7 @@ template <class t_TYPE>
 inline
 const t_TYPE& Optional_Base<t_TYPE, false>::operator*() const
 {
-    BSLS_ASSERT_NONCONVEYOR(has_value());
+    BSLS_ASSERT(has_value());
 
     return d_value.value();
 }
