@@ -174,12 +174,14 @@ class my_Class {
             // throw.  However, if it does, `myVec` will be destroyed
             // automatically along with `guard`.
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&myVec);
         if (myVec[0] >= 5.0) {
             return 5.0;                                               // RETURN
                 // Note that `myVec` is automatically destroyed as the function
                 // returns.
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&myVec);
         return myVec[myVec.size() / 2];
             // Note that `myVec` is destroyed after the temporary containing
             // the return value is created.

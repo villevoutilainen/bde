@@ -766,7 +766,9 @@ typedef bsl::variant<Throws, size_t> VARIANT_TYPE_TC3;
         ASSERT(expCopy == numCopy);                                           \
         ASSERT(expMove == numMove);                                           \
         ASSERT(expDest == FirstType::s_destructorInvocations);                \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.valueless_by_exception());                                \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(obj.index() == INDEX);                                         \
         AltType& ObjAlt = bsl::get<INDEX>(obj);                               \
         ASSERT(bsl::get<INDEX>(obj) == expVal);                               \
@@ -832,7 +834,9 @@ typedef bsl::variant<Throws, size_t> VARIANT_TYPE_TC3;
         ASSERT(expCopyAssign == numCopyAssign);                               \
         ASSERT(expMoveAssign == numMoveAssign);                               \
         ASSERT(numDest == DestAltType::s_destructorInvocations);              \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.valueless_by_exception());                                \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(obj.index() == SRC_INDEX);                                     \
         SrcAltType& ObjAlt = bsl::get<SRC_INDEX>(obj);                        \
         ASSERT(ObjAlt == expVal);                                             \
@@ -871,7 +875,9 @@ typedef bsl::variant<Throws, size_t> VARIANT_TYPE_TC3;
         ASSERT(expCopyAssign == numCopyAssign);                               \
         ASSERT(expMoveAssign == numMoveAssign);                               \
         ASSERT(numDest == DestAltType::s_destructorInvocations - 1);          \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.valueless_by_exception());                                \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(obj.index() == SRC_INDEX);                                     \
         SrcAltType& ObjAlt = bsl::get<SRC_INDEX>(obj);                        \
         ASSERT(ObjAlt == expVal);                                             \
@@ -912,7 +918,9 @@ typedef bsl::variant<Throws, size_t> VARIANT_TYPE_TC3;
         ASSERT(expCopyAssign == numCopyAssign);                               \
         ASSERT(expMoveAssign == numMoveAssign);                               \
         ASSERT(numDest == DestAltType::s_destructorInvocations);              \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.valueless_by_exception());                                \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(obj.index() == SRC_INDEX);                                     \
         SrcAltType& ObjAlt = bsl::get<SRC_INDEX>(obj);                        \
         ASSERT(ObjAlt == expVal);                                             \
@@ -951,7 +959,9 @@ typedef bsl::variant<Throws, size_t> VARIANT_TYPE_TC3;
         ASSERT(expCopyAssign == numCopyAssign);                               \
         ASSERT(expMoveAssign == numMoveAssign);                               \
         ASSERT(numDest == DestAltType::s_destructorInvocations - 1);          \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.valueless_by_exception());                                \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(obj.index() == SRC_INDEX);                                     \
         SrcAltType& ObjAlt = bsl::get<SRC_INDEX>(obj);                        \
         ASSERT(ObjAlt == expVal);                                             \
@@ -8336,14 +8346,18 @@ RUN_FOR_EACH_ALTERNATIVE_COMBINATION_START(10)
 
         swap(lhsVar, rhsVar);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhsVar);
         ASSERT(!lhsVar.valueless_by_exception());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&lhsVar);
         ASSERT(lhsVar.index() == RHS_INDEX);
         RhsAltType& newLhsObj = bsl::get<RHS_INDEX>(lhsVar);
         ASSERT(newLhsObj == rhsAlt);
         ASSERT(checkAllocator(lhsVar, &oa));
         ASSERT(checkAllocator(newLhsObj, &oa));
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhsVar);
         ASSERT(!rhsVar.valueless_by_exception());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&rhsVar);
         ASSERT(rhsVar.index() == LHS_INDEX);
         LhsAltType& newRhsObj = bsl::get<LHS_INDEX>(rhsVar);
         ASSERT(newRhsObj == lhsAlt);
@@ -11176,6 +11190,7 @@ RUN_FOR_EACH_ALTERNATIVE_COMBINATION_START(6bIndex)
             bsl::in_place_index_t<IndexA>(), source, &oa);
         VARIANT       *obj  = BSLS_UTIL_ADDRESSOF(VarBuf.object());
         const VARIANT *cobj = BSLS_UTIL_ADDRESSOF(VarBuf.object());
+        BSLS_ASSERT_CONVEYOR_OBJECT(obj);
         ASSERT(obj->index() == IndexA);
         ASSERT(checkAllocator(*obj, &oa));
 
@@ -11267,6 +11282,7 @@ RUN_FOR_EACH_ALTERNATIVE_COMBINATION_START(6bType)
             bsl::in_place_index_t<IndexA>(), source, &oa);
         VARIANT       *obj  = BSLS_UTIL_ADDRESSOF(VarBuf.object());
         const VARIANT *cobj = BSLS_UTIL_ADDRESSOF(VarBuf.object());
+        BSLS_ASSERT_CONVEYOR_OBJECT(obj);
         ASSERT(obj->index() == IndexA);
         ASSERT(checkAllocator(*obj, &oa));
 
@@ -11527,6 +11543,7 @@ RUN_FOR_EACH_ALTERNATIVE_COMBINATION_START(6aIndex)
             bsl::in_place_index_t<IndexA>(), source, &oa);
         VARIANT&       obj  = VarBuf.object();
         const VARIANT& cobj = VarBuf.object();
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         ASSERT(obj.index() == IndexA);
         ASSERT(checkAllocator(obj, &oa));
 
@@ -11627,6 +11644,7 @@ RUN_FOR_EACH_ALTERNATIVE_COMBINATION_START(6aType)
             bsl::in_place_index_t<IndexA>(), source, &oa);
         VARIANT&       obj  = VarBuf.object();
         const VARIANT& cobj = VarBuf.object();
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);
         ASSERT(obj.index() == IndexA);
         ASSERT(checkAllocator(obj, &oa));
 

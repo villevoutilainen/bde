@@ -8964,8 +8964,12 @@ int main(int argc, char *argv[])
             bsl::shared_ptr<Alert> alertPtr;
             alertPtr.createInplace(&ta);
 
-            alertPtr->addUser(userPtr);
-            userPtr->addAlert(alertPtr);
+            Alert *alert = alertPtr.get();
+            User  *user  = userPtr.get();
+            BSLS_ASSERT_CONVEYOR_OBJECT(alert);
+            BSLS_ASSERT_CONVEYOR_OBJECT(user);
+            alert->addUser(userPtr);
+            user->addAlert(alertPtr);
 
             alertPtr.reset();
             userPtr.reset();
@@ -8988,8 +8992,12 @@ int main(int argc, char *argv[])
 
             bsl::weak_ptr<ModifiedUser> userWeakPtr(userPtr);
 
-            alertPtr->addUser(userWeakPtr);
-            userPtr->addAlert(alertPtr);
+            ModifiedAlert *alert = alertPtr.get();
+            ModifiedUser  *user  = userPtr.get();
+            BSLS_ASSERT_CONVEYOR_OBJECT(alert);
+            BSLS_ASSERT_CONVEYOR_OBJECT(user);
+            alert->addUser(userWeakPtr);
+            user->addAlert(alertPtr);
 
             alertPtr.reset();
             userPtr.reset();
@@ -17748,8 +17756,9 @@ int main(int argc, char *argv[])
         {
             bsl::shared_ptr<SelfReference> mX;
             mX.createInplace();
-            mX->setData(mX);
             ptr = mX.get();
+            BSLS_ASSERT_CONVEYOR_OBJECT(ptr);
+            ptr->setData(mX);
         }
 
         BSLS_ASSERT_CONVEYOR_REF(*ptr).release();

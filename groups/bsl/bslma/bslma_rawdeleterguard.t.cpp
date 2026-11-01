@@ -254,6 +254,7 @@ template <class TYPE>
 inline
 TYPE my_Queue<TYPE>::popFront()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     TYPE *tmp = d_objects.front();
     d_objects.pop_front();
 

@@ -6059,9 +6059,11 @@ bool isConstPtr(const T *)
         TEST_HELPER_UPDATE_EXP_COUNTS                                         \
         ObjWithAllocator objBuffer(&oa);                                      \
         Obj&             obj = objBuffer.object();                            \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.has_value());                                             \
         TEST_HELPER_SET_NUM_COUNTS                                            \
         obj         = source;                                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         TEST_HELPER_UPDATE_NUM_COUNTS                                         \
         TEST_HELPER_CHECK_COUNTS                                              \
         ASSERT(obj.has_value());                                              \
@@ -6076,9 +6078,11 @@ bool isConstPtr(const T *)
         TEST_HELPER_UPDATE_EXP_COUNTS                                         \
         ObjWithAllocator objBuffer(&oa);                                      \
         Obj&             obj = objBuffer.object();                            \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.has_value());                                             \
         TEST_HELPER_SET_NUM_COUNTS                                            \
         obj         = MoveUtil::move(source);                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         TEST_HELPER_UPDATE_NUM_COUNTS                                         \
         TEST_HELPER_CHECK_COUNTS                                              \
         ASSERT(obj.has_value());                                              \
@@ -6094,9 +6098,11 @@ bool isConstPtr(const T *)
         ObjWithAllocator objBuffer(&oa);                                      \
         Obj&             obj = objBuffer.object();                            \
         obj.emplace();                                                        \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(obj.has_value());                                              \
         TEST_HELPER_SET_NUM_COUNTS                                            \
         obj         = source;                                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         TEST_HELPER_UPDATE_NUM_COUNTS                                         \
         TEST_HELPER_CHECK_COUNTS                                              \
         ASSERT(obj.has_value());                                              \
@@ -6114,9 +6120,11 @@ bool isConstPtr(const T *)
         ObjWithAllocator objBuffer(&oa);                                      \
         Obj&             obj = objBuffer.object();                            \
         obj.emplace();                                                        \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(obj.has_value());                                              \
         TEST_HELPER_SET_NUM_COUNTS                                            \
         obj         = MoveUtil::move(source);                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         TEST_HELPER_UPDATE_NUM_COUNTS                                         \
         TEST_HELPER_CHECK_COUNTS                                              \
         ASSERT(obj.has_value());                                              \
@@ -6127,8 +6135,10 @@ bool isConstPtr(const T *)
     {                                                                         \
         ObjWithAllocator objBuffer(&oa);                                      \
         Obj&             obj = objBuffer.object();                            \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.has_value());                                             \
         obj = source;                                                         \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.has_value());                                             \
         ASSERT(checkAllocator(obj, &oa));                                     \
     }
@@ -6137,11 +6147,13 @@ bool isConstPtr(const T *)
         ObjWithAllocator objBuffer(&oa);                                      \
         Obj&             obj = objBuffer.object();                            \
         obj.emplace(ValueType());                                             \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(obj.has_value());                                              \
         int numDest = ValueType::s_destructorInvocations;                     \
         obj         = source;                                                 \
         numDest     = ValueType::s_destructorInvocations - numDest;           \
         ASSERT(1 == numDest);                                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.has_value());                                             \
         ASSERT(checkAllocator(obj, &oa));                                     \
     }
@@ -6153,9 +6165,11 @@ bool isConstPtr(const T *)
         TEST_HELPER_UPDATE_EXP_COUNTS                                         \
         ObjWithAllocator objBuffer(&oa);                                      \
         Obj&             obj = objBuffer.object();                            \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.has_value());                                             \
         TEST_HELPER_SET_NUM_COUNTS                                            \
         obj         = source;                                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         TEST_HELPER_UPDATE_NUM_COUNTS                                         \
         TEST_HELPER_CHECK_COUNTS                                              \
         ASSERT(obj.has_value());                                              \
@@ -6171,9 +6185,11 @@ bool isConstPtr(const T *)
         TEST_HELPER_UPDATE_EXP_COUNTS                                         \
         ObjWithAllocator objBuffer(&oa);                                      \
         Obj&             obj = objBuffer.object();                            \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(!obj.has_value());                                             \
         TEST_HELPER_SET_NUM_COUNTS                                            \
         obj         = MoveUtil::move(source);                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         TEST_HELPER_UPDATE_NUM_COUNTS                                         \
         TEST_HELPER_CHECK_COUNTS                                              \
         ASSERT(obj.has_value());                                              \
@@ -6190,9 +6206,11 @@ bool isConstPtr(const T *)
         ObjWithAllocator objBuffer(&oa);                                      \
         Obj&             obj = objBuffer.object();                            \
         obj.emplace();                                                        \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(obj.has_value());                                              \
         TEST_HELPER_SET_NUM_COUNTS                                            \
         obj         = source;                                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         TEST_HELPER_UPDATE_NUM_COUNTS                                         \
         TEST_HELPER_CHECK_COUNTS                                              \
         ASSERT(obj.has_value());                                              \
@@ -6209,9 +6227,11 @@ bool isConstPtr(const T *)
         ObjWithAllocator objBuffer(&oa);                                      \
         Obj&             obj = objBuffer.object();                            \
         obj.emplace();                                                        \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         ASSERT(obj.has_value());                                              \
         TEST_HELPER_SET_NUM_COUNTS                                            \
         obj         = MoveUtil::move(source);                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&obj);                                    \
         TEST_HELPER_UPDATE_NUM_COUNTS                                         \
         TEST_HELPER_CHECK_COUNTS                                              \
         ASSERT(obj.has_value());                                              \
@@ -6220,11 +6240,13 @@ bool isConstPtr(const T *)
         ASSERT(source.value() == srcCopy.value());                            \
     }
 
-#define TEST_COPY_FROM_EMPTY_OPT(source)                                      \
+#define TEST_COPY_FROM_EMPTY_OPT(SOURCE)                                      \
     {                                                                         \
         bslma::TestAllocatorMonitor dam(&da);                                 \
-        ASSERT(!source.has_value());                                          \
-        bsl::optional<DEST_TYPE> obj(source);                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&csource);                                \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&source);                                 \
+        ASSERT(!SOURCE.has_value());                                          \
+        bsl::optional<DEST_TYPE> obj(SOURCE);                                 \
         ASSERT(!obj.has_value());                                             \
         ASSERT(checkAllocator(obj, &da));                                     \
         ASSERT(dam.isTotalSame());                                            \
@@ -6234,6 +6256,7 @@ bool isConstPtr(const T *)
     {                                                                         \
         bslma::TestAllocator&       expAlloc = (propagate ? oa : da);         \
         bslma::TestAllocatorMonitor dam(&expAlloc);                           \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&source);                                 \
         ASSERT(!source.has_value());                                          \
         bsl::optional<DEST_TYPE> obj(MoveUtil::move(source));                 \
         ASSERT(!obj.has_value());                                             \
@@ -6272,11 +6295,13 @@ bool isConstPtr(const T *)
         ASSERT(checkAllocator(obj.value(), &expAlloc));                       \
     }
 
-#define TEST_EXT_COPY_FROM_EMPTY_OPT(source)                                  \
+#define TEST_EXT_COPY_FROM_EMPTY_OPT(SOURCE)                                  \
     {                                                                         \
         bslma::TestAllocatorMonitor dam(&da);                                 \
-        ASSERT(!source.has_value());                                          \
-        DEST_OPT_TYPE obj(bsl::allocator_arg, &ta, source);                   \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&csource);                                \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&source);                                 \
+        ASSERT(!SOURCE.has_value());                                          \
+        DEST_OPT_TYPE obj(bsl::allocator_arg, &ta, SOURCE);                   \
         ASSERT(!obj.has_value());                                             \
         ASSERT(checkAllocator(obj, &ta));                                     \
         ASSERT(dam.isTotalSame());                                            \
@@ -6285,6 +6310,7 @@ bool isConstPtr(const T *)
 #define TEST_EXT_MOVE_FROM_EMPTY_OPT(source)                                  \
     {                                                                         \
         bslma::TestAllocatorMonitor dam(&da);                                 \
+        BSLS_ASSERT_CONVEYOR_OBJECT(&source);                                 \
         ASSERT(!source.has_value());                                          \
         DEST_OPT_TYPE obj(bsl::allocator_arg, &ta, MoveUtil::move(source));   \
         ASSERT(!obj.has_value());                                             \
@@ -7085,11 +7111,13 @@ void TestDriver<TYPE>::testCase28()
 
         new (&xBuffer.object()) ObjWithAllocator(VALUES[0], &oa);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(X.has_value());
         ASSERT(X.value() == VALUES[0]);
 
         myMemcpy(yBuffer.address(), xBuffer.address(), sizeof(x));
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
         ASSERT(Y.has_value());
         ASSERT(Y.value() == VALUES[0]);
 
@@ -7110,13 +7138,16 @@ void TestDriver<TYPE>::testCase28()
 
         new (&xBuffer.object()) ObjWithAllocator(VALUES[1], &oa);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(X.has_value());
         ASSERT(X.value() == VALUES[1]);
 
         myMemcpy(yBuffer.address(), xBuffer.address(), sizeof(x));
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
         ASSERT(Y.has_value());
         ASSERT(Y.value() == VALUES[1]);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(X.has_value());
         ASSERT(X.value() == Y.value());
         ASSERT(X == Y);
@@ -7368,10 +7399,13 @@ void TestDriver<TYPE>::testCase23()
           }
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&odv);
         ASSERT(tvs[1] == *odv);
         ASSERT(tvs[1] == *DV);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&odv);
         ASSERT_IS_NOT_MOVED_FROM(*odv);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&odv);
         ASSERT_IS_NOT_MOVED_INTO(*odv);
         ASSERT_IS_NOT_MOVED_FROM(*DV);
         ASSERT_IS_NOT_MOVED_INTO(*DV);
@@ -7422,9 +7456,12 @@ void TestDriver<TYPE>::testCase23()
           } break;
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&odv);
         ASSERT(tvs[1] == *odv);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&odv);
         ASSERT_IS_NOT_MOVED_FROM(*odv);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&odv);
         ASSERT_IS_MOVED_INTO(*odv);
         ASSERT_IS_MOVED_FROM(*dv);
         ASSERT_IS_NOT_MOVED_INTO(*dv);
@@ -10127,21 +10164,24 @@ void TestDriver<TYPE>::testCase10d()
         OPT_TYPE  destination;
         destination = source;
         ASSERT(destination.has_value());
-        ASSERT(!destination.value().has_value());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&destination);
+        ASSERT(!(*destination).has_value());
         ASSERT(!source.has_value());
 
         destination.reset();
         source.emplace(val);
         destination = source;
         ASSERT(destination.has_value());
-        ASSERT(destination.value().has_value());
-        ASSERT(destination.value().value() == source.value());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&destination);
+        ASSERT((*destination).has_value());
+        ASSERT((*destination).value() == source.value());
 
         CObj constSource;
         destination.reset();
         destination = constSource;
         ASSERT(destination.has_value());
-        ASSERT(!destination.value().has_value());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&destination);
+        ASSERT(!(*destination).has_value());
 
 #ifdef BSLS_COMPILERFEATURES_SUPPORT_GENERALIZED_INITIALIZERS
         source = {};
@@ -10153,7 +10193,7 @@ void TestDriver<TYPE>::testCase10d()
         source.emplace(val);
         destination = MoveUtil::move(source);
         ASSERT(destination.has_value());
-        ASSERT(destination.value().value() == val);
+        ASSERT((*destination).value() == val);
 
         source = val;
         ASSERT(source.has_value());

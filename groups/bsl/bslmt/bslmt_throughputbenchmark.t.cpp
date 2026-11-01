@@ -1016,6 +1016,8 @@ int main(int argc, char *argv[])
 
             Obj      mX(&supplied);  const Obj& X = mX; (void)X;
             TestUtil test(mX);
+            bsl::vector<Obj::ThreadGroup>& threadGroups = test.threadGroups();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&threadGroups);
 
             int ret = mX.addThreadGroup(Obj::RunFunction(), 10, 1000);
             (void)ret;
@@ -1026,8 +1028,8 @@ int main(int argc, char *argv[])
             ASSERT(10 == X.numThreadsInGroup(ret));
             ASSERT(10 == X.numThreads());
 
-            ASSERT(test.threadGroups().size() == 1);
-            ASSERT(test.threadGroups()[0].d_numThreads == 10);
+            ASSERT(threadGroups.size() == 1);
+            ASSERT(threadGroups[0].d_numThreads == 10);
             ASSERT(allocations  == defaultAllocator.numAllocations());
             ASSERT(sAllocations == supplied.numAllocations());
 
@@ -1040,8 +1042,8 @@ int main(int argc, char *argv[])
             ASSERT(5  == X.numThreadsInGroup(ret));
             ASSERT(15 == X.numThreads());
 
-            ASSERT(test.threadGroups().size() == 2);
-            ASSERT(test.threadGroups()[1].d_numThreads == 5);
+            ASSERT(threadGroups.size() == 2);
+            ASSERT(threadGroups[1].d_numThreads == 5);
             // pre-c++11 platoforms has allocating `bsl::function`
 #if __cplusplus >= 201103L
             ASSERT(allocations  == defaultAllocator.numAllocations());
@@ -1055,8 +1057,8 @@ int main(int argc, char *argv[])
             ASSERT(1  == X.numThreadsInGroup(ret));
             ASSERT(16 == X.numThreads());
 
-            ASSERT(test.threadGroups().size() == 3);
-            ASSERT(test.threadGroups()[2].d_numThreads == 1);
+            ASSERT(threadGroups.size() == 3);
+            ASSERT(threadGroups[2].d_numThreads == 1);
             // pre-c++11 platoforms has allocating `bsl::function`
 #if __cplusplus >= 201103L
             ASSERT(allocations == defaultAllocator.numAllocations());
@@ -1178,6 +1180,8 @@ int main(int argc, char *argv[])
 
             Obj      mX(&supplied);  const Obj& X = mX;(void)X;
             TestUtil test(mX);
+            bsl::vector<Obj::ThreadGroup>& threadGroups = test.threadGroups();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&threadGroups);
 
             int ret = mX.addThreadGroup(Obj::RunFunction(), 10, 1000);
             (void)ret;
@@ -1186,8 +1190,8 @@ int main(int argc, char *argv[])
             ASSERT(10 == X.numThreadsInGroup(ret));
             ASSERT(10 == X.numThreads());
 
-            ASSERT(test.threadGroups().size() == 1);
-            Obj::ThreadGroup& tg0 = test.threadGroups()[0];  (void)tg0;
+            ASSERT(threadGroups.size() == 1);
+            Obj::ThreadGroup& tg0 = threadGroups[0];  (void)tg0;
             ASSERT(tg0.d_numThreads == 10);
             ASSERT(tg0.d_amount == 1000);
             ASSERT(static_cast<bool>(tg0.d_initialize) == false);
@@ -1203,8 +1207,8 @@ int main(int argc, char *argv[])
             ASSERT(5  == X.numThreadsInGroup(ret));
             ASSERT(15 == X.numThreads());
 
-            ASSERT(test.threadGroups().size() == 2);
-            Obj::ThreadGroup& tg1 = test.threadGroups()[1];  (void)tg1;
+            ASSERT(threadGroups.size() == 2);
+            Obj::ThreadGroup& tg1 = threadGroups[1];  (void)tg1;
             ASSERT(tg1.d_numThreads == 5);
             ASSERT(tg1.d_amount     == 200);
             ASSERT(static_cast<bool>(tg1.d_initialize) == false);
@@ -1225,6 +1229,8 @@ int main(int argc, char *argv[])
 
             Obj      mX(&supplied);  const Obj& X = mX;(void)X;
             TestUtil test(mX);
+            bsl::vector<Obj::ThreadGroup>& threadGroups = test.threadGroups();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&threadGroups);
 
             InitFunctor initFunctor(2);
 
@@ -1239,8 +1245,8 @@ int main(int argc, char *argv[])
             ASSERT(30 == X.numThreadsInGroup(ret));
             ASSERT(30 == X.numThreads());
 
-            ASSERT(test.threadGroups().size() == 1);
-            Obj::ThreadGroup& tg0 = test.threadGroups()[0];  (void)tg0;
+            ASSERT(threadGroups.size() == 1);
+            Obj::ThreadGroup& tg0 = threadGroups[0];  (void)tg0;
             ASSERT(tg0.d_numThreads == 30);
             ASSERT(tg0.d_amount     == 0);
             ASSERT(static_cast<bool>(tg0.d_initialize) != false);
@@ -1263,8 +1269,8 @@ int main(int argc, char *argv[])
             ASSERT(50 == X.numThreadsInGroup(ret));
             ASSERT(80 == X.numThreads());
 
-            ASSERT(test.threadGroups().size() == 2);
-            Obj::ThreadGroup& tg1 = test.threadGroups()[1];  (void)tg1;
+            ASSERT(threadGroups.size() == 2);
+            Obj::ThreadGroup& tg1 = threadGroups[1];  (void)tg1;
             ASSERT(tg1.d_numThreads == 50);
             ASSERT(tg1.d_amount == 2000);
             ASSERT(static_cast<bool>(tg1.d_initialize) != false);

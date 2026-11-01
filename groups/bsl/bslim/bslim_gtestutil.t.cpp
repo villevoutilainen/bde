@@ -172,6 +172,7 @@ void PrintTo(int value, ::std::ostream *stream_p)
 
 void PrintTo(const bsl::string_view& sv, ::std::ostream *stream_p)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&sv);
     *stream_p << '"';
     for (unsigned uu = 0; uu < sv.length(); ++uu) {
         if (sv[uu]) {
@@ -371,6 +372,7 @@ void PrintTo(const ::std::wstring& , ::std::ostream* )
 
 bsl::string expStringViewPrint(const bsl::string_view& sv)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&sv);
     bsl::string ret = "\"";
     bsl::size_t numZeroes = bsl::count(sv.begin(), sv.end(), '\0');
 

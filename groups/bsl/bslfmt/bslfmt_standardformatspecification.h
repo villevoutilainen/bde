@@ -251,6 +251,7 @@ void StandardFormatSpecification<t_CHAR>::parseType(
                              const bsl::basic_string_view<t_CHAR>&  typeString,
                              Category                               category)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&typeString);
     // Handle empty string or empty specification.
     if (typeString.empty()) {
         switch (category) {

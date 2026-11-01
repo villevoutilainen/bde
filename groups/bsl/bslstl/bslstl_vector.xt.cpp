@@ -16566,9 +16566,11 @@ void TestDriver<TYPE, ALLOC>::testCase7()
                 bslma::DestructorProctor<Obj> proctorX(xBuf.address());
                 Obj&  mX = xBuf.object();
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                 stretchRemoveAll(&mX,
                                  N,
                                  TstFacility::getIdentifier(VALUES[0]));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&mX);
                 const Obj& X = gg(&mX, SPEC);
 
                 if (veryVerbose) { printf("\t\tDynamic Obj: "); P(X); }

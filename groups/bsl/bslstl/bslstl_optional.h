@@ -3958,6 +3958,7 @@ void Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::swap(Optional_Base& other)
                            bsl::is_nothrow_move_constructible<t_TYPE>::value &&
                            bsl::is_nothrow_swappable<t_TYPE>::value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&other);
     BSLS_ASSERT_NONCONVEYOR(d_allocator == other.d_allocator);
 
@@ -4020,6 +4021,7 @@ inline
 t_TYPE Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::value_or(
                                                          t_ANY_TYPE&& value) &&
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (has_value()) {
         return t_TYPE(std::move(d_value.value()));                    // RETURN
     }
@@ -4037,6 +4039,7 @@ t_TYPE Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::value_or(
                                                       allocator_type allocator,
                                                       t_ANY_TYPE&&   value) &&
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (has_value()) {
         return BloombergLP::bslma::ConstructionUtil::make<t_TYPE>(
                                         allocator,
@@ -4056,6 +4059,7 @@ inline
 Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>&
 Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator=(const Optional_Base& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     if (rhs.has_value()) {
         if (this->has_value()) {
@@ -4077,6 +4081,7 @@ Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>&
 Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator=(
                              BloombergLP::bslmf::MovableRef<Optional_Base> rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     Optional_Base& lvalue = rhs;
     BSLS_ASSERT_CONVEYOR_OBJECT(BSLS_UTIL_ADDRESSOF(lvalue));
 
@@ -4198,6 +4203,7 @@ inline
 t_TYPE Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::value_or(
                     BSLS_COMPILERFEATURES_FORWARD_REF(t_ANY_TYPE) value) const&
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (has_value()) {
         return t_TYPE(d_value.value());                               // RETURN
     }
@@ -4216,6 +4222,7 @@ t_TYPE Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::value_or(
                     allocator_type                                allocator,
                     BSLS_COMPILERFEATURES_FORWARD_REF(t_ANY_TYPE) value) const&
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (has_value()) {
         return BloombergLP::bslma::ConstructionUtil::make<t_TYPE>(
             allocator, d_value.value());                              // RETURN
@@ -4309,6 +4316,7 @@ template <class t_TYPE, bool t_USES_BSLMA_ALLOC>
 Optional_Base<t_TYPE, t_USES_BSLMA_ALLOC>::operator bool() const
                                                           BSLS_KEYWORD_NOEXCEPT
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     return has_value();
 }
 #endif  // BSLS_COMPILERFEATURES_SUPPORT_OPERATOR_EXPLICIT

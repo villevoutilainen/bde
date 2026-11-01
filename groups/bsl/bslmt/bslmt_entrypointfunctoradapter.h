@@ -322,7 +322,9 @@ void EntryPointFunctorAdapter<TYPE>::invokerFunction(void *adapterRaw)
                                                         adapter->d_threadName);
     }
 
-    adapter->functor()();
+    TYPE& function = adapter->functor();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&function);
+    function();
 }
 
 // PRIVATE CREATORS

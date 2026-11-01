@@ -2657,6 +2657,9 @@ int main(int argc, char *argv[])
 
             Obj      mX(&supplied);  const Obj& X = mX;
             TestUtil test(mX);
+            bsl::vector<bsl::vector<bsl::vector<double> > >&
+                                              throughputs = test.throughputs();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&throughputs);
 
             bsls::Types::Int64 allocations = defaultAllocator.numAllocations();
             bsls::Types::Int64 sAllocations = supplied.numAllocations();
@@ -2674,15 +2677,15 @@ int main(int argc, char *argv[])
             ASSERT( 3 == X.numThreads(0));
             ASSERT( 2 == X.numThreads(1));
             // Check through testUtil
-            ASSERT(10 == test.throughputs().size());
-            for (bsl::size_t i = 0; i < test.throughputs().size(); ++i) {
+            ASSERT(10 == throughputs.size());
+            for (bsl::size_t i = 0; i < throughputs.size(); ++i) {
                 ASSERT(X.numThreadGroups() ==
-                               static_cast<int>(test.throughputs()[i].size()));
-                ASSERT(3 == test.throughputs()[i][0].size());
-                ASSERT(2 == test.throughputs()[i][1].size());
+                               static_cast<int>(throughputs[i].size()));
+                ASSERT(3 == throughputs[i][0].size());
+                ASSERT(2 == throughputs[i][1].size());
                 for (int j = 0; j < X.numThreadGroups(); ++j) {
                     for (int k = 0; k < X.numThreads(j); ++k) {
-                        ASSERT(0.0 == test.throughputs()[i][j][k]);
+                        ASSERT(0.0 == throughputs[i][j][k]);
                         if (veryVerbose) {
                             P_(i) P_(j) P(k)
                         }
@@ -2739,22 +2742,22 @@ int main(int argc, char *argv[])
                 mX.setThroughput(TGIDX, THREADIDX, SAMPLEIDX, THROUGHPUT);
 
                 ASSERT(THROUGHPUT ==
-                              test.throughputs()[SAMPLEIDX][TGIDX][THREADIDX]);
+                              throughputs[SAMPLEIDX][TGIDX][THREADIDX]);
                 ASSERT(THROUGHPUT ==
                                       X.getValue(TGIDX, THREADIDX, SAMPLEIDX));
 
                 for (int i = 0;
-                        i < static_cast<int>(test.throughputs().size()); ++i) {
+                        i < static_cast<int>(throughputs.size()); ++i) {
                     ASSERT(X.numThreadGroups() ==
-                               static_cast<int>(test.throughputs()[i].size()));
-                    ASSERT(3 == test.throughputs()[i][0].size());
-                    ASSERT(2 == test.throughputs()[i][1].size());
+                               static_cast<int>(throughputs[i].size()));
+                    ASSERT(3 == throughputs[i][0].size());
+                    ASSERT(2 == throughputs[i][1].size());
                     for (int j = 0; j < X.numThreadGroups(); ++j) {
                         for (int k = 0; k < X.numThreads(j); ++k) {
                             if (i != SAMPLEIDX ||
                                 j != TGIDX ||
                                 k != THREADIDX) {
-                                ASSERT(0.0 == test.throughputs()[i][j][k]);
+                                ASSERT(0.0 == throughputs[i][j][k]);
                                 if (veryVerbose) {
                                     P_(i) P_(j) P(k)
                                 }
@@ -2767,7 +2770,7 @@ int main(int argc, char *argv[])
                 mX.setThroughput(TGIDX, THREADIDX, SAMPLEIDX, 0.0);
 
                 ASSERT(0.0 ==
-                              test.throughputs()[SAMPLEIDX][TGIDX][THREADIDX]);
+                              throughputs[SAMPLEIDX][TGIDX][THREADIDX]);
                 ASSERT(0.0 == X.getValue(TGIDX, THREADIDX, SAMPLEIDX));
 
                 // Confirm that memory did not change
@@ -2887,12 +2890,15 @@ int main(int argc, char *argv[])
 
             Obj      mX;  const Obj& X = mX; (void)X;
             TestUtil test(mX);
+            bsl::vector<bsl::vector<bsl::vector<double> > >&
+                                              throughputs = test.throughputs();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&throughputs);
 
             ASSERT(&defaultAllocator == X.allocator());
             ASSERT(0 == X.numSamples());
             ASSERT(0 == X.numThreadGroups());
             ASSERT(0 == X.totalNumThreads());
-            ASSERT(0 == test.throughputs().size());
+            ASSERT(0 == throughputs.size());
             ASSERT(allocations == defaultAllocator.numAllocations());
 
             bsl::vector<int> threadGroupSizes(2, &scratch);
@@ -2904,7 +2910,7 @@ int main(int argc, char *argv[])
             ASSERT( 5 == X.totalNumThreads());
             ASSERT( 3 == X.numThreads(0));
             ASSERT( 2 == X.numThreads(1));
-            ASSERT(10 == test.throughputs().size());
+            ASSERT(10 == throughputs.size());
 
             ASSERT(allocations + 31 == defaultAllocator.numAllocations());
         }
@@ -2915,11 +2921,14 @@ int main(int argc, char *argv[])
             Obj        mX(reinterpret_cast<bslma::TestAllocator *>(0));
             const Obj& X = mX; (void)X;
             TestUtil   test(mX);
+            bsl::vector<bsl::vector<bsl::vector<double> > >&
+                                              throughputs = test.throughputs();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&throughputs);
 
             ASSERT(0           == X.numSamples());
             ASSERT(0           == X.numThreadGroups());
             ASSERT(0           == X.totalNumThreads());
-            ASSERT(0           == test.throughputs().size());
+            ASSERT(0           == throughputs.size());
             ASSERT(allocations == defaultAllocator.numAllocations());
 
             bsl::vector<int> threadGroupSizes(2, &scratch);
@@ -2931,7 +2940,7 @@ int main(int argc, char *argv[])
             ASSERT( 5 == X.totalNumThreads());
             ASSERT( 3 == X.numThreads(0));
             ASSERT( 2 == X.numThreads(1));
-            ASSERT(10 == test.throughputs().size());
+            ASSERT(10 == throughputs.size());
 
             ASSERT(allocations + 31 == defaultAllocator.numAllocations());
         }
@@ -2943,12 +2952,15 @@ int main(int argc, char *argv[])
 
             Obj      mX(&supplied);  const Obj& X = mX; (void)X;
             TestUtil test(mX);
+            bsl::vector<bsl::vector<bsl::vector<double> > >&
+                                              throughputs = test.throughputs();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&throughputs);
 
             ASSERT(&supplied   == X.allocator());
             ASSERT(0           == X.numSamples());
             ASSERT(0           == X.numThreadGroups());
             ASSERT(0           == X.totalNumThreads());
-            ASSERT(0           == test.throughputs().size());
+            ASSERT(0           == throughputs.size());
             ASSERT(allocations == defaultAllocator.numAllocations());
 
             bsl::vector<int> threadGroupSizes(2, &scratch);
@@ -2960,7 +2972,7 @@ int main(int argc, char *argv[])
             ASSERT( 5 == X.totalNumThreads());
             ASSERT( 3 == X.numThreads(0));
             ASSERT( 2 == X.numThreads(1));
-            ASSERT(10 == test.throughputs().size());
+            ASSERT(10 == throughputs.size());
 
             ASSERT(allocations == defaultAllocator.numAllocations());
         }

@@ -3767,6 +3767,7 @@ template <class VALUE, class ALLOCATOR, class BDE_OTHER_TYPE>
 inline typename bsl::list<VALUE, ALLOCATOR>::size_type
 bsl::erase(list<VALUE, ALLOCATOR>& l, const BDE_OTHER_TYPE& value)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&l);
     // We could use the erase/remove idiom here like we do in the other
     // sequence containers, but this is more efficient, since we just unlink
     // and delete nodes from the list.

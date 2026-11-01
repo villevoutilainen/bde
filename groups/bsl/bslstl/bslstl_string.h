@@ -9089,6 +9089,7 @@ std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>&
 bsl::operator<<(std::basic_ostream<CHAR_TYPE, CHAR_TRAITS>&          os,
                 const basic_string<CHAR_TYPE,CHAR_TRAITS,ALLOCATOR>& str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&str);
     typedef std::basic_ostream<CHAR_TYPE, CHAR_TRAITS> Ostrm;
     typename Ostrm::sentry sentry(os);
     bool ok = false;

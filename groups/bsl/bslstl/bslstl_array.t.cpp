@@ -4052,6 +4052,7 @@ void TestDriver<TYPE, SIZE>::testCase9()
     new (xBuf1.buffer()) Obj();
     bslma::DestructorProctor<Obj> proctorX1(xBuf1.address());
     Obj&                          mX1 = xBuf1.object();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX1);
     const Obj&                    X1 = gg(&mX1, SPEC1);
 
     Obj mX2; const Obj& X2 = gg(&mX2, SPEC2);
@@ -4091,6 +4092,7 @@ void TestDriver<TYPE, SIZE>::testCase9()
             // Verify that subsequent changes in the source object have no
             // effect on the copy-constructed object.
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX1);
             mX1[0] = TestFacility::create<TYPE>(SPEC2[0]);
 
             ASSERTV(SIZE, W1 != X1);
@@ -4357,6 +4359,7 @@ void TestDriver<TYPE, SIZE>::testCase7()
     new (xBuf1.buffer()) Obj();
     bslma::DestructorProctor<Obj> proctorX1(xBuf1.address());
     Obj&                          mX1 = xBuf1.object();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&mX1);
     const Obj&                    X1 = gg(&mX1, SPEC1);
 
     Obj mX2; const Obj& X2 = gg(&mX2, SPEC2);
@@ -4383,6 +4386,7 @@ void TestDriver<TYPE, SIZE>::testCase7()
             // Verify that subsequent changes in the source object have no
             // effect on the copy-constructed object.
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mX1);
             mX1[0] = TestFacility::create<TYPE>(SPEC2[0]);
 
             ASSERTV(SIZE, W1 != X1);

@@ -1116,6 +1116,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                                     const bsl::vector<char, ALLOC>& value,
                                     int                          /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 
@@ -1129,6 +1130,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                              const bsl::vector<signed char, ALLOC>& value,
                              int                                 /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 
@@ -1142,6 +1144,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                            const bsl::vector<unsigned char, ALLOC>& value,
                            int                                   /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 
@@ -1155,6 +1158,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                                    const bsl::vector<short, ALLOC>& value,
                                    int                           /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 
@@ -1168,6 +1172,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                           const bsl::vector<unsigned short, ALLOC>& value,
                           int                                    /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 
@@ -1195,6 +1200,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                             const bsl::vector<unsigned int, ALLOC>& value,
                             int                                  /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 
@@ -1208,6 +1214,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                       const bsl::vector<bsls::Types::Int64, ALLOC>& value,
                       int                                        /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 
@@ -1221,6 +1228,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                      const bsl::vector<bsls::Types::Uint64, ALLOC>& value,
                      int                                         /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 
@@ -1234,6 +1242,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                                    const bsl::vector<float, ALLOC>& value,
                                    int                           /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 
@@ -1247,6 +1256,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                                   const bsl::vector<double, ALLOC>& value,
                                   int                            /* version */)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     const int length = static_cast<int>(value.size());
     stream.putLength(length);
 
@@ -1274,6 +1284,7 @@ STREAM& OutStreamFunctions::bdexStreamOut(
                                        const bsl::vector<TYPE, ALLOC>& value,
                                        int                             version)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     typedef typename bsl::vector<TYPE, ALLOC>::const_iterator Iterator;
 
     const int length = static_cast<int>(value.size());
