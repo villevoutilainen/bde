@@ -652,7 +652,7 @@ void MetricsManager_PublicationHelper::publish(
 
         // If their are no collected records then this category can be ignored.
 
-        if (records->empty()) {
+        if (BSLS_ASSERT_CONVEYOR_REF(*records).empty()) {
             continue;
         }
 
@@ -665,8 +665,10 @@ void MetricsManager_PublicationHelper::publish(
         // Append the collected records to the buffer of records.
 
         recordBuffer.push_back(records);
-        MetricSampleGroup sampleGroup(records->data(),
-                                      static_cast<int>(records->size()),
+        bsl::vector<MetricRecord>& recordVector =
+                                              BSLS_ASSERT_CONVEYOR_REF(*records);
+        MetricSampleGroup sampleGroup(recordVector.data(),
+                                      static_cast<int>(recordVector.size()),
                                       elapsedTime);
 
         // Add 'sampleGroup' to all the general publishers and specific

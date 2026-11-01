@@ -190,7 +190,7 @@ AnonChoice::operator=(const AnonChoice& rhs)
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SEQUENCE: {
-            makeSequence(rhs.d_sequence.object());
+            makeSequence(BSLS_ASSERT_CONVEYOR_REF(rhs.d_sequence.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);

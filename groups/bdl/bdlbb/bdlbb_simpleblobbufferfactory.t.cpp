@@ -587,7 +587,8 @@ int main(int argc, char *argv[])
             BlobBuffer buf;
             factory.allocate(&buf);
 
-            bsl::memset(&*buf.buffer(), 'a', bufferSize);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&buf);
+            bsl::memset(&*BSLS_ASSERT_CONVEYOR_REF(buf.buffer()), 'a', bufferSize);
             const char *start = buf.data(), *end = start + bufferSize;
             for (const char *pc = start; pc < end; ++pc) {
                 ASSERTV(*pc, 'a' == *pc);

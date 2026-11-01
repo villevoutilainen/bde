@@ -377,8 +377,6 @@ STREAM& bbldc::bdexStreamOut(STREAM&                                stream,
                              const bbldc::DayCountConvention::Enum& value,
                              int                                    version)
 {
-    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
-    BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     return bbldc::DayCountConvention::bdexStreamOut(stream, value, version);
 }
 

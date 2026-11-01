@@ -44,8 +44,10 @@ void combine(balm::MetricRecord *record, const balm::MetricRecord& value)
     record->metricId() = value.metricId();
     record->count()   += value.count();
     record->total()   += value.total();
-    record->min()      = bsl::min(record->min(), value.min());
-    record->max()      = bsl::max(record->max(), value.max());
+    record->min()      = bsl::min(BSLS_ASSERT_CONVEYOR_REF(record->min()),
+                                  BSLS_ASSERT_CONVEYOR_REF(value.min()));
+    record->max()      = bsl::max(BSLS_ASSERT_CONVEYOR_REF(record->max()),
+                                  BSLS_ASSERT_CONVEYOR_REF(value.max()));
 }
 
 }  // close namespace u
@@ -520,6 +522,7 @@ CollectorRepository::getMetricCollectors(const MetricId& metricId)
         // 'd_collectors'.  This avoids inconsistent data structures if the
         // second insertion (would have) caused an allocation exception.
         bsl::vector<MetricCollectors *>& colCategory = d_categories[category];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&colCategory);
         colCategory.reserve(colCategory.size() + 1);
 
         cIt = d_collectors.insert(

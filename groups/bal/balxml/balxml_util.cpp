@@ -19,6 +19,7 @@ inline
 bool extractNamespaceFromXsd_Impl(const bsl::string_view&  xsdSource,
                                   STRING_TYPE             *targetNamespace)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&xsdSource);
     // Note that a valid XSD file must have this attribute for the root element
     // '<schema>' and the only place that the token "targetNamespace" can
     // appear prior to its occurrence as the required attribute is in the

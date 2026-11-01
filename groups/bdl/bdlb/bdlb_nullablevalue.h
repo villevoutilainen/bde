@@ -1827,8 +1827,10 @@ bsl::ostream& NullableValue<TYPE>::print(bsl::ostream& stream,
                                          spacesPerLevel);             // RETURN
     }
 
-    return bdlb::PrintMethods::print(
-        stream, this->value(), level, spacesPerLevel);
+    return bdlb::PrintMethods::print(stream,
+                                     BSLS_ASSERT_CONVEYOR_REF(this->value()),
+                                     level,
+                                     spacesPerLevel);
 }
 
 template <class TYPE>

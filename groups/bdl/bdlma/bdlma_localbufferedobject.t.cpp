@@ -1989,29 +1989,40 @@ int main(int argc, char *argv[])
             mV->at(ii) *= 3;
         }
         for (int ii = 0; ii < 100; ++ii) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
             ASSERT((*mV)[ii] == 3 * ii);
         }
         ASSERT(da.numAllocations() == 0);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
         bdlma::LocalBufferedObject<bsl::deque<int> > mD(mV->begin(),
                                                         mV->end());
         for (int ii = 0; ii < 100; ++ii) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
             ASSERT((*mV)[ii] == mD->at(ii));
         }
         ASSERT(da.numAllocations() == 0);
 
         for (int ii = 0; ii < 100; ++ii) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
             (*mV)[ii] *= 10;
         }
         for (int ii = 0; ii < 100; ++ii) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
             ASSERT(30 * ii == (*mV)[ii]);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mD);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
             ASSERT(10 * (*mD)[ii] == (*mV)[ii]);
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
         mD.emplace(mV->begin(), mV->end());
 
         for (int ii = 0; ii < 100; ++ii) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mD);
             ASSERT(30 * ii == (*mD)[ii]);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mD);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mV);
             ASSERT((*mD)[ii] == (*mV)[ii]);
         }
 
@@ -2046,6 +2057,7 @@ int main(int argc, char *argv[])
         ASSERT(ta.numAllocations() == 0);
 
         for (int jj = 0; jj < 20; ++jj) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&mV2);
             mV2->insert(mV2->end(), mL->begin(), mL->end());
         }
 

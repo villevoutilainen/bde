@@ -649,6 +649,7 @@ void test2()
 
     // Make sure `locations` contains the same number of paths as expected.
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&locations);
     LOOP2_ASSERT(L_, locations.size(),
                  k_NUM_VALUES == locations.size());
 
@@ -657,6 +658,7 @@ void test2()
     for (int ii = 0; ii < k_NUM_VALUES; ++ii) {
         const int   LINE        = VALUES[ii].d_line;
         const char *EXP_PATH    = VALUES[ii].d_path;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&locations);
         const char *RESULT_PATH = locations[ii];
 
         if (veryVerbose) {

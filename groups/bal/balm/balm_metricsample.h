@@ -554,7 +554,7 @@ bool balm::operator==(const MetricSampleGroup& lhs,
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     return lhs.records()     == rhs.records()
         && lhs.numRecords()  == rhs.numRecords()
-        && lhs.elapsedTime() == rhs.elapsedTime();
+        && BSLS_ASSERT_CONVEYOR_REF(lhs.elapsedTime()) == BSLS_ASSERT_CONVEYOR_REF(rhs.elapsedTime());
 }
 
 inline

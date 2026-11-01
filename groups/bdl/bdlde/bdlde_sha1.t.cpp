@@ -188,6 +188,7 @@ int fromHexDigit(char c)
 /// as a base 16 integer.
 bsl::string fromHex(const bsl::string_view& hexString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&hexString);
     ASSERT(hexString.length() % 2 == 0);
     bsl::string result;
     for (bsl::size_t i = 0; i < hexString.length(); i += 2) {

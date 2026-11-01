@@ -183,13 +183,13 @@ TimingRequest::operator=(const TimingRequest& rhs)
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SQRT: {
-            makeSqrt(rhs.d_sqrt.object());
+            makeSqrt(BSLS_ASSERT_CONVEYOR_REF(rhs.d_sqrt.object()));
           } break;
           case SELECTION_ID_BASIC: {
-            makeBasic(rhs.d_basic.object());
+            makeBasic(BSLS_ASSERT_CONVEYOR_REF(rhs.d_basic.object()));
           } break;
           case SELECTION_ID_BIG: {
-            makeBig(rhs.d_big.object());
+            makeBig(BSLS_ASSERT_CONVEYOR_REF(rhs.d_big.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);

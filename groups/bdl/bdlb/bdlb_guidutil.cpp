@@ -80,6 +80,7 @@ int charToHex(unsigned char* hex, unsigned char c)
 /// non-zero otherwise.
 int vaildateGuidString(const bsl::string_view& guidString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&guidString);
     bsl::size_t length = guidString.length();
     if (length < 32 || length > 40){
         return -1;                                                    // RETURN
@@ -175,6 +176,7 @@ struct GuidUtil_GuidToStringFormatter
 template <class t_STRING>
 void guidToStringImpl(t_STRING *result, const Guid& guid)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(result);
     BSLS_ASSERT(result);
 
     result->resize(Guid::k_GUID_NUM_CHARS);

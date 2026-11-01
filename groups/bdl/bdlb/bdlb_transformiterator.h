@@ -791,6 +791,7 @@ inline
 TransformIterator<FUNCTOR, ITERATOR>&
 TransformIterator<FUNCTOR, ITERATOR>::operator++()
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     ++iterator();
     return *this;
 }

@@ -2712,12 +2712,16 @@ void TestDriver<KEY_TYPE, DATA_TYPE>::removeAllTestByVecType()
                                                 // elements to container.
         ASSERT(X.isEmpty());
         ASSERT(LEN == numRemoved);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&removed);
         ASSERT(LEN + 1 == static_cast<int>(removed.size()));
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&removed);
         ASSERT(TTF::getIdentifier(removed[0].key())  == VALUES2[0].d_key);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&removed);
         ASSERT(TTF::getIdentifier(removed[0].data()) == VALUES2[0].d_data);
 
         for (int ii = 0; ii < LEN; ++ii) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&removed);
             PairHandle ph = removed[ii + 1];
 
             ASSERT(TTF::getIdentifier(ph.key())  == VALUES2[ii].d_key);

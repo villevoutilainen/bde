@@ -216,6 +216,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool TimeZoneFormatter<t_CHAR>::parseNextModifier(StringView *specInOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(specInOut);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(!specInOut->empty());
 
@@ -248,6 +249,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool TimeZoneFormatter<t_CHAR>::parseNextSpecifier(StringView *specInOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(specInOut);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(!specInOut->empty());
 
@@ -303,6 +305,7 @@ bool TimeZoneFormatter<t_CHAR>::formatNextSpecifier(
                                   t_ITERATOR                     *outIt,
                                   int                             offset) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(specInOut);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(!specInOut->empty());
 

@@ -191,6 +191,8 @@ bool compareText(const bsl::string_view& lhs,
                  const bsl::string_view& rhs,
                  bsl::ostream&     errorStream = bsl::cout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     for (unsigned int i = 0; i < lhs.length() && i < rhs.length(); ++i) {
         if (lhs[i] != rhs[i]) {
             errorStream << "lhs: \"" << lhs << "\"\n"

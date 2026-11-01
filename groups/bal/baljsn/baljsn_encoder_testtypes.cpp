@@ -2796,6 +2796,7 @@ bsl::ostream& EncoderTestChoiceWithAllCategories::print(
     int           level,
     int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     switch (d_selectionId) {
@@ -2805,7 +2806,7 @@ bsl::ostream& EncoderTestChoiceWithAllCategories::print(
         stream << (multilineFlag ? "" : " ");
         stream << "charArray = [ ";
         bdlb::Print::singleLineHexDump(
-            stream, d_charArray.object().begin(), d_charArray.object().end());
+            stream, BSLS_ASSERT_CONVEYOR_REF(d_charArray.object()).begin(), BSLS_ASSERT_CONVEYOR_REF(d_charArray.object()).end());
         stream << " ]" << (multilineFlag ? "\n" : "");
       }  break;
       case SELECTION_ID_CHOICE: {
@@ -3509,7 +3510,7 @@ bsl::ostream& EncoderTestSequenceWithAllCategories::print(
         stream << (multilineFlag ? "" : " ");
         stream << "charArray = [ ";
         bdlb::Print::singleLineHexDump(
-            stream, this->charArray().begin(), this->charArray().end());
+            stream, BSLS_ASSERT_CONVEYOR_REF(this->charArray()).begin(), BSLS_ASSERT_CONVEYOR_REF(this->charArray()).end());
         stream << " ]" << (multilineFlag ? "\n" : "");
     }
     printer.printAttribute("aString", this->aString());

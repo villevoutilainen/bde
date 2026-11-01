@@ -271,6 +271,7 @@ int StringUtil::readStringImp(STRING                  *value,
                               const bsl::string_view&  string,
                               int                      flags)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     BSLS_ASSERT(value);
 
     if (2 > string.size()) {

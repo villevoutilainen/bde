@@ -1346,8 +1346,10 @@ void gg(bsl::vector<Action>   *actions,
             for (; sIt != metricValues.end(); ++sIt) {
                 BSLS_ASSERT_CONVEYOR_OBJECT(prev);
                 BSLS_ASSERT_CONVEYOR_OBJECT(sIt);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&prev);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&sIt);
                 if (sIt == metricValues.begin() ||
-                    sIt->elapsedTime() != prev->elapsedTime()) {
+                    BSLS_ASSERT_CONVEYOR_REF(sIt->elapsedTime()) != BSLS_ASSERT_CONVEYOR_REF(prev->elapsedTime())) {
                     BSLS_ASSERT_CONVEYOR_OBJECT(sIt);
                     d_stream << "\tElapsed Time: "
                              << sIt->elapsedTime().totalSecondsAsDouble()
@@ -2177,6 +2179,7 @@ int main(int argc, char *argv[])
                         bool found = expSchedule.find(CAT)!=expSchedule.end();
                         ASSERT(found ==
                                MX.findCategorySchedule(&interval, CAT));
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&expSchedule);
                         ASSERT((!found) || interval == expSchedule[CAT]);
                     }
 
@@ -2683,6 +2686,7 @@ int main(int argc, char *argv[])
                 const Category *CATEGORY = allCategories[i];
                 bool found = intervalMap.find(CATEGORY) != intervalMap.end();
                 ASSERT(found == MX.findCategorySchedule(&interval, CATEGORY));
+                BSLS_ASSERT_CONVEYOR_OBJECT(&intervalMap);
                 ASSERT((!found) || (interval == intervalMap[CATEGORY]));
             }
 

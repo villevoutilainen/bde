@@ -507,7 +507,7 @@ int PublicationScheduler::cancelDefaultSchedule()
     else {
         bslmt::LockGuard<bslmt::Mutex> guard(clock->mutex());
         clock->defaultClock() = false;
-        clock->nonDefaultCategories().clear();
+        BSLS_ASSERT_CONVEYOR_REF(clock->nonDefaultCategories()).clear();
     }
     return 0;
 }

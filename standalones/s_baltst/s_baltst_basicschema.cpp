@@ -261,7 +261,7 @@ BasicSchemaEnumerationElementChoice::operator=(const BasicSchemaEnumerationEleme
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_ANNOTATION: {
-            makeAnnotation(rhs.d_annotation.object());
+            makeAnnotation(BSLS_ASSERT_CONVEYOR_REF(rhs.d_annotation.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
@@ -700,10 +700,10 @@ BasicSchemaRestrictionElementChoice::operator=(const BasicSchemaRestrictionEleme
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_ANNOTATION: {
-            makeAnnotation(rhs.d_annotation.object());
+            makeAnnotation(BSLS_ASSERT_CONVEYOR_REF(rhs.d_annotation.object()));
           } break;
           case SELECTION_ID_ENUMERATION: {
-            makeEnumeration(rhs.d_enumeration.object());
+            makeEnumeration(BSLS_ASSERT_CONVEYOR_REF(rhs.d_enumeration.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
@@ -1208,10 +1208,10 @@ BasicSchemaSimpleTypeElementChoice::operator=(const BasicSchemaSimpleTypeElement
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_ANNOTATION: {
-            makeAnnotation(rhs.d_annotation.object());
+            makeAnnotation(BSLS_ASSERT_CONVEYOR_REF(rhs.d_annotation.object()));
           } break;
           case SELECTION_ID_RESTRICTION: {
-            makeRestriction(rhs.d_restriction.object());
+            makeRestriction(BSLS_ASSERT_CONVEYOR_REF(rhs.d_restriction.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
@@ -1871,7 +1871,7 @@ BasicSchemaChoiceElementChoice::operator=(const BasicSchemaChoiceElementChoice& 
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_ANNOTATION: {
-            makeAnnotation(rhs.d_annotation.object());
+            makeAnnotation(BSLS_ASSERT_CONVEYOR_REF(rhs.d_annotation.object()));
           } break;
           case SELECTION_ID_ELEMENT: {
             makeElement(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_element));
@@ -2421,7 +2421,7 @@ BasicSchemaComplexTypeElementChoice::operator=(const BasicSchemaComplexTypeEleme
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_ANNOTATION: {
-            makeAnnotation(rhs.d_annotation.object());
+            makeAnnotation(BSLS_ASSERT_CONVEYOR_REF(rhs.d_annotation.object()));
           } break;
           case SELECTION_ID_SEQUENCE: {
             makeSequence(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_sequence));
@@ -3185,10 +3185,10 @@ BasicSchemaElementChoice::operator=(const BasicSchemaElementChoice& rhs)
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_ANNOTATION: {
-            makeAnnotation(rhs.d_annotation.object());
+            makeAnnotation(BSLS_ASSERT_CONVEYOR_REF(rhs.d_annotation.object()));
           } break;
           case SELECTION_ID_SIMPLE_TYPE: {
-            makeSimpleType(rhs.d_simpleType.object());
+            makeSimpleType(BSLS_ASSERT_CONVEYOR_REF(rhs.d_simpleType.object()));
           } break;
           case SELECTION_ID_COMPLEX_TYPE: {
             makeComplexType(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_complexType));
@@ -3751,7 +3751,7 @@ BasicSchemaSequenceElementChoice::operator=(const BasicSchemaSequenceElementChoi
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_ANNOTATION: {
-            makeAnnotation(rhs.d_annotation.object());
+            makeAnnotation(BSLS_ASSERT_CONVEYOR_REF(rhs.d_annotation.object()));
           } break;
           case SELECTION_ID_ELEMENT: {
             makeElement(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_element));
@@ -4142,10 +4142,10 @@ BasicSchemaChoice::operator=(const BasicSchemaChoice& rhs)
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_ANNOTATION: {
-            makeAnnotation(rhs.d_annotation.object());
+            makeAnnotation(BSLS_ASSERT_CONVEYOR_REF(rhs.d_annotation.object()));
           } break;
           case SELECTION_ID_SIMPLE_TYPE: {
-            makeSimpleType(rhs.d_simpleType.object());
+            makeSimpleType(BSLS_ASSERT_CONVEYOR_REF(rhs.d_simpleType.object()));
           } break;
           case SELECTION_ID_COMPLEX_TYPE: {
             makeComplexType(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_complexType));

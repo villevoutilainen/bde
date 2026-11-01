@@ -231,6 +231,8 @@ const char *MSG_550BYTE =
 
 bool compareText(const bsl::string_view& lhs, const bsl::string_view& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     for (unsigned int i = 0; i < lhs.length() && i < rhs.length(); ++i) {
         if (lhs[i] != rhs[i]) {
             cout << "Strings differ at index (" << i << ") "

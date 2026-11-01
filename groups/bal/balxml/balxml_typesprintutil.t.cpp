@@ -527,6 +527,8 @@ const char CustomizedInt::CLASS_NAME[] = "s_baltst::CustomizedInt";
 bool matchFloatingPointResult(const bsl::string_view& result,
                               const bsl::string_view& matchPattern)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&matchPattern);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&result);
 
     const bsl::size_t lenRes = result.length();
     const bsl::size_t lenPat = matchPattern.length();

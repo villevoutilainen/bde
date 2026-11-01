@@ -2061,6 +2061,7 @@ int main(int argc, const char *argv[])  {
             bsl::ostringstream oss;
 
             ASSERT(Ot::e_BOOL == X.typeInfo().type());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             ASSERT(true       == X.tagString().empty());
             ASSERT(false      == X.isTagValid(oss));
             ASSERT(false      == oss.str().empty());
@@ -3355,6 +3356,7 @@ int main(int argc, const char *argv[])  {
                 {
                     bsl::ostringstream oss;
 
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                     if (X.description().empty()) {
                         ASSERT(!X.isDescriptionValid(oss));
                         ASSERT(!oss.str().empty());

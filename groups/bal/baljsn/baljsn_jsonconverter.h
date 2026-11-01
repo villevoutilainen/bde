@@ -688,10 +688,11 @@ int JsonConverter::decodeImp(TYPE                            *value,
 
     if (dataValue->isString()) {
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(dataValue);
         rc = bdlat::EnumUtil::fromStringOrFallbackIfEnabled(
                                                value,
                                                dataValue->theString().data(),
-                              static_cast<int>(dataValue->theString().size()));
+                              static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(dataValue->theString()).size()));
         if (0 == rc) {
             return 0;                                                 // RETURN
         } else {
@@ -824,6 +825,7 @@ int JsonConverter::decodeImp(bsl::vector<char>         *value,
         const bsl::string& base64String = dataValue->theString();
 
         bdlde::Base64Decoder base64Decoder(true);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&base64String);
         int                  length = static_cast<int>(base64String.length());
 
         value->resize(static_cast<bsl::size_t>(

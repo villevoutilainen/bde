@@ -237,6 +237,7 @@ int ParserUtil::getValue(bool *value, const bsl::string_view& data)
 int ParserUtil::getValue(bdldfp::Decimal64       *value,
                          const bsl::string_view&  data)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     if (0 == data.length()) {
         return -1;                                                    // RETURN
     }
@@ -291,6 +292,7 @@ int ParserUtil::getValue(bdldfp::Decimal64       *value,
 
 int ParserUtil::getValue(double *value, const bsl::string_view& data)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&data);
     if (0 == data.length()
      || '.' == data[0]
      || '+' == data[0]
@@ -569,6 +571,7 @@ int ParserUtil::getValue(bsl::vector<char>   *value,
 
 bool ParserUtil::stripQuotes(bsl::string_view *str)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(str);
     BSLS_ASSERT(str);
     if (str->size() >= 2 && '"' == str->front() && '"' == str->back()) {
         str->remove_prefix(1);

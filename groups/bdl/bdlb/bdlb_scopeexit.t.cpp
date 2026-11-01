@@ -181,6 +181,8 @@ static const char k_IDENT_CHARS[] =
 bool testMacroText(const bsl::string_view& expectedTokens,
                    const bsl::string_view& macroText)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&expectedTokens);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&macroText);
     static const bsl::string_view::size_type npos = bsl::string_view::npos;
 
     const bsl::size_t eSize = expectedTokens.size();

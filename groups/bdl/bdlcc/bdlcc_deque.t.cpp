@@ -3970,14 +3970,18 @@ class TestPopFront {
 
             v.clear();
             d_mX_p->tryPopFront(20, &v);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             IntPtr s = v.size();
             for (int ii = 0; ii < s; ++ii) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&v);
                 const int d = u::getData(v[ii]);
                 ASSERTV(expectedVal, d, expectedVal++ == d && "popFront");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&v);
                 ASSERTV(vms, bsltf::getMovedInto(v[ii]),
                    u::e_BSL != s_vecType || vms == bsltf::getMovedInto(v[ii]));
             }
             if (s > maxVecSize) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&v);
                 maxVecSize = v.size();
                 maxVecSizeAt = expectedVal;
             }
@@ -4054,15 +4058,19 @@ class TestPopBack {
             v.clear();
 
             d_mX_p->tryPopBack(20, &v);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             IntPtr s = v.size();
             for (int ii = 0; ii < s; ++ii) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&v);
                 const int d = u::getData(v[ii]);
                 ASSERTV(s_vecType, expectedVal, d,
                                               expectedVal++ == d && "popBack");
+                BSLS_ASSERT_CONVEYOR_OBJECT(&v);
                 ASSERTV(vms, bsltf::getMovedInto(v[ii]),
                    u::e_BSL != s_vecType || vms == bsltf::getMovedInto(v[ii]));
             }
             if (s > maxVecSize) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&v);
                 maxVecSize = v.size();
                 maxVecSizeAt = expectedVal;
             }
@@ -4530,6 +4538,7 @@ void testSingleThreadedTryPop()
         ASSERT(0 != sts);
         ASSERT('Z' == u::getData(e));
         mX.tryPopFront(100, &v);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&v);
         ASSERT(v.empty());
         mX.tryPopFront(100);    // doesn't block
         v.reserve(10);
@@ -4582,9 +4591,12 @@ void testSingleThreadedTryPop()
                                                               (0 < numThrows));
         }
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&v);
         ASSERT(4 == v.size());
         if (k_WELL_BEHAVED || !k_IS_MOVE_AWARE) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             ASSERT('A' + 2 == u::getData(v.front()));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             ASSERT('A' + 5 == u::getData(v.back()));
         }
         mY.erase(mY.begin(), mY.begin() + 4);
@@ -4610,14 +4622,18 @@ void testSingleThreadedTryPop()
                                                               (0 < numThrows));
         }
         ASSERT(0 == u::myLength(X));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&v);
         ASSERT(4 == v.size());
         if (k_WELL_BEHAVED || !k_IS_MOVE_AWARE) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             ASSERT('A' + 6 == u::getData(v.front()));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             ASSERT('A' + 9 == u::getData(v.back()));
         }
         ASSERT(0 == X.length());
         v.clear();
         mX.tryPopFront(1, &v);    // doesn't block
+        BSLS_ASSERT_CONVEYOR_OBJECT(&v);
         ASSERT(v.empty());
         ASSERT(0 == X.length());
         mY.clear();
@@ -4632,6 +4648,7 @@ void testSingleThreadedTryPop()
         ASSERT(0 != sts);
         ASSERT('Z' == u::getData(e));
         mX.tryPopBack(100, &v);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&v);
         ASSERT(v.empty());
         mX.tryPopBack(100);    // doesn't block
         v.reserve(10);
@@ -4678,9 +4695,12 @@ void testSingleThreadedTryPop()
                                    (k_ALLOC && (!match || !k_IS_MOVE_AWARE)) ==
                                                               (0 < numThrows));
         }
+        BSLS_ASSERT_CONVEYOR_OBJECT(&v);
         ASSERT(4 == v.size());
         if (k_WELL_BEHAVED || !k_IS_MOVE_AWARE) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             ASSERTV(v.front(), 'A' + 2 == u::getData(v.front()));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             ASSERTV(v.back(),  'A' + 5 == u::getData(v.back()));
         }
         mY.erase(mY.end() - 4, mY.end());
@@ -4706,14 +4726,18 @@ void testSingleThreadedTryPop()
                                                               (0 < numThrows));
         }
         ASSERT(0 == u::myLength(X));
+        BSLS_ASSERT_CONVEYOR_OBJECT(&v);
         ASSERT(4 == v.size());
         if (k_WELL_BEHAVED || !k_IS_MOVE_AWARE) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             ASSERTV(v.front(), 'A' + 6 == u::getData(v.front()));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             ASSERTV(v.back(),  'A' + 9 == u::getData(v.back()));
         }
         ASSERT(0 == X.length());
         v.clear();
         mX.tryPopBack(1, &v);    // doesn't block
+        BSLS_ASSERT_CONVEYOR_OBJECT(&v);
         ASSERT(v.empty());
         ASSERT(0 == X.length());
         mY.clear();
@@ -8094,6 +8118,7 @@ int main(int argc, char *argv[])
                 BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 ASSERT(3 == pr->rend() - pr->rbegin());
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&PR);
                 PR->pop_back();
                 BSLS_ASSERT_CONVEYOR_OBJECT(&pr);
                 BSLS_ASSERT_CONVEYOR_OBJECT(&PR);

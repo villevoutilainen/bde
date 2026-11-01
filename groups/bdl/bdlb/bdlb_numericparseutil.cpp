@@ -86,6 +86,7 @@ static
 inline
 bsl::string_view stripOptionalPlus(const bsl::string_view& positiveNum)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&positiveNum);
     BSLS_ASSERT_NONCONVEYOR(!positiveNum.empty());
 
     return ('+' == positiveNum[0]) ? positiveNum.substr(1) : positiveNum;
@@ -206,6 +207,7 @@ int NumericParseUtil::parseDouble(double                  *result,
                                   bsl::string_view        *remainder,
                                   const bsl::string_view&  inputString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&inputString);
     BSLS_ASSERT(remainder);
     BSLS_ASSERT(result);
 
@@ -574,6 +576,7 @@ int NumericParseUtil::parseSignedInteger(bsls::Types::Int64       *result,
                                          const bsls::Types::Int64  minValue,
                                          const bsls::Types::Int64  maxValue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&inputString);
     BSLS_ASSERT(result);
     BSLS_ASSERT(remainder);
     BSLS_ASSERT(2 <= base);
@@ -624,6 +627,7 @@ int NumericParseUtil::parseUnsignedInteger(
                                         int                        base,
                                         const bsls::Types::Uint64  maxValue)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&inputString);
     BSLS_ASSERT(result);
     BSLS_ASSERT(remainder);
     BSLS_ASSERT(2 <= base);
@@ -681,6 +685,7 @@ int NumericParseUtil::parseUnsignedInteger(
                                        const bsls::Types::Uint64  maxValue,
                                        int                        maxNumDigits)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&inputString);
     BSLS_ASSERT(result);
     BSLS_ASSERT(remainder);
     BSLS_ASSERT(2 <= base);

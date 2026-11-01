@@ -347,6 +347,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool TimeFormatter<t_CHAR>::parseNextModifier(StringView *specInOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(specInOut);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (t_CHAR(',') == specInOut->front()) {
         d_comma = true;
@@ -361,6 +362,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool TimeFormatter<t_CHAR>::parseNextSpecifier(StringView *specInOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(specInOut);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(!specInOut->empty());
 

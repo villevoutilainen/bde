@@ -188,12 +188,13 @@ Option::operator const OptionInfo&() const
 
 OptionInfo::ArgType Option::argType() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     // An empty tag is the only indicator of a non-option so that must be
     // tested first.  An 'OptionType::e_BOOL' option should not have an empty
     // tag but the class is allowed to contain tags that are considered invalid
     // (i.e., 'isTagValid' returns 'false').
 
-    if (d_optionInfo.object().d_tag.empty()) {
+    if (BSLS_ASSERT_CONVEYOR_REF(d_optionInfo.object()).d_tag.empty()) {
         return OptionInfo::e_NON_OPTION;                              // RETURN
     }
 
@@ -265,7 +266,8 @@ const TypeInfo& Option::typeInfo() const
 
 bool Option::isDescriptionValid(bsl::ostream& stream) const
 {
-    if (d_optionInfo.object().d_description.empty()) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    if (BSLS_ASSERT_CONVEYOR_REF(d_optionInfo.object()).d_description.empty()) {
         stream << "Description cannot be an empty string." << '\n'
                << bsl::flush;
         return false;                                                 // RETURN
@@ -305,7 +307,8 @@ bool Option::isLongTagValid(const char    *longTag,
 
 bool Option::isNameValid(bsl::ostream& stream) const
 {
-    if (d_optionInfo.object().d_name.empty()) {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    if (BSLS_ASSERT_CONVEYOR_REF(d_optionInfo.object()).d_name.empty()) {
         stream << "Name cannot be an empty string." << '\n' << bsl::flush;
         return false;                                                 // RETURN
     }
@@ -400,7 +403,7 @@ bsl::ostream& Option::print(bsl::ostream& stream,
 
     stream << "{";
     bdlb::Print::newlineAndIndent(stream, ++level, spacesPerLevel);
-    if (tagString().empty()) {
+    if (BSLS_ASSERT_CONVEYOR_REF(tagString()).empty()) {
         stream << "NON_OPTION";
     } else {
         stream << "TAG            \"" << tagString() << "\"";

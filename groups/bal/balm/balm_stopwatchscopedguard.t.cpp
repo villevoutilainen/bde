@@ -1094,10 +1094,12 @@ int main(int argc, char *argv[])
                 for (int j = 0; j < sample.numGroups(); ++j) {
                     BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
                     BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
-                    ASSERT(sample.sampleGroup(j).elapsedTime() ==
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
+                    ASSERT(BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(j)).elapsedTime() ==
                            tp1.lastSample().sampleGroup(j).elapsedTime());
                     BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
-                    ASSERT(sample.sampleGroup(j).elapsedTime() ==
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
+                    ASSERT(BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(j)).elapsedTime() ==
                            tp2.lastSample().sampleGroup(j).elapsedTime());
 
                     BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);

@@ -416,6 +416,7 @@ bool StringViewUtil::startsWith(const bsl::string_view&  string,
 inline
 bool StringViewUtil::startsWith(const bsl::string_view& string, char character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return (!string.empty() && character == string.front());
 }
 
@@ -445,6 +446,7 @@ bool StringViewUtil::endsWith(const bsl::string_view&  string,
 inline
 bool StringViewUtil::endsWith(const bsl::string_view& string, char character)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     return (!string.empty() && character == string.back());
 }
 

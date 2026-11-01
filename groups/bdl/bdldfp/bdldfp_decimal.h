@@ -6694,6 +6694,7 @@ BSLS_KEYWORD_CONSTEXPR_CPP20
 void Decimal_FormatterSpecification<t_CHAR>::parseType(
                              const bsl::basic_string_view<t_CHAR>&  typeString)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&typeString);
     // Handle empty string or empty specification.
     if (typeString.empty()) {
         d_formatType = e_FORMAT_DEFAULT;

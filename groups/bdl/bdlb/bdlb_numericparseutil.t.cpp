@@ -943,6 +943,7 @@ static const double NtA = -42e42;
 /// corresponding positive integer, normal, or subnormal `double` value.
 double parseExpected(const bsl::string_view& sv)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&sv);
     typedef bsl::string_view::size_type Position;
     typedef bsl::string_view::size_type Size;
 

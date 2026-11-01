@@ -6599,6 +6599,8 @@ void TestDriver::testCase13()
                                e_BACKWARDS);
         ASSERT(0 == rc);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstStr);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstStrBack);
         ASSERT(
             swappedRangeEquals(&dstStr[0],
                                &dstStr[0] + dstStr.length() + 1,
@@ -6610,6 +6612,8 @@ void TestDriver::testCase13()
             &dstStrBack, charUtf8MultiLang, 0, '?', e_BACKWARDS);
         ASSERT(0 == rc);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstStr);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstStrBack);
         ASSERT(
             swappedRangeEquals(&dstStr[0],
                                &dstStr[0] + dstStr.length() + 1,
@@ -6642,7 +6646,9 @@ void TestDriver::testCase13()
                     &vectorC, WideStringView(dstStrBack), 0, '?', e_BACKWARDS);
         ASSERT(0 == rc);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&vectorC);
         ASSERT(vectorC.size() == bsl::strlen(charUtf8MultiLang) + 1);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&vectorC);
         ASSERT(!bsl::strcmp(&vectorC[0], charUtf8MultiLang));
     }
 
@@ -6665,8 +6671,12 @@ void TestDriver::testCase13()
                                e_BACKWARDS);
         ASSERT(0 == rc);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
         typename VECTOR_US::value_type *dstVecData     = &dstVec[0];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecBack);
         typename VECTOR_US::value_type *dstVecBackData = &dstVecBack[0];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecBack);
         ASSERT(swappedRangeEquals(dstVecData,
                                   dstVecData + dstVec.size(),
                                   dstVecBackData,
@@ -6677,12 +6687,15 @@ void TestDriver::testCase13()
             &dstVecBack, charUtf8MultiLang, 0, '?', e_BACKWARDS);
         ASSERT(0 == rc);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecBack);
         ASSERT(swappedRangeEquals(dstVecData,
                                   dstVecData + dstVec.size(),
                                   dstVecBackData,
                                   dstVecBackData + dstVecBack.size()));
         bslalg::ConstructorProxy<STRING> rStrProxy(&ca);
         STRING&                          rStr = rStrProxy.object();
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecBack);
         rc = Util::utf16ToUtf8(&rStr, &dstVecBack[0], 0, '?', e_BACKWARDS);
         ASSERT(0 == rc);
         ASSERT(rStr == charUtf8MultiLang);
@@ -6701,12 +6714,14 @@ void TestDriver::testCase13()
         ASSERT(SEG_SIZE > sizeof(utf8MultiLang));
 
         dstVecUS.resize(SEG_SIZE);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecUS);
         unsigned short *dstVecUSData = &dstVecUS[0];
 
         bsl::size_t nc = -1, nw = -1;
         int         rc = Util::utf8ToUtf16(
                     dstVecUSData, SEG_SIZE, charUtf8MultiLang, &nc, &nw);
         ASSERT(0 == rc);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecUS);
         ASSERT(0 == dstVecUS[nw - 1]);
         ASSERT(nw > nc);
         ASSERT(bsl::find(dstVecUSData, dstVecUSData + SEG_SIZE, 0) ==
@@ -6717,6 +6732,7 @@ void TestDriver::testCase13()
                                                        dstVecUSProxy2.object();
 
         dstVecUS2.resize(SEG_SIZE);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecUS2);
         unsigned short *dstVecUSData2 = &dstVecUS2[0];
 
         bsl::size_t ncb = -1, nwb = -1;
@@ -6730,6 +6746,7 @@ void TestDriver::testCase13()
         ASSERT(0 == rc);
         ASSERT(nwb == nw);
         ASSERT(ncb == nc);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecUS);
         ASSERT(0 == dstVecUS[nwb - 1]);
         ASSERT(bsl::find(dstVecUSData2, dstVecUSData2 + SEG_SIZE, 0) ==
                dstVecUSData2 + (nwb - 1));
@@ -6740,6 +6757,7 @@ void TestDriver::testCase13()
                                   dstVecUSData2 + nwb));
 
         dstVecC.resize(SEG_SIZE);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecC);
         char *dstVecCData = &dstVecC[0];
 
         ncb = -1, nwb = -1;
@@ -6772,12 +6790,14 @@ void TestDriver::testCase13()
         ASSERT(SEG_SIZE > sizeof(utf8MultiLang));
 
         dstVecWC.resize(SEG_SIZE);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecWC);
         wchar_t *dstVecWCData = &dstVecWC[0];
 
         bsl::size_t nc = -1, nw = -1;
         int         rc = Util::utf8ToUtf16(
                     dstVecWCData, SEG_SIZE, charUtf8MultiLang, &nc, &nw);
         ASSERT(0 == rc);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecWC);
         ASSERT(0 == dstVecWC[nw - 1]);
         ASSERT(nw > nc);
         ASSERT(bsl::find(dstVecWCData, dstVecWCData + SEG_SIZE, 0) ==
@@ -6788,6 +6808,7 @@ void TestDriver::testCase13()
                                                        dstVecWCProxy2.object();
 
         dstVecWC2.resize(SEG_SIZE);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecWC2);
         wchar_t *dstVecWCData2 = &dstVecWC2[0];
 
         bsl::size_t ncb = -1, nwb = -1;
@@ -6801,6 +6822,7 @@ void TestDriver::testCase13()
         ASSERT(0 == rc);
         ASSERT(nwb == nw);
         ASSERT(ncb == nc);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecWC);
         ASSERT(0 == dstVecWC[nwb - 1]);
         ASSERT(bsl::find(dstVecWCData2, dstVecWCData2 + SEG_SIZE, 0) ==
                dstVecWCData2 + (nwb - 1));
@@ -6811,6 +6833,7 @@ void TestDriver::testCase13()
                                   dstVecWCData2 + nwb));
 
         dstVecC.resize(SEG_SIZE);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecC);
         char *dstVecCData = &dstVecC[0];
 
         ncb = -1, nwb = -1;
@@ -6924,6 +6947,7 @@ void TestDriver::testCase12()
                         expectedUtf16 += utf16s[tk];
                         expectedUtf16 += utf16s[tm];
                         expectedUtf16 += utf16s[tn];
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&expectedUtf16);
                         ASSERT(expectedUtf16.length() ==
                                utf16s[ti].length() + utf16s[tj].length() +
                                    utf16s[tk].length() + utf16s[tm].length() +
@@ -6955,6 +6979,7 @@ void TestDriver::testCase12()
                         // `bsl::string::operator==` overload for
                         // `std::pmr:string` is implemented.
 
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&utf8Out);
                         ASSERT(utf8In.length() == utf8Out.length())
                         if (utf8In.length() == utf8Out.length()) {
                             for (bsl::size_t i = 0; i < utf8In.length(); ++i) {
@@ -7048,17 +7073,23 @@ void TestDriver::testCase11()
                             ASSERT(start > START || end < END || ii >= 4 ||
                                    jj >= 4 || kk >= 4 || 0 == rc);
                             ASSERT(ii >= 3 || jj >= 3 || kk >= 3 || 0 == rc);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(nc <= dstVec.size());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             typename VECTOR::iterator found =
                                 bsl::find(dstVec.begin(), dstVec.end(), '?');
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             if (!dstVec.empty() && errorByte &&
                                 (rc & bdlde::CharConvertStatus::
                                           k_INVALID_INPUT_BIT)) {
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT(found < dstVec.end());
                             }
                             else {
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT(found == dstVec.end());
                             }
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(nc <= dstVec.size());
 
                             nc2     = (bsl::size_t)-1;
@@ -7068,14 +7099,19 @@ void TestDriver::testCase11()
                                 &nc2,
                                 errorByte);
                             ASSERT(rc2 == rc);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstStr);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(dstVec.size() == dstStr.length() + 1);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             char *dstVecData = &dstVec[0];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(0 == bsl::memcmp(dstVecData,
                                                     dstStr.c_str(),
                                                     dstVec.size()));
                             LOOP2_ASSERT(nc2, nc, nc2 == nc);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             bsl::size_t dstCap = dstVec.size();
 
                             WIDE_CHAR save = *end;
@@ -7085,7 +7121,10 @@ void TestDriver::testCase11()
                             rc2 = Util::utf16ToUtf8(
                                 &dstStr, start, &nc2, errorByte);
                             ASSERT(rc2 == rc);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstStr);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(dstVec.size() == dstStr.length() + 1);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(0 == bsl::memcmp(dstVecData,
                                                     dstStr.c_str(),
                                                     dstVec.size()));
@@ -7103,9 +7142,11 @@ void TestDriver::testCase11()
                             rc2 = Util::utf16ToUtf8(
                                 &dstVec, srcVec.begin(), &nc2, errorByte);
                             ASSERT(rc2 == rc);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             LOOP2_ASSERT(dstVec.size(),
                                          dstCap,
                                          dstVec.size() == dstCap);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(0 == bsl::memcmp(dstVecData,
                                                     dstStr.c_str(),
                                                     dstVec.size()));
@@ -7115,7 +7156,9 @@ void TestDriver::testCase11()
                             rc2 = Util::utf16ToUtf8(
                                 &dstStr, srcVec.begin(), &nc2, errorByte);
                             ASSERT(rc2 == rc);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstStr);
                             ASSERT(dstStr.length() + 1 == dstCap);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(0 == bsl::memcmp(dstVecData,
                                                     dstStr.c_str(),
                                                     dstVec.size()));
@@ -7124,10 +7167,12 @@ void TestDriver::testCase11()
                             dstVec.push_back(0);
                             dstVec.push_back(0);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             dstVecData = &dstVec[0];
                             for (bsl::size_t cap = 0; cap <= dstCap + 1;
                                  ++cap) {
                                 nc = nw = (bsl::size_t)-1;
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 bsl::memset(
                                     dstVecData, (char)-1, dstVec.size());
                                 rc2 = Util::utf16ToUtf8(
@@ -7144,22 +7189,28 @@ void TestDriver::testCase11()
                                 ASSERT(nc <= nw);
                                 ASSERT(nw <= cap);
                                 ASSERT(nw <= dstCap);
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT((char)-1 == dstVec[nw]);
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT(!cap ||
                                        (nw && nc && 0 == dstVec[nw - 1]));
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 found = bsl::find(dstVec.begin(),
                                                   dstVec.begin() + nw,
                                                   '?');
                                 if (0 != nw && errorByte &&
                                     (rc2 & bdlde::CharConvertStatus::
                                                k_INVALID_INPUT_BIT)) {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                     ASSERT(found < dstVec.begin() + nw);
                                 }
                                 else {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                     ASSERT(found == dstVec.begin() + nw);
                                 }
 
                                 nc2 = nw2 = (bsl::size_t)-1;
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 bsl::memset(
                                     dstVecData, (char)-1, dstVec.size());
                                 rc2 = Util::utf16ToUtf8(dstVecData,
@@ -7174,15 +7225,18 @@ void TestDriver::testCase11()
                                 ASSERT(cap < dstCap || rc2 == rc);
                                 ASSERT(nc2 == nc);
                                 ASSERT(nw2 == nw);
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 found = bsl::find(dstVec.begin(),
                                                   dstVec.begin() + nw2,
                                                   '?');
                                 if (0 != nw2 && errorByte &&
                                     (rc2 & bdlde::CharConvertStatus::
                                                k_INVALID_INPUT_BIT)) {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                     ASSERT(found < dstVec.begin() + nw2);
                                 }
                                 else {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                     ASSERT(found == dstVec.begin() + nw2);
                                 }
                             }
@@ -7262,17 +7316,23 @@ void TestDriver::testCase11()
                             ASSERT(start > START || end < END || ii >= 4 ||
                                    jj >= 4 || kk >= 4 || 0 == rc);
                             ASSERT(ii >= 3 || jj >= 3 || kk >= 3 || 0 == rc);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(nc <= dstVec.size());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             typename VECTOR::iterator found =
                                 bsl::find(dstVec.begin(), dstVec.end(), '?');
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             if (!dstVec.empty() && errorByte &&
                                 (rc & bdlde::CharConvertStatus::
                                           k_INVALID_INPUT_BIT)) {
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT(found < dstVec.end());
                             }
                             else {
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT(found == dstVec.end());
                             }
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(nc <= dstVec.size());
 
                             nc2     = (bsl::size_t)-1;
@@ -7283,14 +7343,19 @@ void TestDriver::testCase11()
                                 errorByte,
                                 e_BACKWARDS);
                             ASSERT(rc2 == rc);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstStr);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(dstVec.size() == dstStr.length() + 1);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             char *dstVecData = &dstVec[0];
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(0 == bsl::memcmp(dstVecData,
                                                     dstStr.c_str(),
                                                     dstVec.size()));
                             LOOP2_ASSERT(nc2, nc, nc2 == nc);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             bsl::size_t dstCap = dstVec.size();
 
                             WIDE_CHAR save = *end;
@@ -7300,7 +7365,10 @@ void TestDriver::testCase11()
                             rc2 = Util::utf16ToUtf8(
                                 &dstStr, start, &nc2, errorByte, e_BACKWARDS);
                             ASSERT(rc2 == rc);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstStr);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(dstVec.size() == dstStr.length() + 1);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(0 == bsl::memcmp(dstVecData,
                                                     dstStr.c_str(),
                                                     dstVec.size()));
@@ -7323,12 +7391,14 @@ void TestDriver::testCase11()
                                                     errorByte,
                                                     e_BACKWARDS);
                             ASSERT(rc2 == rc);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             LOOP5_ASSERT(ii,
                                          jj,
                                          kk,
                                          dstVec.size(),
                                          dstCap,
                                          dstVec.size() == dstCap);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(0 == bsl::memcmp(dstVecData,
                                                     dstStr.c_str(),
                                                     dstVec.size()));
@@ -7341,7 +7411,9 @@ void TestDriver::testCase11()
                                                     errorByte,
                                                     e_BACKWARDS);
                             ASSERT(rc2 == rc);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstStr);
                             ASSERT(dstStr.length() + 1 == dstCap);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(0 == bsl::memcmp(dstVecData,
                                                     dstStr.c_str(),
                                                     dstVec.size()));
@@ -7350,10 +7422,12 @@ void TestDriver::testCase11()
                             dstVec.push_back(0);
                             dstVec.push_back(0);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             dstVecData = &dstVec[0];
                             for (bsl::size_t cap = 0; cap <= dstCap + 1;
                                  ++cap) {
                                 nc = nw = (bsl::size_t)-1;
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 bsl::memset(
                                     dstVecData, (char)-1, dstVec.size());
                                 rc2 = Util::utf16ToUtf8(
@@ -7371,22 +7445,28 @@ void TestDriver::testCase11()
                                 ASSERT(nc <= nw);
                                 ASSERT(nw <= cap);
                                 ASSERT(nw <= dstCap);
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT((char)-1 == dstVec[nw]);
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT(!cap ||
                                        (nw && nc && 0 == dstVec[nw - 1]));
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 found = bsl::find(dstVec.begin(),
                                                   dstVec.begin() + nw,
                                                   '?');
                                 if (0 != nw && errorByte &&
                                     (rc2 & bdlde::CharConvertStatus::
                                                k_INVALID_INPUT_BIT)) {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                     ASSERT(found < dstVec.begin() + nw);
                                 }
                                 else {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                     ASSERT(found == dstVec.begin() + nw);
                                 }
 
                                 nc2 = nw2 = (bsl::size_t)-1;
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 bsl::memset(
                                     dstVecData, (char)-1, dstVec.size());
                                 rc2 = Util::utf16ToUtf8(dstVecData,
@@ -7402,15 +7482,18 @@ void TestDriver::testCase11()
                                 ASSERT(cap < dstCap || rc2 == rc);
                                 ASSERT(nc2 == nc);
                                 ASSERT(nw2 == nw);
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 found = bsl::find(dstVec.begin(),
                                                   dstVec.begin() + nw2,
                                                   '?');
                                 if (0 != nw2 && errorByte &&
                                     (rc2 & bdlde::CharConvertStatus::
                                                k_INVALID_INPUT_BIT)) {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                     ASSERT(found < dstVec.begin() + nw2);
                                 }
                                 else {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                     ASSERT(found == dstVec.begin() + nw2);
                                 }
                             }
@@ -7527,14 +7610,18 @@ void TestDriver::testCase10()
                                                  rc);
                             ASSERT(0 == (rc & bdlde::CharConvertStatus::
                                                   k_OUT_OF_SPACE_BIT));
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(nc <= dstVec.size());
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             max16Len = bsl::max(max16Len, dstVec.size());
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             typename VECTOR::iterator found =
                                 bsl::find(dstVec.begin(),
                                           dstVec.end(),
                                           (unsigned short)'?');
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(errorWord && rc ? found < dstVec.end()
                                                    : found == dstVec.end());
 
@@ -7549,9 +7636,11 @@ void TestDriver::testCase10()
 
                             *end = save;
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecB);
                             found = bsl::find(dstVecB.begin(),
                                               dstVecB.end(),
                                               (unsigned short)'?');
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVecB);
                             ASSERT(errorWord && rc ? found < dstVecB.end()
                                                    : found == dstVecB.end());
 
@@ -7563,10 +7652,15 @@ void TestDriver::testCase10()
                             ASSERT(rc2 == rc);
                             ASSERT(nc2 == nc);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&wDstStr);
                             ASSERT(dstVec.size() == wDstStr.length() + 1);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             ASSERT(0 == dstVec.back());
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&wDstStr);
                             for (bsl::size_t ii = 0; ii < wDstStr.length();
                                  ++ii) {
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT(wDstStr[ii] == (WIDE_CHAR)dstVec[ii]);
                             }
 
@@ -7602,6 +7696,7 @@ void TestDriver::testCase10()
 
                             *end = save;
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                             bsl::size_t dstCap = dstVec.size();
                             dstVec.push_back(0);
                             dstVec.push_back(0);
@@ -7617,13 +7712,17 @@ void TestDriver::testCase10()
                             wDstStrB.push_back(0);
                             wDstStrB.push_back(0);
 
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
+                            BSLS_ASSERT_CONVEYOR_OBJECT(&wDstStr);
                             ASSERTV(wDstStr.length() == dstVec.size());
 
                             for (bsl::size_t cap = 1; cap <= dstCap; ++cap) {
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 bsl::fill(dstVec.begin(),
                                           dstVec.end(),
                                           (unsigned short)-1);
 
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 unsigned short *dstVecData = &dstVec[0];
 
                                 nc = nw = (bsl::size_t)-1;
@@ -7638,7 +7737,9 @@ void TestDriver::testCase10()
                                 ASSERT(nw <= cap);
                                 ASSERT(nw <= dstCap);
                                 ASSERT(!cap || (nw && nc));
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT(!nw || 0 == dstVec[nw - 1]);
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT((unsigned short)-1 == dstVec[nw]);
                                 ASSERT((cap < dstCap) ==
                                        !!(rc & bdlde::CharConvertStatus::
@@ -7654,6 +7755,7 @@ void TestDriver::testCase10()
                                                  (bdlde::CharConvertStatus::
                                                       k_INVALID_INPUT_BIT &
                                                   rc));
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 bsl::fill(dstVec.begin(),
                                           dstVec.end(),
                                           (unsigned short)-1);
@@ -7672,7 +7774,9 @@ void TestDriver::testCase10()
                                 ASSERT(nw <= cap);
                                 ASSERT(nw <= dstCap);
                                 ASSERT(!cap || (nw && nc));
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT(!nw || 0 == dstVec[nw - 1]);
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                 ASSERT((unsigned short)-1 == dstVec[nw]);
                                 ASSERT((cap < dstCap) ==
                                        !!(rc & bdlde::CharConvertStatus::
@@ -7691,6 +7795,7 @@ void TestDriver::testCase10()
 
                                 *end = save;
 
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&wDstStr);
                                 if (cap >= wDstStr.length()) {
                                     wDstStr.resize(cap + 1);
                                 }
@@ -7713,6 +7818,7 @@ void TestDriver::testCase10()
                                 ASSERT((WIDE_CHAR)-1 == wDstStr[cap]);
 
                                 for (bsl::size_t ii = 0; ii < nw; ++ii) {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                     ASSERT((WIDE_CHAR)dstVec[ii] ==
                                                                   wDstStr[ii]);
                                 }
@@ -7720,6 +7826,7 @@ void TestDriver::testCase10()
                                 save = *end;
                                 *end = 0;
 
+                                BSLS_ASSERT_CONVEYOR_OBJECT(&wDstStr);
                                 ASSERT(wDstStr.length() > cap);
                                 bsl::fill(wDstStr.begin(),
                                           wDstStr.end(),
@@ -7738,6 +7845,7 @@ void TestDriver::testCase10()
                                 ASSERT((WIDE_CHAR)-1 == wDstStr[cap]);
 
                                 for (bsl::size_t ii = 0; ii < nw; ++ii) {
+                                    BSLS_ASSERT_CONVEYOR_OBJECT(&dstVec);
                                     ASSERT((WIDE_CHAR)dstVec[ii] ==
                                                                   wDstStr[ii]);
                                 }

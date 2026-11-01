@@ -1060,6 +1060,7 @@ MyChoiceWithDefaultValues::MyChoiceWithDefaultValues(
 MyChoiceWithDefaultValues&
 MyChoiceWithDefaultValues::operator=(const MyChoiceWithDefaultValues& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (this != &rhs) {
         switch (rhs.d_selectionId) {

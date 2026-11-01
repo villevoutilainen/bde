@@ -938,6 +938,7 @@ static bool needsAdHocTestJSonSuiteFileData(const bsl::string_view& fname)
 
 static bool isValidJSonSuiteFileData(const bsl::string_view& fname)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&fname);
     BSLS_ASSERT_OPT_NONCONVEYOR(!fname.empty());
 
     if (bdlb::StringViewUtil::areEqualCaseless(fname,

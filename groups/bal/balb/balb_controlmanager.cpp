@@ -55,6 +55,7 @@ ControlManager::~ControlManager()
 // ACCESSORS
 bool ControlManager::hasDefaultHandler() const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::ReadLockGuard<bslmt::RWMutex> registryGuard(&d_registryMutex);
     return d_defaultHandler.has_value();
 }
@@ -102,6 +103,7 @@ int ControlManager::registerUsageHandler(bsl::ostream& stream)
 
 int ControlManager::registerDefaultHandler(const ControlHandler& handler)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslmt::WriteLockGuard<bslmt::RWMutex> guard(&d_registryMutex);
 
     int retValue     = d_defaultHandler.has_value() ? 1 : 0;
@@ -209,7 +211,7 @@ void ControlManager::printUsage(bsl::ostream&           stream,
     {
        stream << "    " << it->first << " " << it->second.arguments()
               << bsl::endl;
-       if (!it->second.description().empty()) {
+       if (!BSLS_ASSERT_CONVEYOR_REF(it->second.description()).empty()) {
           stream << "        " << it->second.description() << bsl::endl;
        }
     }

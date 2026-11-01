@@ -318,6 +318,7 @@ int JsonParserUtil::getValue(float *value, const bdljsn::Json& json)
 inline
 int JsonParserUtil::getValue(double *value, const bdljsn::Json& json)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&json);
     BSLS_ASSERT(value);
     BSLS_ASSERT_NONCONVEYOR(json.isNumber() || json.isString());
 
@@ -325,19 +326,21 @@ int JsonParserUtil::getValue(double *value, const bdljsn::Json& json)
                 bsl::string_view data = json.theNumber().value();
                 return ParserUtil::getValue(value, data);             // RETURN
     } else if (json.isString()) {
+               const bsl::string& string =
+                                   BSLS_ASSERT_CONVEYOR_REF(json.theString());
                if (0 == bsl::strncmp("+inf",
-                                     json.theString().data(),
-                                     json.theString().size())) {
+                                     string.data(),
+                                     string.size())) {
                     *value =  bsl::numeric_limits<double>::infinity();
                     return  0;                                        // RETURN
         } else if (0 == bsl::strncmp("-inf",
-                                     json.theString().data(),
-                                     json.theString().size())) {
+                                     string.data(),
+                                     string.size())) {
                     *value = -bsl::numeric_limits<double>::infinity();
                     return  0;                                        // RETURN
         } else if (0 == bsl::strncmp("nan",
-                                     json.theString().data(),
-                                     json.theString().size())) {
+                                     string.data(),
+                                     string.size())) {
                     *value = bsl::numeric_limits<double>::quiet_NaN();
                     return  0;                                        // RETURN
         } else {

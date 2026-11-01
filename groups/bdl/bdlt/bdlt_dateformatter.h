@@ -338,6 +338,7 @@ BSLS_KEYWORD_CONSTEXPR_CPP20
 bool DateFormatter<t_CHAR>::parseNextSpecifier(
                                      bsl::basic_string_view<t_CHAR> *specInOut)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(specInOut);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(!specInOut->empty());
 
@@ -410,6 +411,7 @@ bool DateFormatter<t_CHAR>::formatNextSpecifier(
                                   t_ITERATOR                     *outIt,
                                   const DateFormatter_Cache&      value) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(specInOut);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BSLS_ASSERT_SAFE(!specInOut->empty());

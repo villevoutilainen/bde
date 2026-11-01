@@ -1157,8 +1157,10 @@ int main(int argc, char *argv[])
         ASSERT(errInfo.severity() == balxml::ErrorInfo::e_NO_ERROR);
         ASSERT(errInfo.lineNumber() == 0);
         ASSERT(errInfo.columnNumber() == 0);
-        ASSERT(errInfo.source().empty());
-        ASSERT(errInfo.message().empty());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&errInfo);
+        ASSERT(BSLS_ASSERT_CONVEYOR_REF(errInfo.source()).empty());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&errInfo);
+        ASSERT(BSLS_ASSERT_CONVEYOR_REF(errInfo.message()).empty());
         ASSERT(copy1 != errInfo);
         ASSERT(copy2 != errInfo);
 

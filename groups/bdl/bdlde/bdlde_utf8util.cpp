@@ -683,6 +683,7 @@ Utf8Util_ImpUtil::size_type
 Utf8Util_ImpUtil::advancePastValidOrInvalidCodePoint(
                                                  const bsl::string_view& input)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     BSLS_ASSERT_NONCONVEYOR(!input.empty());
 
     size_type numBytes = 1;
@@ -1578,6 +1579,7 @@ bool Utf8Util::isValidCodePoint(int        *status,
 Utf8Util::IntPtr Utf8Util::numBytesRaw(const bsl::string_view& string,
                                        IntPtr                  numCodePoints)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     BSLS_ASSERT_NONCONVEYOR(string.data() || string.empty());
     BSLS_ASSERT(0 <= numCodePoints);
 

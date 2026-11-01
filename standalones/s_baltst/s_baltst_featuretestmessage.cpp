@@ -374,37 +374,37 @@ FeatureTestMessage::operator=(const FeatureTestMessage& rhs)
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
-            makeSelection1(rhs.d_selection1.object());
+            makeSelection1(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection1.object()));
           } break;
           case SELECTION_ID_SELECTION2: {
-            makeSelection2(rhs.d_selection2.object());
+            makeSelection2(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection2.object()));
           } break;
           case SELECTION_ID_SELECTION3: {
-            makeSelection3(rhs.d_selection3.object());
+            makeSelection3(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection3.object()));
           } break;
           case SELECTION_ID_SELECTION4: {
             makeSelection4(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection4));
           } break;
           case SELECTION_ID_SELECTION5: {
-            makeSelection5(rhs.d_selection5.object());
+            makeSelection5(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection5.object()));
           } break;
           case SELECTION_ID_SELECTION6: {
-            makeSelection6(rhs.d_selection6.object());
+            makeSelection6(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection6.object()));
           } break;
           case SELECTION_ID_SELECTION7: {
             makeSelection7(rhs.d_selection7.object());
           } break;
           case SELECTION_ID_SELECTION8: {
-            makeSelection8(rhs.d_selection8.object());
+            makeSelection8(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection8.object()));
           } break;
           case SELECTION_ID_SELECTION9: {
-            makeSelection9(rhs.d_selection9.object());
+            makeSelection9(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection9.object()));
           } break;
           case SELECTION_ID_SELECTION10: {
-            makeSelection10(rhs.d_selection10.object());
+            makeSelection10(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection10.object()));
           } break;
           case SELECTION_ID_SELECTION11: {
-            makeSelection11(rhs.d_selection11.object());
+            makeSelection11(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection11.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
@@ -1102,6 +1102,7 @@ bsl::ostream& FeatureTestMessage::print(
     int           level,
     int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     switch (d_selectionId) {
@@ -1114,7 +1115,7 @@ bsl::ostream& FeatureTestMessage::print(
         stream << (multilineFlag ? "" : " ");
         stream << "selection2 = [ ";
         bdlb::Print::singleLineHexDump(
-            stream, d_selection2.object().begin(), d_selection2.object().end());
+            stream, BSLS_ASSERT_CONVEYOR_REF(d_selection2.object()).begin(), BSLS_ASSERT_CONVEYOR_REF(d_selection2.object()).end());
         stream << " ]" << (multilineFlag ? "\n" : "");
       }  break;
       case SELECTION_ID_SELECTION3: {

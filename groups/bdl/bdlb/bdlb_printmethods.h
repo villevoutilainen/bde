@@ -754,6 +754,7 @@ PrintMethods::print(bsl::ostream&              stream,
                     int                        level,
                     int                        spacesPerLevel)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
 
     if (object.has_value()) {
         return PrintMethods::print(stream,

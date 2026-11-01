@@ -1096,16 +1096,23 @@ int Encoder::encode(Formatter& formatter, const TYPE& object)
         formatter.addHeader();
     }
 
-    const char *tag = d_options->tag().empty()
+    const bsl::string& optionsTag      = d_options->tag();
+    const bsl::string& objectNamespace = d_options->objectNamespace();
+    const bsl::string& schemaLocation  = d_options->schemaLocation();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&optionsTag);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&objectNamespace);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&schemaLocation);
+
+    const char *tag = optionsTag.empty()
                     ? bdlat_TypeName::xsdName(object,
                                               d_options->formattingMode())
-                    : d_options->tag().c_str();
+                    : optionsTag.c_str();
 
     context.openElement(tag);
 
-    if (!d_options->objectNamespace().empty()) {
+    if (!objectNamespace.empty()) {
 
-        context.addAttribute("xmlns", d_options->objectNamespace());
+        context.addAttribute("xmlns", objectNamespace);
 
         if (d_options->outputXSIAlias()) {
             // Only declare the "xsi" namespace and schema location if an
@@ -1114,11 +1121,9 @@ int Encoder::encode(Formatter& formatter, const TYPE& object)
             context.addAttribute("xmlns:xsi",
                                  "http://www.w3.org/2001/XMLSchema-instance");
 
-            if (!d_options->schemaLocation().empty()) {
+            if (!schemaLocation.empty()) {
                 context.addAttribute("xsi:schemaLocation",
-                                     d_options->objectNamespace()
-                                     + " "
-                                     + d_options->schemaLocation());
+                                     objectNamespace + " " + schemaLocation);
             }
         }
     }
@@ -1304,7 +1309,10 @@ int Encoder_EncodeObject::executeImp(
     if (bdlat_NullableValueFunctions::isNull(object)) {
         if (formattingMode & bdlat_FormattingMode::e_NILLABLE) {
             BSLS_ASSERT_CONVEYOR_OBJECT(d_context_p);
-            if ((!d_context_p->encoderOptions().objectNamespace().empty() &&
+            const bsl::string& objectNamespace =
+                         d_context_p->encoderOptions().objectNamespace();
+            BSLS_ASSERT_CONVEYOR_OBJECT(&objectNamespace);
+            if ((!objectNamespace.empty() &&
                  d_context_p->encoderOptions().outputXSIAlias()) ||
                 isMultiple) {
                 // Add the "xsi:nil" attribute for array elements even when

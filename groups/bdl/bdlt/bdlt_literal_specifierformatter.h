@@ -102,6 +102,7 @@ template <class t_CHAR>
 BSLS_KEYWORD_CONSTEXPR_CPP20
 bool Literal_SpecifierFormatter<t_CHAR>::parseNextSpecifier(StringView *spec)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(spec);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_NONCONVEYOR(!spec->empty());
 
@@ -126,6 +127,7 @@ inline
 bool Literal_SpecifierFormatter<t_CHAR>::
                  formatNextSpecifier(StringView *spec, t_ITERATOR *outIt) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(spec);
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     BSLS_ASSERT_SAFE(!spec->empty());
 

@@ -1053,16 +1053,16 @@ Choice3::operator=(const Choice3& rhs)
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SELECTION1: {
-            makeSelection1(rhs.d_selection1.object());
+            makeSelection1(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection1.object()));
           } break;
           case SELECTION_ID_SELECTION2: {
             makeSelection2(rhs.d_selection2.object());
           } break;
           case SELECTION_ID_SELECTION3: {
-            makeSelection3(rhs.d_selection3.object());
+            makeSelection3(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection3.object()));
           } break;
           case SELECTION_ID_SELECTION4: {
-            makeSelection4(rhs.d_selection4.object());
+            makeSelection4(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection4.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);
@@ -2085,7 +2085,7 @@ Choice2::operator=(const Choice2& rhs)
             makeSelection1(rhs.d_selection1.object());
           } break;
           case SELECTION_ID_SELECTION2: {
-            makeSelection2(rhs.d_selection2.object());
+            makeSelection2(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection2.object()));
           } break;
           case SELECTION_ID_SELECTION3: {
             makeSelection3(BSLS_ASSERT_CONVEYOR_REF(*rhs.d_selection3));

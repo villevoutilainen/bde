@@ -615,6 +615,7 @@ int main(int argc, char *argv[])
         mX.setFormatFunctor(customFormatter);
 
         // getFormat should return empty string after setFormatFunctor
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(X.getFormat().empty());
 
         // Verify the custom formatter is used

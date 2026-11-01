@@ -880,6 +880,7 @@ void checkForExpectedConversionResultsU2ToU8(unsigned short *input,
                                     input,
                                     &cppCharsWritten);
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&cppOutput);
     bsl::size_t   cppBytesWritten = cppOutput.length();
 
     LOOP3_ASSERT(L_, SUCCESS,   retVal,
@@ -2923,6 +2924,7 @@ void TestDriver::testCase3()
             int cppRetVal =
                 bdlde::CharConvertUcs2::utf8ToUcs2(&cppResult, SPEC);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&cppResult);
             bsl::size_t cppCharsWritten = cppResult.size();
             bsl::size_t resultBytes     = cppCharsWritten * sizeof(short);
 
@@ -2930,6 +2932,7 @@ void TestDriver::testCase3()
             LOOP3_ASSERT(
                 LINE, cppCharsWritten, EXPECTED, cppCharsWritten == EXPECTED);
             if (cppCharsWritten > 0) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cppResult);
                 LOOP4_ASSERT(
                     LINE,
                     makeArrayPrinter(OUTPUT, EXPECTED),
@@ -2970,6 +2973,7 @@ void TestDriver::testCase3()
                                                                "\xef",
                                                                PLACEHOLDER);
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&cppResult);
             bsl::size_t cppCharsWritten = cppResult.size();
 
             LOOP3_ASSERT(

@@ -663,12 +663,15 @@ class TestPopFront {
 
             v.clear();
             d_mX->tryPopFront(20, &v);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             int s = static_cast<int>(v.size());
             for (int i = 0; i < s; ++i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&v);
                 LOOP2_ASSERT(expectedVal, v[i],
                                           expectedVal++ == v[i] && "popFront");
             }
             if (s > d_maxVecSize) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&v);
                 d_maxVecSize = static_cast<int>(v.size());
                 d_maxVecSizeAt = expectedVal;
             }
@@ -731,12 +734,15 @@ class TestPopBack {
 
             v.clear();
             d_mX->tryPopBack(20, &v);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&v);
             int s = static_cast<int>(v.size());
             for (int i = 0; i < s; ++i) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&v);
                 LOOP2_ASSERT(expectedVal, v[i],
                                            expectedVal++ == v[i] && "popBack");
             }
             if (s > d_maxVecSize) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&v);
                 d_maxVecSize = static_cast<int>(v.size());
                 d_maxVecSizeAt = expectedVal;
             }

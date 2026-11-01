@@ -116,6 +116,7 @@ void Formatter<tt_SPECIFIER_FORMATTER, t_CHAR>::
                                                parseModifiers(StringView *spec)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
+    BSLS_ASSERT_CONVEYOR_OBJECT(spec);
     while (!spec->empty() && t_CHAR('%') != spec->front()) {
         if (!d_specifierFormatter.parseNextModifier(spec)) {
             BSLS_THROW(bsl::format_error("Illegal modifier"));

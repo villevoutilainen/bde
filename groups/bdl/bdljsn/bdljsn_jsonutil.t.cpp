@@ -460,12 +460,13 @@ void checkResult(int                     line,
                 err.location(),
                 Location(0) == err.location());
         // Verify that `err.message()` is unset.
+        BSLS_ASSERT_CONVEYOR_OBJECT(&err);
         ASSERTV(line,
                 string,
                 rc,
                 err.message(),
-                err.message().length(),
-                0 == err.message().length());
+                BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                0 == BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
         // Verify that `json` returns the expected `value`.
         ASSERTV(line,
                 string,
@@ -485,12 +486,13 @@ void checkResult(int                     line,
                 err.location(),
                 Location(0) != err.location());
         // Verify that `err.message()` is set.
+        BSLS_ASSERT_CONVEYOR_OBJECT(&err);
         ASSERTV(line,
                 string,
                 rc,
                 err.message(),
-                err.message().length(),
-                0 != err.message().length());
+                BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
     }
 }
 
@@ -2027,9 +2029,10 @@ int main(int argc, char *argv[])
             ASSERTV(err.location(),
                     Location(0) != err.location());
             // Verify that `err.message()` is set.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 != err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
 
             err.reset();
 
@@ -2041,9 +2044,10 @@ int main(int argc, char *argv[])
             // Verify that `err.location()` is unset.
             ASSERTV(err.location(), Location(0) == err.location());
             // Verify that `err.message()` is unset.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 == err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 == BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
         }
 
         if (verbose)
@@ -2073,9 +2077,10 @@ int main(int argc, char *argv[])
             ASSERTV(err.location(),
                     Location(0) != err.location());
             // Verify that `err.message()` is set.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 != err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
 
             err.reset();
             ro.setMaxNestedDepth(65);
@@ -2087,9 +2092,10 @@ int main(int argc, char *argv[])
             // Verify that `err.location()` is unset.
             ASSERTV(err.location(), Location(0) == err.location());
             // Verify that `err.message()` is unset.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 == err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 == BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
         }
 
         if (verbose)
@@ -2111,9 +2117,10 @@ int main(int argc, char *argv[])
             ASSERTV(err.location(),
                     Location(0) != err.location());
             // Verify that `err.message()` is set.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 != err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
 
             err.reset();
             bdlsb::FixedMemInStreamBuf goodStream(goodJson.data(),
@@ -2125,9 +2132,10 @@ int main(int argc, char *argv[])
             // Verify that `err.location()` is unset.
             ASSERTV(err.location(), Location(0) == err.location());
             // Verify that `err.message()` is unset.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 == err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 == BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
         }
 
         if (verbose)
@@ -2158,9 +2166,10 @@ int main(int argc, char *argv[])
             ASSERTV(err.location(),
                     Location(0) != err.location());
             // Verify that `err.message()` is set.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 != err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
 
             err.reset();
             ro.setMaxNestedDepth(65);
@@ -2173,9 +2182,10 @@ int main(int argc, char *argv[])
             // Verify that `err.location()` is unset.
             ASSERTV(err.location(), Location(0) == err.location());
             // Verify that `err.message()` is unset.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 == err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 == BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
         }
 
         if (verbose)
@@ -2195,9 +2205,10 @@ int main(int argc, char *argv[])
             // Verify that `err.location()` is set.
             ASSERTV(err.location(), Location(0) != err.location());
             // Verify that `err.message()` is set.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 != err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
 
             err.reset();
 
@@ -2209,9 +2220,10 @@ int main(int argc, char *argv[])
             // Verify that `err.location()` is unset.
             ASSERTV(err.location(), Location(0) == err.location());
             // Verify that `err.message()` is unset.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 == err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 == BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
         }
 
         if (verbose)
@@ -2238,9 +2250,10 @@ int main(int argc, char *argv[])
             ASSERTV(err.location(),
                     Location(0) != err.location());
             // Verify that `err.message()` is set.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 != err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
 
             err.reset();
             ro.setMaxNestedDepth(65);
@@ -2251,9 +2264,10 @@ int main(int argc, char *argv[])
             // Verify that `err.location()` is unset.
             ASSERTV(err.location(), Location(0) == err.location());
             // Verify that `err.message()` is unset.
+            BSLS_ASSERT_CONVEYOR_OBJECT(&err);
             ASSERTV(err.message(),
-                    err.message().length(),
-                    0 == err.message().length());
+                    BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                    0 == BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
         }
 
         if (verbose)
@@ -2466,12 +2480,13 @@ int main(int argc, char *argv[])
                             err.location(),
                             Location(0) != err.location());
                     // Verify that `err.message()` is set.
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&err);
                     ASSERTV(LINE,
                             STRING,
                             rc,
                             err.message(),
-                            err.message().length(),
-                            0 != err.message().length());
+                            BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                            0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
                 }
             }
         }
@@ -2548,12 +2563,13 @@ int main(int argc, char *argv[])
                             err.location(),
                             Location(0) != err.location());
                     // Verify that `err.message()` is set.
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&err);
                     ASSERTV(LINE,
                             STRING,
                             rc,
                             err.message(),
-                            err.message().length(),
-                            0 != err.message().length());
+                            BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                            0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
                 }
             }
         }
@@ -2684,12 +2700,13 @@ int main(int argc, char *argv[])
                             err.location(),
                             Location(0) != err.location());
                     // Verify that `err.message()` is set.
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&err);
                     ASSERTV(LINE,
                             STRING,
                             rc,
                             err.message(),
-                            err.message().length(),
-                            0 != err.message().length());
+                            BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                            0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
                 }
             }
         }
@@ -2836,12 +2853,13 @@ int main(int argc, char *argv[])
                             err.location(),
                             Location(0) != err.location());
                     // Verify that `err.message()` is set.
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&err);
                     ASSERTV(LINE,
                             STRING,
                             rc,
                             err.message(),
-                            err.message().length(),
-                            0 != err.message().length());
+                            BSLS_ASSERT_CONVEYOR_REF(err.message()).length(),
+                            0 != BSLS_ASSERT_CONVEYOR_REF(err.message()).length());
                 }
             }
         }

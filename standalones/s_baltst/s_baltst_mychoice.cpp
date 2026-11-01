@@ -160,7 +160,7 @@ MyChoice::operator=(const MyChoice& rhs)
             makeSelection1(rhs.d_selection1.object());
           } break;
           case SELECTION_ID_SELECTION2: {
-            makeSelection2(rhs.d_selection2.object());
+            makeSelection2(BSLS_ASSERT_CONVEYOR_REF(rhs.d_selection2.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);

@@ -4634,7 +4634,7 @@ void u::Resolver::setFrameSymbolName(balst::StackTraceFrame *frame,
         u::FreeGuard guard(demangled);
         frame->setSymbolName(demangled ? demangled : "");
     }
-    if (0 != status || frame->symbolName().empty()) {
+    if (0 != status || BSLS_ASSERT_CONVEYOR_REF(frame->symbolName()).empty()) {
         u_TRACES && u_zprintf("Did not demangle: status: %d\n", status);
         frame->setSymbolName(frame->mangledSymbolName());
     }

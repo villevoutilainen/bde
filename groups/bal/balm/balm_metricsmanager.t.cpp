@@ -2804,11 +2804,12 @@ int main(int argc, char *argv[])
                     if (CATEGORY == BSLS_ASSERT_CONVEYOR_REF(
                                      *group.records()).metricId().category()) {
                         ASSERT(-1 == groupIndex);
+                        BSLS_ASSERT_CONVEYOR_OBJECT(&group);
                         ASSERTV(minElapsedTime,
                                 group.elapsedTime(),
                                 maxElapsedTime,
-                                minElapsedTime <= group.elapsedTime() &&
-                                group.elapsedTime() <= maxElapsedTime);
+                                minElapsedTime <= BSLS_ASSERT_CONVEYOR_REF(group.elapsedTime()) &&
+                                BSLS_ASSERT_CONVEYOR_REF(group.elapsedTime()) <= maxElapsedTime);
                         groupIndex = j;
                     }
                     for (int k = 0; k < group.numRecords(); ++k) {
@@ -4237,10 +4238,12 @@ int main(int argc, char *argv[])
                 BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
                 for (int j = 0; j < sample.numGroups(); ++j) {
                     BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);
-                    ASSERT(sample.sampleGroup(j).elapsedTime() ==
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
+                    ASSERT(BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(j)).elapsedTime() ==
                            tp1.lastSample().sampleGroup(j).elapsedTime());
                     BSLS_ASSERT_CONVEYOR_OBJECT(&tp2);
-                    ASSERT(sample.sampleGroup(j).elapsedTime() ==
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
+                    ASSERT(BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(j)).elapsedTime() ==
                            tp2.lastSample().sampleGroup(j).elapsedTime());
 
                     BSLS_ASSERT_CONVEYOR_OBJECT(&tp1);

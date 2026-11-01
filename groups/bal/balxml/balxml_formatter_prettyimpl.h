@@ -911,7 +911,7 @@ void Formatter_PrettyImplUtil::reset(State *state)
     BSLS_ASSERT_CONVEYOR_OBJECT(state);
     state->column() = 0;
     state->id()     = StateId::e_AT_START;
-    state->indentLevel() -= static_cast<int>(state->elementNesting().size());
+    state->indentLevel() -= static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(state->elementNesting()).size());
     state->elementNesting().clear();
 }
 

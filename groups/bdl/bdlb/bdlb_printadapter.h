@@ -294,7 +294,6 @@ bsl::ostream& operator<<(bsl::ostream&             stream,
     // reference to 'stream'.  If 'stream' is not valid on entry, this
     // operation has no effect.
 {
-    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT_CONVEYOR_OBJECT(&stream);
     BSLS_ASSERT_CONVEYOR_OBJECT(&adapter);
     return bdlb::PrintMethods::print(stream,

@@ -3903,7 +3903,8 @@ R(L_,  s(na0,na1,n(i0),n(i1))   , t, t, x(S,x(A0,V0   ),x(A1,V1   )) )  // *
         options.setOutputXSIAlias(false);
         balxml::Encoder        encoder(&options);
         ASSERT(options.encodingStyle() == balxml::EncodingStyle::COMPACT);
-        ASSERT(options.objectNamespace().empty());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&options);
+        ASSERT(BSLS_ASSERT_CONVEYOR_REF(options.objectNamespace()).empty());
         ASSERT(!options.outputXSIAlias());
 
         bsl::ostringstream os;

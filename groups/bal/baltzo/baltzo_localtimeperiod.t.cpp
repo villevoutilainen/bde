@@ -270,8 +270,8 @@ const int UTC_MAX =  24 * 60 * 60 - 1;
         BSLS_ASSERT_CONVEYOR_OBJECT(result);
         BSLS_ASSERT(result);
 
-        if (utcTime <  period.utcStartTime() ||
-            utcTime >= period.utcEndTime()) {
+        if (utcTime <  BSLS_ASSERT_CONVEYOR_REF(period.utcStartTime()) ||
+            utcTime >= BSLS_ASSERT_CONVEYOR_REF(period.utcEndTime())) {
             return 1;                                                 // RETURN
         }
 

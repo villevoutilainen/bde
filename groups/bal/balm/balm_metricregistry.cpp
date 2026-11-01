@@ -375,6 +375,7 @@ void MetricRegistry::setUserData(const char                     *categoryName,
     const char *category = d_uniqueStrings.insert(categoryName).first->c_str();
     if (!prefixFlag) {
         bsl::vector<const void *>& userData = d_categoryUserData[category];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&userData);
         if (userData.size() <= static_cast<unsigned>(key)) {
             userData.resize(key + 1, 0);
         }
@@ -385,6 +386,7 @@ void MetricRegistry::setUserData(const char                     *categoryName,
     else {
         bsl::vector<const void *>& userData =
                                             d_categoryPrefixUserData[category];
+        BSLS_ASSERT_CONVEYOR_OBJECT(&userData);
         if (userData.size() <= static_cast<unsigned>(key)) {
             userData.resize(key + 1, 0);
         }

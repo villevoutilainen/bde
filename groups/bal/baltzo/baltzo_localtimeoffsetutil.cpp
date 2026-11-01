@@ -104,8 +104,8 @@ bsls::TimeInterval LocalTimeOffsetUtil::localTimeOffset(
 
     int offsetInSeconds;
 
-    if (utcDatetime <  localTimePeriod->utcStartTime()
-     || utcDatetime >= localTimePeriod->utcEndTime()) {
+    if (utcDatetime <  BSLS_ASSERT_CONVEYOR_REF(localTimePeriod->utcStartTime())
+     || utcDatetime >= BSLS_ASSERT_CONVEYOR_REF(localTimePeriod->utcEndTime())) {
 
         readLockGuard.release()->unlock();
 
@@ -113,8 +113,9 @@ bsls::TimeInterval LocalTimeOffsetUtil::localTimeOffset(
             bslmt::WriteLockGuard<bslmt::RWMutex> writeLockGuard(
                                                                 privateLock());
 
-            if (utcDatetime <  localTimePeriod->utcStartTime()
-             || utcDatetime >= localTimePeriod->utcEndTime()) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(localTimePeriod);
+            if (utcDatetime <  BSLS_ASSERT_CONVEYOR_REF(localTimePeriod->utcStartTime())
+             || utcDatetime >= BSLS_ASSERT_CONVEYOR_REF(localTimePeriod->utcEndTime())) {
 
                 int status = configureImp(privateTimezone()->c_str(),
                                           utcDatetime);

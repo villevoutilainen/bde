@@ -557,6 +557,7 @@ int NumberUtil_ImpUtil::asIntegerDispatchImp(
                            const bsl::string_view&                      value,
                            bslmf::SelectTraitCase<NumberUtil_IsSigned>)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&value);
     BSLMF_ASSERT(bsl::is_integral<t_INTEGER_TYPE>::value);
     BSLMF_ASSERT(bsl::numeric_limits<t_INTEGER_TYPE>::is_signed);
 

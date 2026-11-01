@@ -231,8 +231,8 @@ void Collector::update(double value)
     bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
     ++d_record.count();
     d_record.total() += value;
-    d_record.min()   =  bsl::min(d_record.min(), value);
-    d_record.max()   =  bsl::max(d_record.max(), value);
+    BSLS_ASSERT_CONVEYOR_REF(d_record.min())   =  bsl::min(BSLS_ASSERT_CONVEYOR_REF(d_record.min()), value);
+    BSLS_ASSERT_CONVEYOR_REF(d_record.max())   =  bsl::max(BSLS_ASSERT_CONVEYOR_REF(d_record.max()), value);
 }
 
 inline
@@ -245,8 +245,8 @@ void Collector::accumulateCountTotalMinMax(int    count,
     bslmt::LockGuard<bslmt::Mutex> guard(&d_lock);
     d_record.count() += count;
     d_record.total() += total;
-    d_record.min()   =  bsl::min(d_record.min(), min);
-    d_record.max()   =  bsl::max(d_record.max(), max);
+    BSLS_ASSERT_CONVEYOR_REF(d_record.min())   =  bsl::min(BSLS_ASSERT_CONVEYOR_REF(d_record.min()), min);
+    BSLS_ASSERT_CONVEYOR_REF(d_record.max())   =  bsl::max(BSLS_ASSERT_CONVEYOR_REF(d_record.max()), max);
 }
 
 inline

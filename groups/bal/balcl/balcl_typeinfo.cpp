@@ -191,6 +191,7 @@ bool parseValue(void                    *value,
                 const bsl::string_view&  input,
                 OptionType::Enum         type)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&input);
     BSLS_ASSERT(value);
 
     bool result = false;
@@ -806,7 +807,9 @@ ArrayConstraint<TYPE, CONSTRAINT_TYPE, ELEM_TYPE>::validate(
     const bsl::vector<TYPE>& vec = element.the<bsl::vector<TYPE> >();
 
     if (d_constraint) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
         for (size_type i = 0; i < vec.size(); ++i) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&vec);
             if (!d_constraint(&vec[i], stream)) {
                 stream << "The above error occurred while parsing the "
                        << u::Ordinal(i)

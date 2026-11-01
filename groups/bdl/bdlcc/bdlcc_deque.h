@@ -1888,6 +1888,7 @@ void Deque<TYPE>::tryPopFrontImp(typename Deque<TYPE>::size_type  maxNumItems,
             buffer->push_back(bslmf::MovableRefUtil::move(d_monoDeque[ii]));
         }
     }
+    BSLS_ASSERT_CONVEYOR_OBJECT(&proctor);
     proctor->erase(beginRange, endRange);
 
     tg.release();

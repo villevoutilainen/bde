@@ -973,6 +973,7 @@ bsl::ostream& MyChoice::print(bsl::ostream& stream,
                               int           level,
                               int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     if (level < 0) {
         level = -level;
     }

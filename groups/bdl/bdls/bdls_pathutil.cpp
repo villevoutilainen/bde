@@ -226,6 +226,7 @@ const char *leafDelimiter(const STR_TYPE &path, int rootEnd)
 template <class STR_TYPE>
 int u_appendIfValid(STR_TYPE *path, const bsl::string_view& filename)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&filename);
     BSLS_ASSERT_CONVEYOR_OBJECT(path);
     BSLS_ASSERT(path);
 
@@ -324,6 +325,7 @@ int u_popLeaf(STR_TYPE *path, int rootEnd)
 template <class STR_TYPE>
 int u_getLeaf(STR_TYPE *leaf, const bsl::string_view& path, int rootEnd)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&path);
     BSLS_ASSERT(leaf);
 
     int length = static_cast<int>(path.length());
@@ -675,6 +677,7 @@ bool PathUtil::isRelative(const bsl::string_view& path, int rootEnd)
 
 bool PathUtil::hasLeaf(const bsl::string_view& path, int rootEnd)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&path);
     int length = static_cast<int>(path.length());
     if (0 > rootEnd) {
         findFirstNonSeparatorChar(&rootEnd, path.data(), length);

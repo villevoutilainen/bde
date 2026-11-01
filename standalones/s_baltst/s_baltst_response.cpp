@@ -161,10 +161,10 @@ Response::operator=(const Response& rhs)
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_RESPONSE_DATA: {
-            makeResponseData(rhs.d_responseData.object());
+            makeResponseData(BSLS_ASSERT_CONVEYOR_REF(rhs.d_responseData.object()));
           } break;
           case SELECTION_ID_FEATURE_RESPONSE: {
-            makeFeatureResponse(rhs.d_featureResponse.object());
+            makeFeatureResponse(BSLS_ASSERT_CONVEYOR_REF(rhs.d_featureResponse.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);

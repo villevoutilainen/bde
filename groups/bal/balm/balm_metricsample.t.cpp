@@ -426,10 +426,12 @@ int main(int argc, char *argv[])
          ASSERT(timeStamp             == sample.timeStamp());
          ASSERT(2                     == sample.numGroups());
          ASSERT(3                     == sample.numRecords());
-         ASSERT(bsls::TimeInterval(1) == sample.sampleGroup(0).elapsedTime());
+         BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
+         ASSERT(bsls::TimeInterval(1) == BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(0)).elapsedTime());
          ASSERT(buffer1               == sample.sampleGroup(0).records());
          ASSERT(2                     == sample.sampleGroup(0).numRecords());
-         ASSERT(bsls::TimeInterval(2) == sample.sampleGroup(1).elapsedTime());
+         BSLS_ASSERT_CONVEYOR_OBJECT(&sample);
+         ASSERT(bsls::TimeInterval(2) == BSLS_ASSERT_CONVEYOR_REF(sample.sampleGroup(1)).elapsedTime());
          ASSERT(buffer2.data()        == sample.sampleGroup(1).records());
          ASSERT(1                     == sample.sampleGroup(1).numRecords());
 // ```
@@ -1098,6 +1100,7 @@ int main(int argc, char *argv[])
 
             ASSERT(1                       == groups.size());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
             ASSERT(bsls::TimeInterval(5, 0) == groups[0].elapsedTime());
             ASSERT(4                       == groups[0].numRecords());
             ASSERT(BEGIN   <= groups[0].records() &&
@@ -1112,11 +1115,13 @@ int main(int argc, char *argv[])
 
             ASSERT(2                       == groups.size());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
             ASSERT(bsls::TimeInterval(2, 0) == groups[0].elapsedTime());
             ASSERT(6                       == groups[0].numRecords());
             ASSERT(BEGIN   <= groups[0].records() &&
                    END - 6 >= groups[0].records());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
             ASSERT(bsls::TimeInterval(7, 0) == groups[1].elapsedTime());
             ASSERT(3                       == groups[1].numRecords());
             ASSERT(BEGIN   <= groups[1].records() &&
@@ -1131,21 +1136,25 @@ int main(int argc, char *argv[])
 
             ASSERT(4                       == groups.size());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
             ASSERT(bsls::TimeInterval(2, 0) == groups[0].elapsedTime());
             ASSERT(3                       == groups[0].numRecords());
             ASSERT(BEGIN   <= groups[0].records() &&
                    END - 3 >= groups[0].records());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
             ASSERT(bsls::TimeInterval(3, 0) == groups[1].elapsedTime());
             ASSERT(4                       == groups[1].numRecords());
             ASSERT(BEGIN   <= groups[1].records() &&
                    END - 4 >= groups[1].records());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
             ASSERT(bsls::TimeInterval(6, 0) == groups[2].elapsedTime());
             ASSERT(7                       == groups[2].numRecords());
             ASSERT(BEGIN   <= groups[2].records() &&
                    END - 7 >= groups[2].records());
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&groups);
             ASSERT(bsls::TimeInterval(1, 0) == groups[3].elapsedTime());
             ASSERT(1                       == groups[3].numRecords());
             ASSERT(BEGIN   <= groups[3].records() &&
@@ -1483,7 +1492,8 @@ int main(int argc, char *argv[])
                      interval);
             const Group& MX = mX;
 
-            ASSERT(interval                    == MX.elapsedTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&MX);
+            ASSERT(interval                    == BSLS_ASSERT_CONVEYOR_REF(MX.elapsedTime()));
             BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
             ASSERT(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data()
                    == MX.records());
@@ -1537,7 +1547,8 @@ int main(int argc, char *argv[])
         if (veryVerbose) cout << "\tdefault constructor\n";
         {
             Group mX; const Group& MX = mX;
-            ASSERT(bsls::TimeInterval() == MX.elapsedTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&MX);
+            ASSERT(bsls::TimeInterval() == BSLS_ASSERT_CONVEYOR_REF(MX.elapsedTime()));
             ASSERT(0                   == MX.numRecords());
             ASSERT(0                   == MX.records());
 
@@ -1567,7 +1578,8 @@ int main(int argc, char *argv[])
                           static_cast<int>(BSLS_ASSERT_CONVEYOR_REF(
                                                 *VALUES[i].d_records).size()));
 
-            ASSERT(interval                    == MX.elapsedTime());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&MX);
+            ASSERT(interval                    == BSLS_ASSERT_CONVEYOR_REF(MX.elapsedTime()));
             BSLS_ASSERT_CONVEYOR_OBJECT(&VALUES);
             ASSERT(BSLS_ASSERT_CONVEYOR_REF(*VALUES[i].d_records).data()
                    == MX.records());
@@ -1925,7 +1937,8 @@ int main(int argc, char *argv[])
         if (veryVerbose) { cout << '\t';  P(X1); }
         if (veryVerbose) cout << "\ta. Check initial state of x1." << endl;
 
-        ASSERT(interval1    == X1.elapsedTime());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X1);
+        ASSERT(interval1    == BSLS_ASSERT_CONVEYOR_REF(X1.elapsedTime()));
         ASSERT(2            == X1.numRecords());
         ASSERT(RV1.data()   == X1.records());
 
@@ -1941,7 +1954,8 @@ int main(int argc, char *argv[])
 
         if (veryVerbose) cout << "\ta. Check the initial state of x2." << endl;
 
-        ASSERT(interval1    == X2.elapsedTime());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X2);
+        ASSERT(interval1    == BSLS_ASSERT_CONVEYOR_REF(X2.elapsedTime()));
         ASSERT(2            == X2.numRecords());
         ASSERT(RV1.data()   == X2.records());
 
@@ -1960,7 +1974,8 @@ int main(int argc, char *argv[])
         if (veryVerbose) { cout << '\t';  P(X1); }
         if (veryVerbose) cout << "\ta. Check new state of x1." << endl;
 
-        ASSERT(interval2  == X1.elapsedTime());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X1);
+        ASSERT(interval2  == BSLS_ASSERT_CONVEYOR_REF(X1.elapsedTime()));
         ASSERT(1          == X1.numRecords());
         ASSERT(RV2.data() == X1.records());
 
@@ -1977,7 +1992,8 @@ int main(int argc, char *argv[])
 
         if (veryVerbose) cout << "\ta. Check initial state of x3." << endl;
 
-        ASSERT(bsls::TimeInterval() == X3.elapsedTime());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X3);
+        ASSERT(bsls::TimeInterval() == BSLS_ASSERT_CONVEYOR_REF(X3.elapsedTime()));
         ASSERT(0                   == X3.numRecords());
         ASSERT(0                   == X3.records());
 
@@ -1994,7 +2010,8 @@ int main(int argc, char *argv[])
         if (veryVerbose) { cout << '\t';  P(X4); }
 
         if (veryVerbose) cout << "\ta. Check initial state of x4." << endl;
-        ASSERT(bsls::TimeInterval() == X4.elapsedTime());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X4);
+        ASSERT(bsls::TimeInterval() == BSLS_ASSERT_CONVEYOR_REF(X4.elapsedTime()));
         ASSERT(0                   == X4.numRecords());
         ASSERT(0                   == X4.records());
 
@@ -2016,7 +2033,8 @@ int main(int argc, char *argv[])
 
         if (veryVerbose) cout << "\ta. Check new state of x3." << endl;
 
-        ASSERT(interval3  == X3.elapsedTime());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X3);
+        ASSERT(interval3  == BSLS_ASSERT_CONVEYOR_REF(X3.elapsedTime()));
         ASSERT(1          == X3.numRecords());
         ASSERT(RV3.data() == X3.records());
 
@@ -2035,7 +2053,8 @@ int main(int argc, char *argv[])
 
         if (veryVerbose) cout << "\ta. Check new state of x2." << endl;
 
-        ASSERT(interval2  == X2.elapsedTime());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X2);
+        ASSERT(interval2  == BSLS_ASSERT_CONVEYOR_REF(X2.elapsedTime()));
         ASSERT(1          == X2.numRecords());
         ASSERT(RV2.data() == X2.records());
 
@@ -2054,7 +2073,8 @@ int main(int argc, char *argv[])
 
         if (veryVerbose) cout << "\ta. Check new state of x2." << endl;
 
-        ASSERT(interval3  == X2.elapsedTime());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X2);
+        ASSERT(interval3  == BSLS_ASSERT_CONVEYOR_REF(X2.elapsedTime()));
         ASSERT(1          == X2.numRecords());
         ASSERT(RV3.data() == X2.records());
 
@@ -2074,7 +2094,8 @@ int main(int argc, char *argv[])
 
         if (veryVerbose) cout << "\ta. Check new state of x1." << endl;
 
-        ASSERT(interval2  == X1.elapsedTime());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X1);
+        ASSERT(interval2  == BSLS_ASSERT_CONVEYOR_REF(X1.elapsedTime()));
         ASSERT(1          == X1.numRecords());
         ASSERT(RV2.data() == X1.records());
 

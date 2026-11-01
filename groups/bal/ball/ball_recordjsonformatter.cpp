@@ -360,6 +360,7 @@ bsl::string_view getDefaultFormat()
 bsl::optional<bsl::string_view>
 parseOptionalFieldName(bsl::string_view *remaining)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(remaining);
     BSLS_ASSERT(remaining);
 
     if (remaining->empty()) {
@@ -1550,16 +1551,19 @@ int AttributeFormatter::format(baljsn::SimpleFormatter *formatter,
     typedef bsl::vector<ball::ManagedAttribute> Attributes;
 
     const Attributes& attributes = record.attributes();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
     if (k_UNSET == d_index ||
         d_index >= static_cast<int>(attributes.size()) ||
         d_key   != attributes[d_index].key())
     {
         d_index = k_UNSET;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
         for (Attributes::const_iterator i = attributes.begin();
              i != attributes.end();
              ++i)
         {
             if (d_key == BSLS_ASSERT_CONVEYOR_REF(*i).key()) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
                 d_index = static_cast<int>(bsl::distance(attributes.begin(),
                                                          i));
                 break;                                                 // BREAK
@@ -1625,7 +1629,9 @@ int AttributesFormatter::format(baljsn::SimpleFormatter *formatter,
     BSLS_ASSERT_CONVEYOR_OBJECT(this);
     const Attributes& attributes = record.attributes();
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
     for (Attributes::size_type i = 0; i < attributes.size(); ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
         const ManagedAttribute& a = attributes[i];
 
         if (i < d_cache.size()) {
@@ -1797,39 +1803,39 @@ int FormatUtil::formatAttribute(baljsn::SimpleFormatter *formatter,
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(&attribute);
     if (attribute.value().is<bsl::string>()) {
-        return formatter->addValue(name, attribute.value().the<bsl::string>());
+        return formatter->addValue(name, BSLS_ASSERT_CONVEYOR_REF(attribute.value()).the<bsl::string>());
                                                                       // RETURN
     }
     else if (attribute.value().is<int>()) {
-        return formatter->addValue(name, attribute.value().the<int>());
+        return formatter->addValue(name, BSLS_ASSERT_CONVEYOR_REF(attribute.value()).the<int>());
                                                                       // RETURN
     }
     else if (attribute.value().is<long>()) {
         return formatter->addValue(name,
                                    static_cast<long long>(
-                                       attribute.value().the<long>()));
+                                       BSLS_ASSERT_CONVEYOR_REF(attribute.value()).the<long>()));
                                                                       // RETURN
     }
     else if (attribute.value().is<long long>()) {
         return formatter->addValue(name,
-                                   attribute.value().the<long long>());
+                                   BSLS_ASSERT_CONVEYOR_REF(attribute.value()).the<long long>());
                                                                       // RETURN
     }
     else if (attribute.value().is<unsigned int>()) {
         return formatter->addValue(name,
-                                   attribute.value().the<unsigned int>());
+                                   BSLS_ASSERT_CONVEYOR_REF(attribute.value()).the<unsigned int>());
                                                                       // RETURN
     }
     else if (attribute.value().is<unsigned long>()) {
         return formatter->addValue(name,
                                    static_cast<unsigned long long>(
-                                      attribute.value().the<unsigned long>()));
+                                      BSLS_ASSERT_CONVEYOR_REF(attribute.value()).the<unsigned long>()));
                                                                       // RETURN
     }
     else if (attribute.value().is<unsigned long long>()) {
         return formatter->addValue(
                                   name,
-                                  attribute.value().the<unsigned long long>());
+                                  BSLS_ASSERT_CONVEYOR_REF(attribute.value()).the<unsigned long long>());
                                                                       // RETURN
     }
     else if (attribute.value().is<const void *>()) {
@@ -1840,7 +1846,7 @@ int FormatUtil::formatAttribute(baljsn::SimpleFormatter *formatter,
         bsl::ostream                stream(&buffer);
         bslim::Printer              printer(&stream, 0, -1);
 
-        printer.printHexAddr(attribute.value().the<const void *>(), 0);
+        printer.printHexAddr(BSLS_ASSERT_CONVEYOR_REF(attribute.value()).the<const void *>(), 0);
 
         return formatter->addValue(name, &storage[1]);                // RETURN
     }

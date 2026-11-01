@@ -5285,7 +5285,9 @@ int main(int argc, char *argv[])
 
             const FieldValues& V = R.customFields();
             ASSERT(2               == V.length());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             ASSERT("UFString"      == V[0].theString());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             ASSERT(1234            == V[1].theInt64());
         }
         // Install ScopedFields populator callbacks
@@ -5322,7 +5324,9 @@ int main(int argc, char *argv[])
 
             const FieldValues& V = R.customFields();
             ASSERT(2            == V.length());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             ASSERT("UFString"   == V[0].theString());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             ASSERT(1234         == V[1].theInt64());
 
             // Checking attributes added by collectors.

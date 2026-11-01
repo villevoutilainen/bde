@@ -847,6 +847,7 @@ int MiniReader::lookupAttribute(ElementAttribute *attribute, int index) const
     const Node&  node = currentNode();
 
     if (((size_t) index) <  node.d_attrCount) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&node);
         *attribute = node.d_attributes[index];
         return 0; // success                                          // RETURN
     }
@@ -859,6 +860,7 @@ int MiniReader::lookupAttribute(ElementAttribute *attribute,
 {
     const Node&  node = currentNode();
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&node);
     AttributeVector::const_iterator it1 = node.d_attributes.begin();
     AttributeVector::const_iterator it2 = it1 + node.d_attrCount;
 
@@ -879,6 +881,7 @@ int MiniReader::lookupAttribute(ElementAttribute *attribute,
 {
     const Node&  node = currentNode();
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&node);
     AttributeVector::const_iterator it1 = node.d_attributes.begin();
     AttributeVector::const_iterator it2 = it1 + node.d_attrCount;
 
@@ -901,6 +904,7 @@ int MiniReader::lookupAttribute(ElementAttribute *attribute,
 {
     const Node&  node = currentNode();
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&node);
     AttributeVector::const_iterator it1 = node.d_attributes.begin();
     AttributeVector::const_iterator it2 = it1 + node.d_attrCount;
 
@@ -926,6 +930,7 @@ int MiniReader::advanceToEndNode()
     }
 
     const Node& node = currentNode();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&node);
 
     BSLS_ASSERT(node.d_type == e_NODE_TYPE_ELEMENT);  (void)node;
 
@@ -1128,6 +1133,7 @@ int MiniReader::advanceToEndNodeRaw()
     }
 
     const Node& node = currentNode();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&node);
 
     BSLS_ASSERT(node.d_type == e_NODE_TYPE_ELEMENT);
 
@@ -1190,6 +1196,7 @@ int MiniReader::advanceToEndNodeRawBare()
     }
 
     const Node& node = currentNode();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&node);
 
     BSLS_ASSERT(node.d_type == e_NODE_TYPE_ELEMENT);
 
@@ -2003,6 +2010,7 @@ int
 MiniReader::updateAttributes()
 {
     Node&  node = currentNode();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&node);
     AttributeVector::iterator it1 = node.d_attributes.begin();
     AttributeVector::iterator it2 = it1 + node.d_attrCount;
 

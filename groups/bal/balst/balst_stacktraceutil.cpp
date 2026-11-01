@@ -231,7 +231,8 @@ bsl::ostream& StackTraceUtil::printFormatted(
 
     if (stackTraceFrame.isLibraryFileNameKnown()) {
         stream << " in " <<
-               (LIBRARY_NAME_LIMIT > stackTraceFrame.libraryFileName().length()
+               (LIBRARY_NAME_LIMIT > BSLS_ASSERT_CONVEYOR_REF(
+                                    stackTraceFrame.libraryFileName()).length()
                     ? stackTraceFrame.libraryFileName().c_str()
                     : findBasename(stackTraceFrame.libraryFileName().c_str()));
     }

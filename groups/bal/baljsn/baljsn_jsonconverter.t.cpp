@@ -2873,11 +2873,11 @@ int main(int argc, char *argv[])
             P(sequence3);
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
-            P(sequence3.element1().size());    // empty (array)
+            P(BSLS_ASSERT_CONVEYOR_REF(sequence3.element1()).size());    // empty (array)
             BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
-            P(sequence3.element2().size());    // empty (array)
+            P(BSLS_ASSERT_CONVEYOR_REF(sequence3.element2()).size());    // empty (array)
             BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
-            P(sequence3.element6().size());    // empty (array)
+            P(BSLS_ASSERT_CONVEYOR_REF(sequence3.element6()).size());    // empty (array)
 
             BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
             P(sequence3.element3().isNull());  // null  (nullablevalue)
@@ -2888,9 +2888,9 @@ int main(int argc, char *argv[])
         }
 
         BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
-        ASSERT(0    == sequence3.element1().size());   // empty (array)
+        ASSERT(0    == BSLS_ASSERT_CONVEYOR_REF(sequence3.element1()).size());   // empty (array)
         BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
-        ASSERT(0    == sequence3.element2().size());   // empty (array)
+        ASSERT(0    == BSLS_ASSERT_CONVEYOR_REF(sequence3.element2()).size());   // empty (array)
         BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
         ASSERT(true == sequence3.element3().isNull()); // null  (nullablevalue)
         BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
@@ -2898,7 +2898,7 @@ int main(int argc, char *argv[])
         BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
         ASSERT(true == sequence3.element5().isNull()); // null  (nullablevalue)
         BSLS_ASSERT_CONVEYOR_OBJECT(&sequence3);
-        ASSERT(0    == sequence3.element6().size());   // empty (array)
+        ASSERT(0    == BSLS_ASSERT_CONVEYOR_REF(sequence3.element6()).size());   // empty (array)
 
         const ToJsonOptions   TO_JSON_OPTIONS_DEFAULT;
         const FromJsonOptions FROM_JSON_OPTIONS_DEFAULT;
@@ -4230,7 +4230,8 @@ int main(int argc, char *argv[])
             sequenceWithAnonymity.choice ().makeSelection2();
             sequenceWithAnonymity.choice1().makeSelection5();
             s_baltst::Sequence4 sequence4;
-            sequenceWithAnonymity.choice2().makeValue().makeSelection7(
+            BSLS_ASSERT_CONVEYOR_OBJECT(&sequenceWithAnonymity);
+            BSLS_ASSERT_CONVEYOR_REF(sequenceWithAnonymity.choice2()).makeValue().makeSelection7(
                                                                     sequence4);
 
             testSkipUnknownElements(L_, sequenceWithAnonymity);         // TEST

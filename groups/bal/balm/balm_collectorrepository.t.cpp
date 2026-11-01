@@ -955,11 +955,15 @@ int main(int argc, char *argv[])
 
                 {
                     // Verify the collectors are unique.
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&exp_ColV);
                     bsl::set<Col *>  colSet(exp_ColV.begin(),
                                             exp_ColV.end());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&exp_iColV);
                     bsl::set<ICol *> iColSet(exp_iColV.begin(),
                                              exp_iColV.end());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&exp_ColV);
                     ASSERT(colSet.size()  == exp_ColV.size());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&exp_iColV);
                     ASSERT(iColSet.size() == exp_iColV.size());
                 }
 
@@ -1268,7 +1272,9 @@ int main(int argc, char *argv[])
 
                 bsl::set<Col *>  colSet(Z);
                 bsl::set<ICol *> iColSet(Z);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&cols);
                 colSet.insert(cols[id].begin(), cols[id].end());
+                BSLS_ASSERT_CONVEYOR_OBJECT(&iCols);
                 iColSet.insert(iCols[id].begin(), iCols[id].end());
 
                 ASSERT(0 == colSet.count(col));
@@ -1454,11 +1460,15 @@ int main(int argc, char *argv[])
 
                 {
                     // Verify the collectors are unique.
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&exp_ColV);
                     bsl::set<Col *>  colSet(exp_ColV.begin(),
                                             exp_ColV.end());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&exp_iColV);
                     bsl::set<ICol *> iColSet(exp_iColV.begin(),
                                              exp_iColV.end());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&exp_ColV);
                     ASSERT(colSet.size()  == exp_ColV.size());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&exp_iColV);
                     ASSERT(iColSet.size() == exp_iColV.size());
                 }
 
@@ -1466,6 +1476,8 @@ int main(int argc, char *argv[])
                 IColSPtrVector iColV(Z);
                 const int NUM  = mX.getAddedCollectors(&colV, &iColV, *it);
 
+                BSLS_ASSERT_CONVEYOR_OBJECT(&exp_ColV);
+                BSLS_ASSERT_CONVEYOR_OBJECT(&exp_iColV);
                 ASSERT(exp_ColV.size() + exp_iColV.size() ==
                                                 static_cast<bsl::size_t>(NUM));
                 ASSERT(vectorEquals(exp_ColV, colV));

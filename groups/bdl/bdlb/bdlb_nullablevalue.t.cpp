@@ -5534,11 +5534,13 @@ void TestDriver<TEST_TYPE>::testCase38()
 
         new (&xBuffer.object()) ObjWithAllocator(VALUES[0], &oa);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(X.has_value());
         ASSERT(X.value() == VALUES[0]);
 
         myMemcpy(yBuffer.address(), xBuffer.address(), sizeof(x));
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
         ASSERT(Y.has_value());
         ASSERT(Y.value() == VALUES[0]);
 
@@ -5559,13 +5561,16 @@ void TestDriver<TEST_TYPE>::testCase38()
 
         new (&xBuffer.object()) ObjWithAllocator(VALUES[1], &oa);
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(X.has_value());
         ASSERT(X.value() == VALUES[1]);
 
         myMemcpy(yBuffer.address(), xBuffer.address(), sizeof(x));
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
         ASSERT(Y.has_value());
         ASSERT(Y.value() == VALUES[1]);
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(X.has_value());
         ASSERT(X.value() == Y.value());
         ASSERT(X == Y);
@@ -6315,11 +6320,12 @@ void runTestCase18()
             if (veryVeryVerbose) {
                 T_ P(IS_INITIALLY_NULL)
                 if (!IS_INITIALLY_NULL) {
-                    T_ P(OBJ.value().a1())
-                    T_ P(OBJ.value().a2())
-                    T_ P(OBJ.value().a3())
-                    T_ P(OBJ.value().a4())
-                    T_ P(OBJ.value().a5())
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ);
+                    T_ P(BSLS_ASSERT_CONVEYOR_REF(OBJ.value()).a1())
+                    T_ P(BSLS_ASSERT_CONVEYOR_REF(OBJ.value()).a2())
+                    T_ P(BSLS_ASSERT_CONVEYOR_REF(OBJ.value()).a3())
+                    T_ P(BSLS_ASSERT_CONVEYOR_REF(OBJ.value()).a4())
+                    T_ P(BSLS_ASSERT_CONVEYOR_REF(OBJ.value()).a5())
                 }
             }
 
@@ -7822,7 +7828,8 @@ int main(int argc, char *argv[])
 
             nv.value() = 99;
             ASSERT(!nv.isNull());
-            ASSERT( nv.value().has_value());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&nv);
+            ASSERT( BSLS_ASSERT_CONVEYOR_REF(nv.value()).has_value());
             oss << nv;   ASSERTV(oss.str(), "99" == oss.str());         // TEST
             oss.str(""); ASSERTV(oss.str(), ""   == oss.str());
         }

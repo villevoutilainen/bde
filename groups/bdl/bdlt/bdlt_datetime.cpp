@@ -279,6 +279,7 @@ int Datetime::printToBuffer(char *result,
 // FREE OPERATORS
 bsl::ostream& bdlt::operator<<(bsl::ostream& stream, const Datetime& object)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     return object.print(stream, 0, -1);
 }
 

@@ -202,9 +202,9 @@ BSLMF_ASSERT(true == bslma::UsesBslmaAllocator<Obj>::value);
 // ```
       ASSERT(2              == fields->length());
       ASSERT(Type::e_STRING == fields->value(0).type());
-      ASSERT(TEST_USER      == fields->value(0).theString());
+      ASSERT(TEST_USER      == BSLS_ASSERT_CONVEYOR_REF(fields->value(0)).theString());
       ASSERT(Type::e_INT64  == fields->value(1).type());
-      ASSERT(TEST_TASK      == fields->value(1).theInt64());
+      ASSERT(TEST_TASK      == BSLS_ASSERT_CONVEYOR_REF(fields->value(1)).theInt64());
     }
 // ```
 
@@ -669,10 +669,15 @@ int main(int argc, char *argv[])
         ASSERT(ball::UserFieldType::e_DATETIMETZ == OBJ1[4].type());
         ASSERT(ball::UserFieldType::e_CHAR_ARRAY == OBJ1[5].type());
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(A_STRING     == OBJ1[1].theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(A_DOUBLE     == OBJ1[2].theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(A_INT        == OBJ1[3].theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(A_DATE       == OBJ1[4].theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(A_CHAR_ARRAY == OBJ1[5].theCharArray());
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -693,10 +698,15 @@ int main(int argc, char *argv[])
         ASSERT(ball::UserFieldType::e_DATETIMETZ == OBJ2[4].type());
         ASSERT(ball::UserFieldType::e_CHAR_ARRAY == OBJ2[5].type());
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(A_STRING     == OBJ2[1].theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(A_DOUBLE     == OBJ2[2].theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(A_INT        == OBJ2[3].theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(A_DATE       == OBJ2[4].theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(A_CHAR_ARRAY == OBJ2[5].theCharArray());
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -728,16 +738,26 @@ int main(int argc, char *argv[])
         ASSERT(ball::UserFieldType::e_DATETIMETZ == OBJ1[10].type());
         ASSERT(ball::UserFieldType::e_CHAR_ARRAY == OBJ1[11].type());
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(A_STRING     == OBJ1[ 1].theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(A_DOUBLE     == OBJ1[ 2].theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(A_INT        == OBJ1[ 3].theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(A_DATE       == OBJ1[ 4].theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(A_CHAR_ARRAY == OBJ1[ 5].theCharArray());
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(B_STRING     == OBJ1[ 7].theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(B_DOUBLE     == OBJ1[ 8].theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(B_INT        == OBJ1[ 9].theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(B_DATE       == OBJ1[10].theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ1);
         ASSERT(B_CHAR_ARRAY == OBJ1[11].theCharArray());
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -765,16 +785,26 @@ int main(int argc, char *argv[])
         ASSERT(ball::UserFieldType::e_DATETIMETZ == OBJ2[10].type());
         ASSERT(ball::UserFieldType::e_CHAR_ARRAY == OBJ2[11].type());
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(A_STRING     == OBJ2[ 1].theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(A_DOUBLE     == OBJ2[ 2].theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(A_INT        == OBJ2[ 3].theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(A_DATE       == OBJ2[ 4].theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(A_CHAR_ARRAY == OBJ2[ 5].theCharArray());
 
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(B_STRING     == OBJ2[ 7].theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(B_DOUBLE     == OBJ2[ 8].theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(B_INT        == OBJ2[ 9].theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(B_DATE       == OBJ2[10].theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&OBJ2);
         ASSERT(B_CHAR_ARRAY == OBJ2[11].theCharArray());
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -884,10 +914,15 @@ int main(int argc, char *argv[])
         if (veryVeryVerbose) { T_ P(X) }
 
         ASSERT(5            == X.length());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_INT        == X.value(0).theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_STRING     == X.value(1).theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_DATE       == X.value(2).theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_DOUBLE     == X.value(3).theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_CHAR_ARRAY == X.value(4).theCharArray());
 
         if (veryVerbose) cout <<
@@ -913,10 +948,15 @@ int main(int argc, char *argv[])
         if (veryVeryVerbose) { T_ P(Y) }
 
         ASSERT(5            == Y.length());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
         ASSERT(A_INT        == Y.value(0).theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
         ASSERT(A_STRING     == Y.value(1).theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
         ASSERT(A_DATE       == Y.value(2).theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_DOUBLE     == X.value(3).theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_CHAR_ARRAY == X.value(4).theCharArray());
 
         if (veryVerbose) cout <<
@@ -937,10 +977,15 @@ int main(int argc, char *argv[])
         if (veryVeryVerbose) { T_ P(Z) }
 
         ASSERT(5            == Z.length());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
         ASSERT(A_INT        == Z.value(0).theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
         ASSERT(A_STRING     == Z.value(1).theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
         ASSERT(A_DATE       == Z.value(2).theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
         ASSERT(A_DOUBLE     == Z.value(3).theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
         ASSERT(A_CHAR_ARRAY == Z.value(4).theCharArray());
 
         if (veryVerbose) cout <<
@@ -982,10 +1027,15 @@ int main(int argc, char *argv[])
         if (veryVeryVerbose) { T_ P(W) }
 
         ASSERT(5            == W.length());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&W);
         ASSERT(A_INT        == W.value(0).theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&W);
         ASSERT(A_STRING     == W.value(1).theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&W);
         ASSERT(A_DATE       == W.value(2).theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&W);
         ASSERT(A_DOUBLE     == W.value(3).theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&W);
         ASSERT(A_CHAR_ARRAY == W.value(4).theCharArray());
 
         if (veryVerbose) cout <<
@@ -1027,10 +1077,15 @@ int main(int argc, char *argv[])
         if (veryVeryVerbose) { T_ P(X) }
 
         ASSERT(5            == X.length());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_INT        == X.value(0).theInt64());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_STRING     == X.value(1).theString());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_DATE       == X.value(2).theDatetimeTz());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_DOUBLE     == X.value(3).theDouble());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&X);
         ASSERT(A_CHAR_ARRAY == X.value(4).theCharArray());
 
         if (veryVerbose) cout <<

@@ -194,7 +194,9 @@ void StreamPublisher::publish(const MetricSample& metricValues)
                                      gIt->elapsedTime().totalSecondsAsDouble();
 
             BSLS_ASSERT_CONVEYOR_OBJECT(prev);
-            if (gIt == prev || gIt->elapsedTime() != prev->elapsedTime()) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&gIt);
+            BSLS_ASSERT_CONVEYOR_OBJECT(&prev);
+            if (gIt == prev || BSLS_ASSERT_CONVEYOR_REF(gIt->elapsedTime()) != BSLS_ASSERT_CONVEYOR_REF(prev->elapsedTime())) {
                 d_stream << "\tElapsed Time: " << elapsedTime << "s"
                          << bsl::endl;
             }

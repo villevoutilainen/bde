@@ -96,6 +96,7 @@ int Impl::generate(STRING                      *string,
                    const Date&                  object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -118,6 +119,7 @@ int Impl::generate(STRING                      *string,
                    const Time&                  object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -141,6 +143,7 @@ int Impl::generate(STRING                      *string,
                    const Datetime&              object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -164,6 +167,7 @@ int Impl::generate(STRING                      *string,
                    const DateTz&                object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -187,6 +191,7 @@ int Impl::generate(STRING                      *string,
                    const TimeTz&                object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -210,6 +215,7 @@ int Impl::generate(STRING                      *string,
                    const DatetimeTz&            object,
                    const FixUtilConfiguration&  configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);

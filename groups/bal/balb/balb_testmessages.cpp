@@ -5213,6 +5213,7 @@ bsl::ostream& FeatureTestMessage::print(
     int           level,
     int           spacesPerLevel) const
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(this);
     bslim::Printer printer(&stream, level, spacesPerLevel);
     printer.start();
     switch (d_selectionId) {
@@ -5225,7 +5226,7 @@ bsl::ostream& FeatureTestMessage::print(
         stream << (multilineFlag ? "" : " ");
         stream << "selection2 = [ ";
         bdlb::Print::singleLineHexDump(
-            stream, d_selection2.object().begin(), d_selection2.object().end());
+            stream, BSLS_ASSERT_CONVEYOR_REF(d_selection2.object()).begin(), BSLS_ASSERT_CONVEYOR_REF(d_selection2.object()).end());
         stream << " ]" << (multilineFlag ? "\n" : "");
       }  break;
       case SELECTION_ID_SELECTION3: {

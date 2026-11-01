@@ -161,10 +161,10 @@ Request::operator=(const Request& rhs)
     if (this != &rhs) {
         switch (rhs.d_selectionId) {
           case SELECTION_ID_SIMPLE_REQUEST: {
-            makeSimpleRequest(rhs.d_simpleRequest.object());
+            makeSimpleRequest(BSLS_ASSERT_CONVEYOR_REF(rhs.d_simpleRequest.object()));
           } break;
           case SELECTION_ID_FEATURE_REQUEST: {
-            makeFeatureRequest(rhs.d_featureRequest.object());
+            makeFeatureRequest(BSLS_ASSERT_CONVEYOR_REF(rhs.d_featureRequest.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);

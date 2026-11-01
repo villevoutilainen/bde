@@ -161,7 +161,7 @@ MySequenceWithAnonymousChoiceChoice::operator=(const MySequenceWithAnonymousChoi
             makeMyChoice1(rhs.d_myChoice1.object());
           } break;
           case SELECTION_ID_MY_CHOICE2: {
-            makeMyChoice2(rhs.d_myChoice2.object());
+            makeMyChoice2(BSLS_ASSERT_CONVEYOR_REF(rhs.d_myChoice2.object()));
           } break;
           default:
             BSLS_ASSERT(SELECTION_ID_UNDEFINED == rhs.d_selectionId);

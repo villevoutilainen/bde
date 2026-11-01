@@ -2192,7 +2192,7 @@ int main(int argc, char *argv[])
                     ASSERT(expKey == item.key());
 
                     BSLS_ASSERT_CONVEYOR_OBJECT(&item);
-                    ASSERT(time == item.time());
+                    ASSERT(time == BSLS_ASSERT_CONVEYOR_REF(item.time()));
                     ASSERT(prevData < item.data());
 
                     prevData = item.data();
@@ -3809,7 +3809,7 @@ int main(int argc, char *argv[])
                 BSLS_ASSERT_CONVEYOR_OBJECT(&X);
                 const bsls::Types::Int64 NUM_ALLOC = ta.numAllocations();
                 BSLS_ASSERT_CONVEYOR_OBJECT(&X);
-                ASSERT(bsls::TimeInterval() == X.time());
+                ASSERT(bsls::TimeInterval() == BSLS_ASSERT_CONVEYOR_REF(X.time()));
                 const TestString dfltTestString;    // Appease bug in gcc-4.1.2
                 ASSERT(dfltTestString       == X.data());
                 // ASSERT(0 == X.handle());
@@ -3824,7 +3824,7 @@ int main(int argc, char *argv[])
                 BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
                 const bsls::Types::Int64 NUM_ALLOC = ta.numAllocations();
                 BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
-                ASSERT(TIME                == Y.time());
+                ASSERT(TIME                == BSLS_ASSERT_CONVEYOR_REF(Y.time()));
                 ASSERT(STRDATA             == Y.data());
                 ASSERT(HANDLE              == Y.handle());
                 ASSERT(Obj::Key(0)         == Y.key());
@@ -3838,7 +3838,7 @@ int main(int argc, char *argv[])
                 BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
                 const bsls::Types::Int64 NUM_ALLOC = ta.numAllocations();
                 BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
-                ASSERT(TIME                == Z.time());
+                ASSERT(TIME                == BSLS_ASSERT_CONVEYOR_REF(Z.time()));
                 ASSERT(STRDATA             == Z.data());
                 ASSERT(HANDLE              == Z.handle());
                 ASSERT(KEY                 == Z.key());
@@ -3852,7 +3852,7 @@ int main(int argc, char *argv[])
             if (verbose) cout << "\t\tCopy constructor.\n";
             Obj mU(Z, &ta3);  const Obj& U = mU;
             BSLS_ASSERT_CONVEYOR_OBJECT(&U);
-            ASSERT(TIME                    == U.time());
+            ASSERT(TIME                    == BSLS_ASSERT_CONVEYOR_REF(U.time()));
             ASSERT(STRDATA                 == U.data());
             ASSERT(HANDLE                  == U.handle());
             ASSERT(KEY                     == U.key());
@@ -3864,7 +3864,7 @@ int main(int argc, char *argv[])
             BSLS_ASSERT_CONVEYOR_OBJECT(&V);
             mV = U;
             BSLS_ASSERT_CONVEYOR_OBJECT(&V);
-            ASSERT(TIME                    == V.time());
+            ASSERT(TIME                    == BSLS_ASSERT_CONVEYOR_REF(V.time()));
             ASSERT(STRDATA                 == V.data());
             ASSERT(HANDLE                  == V.handle());
             ASSERT(KEY                     == V.key());
@@ -3876,7 +3876,7 @@ int main(int argc, char *argv[])
             BSLS_ASSERT_CONVEYOR_OBJECT(&X);
             mX.time() = TIME;
             BSLS_ASSERT_CONVEYOR_OBJECT(&X);
-            ASSERT(TIME == X.time());
+            ASSERT(TIME == BSLS_ASSERT_CONVEYOR_REF(X.time()));
 
             const bsls::Types::Int64 NUM_ALLOC3 = ta3.numAllocations();
             mU.data() = STRDATA2;

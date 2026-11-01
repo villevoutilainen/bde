@@ -1123,26 +1123,28 @@ bool bdlt::operator<(const TimetableTransition& lhs,
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
-    return lhs.datetime() < rhs.datetime()
+    return BSLS_ASSERT_CONVEYOR_REF(lhs.datetime()) < BSLS_ASSERT_CONVEYOR_REF(rhs.datetime())
         || (lhs.datetime() == rhs.datetime() && lhs.code() < rhs.code());
 }
 
 inline
 bool bdlt::operator<(const TimetableTransition& lhs, const Datetime& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT_NONCONVEYOR(24 > rhs.hour());
 
-    return lhs.datetime() < rhs;
+    return BSLS_ASSERT_CONVEYOR_REF(lhs.datetime()) < rhs;
 }
 
 inline
 bool bdlt::operator<(const Datetime& lhs, const TimetableTransition& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_NONCONVEYOR(24 > lhs.hour());
 
-    return lhs < rhs.datetime();
+    return lhs < BSLS_ASSERT_CONVEYOR_REF(rhs.datetime());
 }
 
 // HASH SPECIALIZATIONS
@@ -1296,7 +1298,7 @@ bool bdlt::operator<(const Timetable_CompactableTransition& lhs,
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
-    return lhs.time() < rhs.time()
+    return BSLS_ASSERT_CONVEYOR_REF(lhs.time()) < BSLS_ASSERT_CONVEYOR_REF(rhs.time())
         || (lhs.time() == rhs.time() && lhs.code() < rhs.code());
 }
 
@@ -1304,20 +1306,22 @@ inline
 bool bdlt::operator<(const Timetable_CompactableTransition& lhs,
                      const Time&                            rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT_NONCONVEYOR(24 > rhs.hour());
 
-    return lhs.time() < rhs;
+    return BSLS_ASSERT_CONVEYOR_REF(lhs.time()) < rhs;
 }
 
 inline
 bool bdlt::operator<(const Time&                            lhs,
                      const Timetable_CompactableTransition& rhs)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
     BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     BSLS_ASSERT_NONCONVEYOR(24 > lhs.hour());
 
-    return lhs < rhs.time();
+    return lhs < BSLS_ASSERT_CONVEYOR_REF(rhs.time());
 }
 
 // HASH SPECIALIZATIONS
@@ -1754,9 +1758,10 @@ TimetableTransition Timetable_ConstIterator::operator*() const
     BSLS_ASSERT_NONCONVEYOR(d_transitionIndex
                               < d_timetable_p->d_timetable[d_dayIndex].size());
 
+    const Timetable_Day& day =
+              BSLS_ASSERT_CONVEYOR_REF(d_timetable_p->d_timetable[d_dayIndex]);
     const Timetable_CompactableTransition& transition =
-                          d_timetable_p->d_timetable[d_dayIndex].d_transitions[
-                                                            d_transitionIndex];
+                                       day.d_transitions[d_transitionIndex];
     return TimetableTransition(
             Datetime(d_timetable_p->firstDate() + static_cast<int>(d_dayIndex),
                      transition.time()),

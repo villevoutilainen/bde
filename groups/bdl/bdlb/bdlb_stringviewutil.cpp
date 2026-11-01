@@ -86,6 +86,7 @@ int StringViewUtil::upperCaseCmp(const bsl::string_view& lhs,
 
 bsl::string_view StringViewUtil::ltrim(const bsl::string_view& string)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&string);
     bsl::string_view::size_type       index  = 0;
     const bsl::string_view::size_type length = string.length();
 

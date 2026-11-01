@@ -132,7 +132,7 @@ void Formatter_PrettyImplUtil::addDataImpl(bsl::ostream&            stream,
 
     typedef WhitespaceType Ws;
     static const Ws::Enum  k_NEWLINE_INDENT = Ws::e_NEWLINE_INDENT;
-    const Ws::Enum         ws               = state->elementNesting().back();
+    const Ws::Enum         ws               = BSLS_ASSERT_CONVEYOR_REF(state->elementNesting()).back();
     const int              valueLen         = static_cast<int>(value.length());
 
     const bool isFirstData =
@@ -196,7 +196,7 @@ void Formatter_PrettyImplUtil::addListDataImpl(bsl::ostream&            stream,
     static const Ws::Enum  k_WORDWRAP_INDENT     = Ws::e_WORDWRAP_INDENT;
     static const Ws::Enum  k_NEWLINE_INDENT      = Ws::e_NEWLINE_INDENT;
 
-    const Ws::Enum ws = state->elementNesting().back();
+    const Ws::Enum ws = BSLS_ASSERT_CONVEYOR_REF(state->elementNesting()).back();
 
     const bool isFirstDataAtLine =
         StateId::e_FIRST_DATA_AT_LINE_BETWEEN_TAGS == state->id();
@@ -418,7 +418,7 @@ bsl::ostream& Formatter_PrettyImplUtil::closeElement(
                 StateId::e_FIRST_DATA_AT_LINE_BETWEEN_TAGS == state->id() ||
                 StateId::e_TRAILING_DATA_BETWEEN_TAGS == state->id() ||
                 StateId::e_IN_TAG == state->id());
-    BSLS_ASSERT_NONCONVEYOR(!state->elementNesting().empty());
+    BSLS_ASSERT_NONCONVEYOR(!BSLS_ASSERT_CONVEYOR_REF(state->elementNesting()).empty());
 
     // Step 1: Print a sequence of conditional tokens to 'stream' and update
     //         the column number and indentation level of 'state'.
@@ -426,7 +426,7 @@ bsl::ostream& Formatter_PrettyImplUtil::closeElement(
     typedef WhitespaceType Ws;
     static const Ws::Enum  k_NEWLINE_INDENT = Ws::e_NEWLINE_INDENT;
 
-    const Ws::Enum ws = state->elementNesting().back();
+    const Ws::Enum ws = BSLS_ASSERT_CONVEYOR_REF(state->elementNesting()).back();
 
     if (StateId::e_IN_TAG == state->id()) {
         stream << "/>";
@@ -452,7 +452,7 @@ bsl::ostream& Formatter_PrettyImplUtil::closeElement(
         state->column() = 0;
     }
 
-    if (1 == state->elementNesting().size()) {
+    if (1 == BSLS_ASSERT_CONVEYOR_REF(state->elementNesting()).size()) {
         stream.flush();
     }
 
@@ -462,7 +462,7 @@ bsl::ostream& Formatter_PrettyImplUtil::closeElement(
 
     // Step 2: Update the ID of 'state'.
 
-    if (state->elementNesting().empty()) {
+    if (BSLS_ASSERT_CONVEYOR_REF(state->elementNesting()).empty()) {
         state->id() = StateId::e_AT_END;
     }
     else {

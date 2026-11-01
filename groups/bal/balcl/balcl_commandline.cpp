@@ -720,7 +720,8 @@ void initialize(bsl::vector<OptionValue>       *data,
     for (bsl::size_t i = 0; i < options.size(); ++i) {
         const Option& thisOption = options[i];
 
-        if (!thisOption.environmentVariableName().empty()) {
+        if (!BSLS_ASSERT_CONVEYOR_REF(thisOption.environmentVariableName())
+                                                                   .empty()) {
             *environmentVariablesPresent = true;
         }
 
@@ -1082,6 +1083,7 @@ int CommandLine::parseImp(bsl::ostream& errorStream)
             const bsl::string& envVarName =
                                           thisOption.environmentVariableName();
 
+            BSLS_ASSERT_CONVEYOR_OBJECT(&envVarName);
             if (envVarName.empty() || !d_data[index].isNull()) {
                 continue;
             }
@@ -1265,7 +1267,8 @@ int CommandLine::longestNonFlagNameSize() const
     int max = 0;
     for (unsigned int i = 0; i < d_options.size(); ++i) {
         if (d_options[i].argType() != OptionInfo::e_FLAG) {
-            int len = static_cast<int>(d_options[i].name().size());
+            int len = static_cast<int>(
+                         BSLS_ASSERT_CONVEYOR_REF(d_options[i].name()).size());
             if (len > max) {
                 max = len;
             }

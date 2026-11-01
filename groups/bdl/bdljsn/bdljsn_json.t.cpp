@@ -7782,12 +7782,12 @@ int main(int argc, char *argv[])
         Json_Initializer ji0;
         ASSERT(ji0.get_storage().is<JsonNull>());
         BSLS_ASSERT_CONVEYOR_OBJECT(&ji0);
-        ASSERT(JsonNull() == ji0.get_storage().the<JsonNull>());
+        ASSERT(JsonNull() == BSLS_ASSERT_CONVEYOR_REF(ji0.get_storage()).the<JsonNull>());
 
         Json_Initializer ji1(jNull);
         ASSERT(ji1.get_storage().is<JsonNull>());
         BSLS_ASSERT_CONVEYOR_OBJECT(&ji1);
-        ASSERT(JsonNull() == ji1.get_storage().the<JsonNull>());
+        ASSERT(JsonNull() == BSLS_ASSERT_CONVEYOR_REF(ji1.get_storage()).the<JsonNull>());
 
         Json_Initializer ji2[] = { 2, 2L, 2LL };
         for (const auto& ji: ji2) {
@@ -7804,12 +7804,12 @@ int main(int argc, char *argv[])
         Json_Initializer ji4(4.25f);
         ASSERT(ji4.get_storage().is<double>());
         BSLS_ASSERT_CONVEYOR_OBJECT(&ji4);
-        ASSERT(4.25 == ji4.get_storage().the<double>());
+        ASSERT(4.25 == BSLS_ASSERT_CONVEYOR_REF(ji4.get_storage()).the<double>());
 
         Json_Initializer ji5(4.25);
         ASSERT(ji5.get_storage().is<double>());
         BSLS_ASSERT_CONVEYOR_OBJECT(&ji5);
-        ASSERT(4.25 == ji5.get_storage().the<double>());
+        ASSERT(4.25 == BSLS_ASSERT_CONVEYOR_REF(ji5.get_storage()).the<double>());
 
         Json_Initializer ji6[] = { "ABC", abcString, bsl::string_view("ABC") };
         for (const auto& ji: ji6) {
@@ -7822,22 +7822,22 @@ int main(int argc, char *argv[])
         Json_Initializer ji8(jObj);
         ASSERT(ji8.get_storage().is<const JsonObject *>());
         BSLS_ASSERT_CONVEYOR_OBJECT(&ji8);
-        ASSERT(&jObj == ji8.get_storage().the<const JsonObject *>());
+        ASSERT(&jObj == BSLS_ASSERT_CONVEYOR_REF(ji8.get_storage()).the<const JsonObject *>());
 
         Json_Initializer ji9(jArr);
         ASSERT(ji9.get_storage().is<const JsonArray *>());
         BSLS_ASSERT_CONVEYOR_OBJECT(&ji9);
-        ASSERT(&jArr == ji9.get_storage().the<const JsonArray *>());
+        ASSERT(&jArr == BSLS_ASSERT_CONVEYOR_REF(ji9.get_storage()).the<const JsonArray *>());
 
         Json_Initializer jiA(jNum);
         ASSERT(jiA.get_storage().is<const JsonNumber *>());
         BSLS_ASSERT_CONVEYOR_OBJECT(&jiA);
-        ASSERT(&jNum == jiA.get_storage().the<const JsonNumber *>());
+        ASSERT(&jNum == BSLS_ASSERT_CONVEYOR_REF(jiA.get_storage()).the<const JsonNumber *>());
 
         Json_Initializer jiB(json);
         ASSERT(jiB.get_storage().is<const Json *>());
         BSLS_ASSERT_CONVEYOR_OBJECT(&jiB);
-        ASSERT(&json == jiB.get_storage().the<const Json *>());
+        ASSERT(&json == BSLS_ASSERT_CONVEYOR_REF(jiB.get_storage()).the<const Json *>());
 #else
         if (veryVerbose) {
             cout << "SKIP: No support for generalized initializers." << endl;

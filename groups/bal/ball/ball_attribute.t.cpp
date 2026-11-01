@@ -589,6 +589,8 @@ bool compareText(const bsl::string_view& lhs,
                  const bsl::string_view& rhs,
                  bsl::ostream&           errorStream = bsl::cout)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&lhs);
+    BSLS_ASSERT_CONVEYOR_OBJECT(&rhs);
     for (unsigned int i = 0; i < lhs.length() && i < rhs.length(); ++i) {
         if (lhs[i] != rhs[i]) {
             errorStream << "lhs: \"" << lhs << "\"\n"
@@ -1275,16 +1277,20 @@ int main(int argc, char *argv[])
         ASSERT(0 == bsl::strcmp("day", a4.name()));
 
         ASSERT(true     == a1.value().is<bsl::string>());
-        ASSERT("Sunday" == a1.value().the<bsl::string>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&a1);
+        ASSERT("Sunday" == BSLS_ASSERT_CONVEYOR_REF(a1.value()).the<bsl::string>());
 
         ASSERT(true     == a2.value().is<int>());
-        ASSERT(7        == a2.value().the<int>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&a2);
+        ASSERT(7        == BSLS_ASSERT_CONVEYOR_REF(a2.value()).the<int>());
 
         ASSERT(true     == a3.value().is<long long>());
-        ASSERT(7        == a3.value().the<long long>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&a3);
+        ASSERT(7        == BSLS_ASSERT_CONVEYOR_REF(a3.value()).the<long long>());
 
         ASSERT(true     == a4.value().is<unsigned long long>());
-        ASSERT(7        == a4.value().the<unsigned long long>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&a4);
+        ASSERT(7        == BSLS_ASSERT_CONVEYOR_REF(a4.value()).the<unsigned long long>());
 
 // Note that the name string that is passed to the constructor of
 // `ball::Attribute` *must* remain valid and unchanged after the
@@ -1324,7 +1330,8 @@ int main(int argc, char *argv[])
         ball::Attribute a7("event", handle);
 
         ASSERT(true   == a7.value().is<const void *>());
-        ASSERT(handle == a7.value().the<const void *>());
+        BSLS_ASSERT_CONVEYOR_OBJECT(&a7);
+        ASSERT(handle == BSLS_ASSERT_CONVEYOR_REF(a7.value()).the<const void *>());
 // ```
       } break;
       case 15: {
@@ -1560,33 +1567,43 @@ int main(int argc, char *argv[])
                         0 == strcmp(W1.name(), U.name()));
 
                 if (U.value().is<int>()) {
-                    mW1.setValue(U.value().the<int>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW1.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<int>());
                 }
                 else if (U.value().is<long>()) {
-                    mW1.setValue(U.value().the<long>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW1.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<long>());
                 }
                 else if (U.value().is<long long>()) {
-                    mW1.setValue(U.value().the<long long>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW1.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<long long>());
                 }
                 else if (U.value().is<unsigned int>()) {
-                    mW1.setValue(U.value().the<unsigned int>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW1.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<unsigned int>());
                 }
                 else if (U.value().is<unsigned long>()) {
-                    mW1.setValue(U.value().the<unsigned long>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW1.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<unsigned long>());
                 }
                 else if (U.value().is<unsigned long long>()) {
-                    mW1.setValue(U.value().the<unsigned long long>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW1.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<unsigned long long>());
                 }
                 else if (U.value().is<bdlb::Guid>()) {
-                    mW1.setValue(U.value().the<bdlb::Guid>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW1.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<bdlb::Guid>());
                 }
                 else if (U.value().is<bsl::string>()) {
-                    mW1.setValue(U.value().the<bsl::string>().c_str());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW1.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<bsl::string>().c_str());
                     ASSERTV(LINE1, LINE2, LINE3, LINE4, W1 == U);
-                    mW1.setValue(U.value().the<bsl::string>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW1.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<bsl::string>());
                 }
                 else if (U.value().is<const void *>()) {
-                    mW1.setValue(U.value().the<const void *>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW1.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<const void *>());
                 }
                 ASSERTV(LINE1, LINE2, LINE3, LINE4, W1.value() == U.value());
                 ASSERTV(LINE1, LINE2, LINE3, LINE4,
@@ -1609,34 +1626,44 @@ int main(int argc, char *argv[])
                         0 == strcmp(W2.name(), V.name()));
 
                 if (U.value().is<int>()) {
-                    mW2.setValue(U.value().the<int>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW2.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<int>());
                 }
                 else if (U.value().is<long>()) {
-                    mW2.setValue(U.value().the<long>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW2.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<long>());
                 }
                 else if (U.value().is<long long>()) {
-                    mW2.setValue(U.value().the<long long>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW2.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<long long>());
                 }
                 else if (U.value().is<unsigned int>()) {
-                    mW2.setValue(U.value().the<unsigned int>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW2.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<unsigned int>());
                 }
                 else if (U.value().is<unsigned long>()) {
-                    mW2.setValue(U.value().the<unsigned long>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW2.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<unsigned long>());
                 }
                 else if (U.value().is<unsigned long long>()) {
-                    mW2.setValue(U.value().the<unsigned long long>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW2.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<unsigned long long>());
                 }
                 else if (U.value().is<bdlb::Guid>()) {
-                    mW2.setValue(U.value().the<bdlb::Guid>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW2.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<bdlb::Guid>());
                 }
                 else if (U.value().is<bsl::string>()) {
-                    mW2.setValue(U.value().the<bsl::string>().c_str());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW2.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<bsl::string>().c_str());
                     ASSERTV(LINE1, LINE2, LINE3, LINE4,
                             W2.value() == U.value());
-                    mW2.setValue(U.value().the<bsl::string>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW2.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<bsl::string>());
                 }
                 else if (U.value().is<const void *>()) {
-                    mW2.setValue(U.value().the<const void *>());
+                    BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+                    mW2.setValue(BSLS_ASSERT_CONVEYOR_REF(U.value()).the<const void *>());
                 }
                 ASSERTV(LINE1, LINE2, LINE3, LINE4, W2.value() == U.value());
                 ASSERTV(LINE1, LINE2, LINE3, LINE4,
@@ -2372,37 +2399,43 @@ int main(int argc, char *argv[])
             const Obj X(VA_NAME, V);
             ASSERT(0        == strcmp(X.name(), VA_NAME));
             ASSERT(true     == X.value().is<int>());
-            ASSERT(VA_VALUE == X.value().the<int>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+            ASSERT(VA_VALUE == BSLS_ASSERT_CONVEYOR_REF(X.value()).the<int>());
 
             mV.assign<int>(VB_VALUE);
             const Obj Y(VB_NAME, V);
             ASSERT(0        == strcmp(Y.name(), VB_NAME));
             ASSERT(true     == Y.value().is<int>());
-            ASSERT(VB_VALUE == Y.value().the<int>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
+            ASSERT(VB_VALUE == BSLS_ASSERT_CONVEYOR_REF(Y.value()).the<int>());
 
             mV.assign<long long>(VC_VALUE);
             const Obj Z(VC_NAME, V);
             ASSERT(0        == strcmp(Z.name(), VC_NAME));
             ASSERT(true     == Z.value().is<long long>());
-            ASSERT(VC_VALUE == Z.value().the<long long>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+            ASSERT(VC_VALUE == BSLS_ASSERT_CONVEYOR_REF(Z.value()).the<long long>());
 
             mV.assign<string>(VD_VALUE);
             const Obj W(VD_NAME, V);
             ASSERT(0        == strcmp(W.name(), VD_NAME));
             ASSERT(true     == W.value().is<string>());
-            ASSERT(VD_VALUE == W.value().the<string>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&W);
+            ASSERT(VD_VALUE == BSLS_ASSERT_CONVEYOR_REF(W.value()).the<string>());
 
             mV.assign<unsigned long long>(VE_VALUE);
             const Obj U(VE_NAME, V);
             ASSERT(0        == strcmp(U.name(), VE_NAME));
             ASSERT(true     == U.value().is<unsigned long long>());
-            ASSERT(VE_VALUE == U.value().the<unsigned long long>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+            ASSERT(VE_VALUE == BSLS_ASSERT_CONVEYOR_REF(U.value()).the<unsigned long long>());
 
             mV.assign<const void *>(VF_VALUE);
             const Obj S(VF_NAME, V);
             ASSERT(0        == strcmp(S.name(), VF_NAME));
             ASSERT(true     == S.value().is<const void *>());
-            ASSERT(VF_VALUE == S.value().the<const void *>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&S);
+            ASSERT(VF_VALUE == BSLS_ASSERT_CONVEYOR_REF(S.value()).the<const void *>());
 
             if (veryVerbose) {
                 cout << "\t\t"; P_(X); P_(Y); P_(Z); P_(W); P_(U); P(S);
@@ -2419,37 +2452,43 @@ int main(int argc, char *argv[])
             const Obj X(VA_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(X.name(), VA_NAME));
             ASSERT(true     == X.value().is<int>());
-            ASSERT(VA_VALUE == X.value().the<int>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+            ASSERT(VA_VALUE == BSLS_ASSERT_CONVEYOR_REF(X.value()).the<int>());
 
             mV.assign<int>(VB_VALUE);
             const Obj Y(VB_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(Y.name(), VB_NAME));
             ASSERT(true     == Y.value().is<int>());
-            ASSERT(VB_VALUE == Y.value().the<int>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
+            ASSERT(VB_VALUE == BSLS_ASSERT_CONVEYOR_REF(Y.value()).the<int>());
 
             mV.assign<long long>(VC_VALUE);
             const Obj Z(VC_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(Z.name(), VC_NAME));
             ASSERT(true     == Z.value().is<long long>());
-            ASSERT(VC_VALUE == Z.value().the<long long>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+            ASSERT(VC_VALUE == BSLS_ASSERT_CONVEYOR_REF(Z.value()).the<long long>());
 
             mV.assign<string>(VD_VALUE);
             const Obj W(VD_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(W.name(), VD_NAME));
             ASSERT(true     == W.value().is<string>());
-            ASSERT(VD_VALUE == W.value().the<string>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&W);
+            ASSERT(VD_VALUE == BSLS_ASSERT_CONVEYOR_REF(W.value()).the<string>());
 
             mV.assign<unsigned long long>(VE_VALUE);
             const Obj U(VE_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(U.name(), VE_NAME));
             ASSERT(true     == U.value().is<unsigned long long>());
-            ASSERT(VE_VALUE == U.value().the<unsigned long long>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+            ASSERT(VE_VALUE == BSLS_ASSERT_CONVEYOR_REF(U.value()).the<unsigned long long>());
 
             mV.assign<const void *>(VF_VALUE);
             const Obj S(VF_NAME, V);
             ASSERT(0        == strcmp(S.name(), VF_NAME));
             ASSERT(true     == S.value().is<const void *>());
-            ASSERT(VF_VALUE == S.value().the<const void *>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&S);
+            ASSERT(VF_VALUE == BSLS_ASSERT_CONVEYOR_REF(S.value()).the<const void *>());
 
             if (veryVerbose) {
                 cout << "\t\t"; P_(X); P_(Y); P_(Z); P_(W); P_(U); P(S);
@@ -2465,37 +2504,43 @@ int main(int argc, char *argv[])
             const Obj X(VA_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(X.name(), VA_NAME));
             ASSERT(true     == X.value().is<int>());
-            ASSERT(VA_VALUE == X.value().the<int>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+            ASSERT(VA_VALUE == BSLS_ASSERT_CONVEYOR_REF(X.value()).the<int>());
 
             mV.assign<int>(VB_VALUE);
             const Obj Y(VB_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(Y.name(), VB_NAME));
             ASSERT(true     == Y.value().is<int>());
-            ASSERT(VB_VALUE == Y.value().the<int>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&Y);
+            ASSERT(VB_VALUE == BSLS_ASSERT_CONVEYOR_REF(Y.value()).the<int>());
 
             mV.assign<long long>(VC_VALUE);
             const Obj Z(VC_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(Z.name(), VC_NAME));
             ASSERT(true     == Z.value().is<long long>());
-            ASSERT(VC_VALUE == Z.value().the<long long>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&Z);
+            ASSERT(VC_VALUE == BSLS_ASSERT_CONVEYOR_REF(Z.value()).the<long long>());
 
             mV.assign<string>(VD_VALUE);
             const Obj W(VD_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(W.name(), VD_NAME));
             ASSERT(true     == W.value().is<string>());
-            ASSERT(VD_VALUE == W.value().the<string>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&W);
+            ASSERT(VD_VALUE == BSLS_ASSERT_CONVEYOR_REF(W.value()).the<string>());
 
             mV.assign<unsigned long long>(VE_VALUE);
             const Obj U(VE_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(U.name(), VE_NAME));
             ASSERT(true     == U.value().is<unsigned long long>());
-            ASSERT(VE_VALUE == U.value().the<unsigned long long>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&U);
+            ASSERT(VE_VALUE == BSLS_ASSERT_CONVEYOR_REF(U.value()).the<unsigned long long>());
 
             mV.assign<const void *>(VF_VALUE);
             const Obj S(VF_NAME, V, &testAllocator);
             ASSERT(0        == strcmp(S.name(), VF_NAME));
             ASSERT(true     == S.value().is<const void *>());
-            ASSERT(VF_VALUE == S.value().the<const void *>());
+            BSLS_ASSERT_CONVEYOR_OBJECT(&S);
+            ASSERT(VF_VALUE == BSLS_ASSERT_CONVEYOR_REF(S.value()).the<const void *>());
 
             if (veryVerbose) {
                 cout << "\t\t"; P_(X); P_(Y); P_(Z); P_(W); P_(U); P(S);

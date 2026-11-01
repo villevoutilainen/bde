@@ -120,6 +120,7 @@ int Impl::generate(STRING                          *string,
                    const bsls::TimeInterval&        object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -142,6 +143,7 @@ int Impl::generate(STRING                          *string,
                    const Date&                      object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -164,6 +166,7 @@ int Impl::generate(STRING                          *string,
                    const Time&                      object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -187,6 +190,7 @@ int Impl::generate(STRING                          *string,
                    const Datetime&                  object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -210,6 +214,7 @@ int Impl::generate(STRING                          *string,
                    const DateTz&                    object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -233,6 +238,7 @@ int Impl::generate(STRING                          *string,
                    const TimeTz&                    object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -256,6 +262,7 @@ int Impl::generate(STRING                          *string,
                    const DatetimeTz&                object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -279,6 +286,7 @@ int Impl::generate(STRING                          *string,
                    const Util::DateOrDateTz&        object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -302,6 +310,7 @@ int Impl::generate(STRING                          *string,
                    const Util::TimeOrTimeTz&        object,
                    const GenerateConfiguration&     configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);
@@ -325,6 +334,7 @@ int Impl::generate(STRING                            *string,
                    const Util::DatetimeOrDatetimeTz&  object,
                    const GenerateConfiguration&       configuration)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(string);
     BSLS_ASSERT_CONVEYOR_OBJECT(&configuration);
     BSLS_ASSERT_CONVEYOR_OBJECT(&object);
     BSLS_ASSERT(string);

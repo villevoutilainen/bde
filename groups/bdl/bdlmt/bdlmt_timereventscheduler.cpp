@@ -213,7 +213,10 @@ void TimerEventSchedulerDispatcher::dispatchEvents(
             // until at least one of the queues is empty.
 
             const bsls::TimeInterval& clockTime = clockData[clockIdx].time();
-            if (clockTime < eventData[*eventIdxPtr].time()) {
+            BSLS_ASSERT_CONVEYOR_OBJECT(&clockTime);
+            const bsls::TimeInterval& eventTime =
+                     BSLS_ASSERT_CONVEYOR_REF(eventData[*eventIdxPtr].time());
+            if (clockTime < eventTime) {
                 if (clockIdx + 1 < clockLen) {
                     scheduler->d_cachedClockMicroseconds =
                             clockData[clockIdx + 1].time().totalMicroseconds();

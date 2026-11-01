@@ -119,6 +119,7 @@ void Utf8ReaderWrapper::reportUtf8Error(int utf8Rc)
     const bsl::string& heldMsg =
                  BSLS_ASSERT_CONVEYOR_REF(heldReader()->errorInfo()).message();
     bsl::string msg;
+    BSLS_ASSERT_CONVEYOR_OBJECT(&heldMsg);
     msg.reserve(heldMsg.length() + 256);
 
     msg = heldMsg;

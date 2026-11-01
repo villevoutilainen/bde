@@ -369,26 +369,26 @@ void PrintUtil::appendAttribute(bsl::string             *result,
     }
     if (a.value().is<bsl::string>()) {
         *result += '"';
-        *result += a.value().the<bsl::string>();
+        *result += BSLS_ASSERT_CONVEYOR_REF(a.value()).the<bsl::string>();
         *result += '"';
     }
     else if (a.value().is<int>()) {
-        appendValue(result, a.value().the<int>());
+        appendValue(result, BSLS_ASSERT_CONVEYOR_REF(a.value()).the<int>());
     }
     else if (a.value().is<long>()) {
-        appendValue(result, a.value().the<long>());
+        appendValue(result, BSLS_ASSERT_CONVEYOR_REF(a.value()).the<long>());
     }
     else if (a.value().is<long long>()) {
-        appendValue(result, a.value().the<long long>());
+        appendValue(result, BSLS_ASSERT_CONVEYOR_REF(a.value()).the<long long>());
     }
     else if (a.value().is<unsigned int>()) {
-        appendValue(result, a.value().the<unsigned int>());
+        appendValue(result, BSLS_ASSERT_CONVEYOR_REF(a.value()).the<unsigned int>());
     }
     else if (a.value().is<unsigned long>()) {
-        appendValue(result, a.value().the<unsigned long>());
+        appendValue(result, BSLS_ASSERT_CONVEYOR_REF(a.value()).the<unsigned long>());
     }
     else if (a.value().is<unsigned long long>()) {
-        appendValue(result, a.value().the<unsigned long long>());
+        appendValue(result, BSLS_ASSERT_CONVEYOR_REF(a.value()).the<unsigned long long>());
     }
     else if (a.value().is<const void *>()) {
 
@@ -398,7 +398,7 @@ void PrintUtil::appendAttribute(bsl::string             *result,
         bsl::ostream                stream(&buffer);
         bslim::Printer              printer(&stream, 0, -1);
 
-        printer.printHexAddr(a.value().the<const void *>(), 0);
+        printer.printHexAddr(BSLS_ASSERT_CONVEYOR_REF(a.value()).the<const void *>(), 0);
 
         appendString(result, &storage[1]);
     }
@@ -764,6 +764,7 @@ void AttributeFormatter::operator()(bsl::string *result, const Record& record)
 {
     BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     const Attributes& attributes = record.attributes();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
     if (k_UNSET == d_index ||
         d_index >= static_cast<int>(attributes.size()) ||
         d_key   != attributes[d_index].key())
@@ -773,11 +774,13 @@ void AttributeFormatter::operator()(bsl::string *result, const Record& record)
         // attributes has changed) we need to try and set d_index.
 
         d_index = k_UNSET;
+        BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
         for (Attributes::const_iterator i = attributes.begin();
              i != attributes.end();
              ++i)
         {
             if (d_key == BSLS_ASSERT_CONVEYOR_REF(*i).key()) {
+                BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
                 d_index = static_cast<int>(bsl::distance(attributes.begin(),
                                                          i));
                 break;                                                 // BREAK
@@ -816,7 +819,9 @@ void AttributesFormatter::renderAllAttributes(bsl::string   *result,
     BSLS_ASSERT_CONVEYOR_OBJECT(&record);
     BSLS_ASSERT_CONVEYOR_OBJECT(result);
     const Attributes&          attributes = record.attributes();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
     Attributes::const_iterator i          = attributes.begin();
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
     Attributes::const_iterator end        = attributes.end();
 
     for (;i < end; ++i) {
@@ -835,7 +840,9 @@ void AttributesFormatter::renderNonSkippedAttributes(bsl::string   *result,
     BSLS_ASSERT_CONVEYOR_OBJECT(d_skipAttributes_p);
     const Attributes& attributes = record.attributes();
 
+    BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
     for (Attributes::size_type i = 0; i < attributes.size(); ++i) {
+        BSLS_ASSERT_CONVEYOR_OBJECT(&attributes);
         const ManagedAttribute& a = attributes[i];
 
         if (i < d_cache.size()) {

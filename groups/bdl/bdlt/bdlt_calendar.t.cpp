@@ -1183,6 +1183,7 @@ static void reviewCount(const bsls::ReviewViolation&)
              && month == date.month()) {
                 return date;                                          // RETURN
             }
+            BSLS_ASSERT_CONVEYOR_OBJECT(&date);
             while (calendar.isNonBusinessDay(--date));
             return date;
         }
@@ -1939,7 +1940,8 @@ int main(int argc, char *argv[])
             ASSERT_SAFE_FAIL(X.getNextBusinessDay(&date, X.firstDate() - 2));
             ASSERT_SAFE_PASS(X.getNextBusinessDay(&date, X.firstDate() - 1));
             ASSERT_SAFE_PASS(X.getNextBusinessDay(&date, X.lastDate() - 1));
-            ASSERT_SAFE_FAIL(X.getNextBusinessDay(&date, X.lastDate()));
+            BSLS_ASSERT_CONVEYOR_OBJECT(&X);
+            ASSERT_SAFE_FAIL(X.getNextBusinessDay(&date, BSLS_ASSERT_CONVEYOR_REF(X.lastDate())));
             ASSERT_SAFE_FAIL(X.getNextBusinessDay(&date,
                                                   bdlt::Date(9999, 12, 31)));
             ASSERT_SAFE_FAIL(X.getNextBusinessDay(0, X.firstDate() - 1));

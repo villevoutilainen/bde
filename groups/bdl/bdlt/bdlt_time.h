@@ -1105,6 +1105,7 @@ bool bdlt::operator>=(const Time& lhs, const Time& rhs)
 inline
 bsl::ostream& bdlt::operator<<(bsl::ostream& stream, const Time& time)
 {
+    BSLS_ASSERT_CONVEYOR_OBJECT(&time);
     return time.print(stream, 0, -1);
 }
 

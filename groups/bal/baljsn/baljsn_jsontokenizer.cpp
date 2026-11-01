@@ -188,11 +188,13 @@ void JsonTokenizer::printTokens() const
                   << bsl::left  <<  bsl::setw(40) << cur->d_tokenType  << "|";
 
         /* */  if (cur->d_tokenValue.is<ElementName>()) {
-                    bsl::cout << cur->d_tokenValue.the<ElementName>()
+                    bsl::cout << BSLS_ASSERT_CONVEYOR_REF(*cur)
+                                                 .d_tokenValue.the<ElementName>()
                               << bsl::endl;
         } else if (cur->d_tokenValue.is<ElementValue>()) {
-                    const bdljsn::Json *value = cur->d_tokenValue
-                                                  .the<ElementValue>();
+                    const bdljsn::Json *value =
+                                            BSLS_ASSERT_CONVEYOR_REF(*cur)
+                                               .d_tokenValue.the<ElementValue>();
                     if (value) {
                         bsl::cout << *value         << bsl::endl;
                     } else {
