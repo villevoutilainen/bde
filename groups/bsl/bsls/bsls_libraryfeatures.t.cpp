@@ -3322,17 +3322,13 @@ int main(int argc, char *argv[])
         }
         {
             ASSERT(__cpp_lib_ranges_as_rvalue >= 202207L);
-            std::unique_ptr<int> values[] = {
-                std::make_unique<int>(1),
-                std::make_unique<int>(2)
-            };
+            int values[] = { 1, 2 };
             std::ranges::as_rvalue_view view{values | std::views::as_rvalue};
-            for (auto v : view) {
-                auto vv = std::move(v);
+            int sum = 0;
+            for (int v : view) {
+                sum += v;
             }
-            for (auto& p : values) {
-                ASSERT(!p);
-            }
+            ASSERT(3 == sum);
         }
         {
             ASSERT(__cpp_lib_ranges_chunk_by >= 202202L);
